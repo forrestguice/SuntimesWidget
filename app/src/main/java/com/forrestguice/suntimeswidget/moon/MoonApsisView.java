@@ -28,6 +28,7 @@ import android.os.Build;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -648,7 +649,7 @@ public class MoonApsisView extends LinearLayout
             Calendar now = Calendar.getInstance();
             String noteText = (dateTime == null ? "" : delta_utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
             String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-            return SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor);
+            return SpanUtils.createBoldColorSpan(null, noteString, noteText, noteColor);
         }
 
     }

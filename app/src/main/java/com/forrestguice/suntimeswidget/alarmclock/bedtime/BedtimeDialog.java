@@ -27,6 +27,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
@@ -1018,7 +1019,7 @@ public class BedtimeDialog extends DialogBase
 
         String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context)).toString();
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
-        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
+        CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         SnackbarUtils.make(context, getList(), message, 7000)
                 .setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
@@ -1039,7 +1040,7 @@ public class BedtimeDialog extends DialogBase
 
         String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context)).toString();
         String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
-        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
+        CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         SnackbarUtils.make(context, getList(), message, 7000)
                 .setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()

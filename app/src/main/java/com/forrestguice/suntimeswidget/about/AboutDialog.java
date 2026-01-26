@@ -40,7 +40,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -171,27 +171,27 @@ public class AboutDialog extends BottomSheetDialogBase
 
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());
-        versionView.setText(SuntimesUtils.fromHtml(htmlVersionString()));
+        versionView.setText(SpanUtils.fromHtml(htmlVersionString()));
 
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
+        supportView.setText(SpanUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
 
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         legalView1.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView1.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal1)));
+        legalView1.setText(SpanUtils.fromHtml(context.getString(R.string.app_legal1)));
 
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
         legalView2.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView2.setText(SuntimesUtils.fromHtml(initTranslationCredits(context)));
+        legalView2.setText(SpanUtils.fromHtml(initTranslationCredits(context)));
 
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView3.setText(SuntimesUtils.fromHtml(initLibraryCredits(context)));
+        legalView3.setText(SpanUtils.fromHtml(initLibraryCredits(context)));
 
         TextView aboutMediaView = (TextView) dialogContent.findViewById(R.id.txt_about_media);
         aboutMediaView.setMovementMethod(LinkMovementMethod.getInstance());
-        aboutMediaView.setText(SuntimesUtils.fromHtml(initMediaCredits(context)));
+        aboutMediaView.setText(SpanUtils.fromHtml(initMediaCredits(context)));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
         String permissionsExplained = context.getString(R.string.privacy_permission_location);
@@ -201,14 +201,14 @@ public class AboutDialog extends BottomSheetDialogBase
         }
 
         String privacy = context.getString(R.string.privacy_policy, permissionsExplained);
-        legalView4.setText(SuntimesUtils.fromHtml(privacy));
+        legalView4.setText(SpanUtils.fromHtml(privacy));
 
         int[] linkViews = new int[] { R.id.txt_help_url, R.id.txt_about_url, R.id.txt_about_legal5 };
         for (int resID : linkViews)
         {
             TextView text = (TextView) dialogContent.findViewById(resID);
             if (text != null) {
-                text.setText(SuntimesUtils.fromHtml(anchor(text.getText().toString())));
+                text.setText(SpanUtils.fromHtml(anchor(text.getText().toString())));
                 text.setMovementMethod(LinkMovementMethod.getInstance());
             }
         }

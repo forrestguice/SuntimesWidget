@@ -34,6 +34,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -753,7 +754,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                 boolean isBefore = (item.offset <= 0);
                 String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
                 String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-                Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+                Spannable offsetSpan = SpanUtils.createBoldSpan(null, offsetDisplay, offsetText);
                 view.text_offset.setText(offsetSpan);
             }
 
@@ -776,24 +777,24 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
         int ringtoneIconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
         ImageSpan ringtonIcon = isSelected || item.enabled
-                ? SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                : SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+                ? SpanUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                : SpanUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
         final String none = context.getString(R.string.alarmOption_ringtone_none);
         String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
         String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
-        return SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
+        return SpanUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
     }
 
     private CharSequence actionDisplayChip(AlarmClockItem item, int actionNum, boolean isSelected)
     {
         int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
         ImageSpan actionIcon = (isSelected || item.enabled)
-                ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+                ? SpanUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                : SpanUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
         String actionName = item.getActionID(actionNum);
         String actionString = isSelected ? (actionName != null ? actionName : "") : "";
         String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
-        return SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
+        return SpanUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
     }
 
     /**

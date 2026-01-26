@@ -26,6 +26,7 @@ import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.Pair;
 import android.util.Log;
 
@@ -90,7 +91,7 @@ public class LocalePrefsFragment extends PreferenceFragment
             } else {
                 String localizedName = "(" + localeDisplay_j + ")";
                 String displayString = localeDisplayNative_j + " " + localizedName;
-                formattedDisplayString = SuntimesUtils.createRelativeSpan(null, displayString, localizedName, 0.7f);
+                formattedDisplayString = SpanUtils.createRelativeSpan(null, displayString, localizedName, 0.7f);
             }
 
             entries[i] = formattedDisplayString;

@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.AlertDialog;
 
@@ -231,9 +232,9 @@ public class BedtimeSleepDialog extends DialogBase
             String numCyclesText = getResources().getQuantityString(R.plurals.cyclePlural, (int)numCycles, (int)numCycles);
 
             String sleepCycleText = getString(R.string.configLabel_numSleepCycles, numCyclesText, sleepCycleMsText, totalSleepMsText);
-            SpannableString sleepCycleDisplay = SuntimesUtils.createBoldSpan(null, sleepCycleText, sleepCycleMsText);
-            sleepCycleDisplay = SuntimesUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, sleepCycleMsText);
-            sleepCycleDisplay = SuntimesUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, totalSleepMsText);
+            SpannableString sleepCycleDisplay = SpanUtils.createBoldSpan(null, sleepCycleText, sleepCycleMsText);
+            sleepCycleDisplay = SpanUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, sleepCycleMsText);
+            sleepCycleDisplay = SpanUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, totalSleepMsText);
             sleepCycleLabel.setText(sleepCycleDisplay);
         }
     }

@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 
 import android.text.SpannableString;
@@ -798,8 +799,8 @@ public class MoonRiseSetView1 extends LinearLayout
             } else {
                 TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 1, false);
                 String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-                SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-                azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+                SpannableString azimuthSpan = SpanUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+                azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
                 TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 1, true);

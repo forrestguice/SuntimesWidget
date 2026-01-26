@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
@@ -68,7 +69,7 @@ public abstract class SunPosLayout extends PositionLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, dataset.dataActual);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
@@ -147,9 +148,9 @@ public abstract class SunPosLayout extends PositionLayout
         TimeDisplayText rightAscDisplay = angle_utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
         String rightAscSymbol = rightAscDisplay.getSuffix();
         String rightAscString = angle_utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
-        SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
-        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
-        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
+        SpannableString rightAsc = SpanUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+        rightAsc = SpanUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+        rightAsc = SpanUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
         return rightAsc;
     }
 
@@ -158,9 +159,9 @@ public abstract class SunPosLayout extends PositionLayout
         TimeDisplayText declinationDisplay = angle_utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
         String declinationSymbol = declinationDisplay.getSuffix();
         String declinationString = angle_utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
-        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
-        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
-        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
+        SpannableString declination = SpanUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        declination = SpanUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+        declination = SpanUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
         return declination;
     }
 

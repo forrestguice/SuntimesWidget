@@ -59,6 +59,7 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -462,7 +463,7 @@ public class WidgetThemes
                 TextView riseView = (TextView) view.findViewById(R.id.text_time_rise);
                 riseView.setTextColor(theme.getSunriseTextColor());
                 String riseString = riseText.getValue();
-                CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+                CharSequence riseSequence = (boldTime ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
                 riseView.setText(riseSequence);
 
                 TextView riseViewSuffix = (TextView) view.findViewById(R.id.text_time_rise_suffix);
@@ -472,7 +473,7 @@ public class WidgetThemes
                 TextView setView = (TextView) view.findViewById(R.id.text_time_set);
                 setView.setTextColor(theme.getSunsetTextColor());
                 String setString = setText.getValue();
-                CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+                CharSequence setSequence = (boldTime ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
                 setView.setText(setSequence);
 
                 TextView setViewSuffix = (TextView) view.findViewById(R.id.text_time_set_suffix);
@@ -487,7 +488,7 @@ public class WidgetThemes
 
                 TextView noonView = (TextView)view.findViewById(R.id.text_time_noon);
                 String noonString = noonText.getValue();
-                CharSequence noonSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
+                CharSequence noonSequence = (boldTime ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
                 noonView.setText(noonSequence);
                 noonView.setTextColor(theme.getNoonTextColor());
 

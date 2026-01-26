@@ -27,6 +27,7 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
@@ -203,9 +204,9 @@ public class MoonLayout_1x1_8 extends MoonLayout
         TimeDisplayText distanceDisplay = LengthUnitDisplay.formatAsDistance(r, distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();
         String distanceString = LengthUnitDisplay.formatAsDistance(r, distanceDisplay);
-        SpannableString distanceSpan = SuntimesUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);
-        distanceSpan = SuntimesUtils.createBoldColorSpan(distanceSpan, distanceString, unitsSymbol, suffixColor);
-        distanceSpan = SuntimesUtils.createRelativeSpan(distanceSpan, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        SpannableString distanceSpan = SpanUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);
+        distanceSpan = SpanUtils.createBoldColorSpan(distanceSpan, distanceString, unitsSymbol, suffixColor);
+        distanceSpan = SpanUtils.createRelativeSpan(distanceSpan, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return distanceSpan;
     }
 
@@ -213,7 +214,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
     {
         String noteTime = delta_utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
         String noteString = context.getString((event.before(now) ? R.string.ago : R.string.hence), noteTime);
-        return (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
+        return (boldTime ? SpanUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SpanUtils.createColorSpan(null, noteString, noteTime, timeColor));
     }
 
     protected int suffixColor = Color.GRAY;

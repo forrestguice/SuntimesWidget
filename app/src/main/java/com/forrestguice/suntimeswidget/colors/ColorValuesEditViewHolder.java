@@ -22,6 +22,8 @@ package com.forrestguice.suntimeswidget.colors;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.View;
@@ -89,12 +91,12 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
             {
                 //float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);  // TODO: fix.. looks nice, but it fails to render if the text becomes ellipsized
                 //colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
-                colorLabel = SuntimesUtils.createColorSpan(colorLabel, " " + labelText + " ", labelText, textColor);
-                colorLabel = SuntimesUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
+                colorLabel = SpanUtils.createColorSpan(colorLabel, " " + labelText + " ", labelText, textColor);
+                colorLabel = SpanUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
 
             } else if (textColor != null) {
-                colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(null, labelText, labelText, textColor)
-                        : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
+                colorLabel = (bold ? SpanUtils.createBoldColorSpan(null, labelText, labelText, textColor)
+                        : SpanUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
 
             } else {
                 colorLabel = new SpannableString(" ");

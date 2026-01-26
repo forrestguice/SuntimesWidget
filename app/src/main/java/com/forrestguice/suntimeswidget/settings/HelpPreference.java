@@ -33,7 +33,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.preference.DialogPreference;
 
 /**
@@ -130,7 +130,7 @@ public class HelpPreference extends DialogPreference
             String buttonText = null;
             TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HelpPreference, 0, 0);
             try {
-                this.helpText = SuntimesUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
+                this.helpText = SpanUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
                 helpLink = a.getString(R.styleable.HelpPreference_helpLink);
                 helpPath = a.getString(R.styleable.HelpPreference_helpPath);
                 buttonText = a.getString(R.styleable.HelpPreference_moreHelpButtonText);

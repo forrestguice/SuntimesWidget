@@ -52,11 +52,11 @@ import android.widget.ViewFlipper;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -1253,7 +1253,7 @@ public class LocationConfigView extends LinearLayout
 
         if (!silent)
         {
-            Toast.makeText(context, SuntimesUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, SpanUtils.fromHtml(context.getString(R.string.location_dialog_toast_copied, clipboardText)), Toast.LENGTH_LONG).show();
         }
     }
 

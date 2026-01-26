@@ -26,7 +26,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -37,7 +36,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentManagerCompat;
 
@@ -103,7 +102,7 @@ public class WelcomeView extends FrameLayout
             for (int resID : textViews) {
                 TextView text = (TextView) view.findViewById(resID);
                 if (text != null) {
-                    text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
+                    text.setText(SpanUtils.fromHtml(text.getText().toString()));
                 }
             }
 
@@ -111,7 +110,7 @@ public class WelcomeView extends FrameLayout
             for (int resID : textViews) {
                 TextView text = (TextView) view.findViewById(resID);
                 if (text != null) {
-                    text.setText(SuntimesUtils.fromHtml(AboutActivity.anchor(text.getText().toString())));
+                    text.setText(SpanUtils.fromHtml(AboutActivity.anchor(text.getText().toString())));
                     text.setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
@@ -119,7 +118,7 @@ public class WelcomeView extends FrameLayout
             final TextView donateLink = (TextView) view.findViewById(R.id.link4);
             if (donateLink != null) {
                 donateLink.setVisibility(View.GONE);
-                donateLink.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
+                donateLink.setText(SpanUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
             }
 
             CheckBox donateCheck = (CheckBox) view.findViewById(R.id.check_donate);

@@ -29,6 +29,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -263,7 +264,7 @@ public class EquinoxView extends LinearLayout
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
         String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
-        CharSequence yearDisplay = SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
+        CharSequence yearDisplay = SpanUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
 
         text_year_length.setText(yearDisplay);
     }
@@ -623,14 +624,14 @@ public class EquinoxView extends LinearLayout
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
-                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
+                                                                         : SpanUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
-                                                                         : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
+                                                                         : SpanUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
                     }
                 } else {

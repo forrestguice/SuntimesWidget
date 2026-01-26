@@ -63,6 +63,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -410,7 +411,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
             if (suffix.isEmpty())
                 text_time.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else text_time.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, Color.RED));    // TODO: warning color
+            else text_time.setText(SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, Color.RED));    // TODO: warning color
         }
 
         /*if (offsetTime != null)

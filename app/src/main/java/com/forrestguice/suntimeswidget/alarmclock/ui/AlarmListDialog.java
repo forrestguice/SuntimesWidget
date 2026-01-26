@@ -39,6 +39,7 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -1736,7 +1737,7 @@ public class AlarmListDialog extends DialogBase
             int offsetIconSize = (int)context.getResources().getDimension(R.dimen.offsetIcon_width);
             int offsetIconResID = a.getResourceId(0, R.drawable.ic_action_timereset);
             a.recycle();
-            Drawable offsetIcon = SuntimesUtils.createImageSpan(context, offsetIconResID, offsetIconSize, offsetIconSize, iconColor).getDrawable().mutate();
+            Drawable offsetIcon = SpanUtils.createImageSpan(context, offsetIconResID, offsetIconSize, offsetIconSize, iconColor).getDrawable().mutate();
 
             // background
             Resources r = context.getResources();
@@ -1982,7 +1983,7 @@ public class AlarmListDialog extends DialogBase
                 view.text_offset.setText((isSchedulable && isSelected || alwaysShowOffset) ? offsetDisplay : "");
 
                 if (preview_offset && item.offset != 0) {
-                    view.text_offset.setText(SuntimesUtils.createSpan(context, "i", "i", new ImageSpan(offsetIcon), ImageSpan.ALIGN_BASELINE));
+                    view.text_offset.setText(SpanUtils.createSpan(context, "i", "i", new ImageSpan(offsetIcon), ImageSpan.ALIGN_BASELINE));
                 }
 
                 view.text_offset.setTextColor(item.enabled ? color_on : color_off);
@@ -2088,9 +2089,9 @@ public class AlarmListDialog extends DialogBase
             int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
             int iconID = item.ringtoneName != null ? res_iconSoundOn : res_iconSoundOff;
             ImageSpan icon = isSelected || item.enabled
-                    ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
-                    : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
-            return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
+                    ? SpanUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                    : SpanUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+            return SpanUtils.createSpan(context, "[icon]", "[icon]", icon);
         }
 
         private CharSequence vibrateDisplayChip(Context context, AlarmClockItem item, boolean isSelected)
@@ -2100,9 +2101,9 @@ public class AlarmListDialog extends DialogBase
                 int iconID = res_iconVibrate;
                 int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
                 ImageSpan ringtonIcon = isSelected || item.enabled
-                        ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
-                        : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
-                return SuntimesUtils.createSpan(context, "[icon]", "[icon]", ringtonIcon);
+                        ? SpanUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                        : SpanUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+                return SpanUtils.createSpan(context, "[icon]", "[icon]", ringtonIcon);
             } else {
                 return "";
             }
@@ -2112,9 +2113,9 @@ public class AlarmListDialog extends DialogBase
         {
             int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
             ImageSpan icon = (isSelected || item.enabled)
-                    ? SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, item.enabled ? color_on : 0)
-                    : SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
-            return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
+                    ? SpanUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                    : SpanUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+            return SpanUtils.createSpan(context, "[icon]", "[icon]", icon);
         }
 
         public void resetBackground()

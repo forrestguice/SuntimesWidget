@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -158,9 +159,9 @@ public class MoonLayout_1x1_6 extends MoonLayout
         TimeDisplayText rightAscDisplay = angle_utils.formatAsRightAscension(moonPosition.rightAscension, PositionLayout.DECIMAL_PLACES);
         String rightAscSymbol = rightAscDisplay.getSuffix();
         String rightAscString = angle_utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
-        SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
-        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
-        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        SpannableString rightAsc = SpanUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+        rightAsc = SpanUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+        rightAsc = SpanUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return rightAsc;
     }
 
@@ -169,9 +170,9 @@ public class MoonLayout_1x1_6 extends MoonLayout
         TimeDisplayText declinationDisplay = angle_utils.formatAsDeclination(moonPosition.declination, PositionLayout.DECIMAL_PLACES);
         String declinationSymbol = declinationDisplay.getSuffix();
         String declinationString = angle_utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
-        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
-        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
-        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        SpannableString declination = SpanUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        declination = SpanUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+        declination = SpanUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return declination;
     }
 

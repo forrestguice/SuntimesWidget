@@ -31,6 +31,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -653,12 +654,12 @@ public class MoonPhasesView1 extends LinearLayout
                         String labelText = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_superfull : R.string.timeMode_moon_supernew);
 
                         if (phase == SuntimesCalculator.MoonPhase.FULL)
-                            phaseLabel = SuntimesUtils.createBoldSpan(null, labelText, labelText);
-                        else phaseLabel = SuntimesUtils.createItalicSpan(null, labelText, labelText);
+                            phaseLabel = SpanUtils.createBoldSpan(null, labelText, labelText);
+                        else phaseLabel = SpanUtils.createItalicSpan(null, labelText, labelText);
 
                     } else if (SuntimesMoonData1.isMicroMoon(phasePosition)) {
                         String labelText = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_microfull : R.string.timeMode_moon_micronew);
-                        phaseLabel = SuntimesUtils.createItalicSpan(null, labelText, labelText);
+                        phaseLabel = SpanUtils.createItalicSpan(null, labelText, labelText);
                     }
                 }
             }
@@ -700,7 +701,7 @@ public class MoonPhasesView1 extends LinearLayout
                 boolean isAgo = now.after(dateTime);
                 String noteText = (dateTime == null ? "" : delta_utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
                 String noteString = isAgo ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (isAgo ? disabledColor : noteColor)));
+                note.setText(SpanUtils.createBoldColorSpan(null, noteString, noteText, (isAgo ? disabledColor : noteColor)));
                 note.setVisibility(View.VISIBLE);
             }
         }

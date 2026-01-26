@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 
 import java.text.NumberFormat;
@@ -147,7 +148,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
         String illumNote = context.getString(R.string.moon_illumination, illum);
-        SpannableString illumNoteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, illumNote, illum, illumColor) : SuntimesUtils.createColorSpan(null, illumNote, illum, illumColor));
+        SpannableString illumNoteSpan = (boldTime ? SpanUtils.createBoldColorSpan(null, illumNote, illum, illumColor) : SpanUtils.createColorSpan(null, illumNote, illum, illumColor));
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
         for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values()) {

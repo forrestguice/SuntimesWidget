@@ -34,9 +34,9 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
@@ -701,9 +701,9 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
     protected static CharSequence displayStringForImportMethod(Context context, int method)
     {
         switch (method) {
-            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
             default: return method + "";
         }
     }

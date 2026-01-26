@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.support.app.ActivityCompat;
@@ -220,12 +221,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
             {
                 if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
 
                 } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
+                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, summaryString, warning, colorWarning));
 
                 } else {
                     String message = context.getString(R.string.configLabel_alarms_notifications_on);
@@ -233,7 +234,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 }
             } else {
                 String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+                notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
 
@@ -248,7 +249,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
             } else {
                 String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
-                fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+                fullscreenNotificationPrefs.setSummary(SpanUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
             }
         }
 
@@ -296,10 +297,10 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
                 SpannableString summary = (hasDndPermission
                         ? new SpannableString(context.getString(R.string.configLabel_permissionGranted))
-                        : new SpannableString(SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
+                        : new SpannableString(SpanUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
 
                 if (bedtimeDndEnabled && !hasDndPermission) {
-                    summary = SuntimesUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
+                    summary = SpanUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
                 }
 
                 dndPermission.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
@@ -624,15 +625,15 @@ public class AlarmPrefsFragment extends PreferenceFragment
         int[] iconAttrs = { R.attr.tagColor_warning, R.attr.icActionAbout, R.attr.icActionWarning };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
-        ImageSpan iconInfo = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
-        ImageSpan iconWarn = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
+        ImageSpan iconInfo = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
+        ImageSpan iconWarn = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] tags = {
-                new SuntimesUtils.ImageSpanTag("[i]", iconInfo),
-                new SuntimesUtils.ImageSpanTag("[w]", iconWarn)
+        SpanUtils.ImageSpanTag[] tags = {
+                new SpanUtils.ImageSpanTag("[i]", iconInfo),
+                new SpanUtils.ImageSpanTag("[w]", iconWarn)
         };
-        CharSequence messageSpan = SuntimesUtils.createSpan(context, message, tags);
+        CharSequence messageSpan = SpanUtils.createSpan(context, message, tags);
 
         return new AlertDialog.Builder(context)
                 .setMessage(messageSpan)

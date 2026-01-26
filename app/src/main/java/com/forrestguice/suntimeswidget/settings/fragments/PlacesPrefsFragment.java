@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.preference.Preference;
 import android.preference.PreferenceManager;
 
@@ -319,20 +320,20 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
         int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
         TypedArray typedArray = context.obtainStyledAttributes(R.styleable.LocationProviderStatus);
-        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionAltitude, R.drawable.check_altitude_dark), iconSize, iconSize, 0);
-        ImageSpan cellIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_cell, R.drawable.ic_celltower_dark), iconSize, iconSize, 0);
-        ImageSpan networkIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_network, R.drawable.ic_network_dark), iconSize, iconSize, 0);
-        ImageSpan gpsIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_satellite, R.drawable.ic_satellite_dark), iconSize, iconSize, 0);
+        ImageSpan altitudeIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionAltitude, R.drawable.check_altitude_dark), iconSize, iconSize, 0);
+        ImageSpan cellIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_cell, R.drawable.ic_celltower_dark), iconSize, iconSize, 0);
+        ImageSpan networkIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_network, R.drawable.ic_network_dark), iconSize, iconSize, 0);
+        ImageSpan gpsIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_satellite, R.drawable.ic_satellite_dark), iconSize, iconSize, 0);
         typedArray.recycle();
 
         CharSequence summaryDisplay = summary;
-        SuntimesUtils.ImageSpanTag[] summaryTags = {
-                new SuntimesUtils.ImageSpanTag("[IconAltitude]", altitudeIcon),
-                new SuntimesUtils.ImageSpanTag("[IconCell]", cellIcon),
-                new SuntimesUtils.ImageSpanTag("[IconNetwork]", networkIcon),
-                new SuntimesUtils.ImageSpanTag("[IconSatellite]", gpsIcon),
+        SpanUtils.ImageSpanTag[] summaryTags = {
+                new SpanUtils.ImageSpanTag("[IconAltitude]", altitudeIcon),
+                new SpanUtils.ImageSpanTag("[IconCell]", cellIcon),
+                new SpanUtils.ImageSpanTag("[IconNetwork]", networkIcon),
+                new SpanUtils.ImageSpanTag("[IconSatellite]", gpsIcon),
         };
-        return SuntimesUtils.createSpan(context, summaryDisplay, summaryTags);
+        return SpanUtils.createSpan(context, summaryDisplay, summaryTags);
     }
     protected static final TimeDateDisplay utils = new TimeDateDisplay();
     protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();

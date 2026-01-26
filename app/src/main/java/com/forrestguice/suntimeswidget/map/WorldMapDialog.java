@@ -37,6 +37,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -667,7 +668,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
             if (suffix.isEmpty())
                 utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
+            else utcTime.setText(SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
         TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);

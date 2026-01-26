@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.graph.LineGraphTaskListener;
 import com.forrestguice.suntimeswidget.graph.SunSymbol;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 
@@ -222,7 +223,7 @@ public class WidgetThemePreview
 
             boolean boldText = values.getAsBoolean(SuntimesThemeContract.THEME_TITLEBOLD);
             if (boldText)
-                previewTitle.setText(SuntimesUtils.createBoldSpan(null, titleText, titleText));
+                previewTitle.setText(SpanUtils.createBoldSpan(null, titleText, titleText));
             else previewTitle.setText(titleText);
 
             updateSize(previewTitle, values.getAsFloat(SuntimesThemeContract.THEME_TITLESIZE), SuntimesThemeContract.THEME_TITLESIZE_MIN, SuntimesThemeContract.THEME_TITLESIZE_MAX);
@@ -644,7 +645,7 @@ public class WidgetThemePreview
             TimeDisplayText nowText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), data.now(), false, timeFormat);
             String nowString = nowText.getValue();
 
-            CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+            CharSequence nowChars = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
             previewTime.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR));
             previewTime.setText(nowChars);
@@ -715,7 +716,7 @@ public class WidgetThemePreview
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
-            CharSequence noon = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
+            CharSequence noon = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
             previewNoon.setText(noon);
             previewNoon.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_NOONCOLOR));
             updateSize(previewNoon, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -735,7 +736,7 @@ public class WidgetThemePreview
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
-            CharSequence rise = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewRise.setText(rise);
             previewRise.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR));
             updateSize(previewRise, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -755,7 +756,7 @@ public class WidgetThemePreview
         if (previewSet != null)
         {
             String setString = setText.getValue();
-            CharSequence set = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewSet.setText(set);
             previewSet.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR));
             updateSize(previewSet, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -860,7 +861,7 @@ public class WidgetThemePreview
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
-            CharSequence rise = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewMoonrise.setText(rise);
             previewMoonrise.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_MOONRISECOLOR));
             updateSize(previewMoonrise, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
@@ -880,7 +881,7 @@ public class WidgetThemePreview
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
-            CharSequence set = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD) ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewMoonset.setText(set);
             previewMoonset.setTextColor(values.getAsInteger(SuntimesThemeContract.THEME_MOONSETCOLOR));
             updateSize(previewMoonset, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);

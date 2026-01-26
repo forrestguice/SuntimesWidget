@@ -51,6 +51,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -472,12 +473,12 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     {
         int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
         TimeDisplayText dstSavings = delta_utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
-        ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, iconSize, iconSize);
+        ImageSpan dstIcon = SpanUtils.createDstSpan(context, iconSize, iconSize);
         String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
         String extrasString = getString(stringResID, dstString);
 
-        SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
-        SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
+        SpannableStringBuilder extrasSpan = SpanUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
+        SpannableString boldedExtrasSpan = SpanUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
         label_tzExtras0.setText(boldedExtrasSpan);
         layout_timezoneExtras.setVisibility(View.VISIBLE);
     }

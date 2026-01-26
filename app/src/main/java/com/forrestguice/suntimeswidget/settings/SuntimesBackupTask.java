@@ -32,6 +32,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.View;
@@ -41,7 +42,6 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
@@ -500,37 +500,37 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     public static CharSequence displayStringForBackupKey(Context context, String key)
     {
         if (SuntimesBackupTask.KEY_APPSETTINGS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_appsettings));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_appsettings));
         }
         if (SuntimesBackupTask.KEY_COLORS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors));
         }
         if (SuntimesBackupTask.KEY_COLORS_APPCOLORS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_appcolors));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_appcolors));
         }
         if (SuntimesBackupTask.KEY_COLORS_MAPCOLORS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_mapcolors));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_mapcolors));
         }
         if (SuntimesBackupTask.KEY_COLORS_ALARMCOLORS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_alarmcolors));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_colors_alarmcolors));
         }
         if (SuntimesBackupTask.KEY_WIDGETSETTINGS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetsettings));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetsettings));
         }
         if (SuntimesBackupTask.KEY_WIDGETTHEMES.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetthemes));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_widgetthemes));
         }
         if (SuntimesBackupTask.KEY_ALARMITEMS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_alarmitems));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_alarmitems));
         }
         if (SuntimesBackupTask.KEY_EVENTITEMS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_eventitems));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_eventitems));
         }
         if (SuntimesBackupTask.KEY_PLACEITEMS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_placeitems));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_placeitems));
         }
         if (SuntimesBackupTask.KEY_ACTIONS.equals(key)) {
-            return SuntimesUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_actions));
+            return SpanUtils.fromHtml(context.getString(R.string.restorebackup_dialog_item_actions));
         }
         return key;
     }

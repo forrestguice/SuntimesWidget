@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntim
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -269,7 +270,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     TimeDisplayText alarmText = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
                     String typeDisplay = (item.type != null ? item.type.getDisplayString() : "Alarm");
                     alarmString = context.getString(messageResID, typeDisplay, alarmText.getValue());
-                    alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
+                    alarmDisplay = SpanUtils.createBoldSpan(null, alarmString, alarmText.getValue());
                     break;
             }
 

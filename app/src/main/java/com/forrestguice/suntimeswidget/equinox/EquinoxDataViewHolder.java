@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisp
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
@@ -131,14 +132,14 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (calendar.before(Calendar.getInstance()))
             {
                 String noteString = context.getString(R.string.ago, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
-                        : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
+                        : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
 
             } else {
                 String noteString = context.getString(R.string.hence, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
-                        : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
+                        : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
             }
         } else {

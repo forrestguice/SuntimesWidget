@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.Editable;
@@ -2599,10 +2600,10 @@ public class LightMapDialog extends BottomSheetDialogBase
         SpannableString azimuthSpan = null;
         if (color != null) {
             //noinspection ConstantConditions
-            azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
+            azimuthSpan = SpanUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
         }
-        azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
-        azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+        azimuthSpan = SpanUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
+        azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
         TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(azimuth, places, true);
@@ -2615,9 +2616,9 @@ public class LightMapDialog extends BottomSheetDialogBase
         String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
         SpannableString span = null;
         //noinspection ConstantConditions
-        span = SuntimesUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
+        span = SpanUtils.createRelativeSpan(span, elevationString, elevationText.getSuffix(), 0.7f);
         if (color != null) {
-            span = SuntimesUtils.createColorSpan(span, elevationString, elevationString, color);
+            span = SpanUtils.createColorSpan(span, elevationString, elevationString, color);
         }
         return span;
     }
@@ -2747,17 +2748,17 @@ public class LightMapDialog extends BottomSheetDialogBase
             if (inDST(timezone, mapTime))
             {
                 int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
-                SuntimesUtils.ImageSpanTag[] spanTags = {
-                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                SpanUtils.ImageSpanTag[] spanTags = {
+                        new SpanUtils.ImageSpanTag(SpanUtils.SPANTAG_DST, SpanUtils.createDstSpan(context, iconSize))
                 };
-                String spanString = " " + SuntimesUtils.SPANTAG_DST;
-                dstIcon = SuntimesUtils.createSpan(context, spanString, spanTags);
+                String spanString = " " + SpanUtils.SPANTAG_DST;
+                dstIcon = SpanUtils.createSpan(context, spanString, spanTags);
             }
 
             CharSequence timeDisplay;
             if (suffix.isEmpty())
                 timeDisplay = getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay);
-            else timeDisplay = SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning);
+            else timeDisplay = SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning);
 
             if (dstIcon != null) {
                 timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
@@ -2916,14 +2917,14 @@ public class LightMapDialog extends BottomSheetDialogBase
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionShadow, R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
-        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0);
+        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0);
         int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.dstTag_dark));
-        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
+        ImageSpan dstIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon Shadow]", shadowIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon Shadow]", shadowIcon),
+                new SpanUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
 
         final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
@@ -2931,13 +2932,13 @@ public class LightMapDialog extends BottomSheetDialogBase
         String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, false).toString();
         String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
         String shadowHelp = getString(R.string.help_shadowlength, shadowSummary);
-        SpannableStringBuilder shadowHelpSpan = SuntimesUtils.createSpan(context, shadowHelp, helpTags);
+        SpannableStringBuilder shadowHelpSpan = SpanUtils.createSpan(context, shadowHelp, helpTags);
 
-        CharSequence dstHelp = "\n" + SuntimesUtils.fromHtml(getString(R.string.help_general_dst));
-        SpannableStringBuilder dstHelpSpan = SuntimesUtils.createSpan(context, dstHelp, helpTags);
+        CharSequence dstHelp = "\n" + SpanUtils.fromHtml(getString(R.string.help_general_dst));
+        SpannableStringBuilder dstHelpSpan = SpanUtils.createSpan(context, dstHelp, helpTags);
 
-        CharSequence twilightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight));
-        CharSequence nightHelp = SuntimesUtils.fromHtml(getString(R.string.help_general_twilight_more));
+        CharSequence twilightHelp = SpanUtils.fromHtml(getString(R.string.help_general_twilight));
+        CharSequence nightHelp = SpanUtils.fromHtml(getString(R.string.help_general_twilight_more));
         CharSequence helpSpan = TextUtils.concat(twilightHelp, nightHelp, dstHelpSpan, shadowHelpSpan);
 
         HelpDialog helpDialog = new HelpDialog();
@@ -3059,19 +3060,19 @@ public class LightMapDialog extends BottomSheetDialogBase
                 if (info[0].delta > 0) {
                     String s = context.getString(R.string.length_twilight1e_pos, duration, info[0].deltaString(showSeconds));
                     if (info[0].durationColor != null)
-                        text.setText(SuntimesUtils.createColorSpan(null, s, duration, info[0].durationColor));
+                        text.setText(SpanUtils.createColorSpan(null, s, duration, info[0].durationColor));
                     else text.setText(new SpannableString(s));
 
                 } else if (info[0].delta < 0) {
                     String s = context.getString(R.string.length_twilight1e_neg, duration, info[0].deltaString(showSeconds));
                     if (info[0].durationColor != null)
-                        text.setText(SuntimesUtils.createColorSpan(null, s, duration, info[0].durationColor));
+                        text.setText(SpanUtils.createColorSpan(null, s, duration, info[0].durationColor));
                     else text.setText(new SpannableString(s));
 
                 } else {
                     String s = context.getString(R.string.length_twilight1, duration);
                     if (info[0].durationColor != null)
-                        text.setText(SuntimesUtils.createColorSpan(null, s, duration, info[0].durationColor));
+                        text.setText(SpanUtils.createColorSpan(null, s, duration, info[0].durationColor));
                     else text.setText(new SpannableString(s));
                 }
                 setVisible(true);
@@ -3079,7 +3080,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             } else if (info.length >= 2) {
                 String s = context.getString(R.string.length_twilight2, info[0].durationString(showSeconds), info[1].durationString(showSeconds));
                 String delimiter = context.getString(R.string.length_delimiter);
-                text.setText(SuntimesUtils.createBoldColorSpan(null, s, delimiter, colorDay));
+                text.setText(SpanUtils.createBoldColorSpan(null, s, delimiter, colorDay));
                 setVisible(true);
 
             } else {

@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -650,25 +651,25 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         int[] iconAttrs = { R.attr.text_accentColor, R.attr.icActionBack, R.attr.icActionEnableAlarm, R.attr.icActionSave, R.attr.icActionCancel, R.attr.icActionDelete, R.attr.icActionTimeReset };
         TypedArray typedArray = obtainStyledAttributes(iconAttrs);
         int accentColor = ContextCompat.getColor(this, typedArray.getResourceId(0, R.color.text_accent_dark));
-        ImageSpan iconBack = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_discard), iconSize, iconSize, 0);
-        ImageSpan iconDone = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_doneall), iconSize, iconSize, accentColor);
-        ImageSpan iconSave = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_save), iconSize, iconSize, 0);
-        ImageSpan iconCancel = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_cancel), iconSize, iconSize, 0);
-        ImageSpan iconDelete = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(5, R.drawable.ic_action_discard), iconSize, iconSize, 0);
-        ImageSpan iconOffset = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(6, R.drawable.ic_action_timereset), iconSize, iconSize, 0);
+        ImageSpan iconBack = SpanUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan iconDone = SpanUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_doneall), iconSize, iconSize, accentColor);
+        ImageSpan iconSave = SpanUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_save), iconSize, iconSize, 0);
+        ImageSpan iconCancel = SpanUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_cancel), iconSize, iconSize, 0);
+        ImageSpan iconDelete = SpanUtils.createImageSpan(this, typedArray.getResourceId(5, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan iconOffset = SpanUtils.createImageSpan(this, typedArray.getResourceId(6, R.drawable.ic_action_timereset), iconSize, iconSize, 0);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon Back]", iconBack),
-                new SuntimesUtils.ImageSpanTag("[Icon Done]", iconDone),
-                new SuntimesUtils.ImageSpanTag("[Icon Save]", iconSave),
-                new SuntimesUtils.ImageSpanTag("[Icon Cancel]", iconCancel),
-                new SuntimesUtils.ImageSpanTag("[Icon Delete]", iconDelete),
-                new SuntimesUtils.ImageSpanTag("[Icon Offset]", iconOffset),
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon Back]", iconBack),
+                new SpanUtils.ImageSpanTag("[Icon Done]", iconDone),
+                new SpanUtils.ImageSpanTag("[Icon Save]", iconSave),
+                new SpanUtils.ImageSpanTag("[Icon Cancel]", iconCancel),
+                new SpanUtils.ImageSpanTag("[Icon Delete]", iconDelete),
+                new SpanUtils.ImageSpanTag("[Icon Offset]", iconOffset),
         };
 
-        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_alarms_edit));
-        CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
+        CharSequence helpText = SpanUtils.fromHtml(getString(R.string.help_alarms_edit));
+        CharSequence helpSpan = SpanUtils.createSpan(this, helpText, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
@@ -1099,7 +1100,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         AlarmLabelDialog dialog = new AlarmLabelDialog();
         dialog.setDialogTitle(getString(R.string.alarmnote_dialog_title));
         dialog.setMultiLine(true);
-        dialog.setShowHelp(true, SuntimesUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_url) + getString(R.string.help_substitutions_path), HELPTAG_SUBSTITUTIONS);
+        dialog.setShowHelp(true, SpanUtils.fromHtml(getString(R.string.help_appearance_title)), getString(R.string.help_url) + getString(R.string.help_substitutions_path), HELPTAG_SUBSTITUTIONS);
         dialog.setAccentColor(colorAlarmEnabled);
         dialog.setLabel(item.note);
         dialog.setOnAcceptedListener(onNoteChanged);

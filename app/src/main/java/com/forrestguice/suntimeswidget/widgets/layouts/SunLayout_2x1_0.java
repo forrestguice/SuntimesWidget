@@ -34,6 +34,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -174,7 +175,7 @@ public class SunLayout_2x1_0 extends SunLayout
         String dayDeltaSuffix = dayDeltaDisplay.getSuffix();
 
         views.setTextViewText(R.id.text_delta_day_prefix, context.getString(data.dayDeltaPrefix()));   // TODO: refactor to use only a single TextView and SpannableString
-        views.setTextViewText(R.id.text_delta_day_value, (isSame ? "" : (boldTime ? SuntimesUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue)));
+        views.setTextViewText(R.id.text_delta_day_value, (isSame ? "" : (boldTime ? SpanUtils.createBoldSpan(null, dayDeltaValue, dayDeltaValue) : dayDeltaValue)));
         views.setTextViewText(R.id.text_delta_day_units, (isSame ? "" : dayDeltaUnits));
         views.setTextViewText(R.id.text_delta_day_suffix, dayDeltaSuffix);
         views.setViewVisibility(R.id.layout_delta_day, (showDayDelta ? View.VISIBLE : View.GONE));

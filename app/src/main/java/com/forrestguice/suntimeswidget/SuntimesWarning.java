@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.SnackbarCompat;
 
 import java.util.regex.Pattern;
@@ -108,9 +109,9 @@ public class SuntimesWarning
     }
     public void setMessage( Context context, String msg )
     {
-        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
-        message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
-        contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+        ImageSpan warningIcon = SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
+        message = SpanUtils.createSpan(context, msg, SpanUtils.SPANTAG_WARNING, warningIcon);
+        contentDescription = msg.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
     }
 
     @Nullable

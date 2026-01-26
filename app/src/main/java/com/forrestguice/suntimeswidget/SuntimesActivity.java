@@ -45,6 +45,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.util.Pair;
@@ -1740,14 +1741,14 @@ public class SuntimesActivity extends AppCompatActivity
         int[] iconAttrs = { R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = obtainStyledAttributes(iconAttrs);
         int dstIconColor = ContextCompat.getColor(this, typedArray.getResourceId(0, R.color.dstTag_dark));
-        ImageSpan dstIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_weather_sunny), iconSize, iconSize, dstIconColor);
+        ImageSpan dstIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_weather_sunny), iconSize, iconSize, dstIconColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        CharSequence helpText = SuntimesUtils.fromHtml(getString(R.string.help_general3, timeText, blueGoldText, dstText));
-        CharSequence helpSpan = SuntimesUtils.createSpan(this, helpText, helpTags);
+        CharSequence helpText = SpanUtils.fromHtml(getString(R.string.help_general3, timeText, blueGoldText, dstText));
+        CharSequence helpSpan = SpanUtils.createSpan(this, helpText, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
@@ -1951,7 +1952,7 @@ public class SuntimesActivity extends AppCompatActivity
             if (AppSettings.loadShowCoordinatesPref(context)) {
                 String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
                 String displayString = getString(R.string.location_format_latlonalt, locationString, altitudeTag);
-                locationSubtitle = SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
+                locationSubtitle = SpanUtils.createRelativeSpan(null, displayString, altitudeTag, 0.5f);
             }
         } else {
             if (AppSettings.loadShowCoordinatesPref(context)) {
@@ -2004,23 +2005,23 @@ public class SuntimesActivity extends AppCompatActivity
         TimeZone timezone = dataset.timezone();
         warnings.setShouldShow(WARNINGID_TIMEZONE, WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date()));
         int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
-        ImageSpan timezoneWarningIcon = (showWarnings && warnings.shouldShow(WARNINGID_TIMEZONE)) ? SuntimesUtils.createWarningSpan(this, iconSize) : null;
+        ImageSpan timezoneWarningIcon = (showWarnings && warnings.shouldShow(WARNINGID_TIMEZONE)) ? SpanUtils.createWarningSpan(this, iconSize) : null;
 
         boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
                                                                      : timezone.observesDaylightTime());
         boolean inDST = useDST && timezone.inDaylightTime(now.getTime());
-        ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, iconSize) : null;
+        ImageSpan dstWarningIcon = (inDST) ? SpanUtils.createDstSpan(this, iconSize) : null;
 
-        SuntimesUtils.ImageSpanTag[] timezoneTags = {
-                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_WARNING, timezoneWarningIcon),
-                new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, dstWarningIcon)
+        SpanUtils.ImageSpanTag[] timezoneTags = {
+                new SpanUtils.ImageSpanTag(SpanUtils.SPANTAG_WARNING, timezoneWarningIcon),
+                new SpanUtils.ImageSpanTag(SpanUtils.SPANTAG_DST, dstWarningIcon)
         };
 
         String timezoneString = getString(R.string.timezoneField, WidgetTimezones.getTimeZoneDisplay(context, timezone));
-        SpannableStringBuilder timezoneSpan = SuntimesUtils.createSpan(this, timezoneString, timezoneTags);
+        SpannableStringBuilder timezoneSpan = SpanUtils.createSpan(this, timezoneString, timezoneTags);
         txt_timezone.setText(timezoneSpan);
-        txt_timezone.setContentDescription(timezoneString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), "")
-                .replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_DST), ""));
+        txt_timezone.setContentDescription(timezoneString.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), "")
+                .replaceAll(Pattern.quote(SpanUtils.SPANTAG_DST), ""));
 
         // datasource ui
         if (txt_datasource != null)

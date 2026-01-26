@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisp
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.android.AndroidResources;
 
@@ -197,7 +198,7 @@ public class AlarmWidgetService extends RemoteViewsService
             Calendar alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(item.alarmtime);
             String timeDisplay = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false, timeFormat).toString();
-            view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SuntimesUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
+            view.setTextViewText(android.R.id.text2, (theme.getTimeBold() ? SpanUtils.createBoldSpan(null, timeDisplay, timeDisplay) : timeDisplay));
 
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
             Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());

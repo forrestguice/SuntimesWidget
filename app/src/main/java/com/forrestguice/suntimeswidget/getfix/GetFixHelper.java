@@ -40,6 +40,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -306,7 +307,7 @@ public class GetFixHelper implements LocationHelper
                 String permissionMessage = activity.getString(R.string.privacy_permission_location);
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
-                        .setMessage(fromHtml(permissionMessage))
+                        .setMessage(SpanUtils.fromHtml(permissionMessage))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
                         {
                             public void onClick(DialogInterface dialog, int which)
@@ -608,20 +609,6 @@ public class GetFixHelper implements LocationHelper
             dialog.show(getActivity().getSupportFragmentManager(), DIALOGTAG_ENABLEGPS);
         } else Log.w("GetFixHelper", "showGPSEnabledPrompt: activity is null!");
     }
-
-
-    /**
-     * @param htmlString html markup
-     * @return an html span
-     */
-    @SuppressWarnings("deprecation")
-    public static Spanned fromHtml(String htmlString )
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            return Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY);
-        else return Html.fromHtml(htmlString);
-    }
-
 
     public static final String DIALOG_WARNING_AGPS = "agpsWarningDialog";
     public static final String EXTRA_FORCE_XTRA_INJECTION = "force_xtra_injection";

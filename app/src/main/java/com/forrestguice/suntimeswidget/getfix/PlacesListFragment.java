@@ -50,6 +50,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
@@ -1869,7 +1870,7 @@ public class PlacesListFragment extends DialogBase
             String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
             String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);
             String displayString = context.getString(R.string.location_format_latlonalt, locationString, altitudeTag);
-            return SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.75f);
+            return SpanUtils.createRelativeSpan(null, displayString, altitudeTag, 0.75f);
 
         } else {
             return locationString;

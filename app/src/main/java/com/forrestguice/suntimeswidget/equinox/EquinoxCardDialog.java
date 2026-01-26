@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisp
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -377,7 +378,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         String timeString = delta_utils.timeDeltaLongDisplayString(0, yearLengthMillis, false,false, true, true, false, false).setSuffix("").toString();
         String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
-        return SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
+        return SpanUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
     }
     
     @Override

@@ -44,6 +44,8 @@ import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 
@@ -854,7 +856,7 @@ public class AlarmSettings
 
             String disabledString = context.getString(R.string.configLabel_alarms_autostart_off);
             String summaryString = context.getString(R.string.configLabel_alarms_autostart_summary, disabledString);
-            return SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning);
+            return SpanUtils.createColorSpan(null, summaryString, disabledString, colorWarning);
 
         } else {
             return context.getString(R.string.configLabel_alarms_autostart_summary, context.getString(R.string.configLabel_alarms_autostart_on));
@@ -875,7 +877,7 @@ public class AlarmSettings
 
             } else {
                 String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-                return SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
+                return SpanUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
             }
         } else return "";
     }

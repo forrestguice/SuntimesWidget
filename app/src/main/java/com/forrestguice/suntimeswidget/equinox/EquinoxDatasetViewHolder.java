@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDispl
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
@@ -378,14 +379,14 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
-                                : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
+                                : SpanUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
-                                : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                        SpannableString noteSpan = (noteView.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
+                                : SpanUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
                     }
                 } else {

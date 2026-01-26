@@ -22,6 +22,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -91,10 +93,10 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
                         displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, pluginTag);
                     }
 
-                    SpannableString styledSummary = SuntimesUtils.createBoldColorSpan(null, displayString, defaultTag, defaultColor);
-                    styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, defaultTag, 1.15f);
-                    styledSummary = SuntimesUtils.createBoldColorSpan(styledSummary, displayString, pluginTag, pluginColor);
-                    styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, pluginTag, 1.15f);
+                    SpannableString styledSummary = SpanUtils.createBoldColorSpan(null, displayString, defaultTag, defaultColor);
+                    styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, defaultTag, 1.15f);
+                    styledSummary = SpanUtils.createBoldColorSpan(styledSummary, displayString, pluginTag, pluginColor);
+                    styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, pluginTag, 1.15f);
                     summaryText.setText(styledSummary);
 
                 } else {

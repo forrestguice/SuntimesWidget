@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -91,7 +92,7 @@ public abstract class SunLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
@@ -129,7 +130,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         TimeDisplayText sunriseText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
         String sunriseString = sunriseText.getValue();
-        CharSequence sunrise = (boldTime ? SuntimesUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
+        CharSequence sunrise = (boldTime ? SpanUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
         views.setTextViewText(R.id.text_time_rise, sunrise);
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
@@ -138,7 +139,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         TimeDisplayText sunsetText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
         String sunsetString = sunsetText.getValue();
-        CharSequence sunset = (boldTime ? SuntimesUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
+        CharSequence sunset = (boldTime ? SpanUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
         views.setTextViewText(R.id.text_time_set, sunset);
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
@@ -147,7 +148,7 @@ public abstract class SunLayout extends SuntimesLayout
     {
         TimeDisplayText noonText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
         String noonString = noonText.getValue();
-        CharSequence noon = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
+        CharSequence noon = (boldTime ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
         views.setTextViewText(R.id.text_time_noon, noon);
         views.setTextViewText(R.id.text_time_noon_suffix, noonText.getSuffix());
     }

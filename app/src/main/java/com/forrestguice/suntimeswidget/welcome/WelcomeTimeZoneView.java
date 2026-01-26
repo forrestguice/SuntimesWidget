@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisp
 import com.forrestguice.suntimeswidget.getfix.LocationConfigView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
@@ -126,8 +127,8 @@ public class WelcomeTimeZoneView extends WelcomeView
 
         if (timeZoneWarning != null)
         {
-            ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
-            timeZoneWarning.setText(SuntimesUtils.createSpan(context, timeZoneWarning.getText().toString(), SuntimesUtils.SPANTAG_WARNING, warningIcon));
+            ImageSpan warningIcon = SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
+            timeZoneWarning.setText(SpanUtils.createSpan(context, timeZoneWarning.getText().toString(), SuntimesUtils.SPANTAG_WARNING, warningIcon));
         }
 
         timeZoneSuggestButton = (Button) view.findViewById(R.id.button_suggest_timezone);
@@ -188,8 +189,8 @@ public class WelcomeTimeZoneView extends WelcomeView
 
             String location = getLongitudeLabel();
             String note = context.getString(R.string.timezoneWarningNote, tz.getID(), offsetDisplay, location);
-            SpannableString noteDisplay = SuntimesUtils.createBoldColorSpan(null, note, offsetDisplay, highlightColor);
-            noteDisplay = SuntimesUtils.createBoldColorSpan(noteDisplay, note, location, normalColor);
+            SpannableString noteDisplay = SpanUtils.createBoldColorSpan(null, note, offsetDisplay, highlightColor);
+            noteDisplay = SpanUtils.createBoldColorSpan(noteDisplay, note, location, normalColor);
             timeZoneWarningNote.setText(noteDisplay);
         }
     }

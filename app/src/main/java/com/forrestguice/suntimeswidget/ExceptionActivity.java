@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AppCompatActivity;
 
@@ -78,7 +79,7 @@ public class ExceptionActivity extends AppCompatActivity
         TextView text_message1 = (TextView) findViewById(R.id.text_message1);
         if (text_message1 != null) {
             //text_message1.setMovementMethod(LinkMovementMethod.getInstance());
-            text_message1.setText(SuntimesUtils.fromHtml(getString(R.string.crash_dialog_message1, getString(R.string.help_support_url))));
+            text_message1.setText(SpanUtils.fromHtml(getString(R.string.crash_dialog_message1, getString(R.string.help_support_url))));
         }
 
         TextView text_report = (TextView) findViewById(R.id.text_exception);

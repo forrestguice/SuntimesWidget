@@ -53,6 +53,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -982,22 +983,22 @@ public class WidgetThemeListActivity extends AppCompatActivity
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionCopy, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionSettings };
         TypedArray typedArray = obtainStyledAttributes(iconAttrs);
-        ImageSpan addIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
-        ImageSpan copyIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0);
-        ImageSpan editIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0);
-        ImageSpan deleteIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0);
-        ImageSpan defaultIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0);
+        ImageSpan addIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
+        ImageSpan copyIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0);
+        ImageSpan editIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0);
+        ImageSpan deleteIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0);
+        ImageSpan defaultIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon Add]", addIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Copy]", copyIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Edit]", editIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Default]", defaultIcon)
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon Add]", addIcon),
+                new SpanUtils.ImageSpanTag("[Icon Copy]", copyIcon),
+                new SpanUtils.ImageSpanTag("[Icon Edit]", editIcon),
+                new SpanUtils.ImageSpanTag("[Icon Delete]", deleteIcon),
+                new SpanUtils.ImageSpanTag("[Icon Default]", defaultIcon)
         };
         String helpString = getString(R.string.help_themelist);
-        SpannableStringBuilder helpSpan = SuntimesUtils.createSpan(this, helpString, helpTags);
+        SpannableStringBuilder helpSpan = SpanUtils.createSpan(this, helpString, helpTags);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);

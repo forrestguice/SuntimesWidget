@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
@@ -321,7 +322,7 @@ public class MoonPhasesView extends LinearLayout
             {
                 String noteText = (dateTime == null ? "" : delta_utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
                 String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
+                note.setText(SpanUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);
             }
         }

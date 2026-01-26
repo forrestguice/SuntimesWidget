@@ -29,6 +29,7 @@ import android.view.ContextThemeWrapper;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -91,8 +92,8 @@ public class ClockTileBase extends SuntimesTileBase
         Calendar now = now(context);
         TimeFormatMode formatMode = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
         String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false, formatMode).toString();
-        SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
-        timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
+        SpannableString timeDisplay = SpanUtils.createBoldSpan(null, timeString, timeString);
+        timeDisplay = SpanUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
 
         SpannableStringBuilder title = new SpannableStringBuilder();
         title.append(timeDisplay);
@@ -108,8 +109,8 @@ public class ClockTileBase extends SuntimesTileBase
         boolean isLocalTime = SuntimesTileBase.isLocalTime(timezone.getID());
 
         String dateString = utils.calendarDateDisplayString(AndroidResources.wrap(context), now(context), true).toString();
-        SpannableString dateDisplay = SuntimesUtils.createBoldSpan(null, dateString, dateString);
-        dateDisplay = SuntimesUtils.createRelativeSpan(dateDisplay, dateString, dateString, 1.25f);
+        SpannableString dateDisplay = SpanUtils.createBoldSpan(null, dateString, dateString);
+        dateDisplay = SpanUtils.createRelativeSpan(dateDisplay, dateString, dateString, 1.25f);
 
         SpannableStringBuilder message = new SpannableStringBuilder(tzDisplay);
         message.append((isLocalTime ? "\n" + location.getLabel() : ""));

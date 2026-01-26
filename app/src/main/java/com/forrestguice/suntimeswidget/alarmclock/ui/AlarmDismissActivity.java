@@ -46,6 +46,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.widget.FloatingActionButton;
@@ -1030,7 +1031,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             return timeText.getValue();
         } else {
             String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            return SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+            return SpanUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
         }
     }
 
@@ -1045,7 +1046,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             boolean isBefore = (alarm.offset <= 0);
             String offsetText = delta_utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
             String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-            offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+            offsetSpan = SpanUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }
         return offsetSpan;
     }
@@ -1058,7 +1059,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 : AlarmSettings.PREF_DEF_ALARM_SNOOZE;
         TimeDisplayText snoozeText = delta_utils.timeDeltaLongDisplayString(0, snoozeMillis);
         String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
-        return SuntimesUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
+        return SpanUtils.createBoldSpan(null, snoozeString, snoozeText.getValue());
     }
 
     @SuppressLint("SetTextI18n")

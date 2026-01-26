@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -316,8 +317,8 @@ public class AlarmTimeDialog extends DialogBase
         String coordString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         String labelString = location.getLabel();
         String displayString = labelString + "\n" + coordString;
-        SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
-        return SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
+        SpannableString displayText = SpanUtils.createBoldSpan(null, displayString, labelString);
+        return SpanUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
     }
 
     public long getDate() {

@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.Before;
@@ -224,13 +225,13 @@ public class SuntimesUtilsTest0
     {
         String tag = "[tag]";
         ImageSpan imageSpan = new ImageSpan((Drawable)null);
-        SuntimesUtils.ImageSpanTag spanTag = new SuntimesUtils.ImageSpanTag(tag, imageSpan);
+        SpanUtils.ImageSpanTag spanTag = new SpanUtils.ImageSpanTag(tag, imageSpan);
         assertEquals("getTag() must return the same tag set by the constructor!", spanTag.getTag(), tag);
         assertEquals("getSpan() must return the same span set by the constructor!", spanTag.getSpan(), imageSpan);
         assertEquals("getBlank() must return a string that is the same length as the tag!", spanTag.getBlank().length(), tag.length());
         assertTrue("getBlank() must return a blank string!", spanTag.getBlank().trim().isEmpty());
 
-        SuntimesUtils.ImageSpanTag spanTag2 = new SuntimesUtils.ImageSpanTag(tag, null);
+        SpanUtils.ImageSpanTag spanTag2 = new SpanUtils.ImageSpanTag(tag, null);
         assertNull("getSpan() should return null (as set by constructor)", spanTag2.getSpan());
     }
 

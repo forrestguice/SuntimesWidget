@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.support.app.AlertDialog;
@@ -571,8 +572,8 @@ public class UIPrefsFragment extends PreferenceFragment
 
         String title = context.getString(R.string.configLabel_general_observerheight) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
-        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
-        SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
+        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
+        SpannableStringBuilder titleSpan = SpanUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);

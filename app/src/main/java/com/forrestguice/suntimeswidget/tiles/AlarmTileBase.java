@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -145,8 +146,8 @@ public class AlarmTileBase extends SuntimesTileBase
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
             String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
-            SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
-            timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
+            SpannableString timeDisplay = SpanUtils.createBoldSpan(null, timeString, timeString);
+            timeDisplay = SpanUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
             title.append(timeDisplay);
 
         } else {
@@ -176,8 +177,8 @@ public class AlarmTileBase extends SuntimesTileBase
 
             String dialogMessage = (eventDisplay != null ? context.getString(R.string.alarmtile_dialogmsg_format1, timeString, eventDisplay, timeUntilPhrase)
                                                          : context.getString(R.string.alarmtile_dialogmsg_format0, timeString, timeUntilPhrase));
-            SpannableString dialogDisplay = SuntimesUtils.createBoldSpan(null, dialogMessage, timeString);
-            dialogDisplay = SuntimesUtils.createBoldSpan(dialogDisplay, dialogMessage, timeUntilString);
+            SpannableString dialogDisplay = SpanUtils.createBoldSpan(null, dialogMessage, timeString);
+            dialogDisplay = SpanUtils.createBoldSpan(dialogDisplay, dialogMessage, timeUntilString);
             msg.append(dialogDisplay);
 
             // show alarm label note too
@@ -191,7 +192,7 @@ public class AlarmTileBase extends SuntimesTileBase
                 }
                 if (item.label != null && !item.label.isEmpty()) {
                     msg.append("\n");
-                    msg.append(SuntimesUtils.createBoldSpan(null, item.label, item.label));
+                    msg.append(SpanUtils.createBoldSpan(null, item.label, item.label));
                 }
                 if (item.note != null) {
                     msg.append("\n");

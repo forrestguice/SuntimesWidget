@@ -59,6 +59,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDis
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -483,14 +484,14 @@ public class MoonDialog extends BottomSheetDialogBase
         String timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dialogTime).toString();
         if (text_dialogTime != null)
         {
-            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
+            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
             if (inDST(dialogTime.getTimeZone(), dialogTime))
             {
                 int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
-                SuntimesUtils.ImageSpanTag[] spanTags = {
-                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                SpanUtils.ImageSpanTag[] spanTags = {
+                        new SpanUtils.ImageSpanTag(SpanUtils.SPANTAG_DST, SpanUtils.createDstSpan(context, iconSize))
                 };
-                CharSequence dstIcon = SuntimesUtils.createSpan(context, " " + SuntimesUtils.SPANTAG_DST, spanTags);
+                CharSequence dstIcon = SpanUtils.createSpan(context, " " + SpanUtils.SPANTAG_DST, spanTags);
                 timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
             }
             text_dialogTime.setText(timeDisplay);
@@ -502,7 +503,7 @@ public class MoonDialog extends BottomSheetDialogBase
                 TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
                 offsetText.setSuffix("");
                 String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
-                text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
+                text_dialogTimeOffset.setText(SpanUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
             } else text_dialogTimeOffset.setText(" ");
         }
     }
@@ -549,7 +550,7 @@ public class MoonDialog extends BottomSheetDialogBase
                 int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
                 int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
                 TimeDisplayText distance = LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
+                moondistance.setText(SpanUtils.createColorSpan(null, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
@@ -1224,25 +1225,25 @@ public class MoonDialog extends BottomSheetDialogBase
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
         int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
-        ImageSpan risingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunrise, iconSize, iconSize, moonriseColor);
-        ImageSpan settingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
-        ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
-        ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
-        ImageSpan shareIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
+        ImageSpan risingIcon = SpanUtils.createImageSpan(context, R.drawable.svg_sunrise, iconSize, iconSize, moonriseColor);
+        ImageSpan settingIcon = SpanUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
+        ImageSpan noonIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
+        ImageSpan midnightIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
+        ImageSpan shareIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
         int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.dstTag_dark));
-        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
+        ImageSpan dstIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon Rising]", risingIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Setting]", settingIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Share]", shareIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon Rising]", risingIcon),
+                new SpanUtils.ImageSpanTag("[Icon Setting]", settingIcon),
+                new SpanUtils.ImageSpanTag("[Icon Noon]", noonIcon),
+                new SpanUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
+                new SpanUtils.ImageSpanTag("[Icon Share]", shareIcon),
+                new SpanUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        SpannableStringBuilder helpSpan0 = SuntimesUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
-        SpannableStringBuilder helpSpan1 = SuntimesUtils.createSpan(context, SuntimesUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
+        SpannableStringBuilder helpSpan0 = SpanUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
+        SpannableStringBuilder helpSpan1 = SpanUtils.createSpan(context, SpanUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
         CharSequence helpDisplay = TextUtils.concat(helpSpan0, "\n\n", helpSpan1);
 
         HelpDialog helpDialog = new HelpDialog();

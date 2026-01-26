@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntim
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.android.AndroidResources;
@@ -72,7 +73,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }

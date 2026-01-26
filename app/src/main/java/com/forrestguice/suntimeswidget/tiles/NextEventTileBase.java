@@ -32,6 +32,7 @@ import android.view.ContextThemeWrapper;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -129,8 +130,8 @@ public class NextEventTileBase extends SuntimesTileBase
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
         event.setTimeInMillis(nextEvent.getCalendar().getTimeInMillis());
         String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false).toString();
-        SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
-        timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
+        SpannableString timeDisplay = SpanUtils.createBoldSpan(null, timeString, timeString);
+        timeDisplay = SpanUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
 
         SpannableStringBuilder title = new SpannableStringBuilder();
         title.append(timeDisplay);
@@ -146,12 +147,12 @@ public class NextEventTileBase extends SuntimesTileBase
 
         RiseSetDataMode mode = nextEvent.getMode();
         String modeString = (mode != null ? mode.toString() : "null");
-        SpannableString modeDisplay = SuntimesUtils.createBoldSpan(null, modeString, modeString);
-        modeDisplay = SuntimesUtils.createRelativeSpan(modeDisplay, modeString, modeString, 1.25f);
+        SpannableString modeDisplay = SpanUtils.createBoldSpan(null, modeString, modeString);
+        modeDisplay = SpanUtils.createRelativeSpan(modeDisplay, modeString, modeString, 1.25f);
 
         String noteValue = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), event.getTimeInMillis()).getValue();
         String noteString = context.getString(event.after(now) ? R.string.hence : R.string.ago, noteValue);
-        CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, noteValue);
+        CharSequence noteDisplay = SpanUtils.createBoldSpan(null, noteString, noteValue);
 
         SpannableStringBuilder message = new SpannableStringBuilder();
         message.append(modeDisplay);

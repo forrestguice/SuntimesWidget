@@ -31,7 +31,6 @@ import android.widget.ListView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
@@ -52,6 +51,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.android.AndroidResources;
@@ -654,17 +654,17 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
     {
         switch (method)
         {
-            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
 
-            case IMPORT_ALARMS_METHOD_ADDALL: return SuntimesUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_addall));
-            case IMPORT_ALARMS_METHOD_CLEAR: return SuntimesUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_clear));
+            case IMPORT_ALARMS_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_addall));
+            case IMPORT_ALARMS_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_clear));
 
-            case IMPORT_PLACES_METHOD_ADDALL: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_addall));
-            case IMPORT_PLACES_METHOD_CLEAR: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_clear));
-            case IMPORT_PLACES_METHOD_IGNORE: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_ignore));
-            case IMPORT_PLACES_METHOD_OVERWRITE: return SuntimesUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_overwrite));
+            case IMPORT_PLACES_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_addall));
+            case IMPORT_PLACES_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_clear));
+            case IMPORT_PLACES_METHOD_IGNORE: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_ignore));
+            case IMPORT_PLACES_METHOD_OVERWRITE: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_overwrite));
 
             default: return method + "";
         }

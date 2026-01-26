@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.text.TimeDisplayText;
 
@@ -81,7 +82,7 @@ public abstract class MoonLayout extends SuntimesLayout
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
         String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
@@ -165,13 +166,13 @@ public abstract class MoonLayout extends SuntimesLayout
         AndroidResources res = AndroidResources.wrap(context);
         TimeDisplayText riseText = time_utils.calendarTimeShortDisplayString(res, moonrise, showSeconds, timeFormat);
         String riseString = riseText.getValue();
-        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+        CharSequence riseSequence = (boldTime ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
         TimeDisplayText setText = time_utils.calendarTimeShortDisplayString(res, moonset, showSeconds, timeFormat);
         String setString = setText.getValue();
-        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+        CharSequence setSequence = (boldTime ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }

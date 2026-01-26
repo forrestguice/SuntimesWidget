@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -832,7 +833,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             boolean boldText = checkTitleBold.isChecked();
             if (boldText)
-                previewTitle.setText(SuntimesUtils.createBoldSpan(null, titleText, titleText));
+                previewTitle.setText(SpanUtils.createBoldSpan(null, titleText, titleText));
             else previewTitle.setText(titleText);
 
             updateSizeFromChooser(previewTitle, chooseTitleSize);
@@ -948,7 +949,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
             TimeDisplayText nowText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), now, false, timeFormat);
             String nowString = nowText.getValue();
-            CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+            CharSequence nowChars = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
             previewTime.setTextColor(chooseColorTime.getColor());
             previewTime.setText(nowChars);
@@ -974,7 +975,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
-            CharSequence noon = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
+            CharSequence noon = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
             previewNoon.setText(noon);
             previewNoon.setTextColor(chooseColorNoon.getColor());
             updateSizeFromChooser(previewNoon, chooseTimeSize);
@@ -994,7 +995,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewRise.setText(rise);
             previewRise.setTextColor(chooseColorRise.getColor());
             updateSizeFromChooser(previewRise, chooseTimeSize);
@@ -1014,7 +1015,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewSet != null)
         {
             String setString = setText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewSet.setText(set);
             previewSet.setTextColor(chooseColorSet.getColor());
             updateSizeFromChooser(previewSet, chooseTimeSize);
@@ -1118,7 +1119,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewMoonrise.setText(rise);
             previewMoonrise.setTextColor(chooseColorMoonrise.getColor());
             updateSizeFromChooser(previewMoonrise, chooseTimeSize);
@@ -1138,7 +1139,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewMoonset.setText(set);
             previewMoonset.setTextColor(chooseColorMoonset.getColor());
             updateSizeFromChooser(previewMoonset, chooseTimeSize);

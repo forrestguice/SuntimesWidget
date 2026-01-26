@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
@@ -107,7 +108,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
-        views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
+        views.setTextViewText(android.R.id.text2, (boldTime ? SpanUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
 }

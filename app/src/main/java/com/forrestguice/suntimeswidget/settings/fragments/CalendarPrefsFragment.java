@@ -30,9 +30,9 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.about.AboutDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.PreferenceFragment;
 
@@ -69,7 +69,7 @@ public class CalendarPrefsFragment extends PreferenceFragment
         Preference calendarReadme = (Preference) findPreference("appwidget_0_calendars_readme");
         if (calendarReadme != null)
         {
-            calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));
+            calendarReadme.setSummary(SpanUtils.fromHtml(getString(R.string.help_calendar)));
             calendarReadme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
                 @Override

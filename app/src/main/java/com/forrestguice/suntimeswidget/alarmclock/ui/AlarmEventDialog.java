@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.events.EventUri;
@@ -407,7 +408,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
 
                                 String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
                                 String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
-                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                txt_note.setText(SpanUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                                 icon_note.setVisibility(View.GONE);
 
                                 String modeDescription = context.getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode);
@@ -416,7 +417,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                             } else {
                                 String timeString = " " + displayString + " ";
                                 String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
-                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                txt_note.setText(SpanUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                                 icon_note.setVisibility(View.VISIBLE);
                                 SuntimesUtils.announceForAccessibility(txt_note, displayString + ", " + txt_note.getText());
                             }
@@ -757,8 +758,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                 String coordString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
                 String labelString = location.getLabel();
                 String displayString = labelString + "\n" + coordString;
-                SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
-                displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
+                SpannableString displayText = SpanUtils.createBoldSpan(null, displayString, labelString);
+                displayText = SpanUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
                 text_location.setText(displayText);
                 return true;
 

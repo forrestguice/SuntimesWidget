@@ -25,6 +25,7 @@ import android.graphics.drawable.InsetDrawable;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.View;
@@ -323,7 +324,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLimitLabel = context.getString(R.string.configLabel_alarms_snoozeLimit);
             String snoozeLimitString = (snoozeLimit > 0 ? "(" + snoozeLimit + ")" : context.getString(R.string.configLabel_alarms_snoozeLimit_none));
             String snoozeLimitDisplay = snoozeLimitLabel + (snoozeLimit > 0 ? " " : "\n") + snoozeLimitString;
-            CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SuntimesUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
+            CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SpanUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
             text_snoozeLimit.setText(snoozeLimitDisplay1);
             text_snoozeLimit.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
@@ -332,7 +333,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLength = context.getResources().getQuantityString(R.plurals.units_minutes, snoozeMinutes, snoozeMinutes);
             String snoozeLengthLabel = context.getString(R.string.configLabel_alarms_snooze);
             String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
-            CharSequence snoozeLengthDisplay = SuntimesUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
+            CharSequence snoozeLengthDisplay = SpanUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
             text_snoozeLength.setText(snoozeLengthDisplay);
             text_snoozeLength.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
@@ -441,7 +442,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         } else {
             String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+            alarmDesc = SpanUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
         }
         return alarmDesc;
     }
@@ -457,12 +458,12 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             String timeString = " " + delta_utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
             String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
-            return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
+            return SpanUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
         } else if (item.getEvent() != null) {
             AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
             String displayString = context.getString(R.string.schedalarm_dialog_note2, eventItem.getTitle());
-            return SuntimesUtils.createBoldSpan(null, displayString, eventItem.getTitle());
+            return SpanUtils.createBoldSpan(null, displayString, eventItem.getTitle());
 
         } else {
             return "";
@@ -484,7 +485,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         } else {
             String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+            alarmDesc = SpanUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
         }
         return alarmDesc;
     }
@@ -510,7 +511,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             boolean isBefore = (item.offset <= 0);
             String offsetText = delta_utils.timeDeltaLongDisplayString(0, item.offset).getValue();
             String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-            return SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+            return SpanUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }
     }
 
@@ -560,8 +561,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         int descColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
         a.recycle();
 
-        SpannableString s = SuntimesUtils.createRelativeSpan(null, label, desc, 0.75f);
-        s = SuntimesUtils.createColorSpan(s, label, desc, descColor);
+        SpannableString s = SpanUtils.createRelativeSpan(null, label, desc, 0.75f);
+        s = SpanUtils.createColorSpan(s, label, desc, descColor);
         return ((actionID != null) ? s : noAction);
     }
 
@@ -581,8 +582,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
                 summary = context.getString(R.string.configLabel_event_alarmitem_desc, summary);
                 String displayString = context.getString(R.string.configLabel_event_alarmitem, eventItem.getTitle(), summary);
-                SpannableString s = SuntimesUtils.createRelativeSpan(null, displayString, summary, 0.75f);
-                s = SuntimesUtils.createColorSpan(s, displayString, summary, color);
+                SpannableString s = SpanUtils.createRelativeSpan(null, displayString, summary, 0.75f);
+                s = SpanUtils.createColorSpan(s, displayString, summary, color);
                 return s;
 
             } else {

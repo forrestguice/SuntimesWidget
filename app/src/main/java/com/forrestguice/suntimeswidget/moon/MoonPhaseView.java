@@ -26,6 +26,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -338,7 +339,7 @@ public class MoonPhaseView extends LinearLayout
                             : utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonToday).toString();
                 }
                 String illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
-                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
+                illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum, noteColor));
 
             } else if (illumRange) {
                 datetime = data.calendar();
@@ -358,16 +359,16 @@ public class MoonPhaseView extends LinearLayout
                 String illum2 = formatter.format(data.getMoonIllumination(endDate));
                 if (illum1.equals(illum2)) {
                     String illumNote = (context != null ? context.getString(R.string.moon_illumination_short, illum1) : illum1);
-                    illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor));
+                    illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum1, noteColor));
                 } else {
                     String illumNote = (context != null ? context.getString(R.string.moon_illumination_range, illum1, illum2) : illum1+" "+illum2);
-                    illumText.setText(SuntimesUtils.createColorSpan(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor), illumNote, illum2, noteColor));
+                    illumText.setText(SpanUtils.createColorSpan(SpanUtils.createColorSpan(null, illumNote, illum1, noteColor), illumNote, illum2, noteColor));
                 }
 
             } else {
                 String illum = formatter.format(datetime != null ? data.getMoonIllumination(datetime) : data.getMoonIlluminationNow());
                 String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
-                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
+                illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum, noteColor));
             }
 
         } else {
@@ -412,8 +413,8 @@ public class MoonPhaseView extends LinearLayout
         {
             TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 2, false);
             String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-            SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-            azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+            SpannableString azimuthSpan = SpanUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+            azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
             this.azimuthText.setText(azimuthSpan);
 
             TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 2, true);
@@ -425,7 +426,7 @@ public class MoonPhaseView extends LinearLayout
             //int elevationColor = Color.WHITE;
             TimeDisplayText elevationText = angle_utils.formatAsElevation(position.elevation, 2);
             String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
-            SpannableString elevationSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
+            SpannableString elevationSpan = SpanUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
             //elevationSpan = SuntimesUtils.createColorSpan(elevationSpan, elevationString, elevationString, elevationColor);
             this.elevationText.setText(elevationSpan);
         }

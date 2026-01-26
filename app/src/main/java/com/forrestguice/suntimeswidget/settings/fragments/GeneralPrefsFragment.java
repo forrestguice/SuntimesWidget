@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.preference.CheckBoxPreference;
 import com.forrestguice.support.preference.ListPreference;
@@ -220,11 +221,11 @@ public class GeneralPrefsFragment extends PreferenceFragment
                 displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, tagPlugin);
             }
 
-            SpannableString styledSummary = SuntimesUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
-            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagDefault, 1.15f);
+            SpannableString styledSummary = SpanUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
+            styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, tagDefault, 1.15f);
 
-            styledSummary = SuntimesUtils.createBoldColorSpan(styledSummary, displayString, tagPlugin, colorPlugin);
-            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagPlugin, 1.15f);
+            styledSummary = SpanUtils.createBoldColorSpan(styledSummary, displayString, tagPlugin, colorPlugin);
+            styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, tagPlugin, 1.15f);
 
             calculatorSummaries[i] = styledSummary;
             i++;
@@ -304,8 +305,8 @@ public class GeneralPrefsFragment extends PreferenceFragment
 
         String title = context.getString(R.string.configLabel_general_altitude_enabled) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
-        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
-        SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
+        ImageSpan altitudeIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
+        SpannableStringBuilder altitudeSpan = SpanUtils.createSpan(context, title, "[i]", altitudeIcon);
         altitudePref.setTitle(altitudeSpan);
     }
 

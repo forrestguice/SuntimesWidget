@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
@@ -50,7 +51,7 @@ public class HelpDialog extends BottomSheetDialogBase
     }
     public void setContent( String content )
     {
-        setContent((CharSequence)SuntimesUtils.fromHtml(content));
+        setContent((CharSequence) SpanUtils.fromHtml(content));
     }
 
     public void setContent( CharSequence content )

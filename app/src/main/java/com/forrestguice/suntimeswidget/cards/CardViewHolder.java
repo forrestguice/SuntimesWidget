@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDispl
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -293,7 +294,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                 if (positionNoon != null) {
                     TimeDisplayText elevationText = angle_utils.formatAsElevation(positionNoon.elevation, 1);
                     String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
-                    positionSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
+                    positionSpan = SpanUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
                 }
 
                 row_solarnoon.updateFields(positionSpan, noonString);
@@ -362,13 +363,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
             int i = (position - CardAdapter.TODAY_POSITION);
             boolean showDateWarning = (options.dateMode != DateMode.CURRENT_DATE && (i > 1 || i < -1));
-            ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
+            ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
 
             Pair<String,String> label = getCardLabel(context, i, options);
             String dateString = context.getString(R.string.dateField, label.first, dateFormat.format(data_date));
-            SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(context, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
-            txt_date.setText((label.second == null) ? dateSpan : SuntimesUtils.createColorSpan(SpannableString.valueOf(dateSpan), dateString, label.second, options.color_warning));
-            txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
+            SpannableStringBuilder dateSpan = SpanUtils.createSpan(context, dateString, SpanUtils.SPANTAG_WARNING, dateWarningIcon);
+            txt_date.setText((label.second == null) ? dateSpan : SpanUtils.createColorSpan(SpannableString.valueOf(dateSpan), dateString, label.second, options.color_warning));
+            txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), ""));
 
         } else {
             for (TimeFieldRow row : customRows.getTimeFieldRows().values()) {
@@ -442,7 +443,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         String compareString = (data.dayLengthToday() == data.dayLengthOther())
                 ? context.getString(data.dayDeltaPrefix()) + " " + deltaText.getSuffix()
                 : context.getString(data.dayDeltaPrefix()) + " " + deltaString + deltaText.getSuffix();
-        return SuntimesUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
+        return SpanUtils.createBoldColorSpan(null, compareString, deltaString, options.color_textTimeDelta);
     }
 
     public void toggleNextPrevButtons(int position)
@@ -643,10 +644,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SpannableString azimuthSpan = null;
         if (color != null) {
             //noinspection ConstantConditions
-            azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
+            azimuthSpan = SpanUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
         }
-        azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
-        azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+        azimuthSpan = SpanUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
+        azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
         view.setText(azimuthSpan);
 
         TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(azimuth, places, true);
@@ -665,7 +666,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         dayLengthDisplay.setSuffix("");
         String dayLengthStr = dayLengthDisplay.getValue();
         String dayLength_label = context.getString(labelID, dayLengthStr);
-        textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
+        textView.setText(SpanUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
     }
 
     public void highlightField( String highlightEventID )
