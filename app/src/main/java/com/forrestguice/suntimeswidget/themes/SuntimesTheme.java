@@ -1102,7 +1102,7 @@ public class SuntimesTheme
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
 
-    public static class ThemeDescriptor implements Comparable
+    public static class ThemeDescriptor implements Comparable<ThemeDescriptor>
     {
         private final String name;
         private String displayString;
@@ -1218,7 +1218,7 @@ public class SuntimesTheme
         }
 
         @Override
-        public int compareTo(@NonNull Object another)
+        public int compareTo(@NonNull ThemeDescriptor another)
         {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());

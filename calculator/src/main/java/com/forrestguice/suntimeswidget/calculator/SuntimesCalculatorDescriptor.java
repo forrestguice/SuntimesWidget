@@ -60,7 +60,7 @@ import java.util.Locale;
  *
  */
 @SuppressWarnings("Convert2Diamond")
-public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalculatorInfo
+public class SuntimesCalculatorDescriptor implements Comparable<SuntimesCalculatorDescriptor>, SuntimesCalculatorInfo
 {
     /*public static final String CATEGORY_SUNTIMES_CALCULATOR = "com.forrestguice.suntimeswidget.SUNTIMES_CALCULATOR";
     public static final String KEY_NAME = "CalculatorName";
@@ -399,7 +399,7 @@ public class SuntimesCalculatorDescriptor implements Comparable, SuntimesCalcula
     }
 
     @Override
-    public int compareTo(@NonNull Object other)
+    public int compareTo(@NonNull SuntimesCalculatorDescriptor other)
     {
         SuntimesCalculatorDescriptor otherDescriptor = (SuntimesCalculatorDescriptor)other;
         return this.getName().compareTo(otherDescriptor.getName());
