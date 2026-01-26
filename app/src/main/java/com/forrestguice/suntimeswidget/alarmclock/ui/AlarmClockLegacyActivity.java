@@ -913,7 +913,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
     protected void showAlarmItemDialog(@NonNull AlarmClockItem item)
     {
-        AlarmEditDialog dialog = new AlarmEditDialog();
+        AlarmEditDialog dialog = AlarmEditDialog.newInstance();
         dialog.initFromItem(item, false);
         dialog.setAlarmClockAdapterListener(alarmItemDialogListener);
         dialog.setOnAcceptedListener(onItemDialogAccepted);

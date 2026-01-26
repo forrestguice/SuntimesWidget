@@ -96,6 +96,7 @@ import java.util.TimeZone;
 public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
+    public static final String TAG_FRAGMENT_ALARMLIST = "AlarmListDialogFragment";
 
     public static final String ACTION_SHOW_ALARMS = "android.intent.action.SHOW_ALARMS";            // AlarmClock.ACTION_SHOW_ALARMS (api19+)
 
@@ -726,13 +727,6 @@ public class AlarmClockActivity extends AppCompatActivity
         addButton.setOnClickListener(onFabMenuClick);
         deselectButton.setOnClickListener(onDeselectClick);
 
-        list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        if (list != null)
-        {
-            list.setOnEmptyViewClick(onEmptyViewClick);
-            list.setAdapterListener(listAdapter);
-        }
-
         View bottomSheet = findViewById(R.id.app_bottomsheet);
         sheetBehavior = BottomSheetBehaviorCompat.from(bottomSheet);
         sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
@@ -757,6 +751,18 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
         });
+
+        list = (AlarmListDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMLIST);
+        if (list == null) {
+            list = AlarmListDialog.newInstance();
+        }
+        list.setOnEmptyViewClick(onEmptyViewClick);
+        list.setAdapterListener(listAdapter);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, TAG_FRAGMENT_ALARMLIST)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     private boolean isAddDialogShowing() {

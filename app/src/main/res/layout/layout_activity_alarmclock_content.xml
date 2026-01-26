@@ -51,9 +51,10 @@
 		app:layout_constraintTop_toBottomOf="@+id/layout_app_menubar"
 		android:paddingTop="4dp">
 
-		<fragment android:name="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog"
+		<!-- AlarmClockActivity supplies this fragment via transaction from onCreate -->
+		<!--<fragment android:name="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog"
 			android:id="@+id/listFragment"
-			android:layout_width="match_parent" android:layout_height="match_parent" />
+			android:layout_width="match_parent" android:layout_height="match_parent" />-->
 
 	</LinearLayout>
 

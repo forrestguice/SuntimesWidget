@@ -128,6 +128,10 @@ public class AlarmListDialog extends DialogBase
     protected ProgressBar progress;
     protected View progressLayout;
 
+    public static AlarmListDialog newInstance() {
+        return new AlarmListDialog();
+    }
+
     @Override
     public void onCreate(Bundle savedState)
     {
