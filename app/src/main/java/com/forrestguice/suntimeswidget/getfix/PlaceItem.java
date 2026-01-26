@@ -103,7 +103,7 @@ public class PlaceItem implements Parcelable
         dest.writeString(comment);
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
+    public static final Parcelable.Creator<PlaceItem> CREATOR = new Parcelable.Creator<PlaceItem>()
     {
         public PlaceItem createFromParcel(Parcel in) {
             return new PlaceItem(in);
