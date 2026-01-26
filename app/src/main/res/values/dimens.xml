@@ -149,7 +149,7 @@
     <dimen name="aboutIcon_size">96dp</dimen>
     <dimen name="welcomeIcon_size">128dp</dimen>
 
-    <dimen name="welcomeIndicator_size">36px</dimen>
+    <dimen name="welcomeIndicator_size">24dp</dimen>
     <dimen name="welcomeActivity_margin">16dp</dimen>
 
     <dimen name="equinoxItem_height">56dp</dimen>
