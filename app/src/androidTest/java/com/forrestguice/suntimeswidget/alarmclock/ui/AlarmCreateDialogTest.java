@@ -39,7 +39,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.TimeDateDialogTest;
 import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;

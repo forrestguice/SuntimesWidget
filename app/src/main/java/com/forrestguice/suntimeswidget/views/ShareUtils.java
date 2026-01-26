@@ -28,7 +28,6 @@ import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.content.FileProvider;
 import com.forrestguice.util.android.AndroidResources;

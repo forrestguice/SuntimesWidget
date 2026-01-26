@@ -52,7 +52,6 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.util.ExecutorUtils;

@@ -23,7 +23,6 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.text.TimeDisplayText;

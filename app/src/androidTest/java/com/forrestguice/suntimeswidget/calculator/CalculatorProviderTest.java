@@ -31,7 +31,6 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;

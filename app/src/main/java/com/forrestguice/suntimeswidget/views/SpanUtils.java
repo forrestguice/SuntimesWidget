@@ -43,7 +43,6 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.ReplacementSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.util.TypedValue;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;

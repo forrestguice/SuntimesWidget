@@ -22,7 +22,6 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
-import com.forrestguice.util.Resources;
 
 import java.util.ArrayList;
 import java.util.Calendar;

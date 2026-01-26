@@ -54,7 +54,9 @@ public class NotificationCompat //extends androidx.core.app.NotificationCompat
         public Builder(@NonNull Context context, @NonNull String channelId) {
             super(context, channelId);
         }
+        @Deprecated
         public Builder(@NonNull Context context) {
+            //noinspection deprecation
             super(context);
         }
     }

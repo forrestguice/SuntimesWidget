@@ -24,7 +24,6 @@ import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculatorInfo;
-import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
