@@ -86,6 +86,7 @@ import java.util.concurrent.Callable;
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
     public static final String TAG = "AlarmReceiverList";
+    public static final String TAG_FRAGMENT_ALARMEDIT = "AlarmEditDialogFragment";
 
     public static final String EXTRA_ITEM = "item";
     public static final String EXTRA_ITEMID = "itemID";
@@ -274,22 +275,21 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         SuntimesUtils.initDisplayStrings(context);
 
-        editor = (AlarmEditDialog) getSupportFragmentManager().findFragmentById(R.id.editFragment);
-        if (editor != null) {
-            editor.setOnAcceptedListener(onEditorAccepted);
-            editor.setAlarmClockAdapterListener(this);
-            editor.setShowDialogFrame(false);
-            editor.setShowOverflow(false);
+        editor = (AlarmEditDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMEDIT);
+        if (editor == null) {
+            editor = AlarmEditDialog.newInstance();
         }
+        editor.setOnAcceptedListener(onEditorAccepted);
+        editor.setAlarmClockAdapterListener(this);
+        editor.setShowDialogFrame(false);
+        editor.setShowOverflow(false);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
             isNew = extras.getBoolean(EXTRA_ISNEW, false);
-            if (editor != null) {
-                editor.initFromItem(item, isNew);
-            }
+            editor.initFromItem(item, isNew);
         }
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
@@ -298,7 +298,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            AlarmClockItem item = ((editor != null) ? editor.getItem() : null);
+            AlarmClockItem item = editor.getItem();
             getSupportActionBar().setTitle(item != null && item.type != null ? item.type.getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
@@ -306,6 +306,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 getSupportActionBar().setBackgroundDrawable(actionBarBackground);
             }
         }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, editor, TAG_FRAGMENT_ALARMEDIT)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     @Nullable

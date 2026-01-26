@@ -79,6 +79,11 @@ public class AlarmEditDialog extends DialogBase
     }
 
     protected AlarmListDialog.AlarmListDialogOptions options;
+
+    public static AlarmEditDialog newInstance() {
+        return new AlarmEditDialog();
+    }
+
     public void initOptions(@NonNull Context context)
     {
         options = new AlarmListDialog.AlarmListDialogOptions(context);
