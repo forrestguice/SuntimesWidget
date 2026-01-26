@@ -23,6 +23,7 @@
     <LinearLayout
         android:id="@+id/dialog_header"
         android:background="?attr/dialogFrame"
+        android:baselineAligned="false"
         android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal" android:gravity="center_vertical"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
