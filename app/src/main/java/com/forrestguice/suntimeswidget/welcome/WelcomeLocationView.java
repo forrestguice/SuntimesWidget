@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,14 @@ public class WelcomeLocationView extends WelcomeView
     private Button button_addPlaces, button_importPlaces, button_lookupLocation;
     private ProgressBar progress_addPlaces;
     private View layout_permissions;
+
+    public WelcomeLocationView(Context context) {
+        super(context, R.layout.layout_welcome_location);
+    }
+
+    public WelcomeLocationView(Context context, AttributeSet attrs) {
+        super(context, attrs, R.layout.layout_welcome_location);
+    }
 
     public WelcomeLocationView(AppCompatActivity activity) {
         super(activity, R.layout.layout_welcome_location);
