@@ -7,9 +7,9 @@ android {
     def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
     if (targetVersion == null) {
         if (useAndroidX) {
-            targetVersion = 30;
+            targetVersion = 30
         } else {
-            targetVersion = 28;
+            targetVersion = 28
         }
     }
 
