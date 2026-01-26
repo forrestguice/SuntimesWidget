@@ -1029,19 +1029,23 @@ public class SuntimesUtils
         return String.format(strDistanceFormat, text.getValue(), text.getUnits());
     }
 
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
         return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
     }
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan, int alignment)
     {
         ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
         return createSpan(context, text, tags, alignment);
     }
 
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags) {
         return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
     }
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags, int alignment)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
@@ -1065,9 +1069,11 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags) {
         return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
     }
+    @Deprecated
     public static SpannableStringBuilder createSpan(Context context, CharSequence text, ImageSpanTag[] tags, int alignment)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
@@ -1091,6 +1097,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createRoundedBackgroundColorSpan(SpannableString span, String text, String toColorize,
                                                                    final int textColor, final boolean boldText,
                                                                    final int backgroundColor, final float cornerRadiusPx, final float paddingPx)
@@ -1127,6 +1134,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createBackgroundColorSpan(SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
@@ -1141,6 +1149,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
@@ -1154,6 +1163,7 @@ public class SuntimesUtils
         }
         return span;
     }
+    @Deprecated
     public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color, boolean bold)
     {
         if (bold) {
@@ -1162,6 +1172,7 @@ public class SuntimesUtils
         return createColorSpan(span, text, toColorize, color);
     }
 
+    @Deprecated
     public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline)
     {
         if (span == null) {
@@ -1175,6 +1186,7 @@ public class SuntimesUtils
         }
         return span;
     }
+    @Deprecated
     public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline, int color)
     {
         if (span == null) {
@@ -1193,6 +1205,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)
     {
         if (span == null) {
@@ -1207,6 +1220,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createItalicSpan(SpannableString span, String text, String toBold)
     {
         if (span == null) {
@@ -1221,11 +1235,13 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createBoldColorSpan(SpannableString span, String text, String toBold, int color)
     {
         return createColorSpan(createBoldSpan(span, text, toBold), text, toBold, color);
     }
 
+    @Deprecated
     public static SpannableString createRelativeSpan(SpannableString span, String text, String toRelative, float relativeSize)
     {
         if (span == null) {
@@ -1240,6 +1256,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static SpannableString createAbsoluteSpan(SpannableString span, String text, String toAbsolute, int pointSizePixels)
     {
         if (span == null) {
@@ -1258,6 +1275,7 @@ public class SuntimesUtils
      * TypefaceSpan
      */
 
+    @Deprecated
     public static SpannableString createTypefaceSpan(SpannableString span, String text, String toTypeface, String typeface)
     {
         if (span == null) {
@@ -1272,6 +1290,7 @@ public class SuntimesUtils
         return span;
     }
 
+    @Deprecated
     public static class TypefaceSpan extends MetricAffectingSpan
     {
         protected final Typeface typeface;
@@ -1301,16 +1320,19 @@ public class SuntimesUtils
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
     }
 
+    @Deprecated
     public static ImageSpan createWarningSpan(Context context, int height)
     {
         //noinspection SuspiciousNameCombination
         return createWarningSpan(context, height, height);
     }
 
+    @Deprecated
     public static ImageSpan createWarningSpan(Context context, float height)
     {
         return createWarningSpan(context, (int) Math.ceil(height));
     }
+    @Deprecated
     public static ImageSpan createWarningSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionWarning, R.attr.tagColor_warning});
@@ -1320,6 +1342,7 @@ public class SuntimesUtils
         return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
+    @Deprecated
     public static ImageSpan createErrorSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionError, R.attr.tagColor_error});
@@ -1329,10 +1352,12 @@ public class SuntimesUtils
         return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
+    @Deprecated
     public static ImageSpan createDstSpan(Context context, float height)
     {
         return createDstSpan(context, (int) Math.ceil(height), (int) Math.ceil(height));
     }
+    @Deprecated
     public static ImageSpan createDstSpan(Context context, int width, int height)
     {
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionDst, R.attr.tagColor_dst});
@@ -1342,10 +1367,12 @@ public class SuntimesUtils
         return createImageSpan(context, drawableID, width, height, ContextCompat.getColor(context, colorID));
     }
 
+    @Deprecated
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
         return createImageSpan(context, drawableID, width, height, tint, PorterDuff.Mode.SRC_ATOP);
     }
+    @Deprecated
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, PorterDuff.Mode tintMode)
     {
         Drawable drawable = null;
@@ -1367,6 +1394,7 @@ public class SuntimesUtils
         return new ImageSpan(drawable);
     }
 
+    @Deprecated
     public static ImageSpan createImageSpan(ImageSpan other)
     {
         Drawable drawable = null;
@@ -1379,6 +1407,7 @@ public class SuntimesUtils
     /**
      * utility class; [Tag, ImageSpan] tuple
      */
+    @Deprecated
     public static class ImageSpanTag
     {
         private final String tag;       // the tag, e.g. [w]
@@ -1422,6 +1451,7 @@ public class SuntimesUtils
      * @return an html span
      */
     @SuppressWarnings("deprecation")
+    @Deprecated
     public static Spanned fromHtml(String htmlString )
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
