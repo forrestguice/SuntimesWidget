@@ -26,9 +26,10 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent" android:layout_height="match_parent">
 
-            <fragment android:id="@+id/placesListFragment"
+            <!-- PlacesActivity supplies this fragment via transaction from onCreate -->
+            <!--<fragment android:id="@+id/placesListFragment"
                 android:name="com.forrestguice.suntimeswidget.getfix.PlacesListFragment"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
+                android:layout_width="match_parent" android:layout_height="match_parent" />-->
 
         </FrameLayout>
 

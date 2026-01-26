@@ -80,15 +80,37 @@ public class PlacesActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        initFragments();
+    }
+
+    public static final String TAG_FRAGMENT_PLACESLIST = "PlacesListFragment";
+
+    protected void initFragments()
+    {
         Intent intent = getIntent();
-        list = (PlacesListFragment) getSupportFragmentManager().findFragmentById(R.id.placesListFragment);
-        if (list != null)
-        {
-            list.setDialogThemOverride(AppSettings.loadTheme(this));
-            list.setFragmentListener(listFragmentListener);
-            list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
-            list.setSelectedRowID(intent.getLongExtra(EXTRA_SELECTED, -1));
+        final long selectedRowID = intent.getLongExtra(EXTRA_SELECTED, -1);
+
+        list = (PlacesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_PLACESLIST);
+        if (list == null) {
+            list = PlacesListFragment.newInstance();    // (PlacesListFragment) getSupportFragmentManager().findFragmentById(R.id.placesListFragment);
         }
+
+        list.setDialogThemOverride(AppSettings.loadTheme(this));
+        list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
+        list.setFragmentListener(listFragmentListener);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, TAG_FRAGMENT_PLACESLIST)
+                .setReorderingAllowed(true)
+                .runOnCommit(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (selectedRowID != -1) {
+                            list.setSelectedRowID(selectedRowID);
+                        }
+                    }
+                })
+                .commit();
     }
 
     protected void initLocale()

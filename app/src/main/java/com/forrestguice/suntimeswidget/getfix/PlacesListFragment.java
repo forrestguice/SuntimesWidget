@@ -116,6 +116,10 @@ public class PlacesListFragment extends DialogBase
         setAllowPick(false);
     }
 
+    public static PlacesListFragment newInstance() {
+        return new PlacesListFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
