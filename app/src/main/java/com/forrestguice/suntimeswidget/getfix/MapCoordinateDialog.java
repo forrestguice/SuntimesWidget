@@ -170,6 +170,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
                         marker.setPressed(false);
                     }
                     updateDialogSubtitle(context);
+                    v.performClick();
                     return true;
 
                 case MotionEvent.ACTION_DOWN:
