@@ -57,6 +57,8 @@ import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.util.android.AndroidResources;
 
+import java.util.Locale;
+
 public class EditEventDialog extends EditBottomSheetDialog
 {
     public static final String ARG_DIALOGMODE = "dialogMode";
@@ -988,7 +990,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         percentValue = value;
         Context context = getContext();
         if (edit_percentValue != null && context != null) {
-            edit_percentValue.setText(Math.abs(percentValue) + "");
+            edit_percentValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(percentValue)));
         }
         if (radio_percentDay != null && radio_percentNight != null) {
             if (percentValue >= 0) {

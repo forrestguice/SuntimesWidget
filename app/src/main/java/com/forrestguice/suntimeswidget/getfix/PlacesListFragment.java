@@ -1786,7 +1786,7 @@ public class PlacesListFragment extends DialogBase
 
                 if (latLonDisplay != null && tagDisplay != null) {
                     if (summary != null) {
-                        summary.setText(latLonDisplay + "\n" + tagDisplay);
+                        summary.setText(context.getString(R.string.place_item_label_format, latLonDisplay, tagDisplay));
                         summary.setVisibility(View.VISIBLE);
                     }
 

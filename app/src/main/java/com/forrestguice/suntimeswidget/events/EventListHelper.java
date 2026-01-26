@@ -86,6 +86,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class EventListHelper
 {
@@ -478,8 +479,8 @@ public class EventListHelper
             {
                 saveDialog.setIsModified(false);
                 if (angle != null && saveDialog.edit_angle != null) {
-                    saveDialog.edit_angle.setText(Double.toString(angle));
-                    saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + angle.intValue());
+                    saveDialog.edit_angle.setText(String.format(Locale.getDefault(), "%.2f", angle));
+                    saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), angle.intValue() + ""));
                     saveDialog.check_shown.setChecked(true);
                     saveDialog.edit_label.selectAll();
                     saveDialog.setIsModified(true);
@@ -489,11 +490,11 @@ public class EventListHelper
                 if (shadowLength != null || objHeight != null)
                 {
                     if (objHeight != null && saveDialog.edit_objHeight != null) {
-                        saveDialog.edit_objHeight.setText(Double.toString(objHeight));
+                        saveDialog.edit_objHeight.setText(String.format(Locale.getDefault(), "%.2f", objHeight));
                     }
                     if (shadowLength != null && saveDialog.edit_shadowLength != null) {
-                        saveDialog.edit_shadowLength.setText(Double.toString(shadowLength));
-                        saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + shadowLength.intValue());
+                        saveDialog.edit_shadowLength.setText(String.format(Locale.getDefault(), "%.2f", shadowLength));
+                        saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), shadowLength.intValue() + ""));
                     }
                     saveDialog.check_shown.setChecked(true);
                     saveDialog.edit_label.selectAll();

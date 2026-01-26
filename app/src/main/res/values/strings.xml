@@ -1624,6 +1624,9 @@
     <string name="configAction_sortPlaces_by_label_descending">Label (descending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="configAction_sortPlaces_by_proximity">Nearest (last known)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
 
+    <string name="place_item_label_format">%1$s\n%2$s</string>
+    <string name="event_item_label_format">%1$s %2$s</string>
+
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egypt)</string>
