@@ -26,7 +26,9 @@ import android.service.quicksettings.Tile;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -64,10 +66,10 @@ public class AlarmTileService extends ClockTileService
 
             if (item != null)
             {
-                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+                TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
                 Calendar event = Calendar.getInstance(TimeZone.getDefault());
                 event.setTimeInMillis(item.alarmtime);
-                String timeDisplay = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();    // TODO: show day
+                String timeDisplay = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();    // TODO: show day
                 tile.setLabel(timeDisplay);
 
             } else {

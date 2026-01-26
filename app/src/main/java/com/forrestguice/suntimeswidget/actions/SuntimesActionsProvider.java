@@ -25,17 +25,18 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.HashMap;
 import java.util.Set;
 
-import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_ACTION;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_CLASS;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_COLOR;
@@ -67,8 +68,12 @@ public class SuntimesActionsProvider extends ContentProvider
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
-        uriMatcher.addURI(AUTHORITY, QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
+        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+    }
+
+    private static String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".action.provider";
     }
 
     @Override
@@ -165,7 +170,8 @@ public class SuntimesActionsProvider extends ContentProvider
                     values.put(COLUMN_ACTION_NAME, actionID);
                     break;
                 case COLUMN_ACTION_COLOR:
-                    values.put(column, Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR)));
+                    String v = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR);
+                    values.put(column, (v != null ? Integer.parseInt(v) : Color.WHITE));
                     break;
                 case COLUMN_ACTION_TAGS:
                     Set<String> tags = WidgetActions.loadActionTags(context, 0, actionID);

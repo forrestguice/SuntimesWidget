@@ -24,15 +24,17 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.about.AboutDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 /**
  * Calendar Prefs
@@ -64,7 +66,7 @@ public class CalendarPrefsFragment extends PreferenceFragment
 
         AppSettings.initLocale(getActivity());
         addPreferencesFromResource(R.xml.preference_calendar);
-        Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
+        Preference calendarReadme = (Preference) findPreference("appwidget_0_calendars_readme");
         if (calendarReadme != null)
         {
             calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));

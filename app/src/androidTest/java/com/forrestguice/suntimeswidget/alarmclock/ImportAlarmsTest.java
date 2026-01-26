@@ -22,13 +22,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.filters.LargeTest;
+
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -51,14 +53,14 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class ImportAlarmsTest extends SuntimesActivityTestBase
 {
     private Context mockContext;
 
     @Before
     public void setup() {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test
@@ -106,7 +108,9 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_getFileName()
     {
+        //noinspection ConstantConditions
         String filename0 = ExportTask.getFileName(null, null);
+        //noinspection ConstantConditions
         assertNull(filename0);
     }
 

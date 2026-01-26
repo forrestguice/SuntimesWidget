@@ -21,18 +21,20 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.test.InstrumentationRegistry;
 
-import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
 
 import org.junit.Before;
 
@@ -49,17 +51,17 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmScheduleTest
 {
     public static final long SCHEDULE_WITHIN_MS = 10000;
 
     public Context context;
-    public SuntimesUtils utils = new SuntimesUtils();
+    public TimeDateDisplay utils = new TimeDateDisplay();
 
     @Before
     public void init() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationUtils.getContext();
     }
 
     @Test
@@ -85,7 +87,7 @@ public class AlarmScheduleTest
             }
             event0 = event;
 
-            Log.i("TEST", utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+            Log.i("TEST", utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
             now = event;
             now.add(Calendar.SECOND, 1);
             c++;
@@ -155,7 +157,7 @@ public class AlarmScheduleTest
         while (c < n)
         {
             Calendar event = AlarmNotifications.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
-            Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(context, now, true, false) + " :: " + utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+            Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), now, true, false) + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
             assertEquals(expectedMonth, event.get(Calendar.MONTH));
             now.add(Calendar.HOUR, 1);
             c++;
@@ -170,13 +172,13 @@ public class AlarmScheduleTest
 
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = WidgetTimezones.ApparentSolarTime.TIMEZONEID;
+        alarm.timezone = TimeZones.ApparentSolarTime.TIMEZONEID;
         alarm.hour = hour;
         alarm.minute = minute;
 
         int c = 0, n = 7;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
         Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)
@@ -370,7 +372,7 @@ public class AlarmScheduleTest
 
             Calendar event = Calendar.getInstance(now.getTimeZone());
             event.setTimeInMillis(alarm.timestamp);
-            Log.i("TEST", utils.calendarDateTimeDisplayString(context, event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
+            Log.i("TEST", utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
 
             assertFalse(AlarmNotifications.t_updateAlarmTime_brokenLoop);
             assertFalse(AlarmNotifications.t_updateAlarmTime_runningLoop);
@@ -403,6 +405,7 @@ public class AlarmScheduleTest
         final Handler onStartHandler = new Handler(Looper.getMainLooper());
         onStartHandler.post(runnable);
         long now = System.currentTimeMillis();
+        //noinspection StatementWithEmptyBody
         while (System.currentTimeMillis() < (now + withinMs) && AlarmNotifications.t_updateAlarmTime_runningLoop) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 /**
  * mocks Bundle for non-instrumented tests
  */
+@SuppressWarnings("ConstantConditions")
 public class Bundle
 {
     protected HashMap<String, String> stringValues = new HashMap<>();

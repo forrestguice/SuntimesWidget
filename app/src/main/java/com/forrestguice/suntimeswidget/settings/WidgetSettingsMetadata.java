@@ -22,10 +22,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -96,8 +97,8 @@ public class WidgetSettingsMetadata
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -115,7 +116,7 @@ public class WidgetSettingsMetadata
         }
         return types;
     }
-    private static void putType(Map<String,Class> map, Class type, String... keys) {
+    private static void putType(Map<String,Class<?>> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
@@ -132,8 +133,8 @@ public class WidgetSettingsMetadata
         private String className = null;
         private int versionCode = -1;
         private int category = -1;
-        private int[] minDimens = new int[] {-1, -1};
-        private int[] maxDimens = new int[] {-1, -1};
+        private final int[] minDimens = new int[] {-1, -1};
+        private final int[] maxDimens = new int[] {-1, -1};
 
         public WidgetMetadata(WidgetMetadata other)
         {

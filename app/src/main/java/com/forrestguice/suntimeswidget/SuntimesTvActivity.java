@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesTvActivity extends SuntimesActivity {
     // TODO: Android TV support
 }

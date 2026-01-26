@@ -19,11 +19,12 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.junit.Before;
@@ -54,6 +55,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OBJECT_HEIGHT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_COORDINATES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_FIELDS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
@@ -86,7 +88,6 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_WINTER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
@@ -142,7 +143,7 @@ public class CalculatorProviderTest0
         Collections.addAll(columns, QUERY_MOON_PROJECTION);
         Collections.addAll(columns, QUERY_MOONPOS_PROJECTION);
         Collections.addAll(columns, QUERY_MOONPHASE_PROJECTION);
-        test_projectionHasUniqueColumns(columns.toArray(new String[columns.size()]));
+        test_projectionHasUniqueColumns(columns.toArray(new String[0]));
 
         test_query_config_projection();
         test_query_seasons_projection();
@@ -167,7 +168,8 @@ public class CalculatorProviderTest0
                 COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
                 COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
                 COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
-                COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_FIELDS
+                COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_COORDINATES,
+                COLUMN_CONFIG_OPTION_FIELDS
         };
 
         List<String> projection = Arrays.asList(QUERY_CONFIG_PROJECTION);
@@ -183,7 +185,8 @@ public class CalculatorProviderTest0
     public void test_query_seasons_projection()
     {
         List<String> projection = Arrays.asList(QUERY_SEASONS_PROJECTION);
-        assertTrue("default projection contains COLUMN_SEASON_VERNAL", projection.contains(COLUMN_SEASON_VERNAL));
+        //noinspection deprecation
+        assertTrue("default projection contains COLUMN_SEASON_VERNAL", projection.contains(CalculatorProviderContract.COLUMN_SEASON_VERNAL));
         assertTrue("default projection contains COLUMN_SEASON_SUMMER", projection.contains(COLUMN_SEASON_SUMMER));
         assertTrue("default projection contains COLUMN_SEASON_AUTUMN", projection.contains(COLUMN_SEASON_AUTUMN));
         assertTrue("default projection contains COLUMN_SEASON_WINTER", projection.contains(COLUMN_SEASON_WINTER));
@@ -289,6 +292,7 @@ public class CalculatorProviderTest0
     // Query Helpers
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void test_processSelection()
     {
@@ -476,8 +480,10 @@ public class CalculatorProviderTest0
         if (cursor != null) {
             try {
                 int index = cursor.getColumnIndex(column);
+                //noinspection StatementWithEmptyBody
                 if (cursor.getType(index) == Cursor.FIELD_TYPE_INTEGER);
                 {
+                    //noinspection unused
                     int value = cursor.getInt(index);
                     return true;
                 }

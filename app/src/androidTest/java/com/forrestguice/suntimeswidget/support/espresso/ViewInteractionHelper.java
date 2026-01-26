@@ -1,13 +1,13 @@
 package com.forrestguice.suntimeswidget.support.espresso;
 
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewInteraction;
+import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.ViewInteraction;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 
 public class ViewInteractionHelper
 {

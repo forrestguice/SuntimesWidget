@@ -30,9 +30,11 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,22 +44,22 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShownCompletely;
@@ -67,12 +69,11 @@ import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatch
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class PlacesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -84,13 +85,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -131,9 +132,9 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -229,8 +230,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_build()
     {
-        clearPlaces(getContext());
-        assertEquals(0, numPlaces(getContext()));
+        clearPlaces(InstrumentationUtils.getContext());
+        assertEquals(0, numPlaces(InstrumentationUtils.getContext()));
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -260,10 +261,10 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
-        int n = numPlaces(getContext());
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
+        int n = numPlaces(InstrumentationUtils.getContext());
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -294,7 +295,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add()
     {
-        clearPlaces(getContext());
+        clearPlaces(InstrumentationUtils.getContext());
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
 

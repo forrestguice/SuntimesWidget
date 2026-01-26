@@ -24,34 +24,39 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,22 +70,9 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LENGTH_UNITS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OBJECT_HEIGHT;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_FIELDS;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_IS24;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_SECONDS;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_WEEKS;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
@@ -90,19 +82,10 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DISTANCE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_PERIGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_RA;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST_DISTANCE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL_DISTANCE;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_SET;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_AUTUMN;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_CROSS_SPRING;
@@ -111,14 +94,12 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SPRING;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_TROPICAL_YEAR_LENGTH;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_WINTER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_YEAR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DEC;
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ISDAY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_RISE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUN_ACTUAL_SET;
@@ -161,7 +142,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class CalculatorProviderTest
 {
     private Context mockContext;
@@ -171,7 +152,7 @@ public class CalculatorProviderTest
     @Before
     public void setup()
     {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
         WidgetSettings.initDefaults(mockContext);
 
         sunCalculator = getCalculator("");
@@ -189,7 +170,7 @@ public class CalculatorProviderTest
         Location location = WidgetSettings.loadLocationPref(mockContext, 0);
         TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(mockContext, 0));
         SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, 0, calculatorName);
-        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(mockContext, descriptor);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
         return factory.createCalculator(location, timezone);
     }
 
@@ -269,9 +250,10 @@ public class CalculatorProviderTest
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor0, projection0);
         assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor0, COLUMN_SEASON_YEAR));
+        //noinspection deprecation
         test_allColumnsLong("QUERY_SEASONS", cursor0,
                 new String[] { COLUMN_SEASON_CROSS_SPRING, COLUMN_SEASON_CROSS_SUMMER, COLUMN_SEASON_CROSS_AUTUMN, COLUMN_SEASON_CROSS_WINTER, COLUMN_SEASON_TROPICAL_YEAR_LENGTH,
-                COLUMN_SEASON_SPRING, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
+                COLUMN_SEASON_SPRING, CalculatorProviderContract.COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 1: year
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR));
@@ -279,9 +261,10 @@ public class CalculatorProviderTest
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor1, projection1);
         assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor1, COLUMN_SEASON_YEAR));
+        //noinspection deprecation
         test_allColumnsLong("QUERY_SEASONS", cursor1,
                 new String[] { COLUMN_SEASON_CROSS_SPRING, COLUMN_SEASON_CROSS_SUMMER, COLUMN_SEASON_CROSS_AUTUMN, COLUMN_SEASON_CROSS_WINTER, COLUMN_SEASON_TROPICAL_YEAR_LENGTH,
-                COLUMN_SEASON_SPRING, COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
+                COLUMN_SEASON_SPRING, CalculatorProviderContract.COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR) + "-" + TEST_DATE1.get(Calendar.YEAR));
@@ -471,20 +454,20 @@ public class CalculatorProviderTest
 
     protected String createTestEvent(String eventID0, double angle, boolean rising)
     {
-        String eventID = eventID0 + (rising ? AlarmEventProvider.ElevationEvent.SUFFIX_RISING : AlarmEventProvider.ElevationEvent.SUFFIX_SETTING);
-        if (EventSettings.hasEvent(mockContext, eventID0)) {
-            EventSettings.deleteEvent(mockContext, eventID0);
-            assertFalse(EventSettings.hasEvent(mockContext, eventID0));
+        String eventID = eventID0 + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING);
+        if (EventSettings.hasEvent(AndroidEventSettings.wrap(mockContext), eventID0)) {
+            EventSettings.deleteEvent(AndroidEventSettings.wrap(mockContext), eventID0);
+            assertFalse(EventSettings.hasEvent(AndroidEventSettings.wrap(mockContext), eventID0));
         }
 
-        String aliased = AlarmEventProvider.SunElevationEvent.getEventName(angle, 0, null);
-        EventSettings.saveEvent(mockContext, AlarmEventProvider.EventType.SUN_ELEVATION, eventID0, "Event @ " + angle, Color.GREEN,
-                AlarmAddon.getEventCalcUri(AlarmEventContract.AUTHORITY, aliased));
-        assertTrue(EventSettings.hasEvent(mockContext, eventID0));
+        String aliased = SunElevationEvent.getEventName(angle, 0, null);
+        EventSettings.saveEvent(AndroidEventSettings.wrap(mockContext), EventType.SUN_ELEVATION, eventID0, "Event @ " + angle, Color.GREEN,
+                EventUri.getEventCalcUri(AlarmEventContract.AUTHORITY, aliased));
+        assertTrue(EventSettings.hasEvent(AndroidEventSettings.wrap(mockContext), eventID0));
         return eventID;
     }
 
-    private final SuntimesUtils utils = new SuntimesUtils();
+    private final TimeDateDisplay utils = new TimeDateDisplay();
     public void verify_sunEvent(String eventID, Cursor cursor, Calendar eventTime0, SuntimesCalculator.SunPosition position0)
     {
         long eventTime = cursor.getLong(cursor.getColumnIndex(eventID));
@@ -493,8 +476,8 @@ public class CalculatorProviderTest
         double eventPosition_ra = cursor.getDouble(cursor.getColumnIndex(eventID + _POSITION_RA));
         double eventPosition_dec = cursor.getDouble(cursor.getColumnIndex(eventID + _POSITION_DEC));
 
-        assertEquals("expected " + utils.calendarDateTimeDisplayString(mockContext, eventTime0.getTimeInMillis())
-                + ", but got " + utils.calendarDateTimeDisplayString(mockContext, eventTime) + " :: a difference of " + ((eventTime0.getTimeInMillis() - eventTime) / 1000) + " seconds; ",
+        assertEquals("expected " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(mockContext), eventTime0.getTimeInMillis())
+                + ", but got " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(mockContext), eventTime) + " :: a difference of " + ((eventTime0.getTimeInMillis() - eventTime) / 1000) + " seconds; ",
                 eventTime0.getTimeInMillis(), eventTime);
 
         assertEquals(position0.azimuth, eventPosition_az, 0);
@@ -807,8 +790,10 @@ public class CalculatorProviderTest
         if (cursor != null) {
             try {
                 int index = cursor.getColumnIndex(column);
+                //noinspection StatementWithEmptyBody
                 if (cursor.getType(index) == Cursor.FIELD_TYPE_INTEGER);
                 {
+                    //noinspection unused
                     int value = cursor.getInt(index);
                     return true;
                 }
@@ -876,7 +861,7 @@ public class CalculatorProviderTest
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String getColumnName(WidgetSettings.SolsticeEquinoxMode mode)
+    public static String getColumnName(SolsticeEquinoxMode mode)
     {
         switch (mode) {
             case EQUINOX_SPRING: return CalculatorProviderContract.COLUMN_SEASON_SPRING;
@@ -885,10 +870,10 @@ public class CalculatorProviderTest
             case SOLSTICE_WINTER: default: return CalculatorProviderContract.COLUMN_SEASON_WINTER;
         }
     }
-    public static Calendar lookupEventTime(Context context, WidgetSettings.SolsticeEquinoxMode mode, int forYear) {
+    public static Calendar lookupEventTime(Context context, SolsticeEquinoxMode mode, int forYear) {
         return lookupEventTime(context, mode, forYear, null);
     }
-    public static Calendar lookupEventTime(Context context, WidgetSettings.SolsticeEquinoxMode mode, int forYear, TimeZone timezone)
+    public static Calendar lookupEventTime(Context context, SolsticeEquinoxMode mode, int forYear, TimeZone timezone)
     {
         Calendar retValue = null;
         Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + forYear);

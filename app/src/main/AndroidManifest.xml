@@ -10,6 +10,7 @@
     <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />     <!-- needed to get location using GPS -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />     <!-- needed to trigger AGPS reload -->
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
 
@@ -19,7 +20,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />                 <!-- needed by AlarmClock -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  <!-- needed by AlarmClock to restore alarms after shutdown/reboot -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />      <!-- needed by AlarmClock -->
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  <!-- needed by AlarmClock -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />  <!-- needed by AlarmClock; api29+ -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />    <!-- needed by AlarmClock; api31+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>       <!-- needed by AlarmClock; api33+ -->
 
     <uses-permission android:name="org.codeaurora.permission.POWER_OFF_ALARM" />  <!-- needed for hardware dependent 'power off' alarms -->
 
@@ -27,10 +30,34 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>       <!-- needed by Actions to launch user-defined intents -->
+
+
+    <permission-tree android:name="${suntimesPermissionRoot}.permission."
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher" />
+
+    <permission-group
+        android:name="${suntimesPermissionRoot}.permission-group.ADDON"
+        android:label="@string/permission_calculator_label"
+        android:description="@string/permission_calculator_desc" />
+    
     <permission
-        android:name="suntimes.permission.READ_CALCULATOR"
-        android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
-    <uses-permission android:name="suntimes.permission.READ_CALCULATOR" />
+        android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
+        android:permissionGroup="${suntimesPermissionRoot}.permission-group.ADDON"
+        android:label="@string/permission_calculator_label"
+        android:description="@string/permission_calculator_desc"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="normal" />                       <!-- legacy permission; protects suntimeswidget.calculator.provider -->
+    <uses-permission android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR" />
+
+    <permission
+        android:name="${suntimesPermissionRoot}.permission.ADDON"
+        android:permissionGroup="${suntimesPermissionRoot}.permission-group.ADDON"
+        android:label="@string/permission_calculator_label"
+        android:description="@string/permission_calculator_desc"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="dangerous" />                       <!-- replaces READ_CALCULATOR; protects suntimeswidget.calculator.provider -->
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
@@ -112,40 +139,40 @@
         <!-- Calculator Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.calculator.CalculatorProvider"
-            android:authorities="suntimeswidget.calculator.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.calculator.provider"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Theme Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider"
-            android:authorities="suntimeswidget.theme.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.theme.provider"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Action Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.actions.SuntimesActionsProvider"
-            android:authorities="suntimeswidget.action.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.action.provider"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Alarm Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsProvider"
-            android:authorities="suntimeswidget.alarm.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.alarm.provider"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true"
             android:syncable="false" />
 
         <!-- Event Provider -->
         <provider
             android:name="com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider"
-            android:authorities="suntimeswidget.event.provider"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:authorities="${suntimesAuthorityRoot}.event.provider"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true"
             android:syncable="false" />
 
@@ -190,7 +217,7 @@
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
@@ -199,16 +226,16 @@
             android:name=".getfix.PlacesActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
         <!-- Widget List Activity -->
         <activity
-            android:name=".SuntimesWidgetListActivity"
+            android:name=".widgets.SuntimesWidgetListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
@@ -217,7 +244,7 @@
             android:name=".events.EventListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
@@ -226,7 +253,7 @@
             android:name=".actions.ActionListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
@@ -235,7 +262,7 @@
             android:name=".themes.WidgetThemeListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:permission="${suntimesPermissionRoot}.permission.ADDON"
             android:exported="true">
         </activity>
 
@@ -268,8 +295,8 @@
 
         <!-- FileProvider (export to file; places, themes) -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.forrestguice.suntimeswidget.fileprovider"
+            android:name="com.forrestguice.support.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
@@ -375,7 +402,7 @@
         <service
             android:name=".alarmclock.bedtime.BedtimeConditionService"
             android:exported="true"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/supports_condition_service"
             android:directBootAware="true"
             android:label="@string/configLabel_bedtime"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
@@ -389,7 +416,7 @@
         </service>
 
         <service android:name=".alarmclock.AlarmJobService"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service android:name=".alarmclock.AlarmNotifications$NotificationService"
@@ -418,7 +445,7 @@
         <receiver android:name=".alarmclock.bedtime.BedtimeBroadcastReceiver"
             android:directBootAware="true"
             android:exported="true"
-            android:permission="suntimes.permission.READ_CALCULATOR">
+            android:permission="${suntimesPermissionRoot}.permission.ADDON">
             <intent-filter>
                 <action android:name="suntimeswidget.alarm.start_bedtime" />
                 <action android:name="suntimeswidget.alarm.pause_bedtime" />
@@ -432,14 +459,14 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
         <activity android:name=".tiles.TileLockScreenActivity" android:theme="@style/LockScreenActivityStyle"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.BedtimeTileService"
             android:exported="true"
             android:label="@string/configLabel_bedtime"
             android:icon="@drawable/ic_action_bedtime"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
@@ -451,47 +478,47 @@
             android:exported="true"
             android:label="@string/app_name_alarmtile"
             android:icon="@drawable/ic_action_alarms"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.AlarmTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.ClockTileService"
             android:exported="true"
             android:label="@string/app_name_clocktile"
             android:icon="@drawable/ic_action_time"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.ClockTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <service
             android:name=".tiles.NextEventTileService"
             android:exported="true"
             android:label="@string/app_name_eventtile"
             android:icon="@drawable/ic_action_timereset"
-            android:enabled="@bool/api_post_24"
+            android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
         <activity android:name=".tiles.NextEventTileConfigActivity"
-            android:enabled="@bool/api_post_24" />
+            android:enabled="@bool/api_24_plus" />
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0"
+        <receiver android:name=".widgets.SuntimesWidget0"
                   android:exported="true"
                   android:label="@string/app_name_widget0"
                   android:icon="@mipmap/ic_launcher">
@@ -509,7 +536,7 @@
         </receiver>
         
         <activity
-            android:name=".SuntimesConfigActivity0"
+            android:name=".widgets.SuntimesConfigActivity0"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -519,7 +546,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_2x1: Resizable (falls back to static 2x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0_2x1"
+        <receiver android:name=".widgets.SuntimesWidget0_2x1"
                   android:exported="true"
                   android:label="@string/app_name_widget0"
                   android:icon="@mipmap/ic_launcher">
@@ -537,7 +564,7 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_2x1"
+            android:name=".widgets.SuntimesConfigActivity0_2x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -547,7 +574,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 0_3x1: Resizable (falls back to static 3x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget0_3x1"
+        <receiver android:name=".widgets.SuntimesWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_widget0"
             android:icon="@mipmap/ic_launcher">
@@ -565,7 +592,7 @@
         </receiver>
 
         <activity
-            android:name=".SuntimesConfigActivity0_3x1"
+            android:name=".widgets.SuntimesConfigActivity0_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -576,9 +603,9 @@
         <!-- Widget 1: Flippable widget (uses RemoteView collections [requires api 14+]) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver
-            android:name=".SuntimesWidget1"
+            android:name=".widgets.SuntimesWidget1"
             android:exported="true"
-            android:enabled="@bool/api_post_14"
+            android:enabled="@bool/api_14_plus"
             android:label="@string/app_name_widget1"
             android:icon="@mipmap/ic_launcher">   <!-- TODO: icon -->
 
@@ -596,13 +623,13 @@
 
         <!-- Widget 1 Service: Flippable widget [requires api 14+] -->
         <service
-            android:name=".SuntimesWidget1Service"
+            android:name=".widgets.SuntimesWidget1Service"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:enabled="@bool/api_post_14" />
+            android:enabled="@bool/api_14_plus" />
 
         <!-- Widget 1 Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity1"
+            android:name=".widgets.SuntimesConfigActivity1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -612,7 +639,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (1x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2"
+        <receiver android:name=".widgets.SuntimesWidget2"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_noon_large">
@@ -631,7 +658,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2"
+            android:name=".widgets.SuntimesConfigActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -641,7 +668,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x1) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x1"
+        <receiver android:name=".widgets.SuntimesWidget2_3x1"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_noon_large">
@@ -660,7 +687,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x1"
+            android:name=".widgets.SuntimesConfigActivity2_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -670,7 +697,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x2) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x2"
+        <receiver android:name=".widgets.SuntimesWidget2_3x2"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_action_map">    <!-- TODO: theme neutral icon -->
@@ -689,7 +716,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x2"
+            android:name=".widgets.SuntimesConfigActivity2_3x2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -699,7 +726,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget 2: Sun Position (3x3) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SuntimesWidget2_3x3"
+        <receiver android:name=".widgets.SuntimesWidget2_3x3"
             android:exported="true"
             android:label="@string/app_name_widget2"
             android:icon="@drawable/ic_action_map">    <!-- TODO: theme neutral icon -->
@@ -718,7 +745,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SuntimesConfigActivity2_3x3"
+            android:name=".widgets.SuntimesConfigActivity2_3x3"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -728,7 +755,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Solstice / Equinox widget (resizable (falls back to static 1x1 for api less than 16)) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".SolsticeWidget0"
+        <receiver android:name=".widgets.SolsticeWidget0"
                   android:exported="true"
                   android:label="@string/app_name_solsticewidget0"
                   android:icon="@drawable/ic_launcher_foreground">
@@ -747,7 +774,7 @@
 
         <!-- Widget Configuration Activity -->
         <activity
-            android:name=".SolsticeWidget0ConfigActivity"
+            android:name=".widgets.SolsticeWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -757,7 +784,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 1x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0"
+        <receiver android:name=".widgets.MoonWidget0"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -775,7 +802,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity"
+            android:name=".widgets.MoonWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -785,7 +812,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 2x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0_2x1"
+        <receiver android:name=".widgets.MoonWidget0_2x1"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -803,7 +830,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_2x1"
+            android:name=".widgets.MoonWidget0ConfigActivity_2x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -813,7 +840,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Moon0 3x1 -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".MoonWidget0_3x1"
+        <receiver android:name=".widgets.MoonWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_moonwidget0"
             android:icon="@drawable/ic_moon">
@@ -831,7 +858,7 @@
         </receiver>
 
         <activity
-            android:name=".MoonWidget0ConfigActivity_3x1"
+            android:name=".widgets.MoonWidget0ConfigActivity_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -936,7 +963,7 @@
         <service
             android:name=".widgets.AlarmWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:enabled="@bool/api_post_14" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
+            android:enabled="@bool/api_14_plus" />    <!-- AlarmWidget Service: Collections widget [requires api 14+] -->
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Alarms (3x2)                                                        -->
@@ -975,7 +1002,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Clock (1x1)                                                               -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".ClockWidget0"
+        <receiver android:name=".widgets.ClockWidget0"
             android:exported="true"
             android:label="@string/app_name_clockwidget0"
             android:icon="@mipmap/ic_launcher_alarms">
@@ -993,7 +1020,7 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity"
+            android:name=".widgets.ClockWidget0ConfigActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -1003,7 +1030,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <!-- Widget: Clock (3x1)                                                               -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver android:name=".ClockWidget0_3x1"
+        <receiver android:name=".widgets.ClockWidget0_3x1"
             android:exported="true"
             android:label="@string/app_name_clockwidget0"
             android:icon="@mipmap/ic_launcher_alarms">
@@ -1021,7 +1048,7 @@
         </receiver>
 
         <activity
-            android:name=".ClockWidget0ConfigActivity_3x1"
+            android:name=".widgets.ClockWidget0ConfigActivity_3x1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

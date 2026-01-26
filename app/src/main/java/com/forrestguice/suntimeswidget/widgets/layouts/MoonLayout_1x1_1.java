@@ -28,7 +28,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -113,7 +113,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
         {
             if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
                 SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
-                views.setTextViewText(R.id.text_info_moonphase, data.getMoonPhaseLabel(context, majorPhase));
+                views.setTextViewText(R.id.text_info_moonphase, data.getMoonPhaseLabel(majorPhase));
             } else views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
 
             views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));

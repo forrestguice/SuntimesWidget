@@ -20,7 +20,7 @@
        xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/table" style="@style/SunsetTimeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunrise"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
@@ -126,7 +126,7 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunset"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
@@ -770,6 +770,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_time_label_moon"
             app:layout_constraintBottom_toBottomOf="@+id/moonphase_view" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

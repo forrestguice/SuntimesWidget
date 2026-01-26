@@ -21,11 +21,11 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +50,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmDatabaseAdapterTest
 {
     private Context mockContext;
@@ -60,7 +60,7 @@ public class AlarmDatabaseAdapterTest
     @Before
     public void setup()
     {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
 
         db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
         db.open();
@@ -111,7 +111,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor0);
             assertTrue("cursor should not be after last", !cursor0.isAfterLast());
             long id = cursor0.getLong(0);
-            verifyAlarm(cursor0, false, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor0, false, id, v.asContentValues(true));
             cursor0.moveToNext();
         }
 
@@ -124,7 +126,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor1);
             assertTrue("cursor should not be after last", !cursor1.isAfterLast());
             long id = cursor1.getLong(0);
-            verifyAlarm(cursor1, true, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor1, true, id, v.asContentValues(true));
             cursor1.moveToNext();
         }
 
@@ -137,7 +141,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor2);
             assertTrue("cursor should not be after last", !cursor2.isAfterLast());
             long id = cursor2.getLong(0);
-            verifyAlarm(cursor2, false, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor2, false, id, v.asContentValues(true));
             cursor2.moveToNext();
         }
 

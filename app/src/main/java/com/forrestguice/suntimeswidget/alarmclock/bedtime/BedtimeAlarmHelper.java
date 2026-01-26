@@ -20,10 +20,10 @@ package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 import android.content.ContentUris;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
@@ -36,11 +36,13 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.Calendar;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class BedtimeAlarmHelper
 {
     public static void pauseBedtimeEvent(final Context context) {
@@ -55,10 +57,10 @@ public class BedtimeAlarmHelper
         final long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -137,24 +139,23 @@ public class BedtimeAlarmHelper
         return alarmItem;
     }
 
-    public static void loadAlarmItem(Context context, @Nullable Long rowId, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
+    public static void loadAlarmItem(Context context, @Nullable Long rowId, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
     {
         if (rowId != null)
         {
-            AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context);
-            listTask.setTaskListener(taskListener);
-            listTask.execute(rowId);
+            AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowId });
+            ExecutorUtils.runProgress("LoadAlarmTask", listTask, taskListener);
         }
     }
     public static void saveAlarmItem(Context context, @Nullable AlarmClockItem item, boolean addAlarm, @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener taskListener)
     {
         if (item != null)
         {
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, addAlarm, false);
+            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, addAlarm, false);
             if (taskListener != null) {
                 task.setTaskListener(taskListener);
             }
-            task.execute(item);
+            ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
         }
     }
 
@@ -175,9 +176,9 @@ public class BedtimeAlarmHelper
             BedtimeAlarmHelper.saveAlarmItem(context, item, false, new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item) {
-                    if (result) {
-                        BedtimeAlarmHelper.scheduleAlarmItem(context, item, enabled);
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
+                    if (result.getResult()) {
+                        BedtimeAlarmHelper.scheduleAlarmItem(context, result.getItem(), enabled);
                     }
                 }
             });
@@ -189,12 +190,13 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE && enabled)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
-                public void onLoadFinished(List<AlarmClockItem> result)
+                @Override
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem bedtimeItem = ((result != null && result.size() > 0) ? result.get(0) : null);
-                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, enabled);
+                    BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, bedtimeItem, true);
                 }
             });
         } else {
@@ -225,9 +227,10 @@ public class BedtimeAlarmHelper
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
-                public void onLoadFinished(List<AlarmClockItem> result)
+                @Override
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem reminderItem = ((result != null && result.size() > 0) ? result.get(0) : null);
                     BedtimeAlarmHelper.setBedtimeReminder(context, reminderItem, eventItem, enabled);
@@ -275,10 +278,11 @@ public class BedtimeAlarmHelper
             BedtimeAlarmHelper.saveAlarmItem(context, reminderItem, addReminder, new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item)
+                public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
-                    Log.d("DEBUG", "saved reminder item " + item.rowID + ": " + result);
-                    if (result) {
+                    AlarmClockItem item = result.getItem();
+                    Log.d("DEBUG", "saved reminder item " + item.rowID + ": " + result.getResult());
+                    if (result.getResult()) {
                         BedtimeSettings.saveAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER, item.rowID);
                         BedtimeAlarmHelper.scheduleAlarmItem(context, item, enabled);
                     }

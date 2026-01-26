@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -30,12 +31,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
-public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemesTask.ImportThemesResult>
+public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThemesTask.ImportThemesResult>
 {
     public static final String TAG = "importThemesTask";
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask()
@@ -51,29 +53,15 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         return isPaused;
     }
 
-    public ImportThemesTask(Context context)
+    public ImportThemesTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
+    public ImportThemesResult call() throws Exception
     {
-        Log.d(TAG, "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected ImportThemesResult doInBackground(Uri... params)
-    {
-        Log.d(TAG, "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         SuntimesTheme[] themes = null;
@@ -87,7 +75,7 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             {
                 @Override
                 public void onImported( SuntimesTheme theme, int i, int n ) {
-                    onProgressUpdate(theme);
+                    publishProgress(theme);
                 }
             });
 
@@ -133,22 +121,6 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
         return new ImportThemesResult(result, uri, themes, error);
     }
 
-    @Override
-    protected void onProgressUpdate(SuntimesTheme... values)
-    {
-        super.onProgressUpdate(values);
-        // TODO
-    }
-
-    @Override
-    protected void onPostExecute( ImportThemesResult result )
-    {
-        Log.d(TAG, "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * ImportThemesResult
      */
@@ -162,19 +134,19 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private SuntimesTheme[] themes;
+        private final SuntimesTheme[] themes;
         public SuntimesTheme[] getThemes()
         {
             return themes;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -184,29 +156,11 @@ public class ImportThemesTask extends AsyncTask<Uri, SuntimesTheme, ImportThemes
             return (themes != null ? themes.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;
         }
-    }
-
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( ImportThemesResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
     }
 
 }

@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,14 +39,14 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmRepeatDialogTest
 {
     private Context context;
 
     @Before
     public void setup() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test

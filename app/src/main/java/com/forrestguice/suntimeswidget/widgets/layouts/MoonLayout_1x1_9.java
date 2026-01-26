@@ -28,11 +28,10 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-
-import net.time4j.SystemClock;
-import net.time4j.calendar.HijriCalendar;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -110,8 +109,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
             }
         }
 
-        HijriCalendar today = SystemClock.inLocalView().today().transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA);
-        int dayNum = today.getDayOfMonth();
+        int dayNum = AndroidCalendarDisplayFactory.create().hijriLunarDayNumber();
         int dayOffset = WidgetSettings.loadDateOffsetPref(context, appWidgetId);
         int moonDay = dayNum + dayOffset;
         String moonDayDisplay = moonDay + "";
@@ -150,7 +148,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min    // TODO: daily interval
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout9", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout9", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 }

@@ -22,11 +22,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.graph.SunSymbol;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Map;
@@ -47,8 +50,11 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_SUNSHADOW = "sunshadow";
     public static final String PREF_KEY_WORLDMAP_MOONLIGHT = "moonlight";
     public static final String PREF_KEY_WORLDMAP_LOCATION = "showlocation";
-    public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
+    public static final String PREF_KEY_WORLDMAP_SPEED1D = "speed_1d";    // deprecated: this flag replaced by enum/string PREF_KEY_WORLDMAP_SPEED
 
+    @SuppressWarnings("deprecation")
     public static final String[][] PREF_DEF_WORLDMAP = new String[][] {
             new String[] {PREF_KEY_WORLDMAP_MAJORLATITUDES, "false"},
             new String[] {PREF_KEY_WORLDMAP_MINORGRID, "false"},
@@ -60,6 +66,9 @@ public class WorldMapWidgetSettings
             new String[] {PREF_KEY_WORLDMAP_SPEED1D, "false"}
     };
 
+    public static final String PREF_KEY_WORLDMAP_SPEED = "speed_step";
+    public static final MapSpeed PREF_DEF_WORLDMAP_SPEED = MapSpeed.FIVE_MINUTES;
+
     public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
 
     public static final double[] PREF_DEF_WORLDMAP_CENTER = new double[] { 33.45, -111.94 };
@@ -70,6 +79,9 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
     public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
 
+    public static final String PREF_KEY_GRAPH_SUNSYMBOL = "sunsymbol";
+    public static final SunSymbol PREF_DEF_GRAPH_SUNSYMBOL = SunSymbol.CIRCLE;
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
@@ -78,6 +90,9 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_EQD = "+proj=eqc +lat_ts=0 +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs";
     public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
+    public static final String PROJ4_MERC = "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
+    public static final String PROJ4_VANDG = "+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m +no_defs";
+    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs ";
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
@@ -107,8 +122,8 @@ public class WorldMapWidgetSettings
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -127,6 +142,36 @@ public class WorldMapWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
+    public static enum MapSpeed
+    {
+        ONE_MINUTE, FIVE_MINUTES, TEN_MINUTES, FIFTEEN_MINUTES, ONE_DAY, ONE_WEEK;
+
+        /**
+         * @return minutes
+         */
+        public int getStepMinutes() {
+            switch (this) {
+                case ONE_WEEK: return 7 * 24 * 60;
+                case ONE_DAY: return 24 * 60;
+                case FIFTEEN_MINUTES: return 15;
+                case TEN_MINUTES: return 10;
+                case FIVE_MINUTES: return 5;
+                case ONE_MINUTE: default: return 1;
+            }
+        }
+
+        public String getDisplayString(Context context) {
+            switch (this) {
+                case ONE_WEEK: return context.getString(R.string.worldmap_dialog_speed_7d);
+                case ONE_DAY: return context.getString(R.string.worldmap_dialog_speed_1d);
+                case FIFTEEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_15m);
+                case TEN_MINUTES: return context.getString(R.string.worldmap_dialog_speed_10m);
+                case FIVE_MINUTES: return context.getString(R.string.worldmap_dialog_speed_5m);
+                case ONE_MINUTE: default: return context.getString(R.string.worldmap_dialog_speed_1m);
+            }
+        }
+    }
+
     /**
      * WorldMapWidgetMode
      */
@@ -136,17 +181,21 @@ public class WorldMapWidgetSettings
         EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_01, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
         EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
-        EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
+        EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1),
+        MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_3, false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
+        VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_4, false, 0, 0, "Van der Grinten", PROJ4_VANDG),
+        SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x3_5, false, 0, 0, "Sinuisoidal", PROJ4_SINU),
+        ;
 
         private final int layoutID;
         private String displayString;
-        private String tag;
-        private boolean supportsCenter;
-        private double[] center;
+        private final String tag;
+        private final boolean supportsCenter;
+        private final double[] center;
         private String projectionTitle;
-        private String proj4String;
+        private final String proj4String;
 
-        private WorldMapWidgetMode(String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
+        private WorldMapWidgetMode(@NonNull String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
         {
             this.displayString = displayString;
             this.projectionTitle = projectionTitle;
@@ -157,8 +206,8 @@ public class WorldMapWidgetSettings
             this.center = new double[] {centerLat, centerLon};
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
@@ -167,13 +216,12 @@ public class WorldMapWidgetSettings
             return layoutID;
         }
 
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
-        {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -185,7 +233,7 @@ public class WorldMapWidgetSettings
         }
 
         public String getProj4() {
-            return String.format(proj4String, center);
+            return getProj4(center);
         }
         public String getProj4(double[] center) {
             return String.format(proj4String, center[0], center[1]);
@@ -205,12 +253,18 @@ public class WorldMapWidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            SINUSOIDAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplesinusoidal));
+            VANDERGRINTEN_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplevandergrinten));
+            MERCATOR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplemercator));
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
             EQUIAZIMUTHAL_SIMPLE1.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_south));
             EQUIAZIMUTHAL_SIMPLE2.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_location));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
 
+            SINUSOIDAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_sinusoidal));
+            VANDERGRINTEN_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_vandergrinten));
+            MERCATOR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_mercator));
             EQUIAZIMUTHAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
             EQUIAZIMUTHAL_SIMPLE1.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
             EQUIAZIMUTHAL_SIMPLE2.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
@@ -300,6 +354,20 @@ public class WorldMapWidgetSettings
         prefs.apply();
     }
 
+    public static void saveMapIntValue(Context context, int appWidgetId, String key, String mapTag, int value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        prefs.putInt(prefs_prefix + key + mapTag, value);
+        prefs.apply();
+    }
+    public static int loadMapIntValue(Context context, int appWidgetId, String key, String mapTag, int defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        return prefs.getInt(prefs_prefix + key + mapTag, defaultValue);
+    }
+
     public static void saveWorldMapString(Context context, int appWidgetId, String key, String mapTag, String value)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
@@ -354,6 +422,20 @@ public class WorldMapWidgetSettings
         }
     }
 
+    public static MapSpeed loadMapSpeed(Context context, int appWidgetId, String tag)
+    {
+        String value = loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_SPEED, tag, PREF_DEF_WORLDMAP_SPEED.name());
+        try {
+            return MapSpeed.valueOf(value);
+        } catch (IllegalArgumentException e) {
+            Log.w("loadMapSpeed", "Failed to load value '" + value + "'; using default '" + PREF_DEF_WORLDMAP_SPEED.name() + "'.");
+            return PREF_DEF_WORLDMAP_SPEED;
+        }
+    }
+    public static void saveMapSpeed(Context context, int appWidgetId, String tag, MapSpeed value) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_SPEED, tag, value.name());
+    }
+
     private static Uri getDrawableUri(Context context, int resId)
     {
         Resources resources = context.getResources();
@@ -387,7 +469,7 @@ public class WorldMapWidgetSettings
     }
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context )
     {
@@ -396,8 +478,8 @@ public class WorldMapWidgetSettings
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId appWidgetId
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {

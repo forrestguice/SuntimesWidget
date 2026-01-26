@@ -34,11 +34,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -46,18 +44,16 @@ import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.PrefTypeInfo;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
-import com.forrestguice.suntimeswidget.views.ExecutorUtils;
+import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import java.lang.ref.WeakReference;
@@ -234,8 +230,8 @@ public class AlarmSettings
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -624,32 +620,30 @@ public class AlarmSettings
 
     public static void setDefaultRingtoneUris(Context context)
     {
-        CacheDefaultRingtoneTask task = new CacheDefaultRingtoneTask(context);
-        task.execute(AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION);
+        ExecutorUtils.runTask("setDefaultRingtone",
+                CacheDefaultRingtoneRunnable(context, new AlarmClockItem.AlarmType[] { AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION }));
     }
 
     /**
      * CacheDefaultRingtoneTask
      */
-    public static class CacheDefaultRingtoneTask extends AsyncTask<AlarmClockItem.AlarmType, Void, Boolean>
+    public static Runnable CacheDefaultRingtoneRunnable(Context context, final AlarmClockItem.AlarmType[] types)
     {
-        WeakReference<Context> contextRef;
-        public CacheDefaultRingtoneTask(Context context) {
-            contextRef = new WeakReference<>(context);
-        }
-
-        @Override
-        protected Boolean doInBackground(AlarmClockItem.AlarmType... types)
+        final WeakReference<Context> contextRef = new WeakReference<>(context);
+        return new Runnable()
         {
-            Context context = contextRef.get();
-            AlarmSettings settings = new AlarmSettings();
-            if (context != null) {
-                for (AlarmClockItem.AlarmType type : types) {
-                    settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+            @Override
+            public void run()
+            {
+                Context context = contextRef.get();
+                AlarmSettings settings = new AlarmSettings();
+                if (context != null) {
+                    for (AlarmClockItem.AlarmType type : types) {
+                        settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                    }
                 }
-                return true;
-            } else return false;
-        }
+            }
+        };
     }
 
     @TargetApi(26)
@@ -804,12 +798,11 @@ public class AlarmSettings
             UsageStatsManager statsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
             if (statsManager != null) {
                 int bucket = statsManager.getAppStandbyBucket();
-                return (bucket == STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
+                return (bucket == AlarmSettingsCompat.STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
             }
         }
         return false;
     }
-    public static final int STANDBY_BUCKET_RESTRICTED = 0x0000002d;    // TODO: replace this with UsageStatsManager.STANDBY_BUCKET_RESTRICTED after targeting api30+
 
     /**
      * https://dontkillmyapp.com/xiomi
@@ -932,11 +925,10 @@ public class AlarmSettings
     @TargetApi(34)
     public static Intent getFullScreenIntentSettingsIntent(Context context)
     {
-        Intent intent = new Intent(ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
+        Intent intent = new Intent(AlarmSettingsCompat.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         return intent;
     }
-    public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api29+
 
     public static void openFullScreenIntentSettings(Context context)
     {
@@ -987,7 +979,7 @@ public class AlarmSettings
                 prefs.getBoolean(PREF_KEY_ALARM_BOOTCOMPLETED_RESULT, false));
     }
     public static void savePrefLastBootCompleted(Context context, BootCompletedInfo info) {
-        savePrefLastBootCompleted(context, new BootCompletedInfo(info.getTimeMillis(), info.getAtElapsedMillis(), info.getDurationMillis(), info.getResult()));
+        savePrefLastBootCompleted(context, info.getTimeMillis(), info.getAtElapsedMillis(), info.getDurationMillis());
     }
     public static void savePrefLastBootCompleted(Context context, long timeMillis, long atElapsedMillis, long durationMillis) {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -1041,17 +1033,16 @@ public class AlarmSettings
         MATH("Math Problem"),
         ADDON("Addon");
 
-        private DismissChallenge(String displayString)
-        {
+        private DismissChallenge(@NonNull String displayString) {
             this.displayString = displayString;
         }
 
         private String displayString;
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString(String value)
+        public void setDisplayString(@NonNull String value)
         {
             displayString = value;
         }
@@ -1060,8 +1051,8 @@ public class AlarmSettings
             NONE.setDisplayString(context.getString(R.string.alarmDismiss_none));
             MATH.setDisplayString(context.getString(R.string.alarmDismiss_math));
         }
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
@@ -1100,7 +1091,7 @@ public class AlarmSettings
 
     /**
      * initDisplayStrings
-     * @param context
+     * @param context Context
      */
     public static void initDisplayStrings(Context context) {
         DismissChallenge.initDisplayStrings(context);

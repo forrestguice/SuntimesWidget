@@ -25,12 +25,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.ContextThemeWrapper;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -39,10 +43,13 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -54,7 +61,8 @@ public class AlarmTileBase extends SuntimesTileBase
     public static final ContentValues DEF_ACTION_VALUES =  WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
     public static final boolean DEF_SHOW_LABELS = true;    // show alarm label and note as part of dialog
 
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public AlarmTileBase(@Nullable Activity activity) {
         super(activity);
@@ -66,23 +74,23 @@ public class AlarmTileBase extends SuntimesTileBase
     }
 
     @Override
-    public Intent getConfigIntent(Context context) {
+    public Intent getConfigIntent(@NonNull Context context) {
         return getConfigIntent(context, appWidgetId(), AlarmTileConfigActivity.class);
     }
 
     @Override
-    public Intent getLaunchIntent(Context context) {
+    public Intent getLaunchIntent(@NonNull Context context) {
         return getLaunchIntent(context, appWidgetId(), initData(context));
     }
 
     @Override
     @Nullable
-    protected Intent getLockScreenIntent(Context context) {
+    protected Intent getLockScreenIntent(@NonNull Context context) {
         return new Intent(context, TileLockScreenActivity.class);
     }
 
     @Override
-    protected void initDefaults(Context context)
+    protected void initDefaults(@NonNull Context context)
     {
         super.initDefaults(context);
         WidgetSettings.saveShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS);
@@ -91,7 +99,7 @@ public class AlarmTileBase extends SuntimesTileBase
     }
 
     @Nullable
-    protected AlarmClockItem initAlarmItem(Context context)
+    protected AlarmClockItem initAlarmItem(@NonNull Context context)
     {
         Long rowID = AlarmSettings.loadUpcomingAlarmId(context);
         if (rowID != null && (alarmItem == null || alarmItem.rowID != rowID)) {
@@ -102,6 +110,7 @@ public class AlarmTileBase extends SuntimesTileBase
     protected void clearAlarmItem() {
         alarmItem = null;
     }
+    @Nullable
     protected AlarmClockItem alarmItem = null;
 
     @Override
@@ -110,7 +119,7 @@ public class AlarmTileBase extends SuntimesTileBase
     }
     public static final int UPDATE_RATE = 12000;     // dialog update rate: 12s
 
-    protected Drawable getDialogIcon(Context context)
+    protected Drawable getDialogIcon(@NonNull Context context)
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
         int[] attrs = { R.attr.text_primaryColor };
@@ -120,20 +129,22 @@ public class AlarmTileBase extends SuntimesTileBase
 
         AlarmClockItem alarm = initAlarmItem(context);
         Drawable d = ContextCompat.getDrawable(context, ((alarm != null) ? alarm.getIcon() : R.drawable.ic_action_alarms));
-        d.setTint(ContextCompat.getColor(contextWrapper, color));
+        if (d != null) {
+            d.setTint(ContextCompat.getColor(contextWrapper, color));
+        }
         return d;
     }
 
-    protected SpannableStringBuilder formatDialogTitle(Context context)
+    protected SpannableStringBuilder formatDialogTitle(@NonNull Context context)
     {
         SpannableStringBuilder title = new SpannableStringBuilder();
         AlarmClockItem item = initAlarmItem(context);
         if (item != null)
         {
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
             SpannableString timeDisplay = SuntimesUtils.createBoldSpan(null, timeString, timeString);
             timeDisplay = SuntimesUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
             title.append(timeDisplay);
@@ -144,21 +155,21 @@ public class AlarmTileBase extends SuntimesTileBase
         return title;
     }
 
-    protected SpannableStringBuilder formatDialogMessage(Context context)
+    protected SpannableStringBuilder formatDialogMessage(@NonNull Context context)
     {
         SpannableStringBuilder msg = new SpannableStringBuilder();
         AlarmClockItem item = initAlarmItem(context);
         if (item != null)
         {
             // formatted alarm time
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
             Calendar event = Calendar.getInstance(TimeZone.getDefault());
             event.setTimeInMillis(item.alarmtime);
-            String timeString = utils.calendarTimeShortDisplayString(context, event, false, timeFormat).toString();
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
 
             // formatted "time until"
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
-            String timeUntilString = utils.timeDeltaLongDisplayString(timeUntilMs);
+            String timeUntilString = delta_utils.timeDeltaLongDisplayString(timeUntilMs).toString();
             String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilString);
 
             String eventDisplay = formatEventDisplay(context, item);    // formatted event label
@@ -184,7 +195,7 @@ public class AlarmTileBase extends SuntimesTileBase
                 }
                 if (item.note != null) {
                     msg.append("\n");
-                    msg.append(DataSubstitutions.displayStringForTitlePattern0(context, item.note, data));
+                    msg.append(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, data));
                 }
             }
 
@@ -194,7 +205,7 @@ public class AlarmTileBase extends SuntimesTileBase
         return msg;
     }
 
-    public static String formatEventDisplay(Context context, AlarmClockItem item)
+    public static String formatEventDisplay(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         String eventString = item.getEvent();
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="api_29_plus">true</bool>
+    <bool name="supports_condition_service">false</bool>    <!-- ConditionService deprecated api29+ -->
+</resources>

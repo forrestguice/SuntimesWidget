@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_location_togglelog"
+        android:icon="?attr/icActionAbout"
+        android:title="@string/configLabel_getFix_lastRequest_flag"
+        android:checkable="true"
+        android:orderInCategory="100" />
+
+    <item android:id="@+id/action_location_agps_reload"
+        android:icon="?attr/icActionGPS_satellite"
+        android:title="@string/configLabel_getFix_gnss_agps_reload"
+        android:orderInCategory="200" />
+
+    <item android:id="@+id/action_location_agps_delete"
+        android:icon="?attr/icActionWarning"
+        android:title="@string/configLabel_getFix_gnss_agps_delete"
+        android:orderInCategory="300" />
+
+</menu>

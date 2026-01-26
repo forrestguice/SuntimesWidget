@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:left="0dp" android:right="0dp">
+    <shape android:shape="rectangle">
+        <size android:width="22dp" android:height="22dp" />
+        <solid android:color="@color/monet_dark_alarm_disabled_bg" />
+        <stroke android:width="0dp" android:color="@color/monet_dark_alarm_disabled_stroke" />
+        <corners android:radius="@dimen/alarmcard_corners_disabled" />
+    </shape>
+</item>
+</layer-list>

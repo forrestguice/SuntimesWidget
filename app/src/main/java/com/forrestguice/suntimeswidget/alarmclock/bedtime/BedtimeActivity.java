@@ -30,13 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -45,6 +39,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
@@ -52,13 +48,19 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.List;
 
@@ -71,11 +73,13 @@ public class BedtimeActivity extends AppCompatActivity
 
     private static final String EXTRA_SHOWBACK = AlarmClockActivity.EXTRA_SHOWBACK;
 
-    private static final int REQUEST_SETTINGS = 20;
+    private static final int REQUEST_SETTINGS = SuntimesNavigation.REQUEST_SETTINGS;
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(REQUEST_SETTINGS);
 
     private static final String DIALOGTAG_HELP = "helpDialog";
 
     protected Toolbar menubar;
+    @Nullable
     private BedtimeDialog list;
     private AppSettings.LocaleInfo localeInfo;
     private SuntimesNavigation navigation;
@@ -141,9 +145,9 @@ public class BedtimeActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_SETTINGS:
@@ -218,7 +222,7 @@ public class BedtimeActivity extends AppCompatActivity
 
     protected void onAlarmItemUpdated(@Nullable Long alarmID, boolean deleted)
     {
-        BedtimeItemAdapter adapter = list.getAdapter();
+        BedtimeItemAdapter adapter = (list != null ? list.getAdapter() : null);
         if (adapter != null)
         {
             if (alarmID != null)
@@ -235,11 +239,10 @@ public class BedtimeActivity extends AppCompatActivity
                             list.notifyItemChanged(position);
                             continue;
                         }
-                        item.loadAlarmItem(this, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+                        item.loadAlarmItem(this, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
                         {
                             @Override
-                            public void onLoadFinished(List<AlarmClockItem> result) {
-                                super.onLoadFinished(result);
+                            public void onFinished(List<AlarmClockItem> result) {
                                 list.notifyItemChanged(position);
                             }
                         });
@@ -250,7 +253,9 @@ public class BedtimeActivity extends AppCompatActivity
                 list.notifyItemChanged(0);
             }
         } else {
-            list.reloadAdapter();
+            if (list != null) {
+                list.reloadAdapter();
+            }
         }
     }
 
@@ -304,7 +309,7 @@ public class BedtimeActivity extends AppCompatActivity
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
@@ -316,7 +321,7 @@ public class BedtimeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         saveWarnings(outState);
@@ -339,14 +344,13 @@ public class BedtimeActivity extends AppCompatActivity
 
         menubar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menubar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
             if (!showBack) {
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);   // TODO: "suntimes alarms" icon
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_suntimes);   // TODO: "suntimes alarms" icon
             }
         }
 
@@ -361,7 +365,9 @@ public class BedtimeActivity extends AppCompatActivity
         menubar.setBackgroundColor(menubarColor);
 
         list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        list.setDialogListener(dialogListener(menubarColor));
+        if (list != null) {
+            list.setDialogListener(dialogListener(menubarColor));
+        }
     }
 
     private BedtimeDialog.DialogListener dialogListener(final int initialColor)
@@ -371,7 +377,7 @@ public class BedtimeActivity extends AppCompatActivity
             private int backgroundColor = initialColor;
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int lastCompletelyVisibleItemPosition)
+            public void onScrolled(int lastCompletelyVisibleItemPosition)
             {
                 if (menubar != null)
                 {
@@ -437,34 +443,31 @@ public class BedtimeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_permission:
-                BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
-                //AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_permission) {
+            BedtimeSettings.startDoNotDisturbAccessActivity(BedtimeActivity.this);
+            //AlarmNotifications.NotificationService.triggerBedtimeMode(this, true);
+            return true;
 
-            case R.id.action_settings:
-                showSettings();
-                return true;
+        } else if (itemId == R.id.action_settings) {
+            showSettings();
+            return true;
 
-            case R.id.action_help:
-                showHelp(this);
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp(this);
+            return true;
 
-            case R.id.action_about:
-                navigation.showAbout(this);
-                return true;
+        } else if (itemId == R.id.action_about) {
+            navigation.showAbout(this);
+            return true;
 
-            case android.R.id.home:
-                if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
-                    onBackPressed();
-                else onHomePressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
+                onBackPressed();
+            else onHomePressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -485,18 +488,17 @@ public class BedtimeActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        startActivityForResult_settings.launch(settingsIntent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 

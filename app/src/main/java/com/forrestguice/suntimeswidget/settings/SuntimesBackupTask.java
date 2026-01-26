@@ -30,14 +30,14 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
+
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.Pair;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
@@ -45,21 +45,25 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.ui.colors.BrightAlarmColorValuesCollection;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
+import com.forrestguice.suntimeswidget.colors.ColorValuesJSON;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventExportTask;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
 import com.forrestguice.suntimeswidget.tiles.ClockTileService;
 import com.forrestguice.suntimeswidget.tiles.NextEventTileService;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -158,8 +162,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         out.write(("\"" + KEY_VERSION + "\": " + BuildConfig.VERSION_CODE).getBytes());                // declare version (expected to be the second item)
         int c = 2;    // keys written
 
-        if (includedKeys.containsKey(KEY_APPSETTINGS) && includedKeys.get(KEY_APPSETTINGS))
+        if (containsAndisTrue(includedKeys, KEY_APPSETTINGS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -170,6 +175,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             if (Build.VERSION.SDK_INT >= 24)
             {
+                //noinspection ConstantConditions
                 if (c > 0) {
                     out.write(",\n".getBytes());
                 }
@@ -180,8 +186,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             }
         }
 
-        if (includedKeys.containsKey(KEY_WIDGETSETTINGS) && includedKeys.get(KEY_WIDGETSETTINGS) && appWidgetIds.size() > 0)
+        if (containsAndisTrue(includedKeys, KEY_WIDGETSETTINGS) && appWidgetIds.size() > 0)
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -191,8 +198,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_ALARMITEMS) && includedKeys.get(KEY_ALARMITEMS))
+        if (containsAndisTrue(includedKeys, KEY_ALARMITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -202,20 +210,25 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_EVENTITEMS) && includedKeys.get(KEY_EVENTITEMS))
+        if (containsAndisTrue(includedKeys, KEY_EVENTITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
             out.write(("\"" + KEY_EVENTITEMS + "\": ").getBytes());    // include EventItems
-            List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
-            events.addAll(EventSettings.loadEvents(context, AlarmEventProvider.EventType.SHADOWLENGTH));
-            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventSettings.EventAlias[0]), out);
+            List<EventAlias> events = EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SUN_ELEVATION);
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOONILLUM));
+            events.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.MOON_ELEVATION));
+            EventExportTask.writeEventItemsJSONArray(context, events.toArray(new EventAlias[0]), out);
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_PLACEITEMS) && includedKeys.get(KEY_PLACEITEMS))
+        if (containsAndisTrue(includedKeys, KEY_PLACEITEMS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -225,8 +238,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_ACTIONS) && includedKeys.get(KEY_ACTIONS))
+        if (containsAndisTrue(includedKeys, KEY_ACTIONS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -236,8 +250,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_WIDGETTHEMES) && includedKeys.get(KEY_WIDGETTHEMES))
+        if (containsAndisTrue(includedKeys, KEY_WIDGETTHEMES))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -247,8 +262,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             c++;
         }
 
-        if (includedKeys.containsKey(KEY_COLORS) && includedKeys.get(KEY_COLORS))
+        if (containsAndisTrue(includedKeys, KEY_COLORS))
         {
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -256,6 +272,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             writeColorsJSONArray(context, new AppColorValuesCollection<ColorValues>(context), out);
             c++;
 
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -263,6 +280,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             writeColorsJSONArray(context, new WorldMapColorValuesCollection<ColorValues>(context), out);
             c++;
 
+            //noinspection ConstantConditions
             if (c > 0) {
                 out.write(",\n".getBytes());
             }
@@ -275,12 +293,22 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         out.flush();
     }
 
+    public static boolean containsAndisTrue(Map<String, Boolean> map, String key)
+    {
+        if (map.containsKey(key)) {
+            Boolean b = map.get(key);
+            return (b != null && b);
+        }
+        return false;
+    }
+
     /**
      * writes
      *   [{ ColorValues }, ...]
      */
     public static void writeColorsJSONArray(Context context, ColorValuesCollection<ColorValues> collection, BufferedOutputStream out) throws IOException
     {
+        ColorValuesJSON json = new ColorValuesJSON();
         out.write("[".getBytes());
 
         int c = 0;
@@ -292,7 +320,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
             ColorValues colors = collection.getColors(context, colorsID);
             if (colors != null) {
-                out.write(colors.toJSON().getBytes());
+                out.write(json.toJSON(colors).getBytes());
                 c++;
             }
         }
@@ -432,10 +460,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 WidgetSettingsExportTask.addWidgetMetadata(context);
                 SuntimesBackupTask task = (uri != null ? new SuntimesBackupTask(context, uri)
                         : new SuntimesBackupTask(context, SuntimesBackupTask.DEF_EXPORT_TARGET, true, true));  // export to external cache;
-                task.setTaskListener(exportListener);
                 task.includeInBackup(keys, checked);
                 task.setAppWidgetIds(getAllWidgetIds(context));
-                task.execute();
+                ExecutorUtils.runProgress("ExportSettingsTask", task, exportListener);
             }
         });
     }
@@ -443,7 +470,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     protected static ArrayList<Integer> getAllWidgetIds(Context context)
     {
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             ids.addAll(getAllWidgetIds(context, widgetClass));
         }
         ids.add(0);                                                    // include app config and quick settings tiles
@@ -452,7 +479,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ids.add(AlarmTileService.ALARMTILE_APPWIDGET_ID);
         return ids;
     }
-    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class widgetClass)
+    protected static ArrayList<Integer> getAllWidgetIds(Context context, Class<?> widgetClass)
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
@@ -583,17 +610,16 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
     {
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, message, (result ? 7000 : Snackbar.LENGTH_LONG));
-
             if (report != null) {
-                snackbar.setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report));
+                SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
+                        .setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report))
+                        .show();
 
             } else if (result && shareUri != null) {
-                snackbar.setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri));
+                SnackbarUtils.make(context, view, message, 7000)
+                        .setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri))
+                        .show();
             }
-
-            ViewUtils.themeSnackbar(context, snackbar, null);
-            snackbar.show();
         }
     }
 

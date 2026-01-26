@@ -19,24 +19,13 @@
 package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+
 import android.content.Context;
 import android.content.DialogInterface;
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -45,18 +34,25 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerPagerAdapter;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.lifecycle.Observer;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
+import com.forrestguice.support.view.ViewPager;
+import com.forrestguice.support.widget.LinearSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.widget.TabLayout;
 
 import java.util.ArrayList;
 
-public class ColorDialog extends BottomSheetDialogFragment
+public class ColorDialog extends BottomSheetDialogBase
 {
     public static final String PREFS_COLORDIALOG = "ColorDialog";
     public static final String KEY_COLORPICKER = "colorPicker";
@@ -112,8 +108,8 @@ public class ColorDialog extends BottomSheetDialogFragment
         } else {
             colorPagerArgs.putInt(KEY_SUGGESTED, color);
         }
-        if (isAdded()) {
-            updateViews(getActivity());
+        if (isAdded() && getContext() != null) {
+            updateViews(getContext());
         }
     }
 
@@ -140,15 +136,15 @@ public class ColorDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        Context context = getContext();
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(ColorPickerFragment.ColorPickerModel.class);
-        viewModel.setColor(getArguments().getInt(KEY_COLOR));
-        viewModel.setColorUnder(getArguments().getInt(KEY_COLOR_UNDER));
-        viewModel.setColorOver(getArguments().getInt(KEY_COLOR_OVER));
-        viewModel.setPreviewMode(getArguments().getInt(KEY_PREVIEW_MODE));
+        viewModel = ViewModelProviders.of(requireActivity()).get(ColorPickerFragment.ColorPickerModel.class);
+        viewModel.setColor(getArgs().getInt(KEY_COLOR));
+        viewModel.setColorUnder(getArgs().getInt(KEY_COLOR_UNDER));
+        viewModel.setColorOver(getArgs().getInt(KEY_COLOR_OVER));
+        viewModel.setPreviewMode(getArgs().getInt(KEY_PREVIEW_MODE));
         viewModel.setShowAlpha(showAlpha());
 
         if (savedState != null)
@@ -157,7 +153,7 @@ public class ColorDialog extends BottomSheetDialogFragment
             setShowAlpha(savedState.getBoolean(KEY_SHOWALPHA, showAlpha()));
             setRecentColors(savedState.getIntegerArrayList(KEY_RECENT));
         }
-        initViews(getActivity(), dialogContent);
+        initViews(context, dialogContent);
 
         SharedPreferences prefs = context.getSharedPreferences(PREFS_COLORDIALOG, Context.MODE_PRIVATE);
         colorPager.setCurrentItem(prefs.getInt(KEY_COLORPICKER, 0));
@@ -165,7 +161,8 @@ public class ColorDialog extends BottomSheetDialogFragment
         return dialogContent;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -190,21 +187,22 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            Context context = getActivity();
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_cancel.requestFocus();
             }
         }
     };
 
-    private DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
+    private final DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
     {
         @Override
         public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
         {
             if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE)
             {
-                getDialog().cancel();
+                if (getDialog() != null) {
+                    getDialog().cancel();
+                }
                 if (colorDialogListener != null) {
                     colorDialogListener.onCanceled();
                 }
@@ -215,7 +213,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     };
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_COLOR, getColor());
@@ -289,8 +287,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         recentColors.setAdapter(recentColors_adapter);
         recentColors.scrollToPosition(0);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(recentColors);
+        new LinearSnapHelper().attachToRecyclerView(recentColors);
 
         btn_suggest = (Button) dialogContent.findViewById(R.id.dialog_button_suggest);
         if (btn_suggest != null) {
@@ -307,13 +304,13 @@ public class ColorDialog extends BottomSheetDialogFragment
             btn_accept.setOnClickListener(onDialogAcceptClick);
         }
 
-        viewModel.color.observe(getActivity(), new Observer<Integer>()
+        viewModel.color.observe(requireActivity(), new Observer<Integer>()
         {
             @Override
             public void onChanged(@Nullable Integer value)
             {
-                if (isAdded() && getView() != null) {
-                    updateViews(getActivity());
+                if (isAdded() && getView() != null && getContext() != null) {
+                    updateViews(getContext());
                 }
             }
         });
@@ -321,7 +318,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         updateViews(context);
     }
 
-    public void updateViews(Context context)
+    public void updateViews(@NonNull Context context)
     {
         if (btn_suggest != null) {
             btn_suggest.setVisibility(suggestedColor() != null ? View.VISIBLE : View.GONE);
@@ -342,7 +339,9 @@ public class ColorDialog extends BottomSheetDialogFragment
     private final View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
             if (colorDialogListener != null) {
                 colorDialogListener.onCanceled();
             }
@@ -367,24 +366,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
-    private ArrayList<Integer> recentColors_list = new ArrayList<>();
+    private final ArrayList<Integer> recentColors_list = new ArrayList<>();
     public void setRecentColors(ArrayList<Integer> colors)
     {
         recentColors_list.clear();

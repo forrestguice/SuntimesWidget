@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
 
 /**
  * A preferences activity for the main app;
@@ -31,8 +31,10 @@ public interface SettingsActivityInterface
 
     int REQUEST_HEADER = 10;
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     int REQUEST_PICKTHEME_LIGHT = 20;      // SuntimesTheme (legacy)
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     int REQUEST_PICKTHEME_DARK = 30;       // SuntimesTheme (legacy)
 

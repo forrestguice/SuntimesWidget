@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,14 +35,14 @@ import org.junit.runner.RunWith;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmClockItemTest
 {
     private Context context;
 
     @Before
     public void setup() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test

@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.preference.ListPreference;
 
 /**
  * A preference with an "action" button; should be provided with a `widgetLayout` containing

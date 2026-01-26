@@ -25,14 +25,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+
 import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +36,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -52,14 +44,31 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.support.widget.FloatingActionButton;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.widget.SwitchCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 {
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public BedtimeViewHolder(View view)
     {
@@ -96,7 +105,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     }
 
     protected void clearViews() {}
-    protected void updateViews(Context context, BedtimeItem item) {}
+    protected void updateViews(Context context, @Nullable BedtimeItem item) {}
 
     @Nullable
     public View getClickView() {
@@ -115,6 +124,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         return null;
     }
 
+    @Nullable
     protected Runnable updateTask = null;
     protected void setUpdateTask(@Nullable Runnable value)
     {
@@ -131,7 +141,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
     public void startUpdateTask()
     {
-        if (itemView != null && updateTask != null) {
+        if (updateTask != null) {
             itemView.removeCallbacks(updateTask);
             itemView.post(updateTask);
             taskIsRunning = true;
@@ -139,7 +149,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
     }
     public void stopUpdateTask()
     {
-        if (itemView != null && updateTask != null) {
+        if (updateTask != null) {
             itemView.removeCallbacks(updateTask);
             taskIsRunning = false;
         }
@@ -170,7 +180,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         protected View text_time_layout;
         protected TextView text_time;
         protected TextView text_time_suffix;
-        protected Switch switch_enabled;
+        protected SwitchCompat switch_enabled;
 
         protected View layout_more;
         protected TextView status_sound;
@@ -190,7 +200,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             text_time_layout = view.findViewById(R.id.text_time_layout);
             text_time = (TextView) view.findViewById(R.id.text_time);
             text_time_suffix = (TextView) view.findViewById(R.id.text_time_suffix);
-            switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
+            switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);
             layout_more = view.findViewById(R.id.layout_more);
             status_sound = (TextView) view.findViewById(R.id.status_sound);
             status_silent = (ImageView) view.findViewById(R.id.status_silent);
@@ -245,13 +255,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             //setAlarmItem(null);
         }
 
-        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, AlarmListDialog.AlarmListTask.AlarmListTaskListener taskListener)
+        protected void loadAlarmItem(Context context, BedtimeItem item, @Nullable Long rowID, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
         {
             if (rowID != null && rowID != BedtimeSettings.ID_NONE)
             {
-                AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context);
-                listTask.setTaskListener(taskListener);
-                listTask.execute(rowID);
+                AlarmListDialog.AlarmListTask listTask = new AlarmListDialog.AlarmListTask(context, new Long[] { rowID });
+                ExecutorUtils.runProgress("LoadAlarmTask", listTask, taskListener);
 
             } else {
                 updateViews(context, item);
@@ -316,7 +325,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             if (card != null)
             {
-                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                Drawable background0 = ContextCompat.getDrawable(context, resId);
+                Drawable background = (background0 != null ? background0.mutate() : null);
                 if (Build.VERSION.SDK_INT >= 16) {
                     card.setBackground(background);
                 } else {
@@ -335,11 +345,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             if (context != null)
             {
-                int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
+                int[] attrs = { R.attr.alarmColorEnabled, R.attr.colorControlNormal,
                         R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
                 TypedArray a = context.obtainStyledAttributes(attrs);
                 @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
-                @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
+                @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.white));
                 @SuppressLint("ResourceType") int cardBgOn = a.getResourceId(2, R.drawable.card_alarmitem_enabled_dark);
                 @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
                 a.recycle();
@@ -352,12 +362,12 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     AlarmNotifications.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
-                    SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+                    TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false);
 
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
-                        DrawableCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
+                        Drawable d = ContextCompat.wrap(getCompoundDrawableStart(context, text_label));
+                        ContextCompat.setTint(d, alarmItem.enabled ? colorOn : colorOff);
                     }
                     if (text_time != null) {
                         text_time.setText(timeText.getValue());
@@ -399,8 +409,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     setCardBackground(context, cardBgOff);
                     if (text_label != null)
                     {
-                        Drawable d = DrawableCompat.wrap(getCompoundDrawableStart(context, text_label));
-                        DrawableCompat.setTint(d, colorOff);
+                        Drawable d = ContextCompat.wrap(getCompoundDrawableStart(context, text_label));
+                        ContextCompat.setTint(d, colorOff);
                     }
                     if (text_time_layout != null) {
                         text_time_layout.setVisibility(View.GONE);
@@ -482,7 +492,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             return R.layout.layout_listitem_bedtime_notify;
         }
 
-        private CompoundButton.OnCheckedChangeListener onDndCheckChanged = new CompoundButton.OnCheckedChangeListener() {
+        private final CompoundButton.OnCheckedChangeListener onDndCheckChanged = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 check_dnd.setChecked(!isChecked);
@@ -532,69 +542,68 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
         protected void showDndMenu(final Context context, View view)
         {
-            PopupMenu.OnMenuItemClickListener menuClickListener = new PopupMenu.OnMenuItemClickListener()
+            PopupMenuCompat.PopupMenuListener menuClickListener = new PopupMenuCompat.PopupMenuListener()
             {
+                @Override
+                public void onUpdateMenu(Context context, Menu menu)
+                {
+                    boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+                    //boolean dnd = BedtimeSettings.isAutomaticZenRuleEnabled(context);  //BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
+
+                    if (dnd)
+                    {
+                        int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
+                        switch (filter)
+                        {
+                            case BedtimeSettings.DND_FILTER_ALARMS:
+                                MenuItem dndAlarmsItem = menu.findItem(R.id.action_dnd_alarms);
+                                if (dndAlarmsItem != null) {
+                                    dndAlarmsItem.setChecked(true);
+                                }
+                                break;
+
+                            case BedtimeSettings.DND_FILTER_PRIORITY:
+                                MenuItem dndPriorityItem = menu.findItem(R.id.action_dnd_priority);
+                                if (dndPriorityItem != null) {
+                                    dndPriorityItem.setChecked(true);
+                                }
+                                break;
+                        }
+
+                    } else {
+                        MenuItem dndDisabledItem = menu.findItem(R.id.action_dnd_disable);
+                        if (dndDisabledItem != null) {
+                            dndDisabledItem.setChecked(true);
+                        }
+                    }
+                }
+
                 @Override
                 public boolean onMenuItemClick(MenuItem item)
                 {
-                    switch (item.getItemId())
-                    {
-                        case R.id.action_dnd_alarms:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_ALARMS);
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
-                            BedtimeSettings.setAutomaticZenRule(context, true);
-                            updateView_dnd(context);
-                            return true;
-
-                        case R.id.action_dnd_priority:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_PRIORITY);
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
-                            BedtimeSettings.setAutomaticZenRule(context, true);
-                            updateView_dnd(context);
-                            return true;
-
-                        case R.id.action_dnd_disable:
-                        default:
-                            BedtimeSettings.savePrefBedtimeDoNotDisturb(context, false);
-                            BedtimeSettings.setAutomaticZenRule(context, false);
-                            updateView_dnd(context);
-                            return true;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.action_dnd_alarms) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_ALARMS);
+                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                        BedtimeSettings.setAutomaticZenRule(context, true);
+                        updateView_dnd(context);
+                        return true;
+                        
+                    } else if (itemId == R.id.action_dnd_priority) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbFilter(context, BedtimeSettings.DND_FILTER_PRIORITY);
+                        BedtimeSettings.savePrefBedtimeDoNotDisturb(context, true);
+                        BedtimeSettings.setAutomaticZenRule(context, true);
+                        updateView_dnd(context);
+                        return true;
                     }
+                    BedtimeSettings.savePrefBedtimeDoNotDisturb(context, false);
+                    BedtimeSettings.setAutomaticZenRule(context, false);
+                    updateView_dnd(context);
+                    return true;
                 }
             };
 
-            PopupMenu popupMenu = PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener, null);
-            Menu menu = popupMenu.getMenu();
-            boolean dnd = BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
-            //boolean dnd = BedtimeSettings.isAutomaticZenRuleEnabled(context);  //BedtimeSettings.loadPrefBedtimeDoNotDisturb(context);
-
-            if (dnd)
-            {
-                int filter = BedtimeSettings.loadPrefBedtimeDoNotDisturbFilter(context);
-                switch (filter)
-                {
-                    case BedtimeSettings.DND_FILTER_ALARMS:
-                        MenuItem dndAlarmsItem = menu.findItem(R.id.action_dnd_alarms);
-                        if (dndAlarmsItem != null) {
-                            dndAlarmsItem.setChecked(true);
-                        }
-                        break;
-
-                    case BedtimeSettings.DND_FILTER_PRIORITY:
-                        MenuItem dndPriorityItem = menu.findItem(R.id.action_dnd_priority);
-                        if (dndPriorityItem != null) {
-                            dndPriorityItem.setChecked(true);
-                        }
-                        break;
-                }
-
-            } else {
-                MenuItem dndDisabledItem = menu.findItem(R.id.action_dnd_disable);
-                if (dndDisabledItem != null) {
-                    dndDisabledItem.setChecked(true);
-                }
-            }
-            popupMenu.show();
+            PopupMenuCompat.createMenu(context, view, R.menu.bedtime_dnd, menuClickListener).show();
         }
 
         @Override
@@ -631,14 +640,14 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
             if (context != null)
             {
                 updateView_dnd(context);
 
-                AlarmClockItem alarmItem = item.getAlarmItem();
+                AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
                 if (alarmItem != null)
                 {
                     if (text_label != null) {
@@ -711,11 +720,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = item.getAlarmItem();
+            AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
             //if (layout_more != null) {
             //    layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             //}
@@ -747,7 +756,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         }
                     }
 
-                    String offsetString = utils.timeDeltaLongDisplayString(offset);
+                    String offsetString = delta_utils.timeDeltaLongDisplayString(offset).toString();
                     String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
                     CharSequence labelDisplay = SuntimesUtils.createBoldSpan(null, labelString, offsetString);
                     text_label.setText(labelDisplay);
@@ -778,11 +787,11 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             super.updateViews(context, item);
 
-            AlarmClockItem alarmItem = item.getAlarmItem();
+            AlarmClockItem alarmItem = (item != null ? item.getAlarmItem() : null);
             if (layout_more != null) {
                 layout_more.setVisibility(alarmItem != null ? View.VISIBLE : View.GONE);
             }
@@ -846,7 +855,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         }
 
         @Override
-        protected void updateViews(Context context, BedtimeItem item)
+        protected void updateViews(Context context, @Nullable BedtimeItem item)
         {
             int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
                     R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
@@ -857,7 +866,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             @SuppressLint("ResourceType") int cardBgOff = a.getResourceId(3, R.drawable.card_alarmitem_disabled_dark);
             a.recycle();
 
-            AlarmClockItem bedtimeOff = item.getAlarmItem();
+            AlarmClockItem bedtimeOff = (item != null ? item.getAlarmItem() : null);
             boolean enabled = (bedtimeOff != null && bedtimeOff.enabled);
             setCardBackground(context, enabled ? cardBgOn : cardBgOff);
 
@@ -866,7 +875,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (text_totalsleep != null)
                 {
                     long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-                    String sleepTotalString = utils.timeDeltaLongDisplayString(sleepTotalMs);
+                    String sleepTotalString = delta_utils.timeDeltaLongDisplayString(sleepTotalMs).toString();
                     String displayString = context.getString(R.string.msg_bedtime_sleep_length, sleepTotalString);
                     SpannableString sleepTimeDisplay = SuntimesUtils.createBoldSpan(null, displayString, sleepTotalString);
                     text_totalsleep.setText(sleepTimeDisplay);
@@ -875,7 +884,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (text_sleepcycle != null)
                 {
                     long sleepOffsetMs = BedtimeSettings.loadPrefSleepOffsetMs(context);
-                    String offsetString = utils.timeDeltaLongDisplayString(sleepOffsetMs);
+                    String offsetString = delta_utils.timeDeltaLongDisplayString(sleepOffsetMs).toString();
 
                     boolean useSleepCycle = BedtimeSettings.loadPrefUseSleepCycle(context);
                     if (useSleepCycle)
@@ -884,8 +893,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         int sleepCycleCount = (int) BedtimeSettings.loadPrefSleepCycleCount(context);
 
                         String sleepCycleCountString = context.getResources().getQuantityString(R.plurals.cyclePlural, sleepCycleCount, sleepCycleCount);  //String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
-                        String sleepCycleString = utils.timeDeltaLongDisplayString(sleepCycleMs);
-                        String sleepCycleHoursString = utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount));
+                        String sleepCycleString = delta_utils.timeDeltaLongDisplayString(sleepCycleMs).toString();
+                        String sleepCycleHoursString = delta_utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount)).toString();
 
                         String displayString = (sleepOffsetMs > 0)
                                 ? context.getString(R.string.msg_bedtime_sleep_length_cycles_plus, sleepCycleCountString, sleepCycleString, offsetString)
@@ -899,7 +908,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
                     } else {
                         long sleepMs = BedtimeSettings.loadPrefSleepMs(context);
-                        String sleepTimeString = utils.timeDeltaLongDisplayString(sleepMs);
+                        String sleepTimeString = delta_utils.timeDeltaLongDisplayString(sleepMs).toString();
                         String displayString = (sleepOffsetMs > 0)
                                 ? context.getString(R.string.msg_bedtime_sleep_length_other_plus, sleepTimeString, offsetString)
                                 : "";
@@ -940,7 +949,8 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             if (card != null)
             {
-                Drawable background = ContextCompat.getDrawable(context, resId).mutate();
+                Drawable background0 = ContextCompat.getDrawable(context, resId);
+                Drawable background = (background0 != null ? background0.mutate() : null);
                 if (Build.VERSION.SDK_INT >= 16) {
                     card.setBackground(background);
                 } else {
@@ -1021,7 +1031,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             {
                 Calendar now = Calendar.getInstance();
                 AlarmNotifications.updateAlarmTime(context, bedtime, now, true);
-                String deltaString = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
+                String deltaString = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
                 String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
                 CharSequence noteDisplay = SuntimesUtils.createBoldSpan(null, noteString, deltaString);
                 note.setText(noteDisplay);

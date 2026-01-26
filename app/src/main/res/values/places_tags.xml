@@ -443,7 +443,7 @@
         <item>[PE-UCA]|Ucayali</item>
     </string-array>
 
-    <string-array name="places_tags_PL">
+    <string-array name="place_tags_PL">
         <item>[PL]|Poland, Baltic Sea*, Europe</item>
         <item>[PL-02]|Lower Silesian</item>
         <item>[PL-06]|Lublin</item>

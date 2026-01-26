@@ -33,7 +33,7 @@
             android:orientation="vertical"
             android:layout_gravity="center" android:gravity="center">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/add_offset_day"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:scaleType="fitCenter"
@@ -74,7 +74,7 @@
             android:orientation="vertical"
             android:layout_gravity="center" android:gravity="center">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/add_offset_hour"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:scaleType="fitCenter"
@@ -115,7 +115,7 @@
             android:layout_gravity="center" android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/add_offset_minute"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:scaleType="fitCenter"
@@ -157,7 +157,7 @@
             android:layout_gravity="center" android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/add_offset_seconds"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:scaleType="fitCenter"

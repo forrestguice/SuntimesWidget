@@ -19,24 +19,41 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@style/SunsetTimeWidget_dark"
-        android:layout_marginBottom="@dimen/settingsGroup_margin"
-        android:paddingLeft="5dp" android:paddingRight="5dp">
+        style="@style/SunsetTimeSettingsGroupLayout">
 
-        <TextView style="@style/SunsetTimeSettingsGroupTitle"
-                  android:id="@+id/appwidget_timezone_grouptitle"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" android:text="@string/configLabel_timezone" />
-
-        <LinearLayout
+        <LinearLayout android:id="@+id/settings_group_timezone_header"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="4dp">
+            style="@style/SunsetTimeSettingsGroupHeader">
 
-            <include layout="@layout/layout_settings_timezone0" />
+            <TextView style="@style/SunsetTimeSettingsGroupTitle"
+                      android:id="@+id/appwidget_timezone_grouptitle"
+                      android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="@string/configLabel_timezone" />
+
+            <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
+
+            <CheckBox android:id="@+id/settings_group_timezone_button"
+                style="@style/SunsetTimeSettingsExpandCheckBox"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
+        <LinearLayout style="@style/SunsetTimeSettingsGroupContentArea"
+            android:id="@+id/settings_group_timezone_content"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/widget_settings_label_padding_left"
+            android:paddingRight="@dimen/widget_settings_label_padding_left"
+            android:paddingTop="4dp" android:orientation="vertical">
+
+            <include layout="@layout/layout_settings_timezone0" />
+
+            <CheckBox
+                android:id="@+id/appwidget_timezone_fromapp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/configLabel_timezone_fromapp" android:textSize="?attr/text_size_small" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

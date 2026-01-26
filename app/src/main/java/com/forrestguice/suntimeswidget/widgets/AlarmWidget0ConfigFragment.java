@@ -21,11 +21,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 
-import android.util.Pair;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +34,13 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_K
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_SORTORDER;
 import static com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES;
 
-public class AlarmWidget0ConfigFragment extends DialogFragment
+public class AlarmWidget0ConfigFragment extends DialogBase
 {
     public AlarmWidget0ConfigFragment()
     {
@@ -307,19 +307,19 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
      * setAlarmWidgetValue
      */
     public void setAlarmWidgetValue(String key, String value) {
-        getArguments().putString(key, value);
+        getArgs().putString(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, boolean value) {
-        getArguments().putBoolean(key, value);
+        getArgs().putBoolean(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, int value) {
-        getArguments().putInt(key, value);
+        getArgs().putInt(key, value);
         updateViews(getActivity());
     }
     public void setAlarmWidgetValue(String key, String[] value) {
-        getArguments().putStringArray(key, value);
+        getArgs().putStringArray(key, value);
         updateViews(getActivity());
     }
 
@@ -327,16 +327,16 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
      * getAlarmWidgetValue
      */
     public String getAlarmWidgetString(String key, String defaultValue) {
-        return getArguments().getString(key, defaultValue);
+        return getArgs().getString(key, defaultValue);
     }
     public int getAlarmWidgetInt(String key, int defaultValue) {
-        return getArguments().getInt(key, defaultValue);
+        return getArgs().getInt(key, defaultValue);
     }
     public boolean getAlarmWidgetBool(String key, boolean defaultValue) {
-        return getArguments().getBoolean(key, defaultValue);
+        return getArgs().getBoolean(key, defaultValue);
     }
     public String[] getAlarmWidgetStringSet(String key, String[] defaultValue) {
-        String[] value = getArguments().getStringArray(key);
+        String[] value = getArgs().getStringArray(key);
         return (value != null ? value : defaultValue);
     }
 
@@ -383,6 +383,7 @@ public class AlarmWidget0ConfigFragment extends DialogFragment
         }
 
         protected String displayString = "";
+        @NonNull
         public String toString() {
             return displayString;
         }

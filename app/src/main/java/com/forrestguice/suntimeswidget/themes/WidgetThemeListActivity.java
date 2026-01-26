@@ -28,7 +28,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -37,13 +36,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -52,15 +44,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.view.WindowManager;
 import android.widget.AdapterView;
-
 import android.widget.GridView;
-
 import android.widget.ImageView;
 
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -74,11 +68,15 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.ActionModeCompat;
+import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.File;
-
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.ADD_THEME_REQUEST;
-import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
 
 public class WidgetThemeListActivity extends AppCompatActivity
 {
@@ -87,9 +85,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     public static final int WALLPAPER_DELAY = 1000;
 
+    public static final int ADD_THEME_REQUEST = WidgetThemeConfigActivity.ADD_THEME_REQUEST;
+    public static final int EDIT_THEME_REQUEST = WidgetThemeConfigActivity.EDIT_THEME_REQUEST;
     public static final int PICK_THEME_REQUEST = 1;
     public static final int IMPORT_REQUEST = 100;
     public static final int EXPORT_REQUEST = 200;
+
+    private final ActivityResultLauncherCompat startActivityForResult_addTheme = registerForActivityResultCompat(ADD_THEME_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_editTheme = registerForActivityResultCompat(EDIT_THEME_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EXPORT_REQUEST);
+    private final ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(IMPORT_REQUEST);
 
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
@@ -97,20 +102,24 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     private boolean adapterModified = false;
     private GridView gridView;
-    private ActionBar actionBar;
 
-    protected ActionMode actionMode = null;
+    @Nullable
+    protected ActionModeCompat actionMode = null;
     private WidgetThemeActionCompat themeActions;
+    @Nullable
     private SuntimesTheme.ThemeDescriptor selected = null;
 
     private ProgressDialog progress;
+    @Nullable
     private static ExportThemesTask exportTask = null;
+    @Nullable
     private static ImportThemesTask importTask = null;
     private static boolean isExporting = false, isImporting = false;
 
     private int previewID = 0;
     private boolean disallowSelect = false;
-    private String preselectedTheme;
+    @Nullable
+    private String preselectedTheme = null;
     private boolean useWallpaper = false;
 
     public WidgetThemeListActivity()
@@ -165,12 +174,12 @@ public class WidgetThemeListActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
-        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        data.setCompareMode(CompareMode.TOMORROW);
+        data.setTimeMode(TimeMode.OFFICIAL);
         data.calculate(context);
 
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data.linkData(noonData);
     }
@@ -215,11 +224,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
     {
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -227,8 +235,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void initThemeAdapter(Context context)
     {
+        SuntimesRiseSetData linked = data.getLinked();
         adapter = new WidgetThemes.ThemeGridAdapter(context, WidgetThemes.sortedValues(true));
-        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday(), data.getLinked().sunriseCalendarToday());
+        adapter.setRiseSet(data.sunriseCalendarToday(), data.sunsetCalendarToday(), (linked != null ? linked.sunriseCalendarToday() : data.sunsetCalendarToday()));
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -255,8 +264,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (themeDesc != null)
             {
                 themeActions.setTheme(this, themeDesc);
-                actionMode = startSupportActionMode(themeActions);
-                actionMode.setTitle(themeDesc.displayString());
+                actionMode = AppCompatActivity.startSupportActionMode(this, themeActions);
+                if (actionMode != null) {
+                    actionMode.setTitle(themeDesc.displayString());
+                }
             }
             return true;
 
@@ -281,7 +292,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
-        startActivityForResult(intent, ADD_THEME_REQUEST);
+        startActivityForResult_addTheme.launch(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -299,7 +310,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             if (previewID >= 0) {
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
             }
-            startActivityForResult(intent, EDIT_THEME_REQUEST);
+            startActivityForResult_editTheme.launch(intent);
             overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
         }
     }
@@ -313,7 +324,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (previewID >= 0) {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
-        startActivityForResult(intent, ADD_THEME_REQUEST);
+        startActivityForResult_addTheme.launch(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -369,8 +380,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             } else {
                 exportTask = new ExportThemesTask(context, "SuntimesThemes", true, true);    // export to external cache
                 exportTask.setDescriptors(themes);
-                exportTask.setTaskListener(exportThemesListener);
-                exportTask.execute();
+                ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
                 return true;
             }
         }
@@ -391,7 +401,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 String filename = exportTarget + ExportThemesTask.FILEEXT;
                 Intent intent = ExportTask.getCreateFileIntent(filename, ExportThemesTask.MIMETYPE);
                 try {
-                    startActivityForResult(intent, EXPORT_REQUEST);
+                    startActivityForResult_export.launch(intent);
                     return true;
 
                 } catch (ActivityNotFoundException e) {
@@ -400,8 +410,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             }
             exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
             exportTask.setDescriptors(WidgetThemes.values());
-            exportTask.setTaskListener(exportThemesListener);
-            exportTask.execute();
+            ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
             return true;
         } else return false;
     }
@@ -415,8 +424,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         Log.i("exportThemes", "Starting export with uri: " + uri);
         exportTask = new ExportThemesTask(context, uri);
         exportTask.setDescriptors(WidgetThemes.values());
-        exportTask.setTaskListener(exportThemesListener);
-        exportTask.execute();
+        ExecutorUtils.runProgress("ExportThemesTask", exportTask, exportThemesListener);
     }
 
     /**
@@ -431,7 +439,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             } else {
                 Intent intent = ExportTask.getOpenFileIntent(ExportThemesTask.MIMETYPE);
-                startActivityForResult(intent, IMPORT_REQUEST);
+                startActivityForResult_import.launch(intent);
                 return true;
             }
         }
@@ -445,14 +453,13 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         } else {
             Log.i("importThemes", "Starting import task from uri: " + uri);
-            importTask = new ImportThemesTask(context);
-            importTask.setTaskListener(importThemesListener);
-            importTask.execute(uri);
+            importTask = new ImportThemesTask(context, uri);
+            ExecutorUtils.runProgress("ImportThemesTask", importTask, importThemesListener);
             return true;
         }
     }
 
-    private ImportThemesTask.TaskListener importThemesListener = new ImportThemesTask.TaskListener()
+    private final ProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult> importThemesListener = new SimpleProgressListener<SuntimesTheme, ImportThemesTask.ImportThemesResult>()
     {
         public void onStarted()
         {
@@ -517,7 +524,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     };
 
-    private ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
+    private final ExportPlacesTask.TaskListener exportThemesListener = new ExportTask.TaskListener()
     {
         public void onStarted()
         {
@@ -598,41 +605,38 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.importThemes:
-                importThemes(this);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.importThemes) {
+            importThemes(this);
+            return true;
 
-            case R.id.addTheme:
-                addTheme();
-                return true;
+        } else if (itemId == R.id.addTheme) {
+            addTheme();
+            return true;
 
-            case R.id.exportThemes:
-                exportThemes(this);
-                return true;
+        } else if (itemId == R.id.exportThemes) {
+            exportThemes(this);
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * WidgetThemeActionCompat
      */
-    private class WidgetThemeActionCompat implements android.support.v7.view.ActionMode.Callback
+    private class WidgetThemeActionCompat  extends ActionModeCompat.CallbackBase implements ActionModeCompat.Callback
     {
         private SuntimesTheme theme = null;
 
@@ -644,15 +648,14 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onCreateActionMode(MenuInflater inflater, Menu menu)
         {
-            MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.themecontext, menu);
             return true;
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode)
+        public void onDestroyActionMode(ActionModeCompat mode)
         {
             actionMode = null;
             selected = null;
@@ -664,10 +667,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 preselectedTheme = null;
                 intent.putExtra(PARAM_SELECTED, (String)null);
             }
+            super.onDestroyActionMode(mode);
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
+        public boolean onPrepareActionMode(ActionModeCompat mode, Menu menu)
         {
             PopupMenuCompat.forceActionBarIcons(menu);
 
@@ -684,35 +688,38 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        public boolean onActionItemClicked(ActionModeCompat mode, MenuItem item)
         {
             if (theme != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectTheme:
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectTheme) {
+                    if (mode != null) {
                         mode.finish();
-                        selectTheme(theme);
-                        return true;
+                    }
+                    selectTheme(theme);
+                    return true;
 
-                    case R.id.editTheme:
-                        editTheme(theme);
-                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
-                        return true;
+                } else if (itemId == R.id.editTheme) {
+                    editTheme(theme);
+                    //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
+                    return true;
 
-                    case R.id.copyTheme:
-                        copyTheme(theme);
-                        //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
-                        return true;
+                } else if (itemId == R.id.copyTheme) {
+                    copyTheme(theme);
+                    //mode.finish();    // TODO: is it OK to startActivity w/out finishing ActionMode? the transition looks better this way.
+                    return true;
 
-                    case R.id.deleteTheme:
-                        deleteTheme(theme);
+                } else if (itemId == R.id.deleteTheme) {
+                    deleteTheme(theme);
+                    if (mode != null) {
                         mode.finish();
-                        return true;
+                    }
+                    return true;
 
-                    case R.id.exportTheme:
-                        exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor() );
-                        return true;  // TODO: messages
+                } else if (itemId == R.id.exportTheme) {
+                    exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor());
+                    return true;  // TODO: messages
                 }
             }
             mode.finish();
@@ -726,9 +733,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
      * @param data result data (containing: SuntimesTheme.THEME_NAME)
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case ADD_THEME_REQUEST:
@@ -816,19 +823,19 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (isExporting && exportTask != null)
         {
             exportTask.pauseTask();
-            exportTask.clearTaskListener();
+            //exportTask.clearTaskListener();
         }
 
         if (isImporting && importTask != null)
         {
             importTask.pauseTask();
-            importTask.clearTaskListener();
+            //importTask.clearTaskListener();
         }
         dismissProgress();
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isExporting", isExporting);
@@ -869,19 +876,18 @@ public class WidgetThemeListActivity extends AppCompatActivity
         if (isExporting && exportTask != null)
         {
             exportTask.setDescriptors(WidgetThemes.values());
-            exportTask.setTaskListener(exportThemesListener);
+            //exportTask.setTaskListener(exportThemesListener);
             showExportProgress();
             exportTask.resumeTask();
         }
         if (isImporting && importTask != null)
         {
-            importTask.setTaskListener(importThemesListener);
+            //importTask.setTaskListener(importThemesListener);
             showImportProgress();
             importTask.resumeTask();
         }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
@@ -899,6 +905,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         } else {
             try {
+                //noinspection deprecation
                 initWallpaperLegacy(animate);
             } catch (Exception e) {
                 Log.e("initWallpaper", "failed to init wallpaper; " + e);
@@ -906,6 +913,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @TargetApi(18)
     @SuppressLint("MissingPermission")
     @Deprecated
@@ -1005,11 +1013,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 }

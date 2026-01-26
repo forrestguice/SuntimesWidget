@@ -18,8 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
-import android.content.Context;
-import android.util.Log;
+import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -68,12 +67,6 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 
     @Override
     public void init(Location location, TimeZone timezone)
-    {
-        init(location, timezone, null);
-    }
-
-    @Override
-    public void init(Location location, TimeZone timezone, Context context)
     {
         this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;

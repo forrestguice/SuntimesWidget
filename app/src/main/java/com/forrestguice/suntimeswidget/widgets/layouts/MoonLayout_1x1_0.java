@@ -22,15 +22,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 
 /**
  * Moonrise / Moonset (1x1)
@@ -79,14 +81,14 @@ public class MoonLayout_1x1_0 extends MoonLayout
         }
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    private RiseSetOrder order = RiseSetOrder.TODAY;
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -116,10 +118,10 @@ public class MoonLayout_1x1_0 extends MoonLayout
                     views.setViewPadding(R.id.text_time_moonrise_suffix, 0, 0, (int)scaledPadding, 0);
                     views.setViewPadding(R.id.icon_time_moonrise, (int)(scaledPadding), 0, (int)scaledPadding/2, 0);
 
-                    Drawable moonriseIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
+                    Drawable moonriseIcon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
                     views.setImageViewBitmap(R.id.icon_time_moonrise, SuntimesUtils.drawableToBitmap(context, moonriseIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable moonsetIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
+                    Drawable moonsetIcon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
                     views.setImageViewBitmap(R.id.icon_time_moonset, SuntimesUtils.drawableToBitmap(context, moonsetIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
                 }
             }

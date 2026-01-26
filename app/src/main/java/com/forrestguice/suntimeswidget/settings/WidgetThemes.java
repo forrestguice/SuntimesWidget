@@ -25,8 +25,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -45,9 +43,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -58,6 +59,8 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme1;
 import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -140,7 +143,7 @@ public class WidgetThemes
         return added;
     }
 
-    private static HashMap<String, ThemeDescriptor> themes = new HashMap<>();
+    private static final HashMap<String, ThemeDescriptor> themes = new HashMap<>();
 
     public static boolean hasValue( ThemeDescriptor theme )
     {
@@ -189,7 +192,7 @@ public class WidgetThemes
 
     public static ThemeDescriptor[] values()
     {
-        return themes.values().toArray(new ThemeDescriptor[themes.values().size()]);
+        return themes.values().toArray(new ThemeDescriptor[0]);
     }
 
     public static List<ThemeDescriptor> getValues()
@@ -200,7 +203,7 @@ public class WidgetThemes
     public static ThemeDescriptor[] sortedValues(boolean defaultsFirst)
     {
         List<SuntimesTheme.ThemeDescriptor> themeDefs = getSortedValues(defaultsFirst);
-        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[themeDefs.size()]);
+        return themeDefs.toArray(new SuntimesTheme.ThemeDescriptor[0]);
     }
 
     public static List<ThemeDescriptor> getSortedValues(final boolean defaultsFirst)
@@ -319,8 +322,8 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
-        private int nonselectedResourceID = R.color.transparent;
+        private final int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
+        private final int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
         {
@@ -364,7 +367,7 @@ public class WidgetThemes
         }
 
         private Calendar riseTime, setTime, noonTime;
-        private SuntimesUtils.TimeDisplayText riseText, setText, noonText;
+        private TimeDisplayText riseText, setText, noonText;
         public void setRiseSet(Calendar rise, Calendar set, Calendar noon)
         {
             riseTime = rise;
@@ -372,11 +375,11 @@ public class WidgetThemes
             noonTime = noon;
 
             SuntimesUtils.initDisplayStrings(context);
-            SuntimesUtils utils = new SuntimesUtils();
+            TimeDateDisplay utils = new TimeDateDisplay();
 
-            riseText = utils.calendarTimeShortDisplayString(context, riseTime);
-            setText = utils.calendarTimeShortDisplayString(context, setTime);
-            noonText = utils.calendarTimeShortDisplayString(context, noonTime);
+            riseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), riseTime);
+            setText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), setTime);
+            noonText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonTime);
         }
 
         public int ordinal( String themeName )
@@ -572,7 +575,7 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int layoutId, dropDownLayoutId;
+        private final int layoutId, dropDownLayoutId;
 
         public ThemeListAdapter(Context context, int layoutId, int dropDownLayoutId, SuntimesTheme.ThemeDescriptor[] themes)
         {

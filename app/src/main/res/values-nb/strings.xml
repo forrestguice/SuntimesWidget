@@ -2018,7 +2018,7 @@
     <string name="app_license_about">Suntimes er gratis og åpen kildekodeprogram.</string>   <!-- displayed by welcome dialog -->
     <string name="app_legal1"><![CDATA[
         <b>Kildekode:</b><br />
-        Copyright &#169 2014-2024 Forrest Guice <br />
+        Copyright &#169 2014-2026 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 

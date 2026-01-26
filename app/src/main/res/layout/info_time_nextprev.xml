@@ -3,7 +3,7 @@
        xmlns:tools="http://schemas.android.com/tools"
        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/info_time_prevbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -11,7 +11,7 @@
         android:background="@drawable/ic_transparent"
         android:contentDescription="@string/prevDay" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/info_time_nextbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"

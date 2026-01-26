@@ -18,14 +18,14 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.preference.PreferenceManager;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.app.AppCompatActivity;
+import androidx.test.rule.ActivityTestRule;
+
 import android.util.Log;
 
 import org.junit.Rule;
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class GetFixTaskTest
 {
     @Rule
@@ -46,7 +46,11 @@ public class GetFixTaskTest
     public void test_getFix()
     {
         AppCompatActivity activity = (AppCompatActivity) activityRule.getActivity();
-        LocationHelper helper = new GetFixHelper(activity, uiObj) {
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activity, uiObj, listener) {
             public int getMinElapsedTime() {
                 return 0;
             }
@@ -68,6 +72,7 @@ public class GetFixTaskTest
         assertTrue(helper.getFix());
         assertTrue("gettingFix should return true", helper.gettingFix());
         assertTrue(waitForTask);
+        //noinspection ConstantConditions,StatementWithEmptyBody,WhileLoopSpinsOnField
         while (waitForTask) {
             /* busy wait for completion */
         }
@@ -84,7 +89,11 @@ public class GetFixTaskTest
     @Test
     public void test_getLastKnownLocation()
     {
-        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj);
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj, listener);
 
         long bench_start = System.nanoTime();
         Location location = helper.getLastKnownLocation(activityRule.getActivity());
@@ -95,6 +104,7 @@ public class GetFixTaskTest
     }
 
     private boolean waitForTask = false;
+    @Nullable
     private Location taskResult = null;
     private final GetFixTaskListener taskListener = new GetFixTaskListener()
     {
@@ -145,8 +155,8 @@ public class GetFixTaskTest
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled) {
-            Log.d("TEST", "UI: onResult: " + result + " (was cancelled? " + wasCancelled + ")");
+        public void onResult(LocationResult result) {
+            Log.d("TEST", "UI: onResult: " + result);
         }
     };
 }
