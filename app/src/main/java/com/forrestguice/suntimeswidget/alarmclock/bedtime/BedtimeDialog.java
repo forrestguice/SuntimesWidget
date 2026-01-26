@@ -88,6 +88,10 @@ public class BedtimeDialog extends DialogBase
     protected LinearLayoutManager layout;
     protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
+    public static BedtimeDialog newInstance() {
+        return new BedtimeDialog();
+    }
+
     @Override
     public void onCreate(Bundle savedState)
     {

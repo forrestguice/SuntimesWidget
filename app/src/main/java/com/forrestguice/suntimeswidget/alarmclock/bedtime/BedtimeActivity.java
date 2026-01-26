@@ -71,6 +71,7 @@ import java.util.List;
 public class BedtimeActivity extends AppCompatActivity
 {
     public static final String TAG = "BedtimeActivity";
+    public static final String TAG_FRAGMENT_BEDTIME = "BedtimeDialogFragment";
 
     private static final String EXTRA_SHOWBACK = AlarmClockActivity.EXTRA_SHOWBACK;
 
@@ -365,10 +366,16 @@ public class BedtimeActivity extends AppCompatActivity
         int menubarColor = BedtimeSettings.isBedtimeModeActive(getApplicationContext()) ? actionBar_background0 : actionBar_background1;
         menubar.setBackgroundColor(menubarColor);
 
-        list = (BedtimeDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        if (list != null) {
-            list.setDialogListener(dialogListener(menubarColor));
+        list = (BedtimeDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_BEDTIME);
+        if (list == null) {
+            list = BedtimeDialog.newInstance();
         }
+        list.setDialogListener(dialogListener(menubarColor));
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, TAG_FRAGMENT_BEDTIME)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     private BedtimeDialog.DialogListener dialogListener(final int initialColor)
