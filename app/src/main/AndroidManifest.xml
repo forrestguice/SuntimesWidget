@@ -217,8 +217,7 @@
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:permission="${suntimesPermissionRoot}.permission.ADDON"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <!-- Places Activity -->
