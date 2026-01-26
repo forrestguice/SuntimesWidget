@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.support.app.ActionBarDrawerToggle;
+import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.view.GravityCompat;
@@ -203,7 +204,7 @@ public class SuntimesNavigation
     }
 
     private void startActivity(@NonNull Activity activity, @NonNull Intent intent) {
-        activity.startActivity(intent, getActivityOptions(activity).toBundle());
+        ActivityCompat.startActivity(activity, intent, getActivityOptions(activity).toBundle());
     }
     private void startActivityForResult(@NonNull AppCompatActivity activity, @NonNull Intent intent, int requestCode) {
         activity.startActivityForResultCompat(intent, requestCode, getActivityOptions(activity));
