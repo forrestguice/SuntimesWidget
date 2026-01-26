@@ -1726,7 +1726,7 @@ public class PlacesListFragment extends DialogBase
         public TextView summary;
         public ImageView icon;
         public TextView distance;
-        public ImageView icon_default, icon_userdefined;
+        public ImageView icon_userdefined;
         public boolean selected = false;
 
         public static HashMap<String, String> tagMap = null;
@@ -1739,7 +1739,6 @@ public class PlacesListFragment extends DialogBase
             icon = (ImageView) itemView.findViewById(R.id.icon2);
             distance = (TextView) itemView.findViewById(R.id.text3);
             icon_userdefined = (ImageView) itemView.findViewById(R.id.icon1);
-            icon_default = (ImageView) itemView.findViewById(R.id.icon2);
         }
 
         public void bindViewHolder(@Nullable Context context, @Nullable PlaceItem item)
