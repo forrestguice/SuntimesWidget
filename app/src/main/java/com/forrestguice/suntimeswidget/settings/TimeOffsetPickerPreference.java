@@ -60,18 +60,21 @@ public class TimeOffsetPickerPreference extends DialogPreference
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     @TargetApi(21)
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     @TargetApi(21)
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     private TextView label;
@@ -80,10 +83,7 @@ public class TimeOffsetPickerPreference extends DialogPreference
     @Override
     protected View onCreateDialogView()
     {
-        Context context = getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
-
+        View dialogView = super.onCreateDialogView();   // inflates DialogLayoutResource
         label = (TextView) dialogView.findViewById(R.id.text_label);
         pickMillis = (TimeOffsetPicker) dialogView.findViewById(R.id.pick_offset_millis);
         pickMillis.setParams(getContext(), param_minMs, param_maxMs, param_showSeconds, param_showMinutes, param_showHours, param_showDays, param_showDirection);
