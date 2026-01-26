@@ -44,11 +44,11 @@
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.getfix.LocationConfigView$LocationViewMode
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.getfix.LocationConfigView$LocationConfigViewListener
 
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightMapView$LightMapTaskListener
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightGraphView$LightGraphTaskListener
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LineGraphView$LineGraphTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightMapTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightGraphTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LineGraphTaskListener
 
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapTask$WorldMapOptions
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapOptions
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapTask$WorldMapTaskListener
 
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.moon.MoonApsisView$MoonApsisViewListener
