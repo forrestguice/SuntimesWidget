@@ -138,6 +138,10 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         setRetainInstance(true);
     }
 
+    public static AlarmCreateDialog newInstance() {
+        return new AlarmCreateDialog();
+    }
+
     @Override
     public void onCreate(Bundle savedState)
     {

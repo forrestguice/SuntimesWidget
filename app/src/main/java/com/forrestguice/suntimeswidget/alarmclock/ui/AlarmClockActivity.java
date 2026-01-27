@@ -97,6 +97,7 @@ public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
     public static final String TAG_FRAGMENT_ALARMLIST = "AlarmListDialogFragment";
+    public static final String TAG_FRAGMENT_ALARMCREATE = "AlarmCreateDialogFragment";
 
     public static final String ACTION_SHOW_ALARMS = "android.intent.action.SHOW_ALARMS";            // AlarmClock.ACTION_SHOW_ALARMS (api19+)
 
@@ -752,6 +753,15 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         });
 
+        AlarmCreateDialog bottomSheetDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
+        if (bottomSheetDialog == null) {
+            bottomSheetDialog = AlarmCreateDialog.newInstance();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.bottomSheetFragmentContainer, bottomSheetDialog, TAG_FRAGMENT_ALARMCREATE)
+                .setReorderingAllowed(true)
+                .commit();
+
         list = (AlarmListDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMLIST);
         if (list == null) {
             list = AlarmListDialog.newInstance();
@@ -849,7 +859,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Context context = AlarmClockActivity.this;
-            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
             if (dialog != null)
             {
                 AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
@@ -942,7 +952,7 @@ public class AlarmClockActivity extends AppCompatActivity
             list.clearSelection();
         }
 
-        AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
             if (type != null) {
@@ -964,7 +974,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void restoreDialogs()
     {
-        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
         if (alarmCreateDialog != null) {
             alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
             alarmCreateDialog.setOnCanceledListener(onAddAlarmCanceled);
