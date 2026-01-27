@@ -46,12 +46,18 @@
     <View android:layout_width="match_parent" style="@style/SunsetTimeHorizontalRule"
         android:layout_marginLeft="16dp" android:layout_marginRight="16dp" />
 
-    <fragment
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
-        app:collapse="true" app:showAddButton="true"
-        android:name="com.forrestguice.suntimeswidget.getfix.LocationConfigDialog"
-        android:tag="LocationConfigDialog" />
+    <FrameLayout android:id="@+id/locationFragmentContainer"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <!-- WelcomeLocationView supplies this fragment via transaction -->
+        <!--<fragment
+            android:layout_height="wrap_content" android:layout_width="match_parent"
+            app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
+            app:collapse="true" app:showAddButton="true"
+            android:name="com.forrestguice.suntimeswidget.getfix.LocationConfigDialog"
+            android:tag="LocationConfigDialogFragment" />-->
+
+    </FrameLayout>
 
     <LinearLayout android:id="@+id/layout_permissions"
         android:orientation="vertical"

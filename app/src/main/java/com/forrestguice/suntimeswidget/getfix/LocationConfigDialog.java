@@ -62,6 +62,10 @@ public class LocationConfigDialog extends BottomSheetDialogBase
 
     protected ImageButton btn_accept, btn_cancel;
 
+    public static LocationConfigDialog newInstance() {
+        return new LocationConfigDialog();
+    }
+
     @Override
     public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs, Bundle savedInstanceState)
     {

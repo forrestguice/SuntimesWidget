@@ -44,6 +44,8 @@ import com.forrestguice.util.concurrent.TaskListener;
  */
 public class WelcomeLocationView extends WelcomeView
 {
+    public static final String TAG_FRAGMENT_LOCATIONCONFIG = "LocationConfigDialogFragment";
+
     public static final int IMPORT_REQUEST = 1100;
 
     private Button button_addPlaces, button_importPlaces, button_lookupLocation;
@@ -70,6 +72,7 @@ public class WelcomeLocationView extends WelcomeView
     public void initViews(Context context, View view)
     {
         super.initViews(context, view);
+        initFragments();
 
         button_addPlaces = (Button) view.findViewById(R.id.button_build_places);
         if (button_addPlaces != null) {
@@ -89,11 +92,6 @@ public class WelcomeLocationView extends WelcomeView
         layout_permissions = view.findViewById(R.id.layout_permissions);
         if (layout_permissions != null) {
             layout_permissions.setVisibility(View.GONE);   // toggled visible by locationConfig
-        }
-
-        LocationConfigDialog locationConfig = getLocationConfigDialog();
-        if (locationConfig != null) {
-            locationConfig.setDialogListener(locationConfigListener());
         }
 
         progress_addPlaces = (ProgressBar) view.findViewById(R.id.progress_build_places);
@@ -290,13 +288,52 @@ public class WelcomeLocationView extends WelcomeView
         }
     }
 
+    protected void initFragments()
+    {
+        FragmentManagerCompat fragments = getFragmentManager();
+        if (fragments == null || fragments.getFragmentManager() == null) {
+            return;
+        }
+
+        LocationConfigDialog dialog = (LocationConfigDialog) fragments.getFragmentManager().findFragmentByTag(TAG_FRAGMENT_LOCATIONCONFIG);
+        if (dialog == null) {
+            Log.d("DEBUG", "initFragments: newInstance()" );
+            dialog = LocationConfigDialog.newInstance();
+        } else Log.d("DEBUG", "initFragments: fragment reused" );
+
+        dialog.setDialogListener(locationConfigListener());
+
+        dialog.setHideDialogHeader(true);
+        dialog.setHideDialogFooter(true);
+        dialog.setHideTitle(true);
+        dialog.setHideMode(true);
+        dialog.setShouldCollapse(true);
+        dialog.setShowAddButton(true);
+
+        fragments.getFragmentManager().beginTransaction()
+                .replace(R.id.locationFragmentContainer, dialog, TAG_FRAGMENT_LOCATIONCONFIG)
+                .setReorderingAllowed(true)
+                .runOnCommit(new Runnable() {
+                    @Override
+                    public void run() {
+                        WelcomeLocationView.this.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                WelcomeLocationView.this.invalidate();
+                            }
+                        });
+                    }
+                })
+                .commit();
+    }
+
     @Nullable
     private LocationConfigDialog getLocationConfigDialog()
     {
         if (isAdded())
         {
             FragmentManagerCompat fragments = getFragmentManager();
-            return (fragments != null ? (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog") : null);
+            return (fragments != null ? (LocationConfigDialog) fragments.findFragmentByTag(TAG_FRAGMENT_LOCATIONCONFIG) : null);
         }
         return null;
     }
