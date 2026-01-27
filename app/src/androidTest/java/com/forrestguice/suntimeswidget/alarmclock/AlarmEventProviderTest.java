@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventS
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.EventTypeResolver;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
@@ -56,6 +57,10 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmEventProviderTest
 {
+    public static String AUTHORITY() {
+        return EventUri.AUTHORITY();    // AlarmEventContract.AUTHORITY;
+    }
+
     public Context context;
 
     @Before
@@ -66,7 +71,7 @@ public class AlarmEventProviderTest
     @Test
     public void test_query_eventTypes()
     {
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_EVENT_TYPES);
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_TYPES);
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(uri, QUERY_EVENT_TYPES_PROJECTION, null, null, null);
         assertNotNull(cursor);
@@ -97,7 +102,7 @@ public class AlarmEventProviderTest
     @Test
     public void test_query_eventInfo()
     {
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_EVENT_INFO);
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_INFO);
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(uri, QUERY_EVENT_INFO_PROJECTION, null, null, null);
         assertNotNull(cursor);
@@ -167,7 +172,7 @@ public class AlarmEventProviderTest
     @Test
     public void test_EventType_resolveEventType()
     {
-        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
+        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "DAYPERCENT_25.5|5r", "MOON_-10|5r", "MOONILLUM_25|5r", "123456789", "SUNSET" };
         EventType[] expected = new EventType[] {
                 EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 

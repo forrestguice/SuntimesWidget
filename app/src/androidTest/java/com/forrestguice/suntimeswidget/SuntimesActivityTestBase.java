@@ -118,6 +118,9 @@ public abstract class SuntimesActivityTestBase
     protected SharedPreferences config(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
+    protected SharedPreferences widgetConfig(Context context) {
+        return context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+    }
 
     /**
      * Rotate the device to landscape and back.

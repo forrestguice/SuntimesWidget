@@ -32,8 +32,10 @@ import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
@@ -96,6 +98,14 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 
     @Rule
     public RetryRule retry = new RetryRule(3);
+
+    @Override
+    protected void overrideConfigState(Context context)
+    {
+        super.overrideConfigState(context);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationPref(context, 0, new Location("Test", TESTLOC_0_LAT, TESTLOC_0_LON));
+    }
 
     @Before
     public void beforeTest() throws IOException {

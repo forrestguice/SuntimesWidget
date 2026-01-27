@@ -34,6 +34,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.Executors;
+
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -72,7 +74,7 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
                 assertTrue(i_npt > i_ist);
             }
         };
-        ExecutorUtils.runTask("TimeZoneLoadTest", AndroidTaskHandler.get(), task, taskListener);
+        ExecutorUtils.runTask("TimeZoneLoadTest", task, taskListener);
     }
 
 }

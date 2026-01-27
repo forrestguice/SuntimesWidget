@@ -125,6 +125,7 @@ public class AlarmSoundFadeTest
             while (System.currentTimeMillis() - t0 <= volumeShaperConfig.getDuration()) {
                 //Log.i("TEST", "startAlert: still playing " + uri);
             }
+            player.stop();
 
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
