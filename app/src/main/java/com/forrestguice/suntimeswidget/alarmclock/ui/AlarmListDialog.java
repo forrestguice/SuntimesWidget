@@ -40,6 +40,7 @@ import android.os.Bundle;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -276,6 +277,12 @@ public class AlarmListDialog extends DialogBase
         }
     }
 
+    protected void invalidateOptionsMenu(Activity activity) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            activity.invalidateOptionsMenu();
+        }  // else { TODO }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
@@ -287,33 +294,26 @@ public class AlarmListDialog extends DialogBase
         int itemId = item.getItemId();
         if (itemId == R.id.sortByAlarmTime) {
             AlarmSettings.savePrefAlarmSort(activity, AlarmSettings.SORT_BY_ALARMTIME);
-            if (Build.VERSION.SDK_INT >= 11) {
-                activity.invalidateOptionsMenu();
-            }  // else { TODO }
+            ActivityCompat.invalidateOptionsMenu(activity);
+            invalidateOptionsMenu(activity);
             adapter.sortItems();
             return true;
 
         } else if (itemId == R.id.sortByCreation) {
             AlarmSettings.savePrefAlarmSort(activity, AlarmSettings.SORT_BY_CREATION);
-            if (Build.VERSION.SDK_INT >= 11) {
-                activity.invalidateOptionsMenu();
-            }  // else { TODO }
+            invalidateOptionsMenu(activity);
             adapter.sortItems();
             return true;
 
         } else if (itemId == R.id.sortEnabledFirst) {
             AlarmSettings.savePrefAlarmSortEnabledFirst(activity, !item.isChecked());
-            if (Build.VERSION.SDK_INT >= 11) {
-                activity.invalidateOptionsMenu();
-            }  // else { TODO }
+            invalidateOptionsMenu(activity);
             adapter.sortItems();
             return true;
 
         } else if (itemId == R.id.showOffset) {
             AlarmSettings.savePrefAlarmSortShowOffset(activity, !item.isChecked());
-            if (Build.VERSION.SDK_INT >= 11) {
-                activity.invalidateOptionsMenu();
-            }  // else { TODO }
+            invalidateOptionsMenu(activity);
             adapter.sortItems();
             return true;
 
