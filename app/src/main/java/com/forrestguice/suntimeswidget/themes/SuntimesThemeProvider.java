@@ -116,7 +116,7 @@ public class SuntimesThemeProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY(), QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
     }
 
-    private static String AUTHORITY() {
+    protected static String AUTHORITY() {
         return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".theme.provider";
     }
 

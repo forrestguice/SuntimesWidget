@@ -43,7 +43,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES_PROJECTION;
@@ -182,7 +181,7 @@ public class SuntimesThemeProviderTest
 
         String themeName0 = "dark";
         SuntimesTheme oracle0 = WidgetThemes.loadTheme(mockContext, themeName0);
-        Uri uri0 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_THEME + "/" + themeName0);
+        Uri uri0 = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_THEME + "/" + themeName0);
         Cursor cursor0 = resolver.query(uri0, projection, null, null, null);
         test_cursorHasColumns("QUERY_THEME", cursor0, projection);
         test_theme(cursor0, oracle0);
@@ -190,7 +189,7 @@ public class SuntimesThemeProviderTest
 
         String themeName1 = "light";
         SuntimesTheme oracle1 = WidgetThemes.loadTheme(mockContext, themeName1);
-        Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_THEME + "/" + themeName1);
+        Uri uri1 = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_THEME + "/" + themeName1);
         Cursor cursor1 = resolver.query(uri1, projection, null, null, null);
         test_cursorHasColumns("QUERY_THEME", cursor1, projection);
         test_theme(cursor1, oracle1);
@@ -308,7 +307,7 @@ public class SuntimesThemeProviderTest
         ContentResolver resolver = mockContext.getContentResolver();
         assertNotNull(resolver);
 
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_THEMES);
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_THEMES);
         String[] projection = QUERY_THEMES_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         assertNotNull(cursor);
@@ -432,6 +431,10 @@ public class SuntimesThemeProviderTest
 
     private void test_projectionContainsColumn(String column, List<String> projection) {
         assertTrue("projection contains " + column, projection.contains(column));
+    }
+
+    public static final String AUTHORITY() {
+        return SuntimesThemeProvider.AUTHORITY();    // SuntimesThemeContract.AUTHORITY;
     }
 
 }
