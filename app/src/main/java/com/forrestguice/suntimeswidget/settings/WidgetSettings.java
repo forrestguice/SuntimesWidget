@@ -38,7 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
-import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
@@ -249,8 +249,8 @@ public class WidgetSettings
     public static String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // reassigned later by initDefaults
     public static final String[][] PREF_DEF_TIMEZONES = new String[][] { };  // e.g. new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
-    public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
-    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
+    public static final String PREF_KEY_TIMEZONE_TIMESTANDARDMODE = "solarmode";
+    public static final TimeStandardMode PREF_DEF_TIMEZONE_TIMESTANDARDMODE = TimeStandardMode.LOCAL_MEAN_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
@@ -331,7 +331,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_MODE,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_CUSTOM,
-            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_SOLARMODE,    // in _general
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_TIMESTANDARDMODE,    // in _general
 
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MODE,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
@@ -1082,19 +1082,19 @@ public class WidgetSettings
 
     public static void initDisplayStrings_TimezoneMode( Context context )
     {
-        TimezoneMode.SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
+        TimezoneMode.TIME_STANDARD.setDisplayString(context.getString(R.string.timezoneMode_standard));
         TimezoneMode.CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
         TimezoneMode.CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
     }
 
 
-    public static void initDisplayStrings_SolarTimeMode( Context context )
+    public static void initDisplayStrings_TimeStandardMode(Context context )
     {
-        SolarTimeMode.LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-        SolarTimeMode.APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
-        SolarTimeMode.LMST.setDisplayString(context.getString(R.string.time_lmst));
-        SolarTimeMode.GMST.setDisplayString(context.getString(R.string.time_gmst));
-        SolarTimeMode.UTC.setDisplayString(context.getString(R.string.time_utc));
+        TimeStandardMode.LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+        TimeStandardMode.APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+        TimeStandardMode.LMST.setDisplayString(context.getString(R.string.time_lmst));
+        TimeStandardMode.GMST.setDisplayString(context.getString(R.string.time_gmst));
+        TimeStandardMode.UTC.setDisplayString(context.getString(R.string.time_utc));
     }
 
     public static void initDisplayStrings_TimeFormatMode( Context context )
@@ -2006,34 +2006,34 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveSolarTimeModePref(Context context, int appWidgetId, SolarTimeMode mode)
+    public static void saveTimeStandardModePref(Context context, int appWidgetId, TimeStandardMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE, mode.name());
         prefs.apply();
     }
-    public static SolarTimeMode loadSolarTimeModePref(Context context, int appWidgetId)
+    public static TimeStandardMode loadTimeStandardModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, PREF_DEF_TIMEZONE_SOLARMODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE, PREF_DEF_TIMEZONE_TIMESTANDARDMODE.name());
 
-        SolarTimeMode timeMode;
+        TimeStandardMode timeMode;
         try
         {
-            timeMode = SolarTimeMode.valueOf(modeString);
+            timeMode = TimeStandardMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timeMode = PREF_DEF_TIMEZONE_SOLARMODE;
+            timeMode = PREF_DEF_TIMEZONE_TIMESTANDARDMODE;
         }
         return timeMode;
     }
-    public static void deleteSolarTimeModePref(Context context, int appWidgetId)
+    public static void deleteTimeStandardModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE);
+        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE);
         prefs.apply();
     }
 
@@ -2989,7 +2989,7 @@ public class WidgetSettings
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
-        deleteSolarTimeModePref(context, appWidgetId);
+        deleteTimeStandardModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
 
         CalendarSettings.deletePrefs(AndroidCalendarSettings.wrap(context), appWidgetId);
@@ -3053,7 +3053,7 @@ public class WidgetSettings
         initDisplayStrings_SolsticeEquinoxMode(context);
         initDisplayStrings_LocationMode(context);
         initDisplayStrings_TimezoneMode(context);
-        initDisplayStrings_SolarTimeMode(context);
+        initDisplayStrings_TimeStandardMode(context);
         initDisplayStrings_DateMode(context);
         initDisplayStrings_TimeFormatMode(context);
         initDisplayStrings_RiseSetOrder(context);

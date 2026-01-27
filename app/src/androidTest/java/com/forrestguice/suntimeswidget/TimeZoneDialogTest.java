@@ -26,7 +26,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import android.content.Intent;
 
-import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
@@ -108,7 +108,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
                 .verifyTimezoneDialog_custom(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone-custom0");
 
-        robot.inputTimezoneDialogMode(context, TimezoneMode.SOLAR_TIME)
+        robot.inputTimezoneDialogMode(context, TimezoneMode.TIME_STANDARD)
                 .verifyTimezoneDialog_solar(context)
                 .captureScreenshot(context, "suntimes-dialog-timezone-solar0");
 
@@ -171,7 +171,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
             switch (mode)
             {
-                case SOLAR_TIME:
+                case TIME_STANDARD:
                     return verifyTimezoneDialog_solar(context);
 
                 case CURRENT_TIMEZONE:
@@ -185,12 +185,12 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
         public TimeZoneDialogRobot verifyTimezoneDialog_solar(Context context)
         {
-            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(TimezoneMode.SOLAR_TIME.toString())));
+            onView(withId(R.id.appwidget_timezone_mode)).check(matches(withSpinnerText(TimezoneMode.TIME_STANDARD.toString())));
 
             onView(withId(R.id.appwidget_timezone_custom)).check(ViewAssertionHelper.assertHidden);
             onView(withId(R.id.sort_timezones)).check(ViewAssertionHelper.assertHidden);
 
-            SolarTimeMode solarTimeMode = WidgetSettings.loadSolarTimeModePref(context, 0);
+            TimeStandardMode solarTimeMode = WidgetSettings.loadTimeStandardModePref(context, 0);
             onView(withId(R.id.appwidget_solartime)).check(matches(withSpinnerText( containsString(solarTimeMode.toString()) )));
             onView(withId(R.id.appwidget_solartime)).check(ViewAssertionHelper.assertEnabled);
             return this;
@@ -226,8 +226,8 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
 
         public static TimezoneMode getTimezoneDialogMode()
         {
-            if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.SOLAR_TIME.toString()))
-                return TimezoneMode.SOLAR_TIME;
+            if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.TIME_STANDARD.toString()))
+                return TimezoneMode.TIME_STANDARD;
 
             else if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.CURRENT_TIMEZONE.toString()))
                 return TimezoneMode.CURRENT_TIMEZONE;

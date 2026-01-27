@@ -246,7 +246,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         LengthUnitDisplay.initDisplayStrings_LengthUnit(res, new AndroidResID_LengthUnitDisplay());
         TimeDeltaDisplay.initDisplayStrings(res, new AndroidResID_TimeDeltaDisplay());
         SuntimesUtils.initDisplayStrings(context);  // TODO: remove
-        WidgetSettings.initDisplayStrings_SolarTimeMode(context);
+        WidgetSettings.initDisplayStrings_TimeStandardMode(context);
 
         initViews(context, dialogContent);
         if (savedState != null) {

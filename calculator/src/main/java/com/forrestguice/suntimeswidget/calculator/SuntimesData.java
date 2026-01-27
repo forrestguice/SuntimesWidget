@@ -22,7 +22,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
-import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
@@ -261,9 +261,9 @@ public class SuntimesData
                 timezone = TimeZone.getDefault();
                 break;
 
-            case SOLAR_TIME:
+            case TIME_STANDARD:
                 Location loc = (location != null) ? location : new Location("0", "0");
-                SolarTimeMode solarMode = settings.loadSolarTimeModePref(widgetID);
+                TimeStandardMode solarMode = settings.loadSolarTimeModePref(widgetID);
                 switch (solarMode)
                 {
                     case APPARENT_SOLAR_TIME:

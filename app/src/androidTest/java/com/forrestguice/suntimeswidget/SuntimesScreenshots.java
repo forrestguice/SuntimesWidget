@@ -171,7 +171,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
         new TimeZoneDialogTest.TimeZoneDialogRobot().showDialog(activity)
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone0-" + theme);
-        new TimeZoneDialogTest.TimeZoneDialogRobot().inputTimezoneDialogMode(context, TimezoneMode.SOLAR_TIME);
+        new TimeZoneDialogTest.TimeZoneDialogRobot().inputTimezoneDialogMode(context, TimezoneMode.TIME_STANDARD);
         new TimeZoneDialogTest.TimeZoneDialogRobot()
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone1-" + theme)
                 .cancelDialog(activity);

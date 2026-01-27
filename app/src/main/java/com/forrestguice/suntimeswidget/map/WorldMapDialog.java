@@ -274,7 +274,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
     private void initLocale(Context context)
     {
         WorldMapWidgetSettings.initDisplayStrings(context);
-        WidgetSettings.initDisplayStrings_SolarTimeMode(context);
+        WidgetSettings.initDisplayStrings_TimeStandardMode(context);
 
         int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);

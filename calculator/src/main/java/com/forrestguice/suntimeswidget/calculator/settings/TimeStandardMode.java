@@ -21,7 +21,7 @@ package com.forrestguice.suntimeswidget.calculator.settings;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 
-public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
+public enum TimeStandardMode
 {
     APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
     LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
@@ -32,7 +32,7 @@ public enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename
     private final String id;
     private String displayString;
 
-    private SolarTimeMode(String id, @NonNull String displayString)
+    private TimeStandardMode(String id, @NonNull String displayString)
     {
         this.id = id;
         this.displayString = displayString;

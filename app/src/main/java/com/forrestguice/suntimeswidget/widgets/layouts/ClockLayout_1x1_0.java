@@ -29,7 +29,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
@@ -161,10 +161,10 @@ public class ClockLayout_1x1_0 extends ClockLayout
         {
             int stringResID;
             Long offset = null;
-            if (data.timezoneMode() == TimezoneMode.SOLAR_TIME)
+            if (data.timezoneMode() == TimezoneMode.TIME_STANDARD)
             {
                 stringResID = R.string.timezoneExtraApparentSolar_short;
-                if (WidgetSettings.loadSolarTimeModePref(context, appWidgetId) == SolarTimeMode.APPARENT_SOLAR_TIME) {
+                if (WidgetSettings.loadTimeStandardModePref(context, appWidgetId) == TimeStandardMode.APPARENT_SOLAR_TIME) {
                     offset = (long)data.calculator().equationOfTime(now) * 1000L;  //(long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
                 }
 

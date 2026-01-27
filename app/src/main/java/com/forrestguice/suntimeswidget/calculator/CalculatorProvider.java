@@ -377,7 +377,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_SOLARTIMEMODE:
-                            row[i] = WidgetSettings.loadSolarTimeModePref(context, appWidgetID).name();
+                            row[i] = WidgetSettings.loadTimeStandardModePref(context, appWidgetID).name();
                             break;
 
                         case COLUMN_CONFIG_APPWIDGETID:

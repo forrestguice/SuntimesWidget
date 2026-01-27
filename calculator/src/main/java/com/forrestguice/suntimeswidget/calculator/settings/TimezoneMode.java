@@ -22,7 +22,7 @@ import com.forrestguice.annotation.NonNull;
 
 public enum TimezoneMode
 {
-    SOLAR_TIME("Time Standards"),   // TODO: misnomer (no longer accurate); rename this value
+    TIME_STANDARD("Time Standards"),
     CURRENT_TIMEZONE("Current"),
     CUSTOM_TIMEZONE("Custom");
 

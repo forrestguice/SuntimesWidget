@@ -47,7 +47,7 @@ public interface SuntimesDataSettings extends ContextInterface
 
     RiseSetOrder loadRiseSetOrderPref(int appWidgetId);
 
-    SolarTimeMode loadSolarTimeModePref(int appWidgetID);
+    TimeStandardMode loadSolarTimeModePref(int appWidgetID);
     RiseSetDataMode loadTimeModePref(int appWidgetId);
     SolsticeEquinoxMode loadTimeMode2Pref(int appWidgetId);
 

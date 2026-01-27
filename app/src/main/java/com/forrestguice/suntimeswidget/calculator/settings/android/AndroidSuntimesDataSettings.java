@@ -8,7 +8,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
-import com.forrestguice.suntimeswidget.calculator.settings.SolarTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -150,7 +150,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
     }
 
     @Override
-    public SolarTimeMode loadSolarTimeModePref(int appWidgetID) {
-        return WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
+    public TimeStandardMode loadSolarTimeModePref(int appWidgetID) {
+        return WidgetSettings.loadTimeStandardModePref(context, appWidgetID);
     }
 }
