@@ -147,10 +147,24 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         return  3 * 255/4;
     }
 
-    private final View.OnTouchListener onMapTouched = new View.OnTouchListener()
+    private final WorldMapView.WorldMapViewTouchListener onMapTouched = new WorldMapView.WorldMapViewTouchListener()
     {
         private double[] mid;
         private boolean isDown = false;
+        private MotionEvent clickEvent;
+
+        @Override
+        public void onClick(View v)
+        {
+            setSelectedCoordinates(map.getLatitudeLongitudeAt(clickEvent.getX(), clickEvent.getY(), mid, map.getWidth(), map.getHeight()));
+            if (marker != null) {
+                setMarkerPosition(clickEvent.getX(), clickEvent.getY());
+                marker.setPressed(false);
+            }
+            if (getContext() != null) {
+                updateDialogSubtitle(getContext());
+            }
+        }
 
         @Override
         public boolean onTouch(View v, MotionEvent event)
@@ -164,12 +178,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
             {
                 case MotionEvent.ACTION_UP:
                     isDown = false;
-                    setSelectedCoordinates(map.getLatitudeLongitudeAt(event.getX(), event.getY(), mid, map.getWidth(), map.getHeight()));
-                    if (marker != null) {
-                        setMarkerPosition(event.getX(), event.getY());
-                        marker.setPressed(false);
-                    }
-                    updateDialogSubtitle(context);
+                    clickEvent = event;
                     v.performClick();
                     return true;
 

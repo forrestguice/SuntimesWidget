@@ -33,6 +33,7 @@ import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -772,6 +773,30 @@ public class WorldMapView extends ImageView
     @Nullable
     public double[] getLatitudeLongitudeAt(float x, float y, double[] mid, int w, int h) {
         return getMapProjection(mode).fromBitmapCoords((int) x, (int) y, mid, w, h);
+    }
+
+    public void setOnTouchListener(WorldMapViewTouchListener listener) {
+        setOnTouchListener((View.OnTouchListener) listener);
+        touchListener = listener;
+    }
+    protected WorldMapViewTouchListener touchListener;
+
+    @Override
+    public boolean performClick()
+    {
+        boolean retValue = super.performClick();
+        if (touchListener != null) {
+            touchListener.onClick(this);
+            retValue = true;
+        }
+        return retValue;
+    }
+
+    public static abstract class WorldMapViewTouchListener implements OnTouchListener
+    {
+        @Override
+        public abstract boolean onTouch(View view, MotionEvent motionEvent);
+        public abstract void onClick(View view);
     }
 
 }
