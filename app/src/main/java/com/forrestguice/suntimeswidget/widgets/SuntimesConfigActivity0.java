@@ -364,7 +364,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     freezePreview = false;
                     previewArea.setVisibility(showPreview ? View.VISIBLE : View.GONE);
                     if (showPreview) {
-                        updatePreview(SuntimesConfigActivity0.this);
+                        updatePreview("onResume", SuntimesConfigActivity0.this);
                     }
                 }
             }, 500);
@@ -611,7 +611,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                         {
                             previewArea.postDelayed(new Runnable() {
                                 public void run() {
-                                    updatePreview(context);
+                                    updatePreview("initPreviewArea", context);
                                 }
                             }, 500);
                         }
@@ -662,7 +662,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_onTap != null)
         {
             spinner_onTap.setAdapter(createAdapter_actionMode());
-            addOnItemSelectedListener(spinner_onTap, onActionModeListener);
+            addOnItemSelectedListener("OnTap", spinner_onTap, onActionModeListener);
         }
 
         //
@@ -701,7 +701,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_calculatorMode != null)
         {
             spinner_calculatorMode.setAdapter(createAdapter_calculators());
-            addOnItemSelectedListener(spinner_calculatorMode, new AdapterView.OnItemSelectedListener()
+            addOnItemSelectedListener("CalculatorMode", spinner_calculatorMode, new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
@@ -744,7 +744,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_timezoneMode != null)
         {
             spinner_timezoneMode.setAdapter(createAdapter_timezoneMode());
-            addOnItemSelectedListener(spinner_timezoneMode, onTimezoneModeListener);
+            addOnItemSelectedListener("TimeZoneMode", spinner_timezoneMode, onTimezoneModeListener);
         }
 
         //
@@ -759,7 +759,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_riseSetOrder != null)
         {
             spinner_riseSetOrder.setAdapter(createAdapter_riseSetOrder());
-            addOnItemSelectedListener(spinner_riseSetOrder, null);
+            addOnItemSelectedListener("RiseSetOrder", spinner_riseSetOrder, null);
         }
 
         button_riseSetOrderHelp = (ImageButton) findViewById(R.id.appwidget_general_riseSetOrder_helpButton);
@@ -814,7 +814,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     progress_timezone.setVisibility(View.VISIBLE);
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
-                    addOnItemSelectedListener(spinner_timezone, null);
+                    addOnItemSelectedListener("TimeZone", spinner_timezone, null);
                     button_addWidget.setEnabled(false);
                 }
 
@@ -823,7 +823,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     spinner_timezone_adapter = result;
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
-                    addOnItemSelectedListener(spinner_timezone, null);
+                    addOnItemSelectedListener("TimeZone", spinner_timezone, null);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
                     button_addWidget.setEnabled(true);
                     progress_timezone.setVisibility(View.GONE);
@@ -838,7 +838,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_solartime != null)
         {
             spinner_solartime.setAdapter(createAdapter_solarTimeMode());
-            addOnItemSelectedListener(spinner_solartime, null);
+            addOnItemSelectedListener("TimeStandard", spinner_solartime, null);
         }
 
         button_solartime_help = (ImageButton) findViewById(R.id.appwidget_solartime_help);
@@ -985,7 +985,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_gravity != null) {
             initGravityAdapter(context);
         }
-        addOnItemSelectedListener(spinner_gravity, null);
+        addOnItemSelectedListener("Gravity", spinner_gravity, null);
 
         //
         // widget: title text
@@ -1059,7 +1059,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_trackingMode.setAdapter(createAdapter_trackingMode());
         }
-        addOnItemSelectedListener(spinner_trackingMode, null);
+        addOnItemSelectedListener("TrackMode", spinner_trackingMode, null);
 
         //
         // widget: compare mode
@@ -1069,7 +1069,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_compareMode.setAdapter(createAdapter_compareMode());
         }
-        addOnItemSelectedListener(spinner_compareMode, null);
+        addOnItemSelectedListener("CompareMode", spinner_compareMode, null);
 
         //
         // widget: showNoon
@@ -1079,7 +1079,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updatePreview(context);
+                updatePreview("onCheckChanged", context);
             }
         });
 
@@ -1204,17 +1204,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 if (chained != null) {
                     chained.onCheckedChanged(buttonView, isChecked);
                 }
-                updatePreview(SuntimesConfigActivity0.this);
+                updatePreview("onCheckChanged", SuntimesConfigActivity0.this);
             }
         };
     }
 
-    protected void addOnItemSelectedListener(Spinner view, @Nullable Spinner.OnItemSelectedListener listener) {
+    protected void addOnItemSelectedListener(String tag, Spinner view, @Nullable Spinner.OnItemSelectedListener listener) {
         if (view != null) {
-            view.setOnItemSelectedListener(onItemSelectedListener(listener));
+            view.setOnItemSelectedListener(onItemSelectedListener(tag, listener));
         }
     }
-    private Spinner.OnItemSelectedListener onItemSelectedListener(final Spinner.OnItemSelectedListener chained)
+    private Spinner.OnItemSelectedListener onItemSelectedListener(final String tag, final Spinner.OnItemSelectedListener chained)
     {
         return new AdapterView.OnItemSelectedListener()
         {
@@ -1224,7 +1224,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 if (chained != null) {
                     chained.onItemSelected(parent, view, position, id);
                 }
-                updatePreview(SuntimesConfigActivity0.this);
+                updatePreview(tag + ".onItemSelected", SuntimesConfigActivity0.this);
             }
         };
     }
@@ -1249,7 +1249,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_themes, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
-        addOnItemSelectedListener(spinner_theme, new AdapterView.OnItemSelectedListener() {
+        addOnItemSelectedListener("Theme", spinner_theme, new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onThemeSelectionChanged();
@@ -1357,7 +1357,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    protected void updatePreview(final Context context)
+    protected void updatePreview(final String tag, final Context context)
     {
         final long bench_start = System.nanoTime();
         if (freezePreview) {
@@ -1414,7 +1414,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                                 updatePreviewArea(context, previewArea, view, widgetSizePx);
                                 if (BuildConfig.DEBUG) {
                                     long bench_end = System.nanoTime();
-                                    Log.d("BENCH", "updatePreview took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+                                    Log.d("BENCH", "updatePreview took :: " + ((bench_end - bench_start) / 1000000.0) + " ms :: " + tag);
                                     //Toast.makeText(context, ((bench_end - bench_start) / 1000000.0) + " ms", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -1479,7 +1479,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_1x1mode != null)
         {
             spinner_1x1mode.setAdapter(createAdapter_widgetModeSun1x1());
-            addOnItemSelectedListener(spinner_1x1mode, null);
+            addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
         }
     }
 
@@ -1508,7 +1508,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_2x1mode != null) {
             spinner_2x1mode.setAdapter(createAdapter_widgetModeSun2x1());
-            addOnItemSelectedListener(spinner_2x1mode, null);
+            addOnItemSelectedListener("WidgetMode2x1", spinner_2x1mode, null);
         }
     }
     protected void loadWidgetMode2x1(Context context)
@@ -1535,7 +1535,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_3x1mode != null) {
             spinner_3x1mode.setAdapter(createAdapter_widgetModeSun3x1());
-            addOnItemSelectedListener(spinner_3x1mode, null);
+            addOnItemSelectedListener("WidgetMode3x1", spinner_3x1mode, null);
         }
     }
     protected void loadWidgetMode3x1(Context context)
@@ -1664,7 +1664,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_timeFormatModeAdapter = new ArrayAdapter<TimeFormatMode>(this, R.layout.layout_listitem_oneline, TimeFormatMode.values());
             spinner_timeFormatModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_timeFormatMode.setAdapter(spinner_timeFormatModeAdapter);
-            addOnItemSelectedListener(spinner_timeFormatMode, null);
+            addOnItemSelectedListener("TimeFormat", spinner_timeFormatMode, null);
         }
     }
 
@@ -1727,7 +1727,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
 
-            addOnItemSelectedListener(spinner_timeMode, new AdapterView.OnItemSelectedListener()
+            addOnItemSelectedListener("TimeMode", spinner_timeMode, new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
@@ -3402,7 +3402,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(Uri.parse(location.getUri()), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
-                updatePreview(SuntimesConfigActivity0.this);
+                updatePreview("onLocationResult", SuntimesConfigActivity0.this);
             } else {
                 Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }

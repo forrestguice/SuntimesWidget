@@ -148,7 +148,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             final ArrayAdapter<CalendarMode> adapter = new ArrayAdapter<CalendarMode>(this, R.layout.layout_listitem_oneline, CalendarMode.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarMode.setAdapter(adapter);
-            addOnItemSelectedListener(spinner_calendarMode, onCalendarModeSelected);
+            addOnItemSelectedListener("CalendarMode", spinner_calendarMode, onCalendarModeSelected);
         }
     }
 

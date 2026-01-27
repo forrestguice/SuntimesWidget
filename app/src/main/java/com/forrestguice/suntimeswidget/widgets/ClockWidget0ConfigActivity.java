@@ -168,7 +168,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         if (spinner_1x1mode != null) {
             adapter_1x1mode = createAdapter_widgetMode1x1();
             spinner_1x1mode.setAdapter(adapter_1x1mode);
-            addOnItemSelectedListener(spinner_1x1mode, null);
+            addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
         }
     }
     private WidgetModeAdapter adapter_1x1mode;
@@ -219,14 +219,14 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void updatePreview(final Context context)
+    protected void updatePreview(final String tag, final Context context)
     {
-        super.updatePreview(context);
+        super.updatePreview(tag, context);
         if (spinner_1x1mode != null)
         {
             spinner_1x1mode.setOnItemSelectedListener(null);
             updateWidgetModeAdapter(spinner_1x1mode, null);
-            addOnItemSelectedListener(spinner_1x1mode, null);
+            addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
         }
         if (BuildConfig.DEBUG) {
             Log.d("DEBUG", "ClockWidgetConfig: updatePreview");

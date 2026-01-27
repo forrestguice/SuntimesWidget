@@ -126,7 +126,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
             adapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             adapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(adapter);
-            addOnItemSelectedListener(spinner_timeMode, null);
+            addOnItemSelectedListener("TimeMode", spinner_timeMode, null);
         }
     }
 
