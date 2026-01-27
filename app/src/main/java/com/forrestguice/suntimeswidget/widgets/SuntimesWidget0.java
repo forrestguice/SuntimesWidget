@@ -59,6 +59,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.support.appwidget.AppWidgetManagerCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
@@ -118,15 +119,25 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     @Override
     @TargetApi(21)
-    public void onRestored (Context context, int[] oldAppWidgetIds, int[] newAppWidgetIds)
+    public void onRestored(Context context, int[] oldAppWidgetIds, int[] newAppWidgetIds)
     {
         if (oldAppWidgetIds != null && newAppWidgetIds != null)
         {
             boolean[] backupRestored = WidgetSettingsImportTask.restoreFromBackup(context, oldAppWidgetIds, newAppWidgetIds);
-            for (int i=0; i<newAppWidgetIds.length; i++) {
-                setUpdateAlarm(context, newAppWidgetIds[i]);
+            for (int i=0; i<newAppWidgetIds.length; i++)
+            {
+                if (backupRestored[i])
+                {
+                    setUpdateAlarm(context, newAppWidgetIds[i]);
+                    if (Build.VERSION.SDK_INT >= 30)
+                    {
+                        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+                        Bundle options = widgetManager.getAppWidgetOptions(newAppWidgetIds[i]);
+                        options.putBoolean(AppWidgetManagerCompat.OPTION_APPWIDGET_RESTORE_COMPLETED, true);
+                        widgetManager.updateAppWidgetOptions(newAppWidgetIds[i], options);
+                    }
+                }
             }
-            // TODO: api30+ should set AppWidgetManager#OPTION_APPWIDGET_RESTORE_COMPLETED true
 
         } else {
             Log.w(TAG, "onReceive: ACTION_APPWIDGET_RESTORED :: required extras are missing! ignoring request");
