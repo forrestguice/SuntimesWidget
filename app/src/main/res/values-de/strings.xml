@@ -2150,10 +2150,10 @@
         <b>Mondillumination:</b> Die Mond Widgets und die Hauptseite zeigen die Mondillumination am Mondmittag (Mittelpunkt zwischen Mondaufgang und -untergang) an. Der Monddialog hingegen zeigt die aktuelle Illumination an.<br/><br/>
     ]]></string>
   <string name="help_general_goldhour"><![CDATA[
-        <b>Goldene Stunde:</b> Die Sonne steht 6 Grad unter oder &uuml;ber dem Horizont. Am Morgen beginnt die Goldene Stunde mit der b&uuml;rgerlichen D&auml;mmerung und endet kurze Zeit nach Sonnenaufgang. Am Abend beginnt die Goldene Stunde kurze Zeit vor Sonnenuntergang und endet mit der b&uuml;rgerlichen D&auml;mmerung.<br/>
+        <b>Goldene Stunde:</b> Die Sonne steht 6 Grad unter oder über dem Horizont. Am Morgen beginnt die Goldene Stunde mit der bürgerlichen Dämmerung und endet kurze Zeit nach Sonnenaufgang. Am Abend beginnt die Goldene Stunde kurze Zeit vor Sonnenuntergang und endet mit der bürgerlichen Dämmerung.<br/>
     ]]></string>
   <string name="help_general_bluehour"><![CDATA[
-        <b>Blaue Stunde:</b> Die Sonne steht zwischen 8 Grad und 4 Grad unter dem Horizont. Der Beginn und das Ende der Blauen Stunde liegt zwischen nautischer und b&uuml;rgerlicher D&auml;mmerung.<br/>
+        <b>Blaue Stunde:</b> Die Sonne steht zwischen 8 Grad und 4 Grad unter dem Horizont. Der Beginn und das Ende der Blauen Stunde liegt zwischen nautischer und bürgerlicher Dämmerung.<br/>
     ]]></string>
   <string name="help_action_launch"><![CDATA[
       Der "fully qualified class name" der Android-Activity, die gestartet werden soll.
