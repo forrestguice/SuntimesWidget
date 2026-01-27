@@ -768,7 +768,7 @@ public class AlarmDatabaseAdapter
     public static class AlarmItemTask implements Callable<AlarmItemTaskResult>
     {
         private final WeakReference<Context> contextRef;
-        protected AlarmDatabaseAdapter db;
+        protected final AlarmDatabaseAdapter db;
         protected final Long[] rowIDs;
 
         public AlarmItemTask(Context context, Long rowId) {
@@ -844,7 +844,7 @@ public class AlarmDatabaseAdapter
     {
         public static final String TAG = "AlarmReceiverItemTask";
 
-        protected AlarmDatabaseAdapter db;
+        protected final AlarmDatabaseAdapter db;
         private boolean flag_add = false;
         private boolean flag_withState = true;
         private AlarmClockItem lastItem;
@@ -913,7 +913,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmDeleteTask implements Callable<AlarmDeleteTask.TaskResult>
     {
-        protected AlarmDatabaseAdapter db;
+        protected final AlarmDatabaseAdapter db;
         @Nullable
         protected final Long[] rowIDs;
 
@@ -1073,7 +1073,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmListTask implements Callable<Long[]> // extends AsyncTask<Void, Void, Long[]>
     {
-        protected AlarmDatabaseAdapter db;
+        protected final AlarmDatabaseAdapter db;
 
         public AlarmListTask(Context context)
         {

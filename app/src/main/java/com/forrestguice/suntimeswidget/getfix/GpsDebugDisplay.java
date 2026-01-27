@@ -64,12 +64,12 @@ public class GpsDebugDisplay
         return c;
     }
 
-    public static String SYMBOL_USED_IN_FIX = "∆";
-    public static String SYMBOL_HAS_EPHEMERIS = "◊";
-    public static String SYMBOL_HAS_ALMANAC = "#";
-    public static String SYMBOL_HAS_NO_ALMANAC = "_";
-    public static String ENTRY_SEPARATOR = " ";
-    public static String VALUE_SEPARATOR = "_";
+    public static final String SYMBOL_USED_IN_FIX = "∆";
+    public static final String SYMBOL_HAS_EPHEMERIS = "◊";
+    public static final String SYMBOL_HAS_ALMANAC = "#";
+    public static final String SYMBOL_HAS_NO_ALMANAC = "_";
+    public static final String ENTRY_SEPARATOR = " ";
+    public static final String VALUE_SEPARATOR = "_";
 
     public static String getSatelliteKey()
     {

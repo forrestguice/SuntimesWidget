@@ -90,9 +90,9 @@ public class MillisecondPickerHelper
         return dialogView;
     }
 
-    public static int SECOND_TO_MS = 1000;
-    public static int MINUTE_TO_MS = 1000 * 60;
-    public static int HOUR_TO_MS = 1000 * 60 * 60;
+    public static final int SECOND_TO_MS = 1000;
+    public static final int MINUTE_TO_MS = 1000 * 60;
+    public static final int HOUR_TO_MS = 1000 * 60 * 60;
 
     public void onBindDialogView(View v)
     {

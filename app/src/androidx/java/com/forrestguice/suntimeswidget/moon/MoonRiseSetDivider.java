@@ -35,8 +35,8 @@ import com.forrestguice.support.view.ViewCompat;
 public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
 {
     protected Drawable divider;
-    protected int centerPosition;
-    protected int itemsPerDay;
+    protected final int centerPosition;
+    protected final int itemsPerDay;
     private final Rect bounds = new Rect();
 
     public MoonRiseSetDivider(Context context, int centerPosition, int itemsPerDay)

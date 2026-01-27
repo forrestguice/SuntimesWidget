@@ -56,7 +56,7 @@ public class AlarmScheduleTest
     public static final long SCHEDULE_WITHIN_MS = 10000;
 
     public Context context;
-    public TimeDateDisplay utils = new TimeDateDisplay();
+    public static final TimeDateDisplay utils = new TimeDateDisplay();
 
     @Before
     public void init() {

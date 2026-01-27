@@ -1151,7 +1151,7 @@ public class PlacesListFragment extends DialogBase
      */
     public static class PlacesListTask extends ProgressCallable<PlaceItem, List<PlaceItem>>
     {
-        protected GetFixDatabaseAdapter database;
+        protected final GetFixDatabaseAdapter database;
 
         public PlacesListTask(@NonNull Context context) {
             database = new GetFixDatabaseAdapter(context.getApplicationContext());
@@ -1298,7 +1298,7 @@ public class PlacesListFragment extends DialogBase
 
     public static class PlacesListAdapter extends RecyclerView.Adapter<PlacesListViewHolder> implements Filterable
     {
-        protected WeakReference<Context> contextRef;
+        protected final WeakReference<Context> contextRef;
         protected ArrayList<PlaceItem> items0, items;
         protected String filterText = "";
         protected ArrayList<Long> filterExceptions;

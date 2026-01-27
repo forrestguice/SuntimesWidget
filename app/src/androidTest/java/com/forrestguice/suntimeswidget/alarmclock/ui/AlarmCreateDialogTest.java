@@ -269,7 +269,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             setRobot(this);
         }
 
-        protected static TimeDateDisplay utils = new TimeDateDisplay();
+        protected static final TimeDateDisplay utils = new TimeDateDisplay();
 
         protected AlarmDialogRobotConfig expected;
         public void initRobotConfig() {

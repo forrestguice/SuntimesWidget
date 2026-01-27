@@ -388,7 +388,7 @@ public class EditActionView extends LinearLayout
 
     public static final class PackageSuggestion
     {
-        protected String label, packageName, className;
+        protected final String label, packageName, className;
 
         public PackageSuggestion(@NonNull String label, @NonNull String packageName, @NonNull String className) {
             this.label = label;

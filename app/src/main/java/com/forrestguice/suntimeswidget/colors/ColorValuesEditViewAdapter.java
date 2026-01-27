@@ -42,7 +42,7 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
         colors = values;
     }
 
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
     public Context getContext() {
         return contextRef.get();
     }

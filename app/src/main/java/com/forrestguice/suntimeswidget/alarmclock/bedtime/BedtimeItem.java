@@ -38,7 +38,7 @@ public class BedtimeItem
         this.slot = slot;
     }
 
-    protected ItemType type;
+    protected final ItemType type;
     public ItemType getItemType() {
         return type;
     }

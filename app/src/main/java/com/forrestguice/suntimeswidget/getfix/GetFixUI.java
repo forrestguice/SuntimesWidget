@@ -72,7 +72,7 @@ public abstract class GetFixUI
             this.wasCancelled = wasCancelled;
         }
 
-        protected boolean wasCancelled;
+        protected final boolean wasCancelled;
         public boolean wasCancelled() {
             return wasCancelled;
         }
@@ -95,12 +95,12 @@ public abstract class GetFixUI
             this.signal_n = signal_n;
         }
 
-        protected Location result;
+        protected final Location result;
         public Location getResult() {
             return result;
         }
 
-        protected long elapsed;
+        protected final long elapsed;
         public long getElapsed() {
             return elapsed;
         }
@@ -115,12 +115,12 @@ public abstract class GetFixUI
             return signal_n;
         }
 
-        protected double accuracy;
+        protected final double accuracy;
         public double getAccuracy() {
             return accuracy;
         }
 
-        protected String log;
+        protected final String log;
         public String getLog() {
             return log;
         }

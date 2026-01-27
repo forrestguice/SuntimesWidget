@@ -83,7 +83,7 @@ public abstract class SuntimesTileBase
     @Nullable
     protected abstract CharSequence formatDialogMessage(Context context);
 
-    protected WeakReference<Activity> activityRef;
+    protected final WeakReference<Activity> activityRef;
     protected TextView dialogView_title, dialogView_message;
 
     public SuntimesTileBase(@Nullable Activity activity)

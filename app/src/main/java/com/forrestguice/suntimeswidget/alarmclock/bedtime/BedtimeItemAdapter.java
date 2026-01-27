@@ -36,7 +36,7 @@ import java.util.List;
 public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
 {
     protected ArrayList<BedtimeItem> items = new ArrayList<>();
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
 
     public BedtimeItemAdapter(Context context)
     {

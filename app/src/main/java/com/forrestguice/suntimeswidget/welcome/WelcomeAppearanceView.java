@@ -182,7 +182,7 @@ public class WelcomeAppearanceView extends WelcomeView
 
     public static class AppThemeInfoAdapter extends ArrayAdapter<AppSettings.AppThemeInfo>
     {
-        protected int layout;
+        protected final int layout;
 
         public AppThemeInfoAdapter(@NonNull Context context, int resource)
         {

@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 
 public class AndroidTimeFormat implements TimeFormatInterface
 {
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
     public AndroidTimeFormat(Context context) {
         this.contextRef = new WeakReference<>(context);
     }

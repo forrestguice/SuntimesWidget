@@ -80,8 +80,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     public static final String TAG = "WidgetUpdate";
 
-    protected static TimeDateDisplay utils = new TimeDateDisplay();
-    protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     protected int[] minSize = { 0, 0 };
     protected int[] getMinSize(Context context)
@@ -615,7 +615,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
     public static class AppWidgetManagerWrapper implements WidgetManagerInterface
     {
-        protected AppWidgetManager appWidgetManager;
+        protected final AppWidgetManager appWidgetManager;
         public AppWidgetManagerWrapper(AppWidgetManager appWidgetManager) {
             this.appWidgetManager = appWidgetManager;
         }

@@ -62,7 +62,7 @@ public class SuntimesWarning
         setMessage(context, msg);
     }
 
-    protected String id;
+    protected final String id;
     public String getId() {
         return id;
     }

@@ -75,7 +75,7 @@ import java.util.concurrent.Executors;
 public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetListItem>
 {
     @SuppressWarnings("rawtypes")
-    public static Class[] ALL_WIDGETS = new Class[] {
+    public static final Class[] ALL_WIDGETS = new Class[] {
             SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
             MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
             SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,

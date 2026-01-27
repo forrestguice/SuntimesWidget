@@ -106,7 +106,7 @@ public class AlarmEvent
         public String getNoun() {
             return noun;
         }
-        protected String noun;
+        protected final String noun;
 
         @NonNull
         public String getGender() {
@@ -129,7 +129,7 @@ public class AlarmEvent
         public static final long MAX_WAIT_MS = 1000;
 
         @Nullable
-        protected SolarEvents event;
+        protected final SolarEvents event;
         @Nullable
         protected String title = "", summary = null;
         @Nullable

@@ -56,11 +56,11 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
 
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
 
     protected Uri exportUri = null;
     @Nullable
-    protected String exportTarget;
+    protected final String exportTarget;
     @Nullable
     protected File exportFile;
     protected int numEntries;

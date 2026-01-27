@@ -39,10 +39,10 @@ public class SolsticeWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static String[] ALL_KEYS = new String[] {
+    public static final String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_SOLSTICEWIDGET + PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER,
     };
-    public static String[] BOOL_KEYS = new String[] {
+    public static final String[] BOOL_KEYS = new String[] {
             PREF_PREFIX_KEY_SOLSTICEWIDGET + PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER,
     };
 

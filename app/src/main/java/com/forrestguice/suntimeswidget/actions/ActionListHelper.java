@@ -455,9 +455,9 @@ public class ActionListHelper
      */
     public static class ActionDisplay
     {
-        public String id, title, desc;
-        public int color;
-        public String[] tags;
+        public final String id, title, desc;
+        public final int color;
+        public final String[] tags;
 
         public ActionDisplay(String id, @NonNull String title, String desc, int color, String[] tags)
         {

@@ -42,8 +42,8 @@ import com.forrestguice.support.preference.PreferenceFragment;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CalendarPrefsFragment extends PreferenceFragment
 {
-    public static String calendarPackage = "com.forrestguice.suntimescalendars";
-    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
+    public static final String calendarPackage = "com.forrestguice.suntimescalendars";
+    public static final String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState)

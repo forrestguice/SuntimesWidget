@@ -49,8 +49,8 @@ import java.util.TimeZone;
 @TargetApi(24)
 public class NextEventTileBase extends SuntimesTileBase
 {
-    protected static TimeDateDisplay utils = new TimeDateDisplay();
-    protected static TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public NextEventTileBase(@Nullable Activity activity) {
         super(activity);

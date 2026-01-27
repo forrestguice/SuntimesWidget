@@ -50,7 +50,7 @@ public class ClockWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static String[] ALL_KEYS = new String[] {
+    public static final String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK + MODE_1x1,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_BOLD,
@@ -58,12 +58,12 @@ public class ClockWidgetSettings
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_COLOR,
     };
-    public static String[] BOOL_KEYS = new String[] {
+    public static final String[] BOOL_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_BOLD,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_ITALIC,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_OUTLINE,
     };
-    public static String[] INT_KEYS = new String[] {
+    public static final String[] INT_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_TYPEFACE + "_" + PREF_KEY_APPEARANCE_TYPEFACE_COLOR,
     };
 

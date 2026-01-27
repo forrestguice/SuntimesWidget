@@ -84,7 +84,7 @@ public class AlarmWidgetService extends RemoteViewsService
         public static final String EXTRA_APPWIDGETID = "appWidgetID";
         public static final String EXTRA_LAYOUTMODE = "layoutMode";
 
-        protected Context context;
+        protected final Context context;
         protected int appWidgetID = 0;
         protected String layoutMode = AlarmWidgetSettings.MODE_2x2;
         protected List<AlarmClockItem> alarmList = new ArrayList<>();

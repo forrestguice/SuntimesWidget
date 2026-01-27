@@ -88,7 +88,7 @@ public class WidgetActions
     public static String PREF_DEF_ACTION_LAUNCH_DESC = "";
 
     public static final String PREF_KEY_ACTION_LAUNCH_COLOR = SuntimesActionsContract.COLUMN_ACTION_COLOR;
-    public static int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
+    public static final int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
 
     public static final String PREF_KEY_ACTION_LAUNCH_TAGS = SuntimesActionsContract.COLUMN_ACTION_TAGS;
 
@@ -1033,7 +1033,7 @@ public class WidgetActions
         }
     }
 
-    public static String[] ANDROID_ACTION_SUGGESTIONS = new String[] {
+    public static final String[] ANDROID_ACTION_SUGGESTIONS = new String[] {
             Intent.ACTION_VIEW, Intent.ACTION_SEARCH, Intent.ACTION_PICK, Intent.ACTION_GET_CONTENT,
             Intent.ACTION_SEND,  Intent.ACTION_SENDTO, Intent.ACTION_SEND_MULTIPLE, "android.intent.action.PASTE",
             Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_INSERT_OR_EDIT, Intent.ACTION_DELETE,

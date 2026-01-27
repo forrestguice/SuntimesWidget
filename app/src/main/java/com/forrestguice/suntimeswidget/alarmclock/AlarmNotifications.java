@@ -876,7 +876,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static int FADEIN_STEP_MILLIS = 25;
+    public static final int FADEIN_STEP_MILLIS = 25;
     protected static boolean isFadingIn = false;
     protected static float t_volume = 0;
     protected static Handler fadeHandler;
@@ -1698,7 +1698,7 @@ public class AlarmNotifications extends BroadcastReceiver
         protected int notificationID = 0;
         @Nullable
         protected Notification notification = null;
-        protected WeakReference<Service> serviceRef;
+        protected final WeakReference<Service> serviceRef;
 
         public ForegroundNotifications(Service service) {
             serviceRef = new WeakReference<>(service);

@@ -151,7 +151,7 @@ public class MenuAddon
             this.info = info;
         }
 
-        protected String title;
+        protected final String title;
         @NonNull
         public String getTitle() {
             return title;
@@ -162,7 +162,7 @@ public class MenuAddon
             return icon;
         }
 
-        protected ActivityInfo info;
+        protected final ActivityInfo info;
         public ActivityInfo getInfo() {
             return info;
         }

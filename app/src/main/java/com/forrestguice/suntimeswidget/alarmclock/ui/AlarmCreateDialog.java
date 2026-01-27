@@ -552,7 +552,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
 
     public static class AlarmTypeAdapter extends ArrayAdapter<AlarmClockItem.AlarmType>
     {
-        protected int layout;
+        protected final int layout;
 
         public AlarmTypeAdapter(@NonNull Context context, int resource)
         {

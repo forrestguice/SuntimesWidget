@@ -68,7 +68,7 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static String[] ALL_KEYS = new String[] {
+    public static final String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_1x1,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_2x2,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_3x2,
@@ -76,11 +76,11 @@ public class AlarmWidgetSettings
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_ENABLEDONLY,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
     };
-    public static String[] BOOL_KEYS = new String[] {
+    public static final String[] BOOL_KEYS = new String[] {
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_ENABLEDONLY,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SHOWICONS,
     };
-    public static String[] INT_KEYS = new String[] {
+    public static final String[] INT_KEYS = new String[] {
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
     };
 

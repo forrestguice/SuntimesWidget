@@ -8,12 +8,12 @@ import java.util.HashMap;
 @SuppressWarnings("ConstantConditions")
 public class Bundle
 {
-    protected HashMap<String, String> stringValues = new HashMap<>();
-    protected HashMap<String, Boolean> boolValues = new HashMap<>();
-    protected HashMap<String, CharSequence> charSequenceValues = new HashMap<>();
-    protected HashMap<String, Integer> intValues = new HashMap<>();
-    protected HashMap<String, Double> doubleValues = new HashMap<>();
-    protected HashMap<String, Long> longValues = new HashMap<>();
+    protected final HashMap<String, String> stringValues = new HashMap<>();
+    protected final HashMap<String, Boolean> boolValues = new HashMap<>();
+    protected final HashMap<String, CharSequence> charSequenceValues = new HashMap<>();
+    protected final HashMap<String, Integer> intValues = new HashMap<>();
+    protected final HashMap<String, Double> doubleValues = new HashMap<>();
+    protected final HashMap<String, Long> longValues = new HashMap<>();
 
     public void putString(String key, String value) {
         stringValues.put(key, value);

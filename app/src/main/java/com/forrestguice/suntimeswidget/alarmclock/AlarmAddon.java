@@ -165,13 +165,13 @@ public class AlarmAddon
             this.info = info;
         }
 
-        protected String title;
+        protected final String title;
         @NonNull
         public String getTitle() {
             return title;
         }
 
-        protected ActivityInfo info;
+        protected final ActivityInfo info;
         public ActivityInfo getInfo() {
             return info;
         }
@@ -203,7 +203,7 @@ public class AlarmAddon
      */
     public static class DismissChallengeInfo extends AddonActivityInfo
     {
-        protected long id;
+        protected final long id;
 
         public DismissChallengeInfo(@NonNull String title, ActivityInfo info, long challengeID) {
             super(title, info);

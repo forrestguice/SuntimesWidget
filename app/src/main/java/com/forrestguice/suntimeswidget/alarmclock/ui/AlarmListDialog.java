@@ -942,7 +942,7 @@ public class AlarmListDialog extends DialogBase
     {
         protected long selectedRowID = -1;
         protected ArrayList<AlarmClockItem> items = new ArrayList<>();
-        protected WeakReference<Context> contextRef;
+        protected final WeakReference<Context> contextRef;
 
         public AlarmListDialogAdapter(Context context) {
             super();
