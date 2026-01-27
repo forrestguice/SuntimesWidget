@@ -222,14 +222,16 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void updatePreview(final String tag, final Context context)
     {
         super.updatePreview(tag, context);
-        if (spinner_1x1mode != null)
+        if (supportsPreview())
         {
-            spinner_1x1mode.setOnItemSelectedListener(null);
-            updateWidgetModeAdapter(spinner_1x1mode, null);
-            addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
-        }
-        if (BuildConfig.DEBUG) {
-            Log.d("DEBUG", "ClockWidgetConfig: updatePreview");
+            if (spinner_1x1mode != null) {
+                spinner_1x1mode.setOnItemSelectedListener(null);
+                updateWidgetModeAdapter(spinner_1x1mode, null);
+                addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
+            }
+            if (BuildConfig.DEBUG) {
+                Log.d("DEBUG", "ClockWidgetConfig: updatePreview");
+            }
         }
     }
 

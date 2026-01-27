@@ -1359,6 +1359,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void updatePreview(final String tag, final Context context)
     {
+        if (!supportsPreview()) {
+            return;
+        }
+
         final long bench_start = System.nanoTime();
         if (freezePreview) {
             return;
