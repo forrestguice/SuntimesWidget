@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ import java.util.TimeZone;
 
 public class WelcomeTimeZoneView extends WelcomeView
 {
+    public static final String TAG_FRAGMENT_TIMEZONE = "TimeZoneDialogFragment";
+
     private static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
     private Spinner timeFormatSpinner;
@@ -105,22 +108,50 @@ public class WelcomeTimeZoneView extends WelcomeView
         }
     }
 
+    protected void initFragments(Context context)
+    {
+        FragmentManagerCompat fragments = getFragmentManager();
+        if (fragments == null || fragments.getFragmentManager() == null) {
+            return;
+        }
+
+        TimeZoneDialog dialog = (TimeZoneDialog) fragments.findFragmentByTag(TAG_FRAGMENT_TIMEZONE);
+        if (dialog == null) {
+            dialog = TimeZoneDialog.newInstance();
+        }
+        dialog.setHideHeader(true);
+        dialog.setHideFooter(true);
+        dialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(context, 0));
+        dialog.setDialogListener(timeZoneDialogListener());
+
+        fragments.getFragmentManager().beginTransaction()
+                .replace(R.id.timezoneFragmentContainer, dialog, TAG_FRAGMENT_TIMEZONE)
+                .setReorderingAllowed(true)
+                .runOnCommit(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        TimeZoneDialog dialog = (TimeZoneDialog) fragments.findFragmentByTag(TAG_FRAGMENT_TIMEZONE);
+                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) dialog.getView().getLayoutParams();
+                        params.height = LayoutParams.MATCH_PARENT;
+                        WelcomeTimeZoneView.this.invalidate();
+                    }
+                })
+                .commit();
+    }
+
     protected TimeZoneDialog getTimeZoneDialog()
     {
         FragmentManagerCompat fragments = getFragmentManager();
-        return (fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog") : null);
+        return (fragments != null ? (TimeZoneDialog) fragments.findFragmentByTag(TAG_FRAGMENT_TIMEZONE) : null);
     }
 
     @Override
     public void initViews(Context context, View view)
     {
         super.initViews(context, view);
-
-        TimeZoneDialog tzConfig = getTimeZoneDialog();
-        if (tzConfig != null) {
-            tzConfig.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(context, 0));
-            tzConfig.setDialogListener(timeZoneDialogListener());
-        }
+        initFragments(context);
 
         timeZoneWarning = (TextView) view.findViewById(R.id.warning_timezone);
         timeZoneWarningNote = (TextView) view.findViewById(R.id.warning_timezone_note);

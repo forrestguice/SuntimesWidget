@@ -132,6 +132,11 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     }
 
     private Calendar now = Calendar.getInstance();
+
+    public static TimeZoneDialog newInstance() {
+        return new TimeZoneDialog();
+    }
+
     public void setNow( Calendar now )
     {
         this.now = now;
@@ -224,8 +229,21 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         this.calculator = calculator;
     }
 
-    private boolean hideHeader = false;
-    private boolean hideFooter = false;
+    //private boolean hideHeader = false;
+    public void setHideHeader(boolean value) {
+        getArgs().putBoolean("hideHeader", value);
+    }
+    public boolean hideHeader() {
+        return getArgs().getBoolean("hideHeader", false);
+    }
+
+    //private boolean hideFooter = false;
+    public void setHideFooter(boolean value) {
+        getArgs().putBoolean("hideFooter", value);
+    }
+    public boolean hideFooter() {
+        return getArgs().getBoolean("hideFooter", false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
@@ -243,12 +261,12 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
         View header = dialogContent.findViewById(R.id.dialog_header);
         if (header != null) {
-            header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
+            header.setVisibility(hideHeader() ? View.GONE : View.VISIBLE);
         }
 
         View footer = dialogContent.findViewById(R.id.dialog_footer);
         if (footer != null) {
-            footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
+            footer.setVisibility(hideFooter() ? View.GONE : View.VISIBLE);
         }
 
         WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(context);
@@ -273,8 +291,8 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     {
         super.onInflate(context, attrs, savedInstanceState);
         TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.TimeZoneConfigDialog);
-        hideHeader = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideHeader, hideHeader);
-        hideFooter = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideFooter, hideFooter);
+        setHideHeader(a.getBoolean(R.styleable.TimeZoneConfigDialog_hideHeader, hideHeader()));
+        setHideFooter(a.getBoolean(R.styleable.TimeZoneConfigDialog_hideFooter, hideFooter()));
         a.recycle();
     }
 

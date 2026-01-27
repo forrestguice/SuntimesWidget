@@ -78,11 +78,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="3">
 
-        <fragment
-            android:layout_height="0dp" android:layout_width="match_parent" android:layout_weight="1"
-            app:hideHeader="true" app:hideFooter="true"
-            android:name="com.forrestguice.suntimeswidget.TimeZoneDialog"
-            android:tag="TimeZoneDialog" />
+        <FrameLayout android:id="@+id/timezoneFragmentContainer"
+            android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+
+            <!-- WelcomeTimeZoneView supplies this fragment via transaction -->
+            <!--<fragment
+                android:layout_height="match_parent" android:layout_width="match_parent"
+                app:hideHeader="true" app:hideFooter="true"
+                android:name="com.forrestguice.suntimeswidget.TimeZoneDialog"
+                android:tag="TimeZoneDialog" />-->
+
+        </FrameLayout>
 
         <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
