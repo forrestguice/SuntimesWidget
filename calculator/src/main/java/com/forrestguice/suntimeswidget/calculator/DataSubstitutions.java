@@ -358,7 +358,7 @@ public class DataSubstitutions
      */
     public static <T extends SuntimesData> String displayStringForTitlePattern0(SuntimesDataSettings context, String titlePattern, @Nullable T data)
     {
-        Log.d("DEBUG", "displayStringForTitlePattern0: " + titlePattern);
+        //Log.d("DEBUG", "displayStringForTitlePattern0: " + titlePattern);
 
         String displayString;
         if (data instanceof SuntimesRiseSetData) {
@@ -395,7 +395,7 @@ public class DataSubstitutions
 
         if (data == null)
         {
-            Log.d("DEBUG", "displayStringForTitlePattern0: null data; removing patterns");
+            //Log.d("DEBUG", "displayStringForTitlePattern0: null data; removing patterns");
             for (String pattern : positionPatterns) {
                 displayString = removePattern(displayString, pattern);
             }
@@ -406,7 +406,7 @@ public class DataSubstitutions
         for (SolarEvents event : events)
         {
             if (!displayString.contains(PATTERN_MARKER)) {
-                Log.d("DEBUG", "displayStringForTitlePattern0: done");
+                //Log.d("DEBUG", "displayStringForTitlePattern0: done");
                 break;
             }
 
@@ -426,14 +426,14 @@ public class DataSubstitutions
             String pattern_eS = addToSet(eventPatterns, patterns_eS.get(event));
 
             if (!DataSubstitutions.containsAtLeastOne(displayString, eventPatterns)) {
-                Log.d("DEBUG", "displayStringForTitlePattern0: no patterns for " + event.name() + "; continuing...");
+                //Log.d("DEBUG", "displayStringForTitlePattern0: no patterns for " + event.name() + "; continuing...");
                 continue;
             }
 
             Calendar eventTime = getCalendarForEvent(event, data);
             T d = data;
 
-            Log.d("DEBUG", "displayStringForTitlePattern0: eventTime for " + event.name() + " is " + (eventTime != null ? eventTime.getTimeInMillis() : "null"));
+            //Log.d("DEBUG", "displayStringForTitlePattern0: eventTime for " + event.name() + " is " + (eventTime != null ? eventTime.getTimeInMillis() : "null"));
 
             if (eventTime != null)
             {
@@ -489,7 +489,7 @@ public class DataSubstitutions
                 }
 
             } else {
-                Log.d("DEBUG", "displayStringForTitlePattern0: null eventTime for " + event.name() + "; removing patterns");
+                //Log.d("DEBUG", "displayStringForTitlePattern0: null eventTime for " + event.name() + "; removing patterns");
                 for (String pattern : eventPatterns) {
                     displayString = displayString.replaceAll(pattern, "");
                 }
