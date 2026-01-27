@@ -20,5 +20,4 @@ package com.forrestguice.suntimeswidget.alarmclock;
 public class AlarmSettingsCompat
 {
     public static final String ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT = "android.settings.MANAGE_APP_USE_FULL_SCREEN_INTENT";    // TODO: remove and use constant from api34+
-    public static final int STANDBY_BUCKET_RESTRICTED = 0x0000002d;    // TODO: replace this with UsageStatsManager.STANDBY_BUCKET_RESTRICTED after targeting api30+
 }

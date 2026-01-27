@@ -46,6 +46,7 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.usage.UsageStatsManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
 
@@ -799,7 +800,7 @@ public class AlarmSettings
             UsageStatsManager statsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
             if (statsManager != null) {
                 int bucket = statsManager.getAppStandbyBucket();
-                return (bucket == AlarmSettingsCompat.STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
+                return (bucket == UsageStatsManagerCompat.STANDBY_BUCKET_RESTRICTED || bucket == UsageStatsManager.STANDBY_BUCKET_RARE);
             }
         }
         return false;
