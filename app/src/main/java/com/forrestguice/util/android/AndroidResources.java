@@ -21,6 +21,7 @@ package com.forrestguice.util.android;
 import android.content.Context;
 import com.forrestguice.support.content.ContextCompat;
 
+import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.res.TypedArray;
 
 public class AndroidResources implements com.forrestguice.util.Resources
@@ -83,5 +84,10 @@ public class AndroidResources implements com.forrestguice.util.Resources
     @Override
     public TypedArray obtainStyledAttributes(int[] colorAttrs) {
         return new AndroidTypedArray(context.obtainStyledAttributes(colorAttrs));
+    }
+
+    @Override
+    public ContentResolver getContentResolver() {
+        return AndroidContentResolver.wrap(context.getContentResolver());
     }
 }

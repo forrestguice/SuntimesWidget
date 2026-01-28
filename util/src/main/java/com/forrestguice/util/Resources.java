@@ -17,6 +17,7 @@
 */
 package com.forrestguice.util;
 
+import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.res.TypedArray;
 
 public interface Resources
@@ -38,4 +39,6 @@ public interface Resources
     String getQuantityString(int id, int quantity, Object... formatArgs);
 
     TypedArray obtainStyledAttributes(int[] attrs);
+
+    ContentResolver getContentResolver();
 }

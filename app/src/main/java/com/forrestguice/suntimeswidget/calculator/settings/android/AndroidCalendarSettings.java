@@ -9,6 +9,8 @@ import com.forrestguice.suntimeswidget.calendar.CalendarModeDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.util.Resources;
+import com.forrestguice.util.android.AndroidContentResolver;
+import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.prefs.SharedPreferences;
 import com.forrestguice.util.android.AndroidResources;
 
@@ -97,5 +99,10 @@ public class AndroidCalendarSettings implements CalendarSettingsInterface
     @Override
     public SharedPreferences getSharedPreferences(String name, int flags) {
         return AndroidSharedPreferences.wrap(context.getSharedPreferences(name, flags));
+    }
+
+    @Override
+    public ContentResolver getContentResolver() {
+        return AndroidContentResolver.wrap(context.getContentResolver());
     }
 }

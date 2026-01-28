@@ -18,6 +18,7 @@
 
 package com.forrestguice.util;
 
+import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.prefs.SharedPreferences;
 
 public interface ContextInterface
@@ -26,4 +27,5 @@ public interface ContextInterface
     String getString(int id);
     String getString(int id, Object... formatArgs);
     SharedPreferences getSharedPreferences(String name, int flags);
+    ContentResolver getContentResolver();
 }

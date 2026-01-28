@@ -7,7 +7,9 @@ import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
+import com.forrestguice.util.android.AndroidContentResolver;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.prefs.SharedPreferences;
 
 import java.util.List;
@@ -167,5 +169,10 @@ public class AndroidEventSettings implements EventSettingsInterface
     @Override
     public SharedPreferences getSharedPreferences(String name, int flags) {
         return AndroidSharedPreferences.wrap(context.getSharedPreferences(name, flags));
+    }
+
+    @Override
+    public ContentResolver getContentResolver() {
+        return AndroidContentResolver.wrap(context.getContentResolver());
     }
 }
