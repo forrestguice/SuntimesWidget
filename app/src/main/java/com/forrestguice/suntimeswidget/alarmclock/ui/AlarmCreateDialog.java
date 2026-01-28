@@ -46,6 +46,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
@@ -156,7 +157,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
         AlarmType.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        AlarmTimeZone.initDisplayStrings(context);
 
         //setStyle(DialogBase.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
@@ -311,7 +312,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
     protected void showDateDialog(Context context)
     {
         final AlarmTimeDateDialog dialog = new AlarmTimeDateDialog();
-        dialog.setTimezone(AlarmClockItem.AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
+        dialog.setTimezone(AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
         dialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog0, int which)

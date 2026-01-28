@@ -29,7 +29,6 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -38,7 +37,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * AlarmClockItem
@@ -758,105 +756,6 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
             }
         }
         return challenge;
-    }
-
-    /**
-     * AlarmTimeZone
-     */
-    public static enum AlarmTimeZone
-    {
-        APPARENT_SOLAR_TIME(TimeZones.ApparentSolarTime.TIMEZONEID, TimeZones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(TimeZones.LocalMeanTime.TIMEZONEID, TimeZones.LocalMeanTime.TIMEZONEID),
-        SYSTEM_TIME("System Time Zone", null);
-
-        private String displayString;
-        private final String tzID;
-
-        private AlarmTimeZone(@NonNull String displayString, @Nullable String tzID)
-        {
-            this.displayString = displayString;
-            this.tzID = tzID;
-        }
-
-        @Nullable
-        public String timeZoneID() {
-            return tzID;
-        }
-
-        @NonNull
-        public String toString() {
-            return displayString;
-        }
-
-        @NonNull
-        public String displayString() {
-            return displayString;
-        }
-
-        public static String displayString(String tzID)
-        {
-            if (tzID == null) {
-                return SYSTEM_TIME.displayString();
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return APPARENT_SOLAR_TIME.displayString();
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return LOCAL_MEAN_TIME.displayString;
-
-            } else {
-                return TimeZone.getTimeZone(tzID).getDisplayName();
-            }
-        }
-
-        public void setDisplayString( String displayString ) {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
-        }
-
-        @NonNull
-        public TimeZone getTimeZone(@Nullable Location location) {
-            return AlarmTimeZone.getTimeZone(timeZoneID(), location);
-        }
-
-        @NonNull
-        public static TimeZone getTimeZone(@Nullable String tzID, @Nullable Location location)
-        {
-            if (location == null || tzID == null) {
-                return TimeZone.getDefault();
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return new TimeZones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
-
-            } else {
-                return TimeZone.getTimeZone(tzID);
-            }
-        }
-
-        public static AlarmTimeZone valueOfID(String tzID)
-        {
-            if (tzID == null) {
-                return SYSTEM_TIME;
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return APPARENT_SOLAR_TIME;
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return LOCAL_MEAN_TIME;
-
-            } else {
-                return null;
-            }
-        }
     }
 
     @Override

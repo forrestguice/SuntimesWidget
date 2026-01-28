@@ -109,7 +109,7 @@ public class AlarmScheduleTest0
 
         int c = 0, n = 7;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
         Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)

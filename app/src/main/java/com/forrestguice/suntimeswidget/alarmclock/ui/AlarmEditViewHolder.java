@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -593,13 +594,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }
 
         } else if (item.timezone != null) {
-            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+            Calendar adjustedTime = Calendar.getInstance(AlarmTimeZone.getTimeZone(item.timezone, item.location));
             adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
             adjustedTime.set(Calendar.MINUTE, item.minute);
-            return utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
+            return utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), adjustedTime) + "\n" + AlarmTimeZone.displayString(item.timezone);
 
         } else {
-            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(null, item.location));
+            Calendar adjustedTime = Calendar.getInstance(AlarmTimeZone.getTimeZone(null, item.location));
             adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
             adjustedTime.set(Calendar.MINUTE, item.minute);
             return utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), adjustedTime) + "\n" + context.getString(R.string.alarmOption_solarevent_none);

@@ -38,7 +38,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -70,7 +70,7 @@ public class AlarmTimeDialog extends DialogBase
     public static final int PREF_DEF_ALARM_TIME_MINUTE = 0;
 
     public static final String PREF_KEY_ALARM_TIME_MODE = "alarmtimezonemode";
-    public static final AlarmClockItem.AlarmTimeZone PREF_DEF_ALARM_TIME_MODE = AlarmClockItem.AlarmTimeZone.SYSTEM_TIME;
+    public static final AlarmTimeZone PREF_DEF_ALARM_TIME_MODE = AlarmTimeZone.SYSTEM_TIME;
 
     public static final String PREF_KEY_ALARM_LOCATION = "alarmlocation";
 
@@ -154,8 +154,8 @@ public class AlarmTimeDialog extends DialogBase
     protected void initViews( Context context, View dialogContent )
     {
         SuntimesUtils.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
-        modeAdapter = new AlarmTimeModeAdapter(context, R.layout.layout_listitem_alarmtz, AlarmClockItem.AlarmTimeZone.values());
+        AlarmTimeZone.initDisplayStrings(context);
+        modeAdapter = new AlarmTimeModeAdapter(context, R.layout.layout_listitem_alarmtz, AlarmTimeZone.values());
         //modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modePicker = (Spinner)dialogContent.findViewById(R.id.modepicker);
         modePicker.setAdapter(modeAdapter);
@@ -223,7 +223,7 @@ public class AlarmTimeDialog extends DialogBase
     {
         if (getDate() != -1L)
         {
-            Calendar calendar = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
+            Calendar calendar = Calendar.getInstance(AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
             calendar.setTimeInMillis(getDate());
             calendar.set(Calendar.HOUR_OF_DAY, getHour());
             calendar.set(Calendar.MINUTE, getMinute());
@@ -237,7 +237,7 @@ public class AlarmTimeDialog extends DialogBase
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            setTimeZone(((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
+            setTimeZone(((AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
             if (getContext() != null) {
                 updateViews(getContext());
             }
@@ -272,7 +272,7 @@ public class AlarmTimeDialog extends DialogBase
         clearTimeChangedListener();
 
         if (modePicker != null && modeAdapter != null) {
-            AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArgs().getString(PREF_KEY_ALARM_TIME_MODE));
+            AlarmTimeZone mode = AlarmTimeZone.valueOfID(getArgs().getString(PREF_KEY_ALARM_TIME_MODE));
             modePicker.setSelection(modeAdapter.getPosition(mode));
             modePicker.setVisibility(getShowTimeZoneSelect() ? View.VISIBLE : View.GONE);
         }
@@ -366,10 +366,10 @@ public class AlarmTimeDialog extends DialogBase
     /**
      * AlarmTimeModeAdapter
      */
-    public static class AlarmTimeModeAdapter extends ArrayAdapter<AlarmClockItem.AlarmTimeZone>
+    public static class AlarmTimeModeAdapter extends ArrayAdapter<AlarmTimeZone>
     {
         private final int layout;
-        public AlarmTimeModeAdapter(@NonNull Context context, int resource, @NonNull AlarmClockItem.AlarmTimeZone[] objects)
+        public AlarmTimeModeAdapter(@NonNull Context context, int resource, @NonNull AlarmTimeZone[] objects)
         {
             super(context, resource, objects);
             layout = resource;
@@ -396,7 +396,7 @@ public class AlarmTimeDialog extends DialogBase
             ImageView icon = (view != null ? (ImageView) view.findViewById(android.R.id.icon1) : null);
             TextView text = (view != null ? (TextView) view.findViewById(android.R.id.text1) : null);
 
-            AlarmClockItem.AlarmTimeZone item = getItem(position);
+            AlarmTimeZone item = getItem(position);
 
             if (text != null) {
                 text.setText(item != null ? item.displayString() : "");

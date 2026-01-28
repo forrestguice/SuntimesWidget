@@ -224,7 +224,7 @@ public class AlarmScheduleTest
 
         int c = 0, n = 3;
         Calendar event0 = null;
-        Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
+        Calendar event1 = Calendar.getInstance(AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
 
         while (c < n)
         {

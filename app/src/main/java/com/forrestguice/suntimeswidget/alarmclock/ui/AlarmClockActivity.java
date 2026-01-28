@@ -45,6 +45,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.SuntimesWarningCollection;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
@@ -650,7 +651,7 @@ public class AlarmClockActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
         AlarmType.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        AlarmTimeZone.initDisplayStrings(context);
 
         int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
         TypedArray a = context.obtainStyledAttributes(attrs);
@@ -1328,7 +1329,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static void scheduleAlarm(Activity context, AlarmType type, String label, String event, Location location, int hour, int minutes, String timezone)
     {
-        TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
+        TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);
         calendar0.set(Calendar.HOUR_OF_DAY, hour);
         calendar0.set(Calendar.MINUTE, minutes);

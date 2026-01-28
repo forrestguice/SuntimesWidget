@@ -44,6 +44,7 @@ import android.os.PowerManager;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -393,7 +394,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        AlarmTimeZone.initDisplayStrings(context);
 
         //int[] bgColors = AlarmSettings.loadPrefAlarmBrightColors(context);
         //colors.setColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START, bgColors[0]);
@@ -800,7 +801,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     protected TimeZone getTimeZone()
     {
         if (alarm != null && alarm.timezone != null) {
-            return AlarmClockItem.AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location);
+            return AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location);
         } else return TimeZone.getDefault();
     }
 
@@ -887,10 +888,10 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 alarmSubtitle.setVisibility(View.VISIBLE);
 
             } else if (alarm.timezone != null) {
-                Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location));
+                Calendar eventTime = Calendar.getInstance(AlarmTimeZone.getTimeZone(alarm.timezone, alarm.location));
                 eventTime.set(Calendar.HOUR_OF_DAY, alarm.hour);
                 eventTime.set(Calendar.MINUTE, alarm.minute);
-                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(alarm.timezone));
+                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime) + "\n" + AlarmTimeZone.displayString(alarm.timezone));
                 alarmSubtitle.setVisibility(View.VISIBLE);
 
             } else {

@@ -433,7 +433,7 @@ public class AlarmScheduler
             repeatingDays = AlarmClockItem.everyday();
         }
 
-        TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
+        TimeZone timezone = AlarmTimeZone.getTimeZone(tzID, location);
         boolean timezone_isLTST = TimeZones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
