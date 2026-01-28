@@ -48,10 +48,10 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
@@ -218,11 +218,11 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
+                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
 
-                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
+                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM)) {
                     String warning = context.getString(R.string.configLabel_alarms_notifications_off);
                     String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
                     notificationPrefs.setSummary(SpanUtils.createColorSpan(null, summaryString, warning, colorWarning));
@@ -484,7 +484,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
      */
     private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
-        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM);
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)

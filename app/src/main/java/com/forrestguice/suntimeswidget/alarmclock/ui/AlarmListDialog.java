@@ -39,6 +39,7 @@ import android.os.Bundle;
 
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityCompat;
@@ -458,7 +459,7 @@ public class AlarmListDialog extends DialogBase
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmClockItem.AlarmType.ALARM.getDisplayString());
+            String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
             SnackbarUtils.make(context, view, context.getString(R.string.deletealarm_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
@@ -475,7 +476,7 @@ public class AlarmListDialog extends DialogBase
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays, boolean addToDatabase)
+    public AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
         final AlarmClockItem alarm = createAlarm(context, type, label, event, location, date, hour, minute, timezone, vibrate, ringtoneUri, ringtoneName, repetitionDays);
         if (addToDatabase) {
@@ -484,11 +485,11 @@ public class AlarmListDialog extends DialogBase
         return alarm;
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location) {
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, @NonNull String event, @NonNull Location location) {
         return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();
@@ -1449,20 +1450,20 @@ public class AlarmListDialog extends DialogBase
                 {
                     int itemId = menuItem.getItemId();
                     if (itemId == R.id.alarmTypeNotification) {
-                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION);
+                        return changeAlarmType(context, rowId, AlarmType.NOTIFICATION);
 
                     } else if (itemId == R.id.alarmTypeNotification1) {
-                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION1);
+                        return changeAlarmType(context, rowId, AlarmType.NOTIFICATION1);
 
                     } else if (itemId == R.id.alarmTypeNotification2) {
-                        return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.NOTIFICATION2);
+                        return changeAlarmType(context, rowId, AlarmType.NOTIFICATION2);
                     }
-                    return changeAlarmType(context, rowId, AlarmClockItem.AlarmType.ALARM);
+                    return changeAlarmType(context, rowId, AlarmType.ALARM);
                 }
             })).show();
         }
 
-        protected boolean changeAlarmType(Context context, final long rowId, AlarmClockItem.AlarmType type)
+        protected boolean changeAlarmType(Context context, final long rowId, AlarmType type)
         {
             AlarmClockItem item = getItem(rowId);
             if (item != null && item.type != type)
@@ -1995,7 +1996,7 @@ public class AlarmListDialog extends DialogBase
             }
 
             // extended controls
-            if (item.type == AlarmClockItem.AlarmType.ALARM)
+            if (item.type == AlarmType.ALARM)
             {
                 switch(alarmState)
                 {

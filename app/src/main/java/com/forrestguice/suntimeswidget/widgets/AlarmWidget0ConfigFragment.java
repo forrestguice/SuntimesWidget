@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,6 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
@@ -229,7 +229,7 @@ public class AlarmWidget0ConfigFragment extends DialogBase
     protected CharSequence displayStringForTypeName(Context context, String name)
     {
         try {
-            AlarmClockItem.AlarmType type = AlarmClockItem.AlarmType.valueOf(name);
+            AlarmType type = AlarmType.valueOf(name);
             return type.getDisplayString();
         } catch (IllegalArgumentException e) {
             return "";
@@ -259,13 +259,13 @@ public class AlarmWidget0ConfigFragment extends DialogBase
         Set<String> filterTypes = new TreeSet<String>(Arrays.asList(getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES)));
 
         if (chip_type_alarms != null) {
-            chip_type_alarms.setVisibility(filterTypes.contains(AlarmClockItem.AlarmType.ALARM.name()) ? View.VISIBLE : View.GONE);
+            chip_type_alarms.setVisibility(filterTypes.contains(AlarmType.ALARM.name()) ? View.VISIBLE : View.GONE);
         }
         if (chip_type_notifications != null) {
             chip_type_notifications.setVisibility(
-                    filterTypes.contains(AlarmClockItem.AlarmType.NOTIFICATION.name())
-                    || filterTypes.contains(AlarmClockItem.AlarmType.NOTIFICATION1.name())
-                    || filterTypes.contains(AlarmClockItem.AlarmType.NOTIFICATION2.name()) ? View.VISIBLE : View.GONE);
+                    filterTypes.contains(AlarmType.NOTIFICATION.name())
+                    || filterTypes.contains(AlarmType.NOTIFICATION1.name())
+                    || filterTypes.contains(AlarmType.NOTIFICATION2.name()) ? View.VISIBLE : View.GONE);
         }
 
         if (spin_sortOrder != null)

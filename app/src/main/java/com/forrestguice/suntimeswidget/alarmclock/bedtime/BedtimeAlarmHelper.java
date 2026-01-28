@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -97,10 +98,10 @@ public class BedtimeAlarmHelper
     public static AlarmClockItem createBedtimeAlarmItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
-        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.ALARM,
+        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.ALARM,
                 context.getString(R.string.configLabel_bedtime_alarm_wakeup),
                 null, location, -1, hour, minute, null,
-                AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+                AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
 
         alarmItem.offset = offset;
         alarmItem.repeating = true;
@@ -113,10 +114,10 @@ public class BedtimeAlarmHelper
     public static AlarmClockItem createBedtimeReminderItem(final Context context, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
-        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
+        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.NOTIFICATION1,
                 context.getString(R.string.configLabel_bedtime_alarm_reminder),
                 null, location, -1, hour, minute, null,
-                AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.NOTIFICATION1), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.NOTIFICATION1), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+                AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmType.NOTIFICATION1), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION1), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;
         alarmItem.repeating = true;
         alarmItem.enabled = true;
@@ -127,7 +128,7 @@ public class BedtimeAlarmHelper
     public static AlarmClockItem createBedtimeEventItem(final Context context, String slot, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
-        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.NOTIFICATION1,
+        AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.NOTIFICATION1,
                 context.getString(slot == null || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY) ? R.string.configLabel_bedtime_alarm_notify : R.string.configLabel_bedtime_alarm_notify_off),
                 null, location, -1, hour, minute, null,
                 false, null, null, AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);

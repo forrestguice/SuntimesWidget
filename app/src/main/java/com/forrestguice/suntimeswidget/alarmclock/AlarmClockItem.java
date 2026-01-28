@@ -685,64 +685,6 @@ public class AlarmClockItem implements Parcelable
     }
 
     /**
-     * AlarmType
-     */
-    public static enum AlarmType
-    {
-        ALARM("Alarm"),
-        NOTIFICATION("Notification"),
-        NOTIFICATION1("Notification (ephemeral)"),
-        NOTIFICATION2("Notification (persistent)");
-
-        private String displayString;
-
-        private AlarmType(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        @NonNull
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            ALARM.setDisplayString(context.getString(R.string.alarmMode_alarm));
-            NOTIFICATION.setDisplayString(context.getString(R.string.alarmMode_notification));
-            NOTIFICATION1.setDisplayString(context.getString(R.string.alarmMode_notification1));
-            NOTIFICATION2.setDisplayString(context.getString(R.string.alarmMode_notification2));
-        }
-
-        public static AlarmType valueOf(String value, AlarmType defaultType)
-        {
-            AlarmType retValue = defaultType;
-            if (value != null)
-            {
-                try {
-                    retValue = AlarmType.valueOf(value);
-
-                } catch (IllegalArgumentException e) {
-                    Log.w("AlarmType", "valueOf :: failed to load '" + value);
-                    retValue = defaultType;
-                }
-            }
-            return retValue;
-        }
-    }
-
-    /**
      * AlarmTimeZone
      */
     public static enum AlarmTimeZone

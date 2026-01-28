@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
@@ -1113,7 +1114,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
         dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_notify));         // override type labels
-        dialog.setAlarmType(AlarmClockItem.AlarmType.NOTIFICATION1);    // restrict type to notification
+        dialog.setAlarmType(AlarmType.NOTIFICATION1);    // restrict type to notification
 
         dialog.setOnAcceptedListener(onAddBedtimeDialogAccept(DIALOG_ADD_BEDTIME, BedtimeSettings.SLOT_BEDTIME_NOTIFY, item));
         dialog.show(getChildFragmentManager(), DIALOG_ADD_BEDTIME);
@@ -1201,7 +1202,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
         dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_wakeup));         // override type labels
-        dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);    // restrict type to alarms only
+        dialog.setAlarmType(AlarmType.ALARM);    // restrict type to alarms only
         // TODO: locked/disabled events
 
         dialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));

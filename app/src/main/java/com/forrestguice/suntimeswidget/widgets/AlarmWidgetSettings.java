@@ -23,8 +23,8 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
@@ -53,8 +53,8 @@ public class AlarmWidgetSettings
     public static final String PREF_PREFIX_KEY_ALARMWIDGET = "_alarmwidget_";
 
     public static final String PREF_KEY_ALARMWIDGET_TYPES = "alarmtypes";
-    public static final String[] PREF_DEF_ALARMWIDGET_TYPES = new String[] { AlarmClockItem.AlarmType.ALARM.name() };
-    public static final String[] ALL_TYPES = new String[] { AlarmClockItem.AlarmType.ALARM.name(), AlarmClockItem.AlarmType.NOTIFICATION.name(), AlarmClockItem.AlarmType.NOTIFICATION1.name() };
+    public static final String[] PREF_DEF_ALARMWIDGET_TYPES = new String[] { AlarmType.ALARM.name() };
+    public static final String[] ALL_TYPES = new String[] { AlarmType.ALARM.name(), AlarmType.NOTIFICATION.name(), AlarmType.NOTIFICATION1.name() };
 
     public static final String PREF_KEY_ALARMWIDGET_ENABLEDONLY = "enabledonly";
     public static final boolean PREF_DEF_ALARMWIDGET_ENABLEDONLY = true;

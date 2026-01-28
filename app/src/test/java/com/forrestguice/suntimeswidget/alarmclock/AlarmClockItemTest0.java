@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -77,7 +77,7 @@ public class AlarmClockItemTest0
 
         AlarmClockItem item1 = new AlarmClockItem();
         item1.label = "test1";
-        item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.type = AlarmType.NOTIFICATION;
         item1.rowID = 20;
         item1.repeating = false;
         item1.setRepeatingDays("1,2,3,4,5,6,7");
@@ -108,7 +108,7 @@ public class AlarmClockItemTest0
 
         AlarmClockItem item3 = new AlarmClockItem();
         item3.label = "";
-        item3.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item3.type = AlarmType.NOTIFICATION;
         item2.timezone = "";
         item3.repeating = true;
         item3.repeatingDays = new ArrayList<>();    // empty repeating days

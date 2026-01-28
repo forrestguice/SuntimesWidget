@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.test.MoreAsserts.assertNotEqual;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;

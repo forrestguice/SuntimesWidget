@@ -53,6 +53,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -67,7 +68,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -96,7 +96,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     protected ActivityResultLauncherCompat startActivityForResult_eventAlias = registerForActivityResultCompat(REQUEST_EVENTALIAS);
 
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
-    public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
+    public static final AlarmType DEF_ALARM_TYPE = AlarmType.ALARM;
 
     public static final String KEY_DIALOGTITLE = "alarmdialog_title";
     public static final String KEY_DIALOGSHOWFRAME = "alarmdialog_showframe";
@@ -114,11 +114,11 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public int getAppWidgetId() { return appWidgetId; }
     public void setAppWidgetId(int value) { appWidgetId = value; }
 
-    private AlarmClockItem.AlarmType type = DEF_ALARM_TYPE;
-    public AlarmClockItem.AlarmType getType() {
+    private AlarmType type = DEF_ALARM_TYPE;
+    public AlarmType getType() {
         return type;
     }
-    public void setType(AlarmClockItem.AlarmType type)
+    public void setType(AlarmType type)
     {
         this.type = type;
         if (getContext() != null) {
@@ -413,7 +413,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                                 txt_note.setText(SpanUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                                 icon_note.setVisibility(View.GONE);
 
-                                String modeDescription = context.getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode);
+                                String modeDescription = context.getString((type == AlarmType.ALARM) ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode);
                                 SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());   // TODO: does AlarmCreateDialog also announce?
 
                             } else {
@@ -624,7 +624,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
 
         if (txt_modeLabel != null) {
-            txt_modeLabel.setText(getString(type == AlarmClockItem.AlarmType.ALARM ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode));
+            txt_modeLabel.setText(getString(type == AlarmType.ALARM ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode));
         }
 
         updateLocationIcon(context, txt_location, useAppLocation);
@@ -667,7 +667,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
         setChoice(choice);
 
-        type = (AlarmClockItem.AlarmType) bundle.getSerializable(KEY_ALARM_TYPE);
+        type = (AlarmType) bundle.getSerializable(KEY_ALARM_TYPE);
         if (type == null) {
             type = DEF_ALARM_TYPE;
         }
@@ -739,7 +739,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     }
 
     protected AlarmClockItem createAlarmItem(@NonNull Context context) {
-        return AlarmListDialog.createAlarm(context, AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(context, AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     private final View.OnClickListener onLocationClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {

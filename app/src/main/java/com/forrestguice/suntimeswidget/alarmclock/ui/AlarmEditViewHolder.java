@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -43,7 +44,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -328,7 +328,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLimitDisplay = snoozeLimitLabel + (snoozeLimit > 0 ? " " : "\n") + snoozeLimitString;
             CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SpanUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
             text_snoozeLimit.setText(snoozeLimitDisplay1);
-            text_snoozeLimit.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_snoozeLimit.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             long snoozeMillis = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
             int snoozeMinutes = (int)(snoozeMillis / (1000 * 60));
@@ -337,14 +337,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
             CharSequence snoozeLengthDisplay = SpanUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
             text_snoozeLength.setText(snoozeLengthDisplay);
-            text_snoozeLength.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_snoozeLength.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
             text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
-            text_dismissChallenge.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_dismissChallenge.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
-            tray_beforeAlert.setVisibility((item.type == AlarmClockItem.AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
+            tray_beforeAlert.setVisibility((item.type == AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
 
             long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
             //Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
@@ -424,7 +424,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
     {
-        String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+        String emptyLabel = ((item.type == AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
         return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
     }
 

@@ -33,6 +33,7 @@ import android.os.Vibrator;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -598,8 +599,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // type button
         if (view.typeButton != null)
         {
-            view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
-            view.typeButton.setContentDescription(item.type != null ? item.type.getDisplayString() : AlarmClockItem.AlarmType.ALARM.getDisplayString());
+            view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmType.ALARM ? iconAlarm : iconNotification)));
+            view.typeButton.setContentDescription(item.type != null ? item.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
 
             if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
@@ -925,20 +926,20 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.alarmTypeNotification) {
-                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
+                    return changeAlarmType(item, AlarmType.NOTIFICATION);
 
                 } else if (itemId == R.id.alarmTypeNotification1) {
-                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+                    return changeAlarmType(item, AlarmType.NOTIFICATION1);
 
                 } else if (itemId == R.id.alarmTypeNotification2) {
-                    return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION2);
+                    return changeAlarmType(item, AlarmType.NOTIFICATION2);
                 }
-                return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);
+                return changeAlarmType(item, AlarmType.ALARM);
             }
         })).show();
     }
 
-    protected boolean changeAlarmType(AlarmClockItem item, AlarmClockItem.AlarmType type)
+    protected boolean changeAlarmType(AlarmClockItem item, AlarmType type)
     {
         if (item.type != type)
         {

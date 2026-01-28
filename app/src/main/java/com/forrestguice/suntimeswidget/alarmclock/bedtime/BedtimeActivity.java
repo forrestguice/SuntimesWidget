@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
@@ -312,7 +313,7 @@ public class BedtimeActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
+        AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         // TODO

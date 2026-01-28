@@ -43,6 +43,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -93,7 +94,6 @@ import com.forrestguice.suntimeswidget.timepicker.DateDialog;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
@@ -1843,7 +1843,7 @@ public class SuntimesActivity extends AppCompatActivity
             AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_ALARM);
             if (dialog != null)
             {
-                AlarmClockItem.AlarmType type = dialog.getAlarmType();
+                AlarmType type = dialog.getAlarmType();
                 com.forrestguice.suntimeswidget.calculator.core.Location location = dialog.getLocation();
                 switch (dialog.getMode())
                 {

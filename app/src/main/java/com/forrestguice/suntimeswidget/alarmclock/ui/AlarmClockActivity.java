@@ -45,6 +45,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.SuntimesWarningCollection;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
@@ -352,13 +353,13 @@ public class AlarmClockActivity extends AppCompatActivity
                 handleIntent_setAlarm(context, intent);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
-                showAddDialog(AlarmClockItem.AlarmType.ALARM);
+                showAddDialog(AlarmType.ALARM);
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
-                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+                showAddDialog(AlarmType.NOTIFICATION);
 
             } else if (param_action.equals(ACTION_ADD_QNOTIFICATION)) {
-                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION1);
+                showAddDialog(AlarmType.NOTIFICATION1);
 
             } else if (param_action.equals(ACTION_DISMISS_ALARM)) {
                 handleIntent_dismissAlarms(intent, param_data);
@@ -409,7 +410,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void handleIntent_setAlarm(Context context, Intent intent)
     {
         Log.i(TAG, "ACTION_SET_ALARM");
-        AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
+        AlarmType param_type = AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmType.ALARM);
         String param_label = intent.getStringExtra(EXTRA_MESSAGE);
         int param_hour = intent.getIntExtra(EXTRA_HOUR, -1);
         int param_minute = intent.getIntExtra(EXTRA_MINUTES, -1);
@@ -648,7 +649,7 @@ public class AlarmClockActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
+        AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
@@ -799,7 +800,7 @@ public class AlarmClockActivity extends AppCompatActivity
             } else if (list.getSelectedRowID() == item.rowID) {
                 if (item.getState() == AlarmState.STATE_SOUNDING || item.getState() == AlarmState.STATE_SNOOZING || item.getState() == AlarmState.STATE_TIMEOUT)
                 {
-                    if (item.type == AlarmClockItem.AlarmType.ALARM) {
+                    if (item.type == AlarmType.ALARM) {
                         showAlarmFullscreenActivity(item, view.text_datetime);
                     } else {
                         sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_DISMISS, item.getUri()));
@@ -948,7 +949,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAddDialog(@Nullable AlarmClockItem.AlarmType type)
+    protected void showAddDialog(@Nullable AlarmType type)
     {
         if (list != null) {
             list.clearSelection();
@@ -1006,7 +1007,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 // notification channel warning
                 if (Build.VERSION.SDK_INT >= 26)
                 {
-                    final AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
+                    final AlarmType[] types = AlarmType.values();
                     for (int i=0; i<types.length; i++)
                     {
                         final int j = ((i < types.length) ? i : 0);
@@ -1072,13 +1073,13 @@ public class AlarmClockActivity extends AppCompatActivity
                         return !NotificationManagerCompat.from(context).areNotificationsEnabled();
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "0":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[0]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[0]);
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "1":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[1]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[1]);
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "2":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[2]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[2]);
 
                     case WARNINGID_BATTERY_OPTIMIZATION:
                         return !AlarmSettings.isIgnoringBatteryOptimizations(context);
@@ -1309,7 +1310,7 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location)
+    public static void scheduleAlarm(Activity context, AlarmType type, String label, @NonNull String event, @NonNull Location location)
     {
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
         boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
@@ -1325,7 +1326,7 @@ public class AlarmClockActivity extends AppCompatActivity
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, String event, Location location, int hour, int minutes, String timezone)
+    public static void scheduleAlarm(Activity context, AlarmType type, String label, String event, Location location, int hour, int minutes, String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);

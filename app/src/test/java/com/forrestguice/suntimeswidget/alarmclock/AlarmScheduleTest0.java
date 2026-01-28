@@ -141,7 +141,7 @@ public class AlarmScheduleTest0
     public static AlarmClockItem createAlarmClockItem(boolean repeating)
     {
         AlarmClockItem alarm = new AlarmClockItem();
-        alarm.type = AlarmClockItem.AlarmType.ALARM;
+        alarm.type = AlarmType.ALARM;
         alarm.repeating = repeating;
         alarm.repeatingDays = AlarmClockItem.everyday();
 

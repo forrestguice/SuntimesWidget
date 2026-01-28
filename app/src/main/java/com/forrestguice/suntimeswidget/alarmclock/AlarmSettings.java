@@ -402,7 +402,7 @@ public class AlarmSettings
     }
 
 
-    public static long[] loadPrefVibratePattern(Context context, AlarmClockItem.AlarmType type)
+    public static long[] loadPrefVibratePattern(Context context, AlarmType type)
     {
         switch (type)
         {
@@ -547,19 +547,19 @@ public class AlarmSettings
         return retValue;
     }
 
-    public static Uri getFallbackRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
+    public static Uri getFallbackRingtoneUri(Context context, AlarmType type) {
         return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/"
-                + (type == AlarmClockItem.AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
+                + (type == AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
     }
 
     public static final long MAX_WAIT_MS = 990;
-    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
+    public static Uri getDefaultRingtoneUri(Context context, AlarmType type) {
         return getDefaultRingtoneUri(context, type, false);
     }
-    public static Uri getDefaultRingtoneUri(final Context context, final AlarmClockItem.AlarmType type, boolean resolveDefaults)
+    public static Uri getDefaultRingtoneUri(final Context context, final AlarmType type, boolean resolveDefaults)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
+        String uriString = prefs.getString((type == AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
             return ExecutorUtils.getResult("defaultRingtoneUri", new Callable<Uri>()
             {
@@ -570,10 +570,10 @@ public class AlarmSettings
             }, MAX_WAIT_MS);
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
-    public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
+    public static String getDefaultRingtoneName(Context context, AlarmType type)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
+        return prefs.getString((type == AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
     }
 
     @Nullable
@@ -585,7 +585,7 @@ public class AlarmSettings
      * Caches the default ringtone uri.
      * @return the default uri (or VALUE_RINGTONE_DEFAULT if not set)
      */
-    public Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
+    public Uri setDefaultRingtone(Context context, AlarmType type)
     {
         Uri uri;
         String key_uri, key_name;
@@ -623,13 +623,13 @@ public class AlarmSettings
     public static void setDefaultRingtoneUris(Context context)
     {
         ExecutorUtils.runTask("setDefaultRingtone",
-                CacheDefaultRingtoneRunnable(context, new AlarmClockItem.AlarmType[] { AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION }));
+                CacheDefaultRingtoneRunnable(context, new AlarmType[] { AlarmType.ALARM, AlarmType.NOTIFICATION }));
     }
 
     /**
      * CacheDefaultRingtoneTask
      */
-    public static Runnable CacheDefaultRingtoneRunnable(Context context, final AlarmClockItem.AlarmType[] types)
+    public static Runnable CacheDefaultRingtoneRunnable(Context context, final AlarmType[] types)
     {
         final WeakReference<Context> contextRef = new WeakReference<>(context);
         return new Runnable()
@@ -640,8 +640,8 @@ public class AlarmSettings
                 Context context = contextRef.get();
                 AlarmSettings settings = new AlarmSettings();
                 if (context != null) {
-                    for (AlarmClockItem.AlarmType type : types) {
-                        settings.setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                    for (AlarmType type : types) {
+                        settings.setDefaultRingtone(context, ((type != null) ? type : AlarmType.NOTIFICATION));
                     }
                 }
             }
@@ -649,7 +649,7 @@ public class AlarmSettings
     }
 
     @TargetApi(26)
-    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmClockItem.AlarmType type)
+    public static void openChannelSettings(@NonNull Context context, @NonNull AlarmType type)
     {
         Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
@@ -661,7 +661,7 @@ public class AlarmSettings
      * isChannelMuted
      * @return true if NotificationChannel is blocked
      */
-    public static boolean isChannelMuted(Context context, @NonNull AlarmClockItem.AlarmType type)
+    public static boolean isChannelMuted(Context context, @NonNull AlarmType type)
     {
         if (Build.VERSION.SDK_INT >= 26)
         {
@@ -680,7 +680,7 @@ public class AlarmSettings
      * areNotificationsAllowedOnLockScreen
      * @return true notifications allowed on lock screen
      */
-    public static boolean areNotificationsAllowedOnLockScreen(Context context, AlarmClockItem.AlarmType type)
+    public static boolean areNotificationsAllowedOnLockScreen(Context context, AlarmType type)
     {
         if (Build.VERSION.SDK_INT >= 21)
         {

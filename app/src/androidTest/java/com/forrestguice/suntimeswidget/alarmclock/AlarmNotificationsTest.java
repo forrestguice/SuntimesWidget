@@ -111,7 +111,7 @@ public class AlarmNotificationsTest
         for (int alarmState : AlarmState.VALUES)
         {
             AlarmClockItem alarm = new AlarmClockItem();
-            alarm.type = AlarmClockItem.AlarmType.NOTIFICATION;
+            alarm.type = AlarmType.NOTIFICATION;
             alarm.timezone = TimeZone.getDefault().getID();
             alarm.hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);    // very soon; will display reminder notification
             alarm.minute = now.get(Calendar.MINUTE);
@@ -202,7 +202,7 @@ public class AlarmNotificationsTest
     private AlarmClockItem createTestItem_clockTime(int hour, int minute)
     {
         AlarmClockItem alarm = new AlarmClockItem();
-        alarm.type = AlarmClockItem.AlarmType.ALARM;
+        alarm.type = AlarmType.ALARM;
         alarm.location = new Location("TEST", "34", "-111", "0");
         alarm.timezone = null;
         alarm.setEvent(null);
@@ -275,7 +275,7 @@ public class AlarmNotificationsTest
 
         // add non-repeating alarm for +1hr (create valid data)
         Calendar now = Calendar.getInstance();
-        alarms[0].type = AlarmClockItem.AlarmType.ALARM;
+        alarms[0].type = AlarmType.ALARM;
         alarms[0].hour = now.get(Calendar.HOUR) + 1;
         alarms[0].minute = now.get(Calendar.MINUTE) + 5;    // soon
         alarms[0].alarmtime = 0;
@@ -289,7 +289,7 @@ public class AlarmNotificationsTest
         // add non-repeating notification (create valid data)
         alarms[1].enabled = true;
         alarms[1].repeating = false;
-        alarms[1].type = AlarmClockItem.AlarmType.NOTIFICATION;
+        alarms[1].type = AlarmType.NOTIFICATION;
         long alarmId1 = addAlarmItemToDatabase(alarms[1]);
         assertTrue("failed to create alarm", hasAlarmId(alarmId1));
         Uri data1 = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, alarmId1);
@@ -345,7 +345,7 @@ public class AlarmNotificationsTest
 
         // add non-repeating alarm for +1hr (create valid data)
         Calendar now = Calendar.getInstance();
-        alarms[0].type = AlarmClockItem.AlarmType.ALARM;
+        alarms[0].type = AlarmType.ALARM;
         alarms[0].timezone = TimeZone.getDefault().getID();
         alarms[0].hour = ((now.get(Calendar.HOUR_OF_DAY) + 1 ) % 24);    // very soon; will display reminder notification
         alarms[0].minute = now.get(Calendar.MINUTE);
@@ -444,7 +444,7 @@ public class AlarmNotificationsTest
     public static AlarmClockItem createAlarmClockItem(boolean repeating)
     {
         AlarmClockItem alarm = new AlarmClockItem();
-        alarm.type = AlarmClockItem.AlarmType.ALARM;
+        alarm.type = AlarmType.ALARM;
         alarm.repeating = repeating;
         alarm.repeatingDays = AlarmClockItem.everyday();
 
@@ -462,7 +462,7 @@ public class AlarmNotificationsTest
     public void test_startCommand_notification(boolean repeating, String repeatingDays) throws TimeoutException
     {
         AlarmClockItem alarm = createAlarmClockItem(repeating);
-        alarm.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        alarm.type = AlarmType.NOTIFICATION;
         alarm.setRepeatingDays(repeatingDays);
         test_startCommand_notification(alarm);
     }
@@ -765,7 +765,7 @@ public class AlarmNotificationsTest
     public void test_startAlert_valid()
     {
         AlarmClockItem alarm0 = new AlarmClockItem();
-        alarm0.type = AlarmClockItem.AlarmType.ALARM;
+        alarm0.type = AlarmType.ALARM;
         alarm0.vibrate = false;    // TODO: test vibrate
         alarm0.ringtoneURI = null;                                                                           // silent alarm
 
@@ -776,7 +776,7 @@ public class AlarmNotificationsTest
         alarm2.ringtoneURI = AlarmSettings.getFallbackRingtoneUri(mockContext, alarm2.type).toString();      // fallback alarm
 
         AlarmClockItem notify0 = new AlarmClockItem();
-        notify0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        notify0.type = AlarmType.NOTIFICATION;
         alarm0.vibrate = false;    // TODO: test vibrate
         notify0.ringtoneURI = null;                                                                          // silent notification
 
@@ -796,7 +796,7 @@ public class AlarmNotificationsTest
     public void test_startAlert_invalid()
     {
         AlarmClockItem alarm0 = new AlarmClockItem();
-        alarm0.type = AlarmClockItem.AlarmType.ALARM;
+        alarm0.type = AlarmType.ALARM;
         alarm0.vibrate = false;    // TODO: test vibrate
         alarm0.ringtoneURI = "invalid://sound/uri";
 
@@ -810,7 +810,7 @@ public class AlarmNotificationsTest
         alarm3.ringtoneURI = "invalid";
 
         AlarmClockItem notify0 = new AlarmClockItem(alarm0);
-        notify0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        notify0.type = AlarmType.NOTIFICATION;
 
         AlarmClockItem notify1 = new AlarmClockItem(notify0);
         notify1.type = null;
@@ -849,8 +849,8 @@ public class AlarmNotificationsTest
     @Test
     public void test_startAlertUri_fallback()
     {
-        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.NOTIFICATION));
-        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.ALARM));
+        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmType.NOTIFICATION));
+        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmType.ALARM));
     }
 
     @Test
@@ -890,7 +890,7 @@ public class AlarmNotificationsTest
         prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, fadeIn ? 3000 : 0).apply();
 
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        String channel = AlarmClockItem.AlarmType.ALARM.name();
+        String channel = AlarmType.ALARM.name();
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);    // player must be initialized first
         verify_initPlayer(channel);
         AlarmNotifications.t_volume = 0;
@@ -940,7 +940,7 @@ public class AlarmNotificationsTest
         prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, 0).apply();
 
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        String channel = AlarmClockItem.AlarmType.NOTIFICATION.name();
+        String channel = AlarmType.NOTIFICATION.name();
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);    // player must be initialized first
         verify_initPlayer(channel);
         try {
@@ -970,7 +970,7 @@ public class AlarmNotificationsTest
 
     public void test_startAlertUri_exception(Uri uri, boolean isAlarm)
     {
-        String channel = (isAlarm ? AlarmClockItem.AlarmType.ALARM : AlarmClockItem.AlarmType.NOTIFICATION).name();
+        String channel = (isAlarm ? AlarmType.ALARM : AlarmType.NOTIFICATION).name();
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel,true);
         verify_initPlayer(channel);
         try {
@@ -983,7 +983,7 @@ public class AlarmNotificationsTest
     public void test_startAlertUri_errorCode(Uri uri, boolean isAlarm, Integer code)
     {
         AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
-        String channel = (isAlarm ? AlarmClockItem.AlarmType.ALARM : AlarmClockItem.AlarmType.NOTIFICATION).name();
+        String channel = (isAlarm ? AlarmType.ALARM : AlarmType.NOTIFICATION).name();
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);
         verify_initPlayer(channel);
         try {

@@ -41,6 +41,7 @@ import android.provider.AlarmClock;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -282,7 +283,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
                 ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
                 boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
-                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
+                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, AlarmType.ALARM);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -301,15 +302,15 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
 
                 //Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
-                addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
+                addAlarm(AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
                 //Log.d(TAG, "handleIntent: add alarm");
-                showAddDialog(AlarmClockItem.AlarmType.ALARM);
+                showAddDialog(AlarmType.ALARM);
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
                 //Log.d(TAG, "handleIntent: add notification");
-                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+                showAddDialog(AlarmType.NOTIFICATION);
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
                 //Log.d(TAG, "handleIntent: alarm deleted");
@@ -346,7 +347,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
+        AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
@@ -391,7 +392,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         if (eventDialog0 != null)
         {
             initEventDialog(eventDialog0, null);
-            eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmClockItem.AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
+            eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
         }
 
         AlarmEventDialog eventDialog1 = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT);
@@ -630,7 +631,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            showAddDialog(AlarmClockItem.AlarmType.ALARM);
+            showAddDialog(AlarmType.ALARM);
             collapseFabMenu();
         }
     };
@@ -638,7 +639,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+            showAddDialog(AlarmType.NOTIFICATION);
             collapseFabMenu();
         }
     };
@@ -647,41 +648,41 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which) {
             //Log.d("DEBUG", "onAddAlarmAccepted");
-            addAlarm(AlarmClockItem.AlarmType.ALARM);
+            addAlarm(AlarmType.ALARM);
         }
     };
     private final DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
             //Log.d("DEBUG", "onAddNotificationAccepted");
-            addAlarm(AlarmClockItem.AlarmType.NOTIFICATION);
+            addAlarm(AlarmType.NOTIFICATION);
         }
     };
 
-    protected void showAddDialog(AlarmClockItem.AlarmType type)
+    protected void showAddDialog(AlarmType type)
     {
         //Log.d("DEBUG", "showAddDialog: " + type);
         AlarmEventDialog eventDialog0 = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 == null)
         {
             final AlarmEventDialog dialog = new AlarmEventDialog();
-            dialog.setDialogTitle(getString((type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
+            dialog.setDialogTitle(getString((type == AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE.name());
-            DialogInterface.OnClickListener clickListener = (type == AlarmClockItem.AlarmType.ALARM ? onAddAlarmAccepted : onAddNotificationAccepted);
+            DialogInterface.OnClickListener clickListener = (type == AlarmType.ALARM ? onAddAlarmAccepted : onAddNotificationAccepted);
             dialog.setOnAcceptedListener(clickListener);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
         }
     }
 
-    protected void addAlarm(AlarmClockItem.AlarmType type)
+    protected void addAlarm(AlarmType type)
     {
         AlarmEventDialog dialog = (AlarmEventDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_EVENT_FAB);
         String choice = ((dialog != null) ? dialog.getChoice() : null);
         addAlarm(type, "", choice, -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
-    protected void addAlarm(AlarmClockItem.AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    protected void addAlarm(AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "addAlarm: type is " + type.toString());
         final AlarmClockItem alarm = new AlarmClockItem();
@@ -1011,7 +1012,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmEventDialog dialog = new AlarmEventDialog();
-        dialog.setDialogTitle(getString((item.type == AlarmClockItem.AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
+        dialog.setDialogTitle(getString((item.type == AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
@@ -1368,7 +1369,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         int ringtoneType = RingtoneManager.TYPE_RINGTONE;
         if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmClockItem.AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
+            ringtoneType = (item.type == AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
         }
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);

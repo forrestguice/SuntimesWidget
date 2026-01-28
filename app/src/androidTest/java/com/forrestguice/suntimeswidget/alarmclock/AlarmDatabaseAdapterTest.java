@@ -44,8 +44,8 @@ import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTLOC_1
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_0;
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_1;
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_2;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.NOTIFICATION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.ALARM;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.NOTIFICATION;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -365,7 +365,7 @@ public class AlarmDatabaseAdapterTest
         String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
         String[] repeatDays = new String[] {"", "1", "0,1,2,3", "1,2", null, "1,2,3,4,5,6"};   // 0 is invalid value
         String[] flags = new String[] {"", "flag1=true", "flag1=true,flag2=false,flag3=true", "flag1=true,flag2=burrito", "flag3=false", null};
-        AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
+        AlarmType[] types = new AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
         int[] hours = new int[] {6, 18, 5, 19, 12, 6};
         int[] minutes = new int[] {30, 10, 0, 1, 59, 6};
 

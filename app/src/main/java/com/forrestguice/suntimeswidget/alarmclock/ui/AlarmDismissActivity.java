@@ -44,6 +44,7 @@ import android.os.PowerManager;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -766,7 +767,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 AlarmClockItem item = result.getItem();
                 Boolean r = result.getResult();
                 if (item != null) {
-                    if (item.type == AlarmClockItem.AlarmType.ALARM) {
+                    if (item.type == AlarmType.ALARM) {
                         setAlarmItem(context, item);
 
                     } else {

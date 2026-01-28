@@ -30,7 +30,7 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
@@ -289,7 +289,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
             // TODO: checkbox/switch isChecked? item shows enabled background?
             return this;
         }
-        public AlarmActivityRobot assertAlarmItem_isType(int position, AlarmClockItem.AlarmType type) {
+        public AlarmActivityRobot assertAlarmItem_isType(int position, AlarmType type) {
             // TODO: correct icon shown? correct label shown?
             return this;
         }

@@ -379,7 +379,7 @@ public class AlarmDatabaseAdapter
     }
 
     public Long findUpcomingAlarmId(long nowMillis) throws SQLException {
-        return findUpcomingAlarmId(nowMillis, new String[] { AlarmClockItem.AlarmType.ALARM.name() });
+        return findUpcomingAlarmId(nowMillis, new String[] { AlarmType.ALARM.name() });
     }
     public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {

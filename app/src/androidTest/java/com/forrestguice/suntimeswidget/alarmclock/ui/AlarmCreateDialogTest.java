@@ -32,10 +32,10 @@ import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
@@ -43,7 +43,6 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.TimeDateDialogTest;
 import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -129,13 +128,13 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
                 //.captureScreenshot(activityRule.getActivity(), "suntimes-dialog-alarm0");
                 //.rotateDevice(context).assertDialogShown(context)
 
-        AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { AlarmClockItem.AlarmType.ALARM,
-                AlarmClockItem.AlarmType.NOTIFICATION, AlarmClockItem.AlarmType.NOTIFICATION1 };
-        for (AlarmClockItem.AlarmType type : types) {
+        AlarmType[] types = new AlarmType[] { AlarmType.ALARM,
+                AlarmType.NOTIFICATION, AlarmType.NOTIFICATION1 };
+        for (AlarmType type : types) {
             robot.selectAlarmType(type)
                     .assertAlarmTypeSelected(type);
         }
-        for (AlarmClockItem.AlarmType type : types)
+        for (AlarmType type : types)
         {
             robot.selectAlarmType(type).assertAlarmTypeSelected(type);
             for (int i : new int[] {0, 1, 0, 1}) {
@@ -154,8 +153,8 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
 
-        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0)
-                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+        robot.selectAlarmType(AlarmType.ALARM).selectTabAtPosition(0)
+                .assertAlarmTypeSelected(AlarmType.ALARM)
                 .assertTabAtPosition(context, 0);
 
         SolarEvents[] events = new SolarEvents[] { SolarEvents.SUNSET, SolarEvents.NOON, SolarEvents.SUNRISE };
@@ -180,8 +179,8 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
 
-        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
-                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+        robot.selectAlarmType(AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
+                .assertAlarmTypeSelected(AlarmType.ALARM)
                 .assertTabAtPosition(context, 0)
                 .assertAlarmDialogEvent(SolarEvents.SUNRISE);
 
@@ -199,8 +198,8 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
 
-        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
-                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+        robot.selectAlarmType(AlarmType.ALARM).selectTabAtPosition(0).selectAlarmDialogEvent(SolarEvents.SUNRISE)
+                .assertAlarmTypeSelected(AlarmType.ALARM)
                 .assertTabAtPosition(context, 0)
                 .assertAlarmDialogEvent(SolarEvents.SUNRISE);
 
@@ -216,8 +215,8 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
-        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(1)
-                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+        robot.selectAlarmType(AlarmType.ALARM).selectTabAtPosition(1)
+                .assertAlarmTypeSelected(AlarmType.ALARM)
                 .assertTabAtPosition(context, 1);
 
         robot.selectTZ_ApparentSolarTime()
@@ -251,8 +250,8 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         AlarmDialogRobot robot = new AlarmDialogRobot();
         robot.showDialog(context).assertDialogShown(context);
-        robot.selectAlarmType(AlarmClockItem.AlarmType.ALARM).selectTabAtPosition(1)
-                .assertAlarmTypeSelected(AlarmClockItem.AlarmType.ALARM)
+        robot.selectAlarmType(AlarmType.ALARM).selectTabAtPosition(1)
+                .assertAlarmTypeSelected(AlarmType.ALARM)
                 .assertTabAtPosition(context, 1)
                 .assertDateNotSet(context);
 
@@ -297,13 +296,13 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public AlarmDialogRobot selectAlarmType(AlarmClockItem.AlarmType type)
+        public AlarmDialogRobot selectAlarmType(AlarmType type)
         {
             onView(withId(R.id.type_spin)).perform(click());
-            onData(allOf(is(instanceOf(AlarmClockItem.AlarmType.class)), is(type))).inRoot(isPlatformPopup()).perform(click());
+            onData(allOf(is(instanceOf(AlarmType.class)), is(type))).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
-        public AlarmDialogRobot assertAlarmTypeSelected(AlarmClockItem.AlarmType type)
+        public AlarmDialogRobot assertAlarmTypeSelected(AlarmType type)
         {
             spinnerDisplaysText(R.id.type_spin, type.getDisplayString());
             return this;

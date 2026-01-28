@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
@@ -362,15 +363,15 @@ public class AlarmEditDialog extends DialogBase
             {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.alarmTypeNotification) {
-                    item.type = AlarmClockItem.AlarmType.NOTIFICATION;
+                    item.type = AlarmType.NOTIFICATION;
                 } else if (itemId == R.id.alarmTypeNotification1) {
-                    item.type = AlarmClockItem.AlarmType.NOTIFICATION1;
+                    item.type = AlarmType.NOTIFICATION1;
                 } else if (itemId == R.id.alarmTypeNotification2) {
-                    item.type = AlarmClockItem.AlarmType.NOTIFICATION2;
+                    item.type = AlarmType.NOTIFICATION2;
                 } else {
-                    item.type = AlarmClockItem.AlarmType.ALARM;
+                    item.type = AlarmType.ALARM;
                 }
-                boolean isAlarm = item.type == AlarmClockItem.AlarmType.ALARM;
+                boolean isAlarm = item.type == AlarmType.ALARM;
                 itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
                 itemView.chip_dismissChallenge.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
 
