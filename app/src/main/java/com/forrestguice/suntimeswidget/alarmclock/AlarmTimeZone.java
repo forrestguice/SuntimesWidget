@@ -18,13 +18,11 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.Context;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.Resources;
 
 import java.util.TimeZone;
 
@@ -78,11 +76,11 @@ public enum AlarmTimeZone
         this.displayString = displayString;
     }
 
-    public static void initDisplayStrings( Context context )
+    public static void initDisplayStrings( Resources context, ResID_AlarmTimeZone r )
     {
-        SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
-        LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-        APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+        SYSTEM_TIME.setDisplayString(context.getString(r.string_timezoneMode_current()));
+        LOCAL_MEAN_TIME.setDisplayString(context.getString(r.string_time_localMean()));
+        APPARENT_SOLAR_TIME.setDisplayString(context.getString(r.string_time_apparent()));
     }
 
     @NonNull
@@ -121,5 +119,12 @@ public enum AlarmTimeZone
         } else {
             return null;
         }
+    }
+
+    public interface ResID_AlarmTimeZone
+    {
+        int string_timezoneMode_current();
+        int string_time_localMean();
+        int string_time_apparent();
     }
 }
