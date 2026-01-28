@@ -54,6 +54,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -1039,7 +1040,7 @@ public class EventListHelper
             {
                 Calendar now = Calendar.getInstance();
                 String uri = item.getUri() + (rising ? ElevationEvent.SUFFIX_RISING : ElevationEvent.SUFFIX_SETTING);
-                Calendar eventTime = AlarmScheduler.updateAlarmTime_addonEvent(AndroidContentResolver.wrap(context.getContentResolver()), uri, getLocation(context), 0, false, AlarmClockItem.everyday(), now);
+                Calendar eventTime = AlarmScheduler.updateAlarmTime_addonEvent(AndroidContentResolver.wrap(context.getContentResolver()), uri, getLocation(context), 0, false, AlarmItemInterface.everyday(), now);
 
                 Log.d("DEBUG", "getChildView: isRising? " + rising + ": " + eventTime);
                 boolean isSoon = (eventTime != null && (Math.abs(now.getTimeInMillis() - eventTime.getTimeInMillis()) < 1000 * 60 * 260 * 48));

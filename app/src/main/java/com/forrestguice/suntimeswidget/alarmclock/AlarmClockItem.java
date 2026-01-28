@@ -43,7 +43,7 @@ import java.util.TimeZone;
 /**
  * AlarmClockItem
  */
-public class AlarmClockItem implements Parcelable
+public class AlarmClockItem implements AlarmItemInterface, Parcelable
 {
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
@@ -86,12 +86,7 @@ public class AlarmClockItem implements Parcelable
 
     @Nullable
     protected HashMap<String, Long> alarmFlags = null;
-    public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
-    public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
-    public static final String FLAG_SNOOZE = "snoozeMillis";                         // milliseconds
-    public static final String FLAG_SNOOZE_LIMIT = "snoozeLimit";                    // 0; unlimited
-    public static final String FLAG_SNOOZE_COUNT = "snoozeCount";                    // [0, limit)
-    public static final String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
+
 
     public boolean modified = false;
     @Nullable
@@ -342,6 +337,15 @@ public class AlarmClockItem implements Parcelable
         return (state != null ? state.getState() : AlarmState.STATE_NONE);
     }
 
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+    @Override
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     @Nullable
     public String getEvent() {
         return event;
@@ -349,6 +353,69 @@ public class AlarmClockItem implements Parcelable
     public void setEvent(@Nullable String event) {
         this.event = event;
         eventItem = null;
+    }
+
+    @Override
+    public long getOffset() {
+        return offset;
+    }
+    @Override
+    public void setOffset(long offsetMillis) {
+        offset = offsetMillis;
+    }
+
+    @Override
+    public int getHour() {
+        return hour;
+    }
+    @Override
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    @Override
+    public int getMinute() {
+        return minute;
+    }
+    @Override
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    @Override
+    public boolean isRepeating() {
+        return repeating;
+    }
+    @Override
+    public void setRepeating(boolean value) {
+        repeating = value;
+    }
+
+    @Override
+    public String getTimeZone() {
+        return timezone;
+    }
+    @Override
+    public void setTimeZone(String tzID) {
+        timezone = tzID;
+    }
+
+    @Override
+    public long getTimestamp() {
+        return timestamp;
+    }
+    @Override
+    public void setTimestamp(long value) {
+        timestamp = value;
+    }
+
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+    @Override
+    public void setModified(boolean value) {
+        modified = value;
     }
 
     @Nullable
@@ -486,6 +553,7 @@ public class AlarmClockItem implements Parcelable
         }
     }
 
+    @Override
     public String getAlarmFlags()
     {
         if (alarmFlags != null)
@@ -512,15 +580,18 @@ public class AlarmClockItem implements Parcelable
         } else return false;
     }
 
+    @Override
     public boolean hasFlag(@Nullable String flagname)
     {
         if (alarmFlags != null && flagname != null) {
             return alarmFlags.containsKey(flagname);
         } else return false;
     }
+    @Override
     public long getFlag(@Nullable String flagname) {
         return getFlag(flagname, 0L);
     }
+    @Override
     public long getFlag(@Nullable String flagname, long defaultValue)
     {
         if (alarmFlags != null && flagname != null) {
@@ -528,16 +599,20 @@ public class AlarmClockItem implements Parcelable
             return (value != null) ? value : defaultValue;
         } else return defaultValue;
     }
+    @Override
     public boolean flagIsTrue(@Nullable String flagname) {
         return (getFlag(flagname) != 0L);
     }
+
     public static boolean flagIsTrue(@NonNull HashMap<String,Long> map, @Nullable String flagname) {
         Long value = map.get(flagname);
         return (value != null && value != 0L);
     }
+    @Override
     public boolean setFlag(@NonNull String flag, boolean value) {
         return setFlag(flag, (value ? 1L : 0L));
     }
+    @Override
     public boolean setFlag(@NonNull String flag, long value)
     {
         if (isValidFlagName(flag))
@@ -610,8 +685,9 @@ public class AlarmClockItem implements Parcelable
         } else return null;
     }
 
-    public static ArrayList<Integer> everyday() {
-        return new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
+    @Override
+    public ArrayList<Integer> getRepeatingDaysArray() {
+        return repeatingDays;
     }
 
     /**

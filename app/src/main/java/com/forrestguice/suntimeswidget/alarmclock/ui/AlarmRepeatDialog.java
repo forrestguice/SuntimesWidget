@@ -40,6 +40,7 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
@@ -56,7 +57,7 @@ public class AlarmRepeatDialog extends DialogBase
     public static final boolean PREF_DEF_ALARM_REPEAT = false;
 
     public static final String PREF_KEY_ALARM_REPEATDAYS = "alarmrepeat_days";
-    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = AlarmClockItem.everyday();
+    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = AlarmItemInterface.everyday();
 
     public static final String KEY_COLORS = "alarmrepeat_colors";
 
@@ -305,7 +306,7 @@ public class AlarmRepeatDialog extends DialogBase
     public void setRepetition(boolean value, @Nullable ArrayList<Integer> days)
     {
         this.repeat = value;
-        repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmClockItem.everyday());
+        repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmItemInterface.everyday());
         if (getContext() != null) {
             updateViews(getContext());
         }
