@@ -101,12 +101,20 @@ public class AlarmEventProvider extends ContentProvider
 
     private TimeDateDisplay utils = null;
 
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO, URIMATCH_EVENTS);                            // content://AUTHORITY/eventInfo
-        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventInfo/[eventID]
-        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_CALC + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventCalc/[eventID]
-        uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_TYPES, URIMATCH_EVENT_TYPES);                      // content://AUTHORITY/eventTypes
+    @Nullable
+    private static UriMatcher uriMatcher = null;
+    @NonNull
+    public static UriMatcher getUriMatcher()
+    {
+        if (uriMatcher == null) {
+            uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+            uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO, URIMATCH_EVENTS);                            // content://AUTHORITY/eventInfo
+            uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_INFO + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventInfo/[eventID]
+            uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_CALC + "/*", URIMATCH_EVENT);                // content://AUTHORITY/eventCalc/[eventID]
+            uriMatcher.addURI(EventUri.AUTHORITY(), QUERY_EVENT_TYPES, URIMATCH_EVENT_TYPES);                      // content://AUTHORITY/eventTypes
+            Log.d("DEBUG", "registered uri matcher: " + EventUri.AUTHORITY());
+        }
+        return uriMatcher;
     }
 
     @Override
@@ -150,7 +158,7 @@ public class AlarmEventProvider extends ContentProvider
         initDisplayStrings_EventType(getContext());
 
         Cursor retValue = null;
-        int uriMatch = uriMatcher.match(uri);
+        int uriMatch = getUriMatcher().match(uri);
         switch (uriMatch)
         {
             case URIMATCH_EVENTS:

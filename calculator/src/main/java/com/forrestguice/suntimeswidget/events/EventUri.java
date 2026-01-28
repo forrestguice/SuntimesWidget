@@ -34,7 +34,7 @@ public class EventUri
     public static String AUTHORITY()
     {
         if (buildConfig == null) {
-            Log.w("EventUri", "AUTHORITY: BuildConfig is unset! returning default...");
+            Log.e("EventUri", "AUTHORITY: BuildConfig is unset! returning default...");
             return AlarmEventContract.AUTHORITY;
         } else {
             return buildConfig.AUTHORITY_ROOT() + ".event.provider";
