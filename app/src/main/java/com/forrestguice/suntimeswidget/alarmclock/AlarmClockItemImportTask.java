@@ -27,6 +27,8 @@ import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.util.concurrent.ProgressCallable;
 import com.forrestguice.util.concurrent.SimpleProgressListener;
 
@@ -235,7 +237,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
                 try {
                     AlarmClockItem item = new AlarmClockItem();
                     item.fromContentValues(context, ExportTask.toContentValues(map));
-                    AlarmScheduler.updateAlarmTime(context, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     return item;
 
                 } catch (Exception e) {

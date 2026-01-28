@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.SuntimesWarningCollection;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
@@ -453,7 +454,7 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         } else {
             AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
-            AlarmScheduler.updateAlarmTime(context, item);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
             showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
         }
     }
@@ -867,7 +868,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (dialog.useAppLocation()) {
                     item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
                 }
-                AlarmScheduler.updateAlarmTime(context, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                 dialog.saveSettings(context);
                 ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
                 showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
@@ -1311,7 +1312,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location)
     {
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
-        boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item);
+        boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
         int hour = 6, minutes = 30;    // fallback to an arbitrary alarm time if event does not occur
 
         if (isSchedulable)

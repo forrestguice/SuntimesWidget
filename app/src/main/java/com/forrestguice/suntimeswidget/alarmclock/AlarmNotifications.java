@@ -733,7 +733,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
         {
-            SuntimesData data = AlarmScheduler.getData(context, alarm);
+            SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm);
             data.calculate(context);
             WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
@@ -1263,7 +1263,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             //noinspection ConstantConditions
             if (data == null) {
-                data = AlarmScheduler.getData(context, alarm);
+                data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm);
                 data.calculate(context);
             }
             notificationMsg += ((eventDisplay != null) ? "\n\n" : "") + alarm.note;
@@ -1317,7 +1317,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (alarm.hasActionID(AlarmClockItem.ACTIONID_REMINDER))    // on-click reminder action
                         {
                             if (data == null) {
-                                data = AlarmScheduler.getData(context, alarm);
+                                data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm);
                                 data.calculate(context);
                             }
                             String reminderActionID = alarm.getActionID(AlarmClockItem.ACTIONID_REMINDER);
@@ -2309,7 +2309,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (dismissedEarly) {
                                             scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
                                         }
-                                        boolean updated = AlarmScheduler.updateAlarmTime(context, item, scheduledFrom, true);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        boolean updated = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item, scheduledFrom, true);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         if (updated)
                                         {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
@@ -2462,7 +2462,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));    // dismiss fullscreen activity
                     if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))           // trigger dismiss action
                     {
-                        SuntimesData data = AlarmScheduler.getData(context, item);
+                        SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), item);
                         data.calculate(context);
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }

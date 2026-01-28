@@ -184,7 +184,7 @@ public class AlarmTileBase extends SuntimesTileBase
             // show alarm label note too
             if (WidgetSettings.loadShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS))
             {
-                SuntimesData data = AlarmScheduler.getData(context, item);
+                SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), item);
                 data.calculate(context);
 
                 if (item.label != null || item.note != null) {

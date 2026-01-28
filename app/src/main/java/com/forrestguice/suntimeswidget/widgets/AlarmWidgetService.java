@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -143,7 +144,7 @@ public class AlarmWidgetService extends RemoteViewsService
 
                     AlarmClockItem item = new AlarmClockItem(context, entryValues);
                     if (!item.enabled) {
-                        AlarmScheduler.updateAlarmTime(context, item);
+                        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     }
 
                     if (item.type != null && filterTypes.contains(item.type.name())) {

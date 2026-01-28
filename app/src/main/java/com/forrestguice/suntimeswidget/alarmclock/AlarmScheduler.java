@@ -18,10 +18,6 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
@@ -35,12 +31,15 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.events.EventUri;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.UriUtils;
+
+import com.forrestguice.util.content.ContentResolver;
+import com.forrestguice.util.content.Cursor;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,10 +57,10 @@ public class AlarmScheduler
      * @param item AlarmClockItem
      * @return true item was updated, false failed to update item
      */
-    public static boolean updateAlarmTime(Context context, final AlarmClockItem item) {
+    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmClockItem item) {
         return updateAlarmTime(context, item, Calendar.getInstance(), true);
     }
-    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
+    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = null;
         boolean modifyHourMinute = true;
@@ -70,7 +69,7 @@ public class AlarmScheduler
         ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
         
         if (item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
-            item.location = WidgetSettings.loadLocationPref(context, 0);
+            item.location = context.loadLocationPref(0);
         }
 
         if (item.location != null && event != null)
@@ -78,7 +77,7 @@ public class AlarmScheduler
             eventTime = updateAlarmTime_solarEvent(context, event, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else if (eventID != null) {
-            eventTime = updateAlarmTime_addonEvent(context, context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
+            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
 
         } else {
             modifyHourMinute = false;    // "clock time" alarms should leave "hour" and "minute" values untouched
@@ -103,7 +102,7 @@ public class AlarmScheduler
     }
 
     @Nullable
-    protected static Calendar updateAlarmTime_solarEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    protected static Calendar updateAlarmTime_solarEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         Calendar eventTime = null;
         switch (event.getType())
@@ -128,7 +127,7 @@ public class AlarmScheduler
     }
 
     @Nullable
-    protected static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    protected static Calendar updateAlarmTime_sunEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
@@ -181,7 +180,7 @@ public class AlarmScheduler
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    private static Calendar updateAlarmTime_moonEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
@@ -252,7 +251,7 @@ public class AlarmScheduler
     }
 
     @Nullable
-    protected static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    protected static Calendar updateAlarmTime_moonPhaseEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         t_updateAlarmTime_runningLoop = true;
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
@@ -295,7 +294,7 @@ public class AlarmScheduler
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    private static Calendar updateAlarmTime_seasonEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         t_updateAlarmTime_runningLoop = true;
         SuntimesEquinoxSolsticeData data = getData_seasons(context, event, location);
@@ -333,7 +332,7 @@ public class AlarmScheduler
         return eventTime;
     }
 
-    public static Calendar updateAlarmTime_addonEvent(Context context, @Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
+    public static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
@@ -486,7 +485,7 @@ public class AlarmScheduler
         }
     }
 
-    public static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
+    public static SuntimesData getData(SuntimesDataSettings context, @NonNull AlarmClockItem alarm)
     {
         SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);   // TODO: non SolarEventsEnum
         if (alarm.location != null && event != null)
@@ -504,11 +503,11 @@ public class AlarmScheduler
                     return getData_clockEvent(context, alarm.location);
             }
         } else {
-            return getData_clockEvent(context, WidgetSettings.loadLocationPref(context, 0));
+            return getData_clockEvent(context, context.loadLocationPref(0));
         }
     }
 
-    private static SuntimesRiseSetData getData_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location)
+    private static SuntimesRiseSetData getData_sunEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location)
     {
         TimeMode timeMode = event.toTimeMode();
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
@@ -517,14 +516,14 @@ public class AlarmScheduler
         sunData.setTodayIs(Calendar.getInstance());
         return sunData;
     }
-    protected static SuntimesMoonData getData_moonEvent(Context context, @NonNull Location location)
+    protected static SuntimesMoonData getData_moonEvent(SuntimesDataSettings context, @NonNull Location location)
     {
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
         moonData.setLocation(location);
         moonData.setTodayIs(Calendar.getInstance());
         return moonData;
     }
-    private static SuntimesEquinoxSolsticeData getData_seasons(Context context, @NonNull SolarEvents event, @NonNull Location location)
+    private static SuntimesEquinoxSolsticeData getData_seasons(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location)
     {
         SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
@@ -533,7 +532,7 @@ public class AlarmScheduler
         data.setTodayIs(Calendar.getInstance());
         return data;
     }
-    private static SuntimesClockData getData_clockEvent(Context context, @NonNull Location location)
+    private static SuntimesClockData getData_clockEvent(SuntimesDataSettings context, @NonNull Location location)
     {
         SuntimesClockData data = new SuntimesClockData(context, 0);
         data.setLocation(location);

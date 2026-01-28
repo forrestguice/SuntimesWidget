@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 
@@ -622,7 +623,7 @@ public class AlarmEditDialog extends DialogBase
         if (holder == null || context == null || !isAdded()) {
             return;
         }
-        boolean isSchedulable = (item != null && AlarmScheduler.updateAlarmTime(context, item, Calendar.getInstance(), false));
+        boolean isSchedulable = (item != null && AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item, Calendar.getInstance(), false));
 
         if (holder.text_datetime != null) {
             holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, enable) : "");

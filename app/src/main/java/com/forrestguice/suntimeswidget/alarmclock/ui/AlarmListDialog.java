@@ -851,7 +851,7 @@ public class AlarmListDialog extends DialogBase
                             break;
                         default:
                             //Log.d("DEBUG", "onItemChanged: updating item timestamp");
-                            AlarmScheduler.updateAlarmTime(getContext(), item);
+                            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(getContext()), item);
                             break;
                     }
                     adapter.setItem(item);
@@ -904,7 +904,7 @@ public class AlarmListDialog extends DialogBase
 
                 AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
                 if (!item.enabled) {
-                    AlarmScheduler.updateAlarmTime(contextRef.get(), item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(contextRef.get()), item);
                 }
 
                 if (option_includeState)
@@ -1521,7 +1521,7 @@ public class AlarmListDialog extends DialogBase
                         context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                        : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                         if (!enabled) {
-                            AlarmScheduler.updateAlarmTime(context, item);
+                            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                         }
                         notifyItemChanged(getIndex(rowId));
 
@@ -1733,7 +1733,7 @@ public class AlarmListDialog extends DialogBase
         {
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event == null ? -1 : event.getType();
-            boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item, Calendar.getInstance(), false);
+            boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item, Calendar.getInstance(), false);
 
             // spannable icons
             int iconColor = (item.enabled ? color_on : color_off);
@@ -2056,7 +2056,7 @@ public class AlarmListDialog extends DialogBase
 
             // note tray
             if (text_usernote != null) {
-                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, AlarmScheduler.getData(context, item)) : "");
+                text_usernote.setText(item.note != null ? DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), item)) : "");
             }
             if (view.noteTray != null) {
                 view.noteTray.setVisibility(isSelected && item.note != null && !item.note.isEmpty() ? View.VISIBLE : View.GONE);

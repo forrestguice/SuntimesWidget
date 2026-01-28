@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -520,7 +521,7 @@ public class BedtimeDialog extends DialogBase
                 configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
 
             } else {
-                AlarmScheduler.updateAlarmTime(context, linkedAlarmItem);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), linkedAlarmItem);
                 Calendar bedtime = Calendar.getInstance();
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
@@ -544,7 +545,7 @@ public class BedtimeDialog extends DialogBase
 
             } else {
                 // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
-                AlarmScheduler.updateAlarmTime(context, linkedAlarmItem);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), linkedAlarmItem);
                 Calendar bedtime = Calendar.getInstance();
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);

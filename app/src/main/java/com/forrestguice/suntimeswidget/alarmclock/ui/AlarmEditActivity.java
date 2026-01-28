@@ -44,6 +44,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
@@ -590,7 +591,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         if (enableItem != null && item != null)
         {
-            enableItem.setVisible(!alarmEnabled && AlarmScheduler.updateAlarmTime(this, item, Calendar.getInstance(), false));
+            enableItem.setVisible(!alarmEnabled && AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(this), item, Calendar.getInstance(), false));
             if (Build.VERSION.SDK_INT >= 21) {
                 ContextCompat.setTint(enableItem.getIcon().mutate(), colorAlarmEnabled);
             } else {
@@ -1158,7 +1159,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 if (item != null)
                 {
                     item.offset = offsetDialog.getOffset();
-                    AlarmScheduler.updateAlarmTime(AlarmEditActivity.this, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
                     editor.notifyItemChanged();
                     editor.triggerPreviewOffset();
                 }
@@ -1199,7 +1200,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                         item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
                     }
                     AlarmCreateDialog.updateAlarmItem(dialog, item);
-                    AlarmScheduler.updateAlarmTime(AlarmEditActivity.this, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
                     editor.notifyItemChanged();
                     editor.triggerPreviewOffset();
                     invalidateOptionsMenu();
@@ -1274,7 +1275,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
         if (editor != null)
         {
-            AlarmScheduler.updateAlarmTime(AlarmEditActivity.this, item);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
             editor.notifyItemChanged();
             editor.triggerPreviewOffset();
             invalidateOptionsMenu();
@@ -1301,7 +1302,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 if (item != null)
                 {
                     item.location = location;
-                    AlarmScheduler.updateAlarmTime(AlarmEditActivity.this, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
                     editor.notifyItemChanged();
                     editor.triggerPreviewOffset();
                     invalidateOptionsMenu();
@@ -1336,7 +1337,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 {
                     item.repeating = repeatDialog.getRepetition();
                     item.repeatingDays = repeatDialog.getRepetitionDays();
-                    AlarmScheduler.updateAlarmTime(AlarmEditActivity.this, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
                     editor.notifyItemChanged();
                 }
             }

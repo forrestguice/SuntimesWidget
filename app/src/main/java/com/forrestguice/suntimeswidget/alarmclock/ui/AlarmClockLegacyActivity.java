@@ -41,6 +41,7 @@ import android.provider.AlarmClock;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.ActivityCompat;
@@ -747,7 +748,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             {
                 item.setEvent(dialog.getChoice());
                 item.modified = true;
-                AlarmScheduler.updateAlarmTime(AlarmClockLegacyActivity.this, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmClockLegacyActivity.this), item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, item, false, true);
                 task.setTaskListener(onUpdateItem);
@@ -1065,7 +1066,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             {
                 item.location = location;
                 item.modified = true;
-                AlarmScheduler.updateAlarmTime(AlarmClockLegacyActivity.this, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmClockLegacyActivity.this), item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, item, false, true);
                 task.setTaskListener(onUpdateItem);
@@ -1128,7 +1129,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 item.minute = timeDialog.getMinute();
                 item.timezone = timeDialog.getTimeZone();
                 item.modified = true;
-                AlarmScheduler.updateAlarmTime(AlarmClockLegacyActivity.this, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmClockLegacyActivity.this), item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, item, false, true);
                 task.setTaskListener(onUpdateItem);
@@ -1189,7 +1190,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
-                AlarmScheduler.updateAlarmTime(AlarmClockLegacyActivity.this, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmClockLegacyActivity.this), item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, item, false, true);
                 task.setTaskListener(onUpdateItem);
@@ -1230,7 +1231,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 item.repeating = repeatDialog.getRepetition();
                 item.repeatingDays = repeatDialog.getRepetitionDays();
                 item.modified = true;
-                AlarmScheduler.updateAlarmTime(AlarmClockLegacyActivity.this, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmClockLegacyActivity.this), item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockLegacyActivity.this, item, false, false);
                 task.setTaskListener(onUpdateItem);
@@ -1577,7 +1578,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
                 AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
                 if (!item.enabled) {
-                    AlarmScheduler.updateAlarmTime(contextRef.get(), item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(contextRef.get()), item);
                 }
                 items.add(item);
                 publishProgress(item);

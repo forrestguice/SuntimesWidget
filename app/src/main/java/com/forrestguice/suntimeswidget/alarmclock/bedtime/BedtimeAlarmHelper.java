@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ExecutorUtils;
@@ -105,7 +106,7 @@ public class BedtimeAlarmHelper
         alarmItem.repeating = true;
         alarmItem.actionID1 = (BedtimeSettings.loadPrefBedtimeAlarmOff(context) ? WidgetActions.SuntimesAction.DISMISS_BEDTIME.name() : null);
         alarmItem.enabled = true;
-        AlarmScheduler.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), alarmItem);
         return alarmItem;
     }
 
@@ -119,7 +120,7 @@ public class BedtimeAlarmHelper
         alarmItem.offset = offset;
         alarmItem.repeating = true;
         alarmItem.enabled = true;
-        AlarmScheduler.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), alarmItem);
         return alarmItem;
     }
 
@@ -136,7 +137,7 @@ public class BedtimeAlarmHelper
                 ? WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name()
                 : WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
         alarmItem.enabled = true;
-        AlarmScheduler.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), alarmItem);
         return alarmItem;
     }
 

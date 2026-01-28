@@ -900,7 +900,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             offsetText.setText(formatOffsetDisplay(context));
 
             if (alarm.note != null) {
-                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmScheduler.getData(context, alarm)));
+                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm)));
             } else noteText.setText("");
 
 

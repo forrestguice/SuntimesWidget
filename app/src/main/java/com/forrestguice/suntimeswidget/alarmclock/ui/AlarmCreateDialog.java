@@ -46,6 +46,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.widget.BottomSheetDialogBase;
@@ -509,7 +510,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(context, AlarmCreateDialog.this, alarmType);
         item.offset = getOffset();
-        boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item);
+        boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
 
         boolean showPreview = showTimePreview();
 
@@ -852,7 +853,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
 
         AlarmClockItem item = createAlarm(context, dialog, getAlarmType());
         item.offset = getOffset();
-        boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item);
+        boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
 
         if (text_time != null) {
             text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, enable) : "");

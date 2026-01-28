@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -360,7 +361,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 {
                     setCardBackground(context, alarmItem.enabled ? cardBgOn : cardBgOff);
 
-                    AlarmScheduler.updateAlarmTime(context, alarmItem);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
                     TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false);
@@ -1031,7 +1032,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (bedtime != null && bedtime.enabled)
             {
                 Calendar now = Calendar.getInstance();
-                AlarmScheduler.updateAlarmTime(context, bedtime, now, true);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), bedtime, now, true);
                 String deltaString = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
                 String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
                 CharSequence noteDisplay = SpanUtils.createBoldSpan(null, noteString, deltaString);
