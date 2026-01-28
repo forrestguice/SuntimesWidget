@@ -235,7 +235,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
                 try {
                     AlarmClockItem item = new AlarmClockItem();
                     item.fromContentValues(context, ExportTask.toContentValues(map));
-                    AlarmNotifications.updateAlarmTime(context, item);
+                    AlarmScheduler.updateAlarmTime(context, item);
                     return item;
 
                 } catch (Exception e) {

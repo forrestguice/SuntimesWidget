@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
@@ -104,7 +105,7 @@ public class BedtimeAlarmHelper
         alarmItem.repeating = true;
         alarmItem.actionID1 = (BedtimeSettings.loadPrefBedtimeAlarmOff(context) ? WidgetActions.SuntimesAction.DISMISS_BEDTIME.name() : null);
         alarmItem.enabled = true;
-        AlarmNotifications.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(context, alarmItem);
         return alarmItem;
     }
 
@@ -118,7 +119,7 @@ public class BedtimeAlarmHelper
         alarmItem.offset = offset;
         alarmItem.repeating = true;
         alarmItem.enabled = true;
-        AlarmNotifications.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(context, alarmItem);
         return alarmItem;
     }
 
@@ -135,7 +136,7 @@ public class BedtimeAlarmHelper
                 ? WidgetActions.SuntimesAction.TRIGGER_BEDTIME.name()
                 : WidgetActions.SuntimesAction.DISMISS_BEDTIME.name();
         alarmItem.enabled = true;
-        AlarmNotifications.updateAlarmTime(context, alarmItem);
+        AlarmScheduler.updateAlarmTime(context, alarmItem);
         return alarmItem;
     }
 

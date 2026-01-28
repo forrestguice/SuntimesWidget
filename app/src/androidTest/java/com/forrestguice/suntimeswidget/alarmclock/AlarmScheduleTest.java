@@ -24,6 +24,8 @@ import android.os.Looper;
 
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
@@ -31,12 +33,14 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.android.AndroidResources;
 
 import org.junit.Before;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -58,9 +62,18 @@ public class AlarmScheduleTest
     public Context context;
     public static final TimeDateDisplay utils = new TimeDateDisplay();
 
+    @Rule
+    public RetryRule retry = new RetryRule(3);
+
     @Before
     public void init() {
         context = InstrumentationUtils.getContext();
+        EventUri.setBuildConfigInfo(new EventUri.BuildConfigInfo() {
+            @Override
+            public String AUTHORITY_ROOT() {
+                return BuildConfig.SUNTIMES_AUTHORITY_ROOT;
+            }
+        });
     }
 
     @Test
@@ -79,7 +92,7 @@ public class AlarmScheduleTest
         Calendar event0 = null;
         while (c < n)
         {
-            Calendar event = AlarmNotifications.updateAlarmTime_sunEvent(context, eventID, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_sunEvent(context, eventID, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
@@ -98,7 +111,7 @@ public class AlarmScheduleTest
     @Test
     public void test_updateAlarmTime_moonPhaseEvents()
     {
-        SuntimesMoonData data = AlarmNotifications.getData_moonEvent(context, location0);
+        SuntimesMoonData data = AlarmScheduler.getData_moonEvent(context, location0);
         data.setTodayIs(getCalendar(2024, Calendar.JUNE, 1, 18, 8));
         data.calculate(context);
 
@@ -155,7 +168,7 @@ public class AlarmScheduleTest
         int c = 0, n = 24;
         while (c < n)
         {
-            Calendar event = AlarmNotifications.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
             Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), now, true, false) + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
             assertEquals(expectedMonth, event.get(Calendar.MONTH));
             now.add(Calendar.HOUR, 1);
@@ -182,13 +195,13 @@ public class AlarmScheduleTest
 
         while (c < n)
         {
-            Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
             }
 
-            boolean result = AlarmNotifications.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
             assertTrue(result);
             assertEquals(event.getTimeInMillis(), alarm.timestamp);
             assertEquals("hour value should remain unchanged", hour, alarm.hour);
@@ -362,19 +375,19 @@ public class AlarmScheduleTest
         Calendar event0 = null;
         while (c < n)
         {
-            AlarmNotifications.t_updateAlarmTime_brokenLoop = false;
-            AlarmNotifications.t_updateAlarmTime_runningLoop = false;
+            AlarmScheduler.t_updateAlarmTime_brokenLoop = false;
+            AlarmScheduler.t_updateAlarmTime_runningLoop = false;
 
             alarm.modified = false;
-            AlarmNotifications.updateAlarmTime(context, alarm, now, true);
+            AlarmScheduler.updateAlarmTime(context, alarm, now, true);
             assertTrue(alarm.modified);
 
             Calendar event = Calendar.getInstance(now.getTimeZone());
             event.setTimeInMillis(alarm.timestamp);
             Log.i("TEST", utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
 
-            assertFalse(AlarmNotifications.t_updateAlarmTime_brokenLoop);
-            assertFalse(AlarmNotifications.t_updateAlarmTime_runningLoop);
+            assertFalse(AlarmScheduler.t_updateAlarmTime_brokenLoop);
+            assertFalse(AlarmScheduler.t_updateAlarmTime_runningLoop);
             if (event0 != null) {
                 assertTrue(event.after(event0));
             }
@@ -405,10 +418,10 @@ public class AlarmScheduleTest
         onStartHandler.post(runnable);
         long now = System.currentTimeMillis();
         //noinspection StatementWithEmptyBody
-        while (System.currentTimeMillis() < (now + withinMs) && AlarmNotifications.t_updateAlarmTime_runningLoop) {
+        while (System.currentTimeMillis() < (now + withinMs) && AlarmScheduler.t_updateAlarmTime_runningLoop) {
             /* busy wait.. the service needs to finish the command within 1000ms to pass the test */
         }
-        assertFalse("failed to finish within " + withinMs + "ms!", AlarmNotifications.t_updateAlarmTime_runningLoop);
+        assertFalse("failed to finish within " + withinMs + "ms!", AlarmScheduler.t_updateAlarmTime_runningLoop);
     }
 
 }

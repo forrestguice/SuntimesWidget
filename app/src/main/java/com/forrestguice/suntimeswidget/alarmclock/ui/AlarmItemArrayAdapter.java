@@ -32,6 +32,7 @@ import android.os.Vibrator;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -984,7 +985,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                     if (!enabled) {
-                        AlarmNotifications.updateAlarmTime(context, item);
+                        AlarmScheduler.updateAlarmTime(context, item);
                     }
                     updateView(itemView, item);
 

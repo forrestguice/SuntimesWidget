@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
 
@@ -359,7 +360,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 {
                     setCardBackground(context, alarmItem.enabled ? cardBgOn : cardBgOff);
 
-                    AlarmNotifications.updateAlarmTime(context, alarmItem);
+                    AlarmScheduler.updateAlarmTime(context, alarmItem);
                     Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
                     alarmTime.setTimeInMillis(alarmItem.timestamp + alarmItem.offset);
                     TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), alarmTime, false);
@@ -1030,7 +1031,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (bedtime != null && bedtime.enabled)
             {
                 Calendar now = Calendar.getInstance();
-                AlarmNotifications.updateAlarmTime(context, bedtime, now, true);
+                AlarmScheduler.updateAlarmTime(context, bedtime, now, true);
                 String deltaString = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
                 String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
                 CharSequence noteDisplay = SpanUtils.createBoldSpan(null, noteString, deltaString);

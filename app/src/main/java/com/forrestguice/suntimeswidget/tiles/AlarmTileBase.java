@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -183,7 +184,7 @@ public class AlarmTileBase extends SuntimesTileBase
             // show alarm label note too
             if (WidgetSettings.loadShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS))
             {
-                SuntimesData data = AlarmNotifications.getData(context, item);
+                SuntimesData data = AlarmScheduler.getData(context, item);
                 data.calculate(context);
 
                 if (item.label != null || item.note != null) {

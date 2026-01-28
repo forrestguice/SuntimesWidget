@@ -70,14 +70,14 @@ public class AlarmScheduleTest0
         while (c < n)
         {
             //noinspection ConstantConditions
-            Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
                 assertEquals(event.getTimeInMillis() - event0.getTimeInMillis(), expectedInterval * 24 * 60 * 60 * 1000);
             }
 
-            boolean result = AlarmNotifications.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
             assertTrue(result);
             assertEquals("hour value should remain unchanged", hour, alarm.hour);
             assertEquals("minute value should remain unchanged", minute, alarm.minute);
@@ -115,13 +115,13 @@ public class AlarmScheduleTest0
         while (c < n)
         {
             assertNotNull(alarm.repeatingDays);
-            Calendar event = AlarmNotifications.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_clockTime(alarm.hour, alarm.minute, alarm.timezone, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
             }
 
-            boolean result = AlarmNotifications.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
             assertTrue(result);
             assertEquals(event.getTimeInMillis(), alarm.timestamp);
             assertEquals("hour value should remain unchanged", hour, alarm.hour);

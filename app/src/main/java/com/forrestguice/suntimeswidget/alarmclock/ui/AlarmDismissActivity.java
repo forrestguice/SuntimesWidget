@@ -43,6 +43,7 @@ import android.os.PowerManager;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -899,7 +900,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             offsetText.setText(formatOffsetDisplay(context));
 
             if (alarm.note != null) {
-                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmNotifications.getData(context, alarm)));
+                noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmScheduler.getData(context, alarm)));
             } else noteText.setText("");
 
 

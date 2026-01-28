@@ -52,6 +52,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -732,7 +733,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public Calendar getCalendarForAlarmChoice( @NonNull Context context, String choice, Calendar now )
     {
         AlarmClockItem item = createAlarmItem(context);
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
+        boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item);
         return (isSchedulable) ? item.getCalendar() : null;
     }
 

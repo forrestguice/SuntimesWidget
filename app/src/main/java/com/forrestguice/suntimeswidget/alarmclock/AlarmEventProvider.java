@@ -435,7 +435,7 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    Calendar calendar = AlarmNotifications.updateAlarmTime_solarEvent(context, event, location, offset, repeating, repeatingDays, now);
+                    Calendar calendar = AlarmScheduler.updateAlarmTime_solarEvent(context, event, location, offset, repeating, repeatingDays, now);
                     row[i] = ((calendar != null) ? calendar.getTimeInMillis() : null);
                     break;
 

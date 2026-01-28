@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -229,7 +230,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         if (item != null)
         {
-            boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
+            boolean isSchedulable = AlarmScheduler.updateAlarmTime(context, item, Calendar.getInstance(), false);
             float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
 
             /*if (card_backdrop != null)

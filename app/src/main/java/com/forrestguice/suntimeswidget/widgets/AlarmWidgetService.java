@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
@@ -142,7 +143,7 @@ public class AlarmWidgetService extends RemoteViewsService
 
                     AlarmClockItem item = new AlarmClockItem(context, entryValues);
                     if (!item.enabled) {
-                        AlarmNotifications.updateAlarmTime(context, item);
+                        AlarmScheduler.updateAlarmTime(context, item);
                     }
 
                     if (item.type != null && filterTypes.contains(item.type.name())) {

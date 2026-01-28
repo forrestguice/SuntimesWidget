@@ -131,7 +131,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         s.append("]");
 
         for (AlarmClockItem item : items0) {
-            AlarmNotifications.updateAlarmTime(mockContext, item);
+            AlarmScheduler.updateAlarmTime(mockContext, item);
         }
 
         // and back again
@@ -159,8 +159,8 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         AlarmClockItem item1 = items[1];
         String json1 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item1);
 
-        AlarmNotifications.updateAlarmTime(mockContext, items[0]);
-        AlarmNotifications.updateAlarmTime(mockContext, items[1]);
+        AlarmScheduler.updateAlarmTime(mockContext, items[0]);
+        AlarmScheduler.updateAlarmTime(mockContext, items[1]);
 
         test_import(json0, items[0]);                                                   // valid (single obj)
         test_import("[" + json0 + "]", items[0]);                             // valid (array; single obj)
