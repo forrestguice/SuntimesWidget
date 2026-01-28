@@ -225,9 +225,7 @@ public class AppSettings
             PREF_KEY_UI_SHOWFIELDS,
             PREF_KEY_UI_MOONPHASECOLUMNS
     };
-    public static final String[] LONG_KEYS = new String[] {
-            //PREF_KEY_GETFIX_TIME    // commented; TODO: does it actually make sense to preserve this value across installations? #783
-    };
+    public static final String[] LONG_KEYS = new String[] {};
     public static final String[] BOOL_KEYS = new String[]
     {
             PREF_KEY_UI_SHOWWARNINGS, PREF_KEY_UI_SHOWMAPBUTTON, PREF_KEY_UI_SHOWDATASOURCE, PREF_KEY_UI_SHOWHEADER_ICON, PREF_KEY_UI_SHOWCOORDINATES,
