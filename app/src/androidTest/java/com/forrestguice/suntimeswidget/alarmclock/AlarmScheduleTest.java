@@ -33,10 +33,13 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.android.AndroidResources;
+
+import junit.framework.AssertionFailedError;
 
 import org.junit.Before;
 
@@ -57,6 +60,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmScheduleTest
 {
+    public static final Location TEST_LOCATION = new Location("Phoenix", "33.45", "-111.94", "1263");
     public static final long SCHEDULE_WITHIN_MS = 10000;
 
     public Context context;
@@ -177,21 +181,50 @@ public class AlarmScheduleTest
     }
 
     @Test
-    public void test_updateAlarmTime_clockTime_ltst()
-    {
-        int hour = 6;
-        int minute = 30;
+    public void test_updateAlarmTime_clockTime_utc() {
+        test_updateAlarmTime_clockTime(TEST_LOCATION, TimeZones.TZID_UTC, 11, 0);
+    }
+    @Test
+    public void test_updateAlarmTime_clockTime_lmt() {
+        test_updateAlarmTime_clockTime(TEST_LOCATION, TimeZones.LocalMeanTime.TIMEZONEID, 11, 0);
+    }
+    @Test
+    public void test_updateAlarmTime_clockTime_ltst() {
+        test_updateAlarmTime_clockTime(TEST_LOCATION, TimeZones.ApparentSolarTime.TIMEZONEID, 11, 0);
+    }
 
+    public void test_updateAlarmTime_clockTime(Location location, String tzID, int hour, int minute)
+    {
+        AssertionFailedError e0 = null;
+        Calendar now = getCalendar(2026, 0, 0, minute, 0);
+        for (int i=0; i<365; i++)
+        {
+            try {
+                now.add(Calendar.DAY_OF_YEAR, 1);
+                now.set(Calendar.HOUR_OF_DAY, hour);
+                test_updateAlarmTime_clockTime(now, hour, 0, location, tzID);
+
+            } catch (AssertionFailedError e) {
+                if (e0 != null) {
+                    e0 = new AssertionFailedError(e0.getMessage() + ",\n" + e.getMessage());
+                } else e0 = e;
+            }
+        }
+        if (e0 != null) {
+            throw e0;
+        }
+    }
+    public void test_updateAlarmTime_clockTime(Calendar now, int hour, int minute, Location location, String tzID)
+    {
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
-        alarm.location = new Location("Phoenix", "33.45", "-111.94", "1263");
-        alarm.timezone = TimeZones.ApparentSolarTime.TIMEZONEID;
+        alarm.location = location;
+        alarm.timezone = tzID;
         alarm.hour = hour;
         alarm.minute = minute;
 
-        int c = 0, n = 7;
+        int c = 0, n = 3;
         Calendar event0 = null;
         Calendar event1 = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, alarm.location));
-        Calendar now = getCalendar(2023, Calendar.JUNE, 22, 7, 0);
 
         while (c < n)
         {
@@ -199,13 +232,23 @@ public class AlarmScheduleTest
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
+                long d = event.getTimeInMillis() - event0.getTimeInMillis();
+                assertTrue("scheduled events are too close! " + new TimeDeltaDisplay().timeDeltaLongDisplayString(d) + " apart :: ["
+                                + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), event0, true, true, true) + "] -> ["
+                                + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true, true) + "]"
+                        , (d > 12 * 60 * 60 * 1000));
+
+                assertTrue("scheduled events are too far! " + new TimeDeltaDisplay().timeDeltaLongDisplayString(d) + " apart :: ["
+                                + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), event0, true, true, true) + "] -> ["
+                                + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true, true) + "]"
+                        , (d <= 24.1 * 60 * 60 * 1000));
             }
 
             boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
             assertTrue(result);
             assertEquals(event.getTimeInMillis(), alarm.timestamp);
-            assertEquals("hour value should remain unchanged", hour, alarm.hour);
-            assertEquals("minute value should remain unchanged", minute, alarm.minute);
+            assertEquals("alarm.hour value should remain unchanged", hour, alarm.hour);
+            assertEquals("alarm.minute value should remain unchanged", minute, alarm.minute);
 
             event0 = event;
             now.setTimeInMillis(event.getTimeInMillis());
