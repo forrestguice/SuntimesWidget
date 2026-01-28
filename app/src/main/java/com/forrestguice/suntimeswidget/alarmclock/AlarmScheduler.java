@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -41,6 +40,7 @@ import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
+import com.forrestguice.util.UriUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -342,8 +342,7 @@ public class AlarmScheduler
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
-        Uri uri_id = Uri.parse(eventID);
-        Uri uri_calc = Uri.parse(EventUri.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        String uri_calc = EventUri.getEventCalcUri(UriUtils.getAuthority(eventID), UriUtils.getLastPathSegment(eventID));
 
         StringBuilder repeatingDaysString = new StringBuilder("[");
         if (repeating) {
@@ -375,7 +374,7 @@ public class AlarmScheduler
     }
 
     public static final long MAX_WAIT_MS = 990;
-    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final Uri uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
+    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final String uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
     {
         return ExecutorUtils.getResult(TAG, new Callable<Calendar>() {
             public Calendar call() {
@@ -384,7 +383,7 @@ public class AlarmScheduler
         }, timeoutAfter);
     }
 
-    protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, Uri uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
+    protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, String uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
     {
         if (resolver != null)
         {
