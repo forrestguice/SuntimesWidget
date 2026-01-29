@@ -626,6 +626,17 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
             return false;
         }
     }
+
+    @Override
+    public AlarmType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(AlarmType type) {
+        this.type = type;
+    }
+
     public boolean incrementFlag(@NonNull String flag) {
         return setFlag(flag, getFlag(flag) + 1);
     }
