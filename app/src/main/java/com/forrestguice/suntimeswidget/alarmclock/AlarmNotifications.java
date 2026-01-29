@@ -966,11 +966,9 @@ public class AlarmNotifications extends BroadcastReceiver
         if (stopVibrate) {
             stopVibration();
         }
-        for (MediaPlayer player : players.values())
-        {
-            if (player != null) {
-                stopSound(player);
-            }
+        for (String channel : players.keySet()) {
+            stopSound(players.get(channel));
+            setIsPlaying(channel, false);
         }
     }
 
