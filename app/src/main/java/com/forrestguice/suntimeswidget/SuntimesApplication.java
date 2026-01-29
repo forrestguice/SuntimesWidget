@@ -44,6 +44,10 @@ public class SuntimesApplication extends Application
 
     public static void init(Context context)
     {
+        if (initialized) {
+            return;
+        }
+
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(context, Thread.getDefaultUncaughtExceptionHandler()));
         Log.init(new AndroidLog());
         Log.setShowDebug(BuildConfig.DEBUG);
