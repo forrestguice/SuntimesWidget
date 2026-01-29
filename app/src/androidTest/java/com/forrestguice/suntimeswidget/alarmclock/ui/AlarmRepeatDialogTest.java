@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
@@ -94,7 +95,7 @@ public class AlarmRepeatDialogTest
     {
         // true, everyday
         AlarmRepeatDialog dialog0 = new AlarmRepeatDialog();
-        dialog0.setRepetition(true, AlarmClockItem.everyday());    // everyday
+        dialog0.setRepetition(true, AlarmItemInterface.everyday());    // everyday
         assertTrue(dialog0.getRepetition());
         assertTrue(isEveryday(dialog0.getRepetitionDays()));
 

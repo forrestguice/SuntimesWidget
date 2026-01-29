@@ -32,6 +32,8 @@ import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.events.EventUri;
@@ -96,7 +98,7 @@ public class AlarmScheduleTest
         Calendar event0 = null;
         while (c < n)
         {
-            Calendar event = AlarmScheduler.updateAlarmTime_sunEvent(context, eventID, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_sunEvent(AndroidSuntimesDataSettings.wrap(context), eventID, alarm.location, alarm.offset, alarm.repeating, alarm.repeatingDays, now);
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
@@ -115,7 +117,7 @@ public class AlarmScheduleTest
     @Test
     public void test_updateAlarmTime_moonPhaseEvents()
     {
-        SuntimesMoonData data = AlarmScheduler.getData_moonEvent(context, location0);
+        SuntimesMoonData data = AlarmScheduler.getData_moonEvent(AndroidSuntimesDataSettings.wrap(context), location0);
         data.setTodayIs(getCalendar(2024, Calendar.JUNE, 1, 18, 8));
         data.calculate(context);
 
@@ -172,7 +174,7 @@ public class AlarmScheduleTest
         int c = 0, n = 24;
         while (c < n)
         {
-            Calendar event = AlarmScheduler.updateAlarmTime_moonPhaseEvent(context, eventID, location0, 0, true, null, now);
+            Calendar event = AlarmScheduler.updateAlarmTime_moonPhaseEvent(AndroidSuntimesDataSettings.wrap(context), eventID, location0, 0, true, null, now);
             Log.i("TEST", tag + " " + c + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), now, true, false) + " :: " + utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, true, true).toString() + " [" + event.getTimeZone().getID() + "] " + (event.getTimeZone().inDaylightTime(event.getTime()) ? "[dst]" : "") );
             assertEquals(expectedMonth, event.get(Calendar.MONTH));
             now.add(Calendar.HOUR, 1);
@@ -244,7 +246,7 @@ public class AlarmScheduleTest
                         , (d <= 24.1 * 60 * 60 * 1000));
             }
 
-            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((AndroidSuntimesDataSettings)null, alarm, now, true);
             assertTrue(result);
             assertEquals(event.getTimeInMillis(), alarm.timestamp);
             assertEquals("alarm.hour value should remain unchanged", hour, alarm.hour);
@@ -289,7 +291,7 @@ public class AlarmScheduleTest
         for (String event : getAddonTestEvents())
         {
             test_updateAlarmTime_repeatingAlarm(event, null, now);
-            test_updateAlarmTime_repeatingAlarm(event, AlarmClockItem.everyday(), now);
+            test_updateAlarmTime_repeatingAlarm(event, AlarmItemInterface.everyday(), now);
             test_updateAlarmTime_alarm(event, now);
         }
     }
@@ -322,9 +324,9 @@ public class AlarmScheduleTest
     {
         Calendar now = getCalendar(2022, Calendar.OCTOBER, 26, 7, 0);
         for (String event : getTestEvents()) {    // "event" alarms
-            test_runnable_finishes(run_updateAlarmTime_repeatingAlarm(event, now, AlarmClockItem.everyday()), SCHEDULE_WITHIN_MS);
+            test_runnable_finishes(run_updateAlarmTime_repeatingAlarm(event, now, AlarmItemInterface.everyday()), SCHEDULE_WITHIN_MS);
         }
-        test_runnable_finishes(run_updateAlarmTime_repeatingAlarm(AlarmClockItem.everyday(), now), SCHEDULE_WITHIN_MS);
+        test_runnable_finishes(run_updateAlarmTime_repeatingAlarm(AlarmItemInterface.everyday(), now), SCHEDULE_WITHIN_MS);
     }
 
     protected Runnable run_updateAlarmTime_repeatingAlarm(final ArrayList<Integer> repeatingDays, final Calendar date) {
@@ -388,7 +390,7 @@ public class AlarmScheduleTest
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(false);
         alarm.location = new Location("Helsinki", "60", "25", "0");
         alarm.timezone = "Europe/Hensinki";
-        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.repeatingDays = AlarmItemInterface.everyday();
         alarm.setEvent(null);
         test_updateAlarmTime(alarm, now);
     }
@@ -407,7 +409,7 @@ public class AlarmScheduleTest
         alarm.location = new Location("Helsinki", "60", "25", "0");
         alarm.timezone = "Europe/Hensinki";
         alarm.hour = alarm.minute = -1;
-        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.repeatingDays = AlarmItemInterface.everyday();
         alarm.setEvent(eventID);
         test_updateAlarmTime(alarm, now);
     }
@@ -422,7 +424,7 @@ public class AlarmScheduleTest
             AlarmScheduler.t_updateAlarmTime_runningLoop = false;
 
             alarm.modified = false;
-            AlarmScheduler.updateAlarmTime(context, alarm, now, true);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), alarm, now, true);
             assertTrue(alarm.modified);
 
             Calendar event = Calendar.getInstance(now.getTimeZone());

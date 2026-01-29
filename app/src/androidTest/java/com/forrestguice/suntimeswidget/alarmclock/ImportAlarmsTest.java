@@ -29,6 +29,7 @@ import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
@@ -131,7 +132,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         s.append("]");
 
         for (AlarmClockItem item : items0) {
-            AlarmScheduler.updateAlarmTime(mockContext, item);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), item);
         }
 
         // and back again
@@ -159,8 +160,8 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         AlarmClockItem item1 = items[1];
         String json1 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item1);
 
-        AlarmScheduler.updateAlarmTime(mockContext, items[0]);
-        AlarmScheduler.updateAlarmTime(mockContext, items[1]);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), items[0]);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), items[1]);
 
         test_import(json0, items[0]);                                                   // valid (single obj)
         test_import("[" + json0 + "]", items[0]);                             // valid (array; single obj)

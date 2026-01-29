@@ -446,7 +446,7 @@ public class AlarmNotificationsTest
         AlarmClockItem alarm = new AlarmClockItem();
         alarm.type = AlarmType.ALARM;
         alarm.repeating = repeating;
-        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.repeatingDays = AlarmItemInterface.everyday();
 
         Calendar now = Calendar.getInstance();
         alarm.timezone = TimeZone.getDefault().getID();
