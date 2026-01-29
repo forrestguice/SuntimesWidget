@@ -34,6 +34,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+@Category(UnlistedTest.class)    // testing requires commenting `android:process=":crashreport"` from ExceptionActivity definition in AndroidManifest.xml
 @LargeTest
 @BehaviorTest
 @RunWith(SuntimesJUnitTestRunner.class)
