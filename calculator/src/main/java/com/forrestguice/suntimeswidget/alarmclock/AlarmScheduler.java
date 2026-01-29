@@ -57,46 +57,46 @@ public class AlarmScheduler
      * @param item AlarmClockItem
      * @return true item was updated, false failed to update item
      */
-    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmClockItem item) {
+    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmItemInterface item) {
         return updateAlarmTime(context, item, Calendar.getInstance(), true);
     }
-    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmClockItem item, Calendar now, boolean modifyItem)
+    public static boolean updateAlarmTime(SuntimesDataSettings context, final AlarmItemInterface item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = null;
         boolean modifyHourMinute = true;
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
-        ArrayList<Integer> repeatingDays = (item.repeatingDays != null ? item.repeatingDays : AlarmClockItem.everyday());
+        ArrayList<Integer> repeatingDays = (item.getRepeatingDaysArray() != null ? item.getRepeatingDaysArray() : AlarmItemInterface.everyday());
         
-        if (item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP)) {
-            item.location = context.loadLocationPref(0);
+        if (item.flagIsTrue(AlarmItemInterface.FLAG_LOCATION_FROM_APP)) {
+            item.setLocation(context.loadLocationPref(0));
         }
 
-        if (item.location != null && event != null)
+        if (item.getLocation() != null && event != null)
         {
-            eventTime = updateAlarmTime_solarEvent(context, event, item.location, item.offset, item.repeating, repeatingDays, now);
+            eventTime = updateAlarmTime_solarEvent(context, event, item.getLocation(), item.getOffset(), item.isRepeating(), repeatingDays, now);
 
         } else if (eventID != null) {
-            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, repeatingDays, now);
+            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.getLocation(), item.getOffset(), item.isRepeating(), repeatingDays, now);
 
         } else {
             modifyHourMinute = false;    // "clock time" alarms should leave "hour" and "minute" values untouched
-            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, repeatingDays, now);
+            eventTime = updateAlarmTime_clockTime(item.getHour(), item.getMinute(), item.getTimeZone(), item.getLocation(), item.getOffset(), item.isRepeating(), repeatingDays, now);
         }
 
         if (eventTime == null) {
-            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.getEvent() + "@" + item.location);
+            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.getEvent() + "@" + item.getLocation());
             return false;
         }
 
         if (modifyItem)
         {
             if (modifyHourMinute) {
-                item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-                item.minute = eventTime.get(Calendar.MINUTE);
+                item.setHour( eventTime.get(Calendar.HOUR_OF_DAY) );
+                item.setMinute( eventTime.get(Calendar.MINUTE) );
             }
-            item.timestamp = eventTime.getTimeInMillis();
-            item.modified = true;
+            item.setTimestamp( eventTime.getTimeInMillis() );
+            item.setModified( true );
         }
         return true;
     }
@@ -132,7 +132,7 @@ public class AlarmScheduler
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_sunEvent: empty repeatingDays! using EVERYDAY instead..");
-            repeatingDays = AlarmClockItem.everyday();
+            repeatingDays = AlarmItemInterface.everyday();
         }
 
         SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
@@ -185,7 +185,7 @@ public class AlarmScheduler
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_moonEvent: empty repeatingDays! using EVERYDAY instead..");
-            repeatingDays = AlarmClockItem.everyday();
+            repeatingDays = AlarmItemInterface.everyday();
         }
 
         SuntimesMoonData moonData = getData_moonEvent(context, location);
@@ -336,7 +336,7 @@ public class AlarmScheduler
     {
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_addonEvent: empty repeatingDays! using EVERYDAY instead..");
-            repeatingDays = AlarmClockItem.everyday();
+            repeatingDays = AlarmItemInterface.everyday();
         }
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
@@ -430,7 +430,7 @@ public class AlarmScheduler
         t_updateAlarmTime_runningLoop = true;
         if (repeatingDays.isEmpty()) {
             //Log.w(TAG, "updateAlarmTime_clockTime: empty repeatingDays! using EVERYDAY instead..");
-            repeatingDays = AlarmClockItem.everyday();
+            repeatingDays = AlarmItemInterface.everyday();
         }
 
         TimeZone timezone = AlarmTimeZone.getTimeZone(tzID, location);
@@ -485,22 +485,22 @@ public class AlarmScheduler
         }
     }
 
-    public static SuntimesData getData(SuntimesDataSettings context, @NonNull AlarmClockItem alarm)
+    public static SuntimesData getData(SuntimesDataSettings context, @NonNull AlarmItemInterface alarm)
     {
         SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);   // TODO: non SolarEventsEnum
-        if (alarm.location != null && event != null)
+        if (alarm.getLocation() != null && event != null)
         {
             switch (event.getType())
             {
                 case SolarEvents.TYPE_MOON:
                 case SolarEvents.TYPE_MOONPHASE:
-                    return getData_moonEvent(context, alarm.location);
+                    return getData_moonEvent(context, alarm.getLocation());
                 case SolarEvents.TYPE_SEASON:
-                    return getData_seasons(context, event, alarm.location);
+                    return getData_seasons(context, event, alarm.getLocation());
                 case SolarEvents.TYPE_SUN:
-                    return getData_sunEvent(context, event, alarm.location);
+                    return getData_sunEvent(context, event, alarm.getLocation());
                 default:
-                    return getData_clockEvent(context, alarm.location);
+                    return getData_clockEvent(context, alarm.getLocation());
             }
         } else {
             return getData_clockEvent(context, context.loadLocationPref(0));

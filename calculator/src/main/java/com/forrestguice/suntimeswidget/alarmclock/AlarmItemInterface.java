@@ -41,7 +41,7 @@ public interface AlarmItemInterface
     long getFlag(@Nullable String flagname, long defaultValue);
     boolean setFlag(@NonNull String flag, boolean value);
     boolean setFlag(@NonNull String flag, long value);
-        
+
     @Nullable
     String getEvent();
     void setEvent(@Nullable String event);
