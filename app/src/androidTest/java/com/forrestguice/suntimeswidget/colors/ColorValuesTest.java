@@ -221,7 +221,8 @@ public class ColorValuesTest
 
             HashMap<String, Object> v = values.getValues();
             for (String key : v.keySet()) {
-                Log.d("DEBUG", key + "=" + ((String) v.get(key)));
+                Object debugValue = v.get(key);
+                Log.d("TEST", key + "=" + (debugValue != null ? debugValue : "null"));
             }
 
             assertEquals(Color.MAGENTA, values.getColor("0"));
