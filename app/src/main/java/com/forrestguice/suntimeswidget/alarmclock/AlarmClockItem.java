@@ -61,6 +61,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     public long offset = 0;
     @Nullable
     public String label = null;
+    @Nullable
     public String note = null;
     @Nullable
     private String event = null;
@@ -84,7 +85,6 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
 
     @Nullable
     protected HashMap<String, Long> alarmFlags = null;
-
 
     public boolean modified = false;
     @Nullable
@@ -323,6 +323,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         return values;
     }
 
+    @Override
     public void setState(int value)
     {
         if (state == null)
@@ -330,6 +331,31 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         else state.setState(value);
     }
 
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean value) {
+        enabled = value;
+    }
+
+    @Override
+    public void setLabel(String value) {
+        this.label = value;
+    }
+
+    @Override
+    public void setNote(String value) {
+        note = value;
+    }
+    @Override
+    public String getNote() {
+        return note;
+    }
+
+    @Override
     public int getState()
     {
         return (state != null ? state.getState() : AlarmState.STATE_NONE);
@@ -348,6 +374,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     public String getEvent() {
         return event;
     }
+    @Override
     public void setEvent(@Nullable String event) {
         this.event = event;
         eventItem = null;
@@ -408,6 +435,33 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     }
 
     @Override
+    public boolean getVibrate() {
+        return vibrate;
+    }
+    @Override
+    public void setVibrate(boolean value) {
+        vibrate = value;
+    }
+
+    @Override
+    public String getRingtoneURI() {
+        return ringtoneURI;
+    }
+    @Override
+    public void setRingtoneURI(String value) {
+        ringtoneURI = value;
+    }
+
+    @Override
+    public String getRingtoneName() {
+        return ringtoneName;
+    }
+    @Override
+    public void setRingtoneName(String value) {
+        ringtoneName = value;
+    }
+
+    @Override
     public boolean isModified() {
         return modified;
     }
@@ -457,6 +511,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         return getLabel((solarEvent != null) ? solarEvent.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));   // TODO
     }*/
 
+    @Override
     public String getLabel(String emptyLabel)
     {
         return (label == null || label.isEmpty() ? emptyLabel : label);
@@ -478,11 +533,13 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         return calendar;
     }
 
+    @Override
     public boolean hasActionID(int actionNum)
     {
         String value = getActionID(actionNum);
         return (value != null && !value.trim().isEmpty());
     }
+    @Override
     public String getActionID(int actionNum)
     {
         String value;
@@ -494,6 +551,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         }
         return (value != null ? value.trim() : null);
     }
+    @Override
     public void setActionID(int actionNum, String actionID)
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
@@ -504,15 +562,12 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
             case ACTIONID_MAIN: default: actionID0 = value; break;
         }
     }
-    public static final int ACTIONID_MAIN = 0;
-    public static final int ACTIONID_DISMISS = 1;
-    public static final int ACTIONID_REMINDER = 2;
-    public static final int ACTIONID_RESERVED = 3;
 
     /**
      * setAlarmFlags
      * @param flags as a String, e.g. "flag1=true;flag2=false;..."
      */
+    @Override
     public void setAlarmFlags(String flags)
     {
         if (flags != null && !flags.trim().isEmpty())
@@ -637,9 +692,11 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         this.type = type;
     }
 
+    @Override
     public boolean incrementFlag(@NonNull String flag) {
         return setFlag(flag, getFlag(flag) + 1);
     }
+    @Override
     public boolean clearFlag(@Nullable String flag)
     {
         if (flag != null && alarmFlags != null && alarmFlags.containsKey(flag))
@@ -674,6 +731,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
      * getRepeatingDays
      * @return a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
      */
+    @Override
     public String getRepeatingDays()
     {
         if (repeatingDays != null)

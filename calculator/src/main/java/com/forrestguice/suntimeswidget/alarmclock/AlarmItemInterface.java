@@ -35,15 +35,30 @@ public interface AlarmItemInterface
     String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
 
     String getAlarmFlags();
+    void setAlarmFlags(String flags);
     boolean hasFlag(@Nullable String flagname);
     boolean flagIsTrue(String flag);
     long getFlag(@Nullable String flagname);
     long getFlag(@Nullable String flagname, long defaultValue);
     boolean setFlag(@NonNull String flag, boolean value);
     boolean setFlag(@NonNull String flag, long value);
+    boolean incrementFlag(@NonNull String flag);
+    boolean clearFlag(@Nullable String flag);
 
     AlarmType getType();
     void setType(AlarmType type);
+
+    int getState();
+    void setState(int state);
+
+    boolean isEnabled();
+    void setEnabled(boolean value);
+
+    String getLabel(String emptyLabel);
+    void setLabel(String value);
+
+    void setNote(String value);
+    String getNote();
 
     @Nullable
     String getEvent();
@@ -67,14 +82,34 @@ public interface AlarmItemInterface
     long getTimestamp();
     void setTimestamp(long value);
 
+    boolean getVibrate();
+    void setVibrate(boolean value);
+
+    String getRingtoneURI();
+    void setRingtoneURI(String value);
+
+    String getRingtoneName();
+    void setRingtoneName(String value);
+
     boolean isModified();
     void setModified(boolean value);
 
     boolean isRepeating();
     void setRepeating(boolean value);
 
+    String getRepeatingDays();
+    void setRepeatingDays(@Nullable String repeatingDaysString);
     ArrayList<Integer> getRepeatingDaysArray();
     static ArrayList<Integer> everyday() {
         return new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
     }
+
+    int ACTIONID_MAIN = 0;
+    int ACTIONID_DISMISS = 1;
+    int ACTIONID_REMINDER = 2;
+    int ACTIONID_RESERVED = 3;
+
+    boolean hasActionID(int actionNum);
+    String getActionID(int actionNum);
+    void setActionID(int actionNum, String actionID);
 }
