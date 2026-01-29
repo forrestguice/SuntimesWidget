@@ -1136,6 +1136,9 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     protected static void setIsPlaying(String channel, boolean value) {
         isPlaying.put(channel, value);
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "setIsPlaying: " + channel + ": " + value);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
