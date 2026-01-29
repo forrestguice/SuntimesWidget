@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -3085,7 +3086,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
 
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
-        boolean timezone_isLTST = TimeZones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
+        boolean timezone_isLTST = WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
