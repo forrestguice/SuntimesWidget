@@ -10,4 +10,5 @@ java {
 dependencies {
     implementation project(path: ":util")
     implementation project(path: ":lib-luckycatlabs-sunrisesunset")
+    testImplementation 'junit:junit:4.12'
 }
