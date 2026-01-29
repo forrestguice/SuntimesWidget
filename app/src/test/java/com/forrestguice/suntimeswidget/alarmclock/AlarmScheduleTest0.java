@@ -22,8 +22,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 
 import org.junit.Test;
@@ -77,7 +79,7 @@ public class AlarmScheduleTest0
                 assertEquals(event.getTimeInMillis() - event0.getTimeInMillis(), expectedInterval * 24 * 60 * 60 * 1000);
             }
 
-            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((SuntimesDataSettings) null, alarm, now, true);
             assertTrue(result);
             assertEquals("hour value should remain unchanged", hour, alarm.hour);
             assertEquals("minute value should remain unchanged", minute, alarm.minute);
@@ -121,7 +123,7 @@ public class AlarmScheduleTest0
                 assertTrue(event.after(event0));
             }
 
-            boolean result = AlarmScheduler.updateAlarmTime((Context)null, alarm, now, true);
+            boolean result = AlarmScheduler.updateAlarmTime((SuntimesDataSettings) null, alarm, now, true);
             assertTrue(result);
             assertEquals(event.getTimeInMillis(), alarm.timestamp);
             assertEquals("hour value should remain unchanged", hour, alarm.hour);
@@ -143,7 +145,7 @@ public class AlarmScheduleTest0
         AlarmClockItem alarm = new AlarmClockItem();
         alarm.type = AlarmType.ALARM;
         alarm.repeating = repeating;
-        alarm.repeatingDays = AlarmClockItem.everyday();
+        alarm.repeatingDays = AlarmItemInterface.everyday();
 
         Calendar now = Calendar.getInstance();
         alarm.timezone = TimeZone.getDefault().getID();

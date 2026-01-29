@@ -37,7 +37,7 @@ public class AlarmClockItemTest0
     @Test
     public void test_alarmClockItem_repeatingDays_everyday()
     {
-        ArrayList<Integer> days = AlarmClockItem.everyday();
+        ArrayList<Integer> days = AlarmItemInterface.everyday();
         assertNotNull(days);
         assertEquals(days.size(), 7);
         assertFalse(days.contains(0));
