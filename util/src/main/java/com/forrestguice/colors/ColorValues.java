@@ -21,6 +21,7 @@ package com.forrestguice.colors;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -194,16 +195,30 @@ public abstract class ColorValues implements Serializable
         result.append(jsonPair(KEY_ID, getID())).append(",\n");
         result.append(jsonPair(KEY_LABEL, getLabel())).append(",\n");
 
-        for (String key : getColorKeys())
+        String[] keys = getColorKeys();
+        int n = keys.length;
+        for (int i=0; i<n; i++)
         {
-            result.append(jsonPair(key, "#" + Integer.toHexString(getColor(key)))).append(",\n");
-            if (withLabels && hasLabel(key)) {
-                result.append(jsonPair(key + SUFFIX_LABEL, getLabel(key))).append(",\n");
+            String key = keys[i];
+            if (withLabels && hasLabel(key))
+            {
+                result.append(jsonPair(key, "#" + Integer.toHexString(getColor(key))))
+                        .append(",\n");
+                result.append(jsonPair(key + SUFFIX_LABEL, getLabel(key)))
+                        .append(lineEnding(i, n));    // ",\n"
+            } else {
+                result.append(jsonPair(key, "#" + Integer.toHexString(getColor(key))))
+                        .append(lineEnding(i, n));    // ",\n"
             }
         }
 
-        result.append("\n}");
+        result.append("}");
+        //Log.d("DEBUG", "toJSON ::" + result.toString());
         return result.toString();
+    }
+
+    private String lineEnding(int i, int n) {
+        return (i < n-1) ? ",\n" : "\n";
     }
 
     private String jsonPair(String key, String value) {
