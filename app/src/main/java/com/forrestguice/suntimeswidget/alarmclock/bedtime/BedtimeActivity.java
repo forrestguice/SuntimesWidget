@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.android.AndroidResID_AlarmTimeZone;
+import com.forrestguice.suntimeswidget.alarmclock.android.AndroidResID_AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
@@ -311,12 +312,13 @@ public class BedtimeActivity extends AppCompatActivity
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
+        AndroidResources res = AndroidResources.wrap(context);
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_SolarEvents());
-        AlarmType.initDisplayStrings(context);
-        AlarmTimeZone.initDisplayStrings(AndroidResources.wrap(context), AndroidResID_AlarmTimeZone.get());
+        SolarEvents.initDisplayStrings(res, new AndroidResID_SolarEvents());
+        AlarmType.initDisplayStrings(res, AndroidResID_AlarmType.get());
+        AlarmTimeZone.initDisplayStrings(res, AndroidResID_AlarmTimeZone.get());
 
         // TODO
         /*int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };

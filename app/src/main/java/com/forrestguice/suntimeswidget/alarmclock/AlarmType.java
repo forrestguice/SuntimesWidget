@@ -18,11 +18,9 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.forrestguice.annotation.NonNull;
-import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.util.Log;
+import com.forrestguice.util.Resources;
 
 public enum AlarmType
 {
@@ -54,12 +52,12 @@ public enum AlarmType
         this.displayString = displayString;
     }
 
-    public static void initDisplayStrings( Context context )
+    public static void initDisplayStrings(Resources context, ResID_AlarmType r)
     {
-        ALARM.setDisplayString(context.getString(R.string.alarmMode_alarm));
-        NOTIFICATION.setDisplayString(context.getString(R.string.alarmMode_notification));
-        NOTIFICATION1.setDisplayString(context.getString(R.string.alarmMode_notification1));
-        NOTIFICATION2.setDisplayString(context.getString(R.string.alarmMode_notification2));
+        ALARM.setDisplayString(context.getString(r.string_alarmMode_alarm()));
+        NOTIFICATION.setDisplayString(context.getString(r.string_alarmMode_notification()));
+        NOTIFICATION1.setDisplayString(context.getString(r.string_alarmMode_notification1()));
+        NOTIFICATION2.setDisplayString(context.getString(r.string_alarmMode_notification2()));
     }
 
     public static AlarmType valueOf(String value, AlarmType defaultType)
@@ -76,5 +74,13 @@ public enum AlarmType
             }
         }
         return retValue;
+    }
+
+    public interface ResID_AlarmType
+    {
+        int string_alarmMode_alarm();
+        int string_alarmMode_notification();
+        int string_alarmMode_notification1();
+        int string_alarmMode_notification2();
     }
 }
