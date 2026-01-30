@@ -47,16 +47,24 @@ public class SuntimesAlarmsProvider extends ContentProvider
     private static final int URIMATCH_ALARM = 10;
     private static final int URIMATCH_ALARM_STATE = 20;
 
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
-        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
-        uriMatcher.addURI(AUTHORITY(), QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+    @Nullable
+    private UriMatcher uriMatcher = null;
+    @NonNull
+    protected UriMatcher getUriMatcher()
+    {
+        if (uriMatcher == null) {
+            uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+            uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS, URIMATCH_ALARMS);                          // content://AUTHORITY/alarms
+            uriMatcher.addURI(AUTHORITY(), QUERY_ALARMS + "/*", URIMATCH_ALARM);              // content://AUTHORITY/alarms/[alarmID]
+            uriMatcher.addURI(AUTHORITY(), QUERY_ALARMSTATE + "/*", URIMATCH_ALARM_STATE);    // content://AUTHORITY/state/[alarmID]
+        }
+        return uriMatcher;
     }
 
-    private static String AUTHORITY() {
-        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".alarm.provider";
+    protected String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;
     }
+    public static final String AUTHORITY_SUFFIX = ".alarm.provider";
 
     @Override
     public boolean onCreate() {
@@ -93,7 +101,7 @@ public class SuntimesAlarmsProvider extends ContentProvider
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         Cursor retValue = null;
-        int uriMatch = uriMatcher.match(uri);
+        int uriMatch = getUriMatcher().match(uri);
         switch (uriMatch)
         {
             case URIMATCH_ALARMS:

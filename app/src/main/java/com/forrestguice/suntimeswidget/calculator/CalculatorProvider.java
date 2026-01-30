@@ -93,11 +93,13 @@ public class CalculatorProvider extends ContentProvider
     private static final int URIMATCH_SEASONS_FOR_YEAR = 150;
     private static final int URIMATCH_SEASONS_FOR_RANGE = 160;
 
-    private static UriMatcher uriMatcher;
-    private static UriMatcher uriMatcher()
+    @Nullable
+    private UriMatcher uriMatcher = null;
+    @NonNull
+    protected UriMatcher uriMatcher()
     {
-        if (CalculatorProvider.uriMatcher != null) {
-            return CalculatorProvider.uriMatcher;
+        if (uriMatcher != null) {
+            return uriMatcher;
         }
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -127,8 +129,9 @@ public class CalculatorProvider extends ContentProvider
         return uriMatcher;
     }
 
-    private static String AUTHORITY() {
-        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".calculator.provider";
+    public static String AUTHORITY_SUFFIX = ".calculator.provider";
+    protected String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;
     }
 
     @Override

@@ -110,15 +110,22 @@ public class SuntimesThemeProvider extends ContentProvider
     private static final int URIMATCH_THEMES = 0;
     private static final int URIMATCH_THEME = 10;
 
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        uriMatcher.addURI(AUTHORITY(), QUERY_THEMES, URIMATCH_THEMES);                 // content://AUTHORITY/themes
-        uriMatcher.addURI(AUTHORITY(), QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
+    @Nullable
+    private UriMatcher uriMatcher = null;
+    @NonNull
+    protected UriMatcher getUriMatcher()
+    {
+        if (uriMatcher == null) {
+            uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+            uriMatcher.addURI(AUTHORITY(), QUERY_THEMES, URIMATCH_THEMES);                 // content://AUTHORITY/themes
+            uriMatcher.addURI(AUTHORITY(), QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
+        }
+        return uriMatcher;
     }
-
-    protected static String AUTHORITY() {
-        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".theme.provider";
+    protected String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;
     }
+    public static final String AUTHORITY_SUFFIX = ".theme.provider";
 
     @Override
     public boolean onCreate() {
@@ -157,7 +164,7 @@ public class SuntimesThemeProvider extends ContentProvider
         HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
         Cursor retValue = null;
 
-        int uriMatch = uriMatcher.match(uri);
+        int uriMatch = getUriMatcher().match(uri);
         switch (uriMatch)
         {
             case URIMATCH_THEME:

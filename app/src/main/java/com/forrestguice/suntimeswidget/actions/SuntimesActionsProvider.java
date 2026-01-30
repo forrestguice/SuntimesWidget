@@ -66,15 +66,23 @@ public class SuntimesActionsProvider extends ContentProvider
     private static final int URIMATCH_ACTIONS = 0;
     private static final int URIMATCH_ACTION = 10;
 
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
-        uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+    @Nullable
+    private UriMatcher uriMatcher = null;
+    @NonNull
+    protected UriMatcher getUriMatcher()
+    {
+        if (uriMatcher == null) {
+            uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+            uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
+            uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+        }
+        return uriMatcher;
     }
 
-    private static String AUTHORITY() {
-        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + ".action.provider";
+    protected String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;
     }
+    public static final String AUTHORITY_SUFFIX = ".action.provider";
 
     @Override
     public boolean onCreate() {
@@ -113,7 +121,7 @@ public class SuntimesActionsProvider extends ContentProvider
         HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
         Cursor retValue = null;
 
-        int uriMatch = uriMatcher.match(uri);
+        int uriMatch = getUriMatcher().match(uri);
         switch (uriMatch)
         {
             case URIMATCH_ACTION:
