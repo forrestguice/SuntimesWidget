@@ -162,8 +162,7 @@ public class GetFixHelper implements LocationHelper
                     //Log.d("GetFixHelper", "MaxElapsed: " + maxElapsed);
                     //Log.d("GetFixHelper", "MaxAge: " + maxAge);
 
-                    getFixTask.addGetFixTaskListeners(listeners);
-                    getFixTask.addGetFixTaskListener( new GetFixTaskListener()
+                    listeners.add( new GetFixTaskListener()
                     {
                         @Override
                         public void onFinished(Location result)
@@ -177,6 +176,8 @@ public class GetFixHelper implements LocationHelper
                             }
                         }
                     });
+                    getFixTask.addGetFixTaskListeners(listeners);
+
                     ExecutorUtils.runProgress("GetFixTask", Executors.newSingleThreadExecutor(), ExecutorUtils.getHandler(), getFixTask, listeners);
 
                 } else {
