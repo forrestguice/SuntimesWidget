@@ -750,9 +750,12 @@ public class PlacesListFragment extends DialogBase
 
     protected void dismissEditPlaceDialog()
     {
-        PlacesEditFragment dialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
-        if (dialog != null) {
-            dialog.dismiss();
+        if (isAdded())
+        {
+            PlacesEditFragment dialog = (PlacesEditFragment) getChildFragmentManager().findFragmentByTag(DIALOG_EDITPLACE);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
         }
     }
 
