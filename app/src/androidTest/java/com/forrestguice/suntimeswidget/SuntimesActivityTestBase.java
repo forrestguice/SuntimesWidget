@@ -377,14 +377,14 @@ public abstract class SuntimesActivityTestBase
     }
 
     public static SimpleDateFormat[] timeDateFormats12 = new SimpleDateFormat[] {
-            new SimpleDateFormat("MMM d, h:mm a"),
-            new SimpleDateFormat("MMMM d, h:mm a"),
-            new SimpleDateFormat("MMMM d, yyyy, h:mm a")
+            new SimpleDateFormat("MMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm\u00A0a")
     };
     public static SimpleDateFormat[] timeDateFormats12s = new SimpleDateFormat[] {
-            new SimpleDateFormat("MMM d, h:mm:ss a"),
-            new SimpleDateFormat("MMMM d, h:mm:ss a"),
-            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss a")
+            new SimpleDateFormat("MMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss\u00A0a")
     };
     public static SimpleDateFormat[] timeDateFormats24 = new SimpleDateFormat[] {
             new SimpleDateFormat("MMM d, HH:mm"),

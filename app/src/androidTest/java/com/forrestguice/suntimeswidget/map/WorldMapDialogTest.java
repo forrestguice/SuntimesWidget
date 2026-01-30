@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -37,6 +38,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.SystemTimeFormat;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -74,6 +76,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withTextAsDate;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @BehaviorTest
@@ -104,7 +107,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
                 //.captureScreenshot(context, "suntimes-dialog-worldmap0");
@@ -116,7 +119,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context);
 
         robot.clickTimeZoneLabel(context)
@@ -161,7 +164,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
 
@@ -181,7 +184,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
 
@@ -250,7 +253,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
 
@@ -272,7 +275,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
 
@@ -297,7 +300,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity context = activityRule.getActivity();
         WorldMapDialogRobot robot = new WorldMapDialogRobot();
-        robot.showDialog(context)
+        robot.showDialog(context).sleep(500)
                 .assertDialogShown(context)
                 .assertShowsDate(context, robot.now(context));
 
@@ -565,7 +568,8 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
         public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
-            boolean is24 = (withMode == TimeFormatMode.MODE_SYSTEM || withMode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+            assertTrue(TimeDateDisplay.isInitialized());
+            boolean is24 = (withMode == TimeFormatMode.MODE_SYSTEM || withMode == TimeFormatMode.MODE_SUNTIMES) ? SystemTimeFormat.is24HourFormat()
                     : (withMode == TimeFormatMode.MODE_24HR);
             SimpleDateFormat[] formats = !is24
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
