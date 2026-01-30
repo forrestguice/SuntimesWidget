@@ -106,7 +106,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_PlacesActivit_menu()
+    public void test_PlacesActivity_menu()
     {
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -248,7 +248,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(activity)
                 .clickOverflowMenu_build(activity)
                 .assertBuildDialogShown(activity)
-                .clickBuildDialog_addButton().sleep(500);
+                .clickBuildDialog_allButton()
+                .clickBuildDialog_addButton().sleep(3000);
         assertTrue(numPlaces(activity) > 0);
         robot.assertListHasAtLeast(activity, 1);
     }
@@ -281,13 +282,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(activity)
                 .clickOverflowMenu_clear(activity)
                 .assertClearDialogShown(activity)
-                .clickClearDialog_clearButton().sleep(1000)
+                .clickClearDialog_clearButton().sleep(3000)
                 .assertEmptyPlaces(activity)
                 .assertUndoClearSnackbarShown(activity);
         assertEquals(0, numPlaces(activity));
 
         robot.clickSnackbar_undo()
-                .assertUndoClearSnackbarNotShown(activity)
+                .assertUndoClearSnackbarNotShown(activity).sleep(3000)
                 .assertListHasAtLeast(activity, 3);
         assertEquals(n, numPlaces(activity));
     }
@@ -467,7 +468,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickBuildDialog_addButton() {
-            onView(allOf(withText(R.string.configLabel_places_build), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.configAction_addPlace), withClassName(endsWith("Button")))).perform(click());
+            return this;
+        }
+        public PlacesActivityRobot clickBuildDialog_allButton() {
+            onView(allOf(withText(R.string.configAction_checkAll), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickBuildDialog_cancelButton() {
@@ -574,7 +579,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot assertEmptyPlaces(Context context) {
-            onView(withId(android.R.id.empty)).check(assertShown);
+            onView(withId(R.id.emptyView_text)).check(assertShown);
             onView(withId(R.id.placesList)).check(assertHidden);
             return this;
         }
