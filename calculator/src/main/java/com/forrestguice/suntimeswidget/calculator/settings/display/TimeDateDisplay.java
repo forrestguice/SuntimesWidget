@@ -94,22 +94,24 @@ public class TimeDateDisplay
         strDateShortFormat = context.getString(r.string_strDateShortFormat());
         strDateLongFormat = context.getString(r.string_strDateLongFormat());
 
+        Resources res = context.getResources();
+
         strTimeShortFormat12 = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strTimeShortFormat12s = context.getString(r.string_strTimeShortFormat12(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
 
-        Resources res = context.getResources();
-        strTimeShortFormat12 = context.getString(r.string_time_format_12hr_short(), strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strDateTimeVeryShortFormat = dateTimeFormatVeryShort(res, r, is24, false);  //  context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormat);
         strDateTimeShortFormat = dateTimeFormatShort(res, r, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
         strDateTimeLongFormat = dateTimeFormatLong(res, r, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
-        strTimeShortFormat12s = context.getString(r.string_time_format_12hr_short(), strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
         strDateTimeVeryShortFormatSec = dateTimeFormatVeryShort(res, r, is24, true);  // context.getString(R.string.datetime_format_short, strDateVeryShortFormat, timeFormatSec);
         strDateTimeShortFormatSec = dateTimeFormatShort(res, r, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = dateTimeFormatLong(res, r, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         initialized = true;
         resIDs = r;
+    }
+    public static boolean isInitialized() {
+        return initialized;
     }
 
     private static String dateTimeFormatVeryShort(Resources res, ResID_TimeDateDisplay r, boolean is24, boolean showSeconds) {
@@ -527,7 +529,6 @@ public class TimeDateDisplay
 
         int string_strTimeShortFormat12();
 
-        int string_time_format_12hr_short();
         int string_datetime_format_short();
         int string_datetime_format_long();
     }
