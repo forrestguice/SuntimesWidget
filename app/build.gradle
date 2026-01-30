@@ -67,8 +67,11 @@ android
         versionCode 126
         versionName "0.16.12"
 
-        manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget", suntimesPermissionRoot:"suntimes"]
-        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget\""
+        manifestPlaceholders = [suntimesAuthorityRoot:"suntimes",
+                                suntimesAuthorityRoot0:"suntimeswidget",
+                                suntimesPermissionRoot:"suntimes"]
+        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes\""                // uses permission.ADDON
+        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget\""         // legacy; uses permission.READ_CALCULATOR
         buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
@@ -104,8 +107,11 @@ android
             applicationIdSuffix ".legacy"
             versionNameSuffix "-legacy"
             resValue "string", "packageName", "com.forrestguice.suntimeswidget.legacy"   // TODO: cleaner way to set this resValue without duplication
-            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.legacy", suntimesPermissionRoot:"suntimes.legacy"]
-            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget.legacy\""
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimes.legacy",
+                                    suntimesAuthorityRoot0:"suntimeswidget.legacy",
+                                    suntimesPermissionRoot:"suntimes.legacy"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes.legacy\""
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget.legacy\""
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.legacy\""
         }
         nightly {
@@ -113,8 +119,11 @@ android
             applicationIdSuffix ".nightly"
             versionNameSuffix "-nightly"
             resValue "string", "packageName", "com.forrestguice.suntimeswidget.nightly"   // TODO: cleaner way to set this resValue without duplication
-            manifestPlaceholders = [suntimesAuthorityRoot:"suntimeswidget.nightly", suntimesPermissionRoot:"suntimes.nightly"]
-            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimeswidget.nightly\""
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimes.nightly",
+                                    suntimesAuthorityRoot0:"suntimeswidget.nightly",
+                                    suntimesPermissionRoot:"suntimes.nightly"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes.nightly\""
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget.nightly\""
             buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
             def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
             versionCode nightlyVersionCode
