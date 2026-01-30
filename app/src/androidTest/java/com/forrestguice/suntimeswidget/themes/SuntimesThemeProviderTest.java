@@ -28,6 +28,7 @@ import com.forrestguice.annotation.Nullable;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
@@ -107,6 +108,7 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_VERSION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_WINTERCOLOR;
 
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider.AUTHORITY_SUFFIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -434,7 +436,7 @@ public class SuntimesThemeProviderTest
     }
 
     public static final String AUTHORITY() {
-        return SuntimesThemeProvider.AUTHORITY();    // SuntimesThemeContract.AUTHORITY;
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;    // SuntimesThemeContract.AUTHORITY;
     }
 
 }
