@@ -73,6 +73,7 @@ import com.forrestguice.support.widget.GridLayoutManager;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
 import com.forrestguice.support.widget.LinearSnapHelper;
+import com.forrestguice.support.widget.PagerSnapHelper;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
 import com.forrestguice.util.android.AndroidResources;
@@ -750,7 +751,8 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         card_view.setOnScrollListener(onCardScrollListener);
         card_view.suppressLayout(false);
 
-        new LinearSnapHelper().attachToRecyclerView(card_view);
+        //new LinearSnapHelper().attachToRecyclerView(card_view);    // one-to-many pages per swipe
+        new PagerSnapHelper().attachToRecyclerView(card_view);       // one page per swipe
 
         initAdapter(context);
     }
