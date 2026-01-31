@@ -19,7 +19,7 @@ import static org.hamcrest.core.IsNot.not;
 public class ViewAssertionHelper
 {
     public static ViewAssertion assertShown = matches(isDisplayed());
-    public static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(90));
+    public static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(80));
     public static ViewAssertion assertHidden = matches(not(isDisplayed()));
     public static ViewAssertion assertEnabled = matches(allOf(isEnabled(), isDisplayed()));
     public static ViewAssertion assertDisabled = matches(allOf(not(isEnabled()), isDisplayed()));

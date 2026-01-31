@@ -41,8 +41,15 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.SystemTimeFormat;
 
 import androidx.annotation.Nullable;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.GeneralLocation;
+import androidx.test.espresso.action.GeneralSwipeAction;
+import androidx.test.espresso.action.Press;
+import androidx.test.espresso.action.Swipe;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -440,7 +447,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             //Calendar eventTime = CalculatorProviderTest.lookupEventTime(context, mode, thisYear(), robot1.now(context).getTimeZone());
             // TODO assertDate
 
-            robot.expandSheet();
+            robot.expandSheet().sleep(1000);
         }
 
         robot.cancelDialog(context);
@@ -860,7 +867,8 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         public EquinoxDialogRobot assertCard_showsDate(@Nullable Calendar date, String withLabel, TimeFormatMode withMode, boolean withSeconds)
         {
             if (date != null) {
-                SimpleDateFormat[] formats = (withMode == TimeFormatMode.MODE_12HR)
+                boolean is24 = (withMode == TimeFormatMode.MODE_24HR) || (withMode == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat());
+                SimpleDateFormat[] formats = (!is24)
                         ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                         : (withSeconds ? timeDateFormats24s : timeDateFormats24);
                 long tolerance = (withSeconds ? 1000 : 60 * 1000);

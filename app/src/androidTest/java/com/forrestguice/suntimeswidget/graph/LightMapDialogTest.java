@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.SystemTimeFormat;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -144,7 +145,8 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context).sleep(500)
-                .assertDialogShown(context);
+                .assertDialogShown(context)
+                .clickResetButton(context);
 
         robot.clickTimeZoneLabel(context)
                 .assertOverflowMenu_TimeZone(context)
@@ -711,7 +713,8 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         }
         public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
-            SimpleDateFormat[] formats = (withMode == TimeFormatMode.MODE_12HR)
+            boolean is24 = (withMode == TimeFormatMode.MODE_24HR) || (withMode == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat());
+            SimpleDateFormat[] formats = (!is24)
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                     : (withSeconds ? timeDateFormats24s : timeDateFormats24);
             long tolerance = (withSeconds
