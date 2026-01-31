@@ -668,6 +668,12 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
                     }
                     return true;
 
+                } else if (itemId == R.id.action_moon) {
+                    if (dialogListener != null) {
+                        dialogListener.onShowMoon(itemTime);
+                    }
+                    return true;
+
                 } else if (itemId == R.id.action_worldmap) {
                     if (dialogListener != null) {
                         dialogListener.onShowMap(itemTime);
@@ -926,6 +932,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     {
         public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
+        public void onShowMoon( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}

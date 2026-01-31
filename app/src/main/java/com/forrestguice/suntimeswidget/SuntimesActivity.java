@@ -2580,8 +2580,8 @@ public class SuntimesActivity extends AppCompatActivity
             showSunPositionAt(suggested);
         }
 
-        //@Override
-        public void onShowMoonInfo(long suggested) {
+        @Override
+        public void onShowMoon(long suggested) {
             showMoonPositionAt(suggested);
         }
 
