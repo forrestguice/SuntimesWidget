@@ -502,7 +502,7 @@ public class MoonDialog extends BottomSheetDialogBase
             {
                 TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
                 offsetText.setSuffix("");
-                String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
+                String displayString = context.getString((nowIsAfter ? R.string.delta_ago : R.string.delta_hence), offsetText.toString());
                 text_dialogTimeOffset.setText(SpanUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
             } else text_dialogTimeOffset.setText(" ");
         }

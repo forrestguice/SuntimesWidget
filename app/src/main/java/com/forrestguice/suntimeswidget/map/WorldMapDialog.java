@@ -673,7 +673,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
         TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
-        String displayString = context.getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+        String displayString = context.getString((nowIsAfter ? R.string.delta_ago : R.string.delta_hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);
     }
 

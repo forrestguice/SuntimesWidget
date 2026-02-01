@@ -171,7 +171,7 @@ public class AlarmTileBase extends SuntimesTileBase
             // formatted "time until"
             long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
             String timeUntilString = delta_utils.timeDeltaLongDisplayString(timeUntilMs).toString();
-            String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.hence : R.string.ago), timeUntilString);
+            String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.delta_hence : R.string.delta_ago), timeUntilString);
 
             String eventDisplay = formatEventDisplay(context, item);    // formatted event label
 

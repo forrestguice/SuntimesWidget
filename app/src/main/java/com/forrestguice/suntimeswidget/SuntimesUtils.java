@@ -177,12 +177,12 @@ public class SuntimesUtils
         strRaSymbol = res.getString(R.string.widgetLabel_rightAscension_symbol);
         strDecSymbol = res.getString(R.string.widgetLabel_declination_symbol);
 
-        strDegreesFormat = res.getString(R.string.degrees_format);
-        strDirectionFormat = res.getString(R.string.direction_format);
-        strElevationFormat = res.getString(R.string.elevation_format);
-        strRaFormat = res.getString(R.string.rightascension_format);
-        strDeclinationFormat = res.getString(R.string.declination_format);
-        strDistanceFormat = res.getString(R.string.distance_format);
+        strDegreesFormat = res.getString(R.string.format_degrees);
+        strDirectionFormat = res.getString(R.string.format_direction);
+        strElevationFormat = res.getString(R.string.format_elevation);
+        strRaFormat = res.getString(R.string.format_rightascension);
+        strDeclinationFormat = res.getString(R.string.format_declination);
+        strDistanceFormat = res.getString(R.string.format_distance);
 
         strTimeDeltaFormat = res.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = res.getString(R.string.time_format_12hr_veryshort);

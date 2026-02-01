@@ -44,7 +44,7 @@
             android:scaleType="fitStart"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp" android:layout_marginBottom="4dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
-            android:contentDescription="@string/sunset" />
+            android:contentDescription="@string/table_header_sunset" />
 
     </LinearLayout>
 </merge>

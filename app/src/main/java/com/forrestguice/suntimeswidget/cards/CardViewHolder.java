@@ -606,8 +606,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         icon_sunrise.setVisibility(iconVisibility);
         icon_sunset.setVisibility(iconVisibility);
 
-        int resID_risingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.dawn : R.string.sunrise_short);
-        int resID_settingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.dusk : R.string.sunset_short);
+        int resID_risingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.table_header_dawn : R.string.table_header_sunrise_short);
+        int resID_settingLabel = ((options.showHeaderText == AppSettings.HEADER_TEXT_LABEL_ALT) ? R.string.table_header_dusk : R.string.table_header_sunset_short);
         boolean showPosition = (options.showHeaderText == AppSettings.HEADER_TEXT_AZIMUTH);
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         if (showPosition && sun != null)

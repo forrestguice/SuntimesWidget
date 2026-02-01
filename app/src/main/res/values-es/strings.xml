@@ -164,14 +164,14 @@
     <string name="until_moonnight">Medianoche lunar</string>   
 
     <!-- Table -->
-    <string name="sunrise">Amanecer</string>
-    <string name="sunrise_short">Amanecer</string>
-    <string name="sunset">Atardecer</string>
-    <string name="sunset_short">Atardecer</string>
-    <string name="moonrise">Salida de la Luna</string>
-    <string name="moonrise_short">Salida de la Luna</string>
-    <string name="moonset">Puesta de la Luna</string>
-    <string name="moonset_short">Puesta de la Luna</string>
+    <string name="table_header_sunrise">Amanecer</string>
+    <string name="table_header_sunrise_short">Amanecer</string>
+    <string name="table_header_sunset">Atardecer</string>
+    <string name="table_header_sunset_short">Atardecer</string>
+    <string name="table_header_moonrise">Salida de la Luna</string>
+    <string name="table_header_moonrise_short">Salida de la Luna</string>
+    <string name="table_header_moonset">Puesta de la Luna</string>
+    <string name="table_header_moonset_short">Puesta de la Luna</string>
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
@@ -182,8 +182,8 @@
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence">Dentro de <xliff:g id="timeSpan">%1$s</xliff:g></string>
-    <string name="ago">Hace <xliff:g id="timeSpan">%1$s</xliff:g></string>
+    <string name="delta_hence">Dentro de <xliff:g id="timeSpan">%1$s</xliff:g></string>
+    <string name="delta_ago">Hace <xliff:g id="timeSpan">%1$s</xliff:g></string>
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">ninguno</string>  <!-- no time / time does not occur -->
@@ -1118,7 +1118,7 @@
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
 
     <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
     <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
@@ -1571,7 +1571,7 @@
     </string-array>
 
     
-    <string name="degrees_format"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  
+    <string name="format_degrees"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>
     <!--<string name="elevation_format"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>-->
     <!--<string name="declination_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>-->
     <!--<string name="rightascension_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>-->
@@ -1679,9 +1679,9 @@
     <string name="lightmap_seekAltitude_configHint">degrees</string>   <!-- TODO -->
     <string name="lightmap_seekAltitude_suffix">°∠</string>
     <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
-    <string name="lightmap_seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="lightmap_seekAltitude_rising_contentDescription">@string/table_header_sunrise</string>
     <string name="lightmap_seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
-    <string name="lightmap_seekAltitude_setting_contentDescription">@string/sunset</string>
+    <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

@@ -97,7 +97,7 @@
                     tools:ignore="contentDescription"/>
 
                 <TextView android:id="@+id/label_time_sunrise" style="@style/TableHeadTextView"
-                    android:text="@string/sunrise_short" android:textColor="?attr/table_risingColor"
+                    android:text="@string/table_header_sunrise_short" android:textColor="?attr/table_risingColor"
                     android:maxWidth="@dimen/table_heading_label_maxdim" />
 
             </LinearLayout>
@@ -139,7 +139,7 @@
                     android:id="@+id/label_time_sunset"
                     style="@style/TableHeadTextView"
                     android:maxWidth="@dimen/table_heading_label_maxdim"
-                    android:text="@string/sunset_short"
+                    android:text="@string/table_header_sunset_short"
                     android:textColor="?attr/table_settingColor"/>
 
             </LinearLayout>

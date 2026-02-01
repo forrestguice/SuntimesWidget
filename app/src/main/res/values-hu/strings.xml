@@ -160,14 +160,14 @@
     <string name="until_moonnight">holdi éjfélig</string>
 
     <!-- Table -->
-    <string name="sunrise">Napkelte</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Napkelte</string>                          <!-- table title -->
-    <string name="sunset">Napnyugta</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Napnyugta</string>                            <!-- table title -->
-    <string name="moonrise">Holdkelte</string>                             <!-- contentDescription -->
-    <string name="moonrise_short">Holdkelte</string>                             <!-- table title -->
-    <string name="moonset">Holdnyugta</string>                             <!-- contentDescription -->
-    <string name="moonset_short">Holdnyugta</string>                             <!-- table title -->
+    <string name="table_header_sunrise">Napkelte</string>                             <!-- contentDescription -->
+    <string name="table_header_sunrise_short">Napkelte</string>                          <!-- table title -->
+    <string name="table_header_sunset">Napnyugta</string>                               <!-- contentDescription -->
+    <string name="table_header_sunset_short">Napnyugta</string>                            <!-- table title -->
+    <string name="table_header_moonrise">Holdkelte</string>                             <!-- contentDescription -->
+    <string name="table_header_moonrise_short">Holdkelte</string>                             <!-- table title -->
+    <string name="table_header_moonset">Holdnyugta</string>                             <!-- contentDescription -->
+    <string name="table_header_moonset_short">Holdnyugta</string>                             <!-- table title -->
     
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -178,8 +178,8 @@
     <string name="delta_minutes">perc</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">mp</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  múlva</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  óta</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="delta_hence"><xliff:g id="timeSpan">%1$s</xliff:g>  múlva</string>  <!-- e.g. 15d 23h from now -->
+    <string name="delta_ago"><xliff:g id="timeSpan">%1$s</xliff:g>  óta</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">nincs</string>  <!-- no time / time does not occur -->
@@ -1116,7 +1116,7 @@
     <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
 
     <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
     <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
@@ -1574,7 +1574,7 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
     <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
@@ -1683,9 +1683,9 @@
     <string name="lightmap_seekAltitude_configHint">fok</string>
     <string name="lightmap_seekAltitude_suffix">°∠</string>
     <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
-    <string name="lightmap_seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="lightmap_seekAltitude_rising_contentDescription">@string/table_header_sunrise</string>
     <string name="lightmap_seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
-    <string name="lightmap_seekAltitude_setting_contentDescription">@string/sunset</string>
+    <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

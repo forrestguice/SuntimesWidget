@@ -36,22 +36,22 @@ public class AndroidResID_AngleDisplay implements AngleDisplay.ResID_AngleDispla
     }
     @Override
     public int string_strDegreesFormat() {
-        return R.string.degrees_format;
+        return R.string.format_degrees;
     }
     @Override
     public int string_strDirectionFormat() {
-        return R.string.direction_format;
+        return R.string.format_direction;
     }
     @Override
     public int string_strElevationFormat() {
-        return R.string.elevation_format;
+        return R.string.format_elevation;
     }
     @Override
     public int string_strRaFormat() {
-        return R.string.rightascension_format;
+        return R.string.format_rightascension;
     }
     @Override
     public int string_strDeclinationFormat() {
-        return R.string.declination_format;
+        return R.string.format_declination;
     }
 }

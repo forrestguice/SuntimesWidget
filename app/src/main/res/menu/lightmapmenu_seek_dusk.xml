@@ -4,7 +4,7 @@
 
     <group>
         <item android:id="@+id/seek_dusk_actual"
-            android:title="@string/sunset_short"
+            android:title="@string/table_header_sunset_short"
             app:showAsAction="never" />
 
         <item android:id="@+id/seek_dusk_civil"
@@ -22,7 +22,7 @@
 
     <group>
         <item android:id="@+id/seek_moon_set"
-            android:title="@string/moonset"
+            android:title="@string/table_header_moonset"
             app:showAsAction="never" />
     </group>
 

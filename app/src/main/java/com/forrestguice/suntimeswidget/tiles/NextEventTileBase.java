@@ -150,7 +150,7 @@ public class NextEventTileBase extends SuntimesTileBase
         modeDisplay = SpanUtils.createRelativeSpan(modeDisplay, modeString, modeString, 1.25f);
 
         String noteValue = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), event.getTimeInMillis()).getValue();
-        String noteString = context.getString(event.after(now) ? R.string.hence : R.string.ago, noteValue);
+        String noteString = context.getString(event.after(now) ? R.string.delta_hence : R.string.delta_ago, noteValue);
         CharSequence noteDisplay = SpanUtils.createBoldSpan(null, noteString, noteValue);
 
         SpannableStringBuilder message = new SpannableStringBuilder();

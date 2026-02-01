@@ -145,9 +145,9 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
             views.setTextViewText(R.id.text_time_event, eventString.getValue());
             views.setViewVisibility(R.id.text_time_event, showDate ? View.VISIBLE : View.GONE);
 
-            int noteStringId = R.string.hence;
+            int noteStringId = R.string.delta_hence;
             if (event.before(now)) {
-                noteStringId = R.string.ago;
+                noteStringId = R.string.delta_ago;
             }
 
             String noteTime = delta_utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();

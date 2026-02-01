@@ -131,13 +131,13 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
 
             if (calendar.before(Calendar.getInstance()))
             {
-                String noteString = context.getString(R.string.ago, noteText);
+                String noteString = context.getString(R.string.delta_ago, noteText);
                 SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
                         : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
 
             } else {
-                String noteString = context.getString(R.string.hence, noteText);
+                String noteString = context.getString(R.string.delta_hence, noteText);
                 SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
                         : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);

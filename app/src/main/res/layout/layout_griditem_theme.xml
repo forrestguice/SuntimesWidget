@@ -141,7 +141,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:contentDescription="@string/moonrise"
+                android:contentDescription="@string/table_header_moonrise"
                 android:scaleType="fitStart" />
 
             <com.forrestguice.support.widget.ImageView
@@ -151,7 +151,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginStart="4dp"
-                android:contentDescription="@string/moonset"
+                android:contentDescription="@string/table_header_moonset"
                 android:scaleType="fitEnd" />
 
             <com.forrestguice.support.widget.ImageView

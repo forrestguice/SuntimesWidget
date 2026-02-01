@@ -41,7 +41,7 @@
             android:scaleType="fitCenter" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="2dp" android:layout_marginRight="1dp" android:layout_marginTop="1dp"
             android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
-            android:contentDescription="@string/sunrise_short" />
+            android:contentDescription="@string/table_header_sunrise_short" />
 
     </LinearLayout>
 
