@@ -270,7 +270,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                             preference.setSummary(getLocationProviderSummary(getActivity(), locationManager, locationProvider));
                         }
                     } catch (SecurityException e) {
-                        preference.setSummary(getString(R.string.configLabel_permissionRequired));
+                        preference.setSummary(getString(R.string.privacy_permissiondialog_required_label));
                     } catch (IllegalArgumentException e) {
                         preference.setSummary(e.getLocalizedMessage());
                     }

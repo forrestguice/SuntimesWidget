@@ -1957,30 +1957,30 @@
     <string name="app_name_eventtile">Következő esemény csempe</string>
     <string name="app_name_solsticewidget0">Napforduló Widget</string>
     <string name="app_name_moonwidget0">Hold Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Megjeleníti a napfény- és holdfényidőket.</string> 
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Támogatás:</b> keresse fel a
         <a href="%1$s">problémakövetőt</a> kérések benyújtásához.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Forráskód:</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         A forráskód elérhető a GPLv3 alatt.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Fordítók:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_translations_field"><![CDATA[<b>Fordítók:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, és <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Névjegy</string>
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, és <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Névjegy</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Könyvtárak:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string> 
-    <string name="app_about_media"><![CDATA[ <b>Média:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_libraries_field"><![CDATA[ <b>Könyvtárak:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Média:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Kihagyás</string>   
@@ -2003,17 +2003,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Jogosultságok kérése most?]]></string>
     <string name="privacy_permissiondialog_ignore">Mellőzés</string>
     <string name="privacy_permissiondialog_title">Engedélyek</string>
-    <string name="privacyTab">Adatvédelem</string>
+    <string name="about_dialog_privacy">Adatvédelem</string>
 
-    <string name="security_dialog_title">Biztonsági értesítés</string> 
-    <string name="security_duplicate_permissions">A Suntimeshoz tartozó engedély:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nígy is definálva van: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">Ezt a funkciót nem támogatja az API %1$s.</string>
-    <string name="feature_not_supported_by_source">Ezt a funkciót a jelenlegi adatforrás nem támogatja.</string>
-    <string name="reboot_required_message">A módosítások érvénybe lépéséhez újraindításra lehet szükség.</string>
-    <string name="restart_required_message">Előfordulhat, hogy újra kell indítani a rendszert ahhoz, hogy a módosítások teljes mértékben érvényesüljenek.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Biztonsági értesítés</string>
+    <string name="privacy_securitydialog_duplicate_permissions">A Suntimeshoz tartozó engedély:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nígy is definálva van: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Ezt a funkciót nem támogatja az API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Ezt a funkciót a jelenlegi adatforrás nem támogatja.</string>
+    <string name="app_reboot_required_message">A módosítások érvénybe lépéséhez újraindításra lehet szükség.</string>
+    <string name="app_restart_required_message">Előfordulhat, hogy újra kell indítani a rendszert ahhoz, hogy a módosítások teljes mértékben érvényesüljenek.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2021,11 +2021,11 @@
     <string name="dialog_msg_donotshowagain">Ne mutassa ezt újra.</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Egy egyszerű, viszonylag gyors, de pontatlan számológép.</string>
-    <string name="calculator_displayString_time4a_noaa">A National Oceanic and Atmospheric Administration (NOAA) által közzétett algoritmusokat használja.</string>
-    <string name="calculator_displayString_time4a_cc">A Dershowitz/Reingold a "Calendrical Calculations" (harmadik kiadás) című könyvben közzétett algoritmusokat követi.</string>
-    <string name="calculator_displayString_time4a_4j">A Jean Meeus "Astronomical Algorithms" (második kiadás) című könyvében közzétett csillagászati számításokon alapul.</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Egy egyszerű, viszonylag gyors, de pontatlan számológép.</string>
+    <string name="about_calculator_displayString_time4a_noaa">A National Oceanic and Atmospheric Administration (NOAA) által közzétett algoritmusokat használja.</string>
+    <string name="about_calculator_displayString_time4a_cc">A Dershowitz/Reingold a "Calendrical Calculations" (harmadik kiadás) című könyvben közzétett algoritmusokat követi.</string>
+    <string name="about_calculator_displayString_time4a_4j">A Jean Meeus "Astronomical Algorithms" (második kiadás) című könyvében közzétett csillagászati számításokon alapul.</string>
 
 </resources>

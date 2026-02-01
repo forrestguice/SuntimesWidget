@@ -2162,39 +2162,39 @@
     <string name="app_name_clockwidget0">Часы (виджет)</string>
     <string name="app_name_solsticewidget0">Солнцестояние (виджет)</string>
     <string name="app_name_moonwidget0">Лунный виджет</string>
-    <string name="app_version"><![CDATA[<b>Версия:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Версия:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Показывает время солнечного и лунного освещения.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Поддержка:</b> посетите
         <a href="%1$s">трекер отслеживания проблем</a> на GitHub для создания запроса.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s предоставляется бесплатно, но если приложение оказалось полезным,
         <a href="%2$s">то можете пожертвовать деньги на ваше усмотрение</a>.
     ]]></string>
 
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Исходный код:</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         Исходный код доступен под лицензией GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Переводы:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> от <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Благодарности</string>
+    <string name="about_translations_field"><![CDATA[<b>Переводы:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> от <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Благодарности</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Сторонние библиотеки:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="app_libraries">
+    <string name="about_libraries_field"><![CDATA[ <b>Сторонние библиотеки:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="about_libraries">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
         <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
         <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
-    <string name="app_about_media"><![CDATA[ <b>Медиа:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Медиа:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Пропустить</string>
@@ -2220,17 +2220,17 @@
     <!--<string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
     ]]></xliff:g></string>-->
-    <string name="privacyTab">Приватность</string>
+    <string name="about_dialog_privacy">Приватность</string>
 
-    <string name="security_dialog_title">Предупреждение безопасности</string>
-    <string name="security_duplicate_permissions">Разрешение, принадлежащее Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nтакже определено для: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">Эта функция не поддерживается API %1$s.</string>
-    <string name="feature_not_supported_by_source">Эта функция не поддерживается текущим источником данных.</string>
-    <string name="reboot_required_message">Для вступления изменений в силу может потребоваться перезагрузка.</string>
-    <string name="restart_required_message">Для полного вступления изменений в силу может потребоваться перезапуск.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Предупреждение безопасности</string>
+    <string name="privacy_securitydialog_duplicate_permissions">Разрешение, принадлежащее Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nтакже определено для: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Эта функция не поддерживается API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Эта функция не поддерживается текущим источником данных.</string>
+    <string name="app_reboot_required_message">Для вступления изменений в силу может потребоваться перезагрузка.</string>
+    <string name="app_restart_required_message">Для полного вступления изменений в силу может потребоваться перезапуск.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2238,12 +2238,12 @@
     <string name="dialog_msg_donotshowagain">Больше не показзывать это сообщение</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Простой, относительно быстрый, но неточный калькулятор.</string>
-    <string name="calculator_displayString_time4a_noaa">Следует алгоритмам, опубликованным Национальным управлением океанических и атмосферных исследований США (NOAA).</string>
-    <string name="calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N.&#160;Dershowitz и E.M.&#160;Reingold в книге \"Calendrical&#160;Calculations\" (3-е издание).</string>
-    <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical&#160;Algorithms\" (2-е издание).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Простой, относительно быстрый, но неточный калькулятор.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Следует алгоритмам, опубликованным Национальным управлением океанических и атмосферных исследований США (NOAA).</string>
+    <string name="about_calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N.&#160;Dershowitz и E.M.&#160;Reingold в книге \"Calendrical&#160;Calculations\" (3-е издание).</string>
+    <string name="about_calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical&#160;Algorithms\" (2-е издание).</string>
 
 
 </resources>

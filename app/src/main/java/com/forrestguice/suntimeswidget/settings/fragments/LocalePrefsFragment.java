@@ -142,7 +142,7 @@ public class LocalePrefsFragment extends PreferenceFragment
         return new ListPreference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(ListPreference preference, Object newValue) {
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
@@ -152,7 +152,7 @@ public class LocalePrefsFragment extends PreferenceFragment
         return new ListPreference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(ListPreference preference, Object newValue) {
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };

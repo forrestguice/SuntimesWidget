@@ -1974,30 +1974,30 @@
     <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Giny de solstici</string>
     <string name="app_name_moonwidget0">Giny lunar</string>
-    <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Mostra les hores de l\'alba, capvespre, llum crepuscular i lunar.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Suport:</b> visita el
         <a href="%1$s">seguiment d\'incidències</a> per enviar una petició.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
     <b>Codi font:</b><br />
     Copyright &#169 2014-2026 Forrest Guice <br />
     Codi font disponible sota GPLv3.
 ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Traduccions a:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> per <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <string name="about_translations_field"><![CDATA[<b>Traduccions a:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> per <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
-    <string name="creditsTab">Crèdits</string>   
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <string name="about_dialog_credits">Crèdits</string>
     
-    <string name="app_legal3"><![CDATA[ <b>Biblioteques:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string name="about_libraries_field"><![CDATA[ <b>Biblioteques:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
@@ -2020,17 +2020,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permisos</string>
-    <string name="privacyTab">Privacitat</string>   
+    <string name="about_dialog_privacy">Privacitat</string>
 
-    <string name="security_dialog_title">Alerta de seguretat</string>  
-    <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
-    <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
-    <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
-    <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Alerta de seguretat</string>
+    <string name="privacy_securitydialog_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
+    <string name="app_reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
+    <string name="app_restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">D\'acord</string>  
@@ -2038,11 +2038,11 @@
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Una simple, relativament ràpida però imprecisa calculadora.</string>
-    <string name="calculator_displayString_time4a_noaa">Segueix algoritmes publicats per la "National Oceanic and Atmospheric Administration".</string>
-    <string name="calculator_displayString_time4a_cc">Segueix algoritmes publicats per Dershowitz/Reingold en el seu llibre "Calendrical Calculations" (tercera edició).</string>
-    <string name="calculator_displayString_time4a_4j">Basat en càlculs astrònomics publicats per Jean Meeus en el seu llibre "Astronomical Algorithms" (segona edició).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Una simple, relativament ràpida però imprecisa calculadora.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Segueix algoritmes publicats per la "National Oceanic and Atmospheric Administration".</string>
+    <string name="about_calculator_displayString_time4a_cc">Segueix algoritmes publicats per Dershowitz/Reingold en el seu llibre "Calendrical Calculations" (tercera edició).</string>
+    <string name="about_calculator_displayString_time4a_4j">Basat en càlculs astrònomics publicats per Jean Meeus en el seu llibre "Astronomical Algorithms" (segona edició).</string>
 
 </resources>

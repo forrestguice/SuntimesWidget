@@ -1963,30 +1963,30 @@
     <string name="app_name_eventtile">Kahelo de sekva okazaĵo</string>
     <string name="app_name_solsticewidget0">Solstico</string>
     <string name="app_name_moonwidget0">Luno</string>
-    <string name="app_version"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Versio:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Montras tempojn de lumadoj de Suno kaj Luno.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Subteno:</b> vizitu la
         <a href="%1$s">erar-spurilon</a> por raporti problemon.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         La aplikaĵo %s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
         <a href="%2$s">konsideri donaci ajnan monkvanton</a>.
     ]]></string>
-    <string name="app_license_about">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_license_notice">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
+    <string name="about_app_sourcecode_field"><![CDATA[
         Aŭtorrajto &#169 2014-2026 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Tradukoj al:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> de <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_translations_field"><![CDATA[<b>Tradukoj al:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> de <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> kaj <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Dankoj</string>
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> kaj <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Dankoj</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Bildoj:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_libraries_field"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Bildoj:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Preterpasi</string>
@@ -2009,17 +2009,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
     <string name="privacy_permissiondialog_title">Permesoj</string>
-    <string name="privacyTab">Privateco</string>
+    <string name="about_dialog_privacy">Privateco</string>
     
-    <string name="security_dialog_title">Sekureca averto</string>
-    <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
-    <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
-    <string name="reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
-    <string name="restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permeso akirita</string>
+    <string name="privacy_securitydialog_title">Sekureca averto</string>
+    <string name="privacy_securitydialog_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
+    <string name="app_reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
+    <string name="app_restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permeso akirita</string>
 
-    <string name="drag_hint">Ŝovu tien ĉi</string>
+    <string name="hint_drag">Ŝovu tien ĉi</string>
     <string name="hint_label">Etikedo</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">Bone</string>
@@ -2027,11 +2027,11 @@
     <string name="dialog_msg_donotshowagain">Ne demandi min denove</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Simpla, rapida, sed malpreciza kalkulilo.</string>
-    <string name="calculator_displayString_time4a_noaa">Uzas algoritmojn publikigitajn de Nacia Oceana kaj Atmosfera Administro (NOAA).</string>
-    <string name="calculator_displayString_time4a_cc">Uzas algoritmojn publikigitajn de Dershowitz kaj Reingold en ilia libro “Calendrical Calculations” (tria eldono).</string>
-    <string name="calculator_displayString_time4a_4j">Bazita sur astrosciencaj kalkuloj publikigitaj de Jean Meeus en lia libro “Astronomical Algorithms” (dua eldono).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Simpla, rapida, sed malpreciza kalkulilo.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Uzas algoritmojn publikigitajn de Nacia Oceana kaj Atmosfera Administro (NOAA).</string>
+    <string name="about_calculator_displayString_time4a_cc">Uzas algoritmojn publikigitajn de Dershowitz kaj Reingold en ilia libro “Calendrical Calculations” (tria eldono).</string>
+    <string name="about_calculator_displayString_time4a_4j">Bazita sur astrosciencaj kalkuloj publikigitaj de Jean Meeus en lia libro “Astronomical Algorithms” (dua eldono).</string>
 
 </resources>

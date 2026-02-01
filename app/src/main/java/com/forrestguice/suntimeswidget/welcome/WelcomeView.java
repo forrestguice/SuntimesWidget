@@ -118,7 +118,7 @@ public class WelcomeView extends FrameLayout
             final TextView donateLink = (TextView) view.findViewById(R.id.link4);
             if (donateLink != null) {
                 donateLink.setVisibility(View.GONE);
-                donateLink.setText(SpanUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
+                donateLink.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_donate_field, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
             }
 
             CheckBox donateCheck = (CheckBox) view.findViewById(R.id.check_donate);

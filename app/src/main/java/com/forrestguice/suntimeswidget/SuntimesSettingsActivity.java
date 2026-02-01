@@ -265,7 +265,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                     pref.apply();
                 }
                 rebuildActivity();
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
 
             } else if (adapterModified) {
                 rebuildActivity();

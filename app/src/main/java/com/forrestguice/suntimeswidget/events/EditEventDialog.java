@@ -649,7 +649,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
             }  else {
                 if (getContext() != null) {
-                    Toast.makeText(getContext(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+                    Toast.makeText(getContext(), getString(R.string.app_feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
                 }
             }
         }

@@ -67,7 +67,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start"
-            android:text="@string/app_version" android:textSize="?attr/text_size_small"
+            android:text="@string/about_app_version_field" android:textSize="?attr/text_size_small"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
@@ -77,7 +77,7 @@
             android:id="@+id/txt_about_support"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_support_url" />
+            android:text="@string/about_app_support_field" />
 
         <TextView
             android:id="@+id/txt_help_url"
@@ -97,7 +97,7 @@
             android:id="@+id/txt_about_legal1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal1"
+            android:text="@string/about_app_sourcecode_field"
             android:autoLink="web" />
 
         <TextView
@@ -117,7 +117,7 @@
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal2" />
+            android:text="@string/about_translations_field" />
 
         <TextView
             android:id="@+id/txt_about_legal3"
@@ -126,7 +126,7 @@
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal3"
+            android:text="@string/about_libraries_field"
             android:autoLink="web" />
 
         <TextView
@@ -134,7 +134,7 @@
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:text="@string/app_about_media" android:textSize="?attr/text_size_small"
+            android:text="@string/about_media_field" android:textSize="?attr/text_size_small"
             android:autoLink="web" />
 
         <View

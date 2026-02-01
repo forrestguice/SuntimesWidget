@@ -1987,30 +1987,30 @@
     <string name="app_name_eventtile">Next Event Tile</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">展示太陽和月亮的時間。</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>支援:</b> 訪問
         <a href="%1$s">問題追蹤器</a> 提交一個請求。
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s 免費使用，如果您認為它有價值，請
         <a href="%2$s">隨意付費</a>。
     ]]></string>
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>原始碼:</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         原始碼在 GPLv3 許可下發布。
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>翻譯:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_translations_field"><![CDATA[<b>翻譯:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>，與 <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">出品</string>
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>，與 <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">出品</string>
 
-    <string name="app_legal3"><![CDATA[ <b>庫:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>媒體:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_libraries_field"><![CDATA[ <b>庫:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>媒體:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">跳過</string>
@@ -2033,17 +2033,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[現在請求許可權？]]></string>
     <string name="privacy_permissiondialog_ignore">忽略</string>
     <string name="privacy_permissiondialog_title">許可權</string>
-    <string name="privacyTab">隱私</string>
+    <string name="about_dialog_privacy">隱私</string>
 
-    <string name="security_dialog_title">安全提醒</string>
-    <string name="security_duplicate_permissions">屬於 Suntimes 的許可權:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\n也被定義為: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">API %1$s 不支援此功能。</string>
-    <string name="feature_not_supported_by_source">當前資料來源不支援此功能。</string>
-    <string name="reboot_required_message">可能需要重啟裝置以使變更生效。</string>    <!-- toast; device off/on may be required -->
-    <string name="restart_required_message">可能需要重啟應用以使變更生效。</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">許可權已授予</string>
+    <string name="privacy_securitydialog_title">安全提醒</string>
+    <string name="privacy_securitydialog_duplicate_permissions">屬於 Suntimes 的許可權:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\n也被定義為: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">API %1$s 不支援此功能。</string>
+    <string name="app_feature_not_supported_by_source">當前資料來源不支援此功能。</string>
+    <string name="app_reboot_required_message">可能需要重啟裝置以使變更生效。</string>    <!-- toast; device off/on may be required -->
+    <string name="app_restart_required_message">可能需要重啟應用以使變更生效。</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">許可權已授予</string>
 
-    <string name="drag_hint">拖拽到這裡</string>
+    <string name="hint_drag">拖拽到這裡</string>
     <string name="hint_label">標籤</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">確認</string>
@@ -2051,11 +2051,11 @@
     <string name="dialog_msg_donotshowagain">不再顯示這條訊息</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">一個簡單、相對快速但不太精確的計算器。</string>
-    <string name="calculator_displayString_time4a_noaa">遵循美國國家海洋和大氣管理局（NOAA）釋出的演算法。</string>
-    <string name="calculator_displayString_time4a_cc">遵循 Dershowitz 和 Reingold 在他們的書籍《日曆計算》（"Calendrical Calculations"）（第三版）中釋出的演算法。</string>
-    <string name="calculator_displayString_time4a_4j">基於 Jean Meeus 在他的書籍《天文演算法》（"Astronomical Algorithms"）（第二版）中釋出的天文計算。</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">一個簡單、相對快速但不太精確的計算器。</string>
+    <string name="about_calculator_displayString_time4a_noaa">遵循美國國家海洋和大氣管理局（NOAA）釋出的演算法。</string>
+    <string name="about_calculator_displayString_time4a_cc">遵循 Dershowitz 和 Reingold 在他們的書籍《日曆計算》（"Calendrical Calculations"）（第三版）中釋出的演算法。</string>
+    <string name="about_calculator_displayString_time4a_4j">基於 Jean Meeus 在他的書籍《天文演算法》（"Astronomical Algorithms"）（第二版）中釋出的天文計算。</string>
 
 </resources>

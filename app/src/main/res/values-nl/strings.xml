@@ -2058,38 +2058,38 @@
     <string name="app_name_clockwidget0">Clock Widget</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
-    <string name="app_version"><![CDATA[<b>Versie:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Versie:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Ondersteuning:</b> bezoek de
         <a href="%1$s">issue tracker</a> om een verzoek in te dienen.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Source Code:</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Vertalingen:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> door <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Credits</string>
+    <string name="about_translations_field"><![CDATA[<b>Vertalingen:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> door <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Credits</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="app_libraries">
+    <string name="about_libraries_field"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="about_libraries">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
         <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
         <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
-    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string name="about_media_field"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
@@ -2115,17 +2115,17 @@
     <!--<string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
     ]]></xliff:g></string>-->
-    <string name="privacyTab">Privacy</string>
+    <string name="about_dialog_privacy">Privacy</string>
 
-    <string name="security_dialog_title">Security Alert</string>
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Security Alert</string>
+    <string name="privacy_securitydialog_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">This feature is not supported by the current data source.</string>
+    <string name="app_reboot_required_message">A reboot may be needed for changes to take effect.</string>
+    <string name="app_restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2133,11 +2133,11 @@
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
-    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
-    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
-    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
+    <string name="about_calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
+    <string name="about_calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
 
 </resources>

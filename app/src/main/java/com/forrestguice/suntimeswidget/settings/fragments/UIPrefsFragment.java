@@ -281,7 +281,7 @@ public class UIPrefsFragment extends PreferenceFragment
         return new ListPreference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(ListPreference preference, Object newValue) {
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
@@ -327,7 +327,7 @@ public class UIPrefsFragment extends PreferenceFragment
             @Override
             public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 //overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
-                Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, activity.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };

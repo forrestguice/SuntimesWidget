@@ -1963,29 +1963,29 @@
   <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
   <string name="app_name_solsticewidget0">Sonnenwend Widget</string>
   <string name="app_name_moonwidget0">Mond Widget</string>
-  <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+  <string name="about_app_version_field"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
   <string name="app_shortdesc">Eine App, die Auf- und Untergangszeiten von Sonne und Mond anzeigt.</string>
-  <string name="app_support_url"><![CDATA[
+  <string name="about_app_support_field"><![CDATA[
       <b>Unterst&uuml;tzung:</b> besuchen Sie
       <a href="%1$s">issue tracker</a> um eine Anfrage zu stellen.
   ]]></string>
-  <string name="app_donate_url"><![CDATA[
+  <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-  <string name="app_legal1"><![CDATA[
+  <string name="about_app_sourcecode_field"><![CDATA[
       Copyright &#169 2014-2026 Forrest Guice <br />
       Quellcode verf&uuml;gbar unter GPLv3.
   ]]></string>
 
-  <string name="app_legal2"><![CDATA[<b>Übersetzungen in:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-  <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> von <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-  <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-  <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-  <string name="creditsTab">Danksagungen</string>
+  <string name="about_translations_field"><![CDATA[<b>Übersetzungen in:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+  <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> von <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+  <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+  <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+  <string name="about_dialog_credits">Danksagungen</string>
 
-  <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-  <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+  <string name="about_libraries_field"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+  <string name="about_media_field"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
   <!-- Dialog: Welcome / Initial setup -->
   <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
@@ -2013,18 +2013,18 @@
   <string name="privacy_permissiondialog_prompt"><![CDATA[Berechtigungen jetzt anfragen?]]></string>
   <string name="privacy_permissiondialog_ignore">Ignorieren</string>
   <string name="privacy_permissiondialog_title">Berechtigungen</string>
-  <string name="privacyTab">Privatsphäre</string>
+  <string name="about_dialog_privacy">Privatsphäre</string>
 
-  <string name="security_dialog_title">Sicherheitswarnung</string>
-  <string name="security_duplicate_permissions">Eine Berechtigung, die zu Suntimes
+  <string name="privacy_securitydialog_title">Sicherheitswarnung</string>
+  <string name="privacy_securitydialog_duplicate_permissions">Eine Berechtigung, die zu Suntimes
     gehört:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nwird auch angefordert von: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-  <string name="feature_not_supported_by_api">Diese Funktion wird nicht von der API %1$s unterstützt.</string>
-  <string name="feature_not_supported_by_source">Diese Funktion wird nicht von der aktuellen Datenquelle unterstützt.</string>
-  <string name="reboot_required_message">Ein Neustart ist möglicherweise nötig, damit die Änderungen wirksam werden.</string>
-  <string name="restart_required_message">Möglicherweise ist ein Neustart erforderlich, damit die Änderungen vollständig wirksam werden.</string>   <!-- toast; app restart may be required -->
-  <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+  <string name="app_feature_not_supported_by_api">Diese Funktion wird nicht von der API %1$s unterstützt.</string>
+  <string name="app_feature_not_supported_by_source">Diese Funktion wird nicht von der aktuellen Datenquelle unterstützt.</string>
+  <string name="app_reboot_required_message">Ein Neustart ist möglicherweise nötig, damit die Änderungen wirksam werden.</string>
+  <string name="app_restart_required_message">Möglicherweise ist ein Neustart erforderlich, damit die Änderungen vollständig wirksam werden.</string>   <!-- toast; app restart may be required -->
+  <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-  <string name="drag_hint">Drag here</string>    <!-- TODO -->
+  <string name="hint_drag">Drag here</string>    <!-- TODO -->
   <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
   <string name="dialog_ok">OK</string>
@@ -2032,14 +2032,14 @@
   <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
   <!-- calculator implemenations -->
-  <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-  <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-  <string name="calculator_displayString_time4a_simple">Ein einfacher, relativ schneller, aber ungenauer Algorithmus.</string>
-  <string name="calculator_displayString_time4a_noaa">Folgt dem vom National Oceanic and Atmospheric
+  <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+  <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+  <string name="about_calculator_displayString_time4a_simple">Ein einfacher, relativ schneller, aber ungenauer Algorithmus.</string>
+  <string name="about_calculator_displayString_time4a_noaa">Folgt dem vom National Oceanic and Atmospheric
       Administration veröffentlichten Algorithmus.</string>
-  <string name="calculator_displayString_time4a_cc">Folgt dem Algorithmus von Dershowitz und Reingold, veröffentlicht in
+  <string name="about_calculator_displayString_time4a_cc">Folgt dem Algorithmus von Dershowitz und Reingold, veröffentlicht in
       deren Buch "Calendrical Calculations" (dritte Auflage).</string>
-  <string name="calculator_displayString_time4a_4j">Basiert auf astronomischen Berechnungen, veröffentlicht von
+  <string name="about_calculator_displayString_time4a_4j">Basiert auf astronomischen Berechnungen, veröffentlicht von
       Jean Meeus in dessen Buch "Astronomical Algorithms" (zweite Auflage).</string>
 
 </resources>

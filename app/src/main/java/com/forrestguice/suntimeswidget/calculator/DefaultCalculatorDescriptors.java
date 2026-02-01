@@ -43,27 +43,27 @@ public class DefaultCalculatorDescriptors implements SuntimesCalculatorDescripto
 
     public static SuntimesCalculatorDescriptor SunriseSunsetJava() {
         return new SuntimesCalculatorDescriptor(SunriseSunsetSuntimesCalculator.NAME, SunriseSunsetSuntimesCalculator.LINK, SunriseSunsetSuntimesCalculator.REF,
-                R.string.calculator_displayString_sunrisesunsetlib, SunriseSunsetSuntimesCalculator.FEATURES);
+                R.string.about_calculator_displayString_sunrisesunsetlib, SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
     public static SuntimesCalculatorDescriptor CarmenSunriseSunset() {
         return new SuntimesCalculatorDescriptor(com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.NAME, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.LINK, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.REF,
-                R.string.calculator_displayString_caarmensunrisesunset, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.FEATURES);
+                R.string.about_calculator_displayString_caarmensunrisesunset, com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset.SunriseSunsetSuntimesCalculator.FEATURES);
     }
 
     public static SuntimesCalculatorDescriptor Time4A_CC() {
-        return new SuntimesCalculatorDescriptor(Time4ACCSuntimesCalculator.NAME, Time4ACCSuntimesCalculator.LINK, Time4ACCSuntimesCalculator.REF, R.string.calculator_displayString_time4a_cc, Time4ACCSuntimesCalculator.FEATURES);
+        return new SuntimesCalculatorDescriptor(Time4ACCSuntimesCalculator.NAME, Time4ACCSuntimesCalculator.LINK, Time4ACCSuntimesCalculator.REF, R.string.about_calculator_displayString_time4a_cc, Time4ACCSuntimesCalculator.FEATURES);
     }
 
     public static SuntimesCalculatorDescriptor Time4A_NOAA() {
-        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.LINK, Time4ANOAASuntimesCalculator.REF, R.string.calculator_displayString_time4a_noaa, Time4ANOAASuntimesCalculator.FEATURES);
+        return new SuntimesCalculatorDescriptor(Time4ANOAASuntimesCalculator.NAME, Time4ANOAASuntimesCalculator.LINK, Time4ANOAASuntimesCalculator.REF, R.string.about_calculator_displayString_time4a_noaa, Time4ANOAASuntimesCalculator.FEATURES);
     }
 
     public static SuntimesCalculatorDescriptor Time4A_4J() {
-        return new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, R.string.calculator_displayString_time4a_4j, Time4A4JSuntimesCalculator.FEATURES);
+        return new SuntimesCalculatorDescriptor(Time4A4JSuntimesCalculator.NAME, Time4A4JSuntimesCalculator.LINK, Time4A4JSuntimesCalculator.REF, R.string.about_calculator_displayString_time4a_4j, Time4A4JSuntimesCalculator.FEATURES);
     }
 
     public static SuntimesCalculatorDescriptor Time4A_Simple() {
-        return new SuntimesCalculatorDescriptor(Time4ASimpleSuntimesCalculator.NAME, Time4ASimpleSuntimesCalculator.LINK, Time4ASimpleSuntimesCalculator.REF, R.string.calculator_displayString_time4a_simple, Time4ASuntimesCalculator.FEATURES);
+        return new SuntimesCalculatorDescriptor(Time4ASimpleSuntimesCalculator.NAME, Time4ASimpleSuntimesCalculator.LINK, Time4ASimpleSuntimesCalculator.REF, R.string.about_calculator_displayString_time4a_simple, Time4ASuntimesCalculator.FEATURES);
     }
 }

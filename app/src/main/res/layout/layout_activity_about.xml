@@ -32,13 +32,13 @@
                 android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/creditsTab" />
+                android:text="@string/about_dialog_credits" />
 
             <com.forrestguice.support.widget.TabItem
                 android:id="@+id/tabItem3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/privacyTab" />
+                android:text="@string/about_dialog_privacy" />
 
         </com.forrestguice.support.widget.TabLayout>
     </com.forrestguice.support.widget.AppBarLayout>

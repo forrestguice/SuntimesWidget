@@ -136,7 +136,7 @@ public class AboutDialog extends BottomSheetDialogBase
         {
             versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
         }
-        return getString(R.string.app_version, versionString);
+        return getString(R.string.about_app_version_field, versionString);
     }
 
     public static void openLink(@Nullable Context context, @Nullable String url)
@@ -175,11 +175,11 @@ public class AboutDialog extends BottomSheetDialogBase
 
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         supportView.setMovementMethod(LinkMovementMethod.getInstance());
-        supportView.setText(SpanUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
+        supportView.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_support_field, context.getString(R.string.help_support_url))));
 
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         legalView1.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView1.setText(SpanUtils.fromHtml(context.getString(R.string.app_legal1)));
+        legalView1.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_sourcecode_field)));
 
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
         legalView2.setMovementMethod(LinkMovementMethod.getInstance());
@@ -237,11 +237,11 @@ public class AboutDialog extends BottomSheetDialogBase
     }
 
     public static String initLibraryCredits(Context context) {
-        return initCredits(context, R.string.app_legal3, R.array.app_libraries, R.string.libraryCreditsFormat);
+        return initCredits(context, R.string.about_libraries_field, R.array.about_libraries, R.string.about_libraryCreditsFormat);
     }
 
     public static String initMediaCredits(Context context) {
-        return initCredits(context, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
+        return initCredits(context, R.string.about_media_field, R.array.about_media, R.string.about_libraryCreditsFormat);
     }
 
     public static String initTranslationCredits(@Nullable Context context)
@@ -285,19 +285,19 @@ public class AboutDialog extends BottomSheetDialogBase
                     authors = authorList[0];
 
                 } else if (authorList.length == 2) {
-                    authors = context.getString(R.string.authorListFormat_n, authorList[0], authorList[1]);
+                    authors = context.getString(R.string.about_authorListFormat_n, authorList[0], authorList[1]);
 
                 } else {
                     for (int k=0; k<authorList.length-1; k++)
                     {
                         if (authors.isEmpty())
                             authors = authorList[k];
-                        else authors = context.getString(R.string.authorListFormat_i, authors, authorList[k]);
+                        else authors = context.getString(R.string.about_authorListFormat_i, authors, authorList[k]);
                     }
-                    authors = context.getString(R.string.authorListFormat_n, authors, authorList[authorList.length-1]);
+                    authors = context.getString(R.string.about_authorListFormat_n, authors, authorList[authorList.length-1]);
                 }
 
-                String line = context.getString(R.string.translationCreditsFormat, localeDisplay_j, authors);
+                String line = context.getString(R.string.about_translationCreditsFormat, localeDisplay_j, authors);
                 if (i != index.length-1) {
                     if (!line.endsWith("<br/>") && !line.endsWith("<br />"))
                         line = line + "<br/>";
@@ -305,7 +305,7 @@ public class AboutDialog extends BottomSheetDialogBase
                 credits.append(line);
             }
         }
-        return context.getString(R.string.app_legal2, credits.toString());
+        return context.getString(R.string.about_translations_field, credits.toString());
     }
 
 }

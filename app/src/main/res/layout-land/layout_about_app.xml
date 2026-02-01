@@ -54,7 +54,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:layout_gravity="start"
-                android:text="@string/app_version" android:textSize="?attr/text_size_small"
+                android:text="@string/about_app_version_field" android:textSize="?attr/text_size_small"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
@@ -64,7 +64,7 @@
                 android:id="@+id/txt_about_support"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-                android:text="@string/app_support_url" />
+                android:text="@string/about_app_support_field" />
 
             <TextView
                 android:id="@+id/txt_help_url"
@@ -112,7 +112,7 @@
                 <TextView android:id="@+id/txt_donate_url" android:visibility="gone"
                     android:layout_height="wrap_content" android:layout_width="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:text="@string/app_donate_url" />
+                    android:text="@string/about_app_donate_field" />
 
             </LinearLayout>
 

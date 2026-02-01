@@ -39,14 +39,14 @@
 
     <permission-group
         android:name="${suntimesPermissionRoot}.permission-group.ADDON"
-        android:label="@string/permission_calculator_label"
-        android:description="@string/permission_calculator_desc" />
+        android:label="@string/privacy_permission_calculator_label"
+        android:description="@string/privacy_permission_calculator_desc" />
     
     <permission
         android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR"
         android:permissionGroup="${suntimesPermissionRoot}.permission-group.ADDON"
-        android:label="@string/permission_calculator_label"
-        android:description="@string/permission_calculator_desc"
+        android:label="@string/privacy_permission_calculator_label"
+        android:description="@string/privacy_permission_calculator_desc"
         android:icon="@mipmap/ic_launcher"
         android:protectionLevel="normal" />                       <!-- legacy permission; protects suntimeswidget.calculator.provider -->
     <uses-permission android:name="${suntimesPermissionRoot}.permission.READ_CALCULATOR" />
@@ -54,8 +54,8 @@
     <permission
         android:name="${suntimesPermissionRoot}.permission.ADDON"
         android:permissionGroup="${suntimesPermissionRoot}.permission-group.ADDON"
-        android:label="@string/permission_calculator_label"
-        android:description="@string/permission_calculator_desc"
+        android:label="@string/privacy_permission_calculator_label"
+        android:description="@string/privacy_permission_calculator_desc"
         android:icon="@mipmap/ic_launcher"
         android:protectionLevel="dangerous" />                       <!-- replaces READ_CALCULATOR; protects suntimeswidget.calculator.provider -->
 

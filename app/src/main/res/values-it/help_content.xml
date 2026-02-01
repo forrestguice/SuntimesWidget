@@ -5,7 +5,7 @@
     <string name="help_battery_optimization_aggressive">Questo è un dispositivo <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, che potrebbe richiedere ulteriori configurazioni per funzionare correttamente.</string>
     <string name="help_restricted_bucket">L\'applicazione è stata inclusa nell\'elenco delle applicazioni limitate o poco usate. Le sveglie potrebbero non funzionare correttamente.</string>
 
-    <string name="calculator_displayString_time4a_4j">Basato su calcoli astronomici pubblicati da Jean Meeus nel suo libro "Astronomical Algorithms" (seconda edizione).</string>
+    <string name="about_calculator_displayString_time4a_4j">Basato su calcoli astronomici pubblicati da Jean Meeus nel suo libro "Astronomical Algorithms" (seconda edizione).</string>
     <string name="help_datasources">
         <![CDATA[
         Suntimes usa libererie di terze parti per effettuare calcoli astronomici.<br/>

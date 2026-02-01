@@ -2025,30 +2025,30 @@
     <string name="app_name_clockwidget0">Widget de Relógio</string>
     <string name="app_name_solsticewidget0">Widget de Solstício</string>
     <string name="app_name_moonwidget0">Widget de Lua</string>
-    <string name="app_version"><![CDATA[<b>Versão:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Versão:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Exibe horários de luz solar e lunar.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Suporte:</b> visite
         <a href="%1$s">o gerenciador de ocorrências</a> para enviar uma solicitação.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s está disponível gratuitamente, mas se você achar que ele teve valor, por favor,
         <a href="%2$s">pague o quanto desejar</a>.
     ]]></string>
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Código Aberto:</b><br />
         Direitos Reservados a &#169 2014-2026 Forrest Guice <br />
         Código Aberto disponível sob GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Traduções para:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> por <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Créditos</string>
+    <string name="about_translations_field"><![CDATA[<b>Traduções para:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> por <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Créditos</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Bibliotecas:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Mídia:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_libraries_field"><![CDATA[ <b>Bibliotecas:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Mídia:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Pular</string>
@@ -2071,17 +2071,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Solicitar permissões agora?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permissões</string>
-    <string name="privacyTab">Privacidade</string>
+    <string name="about_dialog_privacy">Privacidade</string>
 
-    <string name="security_dialog_title">Alerta de Segurança</string>
-    <string name="security_duplicate_permissions">Uma permissão que pertence ao app:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambém é definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">Essa função não é permitida pela API %1$s.</string>
-    <string name="feature_not_supported_by_source">Essa função não é suportada pela fonte de dados atual.</string>
-    <string name="reboot_required_message">Pode ser necessário o reinício do app para que as mudanças sejam aplicadas..</string>
-    <string name="restart_required_message">Pode ser necessário reiniciar para que as modificações tenham efeito.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Alerta de Segurança</string>
+    <string name="privacy_securitydialog_duplicate_permissions">Uma permissão que pertence ao app:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambém é definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Essa função não é permitida pela API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Essa função não é suportada pela fonte de dados atual.</string>
+    <string name="app_reboot_required_message">Pode ser necessário o reinício do app para que as mudanças sejam aplicadas..</string>
+    <string name="app_restart_required_message">Pode ser necessário reiniciar para que as modificações tenham efeito.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Arraste aqui</string>
+    <string name="hint_drag">Arraste aqui</string>
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2089,11 +2089,11 @@
     <string name="dialog_msg_donotshowagain">Não exibir esta mensagem novamente.</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Uma calculadora simples, relativamente rápida, mas imprecisa.</string>
-    <string name="calculator_displayString_time4a_noaa">Segue algoritmos publicados por National Oceanic e Atmospheric Administration.</string>
-    <string name="calculator_displayString_time4a_cc">Segue algoritmos publicados por Dershowitz/Reingold no livro "Calendrical Calculations" (terceira edição).</string>
-    <string name="calculator_displayString_time4a_4j">Baseado em cálculos publicados por Jean Meeus no livro "Astronomical Algorithms" (segunda edição).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Uma calculadora simples, relativamente rápida, mas imprecisa.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Segue algoritmos publicados por National Oceanic e Atmospheric Administration.</string>
+    <string name="about_calculator_displayString_time4a_cc">Segue algoritmos publicados por Dershowitz/Reingold no livro "Calendrical Calculations" (terceira edição).</string>
+    <string name="about_calculator_displayString_time4a_4j">Baseado em cálculos publicados por Jean Meeus no livro "Astronomical Algorithms" (segunda edição).</string>
 
 </resources>

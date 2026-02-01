@@ -2078,39 +2078,39 @@
     <string name="app_name_clockwidget0">Widget hodin</string>
     <string name="app_name_solsticewidget0">Widget slunovratu</string>
     <string name="app_name_moonwidget0">Widget měsíce</string>
-    <string name="app_version"><![CDATA[<b>Verze:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Verze:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Zobrazuje časy slunečního a měsíčního svitu.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Podpora:</b> navštivte
         <a href="%1$s">issue tracker</a> pro podání žádosti.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
 
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Zdrojový kód:</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         Zdorjový kód dostupný pod licencí GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Překlady:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> díky <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, a <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Zásluhy</string>
+    <string name="about_translations_field"><![CDATA[<b>Překlady:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> díky <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, a <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="about_dialog_credits">Zásluhy</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Knihovny:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="app_libraries">
+    <string name="about_libraries_field"><![CDATA[ <b>Knihovny:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="about_libraries">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
         <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
         <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
-    <string name="app_about_media"><![CDATA[ <b>Média:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Média:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
@@ -2133,17 +2133,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Vyžádat oprávnění nyní?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorovat</string>
     <string name="privacy_permissiondialog_title">Oprávnění</string>
-    <string name="privacyTab">Sourkomí</string>
+    <string name="about_dialog_privacy">Sourkomí</string>
 
-    <string name="security_dialog_title">Bezpečnostní upozornění</string>
-    <string name="security_duplicate_permissions">Povolení, které patří Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis také definováno: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">Tato funkce není podporována rozhraním API %1$s.</string>
-    <string name="feature_not_supported_by_source">Tato funkce není podporována aktuálním zdrojem dat.</string>
-    <string name="reboot_required_message">Aby se změny projevily, může být nutné restartovat zařízení.</string>    <!-- toast; device off/on may be required -->
-    <string name="restart_required_message">Aby se změny plně projevily, může být nutné restartovat aplikaci.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Bezpečnostní upozornění</string>
+    <string name="privacy_securitydialog_duplicate_permissions">Povolení, které patří Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis také definováno: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">Tato funkce není podporována rozhraním API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Tato funkce není podporována aktuálním zdrojem dat.</string>
+    <string name="app_reboot_required_message">Aby se změny projevily, může být nutné restartovat zařízení.</string>    <!-- toast; device off/on may be required -->
+    <string name="app_restart_required_message">Aby se změny plně projevily, může být nutné restartovat aplikaci.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2151,11 +2151,11 @@
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Jednoduchý, poměrně rychlý, ale nepřesný kalkulátor.</string>
-    <string name="calculator_displayString_time4a_noaa">Řídí se algoritmy zveřejněnými Národním úřadem pro oceán a atmosféru.</string>
-    <string name="calculator_displayString_time4a_cc">Dodržuje algoritmy publikované Dershowitzem/Reingoldem v jejich knize "Calendrical Calculations" (třetí vydání).</string>
-    <string name="calculator_displayString_time4a_4j">Na základě astronomických výpočtů publikovaných Jeanem Meeusem ve své knize "Astronomické algoritmy" (druhé vydání).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Jednoduchý, poměrně rychlý, ale nepřesný kalkulátor.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Řídí se algoritmy zveřejněnými Národním úřadem pro oceán a atmosféru.</string>
+    <string name="about_calculator_displayString_time4a_cc">Dodržuje algoritmy publikované Dershowitzem/Reingoldem v jejich knize "Calendrical Calculations" (třetí vydání).</string>
+    <string name="about_calculator_displayString_time4a_4j">Na základě astronomických výpočtů publikovaných Jeanem Meeusem ve své knize "Astronomické algoritmy" (druhé vydání).</string>
 
 </resources>

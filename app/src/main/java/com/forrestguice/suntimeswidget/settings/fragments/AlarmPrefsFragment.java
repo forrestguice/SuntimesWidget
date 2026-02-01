@@ -295,7 +295,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 boolean hasDndPermission = BedtimeSettings.hasDoNotDisturbPermission(context);
 
                 SpannableString summary = (hasDndPermission
-                        ? new SpannableString(context.getString(R.string.configLabel_permissionGranted))
+                        ? new SpannableString(context.getString(R.string.privacy_permissiondialog_granted_label))
                         : new SpannableString(SpanUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
 
                 if (bedtimeDndEnabled && !hasDndPermission) {
@@ -345,7 +345,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     if (context != null)
                     {
                         AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);
-                        Toast.makeText(context, context.getString(R.string.reboot_required_message), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, context.getString(R.string.app_reboot_required_message), Toast.LENGTH_LONG).show();
                         return true;
                     }
                     return false;

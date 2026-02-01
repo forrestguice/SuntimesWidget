@@ -2202,39 +2202,39 @@
     <string name="app_name_eventtile">بلاطة الحدث التالي</string>
     <string name="app_name_solsticewidget0">ويدجت الانقلاب الشتوي</string>
     <string name="app_name_moonwidget0">ويدجت القمر</string>
-    <string name="app_version"><![CDATA[<b>الإصدار:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>الإصدار:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">يعرض أوقات الشروق والغروب للشمس والقمر.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>الدعم:</b> قم بزيارة
         <a href="%1$s">متعقب المشكلات</a> لتقديم طلب.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s متاح مجانًا، ولكن إذا أثبتت قيمته، يُرجى
         <a href="%2$s">الدفع بالمبلغ الذي تريده</a>.
     ]]></string>
-    <string name="app_license_about">أوقات الشمس هو برنامج مجاني ومفتوح المصدر.</string> <!-- displayed by welcome dialog -->
+    <string name="about_app_license_notice">أوقات الشمس هو برنامج مجاني ومفتوح المصدر.</string> <!-- displayed by welcome dialog -->
 
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>الشفرة المصدرية:</b><br/>
         حقوق النشر 2014-2026 Forrest Guice &#169
         <br/>الشفرة المصدرية متاحة بموجب GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> من قبل <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>، و<xliff:g id="authorName">%2$s</xliff:g></string>
-    <string name="creditsTab">الاعتمادات</string>
-    <string name="app_legal3"><![CDATA[ <b>المكتبات:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="app_libraries">
+    <string name="about_translations_field"><![CDATA[<b>الترجمات إلى:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> من قبل <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>، و<xliff:g id="authorName">%2$s</xliff:g></string>
+    <string name="about_dialog_credits">الاعتمادات</string>
+    <string name="about_libraries_field"><![CDATA[ <b>المكتبات:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="about_libraries">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
         <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
         <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
-    <string name="app_about_media"><![CDATA[ <b>وسائل الإعلام:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
-    <string-array name="app_media">
+    <string name="about_media_field"><![CDATA[ <b>وسائل الإعلام:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string-array name="about_media">
         <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
     </string-array>
 
@@ -2259,17 +2259,17 @@
 <string name="privacy_permissiondialog_prompt"><![CDATA[هل ترغب في طلب الأذونات الآن؟]]></string>
 <string name="privacy_permissiondialog_ignore">تجاهل</string>
 <string name="privacy_permissiondialog_title">الأذونات</string>
-<string name="privacyTab">الخصوصية</string>
+<string name="about_dialog_privacy">الخصوصية</string>
 
-    <string name="security_dialog_title">تنبيه أمان</string>
-    <string name="security_duplicate_permissions">الإذن الذي ينتمي إلى Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nمعرف أيضًا من خلال: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">هذه الميزة غير مدعومة بواسطة واجهة برمجة التطبيقات %1$s.</string>
-    <string name="feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
-    <string name="reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->
-    <string name="restart_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتحقيق التأثير الكامل للتغييرات.</string>   <!-- toast; app restart may be required -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">تنبيه أمان</string>
+    <string name="privacy_securitydialog_duplicate_permissions">الإذن الذي ينتمي إلى Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nمعرف أيضًا من خلال: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="app_feature_not_supported_by_api">هذه الميزة غير مدعومة بواسطة واجهة برمجة التطبيقات %1$s.</string>
+    <string name="app_feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
+    <string name="app_reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->
+    <string name="app_restart_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتحقيق التأثير الكامل للتغييرات.</string>   <!-- toast; app restart may be required -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">موافق</string>
@@ -2277,12 +2277,12 @@
     <string name="dialog_msg_donotshowagain">لا تظهر هذه الرسالة مرة أخرى</string>  <!-- checkbox text -->
 
     <!-- calculator implementations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">آلة حاسبة بسيطة، سريعة نسبياً، لكنها غير دقيقة.</string>
-    <string name="calculator_displayString_time4a_noaa">تتبع خوارزميات نشرتها الإدارة الوطنية للمحيطات والغلاف الجوي.</string>
-    <string name="calculator_displayString_time4a_cc">تتبع خوارزميات نشرتها Dershowitz/Reingold في كتابهم "Calendrical Calculations" (الطبعة الثالثة).</string>
-    <string name="calculator_displayString_time4a_4j">مستندة إلى الحسابات الفلكية التي نشرها Jean Meeus في كتابه "Astronomical Algorithms" (الطبعة الثانية).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">آلة حاسبة بسيطة، سريعة نسبياً، لكنها غير دقيقة.</string>
+    <string name="about_calculator_displayString_time4a_noaa">تتبع خوارزميات نشرتها الإدارة الوطنية للمحيطات والغلاف الجوي.</string>
+    <string name="about_calculator_displayString_time4a_cc">تتبع خوارزميات نشرتها Dershowitz/Reingold في كتابهم "Calendrical Calculations" (الطبعة الثالثة).</string>
+    <string name="about_calculator_displayString_time4a_4j">مستندة إلى الحسابات الفلكية التي نشرها Jean Meeus في كتابه "Astronomical Algorithms" (الطبعة الثانية).</string>
 
 
 </resources>

@@ -1948,30 +1948,30 @@
     <string name="app_name_eventtile">Next Event Tile</string>   <!-- TODO -->
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="about_app_version_field"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Affiche les heures de lever et coucher de soleil et de la lune.</string>
-    <string name="app_support_url"><![CDATA[
+    <string name="about_app_support_field"><![CDATA[
         <b>Support :</b> visitez le
         <a href="%1$s">gestionnaire de ticket</a> pour soumettre une requête.
     ]]></string>
-    <string name="app_donate_url"><![CDATA[
+    <string name="about_app_donate_field"><![CDATA[
         %s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
-    <string name="app_legal1"><![CDATA[
+    <string name="about_app_sourcecode_field"><![CDATA[
         <b>Code source :</b><br />
         Copyright &#169 2014-2026 Forrest Guice <br />
         Code source disponible sous licence GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Traductions en :</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <string name="about_translations_field"><![CDATA[<b>Traductions en :</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
-    <string name="creditsTab">Credits</string>   <!-- TODO -->
+    <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <string name="about_dialog_credits">Credits</string>   <!-- TODO -->
 
-    <string name="app_legal3"><![CDATA[ <b>Bibliothèques :</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Media :</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_libraries_field"><![CDATA[ <b>Bibliothèques :</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="about_media_field"><![CDATA[ <b>Media :</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Passer</string>
@@ -1994,17 +1994,17 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
+    <string name="about_dialog_privacy">Privacy</string>   <!-- TODO -->
 
-    <string name="security_dialog_title">Alerte de sécurité</string>  <!-- TODO -->
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
-    <string name="feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
-    <string name="reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="privacy_securitydialog_title">Alerte de sécurité</string>  <!-- TODO -->
+    <string name="privacy_securitydialog_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="app_feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
+    <string name="app_feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
+    <string name="app_reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
+    <string name="app_restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="privacy_permissiondialog_granted_label">Permission Granted</string>    <!-- TODO -->
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
+    <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
@@ -2012,11 +2012,11 @@
     <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implemenations -->
-    <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
-    <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">Un algorithme simple, relativement rapide mais imprécis.</string>
-    <string name="calculator_displayString_time4a_noaa">Implémente les algorithmes publiés par la National Oceanic and Atmospheric Administration.</string>
-    <string name="calculator_displayString_time4a_cc">Implémente les algorithmes publiés par Dershowitz/Reingold dans leur livre "Calendrical Calculations" (troisième édition).</string>
-    <string name="calculator_displayString_time4a_4j">Basé sur les calculs astronomiques publiés par Jean Meeus dans son livre "Astronomical Algorithms" (seconde édition).</string>
+    <string name="about_calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
+    <string name="about_calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
+    <string name="about_calculator_displayString_time4a_simple">Un algorithme simple, relativement rapide mais imprécis.</string>
+    <string name="about_calculator_displayString_time4a_noaa">Implémente les algorithmes publiés par la National Oceanic and Atmospheric Administration.</string>
+    <string name="about_calculator_displayString_time4a_cc">Implémente les algorithmes publiés par Dershowitz/Reingold dans leur livre "Calendrical Calculations" (troisième édition).</string>
+    <string name="about_calculator_displayString_time4a_4j">Basé sur les calculs astronomiques publiés par Jean Meeus dans son livre "Astronomical Algorithms" (seconde édition).</string>
 
 </resources>

@@ -107,14 +107,14 @@ public class AboutAppView extends FrameLayout
         TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
         if (supportView != null) {
             supportView.setMovementMethod(LinkMovementMethod.getInstance());
-            supportView.setText(SpanUtils.fromHtml(context.getString(R.string.app_support_url, context.getString(R.string.help_support_url))));
+            supportView.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_support_field, context.getString(R.string.help_support_url))));
         }
 
         final TextView donateView = (TextView) dialogContent.findViewById(R.id.txt_donate_url);
         if (donateView != null) {
             donateView.setVisibility(View.GONE);
             donateView.setMovementMethod(LinkMovementMethod.getInstance());
-            donateView.setText(SpanUtils.fromHtml(context.getString(R.string.app_donate_url, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
+            donateView.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_donate_field, context.getString(R.string.app_name), context.getString(R.string.help_donate_url))));
         }
 
         CheckBox checkDonate = (CheckBox) dialogContent.findViewById(R.id.check_donate);
@@ -133,7 +133,7 @@ public class AboutAppView extends FrameLayout
         TextView legalView1 = (TextView) dialogContent.findViewById(R.id.txt_about_legal1);
         if (legalView1 != null) {
             legalView1.setMovementMethod(LinkMovementMethod.getInstance());
-            legalView1.setText(SpanUtils.fromHtml(context.getString(R.string.app_legal1)));
+            legalView1.setText(SpanUtils.fromHtml(context.getString(R.string.about_app_sourcecode_field)));
         }
 
         TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
@@ -184,7 +184,7 @@ public class AboutAppView extends FrameLayout
         {
             versionString += " " + smallText("[" + BuildConfig.BUILD_TYPE + "]");
         }
-        return context.getString(R.string.app_version, versionString);
+        return context.getString(R.string.about_app_version_field, versionString);
     }
 
     public static String smallText(String text) {

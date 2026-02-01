@@ -980,8 +980,8 @@ public class AppSettings
 
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                             alertDialog.setIcon(warningIcon);
-                            alertDialog.setTitle(context.getString(R.string.security_dialog_title));
-                            alertDialog.setMessage(context.getString(R.string.security_duplicate_permissions, permission.name, packageInfo.packageName));
+                            alertDialog.setTitle(context.getString(R.string.privacy_securitydialog_title));
+                            alertDialog.setMessage(context.getString(R.string.privacy_securitydialog_duplicate_permissions, permission.name, packageInfo.packageName));
                             alertDialog.setNeutralButton( context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
