@@ -167,18 +167,18 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         String colorsID = editID.getText().toString();
         if (colorsID.trim().isEmpty()) {    // must not be empty
-            editID.setError(getString(R.string.error_colorid_empty));
+            editID.setError(getString(R.string.colors_error_colorid_empty));
             return false;
 
         } else if (colorsID.contains(" ")) {    // must not contain spaces
-            editID.setError(getString(R.string.error_colorid_spaces));
+            editID.setError(getString(R.string.colors_error_colorid_spaces));
             editID.setSelection(colorsID.indexOf(" "), colorsID.indexOf(" ") + 1);
             return false;
         }
 
         String colorsLabel = editLabel.getText().toString();
         if (colorsLabel.trim().isEmpty()) {
-            editLabel.setError(getString(R.string.error_colorlabel_empty));
+            editLabel.setError(getString(R.string.colors_error_colorlabel_empty));
             return false;
         }
 

@@ -28,7 +28,7 @@
 
         <CheckBox android:id="@+id/check_filter"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configAction_filterColors" />
+            android:text="@string/colors_action_filterColors" />
 
     </LinearLayout>
 

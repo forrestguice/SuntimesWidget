@@ -1921,28 +1921,28 @@
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <string name="configAction_colors">Koloroj</string>
-    <string name="configAction_filterColors">Filtri</string>    <!-- checkbox label -->
-    <string name="configAction_addColors">Aldoni</string>
-    <string name="configAction_editColors">Redakti</string>
-    <string name="configAction_saveColors">Konservi</string>
-    <string name="configAction_deleteColors">Forigi</string>
-    <string name="configAction_importColors">@string/configAction_import</string>
-    <string name="configAction_exportColors">@string/configAction_export</string>
+    <string name="colors_action_filterColors">Filtri</string>    <!-- checkbox label -->
+    <string name="colors_action_addColors">Aldoni</string>
+    <string name="colors_action_editColors">Redakti</string>
+    <string name="colors_action_saveColors">Konservi</string>
+    <string name="colors_action_deleteColors">Forigi</string>
+    <string name="colors_action_importColors">@string/configAction_import</string>
+    <string name="colors_action_exportColors">@string/configAction_export</string>
 
-    <string name="suggest_colorid">Propra</string>       <!-- edittext hint -->
-    <string name="hint_colorid">Nomo</string>              <!-- edittext hint -->
-    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
-    <string name="error_colorlabel_empty">Etikedo postulata</string>           <!-- edittext error text -->
-    <string name="error_colorid_empty">Nomo postulata</string>                  <!-- edittext error text -->
-    <string name="error_colorid_spaces">Nomo ne enhavu spacetojn</string>   <!-- edittext error text -->
-    <string name="msg_colors_saved">Konservis kolorojn %s</string>        <!-- toast -->
-    <string name="msg_colors_deleted">Forigis kolorojn %s</string>    <!-- toast -->
-    <string name="msg_colors_imported">Enportis kolorojn %s</string>    <!-- toast -->
-    <string name="msg_colors_import_failed">Malsukcesis enporti kolorojn!</string>    <!-- toast -->
+    <string name="colors_suggest_colorid">Propra</string>       <!-- edittext hint -->
+    <string name="colors_hint_colorid">Nomo</string>              <!-- edittext hint -->
+    <string name="colors_hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="colors_error_colorlabel_empty">Etikedo postulata</string>           <!-- edittext error text -->
+    <string name="colors_error_colorid_empty">Nomo postulata</string>                  <!-- edittext error text -->
+    <string name="colors_error_colorid_spaces">Nomo ne enhavu spacetojn</string>   <!-- edittext error text -->
+    <string name="colors_msg_saved">Konservis kolorojn %s</string>        <!-- toast -->
+    <string name="colors_msg_deleted">Forigis kolorojn %s</string>    <!-- toast -->
+    <string name="colors_msg_imported">Enportis kolorojn %s</string>    <!-- toast -->
+    <string name="colors_msg_import_failed">Malsukcesis enporti kolorojn!</string>    <!-- toast -->
 
-    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_title">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_hint">Algluu antaŭe kunhavigitajn kolorojn tien ĉi.</string>
-    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_ok">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>
 
     <string name="colorsdelete_dialog_title">Ĉu forigi kolorojn?</string>    <!-- toast -->

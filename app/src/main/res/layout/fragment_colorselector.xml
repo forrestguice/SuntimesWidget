@@ -21,14 +21,14 @@
     <com.forrestguice.support.widget.ImageButton android:id="@+id/editButton"
         android:src="?attr/icActionEdit" style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:tooltipText="@string/configAction_editColors"  tools:ignore="UnusedAttribute"
-        android:contentDescription="@string/configAction_editColors" />
+        android:tooltipText="@string/colors_action_editColors"  tools:ignore="UnusedAttribute"
+        android:contentDescription="@string/colors_action_editColors" />
 
     <com.forrestguice.support.widget.ImageButton android:id="@+id/addButton"
         android:src="?attr/icActionNew" style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:tooltipText="@string/configAction_addColors" tools:ignore="UnusedAttribute"
-        android:contentDescription="@string/configAction_addColors" />
+        android:tooltipText="@string/colors_action_addColors" tools:ignore="UnusedAttribute"
+        android:contentDescription="@string/colors_action_addColors" />
 
     <com.forrestguice.support.widget.ImageButton android:id="@+id/menuButton" android:visibility="gone"
         style="@style/Widget.AppCompat.ActionButton.Overflow"

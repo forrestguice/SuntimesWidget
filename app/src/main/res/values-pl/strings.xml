@@ -1956,28 +1956,28 @@
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <string name="configAction_colors">Kolory</string>
-    <string name="configAction_filterColors">Filtruj</string>    <!-- checkbox label -->
-    <string name="configAction_addColors">Dodaj</string>
-    <string name="configAction_editColors">Edytuj</string>
-    <string name="configAction_saveColors">Zapisz</string>
-    <string name="configAction_deleteColors">Usuń</string>
-    <string name="configAction_importColors">@string/configAction_import</string>
-    <string name="configAction_exportColors">@string/configAction_export</string>
+    <string name="colors_action_filterColors">Filtruj</string>    <!-- checkbox label -->
+    <string name="colors_action_addColors">Dodaj</string>
+    <string name="colors_action_editColors">Edytuj</string>
+    <string name="colors_action_saveColors">Zapisz</string>
+    <string name="colors_action_deleteColors">Usuń</string>
+    <string name="colors_action_importColors">@string/configAction_import</string>
+    <string name="colors_action_exportColors">@string/configAction_export</string>
 
-    <string name="suggest_colorid">Własny</string>       <!-- edittext hint -->
-    <string name="hint_colorid">Nazwa</string>              <!-- edittext hint -->
-    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
-    <string name="error_colorlabel_empty">Etykieta jest wymagana</string>           <!-- edittext error text -->
-    <string name="error_colorid_empty">Nazwa jest wymagana</string>                  <!-- edittext error text -->
-    <string name="error_colorid_spaces">Nazwa nie może zawierać spacji</string>   <!-- edittext error text -->
-    <string name="msg_colors_saved">Zapisano kolory %s</string>        <!-- toast -->
-    <string name="msg_colors_deleted">Usunięto kolory %s</string>    <!-- toast -->
-    <string name="msg_colors_imported">Zaimportowano kolory %s</string>    <!-- toast -->
-    <string name="msg_colors_import_failed">Nie udało się zaimportować kolorów!</string>    <!-- toast -->
+    <string name="colors_suggest_colorid">Własny</string>       <!-- edittext hint -->
+    <string name="colors_hint_colorid">Nazwa</string>              <!-- edittext hint -->
+    <string name="colors_hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="colors_error_colorlabel_empty">Etykieta jest wymagana</string>           <!-- edittext error text -->
+    <string name="colors_error_colorid_empty">Nazwa jest wymagana</string>                  <!-- edittext error text -->
+    <string name="colors_error_colorid_spaces">Nazwa nie może zawierać spacji</string>   <!-- edittext error text -->
+    <string name="colors_msg_saved">Zapisano kolory %s</string>        <!-- toast -->
+    <string name="colors_msg_deleted">Usunięto kolory %s</string>    <!-- toast -->
+    <string name="colors_msg_imported">Zaimportowano kolory %s</string>    <!-- toast -->
+    <string name="colors_msg_import_failed">Nie udało się zaimportować kolorów!</string>    <!-- toast -->
 
-    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_title">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_hint">Wklej tutaj poprzednio udostępnione kolory.</string>
-    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_ok">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>
 
     <string name="colorsdelete_dialog_title">Czy usunąć kolory?</string>    <!-- toast -->

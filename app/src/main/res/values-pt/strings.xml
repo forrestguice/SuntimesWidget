@@ -1986,28 +1986,28 @@
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <string name="configAction_colors">Cores</string>
-    <string name="configAction_filterColors">Filtrar</string>    <!-- checkbox label -->
-    <string name="configAction_addColors">Adicionar</string>
-    <string name="configAction_editColors">Editar</string>
-    <string name="configAction_saveColors">Salvar</string>
-    <string name="configAction_deleteColors">Excluir</string>
-    <string name="configAction_importColors">@string/configAction_import</string>
-    <string name="configAction_exportColors">@string/configAction_export</string>
+    <string name="colors_action_filterColors">Filtrar</string>    <!-- checkbox label -->
+    <string name="colors_action_addColors">Adicionar</string>
+    <string name="colors_action_editColors">Editar</string>
+    <string name="colors_action_saveColors">Salvar</string>
+    <string name="colors_action_deleteColors">Excluir</string>
+    <string name="colors_action_importColors">@string/configAction_import</string>
+    <string name="colors_action_exportColors">@string/configAction_export</string>
 
-    <string name="suggest_colorid">Personalizado</string>       <!-- edittext hint -->
-    <string name="hint_colorid">ID</string>              <!-- edittext hint -->
-    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
-    <string name="error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
-    <string name="error_colorid_empty">ID necessário</string>                  <!-- edittext error text -->
-    <string name="error_colorid_spaces">O ID não pode conter espaços</string>   <!-- edittext error text -->
-    <string name="msg_colors_saved">Salvo %s</string>        <!-- toast -->
-    <string name="msg_colors_deleted">Removido %s</string>    <!-- toast -->
-    <string name="msg_colors_imported">Cores importadas %s</string>    <!-- toast -->
-    <string name="msg_colors_import_failed">Falha ao importar cores!</string>    <!-- toast -->
+    <string name="colors_suggest_colorid">Personalizado</string>       <!-- edittext hint -->
+    <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->
+    <string name="colors_hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="colors_error_colorlabel_empty">Label required</string>           <!-- edittext error text -->   <!-- TODO -->
+    <string name="colors_error_colorid_empty">ID necessário</string>                  <!-- edittext error text -->
+    <string name="colors_error_colorid_spaces">O ID não pode conter espaços</string>   <!-- edittext error text -->
+    <string name="colors_msg_saved">Salvo %s</string>        <!-- toast -->
+    <string name="colors_msg_deleted">Removido %s</string>    <!-- toast -->
+    <string name="colors_msg_imported">Cores importadas %s</string>    <!-- toast -->
+    <string name="colors_msg_import_failed">Falha ao importar cores!</string>    <!-- toast -->
 
-    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_title">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_hint">Cole cores compartilhadas anteriormente aqui.</string>
-    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_ok">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>
 
     <string name="colorsdelete_dialog_title">Remover Cores?</string>    <!-- toast -->

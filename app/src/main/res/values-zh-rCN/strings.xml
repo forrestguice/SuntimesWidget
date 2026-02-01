@@ -1945,28 +1945,28 @@
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <string name="configAction_colors">颜色</string>
-    <string name="configAction_filterColors">筛选</string>    <!-- checkbox label -->
-    <string name="configAction_addColors">添加</string>
-    <string name="configAction_editColors">编辑</string>
-    <string name="configAction_saveColors">保存</string>
-    <string name="configAction_deleteColors">删除</string>
-    <string name="configAction_importColors">@string/configAction_import</string>
-    <string name="configAction_exportColors">@string/configAction_export</string>
+    <string name="colors_action_filterColors">筛选</string>    <!-- checkbox label -->
+    <string name="colors_action_addColors">添加</string>
+    <string name="colors_action_editColors">编辑</string>
+    <string name="colors_action_saveColors">保存</string>
+    <string name="colors_action_deleteColors">删除</string>
+    <string name="colors_action_importColors">@string/configAction_import</string>
+    <string name="colors_action_exportColors">@string/configAction_export</string>
 
-    <string name="suggest_colorid">自定义</string>       <!-- edittext hint -->
-    <string name="hint_colorid">ID</string>              <!-- edittext hint -->
-    <string name="hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
-    <string name="error_colorlabel_empty">标签 必需</string>           <!-- edittext error text --> 
-    <string name="error_colorid_empty">ID 必需</string>                  <!-- edittext error text -->
-    <string name="error_colorid_spaces">ID 不能包含空格</string>   <!-- edittext error text -->
-    <string name="msg_colors_saved">已保存 %s</string>        <!-- toast -->
-    <string name="msg_colors_deleted">已删除 %s</string>    <!-- toast -->
-    <string name="msg_colors_imported">已导入颜色 %s</string>    <!-- toast -->
-    <string name="msg_colors_import_failed">导入颜色失败！</string>    <!-- toast -->
+    <string name="colors_suggest_colorid">自定义</string>       <!-- edittext hint -->
+    <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->
+    <string name="colors_hint_colorlabel">@string/hint_label</string>        <!-- edittext hint -->
+    <string name="colors_error_colorlabel_empty">标签 必需</string>           <!-- edittext error text -->
+    <string name="colors_error_colorid_empty">ID 必需</string>                  <!-- edittext error text -->
+    <string name="colors_error_colorid_spaces">ID 不能包含空格</string>   <!-- edittext error text -->
+    <string name="colors_msg_saved">已保存 %s</string>        <!-- toast -->
+    <string name="colors_msg_deleted">已删除 %s</string>    <!-- toast -->
+    <string name="colors_msg_imported">已导入颜色 %s</string>    <!-- toast -->
+    <string name="colors_msg_import_failed">导入颜色失败！</string>    <!-- toast -->
 
-    <string name="colorsimport_dialog_title">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_title">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_hint">在此处粘贴先前共享的颜色。</string>
-    <string name="colorsimport_dialog_ok">@string/configAction_importColors</string>
+    <string name="colorsimport_dialog_ok">@string/colors_action_importColors</string>
     <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>
 
     <string name="colorsdelete_dialog_title">删除颜色？</string>    <!-- toast -->

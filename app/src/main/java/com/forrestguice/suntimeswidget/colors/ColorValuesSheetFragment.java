@@ -222,7 +222,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
     protected String suggestColorValuesID(Context context)
     {
-        String base = context.getString(R.string.suggest_colorid).toLowerCase(Locale.ROOT);
+        String base = context.getString(R.string.colors_suggest_colorid).toLowerCase(Locale.ROOT);
         String suggestion = base;
         if (colorCollection != null)
         {
@@ -334,7 +334,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                     if (colorsID.equals(selectedID)) {
                         colorCollection.setSelectedColorsID(context, null, getAppWidgetID(), getColorTag());
                     }
-                    Toast.makeText(context, getString(R.string.msg_colors_deleted, colorsID), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.colors_msg_deleted, colorsID), Toast.LENGTH_SHORT).show();
                     updateViews();
                 }
             };
@@ -378,13 +378,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
                     colorCollection.setColors(context, id, values);
                     //colorCollection.setSelectedColorsID(context, id, getAppWidgetID(), getColorTag());
-                    Toast.makeText(getActivity(), context.getString(R.string.msg_colors_imported, id), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), context.getString(R.string.colors_msg_imported, id), Toast.LENGTH_SHORT).show();
                     updateViews();
                     return;
                 }
             }
         }
-        Toast.makeText(getActivity(), context.getString(R.string.msg_colors_import_failed), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), context.getString(R.string.colors_msg_import_failed), Toast.LENGTH_SHORT).show();
     }
 
     private final ColorValuesEditFragment.FragmentListener editDialogListener = new ColorValuesEditFragment.FragmentListener()
@@ -408,7 +408,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 listDialog.updateViews();
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
-                Toast.makeText(context, getString(R.string.msg_colors_saved, colorsID), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.colors_msg_saved, colorsID), Toast.LENGTH_SHORT).show();
 
                 if (getHideAfterSave()) {
                     requestHideSheet();
@@ -426,7 +426,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
                 requestHideSheet();
-                Toast.makeText(context, getString(R.string.msg_colors_deleted, colorsID), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.colors_msg_deleted, colorsID), Toast.LENGTH_SHORT).show();
             }
         }
     };

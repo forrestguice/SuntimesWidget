@@ -250,11 +250,11 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public ColorValuesActivityRobot clickAddButton() {
-            onView(withContentDescription(R.string.configAction_addColors)).perform(click());
+            onView(withContentDescription(R.string.colors_action_addColors)).perform(click());
             return this;
         }
         public ColorValuesActivityRobot clickEditButton() {
-            onView(withContentDescription(R.string.configAction_editColors)).perform(click());
+            onView(withContentDescription(R.string.colors_action_editColors)).perform(click());
             return this;
         }
 
@@ -263,7 +263,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public ColorValuesActivityRobot cancelOverflowMenu() {
-            onView(withText(R.string.configAction_importColors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.colors_action_importColors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -282,7 +282,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             }
             onView(withText(R.string.configAction_import)).check(assertShown);
             onView(withText(R.string.configAction_share)).check(assertShown);
-            onView(withText(R.string.configAction_deleteColors)).check(assertShown);
+            onView(withText(R.string.colors_action_deleteColors)).check(assertShown);
             return this;
         }
     }
