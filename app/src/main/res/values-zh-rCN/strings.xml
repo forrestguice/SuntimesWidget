@@ -45,10 +45,10 @@
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">后一天</string>
-    <string name="prevDay">前一天</string>
-    <string name="nextYear">下一年</string>
-    <string name="prevYear">上一年</string>
+    <string name="action_nextDay">后一天</string>
+    <string name="action_prevDay">前一天</string>
+    <string name="action_nextYear">下一年</string>
+    <string name="action_prevYear">上一年</string>
 
     <!-- Warnings -->
     <string name="spanTag_warning">警告！</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
@@ -68,21 +68,21 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已设置为除今天外的另一天。</string>  <!-- snackbar message -->
+    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已设置为除今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_today">过去</string>
-    <string name="past_n">过去（%1$s）</string>
+    <string name="cardlabel_past_today">过去</string>
+    <string name="cardlabel_past_n">过去（%1$s）</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
-    <string name="yesterday">昨天</string>
-    <string name="today">今天</string>
-    <string name="tomorrow">明天</string>
+    <string name="cardlabel_yesterday">昨天</string>
+    <string name="cardlabel_today">今天</string>
+    <string name="cardlabel_tomorrow">明天</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_today">将来</string>
-    <string name="future_n">将来（%1$s）</string>
+    <string name="cardlabel_future_today">将来</string>
+    <string name="cardlabel_future_n">将来（%1$s）</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
@@ -612,232 +612,232 @@
     <string name="configLabel_general_showNoon">显示太阳正午</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
-    <string name="configLabel_action_launch">类:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_package">包:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_package" />               <!-- edittext label -->
-    <string name="configHint_action_launch_title">动作标题</string>                 <!-- edittext hint -->
-    <string name="configHint_action_launch_desc">简介</string>                 <!-- edittext hint -->
-    <string name="configLabel_action_launch_type">类型:</string>                 <!-- spinner label -->
-    <string name="configLabel_action_launch_action">动作:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_action">&lt;无&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_data">数据:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_data">&lt;无&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_extras">更多:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
+    <string name="actions_configLabel_action_launch">类:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_package">包:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_title">动作标题</string>                 <!-- edittext hint -->
+    <string name="actions_configHint_action_launch_desc">简介</string>                 <!-- edittext hint -->
+    <string name="actions_configLabel_action_launch_type">类型:</string>                 <!-- spinner label -->
+    <string name="actions_configLabel_action_launch_action">动作:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_action">&lt;无&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_data">数据:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_data">&lt;无&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_extras">更多:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>
-    <string name="configLabel_action_item_desc">(%1$s)</string>
-    <string name="configLabel_action_item_none">无动作</string>
+    <string name="actions_configLabel_action_item">%1$s %2$s</string>
+    <string name="actions_configLabel_action_item_desc">(%1$s)</string>
+    <string name="actions_configLabel_action_item_none">无动作</string>
 
-    <string name="addaction_custname">自定义<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_custtitle">自定义动作 <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">ID 不能为空（或包含空格）。</string>
-    <string name="addaction_error_title">显示字符串不能为空。</string>
-    <string name="addaction_error_exists">ID已被占用。此动作将被覆盖。</string>
+    <string name="actions_addaction_custname">自定义<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_custtitle">自定义动作 <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_error_id">ID 不能为空（或包含空格）。</string>
+    <string name="actions_addaction_error_title">显示字符串不能为空。</string>
+    <string name="actions_addaction_error_exists">ID已被占用。此动作将被覆盖。</string>
 
-    <string name="delaction_dialog_msg">您确认要删除 %1$s 吗（%2$s）？</string>
-    <string name="delaction_dialog_msg1">无法删除默认操作。\n\n是否恢复为默认值？</string>
-    <string name="delaction_dialog_ok">删除</string>
-    <string name="delaction_dialog_ok1">重置</string>
-    <string name="delaction_dialog_cancel">取消</string>
+    <string name="actions_delaction_dialog_msg">您确认要删除 %1$s 吗（%2$s）？</string>
+    <string name="actions_delaction_dialog_msg1">无法删除默认操作。\n\n是否恢复为默认值？</string>
+    <string name="actions_delaction_dialog_ok">删除</string>
+    <string name="actions_delaction_dialog_ok1">重置</string>
+    <string name="actions_delaction_dialog_cancel">取消</string>
 
-    <string name="clearactions_dialog_msg">您确认要重置为默认值吗？\n\n所有自定义动作都将被删除。</string>
-    <string name="clearactions_dialog_ok">清空</string>
+    <string name="actions_clearactions_dialog_msg">您确认要重置为默认值吗？\n\n所有自定义动作都将被删除。</string>
+    <string name="actions_clearactions_dialog_ok">清空</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">动作已重置为默认值。</string>
+    <string name="actions_clearactions_toast">动作已重置为默认值。</string>
 
-    <string name="saveaction_dialog_title">新增动作</string>
-    <string name="saveaction_dialog_ok">保存</string>
+    <string name="actions_saveaction_dialog_title">新增动作</string>
+    <string name="actions_saveaction_dialog_ok">保存</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="saveaction_dialog_suggest">建议</string>
-    <string name="saveaction_toast">动作 \"%1$s\" 已保存（%2$s）。</string>
+    <string name="actions_saveaction_dialog_suggest">建议</string>
+    <string name="actions_saveaction_toast">动作 \"%1$s\" 已保存（%2$s）。</string>
 
-    <string name="loadaction_dialog_title">动作</string>
-    <string name="loadaction_toast">动作 \"%1$s\" 已加载。</string>
+    <string name="actions_loadaction_dialog_title">动作</string>
+    <string name="actions_loadaction_toast">动作 \"%1$s\" 已加载。</string>
 
-    <string name="startaction_failed_toast">启动 %s 失败！</string>         <!-- error toast -->
+    <string name="actions_startaction_failed_toast">启动 %s 失败！</string>         <!-- error toast -->
 
-    <string name="configAction_addAction">新增</string>           <!-- button (contentDescription) -->
-    <string name="configAction_editAction">编辑</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">测试</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAction">保存</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">加载</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteAction">删除</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">清空</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_add">新增</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_edit">编辑</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_test">测试</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_save">保存</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_load">加载</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_delete">删除</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_clear">清空</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">小部件主题</string>
-    <string name="configLabel_widgetThemeListSelect">选择一个主题</string>
-    <string name="configAction_addTheme">新增</string>           <!-- button (contentDescription) -->
-    <string name="configAction_selectTheme">选择</string>     <!-- button (contentDescription) -->
-    <string name="configAction_editTheme">编辑</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">删除</string>     <!-- button (contentDescription) -->
-    <string name="configAction_copyTheme">复制</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeList">小部件主题</string>
+    <string name="themes_configLabel_widgetThemeListSelect">选择一个主题</string>
+    <string name="themes_configAction_addTheme">新增</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_selectTheme">选择</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_editTheme">编辑</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_deleteTheme">删除</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_copyTheme">复制</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">深色</string>                                <!-- default widget theme name -->
-    <string name="widgetThemes_dark_transparent">深色（透明）</string>      <!-- default widget theme name -->
-    <string name="widgetThemes_dark_translucent">深色（半透明）</string>      <!-- default widget theme name -->
-    <string name="widgetThemes_light">浅色</string>                              <!-- default widget theme name -->
-    <string name="widgetThemes_light_transparent">浅色（透明）</string>    <!-- default widget theme name -->
-    <string name="widgetThemes_dark1">深色（传统）</string>                                <!-- default widget theme name -->
-    <string name="widgetThemes_light1">浅色（传统）</string>                              <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark">深色</string>                                <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark_transparent">深色（透明）</string>      <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark_translucent">深色（半透明）</string>      <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light">浅色</string>                              <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light_transparent">浅色（透明）</string>    <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark1">深色（传统）</string>                                <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light1">浅色（传统）</string>                              <!-- default widget theme name -->
 
-    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="themes_addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g>（副本）</string>                            <!-- copied theme name (display string) -->
+    <string name="themes_addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g>（副本）</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 新增成功。</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 保存成功。</string>         <!-- toast msg -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 已删除。</string> <!-- toast msg -->
+    <string name="themes_addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 新增成功。</string>          <!-- toast msg -->
+    <string name="themes_edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 保存成功。</string>         <!-- toast msg -->
+    <string name="themes_deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 已删除。</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">ID 不能重复（必填）。</string>        <!-- error hint (themeName empty) -->
-    <string name="edittheme_error_themeName_unique">ID 不能重复（重复）。</string>  <!-- error hint (themeName taken) -->
-    <string name="edittheme_error_displaytext">显示字符不能没有哦。</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">大小必须是一个 &gt;= <xliff:g id="minSize">%1$s</xliff:g> 的数字。</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">大小必须是一个 &lt;= <xliff:g id="maxSize">%1$s</xliff:g> 的数字。</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">默认</string>  <!-- content description -->
+    <string name="themes_edittheme_error_themeName_empty">ID 不能重复（必填）。</string>        <!-- error hint (themeName empty) -->
+    <string name="themes_edittheme_error_themeName_unique">ID 不能重复（重复）。</string>  <!-- error hint (themeName taken) -->
+    <string name="themes_edittheme_error_displaytext">显示字符不能没有哦。</string>  <!-- error hint (display text is empty) -->
+    <string name="themes_edittheme_error_textsize_min">大小必须是一个 &gt;= <xliff:g id="minSize">%1$s</xliff:g> 的数字。</string>  <!-- error hint (size is smaller than min) -->
+    <string name="themes_edittheme_error_textsize_max">大小必须是一个 &lt;= <xliff:g id="maxSize">%1$s</xliff:g> 的数字。</string>  <!-- error hint (size is larger than max) -->
+    <string name="themes_edittheme_flag_default">默认</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">删除主题</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">确认要删除 <xliff:g id="themeName">%1$s</xliff:g> 吗？</string>   <!-- dialog msg -->
-    <string name="deletetheme_dialog_ok">删除</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">取消</string>    <!-- button -->
+    <string name="themes_deletetheme_dialog_title">删除主题</string>        <!-- dialog title -->
+    <string name="themes_deletetheme_dialog_message">确认要删除 <xliff:g id="themeName">%1$s</xliff:g> 吗？</string>   <!-- dialog msg -->
+    <string name="themes_deletetheme_dialog_ok">删除</string>        <!-- button -->
+    <string name="themes_deletetheme_dialog_cancel">取消</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">新增主题</string>     <!-- title text -->
-    <string name="configLabel_widgetThemeEdit">编辑主题</string>   <!-- title text -->
-    <string name="configAction_saveTheme">保存</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">选择颜色</string> <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeAdd">新增主题</string>     <!-- title text -->
+    <string name="themes_configLabel_widgetThemeEdit">编辑主题</string>   <!-- title text -->
+    <string name="themes_configAction_saveTheme">保存</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_chooseColor">选择颜色</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">底色:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">浅色</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">深色</string>          <!-- dark background -->
-    <string name="configLabel_themeBackground_trans">透明</string>  <!-- transparent background -->
-    <string name="configLabel_themeBackground_color">颜色</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">颜色:</string>      <!-- color label -->
+    <string name="themes_configLabel_themeBackgroundId">底色:</string>    <!-- spinner label -->
+    <string name="themes_configLabel_themeBackground_light">浅色</string>        <!-- light background -->
+    <string name="themes_configLabel_themeBackground_dark">深色</string>          <!-- dark background -->
+    <string name="themes_configLabel_themeBackground_trans">透明</string>  <!-- transparent background -->
+    <string name="themes_configLabel_themeBackground_color">颜色</string>      <!-- custom background -->
+    <string name="themes_configLabel_themeColorBackground">颜色:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">标题颜色</string>     <!-- color label -->
-    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configLabel_themeColorTitle">标题颜色</string>     <!-- color label -->
+    <string name="themes_configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">文字颜色</string>       <!-- color label -->
-    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorText">文字颜色</string>       <!-- color label -->
+    <string name="themes_configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">春季颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">夏季颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">秋季颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">冬季颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring">春季颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer">夏季颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall">秋季颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter">冬季颜色</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">春季（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer_text">夏季（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">秋季（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter_text">冬季（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring_text">春季（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer_text">夏季（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">秋季（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter_text">冬季（文本）</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">强调</string> <!-- color label -->
-    <string name="configLabel_themeColorAction">动作</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAccent">强调</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAction">动作</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">地图背景</string> <!-- color label -->
-    <string name="configLabel_themeColorMapForeground">地图前景</string> <!-- color label -->
-    <string name="configLabel_themeColorMapSunShadow">阴影</string> <!-- color label -->
-    <string name="configLabel_themeColorMapMoonHighlight">高光</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapBackground">地图背景</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapForeground">地图前景</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapSunShadow">阴影</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapMoonHighlight">高光</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">月出（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset_text">月落（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise_text">月出（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset_text">月落（文本）</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">月出颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">月落颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">眉月颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">亏凸月颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">满月颜色</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">新月颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise">月出颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset">月落颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaxing">眉月颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaning">亏凸月颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFull">满月颜色</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNew">新月颜色</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">完整（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNewText">新（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">远地点（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonPerigeeText">近地点（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFullText">完整（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNewText">新（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonApogeeText">远地点（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonPerigeeText">近地点（文本）</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">日出（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorSunrise">日出颜色</string> <!-- color label -->
-    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunrise_text">日出（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunrise">日出颜色</string> <!-- color label -->
+    <string name="themes_configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">日落（文本）</string> <!-- color label -->
-    <string name="configLabel_themeColorSunset">日落颜色</string>   <!-- color label -->
-    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunset_text">日落（文本）</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunset">日落颜色</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">正午颜色</string>      <!-- color label -->
-    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configLabel_themeColorNoon">正午颜色</string>      <!-- color label -->
+    <string name="themes_configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">太阳（填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunStroke">太阳（描边）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">太阳路径（日填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">太阳路径（日描边）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">太阳路径（夜填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">太阳路径（夜描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunFill">太阳（填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunStroke">太阳（描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayFill">太阳路径（日填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayStroke">太阳路径（日描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightFill">太阳路径（夜填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightStroke">太阳路径（夜描边）</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMoonFill">月亮（填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonStroke">月亮（描边）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayFill">月亮路径（日填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayStroke">月亮路径（日描边）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightFill">月亮路径（夜填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightStroke">月亮路径（夜描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonFill">月亮（填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonStroke">月亮（描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayFill">月亮路径（日填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayStroke">月亮路径（日描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightFill">月亮路径（夜填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightStroke">月亮路径（夜描边）</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphPointFill">点（填充）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphPointStroke">点（描边）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointFill">点（填充）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointStroke">点（描边）</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">标签（文本）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphLabelsBG">标签（背景）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabels">标签（文本）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabelsBG">标签（背景）</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphBackground">图表背景</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphAxis">轴</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMajor">网格（主）</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMinor">网格（辅）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphBackground">图表背景</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphAxis">轴</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMajor">网格（主）</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMinor">网格（辅）</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorFill">填充</string>         <!-- color label -->
-    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorFill">填充</string>         <!-- color label -->
+    <string name="themes_configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">边框</string>         <!-- color label -->
-    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorBorder">边框</string>         <!-- color label -->
+    <string name="themes_configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">边框宽度（出/落）</string>  <!-- size label -->
-    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">边框宽度（午）:</string>         <!-- size label -->
-    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+    <string name="themes_configLabel_themeBorderWidthRiseSet">边框宽度（出/落）</string>  <!-- size label -->
+    <string name="themes_configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="themes_configLabel_themeBorderWidthNoon">边框宽度（午）:</string>         <!-- size label -->
+    <string name="themes_configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">后缀颜色</string>   <!-- color label -->
-    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSuffix">后缀颜色</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">文字颜色2</string>      <!-- color label -->
-    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorTime">文字颜色2</string>      <!-- color label -->
+    <string name="themes_configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">标题大小:</string>  <!-- edit label -->
-    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTitle">标题大小:</string>  <!-- edit label -->
+    <string name="themes_configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">粗体</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTitle">粗体</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">文字大小:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeText">文字大小:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">时间文字大小:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTime">时间文字大小:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">粗体</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTime">粗体</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">后缀文字大小:</string> <!-- edit label -->
-    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeSuffix">后缀文字大小:</string> <!-- edit label -->
+    <string name="themes_configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">留白:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[左，上，右，下]</string> <!-- edit hint -->
+    <string name="themes_configLabel_themePadding">留白:</string>            <!-- edit label -->
+    <string name="themes_configHint_themePadding">[左，上，右，下]</string> <!-- edit hint -->
 
-    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">主题ID</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="themes_configHint_themeID">主题ID</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">显示:</string>               <!-- edit label -->
-    <string name="configHint_themeName">标签</string>                   <!-- edit hint -->
+    <string name="themes_configLabel_themeName">显示:</string>               <!-- edit label -->
+    <string name="themes_configHint_themeName">标签</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">方位</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">方位</string>                   <!-- label -->
@@ -853,19 +853,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">距离</string>           <!-- label -->
 
-    <string name="configLabel_alarms_bg_startColor">背景（开始）</string>               <!-- color label -->
-    <string name="configLabel_alarms_bg_endColor">背景（结束）</string>                <!-- color label -->
-    <string name="configLabel_alarms_soundingPulse_startColor">脉冲（响铃）</string>      <!-- color label -->
-    <string name="configLabel_alarms_soundingPulse_endColor">脉冲（响铃）</string>        <!-- color label -->
-    <string name="configLabel_alarms_snoozingPulse_startColor">脉冲（延时）</string>      <!-- color label -->
-    <string name="configLabel_alarms_snoozingPulse_endColor">脉冲（延时）</string>        <!-- color label -->
-    <string name="configLabel_alarms_text_primaryColor">主要文本</string>                         <!-- color label -->
-    <string name="configLabel_alarms_text_primaryColorInverse">主要文本（反向）</string>        <!-- color label -->
-    <string name="configLabel_alarms_text_secondaryColor">次要文本</string>                     <!-- color label -->
-    <string name="configLabel_alarms_text_secondaryColorInverse">次要文本（反向）</string>    <!-- color label -->
-    <string name="configLabel_alarms_text_timeColor">时间文本</string>                               <!-- color label -->
-    <string name="configLabel_alarms_text_timeColorInverse">时间文本（反向）</string>              <!-- color label -->
-    <string name="configLabel_alarms_text_disabledColor">禁用</string>                            <!-- color label -->
+    <string name="themes_configLabel_alarms_bg_startColor">背景（开始）</string>               <!-- color label -->
+    <string name="themes_configLabel_alarms_bg_endColor">背景（结束）</string>                <!-- color label -->
+    <string name="themes_configLabel_alarms_soundingPulse_startColor">脉冲（响铃）</string>      <!-- color label -->
+    <string name="themes_configLabel_alarms_soundingPulse_endColor">脉冲（响铃）</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_snoozingPulse_startColor">脉冲（延时）</string>      <!-- color label -->
+    <string name="themes_configLabel_alarms_snoozingPulse_endColor">脉冲（延时）</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_text_primaryColor">主要文本</string>                         <!-- color label -->
+    <string name="themes_configLabel_alarms_text_primaryColorInverse">主要文本（反向）</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_text_secondaryColor">次要文本</string>                     <!-- color label -->
+    <string name="themes_configLabel_alarms_text_secondaryColorInverse">次要文本（反向）</string>    <!-- color label -->
+    <string name="themes_configLabel_alarms_text_timeColor">时间文本</string>                               <!-- color label -->
+    <string name="themes_configLabel_alarms_text_timeColorInverse">时间文本（反向）</string>              <!-- color label -->
+    <string name="themes_configLabel_alarms_text_disabledColor">禁用</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -911,7 +911,7 @@
 
     <string name="editevent_dialog_id_label">ID</string>
     <string name="editevent_dialog_id_hint">事件 ID</string>
-    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>
+    <string name="editevent_dialog_id_error">@string/actions_addaction_error_id</string>
     <string name="editevent_dialog_uri_hint">事件 Uri</string>
     <string name="editevent_dialog_showevent">在应用中展示此事件。</string>
     <string name="editevent_dialog_showevent_off">此事件将不再被展示。</string>
@@ -920,7 +920,7 @@
     <string name="editevent_dialog_title1">事件</string>    <!-- 'edit event' title -->
     <string name="editevent_dialog_label_label">标签</string>
     <string name="editevent_dialog_label_hint">事件标签</string>
-    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
+    <string name="editevent_dialog_label_error">@string/actions_addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">自定义角度</string>
 
     <string name="editevent_dialog_angle">角度</string>

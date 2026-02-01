@@ -1273,10 +1273,10 @@ public class SuntimesTheme
 
         public static void initDisplayStrings( Context context )
         {
-            DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
-            LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
-            TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
-            COLOR.setDisplayString(context.getString(R.string.configLabel_themeBackground_color));
+            DARK.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_dark));
+            LIGHT.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_light));
+            TRANSPARENT.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_trans));
+            COLOR.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_color));
         }
 
         @NonNull

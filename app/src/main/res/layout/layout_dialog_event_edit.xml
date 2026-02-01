@@ -267,7 +267,7 @@
             android:id="@+id/chooser_eventColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            app:hintText="@string/configHint_themeColorSunrise"
+            app:hintText="@string/themes_configHint_themeColorSunrise"
             app:labelText="Color" app:reverse="false" />
 
     </LinearLayout>
@@ -284,7 +284,7 @@
             android:id="@+id/dialog_button_cancel"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/saveaction_dialog_cancel"
+            android:text="@string/actions_saveaction_dialog_cancel"
             tools:ignore="ButtonOrder" />
 
         <Button
@@ -292,7 +292,7 @@
             android:id="@+id/dialog_button_accept"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/saveaction_dialog_ok" />
+            android:text="@string/actions_saveaction_dialog_ok" />
 
     </LinearLayout>
 

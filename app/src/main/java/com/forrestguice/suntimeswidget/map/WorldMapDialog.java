@@ -658,7 +658,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             mapTime.setTimeInMillis(mapTimeMillis);
             nowIsAfter = now.after(mapTime);
             if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
-                suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+                suffix = ((nowIsAfter) ? context.getString(R.string.cardlabel_past_today) : context.getString(R.string.cardlabel_future_today));
             }
         }
 

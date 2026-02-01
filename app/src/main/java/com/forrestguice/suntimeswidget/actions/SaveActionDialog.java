@@ -75,7 +75,7 @@ public class SaveActionDialog extends EditActionDialog
         suggested_c = 0;
         String suggested;
         do {
-            suggested = ((context != null) ? context.getString(R.string.addaction_custname, Integer.toString(suggested_c)) : suggested_c + "");
+            suggested = ((context != null) ? context.getString(R.string.actions_addaction_custname, Integer.toString(suggested_c)) : suggested_c + "");
             suggested_c++;
         } while (intentIDs != null && intentIDs.contains(suggested));
         return suggested;
@@ -122,12 +122,12 @@ public class SaveActionDialog extends EditActionDialog
         String title = edit.getIntentTitle();
 
         if (id.trim().isEmpty() || id.contains(" ")) {
-            edit_intentID.setError(getString(R.string.addaction_error_id));
+            edit_intentID.setError(getString(R.string.actions_addaction_error_id));
             return false;
         } else edit_intentID.setError(null);
 
         if (title.trim().isEmpty()) {
-            edit.edit_label.setError(getString(R.string.addaction_error_title));
+            edit.edit_label.setError(getString(R.string.actions_addaction_error_title));
             return false;
         } else edit.text_label.setError(null);
 
@@ -170,7 +170,7 @@ public class SaveActionDialog extends EditActionDialog
         if (intentID == null) {
             intentID = suggestedIntentID(context);
             if (intentTitle == null || intentTitle.trim().isEmpty()) {
-                intentTitle = context.getString(R.string.addaction_custtitle, Integer.toString(suggested_c - 1));
+                intentTitle = context.getString(R.string.actions_addaction_custtitle, Integer.toString(suggested_c - 1));
             }
         }
 

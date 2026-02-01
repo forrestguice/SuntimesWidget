@@ -67,8 +67,8 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
     public int[] getColorLabelsRes() {
         return new int[] {
                 R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
-                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
+                R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.themes_configLabel_themeColorGraphPointFill, R.string.themes_configLabel_themeColorGraphPointStroke,
         };
     }
     public int[] getColorRoles() {
@@ -131,7 +131,7 @@ public class LightMapColorValues extends ResourceColorValues implements Serializ
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static LightMapColorValues getColorDefaults(Resources context, boolean darkTheme) {

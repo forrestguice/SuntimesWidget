@@ -131,39 +131,39 @@ public class ActionListActivityTest extends SuntimesActivityTestBase
         }
 
         public ActionListActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearActions)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.actions_action_clear)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
         public ActionListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_clearActions)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.actions_action_clear)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public ActionListActivityRobot clickConfirmClearButton() {
-            onView(withText(R.string.clearactions_dialog_ok)).perform(click());
+            onView(withText(R.string.actions_clearactions_dialog_ok)).perform(click());
             return this;
         }
         public ActionListActivityRobot clickConfirmCancelButton() {
-            onView(withText(R.string.clearactions_dialog_cancel)).perform(click());
+            onView(withText(R.string.actions_clearactions_dialog_cancel)).perform(click());
             return this;
         }
 
         /////////////////////////////////////////////////////////////////////////
 
         public ActionListActivityRobot assertActivityShown(Context context) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.loadaction_dialog_title),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.actions_loadaction_dialog_title),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             return this;
         }
 
         public ActionListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_clearActions)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.actions_action_clear)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public ActionListActivityRobot assertClearDialogShown(Context context, boolean isShown) {
-            onView(withText(R.string.clearactions_dialog_msg)).check(isShown ? assertShown : doesNotExist());
+            onView(withText(R.string.actions_clearactions_dialog_msg)).check(isShown ? assertShown : doesNotExist());
             return this;
         }
     }

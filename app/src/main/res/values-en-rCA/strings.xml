@@ -7,7 +7,7 @@
     <string name="timeMode_cross_midautumnal">Fall/Winter Cross-Quarter</string>    <!-- setting -->
     <string name="solarevents_event_equinox_autumnal">fall equinox</string>
 
-    <string name="configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">Fall (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall">Fall Colour:</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">Fall (text)</string> <!-- color label -->
 
 </resources>

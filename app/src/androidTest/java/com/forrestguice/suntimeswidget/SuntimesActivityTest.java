@@ -603,9 +603,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             robot.clickCardDate()
                     .sleep(500);
 
-            if (viewIsDisplayed(R.id.text_date, context.getString(R.string.today)))
+            if (viewIsDisplayed(R.id.text_date, context.getString(R.string.cardlabel_today)))
                 verifyTimeCard_today();
-            else if (viewIsDisplayed(R.id.text_date, context.getString(R.string.tomorrow)))
+            else if (viewIsDisplayed(R.id.text_date, context.getString(R.string.cardlabel_tomorrow)))
                 verifyTimeCard_tomorrow();
             else fail("swapped card does not display 'today' or 'tomorrow'!");
         }
@@ -629,7 +629,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
         onView(cardFlipper).check(assertShown);   // flipper should be visible
 
-        boolean cardSetToToday = viewIsDisplayed(R.id.text_date, activityRule.getActivity().getString(R.string.today));
+        boolean cardSetToToday = viewIsDisplayed(R.id.text_date, activityRule.getActivity().getString(R.string.cardlabel_today));
 
         // pre-click checks
         if (cardSetToToday)
@@ -840,7 +840,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
 
         public MainActivityRobot swapCard(Context context) {
-            if (viewIsDisplayed(R.id.info_time_all_today, context, R.string.today))
+            if (viewIsDisplayed(R.id.info_time_all_today, context, R.string.cardlabel_today))
                 swapCardNext();
             else swapCardPrev();
             return this;

@@ -311,7 +311,7 @@
         <!-- Color Dialog Activity -->
         <activity
             android:name=".settings.colors.ColorActivity"
-            android:label="@string/configAction_chooseColor"
+            android:label="@string/themes_configAction_chooseColor"
             android:icon="@drawable/ic_palette"
             android:exported="true">
 

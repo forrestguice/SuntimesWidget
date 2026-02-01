@@ -5,12 +5,12 @@
 
         <item android:id="@+id/action_themes"
             android:icon="?attr/icActionAppearance"
-            android:title="@string/configLabel_widgetThemeList"
+            android:title="@string/themes_configLabel_widgetThemeList"
             app:showAsAction="ifRoom" />
 
         <item android:id="@+id/action_actionlist"
             android:icon="?attr/icActionExtension"
-            android:title="@string/loadaction_dialog_title"
+            android:title="@string/actions_loadaction_dialog_title"
             app:showAsAction="ifRoom" />
 
         <item android:id="@+id/action_export"

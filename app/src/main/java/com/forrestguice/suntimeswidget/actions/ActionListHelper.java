@@ -360,7 +360,7 @@ public class ActionListHelper
             public void onClick(DialogInterface dialog, int which) {
                 String intentID = saveDialog.getIntentID();
                 saveDialog.getEdit().saveIntent(context, 0, intentID, saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
-                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.actions_saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
                 initAdapter(context);
                 updateViews(context);
                 adapterModified = true;
@@ -386,9 +386,9 @@ public class ActionListHelper
         if (context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setMessage(context.getString(R.string.clearactions_dialog_msg))
-                    .setNegativeButton(context.getString(R.string.clearactions_dialog_cancel), null)
-                    .setPositiveButton(context.getString(R.string.clearactions_dialog_ok),
+            dialog.setMessage(context.getString(R.string.actions_clearactions_dialog_msg))
+                    .setNegativeButton(context.getString(R.string.actions_clearactions_dialog_cancel), null)
+                    .setPositiveButton(context.getString(R.string.actions_clearactions_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -396,7 +396,7 @@ public class ActionListHelper
                                 {
                                     WidgetActions.deletePrefs(context);
                                     WidgetActions.initDefaults(context);
-                                    Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getString(R.string.actions_clearactions_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
                                     updateViews(context);
                                     adapterModified = true;
@@ -417,9 +417,9 @@ public class ActionListHelper
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-            dialog.setMessage(context.getString(isDefault ? R.string.delaction_dialog_msg1 : R.string.delaction_dialog_msg, title, actionID))
-                    .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
-                    .setPositiveButton(context.getString(isDefault ? R.string.delaction_dialog_ok1 : R.string.delaction_dialog_ok),
+            dialog.setMessage(context.getString(isDefault ? R.string.actions_delaction_dialog_msg1 : R.string.actions_delaction_dialog_msg, title, actionID))
+                    .setNegativeButton(context.getString(R.string.actions_delaction_dialog_cancel), null)
+                    .setPositiveButton(context.getString(isDefault ? R.string.actions_delaction_dialog_ok1 : R.string.actions_delaction_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override

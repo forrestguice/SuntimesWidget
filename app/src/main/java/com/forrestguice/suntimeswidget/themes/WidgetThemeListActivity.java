@@ -334,10 +334,10 @@ public class WidgetThemeListActivity extends AppCompatActivity
         {
             final Context context = this;
             AlertDialog.Builder confirm = new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.deletetheme_dialog_title))
-                    .setMessage(getString(R.string.deletetheme_dialog_message, theme.themeDisplayString()))
+                    .setTitle(getString(R.string.themes_deletetheme_dialog_title))
+                    .setMessage(getString(R.string.themes_deletetheme_dialog_message, theme.themeDisplayString()))
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(getString(R.string.deletetheme_dialog_ok), new DialogInterface.OnClickListener()
+                    .setPositiveButton(getString(R.string.themes_deletetheme_dialog_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int whichButton)
                         {
@@ -346,11 +346,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
                                 theme.deleteTheme(WidgetThemes.getSharedPreferences(context));
                                 adapterModified = true;
                                 initThemeAdapter(context);
-                                Toast.makeText(context, context.getString(R.string.deletetheme_toast_success, theme.themeName()), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, context.getString(R.string.themes_deletetheme_toast_success, theme.themeName()), Toast.LENGTH_LONG).show();
                             }
                         }
                     })
-                    .setNegativeButton(getString(R.string.deletetheme_dialog_cancel), null);
+                    .setNegativeButton(getString(R.string.themes_deletetheme_dialog_cancel), null);
 
             confirm.show();
         }
@@ -784,7 +784,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 triggerActionMode(null, theme);
                 gridView.setSelection(i);
 
-                Toast.makeText(this, getString(R.string.addtheme_toast_success, themeName), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.themes_addtheme_toast_success, themeName), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -806,7 +806,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 triggerActionMode(null, theme);
                 gridView.setSelection(i);
 
-                Toast.makeText(this, getString(R.string.edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.themes_edittheme_toast_success, themeName), Toast.LENGTH_LONG).show();
                 updateWidgetsMatchingTheme(this, themeName);
             }
         }

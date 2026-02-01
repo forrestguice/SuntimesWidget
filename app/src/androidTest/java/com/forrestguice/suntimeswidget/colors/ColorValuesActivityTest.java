@@ -272,7 +272,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
         public ColorValuesActivityRobot assertActivityShown(Context context) {
             onView(allOf(withText(config.getActivityTitle()), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(navigationButton()).check(assertShown);
-            onView(withContentDescription(R.string.configAction_chooseColor)).check(assertShown);
+            onView(withContentDescription(R.string.themes_configAction_chooseColor)).check(assertShown);
             return this;
         }
 

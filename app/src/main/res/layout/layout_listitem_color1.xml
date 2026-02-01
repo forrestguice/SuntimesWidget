@@ -5,6 +5,6 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/colorButton"
-        style="@style/ColorEditButton2" android:contentDescription="@string/configAction_chooseColor" />
+        style="@style/ColorEditButton2" android:contentDescription="@string/themes_configAction_chooseColor" />
 
 </FrameLayout>

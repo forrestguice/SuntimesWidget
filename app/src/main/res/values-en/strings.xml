@@ -8,18 +8,18 @@
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
-    <string name="configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Colour</string>      <!-- color label -->
+    <string name="themes_configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
+    <string name="themes_configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
+    <string name="themes_configLabel_themeColorBackground">Colour</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
-    <string name="configLabel_themeColorText">Text Colour</string>       <!-- color label -->
+    <string name="themes_configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
+    <string name="themes_configLabel_themeColorText">Text Colour</string>       <!-- color label -->
 
-    <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall">Autumn</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
-    <string name="configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
+    <string name="themes_configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
+    <string name="themes_configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Choose Colour</string>

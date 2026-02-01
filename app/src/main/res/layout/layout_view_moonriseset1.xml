@@ -21,7 +21,7 @@
                 android:src="?attr/icActionPrevious"
                 android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
-                android:contentDescription="@string/today" />
+                android:contentDescription="@string/cardlabel_today" />
 
             <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/info_time_nextbtn"
@@ -31,7 +31,7 @@
                 android:src="?attr/icActionNext"
                 android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                 android:padding="4dp"
-                android:contentDescription="@string/today" />
+                android:contentDescription="@string/cardlabel_today" />
         </LinearLayout>
 
     </FrameLayout>

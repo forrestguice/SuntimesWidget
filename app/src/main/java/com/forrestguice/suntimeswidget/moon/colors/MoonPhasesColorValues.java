@@ -54,8 +54,8 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMoonNew, R.string.configLabel_themeColorMoonWaxing,
-                R.string.configLabel_themeColorMoonFull, R.string.configLabel_themeColorMoonWaning,
+                R.string.themes_configLabel_themeColorMoonNew, R.string.themes_configLabel_themeColorMoonWaxing,
+                R.string.themes_configLabel_themeColorMoonFull, R.string.themes_configLabel_themeColorMoonWaning,
         };
     }
     public int[] getColorRoles() {
@@ -111,7 +111,7 @@ public class MoonPhasesColorValues extends ResourceColorValues implements Serial
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static MoonPhasesColorValues getColorDefaults(Resources context, boolean darkTheme) {

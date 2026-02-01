@@ -9,7 +9,7 @@
         android:layout_gravity="end"
         android:src="?attr/icActionPrevious"
         android:background="@drawable/ic_transparent"
-        android:contentDescription="@string/prevDay" />
+        android:contentDescription="@string/action_prevDay" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/info_time_nextbtn"
@@ -17,6 +17,6 @@
         android:layout_gravity="end"
         android:src="?attr/icActionNext"
         android:background="@drawable/ic_transparent"
-        android:contentDescription="@string/nextDay" />
+        android:contentDescription="@string/action_nextDay" />
 
 </merge>

@@ -75,11 +75,11 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMapBackground, R.string.configLabel_themeColorMapForeground,
-                R.string.configLabel_themeColorMapSunShadow, R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-                R.string.worldmap_dialog_option_moonlight, R.string.configLabel_themeColorGraphMoonFill, R.string.configLabel_themeColorGraphMoonStroke,
-                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
-                R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
+                R.string.themes_configLabel_themeColorMapBackground, R.string.themes_configLabel_themeColorMapForeground,
+                R.string.themes_configLabel_themeColorMapSunShadow, R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.worldmap_dialog_option_moonlight, R.string.themes_configLabel_themeColorGraphMoonFill, R.string.themes_configLabel_themeColorGraphMoonStroke,
+                R.string.themes_configLabel_themeColorGraphPointFill, R.string.themes_configLabel_themeColorGraphPointStroke,
+                R.string.themes_configLabel_themeColorGraphAxis, R.string.themes_configLabel_themeColorGraphGridMajor, R.string.themes_configLabel_themeColorGraphGridMinor,
         };
     }
     public int[] getColorRoles() {
@@ -145,7 +145,7 @@ public class WorldMapColorValues extends ResourceColorValues implements Serializ
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static WorldMapColorValues getColorDefaults(Resources context, boolean darkTheme) {

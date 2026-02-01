@@ -58,10 +58,10 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSpring_text,
-                R.string.configLabel_themeColorSummer_text,
-                R.string.configLabel_themeColorFall_text,
-                R.string.configLabel_themeColorWinter_text,
+                R.string.themes_configLabel_themeColorSpring_text,
+                R.string.themes_configLabel_themeColorSummer_text,
+                R.string.themes_configLabel_themeColorFall_text,
+                R.string.themes_configLabel_themeColorWinter_text,
         };
     }
     public int[] getColorRoles() {
@@ -123,7 +123,7 @@ public class EquinoxColorValues extends ResourceColorValues implements Serializa
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static EquinoxColorValues getColorDefaults(Resources context, boolean darkTheme) {

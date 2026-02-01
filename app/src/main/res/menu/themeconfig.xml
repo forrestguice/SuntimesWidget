@@ -5,7 +5,7 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/saveTheme"
-              android:title="@string/configAction_saveTheme"
+              android:title="@string/themes_configAction_saveTheme"
               android:icon="?attr/icActionSave"
               android:visible="false"
               app:showAsAction="always" />

@@ -1236,7 +1236,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">false</item>
-        <item name="android:contentDescription">@string/configAction_chooseColor</item>
+        <item name="android:contentDescription">@string/themes_configAction_chooseColor</item>
         <item name="android:layout_marginRight">4dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/ic_colortab</item>

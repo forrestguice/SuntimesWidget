@@ -549,7 +549,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             case EDIT_THEME:
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                    getSupportActionBar().setTitle(getString(R.string.themes_configLabel_widgetThemeEdit));
                 }
                 labelName.setEnabled(false);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -560,7 +560,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             case ADD_THEME:
             default:
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                    getSupportActionBar().setTitle(getString(R.string.themes_configLabel_widgetThemeAdd));
                 }
                 labelName.setEnabled(true);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
@@ -1783,7 +1783,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         int i = 1;
         String generatedName;
         do {
-            generatedName = getString(R.string.addtheme_custname, i+"");
+            generatedName = getString(R.string.themes_addtheme_custname, i+"");
             i++;
         } while (WidgetThemes.valueOf(generatedName) != null);
         return generatedName;
@@ -1797,7 +1797,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     protected String generateThemeName( @NonNull String suggestedName )
     {
         int i = 1;
-        String copyName = getString(R.string.addtheme_copyname, "", "");
+        String copyName = getString(R.string.themes_addtheme_copyname, "", "");
         String generatedName = suggestedName;
         while (WidgetThemes.valueOf(generatedName) != null)
         {
@@ -1814,14 +1814,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     i++;
                 }
             }
-            generatedName = getString(R.string.addtheme_copyname, root, Integer.toString(i));
+            generatedName = getString(R.string.themes_addtheme_copyname, root, Integer.toString(i));
         }
         return generatedName;
     }
 
     protected String generateThemeDisplayString( String suggestedName )
     {
-        return getString(R.string.addtheme_copydisplay, suggestedName);
+        return getString(R.string.themes_addtheme_copydisplay, suggestedName);
     }
 
     /**
@@ -1853,14 +1853,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (themeID.isEmpty())
         {
             isValid = false;       // themeName is required
-            editName.setError(context.getString(R.string.edittheme_error_themeName_empty));
+            editName.setError(context.getString(R.string.themes_edittheme_error_themeName_empty));
             if (grabFocus)
                 editName.requestFocus();
         }
         if (mode == UIMode.ADD_THEME && WidgetThemes.valueOf(editName.getText().toString()) != null)
         {
             isValid = false;       // themeName is already taken
-            editName.setError(context.getString(R.string.edittheme_error_themeName_unique));
+            editName.setError(context.getString(R.string.themes_edittheme_error_themeName_unique));
             if (grabFocus)
                 editName.requestFocus();
         }
@@ -1879,7 +1879,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (editDisplay.getText().toString().trim().isEmpty())
         {
             isValid = false;     // display text is empty
-            editDisplay.setError(context.getString(R.string.edittheme_error_displaytext));
+            editDisplay.setError(context.getString(R.string.themes_edittheme_error_displaytext));
             if (grabFocus)
                 editDisplay.requestFocus();
         }

@@ -4,23 +4,23 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/addAction"
-            android:title="@string/configAction_addAction"
+            android:title="@string/actions_action_add"
             android:icon="?attr/icActionNew"
             app:showAsAction="ifRoom" />
 
         <item android:id="@+id/clearAction"
-            android:title="@string/configAction_clearActions"
+            android:title="@string/actions_action_clear"
             android:icon="?attr/icActionDelete"
             app:showAsAction="never" />
 
         <item android:id="@+id/exportAction"
-            android:title="@string/configAction_exportActions"
+            android:title="@string/actions_action_export"
             android:icon="?attr/icActionSave"
             android:visible="false"
             app:showAsAction="never" />
 
         <item android:id="@+id/importAction"
-            android:title="@string/configAction_importActions"
+            android:title="@string/actions_action_import"
             android:icon="?attr/icActionCopy"
             android:visible="false"
             app:showAsAction="never" />

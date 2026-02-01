@@ -47,10 +47,10 @@
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">Sekva tago</string>
-    <string name="prevDay">Antaŭa tago</string>
-    <string name="nextYear">Sekva jaro</string>
-    <string name="prevYear">Antaŭa jaro</string>
+    <string name="action_nextDay">Sekva tago</string>
+    <string name="action_prevDay">Antaŭa tago</string>
+    <string name="action_nextYear">Sekva jaro</string>
+    <string name="action_prevYear">Antaŭa jaro</string>
 
     <!-- Warnings -->
     <string name="spanTag_warning">Atentu!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
@@ -71,20 +71,20 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
+    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_today">Pasinteco</string>
-    <string name="past_n">Pasinteco (%1$s)</string>
+    <string name="cardlabel_past_today">Pasinteco</string>
+    <string name="cardlabel_past_n">Pasinteco (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
-    <string name="yesterday">Hieraŭ</string>
-    <string name="today">Hodiaŭ</string>
-    <string name="tomorrow">Morgaŭ</string>
+    <string name="cardlabel_yesterday">Hieraŭ</string>
+    <string name="cardlabel_today">Hodiaŭ</string>
+    <string name="cardlabel_tomorrow">Morgaŭ</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_today">Estonteco</string>
-    <string name="future_n">Estonteco (%1$s)</string>
+    <string name="cardlabel_future_today">Estonteco</string>
+    <string name="cardlabel_future_n">Estonteco (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity).
@@ -604,236 +604,236 @@
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
-    <string name="configLabel_action_launch">Klaso:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_package">Pakaĵo:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_title">Nomo de ago</string>                 <!-- edittext hint -->
-    <string name="configHint_action_launch_desc">Konciza priskribo</string>                 <!-- edittext hint -->
-    <string name="configLabel_action_launch_type">Tipo:</string>                 <!-- spinner label -->
-    <string name="configLabel_action_launch_action">Ago:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_action">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_data">Datumo:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_data">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_datatype">MIME:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_extras">Ekstraj:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
+    <string name="actions_configLabel_action_launch">Klaso:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_package">Pakaĵo:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_title">Nomo de ago</string>                 <!-- edittext hint -->
+    <string name="actions_configHint_action_launch_desc">Konciza priskribo</string>                 <!-- edittext hint -->
+    <string name="actions_configLabel_action_launch_type">Tipo:</string>                 <!-- spinner label -->
+    <string name="actions_configLabel_action_launch_action">Ago:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_action">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_data">Datumo:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_data">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_datatype">MIME:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_extras">Ekstraj:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>
-    <string name="configLabel_action_item_desc">(%1$s)</string>
-    <string name="configLabel_action_item_none">Neniu ago</string>
+    <string name="actions_configLabel_action_item">%1$s %2$s</string>
+    <string name="actions_configLabel_action_item_desc">(%1$s)</string>
+    <string name="actions_configLabel_action_item_none">Neniu ago</string>
 
-    <string name="addaction_custname">propra<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_custtitle">Propra ago <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">Identigilo ne estu malplena kaj ne enhavu spacetojn.</string>
-    <string name="addaction_error_title">Nomo ne estu malplena.</string>
-    <string name="addaction_error_exists">Identigilo jam estas uzata. Tiu ĉi ago estos superskribita.</string>
+    <string name="actions_addaction_custname">propra<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_custtitle">Propra ago <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_error_id">Identigilo ne estu malplena kaj ne enhavu spacetojn.</string>
+    <string name="actions_addaction_error_title">Nomo ne estu malplena.</string>
+    <string name="actions_addaction_error_exists">Identigilo jam estas uzata. Tiu ĉi ago estos superskribita.</string>
 
-    <string name="delaction_dialog_msg">Ĉu vi certe volas forigi la agon %1$s (%2$s)?</string>
-    <string name="delaction_dialog_msg1">Ne eblas forigi implicitajn agojn.\n\nĈu restarigi implicitajn?</string>
-    <string name="delaction_dialog_ok">Forigi</string>
-    <string name="delaction_dialog_ok1">Restarigi</string>
-    <string name="delaction_dialog_cancel">Nuligi</string>
+    <string name="actions_delaction_dialog_msg">Ĉu vi certe volas forigi la agon %1$s (%2$s)?</string>
+    <string name="actions_delaction_dialog_msg1">Ne eblas forigi implicitajn agojn.\n\nĈu restarigi implicitajn?</string>
+    <string name="actions_delaction_dialog_ok">Forigi</string>
+    <string name="actions_delaction_dialog_ok1">Restarigi</string>
+    <string name="actions_delaction_dialog_cancel">Nuligi</string>
 
-    <string name="clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
-    <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
-    <string name="clearactions_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
+    <string name="actions_clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
+    <string name="actions_clearactions_dialog_ok">Forigi ĉiujn</string>
+    <string name="actions_clearactions_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
+    <string name="actions_clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
 
-    <string name="saveaction_dialog_title">Aldoni agon</string>
-    <string name="saveaction_dialog_ok">Konservi</string>
-    <string name="saveaction_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
-    <string name="saveaction_dialog_suggest">Proponi</string>
-    <string name="saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
+    <string name="actions_saveaction_dialog_title">Aldoni agon</string>
+    <string name="actions_saveaction_dialog_ok">Konservi</string>
+    <string name="actions_saveaction_dialog_cancel">Nuligi</string>  <!-- "Cancel" button; uncomment to override -->
+    <string name="actions_saveaction_dialog_suggest">Proponi</string>
+    <string name="actions_saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
 
-    <string name="loadaction_dialog_title">Agoj</string>
-    <string name="loadaction_toast">Lanĉis la agon “%1$s”.</string>
+    <string name="actions_loadaction_dialog_title">Agoj</string>
+    <string name="actions_loadaction_toast">Lanĉis la agon “%1$s”.</string>
 
-    <string name="startaction_failed_toast">Malsukcesis lanĉi la agon “%s”!</string>         <!-- error toast -->
+    <string name="actions_startaction_failed_toast">Malsukcesis lanĉi la agon “%s”!</string>         <!-- error toast -->
 
-    <string name="configAction_addAction">Aldoni</string>           <!-- button (contentDescription) -->
-    <string name="configAction_editAction">Redakti</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Testi</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAction">Konservi</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Lanĉi</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_deleteAction">Forigi</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_add">Aldoni</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_edit">Redakti</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_test">Testi</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_save">Konservi</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_load">Lanĉi</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_delete">Forigi</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_clear">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="configLabel_widgetThemeList">Fenestraĵa haŭto</string>
-    <string name="configLabel_widgetThemeListSelect">Elekti haŭton</string>
-    <string name="configAction_addTheme">Aldoni</string>           <!-- button (contentDescription) -->
-    <string name="configAction_selectTheme">Elekti</string>     <!-- button (contentDescription) -->
-    <string name="configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
-    <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeList">Fenestraĵa haŭto</string>
+    <string name="themes_configLabel_widgetThemeListSelect">Elekti haŭton</string>
+    <string name="themes_configAction_addTheme">Aldoni</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_selectTheme">Elekti</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
-    <string name="widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
-    <string name="widgetThemes_dark_translucent">Malhela (duon-travidebla)</string>      <!-- default widget theme name -->
-    <string name="widgetThemes_light">Hela</string>                              <!-- default widget theme name -->
-    <string name="widgetThemes_light_transparent">Hela (travidebla)</string>    <!-- default widget theme name -->
-    <string name="widgetThemes_dark1">Malhela (malnova)</string>                                <!-- default widget theme name -->
-    <string name="widgetThemes_light1">Hela (malnova)</string>                              <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark_translucent">Malhela (duon-travidebla)</string>      <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light">Hela</string>                              <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light_transparent">Hela (travidebla)</string>    <!-- default widget theme name -->
+    <string name="themes_widgetThemes_dark1">Malhela (malnova)</string>                                <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light1">Hela (malnova)</string>                              <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopio)</string>                            <!-- copied theme name (display string) -->
+    <string name="themes_addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopio)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success">Aldonis <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success">Konservis <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
-    <string name="deletetheme_toast_success">Forigis <xliff:g id="themeName">%1$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="themes_addtheme_toast_success">Aldonis <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="themes_edittheme_toast_success">Konservis <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="themes_deletetheme_toast_success">Forigis <xliff:g id="themeName">%1$s</xliff:g>.</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">Identigilo estu unika (postulata).</string>        <!-- error hint (themeName empty) -->
-    <string name="edittheme_error_themeName_unique">Identigilo estu unika (jam uzata).</string>  <!-- error hint (themeName taken) -->
-    <string name="edittheme_error_displaytext">Montrata teksto ne estu malplena.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Grando estu plena nombro &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">norma</string>  <!-- content description -->
+    <string name="themes_edittheme_error_themeName_empty">Identigilo estu unika (postulata).</string>        <!-- error hint (themeName empty) -->
+    <string name="themes_edittheme_error_themeName_unique">Identigilo estu unika (jam uzata).</string>  <!-- error hint (themeName taken) -->
+    <string name="themes_edittheme_error_displaytext">Montrata teksto ne estu malplena.</string>  <!-- error hint (display text is empty) -->
+    <string name="themes_edittheme_error_textsize_min">Grando estu plena nombro &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="themes_edittheme_error_textsize_max">Grando estu plena nombro &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="themes_edittheme_flag_default">norma</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">Forigi haŭton</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
-    <string name="deletetheme_dialog_ok">Forigi</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
+    <string name="themes_deletetheme_dialog_title">Forigi haŭton</string>        <!-- dialog title -->
+    <string name="themes_deletetheme_dialog_message">Ĉu vi certe volas forigi <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="themes_deletetheme_dialog_ok">Forigi</string>        <!-- button -->
+    <string name="themes_deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Aldoni haŭton</string>     <!-- title text -->
-    <string name="configLabel_widgetThemeEdit">Redakti haŭton</string>   <!-- title text -->
-    <string name="configAction_saveTheme">Konservi</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">Elekti koloron</string> <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeAdd">Aldoni haŭton</string>     <!-- title text -->
+    <string name="themes_configLabel_widgetThemeEdit">Redakti haŭton</string>   <!-- title text -->
+    <string name="themes_configAction_saveTheme">Konservi</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_chooseColor">Elekti koloron</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Fono:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">Hela</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">Malhela</string>          <!-- dark background -->
-    <string name="configLabel_themeBackground_trans">Travidebla</string>  <!-- transparent background -->
-    <string name="configLabel_themeBackground_color">Koloro</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Koloro:</string>      <!-- color label -->
+    <string name="themes_configLabel_themeBackgroundId">Fono:</string>    <!-- spinner label -->
+    <string name="themes_configLabel_themeBackground_light">Hela</string>        <!-- light background -->
+    <string name="themes_configLabel_themeBackground_dark">Malhela</string>          <!-- dark background -->
+    <string name="themes_configLabel_themeBackground_trans">Travidebla</string>  <!-- transparent background -->
+    <string name="themes_configLabel_themeBackground_color">Koloro</string>      <!-- custom background -->
+    <string name="themes_configLabel_themeColorBackground">Koloro:</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Koloro de titolo</string>     <!-- color label -->
-    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configLabel_themeColorTitle">Koloro de titolo</string>     <!-- color label -->
+    <string name="themes_configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Koloro de teksto</string>       <!-- color label -->
-    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorText">Koloro de teksto</string>       <!-- color label -->
+    <string name="themes_configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Printempa koloro</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Somera koloro</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Aŭtuna koloro</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Vintra koloro</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring">Printempa koloro</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer">Somera koloro</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall">Aŭtuna koloro</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter">Vintra koloro</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Printempo (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer_text">Somero (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">Aŭtuno (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter_text">Vintro (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring_text">Printempo (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer_text">Somero (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">Aŭtuno (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter_text">Vintro (teksto)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Emfazo</string> <!-- color label -->
-    <string name="configLabel_themeColorAction">Ago</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAccent">Emfazo</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAction">Ago</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Fono de mapo</string> <!-- color label -->
-    <string name="configLabel_themeColorMapForeground">Malfono de mapo</string> <!-- color label -->
-    <string name="configLabel_themeColorMapSunShadow">Ombro</string> <!-- color label -->
-    <string name="configLabel_themeColorMapMoonHighlight">Prilumo</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapBackground">Fono de mapo</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapForeground">Malfono de mapo</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapSunShadow">Ombro</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapMoonHighlight">Prilumo</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Lunleviĝo (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset_text">Lunsubiro (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise_text">Lunleviĝo (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset_text">Lunsubiro (teksto)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Koloro de lunleviĝo</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Koloro de lunsubiro</string>  <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Koloro de kreskanta</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Koloro de malkreskanta</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Koloro de plenluno</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Koloro de novluno</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise">Koloro de lunleviĝo</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset">Koloro de lunsubiro</string>  <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaxing">Koloro de kreskanta</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaning">Koloro de malkreskanta</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFull">Koloro de plenluno</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNew">Koloro de novluno</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Plenluno (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNewText">Novluno (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogeo (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigeo (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFullText">Plenluno (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNewText">Novluno (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonApogeeText">Apogeo (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonPerigeeText">Perigeo (teksto)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Sunleviĝo (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorSunrise">Koloro de sunleviĝo</string> <!-- color label -->
-    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunrise_text">Sunleviĝo (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunrise">Koloro de sunleviĝo</string> <!-- color label -->
+    <string name="themes_configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Sunsubiro (teksto)</string> <!-- color label -->
-    <string name="configLabel_themeColorSunset">Koloro de sunsubiro</string>   <!-- color label -->
-    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunset_text">Sunsubiro (teksto)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunset">Koloro de sunsubiro</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Koloro de sun‑kulmino</string>      <!-- color label -->
+    <string name="themes_configLabel_themeColorNoon">Koloro de sun‑kulmino</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">Suno (plenigo)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunStroke">Suno (rando)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">Vojo de Suno (plenigo tage)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">Vojo de Suno (rando tage)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">Vojo de Suno (plenigo nokte)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">Vojo de Suno (rando nokte)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunFill">Suno (plenigo)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunStroke">Suno (rando)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayFill">Vojo de Suno (plenigo tage)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayStroke">Vojo de Suno (rando tage)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightFill">Vojo de Suno (plenigo nokte)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightStroke">Vojo de Suno (rando nokte)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMidnightText">Meznokto (teksto)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMidnightFill">Meznokto (plenigo)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMidnightStroke">Meznokto (rando)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMidnightText">Meznokto (teksto)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMidnightFill">Meznokto (plenigo)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMidnightStroke">Meznokto (rando)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMoonFill">Luno (plenigo)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonStroke">Luno (rando)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayFill">Vojo de Luno (plenigo tage)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayStroke">Vojo de Luno (rando tage)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightFill">Vojo de Luno (plenigo nokte)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightStroke">Vojo de Luno (rando nokte)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonFill">Luno (plenigo)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonStroke">Luno (rando)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayFill">Vojo de Luno (plenigo tage)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayStroke">Vojo de Luno (rando tage)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightFill">Vojo de Luno (plenigo nokte)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightStroke">Vojo de Luno (rando nokte)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphPointFill">Punktoj (plenigo)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphPointStroke">Punktoj (rando)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointFill">Punktoj (plenigo)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointStroke">Punktoj (rando)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">Etikedoj (teksto)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphLabelsBG">Etikedoj (fono)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabels">Etikedoj (teksto)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabelsBG">Etikedoj (fono)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphBackground">Fono de diagramo</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphAxis">Aksoj</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMajor">Krado (ĉefa)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMinor">Krado (malĉefa)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphBackground">Fono de diagramo</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphAxis">Aksoj</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMajor">Krado (ĉefa)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMinor">Krado (malĉefa)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorFill">Plenigo</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorFill">Plenigo</string>         <!-- color label -->
     <!--<string name="configHint_themeColorFill">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Bordero</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorBorder">Bordero</string>         <!-- color label -->
     <!--<string name="configHint_themeColorBorder">#FFFFFFFF</string>-->        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Larĝo de bordero (leviĝo/subiro):</string>  <!-- size label -->
+    <string name="themes_configLabel_themeBorderWidthRiseSet">Larĝo de bordero (leviĝo/subiro):</string>  <!-- size label -->
     <!--<string name="configHint_themeBorderWidthRiseSet">2</string>-->                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Larĝo de bordero (sun‑kulmino):</string>         <!-- size label -->
+    <string name="themes_configLabel_themeBorderWidthNoon">Larĝo de bordero (sun‑kulmino):</string>         <!-- size label -->
     <!--<string name="configHint_themeBorderWidthNoon">3</string>-->
 
-    <string name="configLabel_themeColorSuffix">Koloro de sufikso</string>   <!-- color label -->
-    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSuffix">Koloro de sufikso</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Koloro de teksto 2</string>      <!-- color label -->
-    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorTime">Koloro de teksto 2</string>      <!-- color label -->
+    <string name="themes_configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
-    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTitle">Grando de titolo:</string>  <!-- edit label -->
+    <string name="themes_configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">Grasa</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTitle">Grasa</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeText">Grando de teksto:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Grando de tempo:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTime">Grando de tempo:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Grasa</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTime">Grasa</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Grando de sufikso:</string> <!-- edit label -->
-    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeSuffix">Grando de sufikso:</string> <!-- edit label -->
+    <string name="themes_configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Deŝovo:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[maldekstren, supren, dekstren, malsupren]</string> <!-- edit hint -->
+    <string name="themes_configLabel_themePadding">Deŝovo:</string>            <!-- edit label -->
+    <string name="themes_configHint_themePadding">[maldekstren, supren, dekstren, malsupren]</string> <!-- edit hint -->
 
-    <string name="configLabel_themeID">Identigilo:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">Identigilo de haŭto</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeID">Identigilo:</string>                      <!-- edit label -->
+    <string name="themes_configHint_themeID">Identigilo de haŭto</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">Vidigi:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Etikedo</string>                   <!-- edit hint -->
+    <string name="themes_configLabel_themeName">Vidigi:</string>               <!-- edit label -->
+    <string name="themes_configHint_themeName">Etikedo</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Azimuto</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az.</string>                   <!-- label -->
@@ -846,19 +846,19 @@
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
     <string name="widgetLabel_distance">Distanco</string>           <!-- label -->
 
-    <string name="configLabel_alarms_bg_startColor">Fono (komenca)</string>               <!-- color label -->
-    <string name="configLabel_alarms_bg_endColor">Fono (fina)</string>                <!-- color label -->
-    <string name="configLabel_alarms_soundingPulse_startColor">Pulsado (alarme)</string>      <!-- color label -->
-    <string name="configLabel_alarms_soundingPulse_endColor">Pulsado (alarme)</string>        <!-- color label -->
-    <string name="configLabel_alarms_snoozingPulse_startColor">Pulsado (dormete)</string>      <!-- color label -->
-    <string name="configLabel_alarms_snoozingPulse_endColor">Pulsado (dormete)</string>        <!-- color label -->
-    <string name="configLabel_alarms_text_primaryColor">Ĉefa teksto</string>                         <!-- color label -->
-    <string name="configLabel_alarms_text_primaryColorInverse">Ĉefa teksto (inverse)</string>        <!-- color label -->
-    <string name="configLabel_alarms_text_secondaryColor">Malĉefa teksto</string>                     <!-- color label -->
-    <string name="configLabel_alarms_text_secondaryColorInverse">Malĉefa teksto (inverse)</string>    <!-- color label -->
-    <string name="configLabel_alarms_text_timeColor">Teksto de tempo</string>                               <!-- color label -->
-    <string name="configLabel_alarms_text_timeColorInverse">Teksto de tempo (inverse)</string>              <!-- color label -->
-    <string name="configLabel_alarms_text_disabledColor">Malaktiva</string>                            <!-- color label -->
+    <string name="themes_configLabel_alarms_bg_startColor">Fono (komenca)</string>               <!-- color label -->
+    <string name="themes_configLabel_alarms_bg_endColor">Fono (fina)</string>                <!-- color label -->
+    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulsado (alarme)</string>      <!-- color label -->
+    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulsado (alarme)</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulsado (dormete)</string>      <!-- color label -->
+    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulsado (dormete)</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_text_primaryColor">Ĉefa teksto</string>                         <!-- color label -->
+    <string name="themes_configLabel_alarms_text_primaryColorInverse">Ĉefa teksto (inverse)</string>        <!-- color label -->
+    <string name="themes_configLabel_alarms_text_secondaryColor">Malĉefa teksto</string>                     <!-- color label -->
+    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Malĉefa teksto (inverse)</string>    <!-- color label -->
+    <string name="themes_configLabel_alarms_text_timeColor">Teksto de tempo</string>                               <!-- color label -->
+    <string name="themes_configLabel_alarms_text_timeColorInverse">Teksto de tempo (inverse)</string>              <!-- color label -->
+    <string name="themes_configLabel_alarms_text_disabledColor">Malaktiva</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -905,7 +905,7 @@
 
     <string name="editevent_dialog_id_label">ID</string>
     <string name="editevent_dialog_id_hint">Identigilo de okazaĵo</string>
-    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>
+    <string name="editevent_dialog_id_error">@string/actions_addaction_error_id</string>
     <string name="editevent_dialog_uri_hint">Ligilo de okazaĵo</string>
     <string name="editevent_dialog_showevent">Montri tiun ĉi okazaĵon en la aplikaĵo.</string>
     <string name="editevent_dialog_showevent_off">Ne montri tiun ĉi okazaĵon.</string>
@@ -914,7 +914,7 @@
     <string name="editevent_dialog_title1">Okazaĵo</string>    <!-- 'edit event' title -->
     <string name="editevent_dialog_label_label">Nomo</string>
     <string name="editevent_dialog_label_hint">Nomo de okazaĵo</string>
-    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
+    <string name="editevent_dialog_label_error">@string/actions_addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Propra angulo</string>
 
     <string name="editevent_dialog_angle">Angulo</string>

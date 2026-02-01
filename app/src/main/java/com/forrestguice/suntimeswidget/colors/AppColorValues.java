@@ -222,7 +222,7 @@ public class AppColorValues extends ResourceColorValues implements Serializable
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static AppColorValues getColorDefaults(Resources context, boolean darkTheme) {

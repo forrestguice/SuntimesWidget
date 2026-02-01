@@ -362,7 +362,7 @@ public class EditActionView extends LinearLayout
             }
 
             String labelText = edit_label != null ? edit_label.getText().toString() : "";
-            String defaultLabel = getContext().getString(R.string.addaction_custtitle, "");
+            String defaultLabel = getContext().getString(R.string.actions_addaction_custtitle, "");
             if (edit_label != null && (labelText.trim().isEmpty() || labelText.startsWith(defaultLabel))) {
                 edit_label.setText(suggestion != null ? suggestion.getLabel() : "");
             }
@@ -506,7 +506,7 @@ public class EditActionView extends LinearLayout
 
                 } catch (Exception e) {
                     Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                    SnackbarUtils.make(getContext(), this, getContext().getString(R.string.startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
+                    SnackbarUtils.make(getContext(), this, getContext().getString(R.string.actions_startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -524,7 +524,7 @@ public class EditActionView extends LinearLayout
 
         } catch (Exception e) {
             Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
-            SnackbarUtils.make(getContext(), this, getContext().getString(R.string.startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
+            SnackbarUtils.make(getContext(), this, getContext().getString(R.string.actions_startaction_failed_toast, launchType), SnackbarUtils.LENGTH_LONG).show();
         }
     }
 
@@ -618,7 +618,7 @@ public class EditActionView extends LinearLayout
             public void onClick(DialogInterface dialog, int which) {
                 initFromOther(saveDialog.getEdit());
                 saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
-                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.actions_saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
             }
         };
     }

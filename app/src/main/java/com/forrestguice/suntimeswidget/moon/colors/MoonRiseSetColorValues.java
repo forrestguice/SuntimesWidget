@@ -55,8 +55,8 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Seria
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
-                R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
+                R.string.themes_configLabel_themeColorMoonrise, R.string.themes_configLabel_themeColorMoonrise_text,
+                R.string.themes_configLabel_themeColorMoonset, R.string.themes_configLabel_themeColorMoonset_text,
         };
     }
     public int[] getColorRoles() {
@@ -112,7 +112,7 @@ public class MoonRiseSetColorValues extends ResourceColorValues implements Seria
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static MoonRiseSetColorValues getColorDefaults(Resources context, boolean darkTheme) {

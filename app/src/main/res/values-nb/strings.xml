@@ -48,10 +48,10 @@
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">Neste dag</string>
-    <string name="prevDay">Forrige dag</string>
-    <string name="nextYear">Neste år</string>
-    <string name="prevYear">Forrige år</string>
+    <string name="action_nextDay">Neste dag</string>
+    <string name="action_prevDay">Forrige dag</string>
+    <string name="action_nextYear">Neste år</string>
+    <string name="action_prevYear">Forrige år</string>
 
     <!-- Warnings -->
     <string name="spanTag_warning">Advarsel!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
@@ -71,21 +71,21 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
+    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_today">Fortid</string>
-    <string name="past_n">Fortid (%1$s)</string>
+    <string name="cardlabel_past_today">Fortid</string>
+    <string name="cardlabel_past_n">Fortid (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
-    <string name="yesterday">I går</string>
-    <string name="today">I dag</string>
-    <string name="tomorrow">I morgen</string>
+    <string name="cardlabel_yesterday">I går</string>
+    <string name="cardlabel_today">I dag</string>
+    <string name="cardlabel_tomorrow">I morgen</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_today">Framtid</string>
-    <string name="future_n">Framtid (%1$s)</string>
+    <string name="cardlabel_future_today">Framtid</string>
+    <string name="cardlabel_future_n">Framtid (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
@@ -614,233 +614,233 @@
     <string name="configLabel_general_showNoon">Vis lokal middag</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_action_launch_package" />               <!-- edittext label -->
-    <string name="configHint_action_launch_title">Handlingstittel</string>                 <!-- edittext hint -->
-    <string name="configHint_action_launch_desc">Kort beskrivelse</string>                 <!-- edittext hint -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
-    <string name="configLabel_action_launch_action">Handling:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_action">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Ekstra:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="actions_configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
+    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_title">Handlingstittel</string>                 <!-- edittext hint -->
+    <string name="actions_configHint_action_launch_desc">Kort beskrivelse</string>                 <!-- edittext hint -->
+    <string name="actions_configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
+    <string name="actions_configLabel_action_launch_action">Handling:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_action">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="actions_configHint_action_launch_data">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
+    <string name="actions_configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="actions_configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="actions_configLabel_action_launch_extras">Ekstra:</string>                 <!-- edittext label -->
+    <string name="actions_configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
-    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">Ingen handling</string>
+    <string name="actions_configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
+    <string name="actions_configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
+    <string name="actions_configLabel_action_item_none">Ingen handling</string>
 
-    <string name="addaction_custname">egendefinert<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_custtitle">Egendefinert handling <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">ID må ikke være tom (eller inneholde mellomrom).</string>
-    <string name="addaction_error_title">Visningsstreng må ikke være tom.</string>
-    <string name="addaction_error_exists">ID er tatt allerede. Denne handlingen blir overskrevet.</string>
+    <string name="actions_addaction_custname">egendefinert<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_custtitle">Egendefinert handling <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="actions_addaction_error_id">ID må ikke være tom (eller inneholde mellomrom).</string>
+    <string name="actions_addaction_error_title">Visningsstreng må ikke være tom.</string>
+    <string name="actions_addaction_error_exists">ID er tatt allerede. Denne handlingen blir overskrevet.</string>
 
-    <string name="delaction_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?</string>
-    <string name="delaction_dialog_msg1">Standardhandlinger kan ikke fjernes.\n\nGå tilbake til standardverdier?</string>
-    <string name="delaction_dialog_ok">Slett</string>
-    <string name="delaction_dialog_ok1">Tilbakestill</string>
-    <string name="delaction_dialog_cancel">Avbryt</string>
+    <string name="actions_delaction_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?</string>
+    <string name="actions_delaction_dialog_msg1">Standardhandlinger kan ikke fjernes.\n\nGå tilbake til standardverdier?</string>
+    <string name="actions_delaction_dialog_ok">Slett</string>
+    <string name="actions_delaction_dialog_ok1">Tilbakestill</string>
+    <string name="actions_delaction_dialog_cancel">Avbryt</string>
 
-    <string name="clearactions_dialog_msg">Er du sikker på at du vil tilbakestille til standardverdier?\n\nAlle egendefinerte handlinger blir fjernet.</string>
-    <string name="clearactions_dialog_ok">Fjern</string>
+    <string name="actions_clearactions_dialog_msg">Er du sikker på at du vil tilbakestille til standardverdier?\n\nAlle egendefinerte handlinger blir fjernet.</string>
+    <string name="actions_clearactions_dialog_ok">Fjern</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">Handlinger tilbakestilt til standardverdier.</string>
+    <string name="actions_clearactions_toast">Handlinger tilbakestilt til standardverdier.</string>
 
-    <string name="saveaction_dialog_title">Legg til handling</string>
-    <string name="saveaction_dialog_ok">Lagre</string>
+    <string name="actions_saveaction_dialog_title">Legg til handling</string>
+    <string name="actions_saveaction_dialog_ok">Lagre</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="saveaction_dialog_suggest">Foreslå</string>
-    <string name="saveaction_toast">Lagret handling \"%1$s\" (%2$s).</string>
+    <string name="actions_saveaction_dialog_suggest">Foreslå</string>
+    <string name="actions_saveaction_toast">Lagret handling \"%1$s\" (%2$s).</string>
 
-    <string name="loadaction_dialog_title">Handlinger</string>
-    <string name="loadaction_toast">Lastet handling \"%1$s\".</string>
+    <string name="actions_loadaction_dialog_title">Handlinger</string>
+    <string name="actions_loadaction_toast">Lastet handling \"%1$s\".</string>
 
-    <string name="startaction_failed_toast">Kunne ikke starte %s!</string>         <!-- error toast -->
+    <string name="actions_startaction_failed_toast">Kunne ikke starte %s!</string>         <!-- error toast -->
 
-    <string name="configAction_addAction">Legg til</string>           <!-- button (contentDescription) -->
-    <string name="configAction_editAction">Rediger</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAction">Lagre</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Last</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteAction">Slett</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Fjern alle</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_add">Legg til</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_edit">Rediger</string>           <!-- button (contentDescription) -->
+    <string name="actions_action_test">Test</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_save">Lagre</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_load">Last</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_delete">Slett</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_clear">Fjern alle</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">Modultemaer</string>
-    <string name="configLabel_widgetThemeListSelect">Velg et tema</string>
-    <string name="configAction_addTheme">Legg til</string>           <!-- button (contentDescription) -->
-    <string name="configAction_selectTheme">Velg</string>     <!-- button (contentDescription) -->
-    <string name="configAction_editTheme">Rediger</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
-    <string name="configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeList">Modultemaer</string>
+    <string name="themes_configLabel_widgetThemeListSelect">Velg et tema</string>
+    <string name="themes_configAction_addTheme">Legg til</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_selectTheme">Velg</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_editTheme">Rediger</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
+    <string name="themes_configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="themes_configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark1">Dark (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
-    <string name="widgetThemes_light1">Light (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
+    <string name="themes_widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
+    <string name="themes_widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="themes_widgetThemes_dark_translucent">Dark (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
+    <string name="themes_widgetThemes_light">Light</string>                              <!-- default widget theme name --> <!-- TODO -->
+    <string name="themes_widgetThemes_light_transparent">Light (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
+    <string name="themes_widgetThemes_dark1">Dark (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
+    <string name="themes_widgetThemes_light1">Light (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
 
-    <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="themes_addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
-    <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
+    <string name="themes_addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success">Lagt til <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success">Lagret <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> ble slettet.</string> <!-- toast msg -->
+    <string name="themes_addtheme_toast_success">Lagt til <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
+    <string name="themes_edittheme_toast_success">Lagret <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="themes_deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> ble slettet.</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
-    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
-    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Størrelse må være &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">Størrelse må være &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">default</string>  <!-- content description -->
+    <string name="themes_edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
+    <string name="themes_edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
+    <string name="themes_edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
+    <string name="themes_edittheme_error_textsize_min">Størrelse må være &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="themes_edittheme_error_textsize_max">Størrelse må være &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="themes_edittheme_flag_default">default</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">Slett tema</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">Er du sikker på at du vil slette <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
-    <string name="deletetheme_dialog_ok">Slett</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Avbryt</string>    <!-- button -->
+    <string name="themes_deletetheme_dialog_title">Slett tema</string>        <!-- dialog title -->
+    <string name="themes_deletetheme_dialog_message">Er du sikker på at du vil slette <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="themes_deletetheme_dialog_ok">Slett</string>        <!-- button -->
+    <string name="themes_deletetheme_dialog_cancel">Avbryt</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Legg til tema</string>     <!-- title text -->
-    <string name="configLabel_widgetThemeEdit">Rediger tema</string>   <!-- title text -->
-    <string name="configAction_saveTheme">Lagre</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">Velg farge</string> <!-- button (contentDescription) -->
+    <string name="themes_configLabel_widgetThemeAdd">Legg til tema</string>     <!-- title text -->
+    <string name="themes_configLabel_widgetThemeEdit">Rediger tema</string>   <!-- title text -->
+    <string name="themes_configAction_saveTheme">Lagre</string>           <!-- button (contentDescription) -->
+    <string name="themes_configAction_chooseColor">Velg farge</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Basis:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">Lys</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">Mørk</string>          <!-- dark background -->
-    <string name="configLabel_themeBackground_trans">Gjennomsiktig</string>  <!-- transparent background -->
-    <string name="configLabel_themeBackground_color">Farge</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Farge</string>      <!-- color label -->
+    <string name="themes_configLabel_themeBackgroundId">Basis:</string>    <!-- spinner label -->
+    <string name="themes_configLabel_themeBackground_light">Lys</string>        <!-- light background -->
+    <string name="themes_configLabel_themeBackground_dark">Mørk</string>          <!-- dark background -->
+    <string name="themes_configLabel_themeBackground_trans">Gjennomsiktig</string>  <!-- transparent background -->
+    <string name="themes_configLabel_themeBackground_color">Farge</string>      <!-- custom background -->
+    <string name="themes_configLabel_themeColorBackground">Farge</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Tittelfarge</string>     <!-- color label -->
-    <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configLabel_themeColorTitle">Tittelfarge</string>     <!-- color label -->
+    <string name="themes_configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Tekstfarge</string>       <!-- color label -->
-    <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorText">Tekstfarge</string>       <!-- color label -->
+    <string name="themes_configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Vårfarge</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Sommerfarge</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring">Vårfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer">Sommerfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Vår (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer_text">Sommer (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">Høst (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter_text">Vinter (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring_text">Vår (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer_text">Sommer (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">Høst (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter_text">Vinter (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Aksent</string> <!-- color label -->
-    <string name="configLabel_themeColorAction">Handling</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAccent">Aksent</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorAction">Handling</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
-    <string name="configLabel_themeColorMapForeground">Kartforgrunn</string> <!-- color label -->
-    <string name="configLabel_themeColorMapSunShadow">Skygge</string> <!-- color label -->
-    <string name="configLabel_themeColorMapMoonHighlight">Opplyst</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapForeground">Kartforgrunn</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapSunShadow">Skygge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMapMoonHighlight">Opplyst</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Måneoppgang (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset_text">Månenedgang (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise_text">Måneoppgang (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset_text">Månenedgang (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Måneoppgangsfarge</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Månenedgangsfarge</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Tiltagende måne - farge</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Avtagende måne - farge</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Fullmånefarge</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">Nymånefarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise">Måneoppgangsfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset">Månenedgangsfarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaxing">Tiltagende måne - farge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonWaning">Avtagende måne - farge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFull">Fullmånefarge</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNew">Nymånefarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNewText">Ny (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogeum (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigeum (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFullText">Full (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNewText">Ny (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonApogeeText">Apogeum (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonPerigeeText">Perigeum (tekst)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Soloppgang (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorSunrise">Soloppgangsfarge</string> <!-- color label -->
-    <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunrise_text">Soloppgang (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunrise">Soloppgangsfarge</string> <!-- color label -->
+    <string name="themes_configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Solnedgang (tekst)</string> <!-- color label -->
-    <string name="configLabel_themeColorSunset">Solnedgangsfarge</string>   <!-- color label -->
-    <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSunset_text">Solnedgang (tekst)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunset">Solnedgangsfarge</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Middagfarge</string>      <!-- color label -->
-    <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configLabel_themeColorNoon">Middagfarge</string>      <!-- color label -->
+    <string name="themes_configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">Solen (fyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunStroke">Solen (strek)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">Solens bane (dagfyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">Solens bane (dagstrek)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">Solens bane (nattfyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">Solens bane (nattstrek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunFill">Solen (fyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunStroke">Solen (strek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayFill">Solens bane (dagfyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathDayStroke">Solens bane (dagstrek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightFill">Solens bane (nattfyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphSunPathNightStroke">Solens bane (nattstrek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphMoonFill">Månen (fyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonStroke">Månen (strek)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayFill">Månens bane (dagfyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathDayStroke">Månens bane (dagstrek)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightFill">Månens bane (nattfyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphMoonPathNightStroke">Månens bane (nattstrek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonFill">Månen (fyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonStroke">Månen (strek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayFill">Månens bane (dagfyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathDayStroke">Månens bane (dagstrek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightFill">Månens bane (nattfyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMoonPathNightStroke">Månens bane (nattstrek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphPointFill">Punkter (fyll)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphPointStroke">Punkter (strek)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointFill">Punkter (fyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphPointStroke">Punkter (strek)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">Påskrifter (tekst)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphLabelsBG">Påskrifter (bakgrunn)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabels">Påskrifter (tekst)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabelsBG">Påskrifter (bakgrunn)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphBackground">Grafbakgrunn</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphAxis">Akser</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMajor">Rutenett (større)</string>         <!-- color label -->
-    <string name="configLabel_themeColorGraphGridMinor">Rutenett (mindre)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphBackground">Grafbakgrunn</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphAxis">Akser</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMajor">Rutenett (større)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphGridMinor">Rutenett (mindre)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorFill">Fyll</string>         <!-- color label -->
-    <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorFill">Fyll</string>         <!-- color label -->
+    <string name="themes_configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Ramme</string>         <!-- color label -->
-    <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorBorder">Ramme</string>         <!-- color label -->
+    <string name="themes_configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Rammebredde (oppg/nedg):</string>  <!-- size label -->
-    <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Rammebredde (middag):</string>         <!-- size label -->
-    <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+    <string name="themes_configLabel_themeBorderWidthRiseSet">Rammebredde (oppg/nedg):</string>  <!-- size label -->
+    <string name="themes_configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="themes_configLabel_themeBorderWidthNoon">Rammebredde (middag):</string>         <!-- size label -->
+    <string name="themes_configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffiksfarge</string>   <!-- color label -->
-    <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configLabel_themeColorSuffix">Suffiksfarge</string>   <!-- color label -->
+    <string name="themes_configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Tekstfarge2</string>      <!-- color label -->
-    <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configLabel_themeColorTime">Tekstfarge2</string>      <!-- color label -->
+    <string name="themes_configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Tittelstørrelse:</string>  <!-- edit label -->
-    <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTitle">Tittelstørrelse:</string>  <!-- edit label -->
+    <string name="themes_configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">Fet</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTitle">Fet</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Tekststørrelse:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeText">Tekststørrelse:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Tidsstørrelse:</string>    <!-- edit label -->
-    <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeTime">Tidsstørrelse:</string>    <!-- edit label -->
+    <string name="themes_configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Fet</string>          <!-- checkbox label -->
+    <string name="themes_configLabel_themeBoldTime">Fet</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Suffiksstørrelse:</string> <!-- edit label -->
-    <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeSizeSuffix">Suffiksstørrelse:</string> <!-- edit label -->
+    <string name="themes_configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Utfylling:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[venstre, øverst, høyre, nederst]</string> <!-- edit hint -->
+    <string name="themes_configLabel_themePadding">Utfylling:</string>            <!-- edit label -->
+    <string name="themes_configHint_themePadding">[venstre, øverst, høyre, nederst]</string> <!-- edit hint -->
 
-    <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">Tema-ID</string>                  <!-- edit hint -->
+    <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
+    <string name="themes_configHint_themeID">Tema-ID</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">Vis:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Påskrift</string>                   <!-- edit hint -->
+    <string name="themes_configLabel_themeName">Vis:</string>               <!-- edit label -->
+    <string name="themes_configHint_themeName">Påskrift</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Asimut</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Asimut</string>                   <!-- label -->
@@ -856,19 +856,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Avstand</string>           <!-- label -->
 
-    <string name="configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -915,7 +915,7 @@
 
     <string name="editevent_dialog_id_label">ID</string>
     <string name="editevent_dialog_id_hint">Hendelse-ID</string>
-    <string name="editevent_dialog_id_error">@string/addaction_error_id</string>    <!-- TODO -->
+    <string name="editevent_dialog_id_error">@string/actions_addaction_error_id</string>    <!-- TODO -->
     <string name="editevent_dialog_uri_hint">Event Uri</string>    <!-- TODO -->
     <string name="editevent_dialog_showevent">Vis denne hendelsen i appen.</string>
     <string name="editevent_dialog_showevent_off">Denne hendelsen vil ikke lenger bli vist.</string>
@@ -924,7 +924,7 @@
     <string name="editevent_dialog_title1">Hendelse</string>    <!-- 'edit event' title -->
     <string name="editevent_dialog_label_label">Påskrift</string>
     <string name="editevent_dialog_label_hint">Hendelsespåskrift</string>
-    <string name="editevent_dialog_label_error">@string/addaction_error_title</string>    <!-- TODO -->
+    <string name="editevent_dialog_label_error">@string/actions_addaction_error_title</string>    <!-- TODO -->
     <string name="editevent_dialog_label_suggested">Tilpasset vinkel</string>
 
     <string name="editevent_dialog_angle">Vinkel</string>

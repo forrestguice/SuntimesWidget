@@ -76,12 +76,12 @@ public class CardColorValues extends ResourceColorValues implements Serializable
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSunrise, R.string.configLabel_themeColorSunrise_text,
-                R.string.configLabel_themeColorSunset, R.string.configLabel_themeColorSunset_text,
-                R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
-                R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
-                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-                R.string.configLabel_themeColorGraphMidnightText, R.string.configLabel_themeColorGraphMidnightFill, R.string.configLabel_themeColorGraphMidnightStroke
+                R.string.themes_configLabel_themeColorSunrise, R.string.themes_configLabel_themeColorSunrise_text,
+                R.string.themes_configLabel_themeColorSunset, R.string.themes_configLabel_themeColorSunset_text,
+                R.string.themes_configLabel_themeColorMoonrise, R.string.themes_configLabel_themeColorMoonrise_text,
+                R.string.themes_configLabel_themeColorMoonset, R.string.themes_configLabel_themeColorMoonset_text,
+                R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.themes_configLabel_themeColorGraphMidnightText, R.string.themes_configLabel_themeColorGraphMidnightFill, R.string.themes_configLabel_themeColorGraphMidnightStroke
         };
     }
     public int[] getColorRoles() {
@@ -153,7 +153,7 @@ public class CardColorValues extends ResourceColorValues implements Serializable
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static CardColorValues getColorDefaults(Resources context, boolean darkTheme) {

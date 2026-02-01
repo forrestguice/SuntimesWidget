@@ -40,7 +40,7 @@ public class DarkThemeTranslucent extends DarkThemeTrans
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = context.getString(R.string.widgetThemes_dark_translucent);
+        this.themeDisplayString = context.getString(R.string.themes_widgetThemes_dark_translucent);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -49,7 +49,7 @@ public class DarkThemeTranslucent extends DarkThemeTrans
     public static ThemeDescriptor themeDescriptor(Context context)
     {
         if (THEMEDEF_DESCRIPTOR == null) {
-            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_dark_translucent), THEMEDEF_VERSION, ThemeBackground.COLOR.name(), Color.parseColor("#82212121"));
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.themes_widgetThemes_dark_translucent), THEMEDEF_VERSION, ThemeBackground.COLOR.name(), Color.parseColor("#82212121"));
         }
         return THEMEDEF_DESCRIPTOR;
     }

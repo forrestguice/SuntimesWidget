@@ -137,7 +137,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public TimeDateDialogRobot clickTodayButton() {
-            onView(withText(R.string.today)).perform(click());
+            onView(withText(R.string.cardlabel_today)).perform(click());
             return this;
         }
         public TimeDateDialogRobot clickClearButton() {

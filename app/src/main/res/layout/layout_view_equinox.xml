@@ -43,7 +43,7 @@
                         android:id="@+id/info_time_prevbtn1"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
-                        android:src="?attr/icActionPrevious" android:contentDescription="@string/prevYear"
+                        android:src="?attr/icActionPrevious" android:contentDescription="@string/action_prevYear"
                         android:background="?attr/selectableItemBackground" />
 
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                         android:id="@+id/info_time_nextbtn1"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
-                        android:src="?attr/icActionNext" android:contentDescription="@string/nextYear"
+                        android:src="?attr/icActionNext" android:contentDescription="@string/action_nextYear"
                         android:background="?attr/selectableItemBackground" />
 
                 </LinearLayout>

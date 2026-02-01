@@ -366,7 +366,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
 
             Pair<String,String> label = getCardLabel(context, i, options);
-            String dateString = context.getString(R.string.dateField, label.first, dateFormat.format(data_date));
+            String dateString = context.getString(R.string.card_dateField, label.first, dateFormat.format(data_date));
             SpannableStringBuilder dateSpan = SpanUtils.createSpan(context, dateString, SpanUtils.SPANTAG_WARNING, dateWarningIcon);
             txt_date.setText((label.second == null) ? dateSpan : SpanUtils.createColorSpan(SpannableString.valueOf(dateSpan), dateString, label.second, options.color_warning));
             txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), ""));
@@ -583,15 +583,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     private Pair<String,String> getCardLabel(Context context, int i, CardAdapter.CardAdapterOptions options)
     {
         String dayOffset = ((i < 0) ? "-" : "+") + Math.abs(i);
-        String label = context.getString(R.string.today);
+        String label = context.getString(R.string.cardlabel_today);
         if (i == 1) {
-            return new Pair<>(context.getString(R.string.tomorrow), null);
+            return new Pair<>(context.getString(R.string.cardlabel_tomorrow), null);
         } else if (i == -1) {
-            return new Pair<>(context.getString(R.string.yesterday), null);
+            return new Pair<>(context.getString(R.string.cardlabel_yesterday), null);
         } else if (i > 0) {
-            return new Pair<>(context.getString(R.string.future_n, dayOffset), dayOffset);
+            return new Pair<>(context.getString(R.string.cardlabel_future_n, dayOffset), dayOffset);
         } else if (i < 0) {
-            return new Pair<>(context.getString(R.string.past_n, dayOffset), dayOffset);
+            return new Pair<>(context.getString(R.string.cardlabel_past_n, dayOffset), dayOffset);
         }
         return new Pair<>(label, null);
     }

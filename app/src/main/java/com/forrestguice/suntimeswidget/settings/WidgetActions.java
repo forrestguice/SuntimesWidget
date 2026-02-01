@@ -512,7 +512,7 @@ public class WidgetActions
 
             } catch (Exception e) {
                 Log.e(TAG, "startIntent: unable to start + " + launchType + " :: " + e);
-                Toast.makeText(context, context.getString(R.string.startaction_failed_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.actions_startaction_failed_toast), Toast.LENGTH_SHORT).show();
             }
         }
     }

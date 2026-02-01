@@ -29,7 +29,7 @@
 
             <com.forrestguice.support.widget.Toolbar
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-                app:title="@string/loadaction_dialog_title" />
+                app:title="@string/actions_loadaction_dialog_title" />
 
         </com.forrestguice.support.widget.AppBarLayout>
 

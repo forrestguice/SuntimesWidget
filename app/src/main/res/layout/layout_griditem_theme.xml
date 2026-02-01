@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/text_title"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/edittheme_flag_default" />
+            android:contentDescription="@string/themes_edittheme_flag_default" />
 
         <View android:id="@+id/hrRule"
             android:layout_width="0dp" android:layout_height="1dp"
@@ -90,7 +90,7 @@
                         android:layout_height="4dp"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:contentDescription="@string/configLabel_themeColorSpring"
+                        android:contentDescription="@string/themes_configLabel_themeColorSpring"
                         android:background="@drawable/ic_colortab" />
 
                     <com.forrestguice.support.widget.ImageView
@@ -99,7 +99,7 @@
                         android:layout_height="4dp"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:contentDescription="@string/configLabel_themeColorSummer"
+                        android:contentDescription="@string/themes_configLabel_themeColorSummer"
                         android:background="@drawable/ic_colortab" />
 
                     <com.forrestguice.support.widget.ImageView
@@ -108,7 +108,7 @@
                         android:layout_height="4dp"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:contentDescription="@string/configLabel_themeColorFall"
+                        android:contentDescription="@string/themes_configLabel_themeColorFall"
                         android:background="@drawable/ic_colortab" />
 
                     <com.forrestguice.support.widget.ImageView
@@ -117,7 +117,7 @@
                         android:layout_height="4dp"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:contentDescription="@string/configLabel_themeColorWinter"
+                        android:contentDescription="@string/themes_configLabel_themeColorWinter"
                         android:background="@drawable/ic_colortab" />
 
                 </LinearLayout>

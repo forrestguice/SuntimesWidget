@@ -76,7 +76,7 @@
                 android:id="@+id/dialog_button_neutral"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/today" />
+                android:text="@string/cardlabel_today" />
 
             <!--<View android:layout_width="0dp" android:layout_height="1dp" android:background="@null" android:layout_weight="1" />
 

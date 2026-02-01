@@ -4,17 +4,17 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/loadIntent"
-            android:title="@string/configAction_loadAction"
+            android:title="@string/actions_action_load"
             android:icon="?attr/icActionWidgets"
             app:showAsAction="never" />
 
         <item android:id="@+id/saveIntent"
-            android:title="@string/configAction_saveAction"
+            android:title="@string/actions_action_save"
             android:icon="?attr/icActionSave"
             app:showAsAction="never" />
 
         <item android:id="@+id/testIntent"
-            android:title="@string/configAction_testAction"
+            android:title="@string/actions_action_test"
             android:icon="?attr/icActionPlay"
             app:showAsAction="never" />
 

@@ -478,7 +478,7 @@ public class MoonDialog extends BottomSheetDialogBase
 
         String suffix = "";
         if (isOffset(nowMillis, dialogTimeMillis)) {
-            suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+            suffix = ((nowIsAfter) ? context.getString(R.string.cardlabel_past_today) : context.getString(R.string.cardlabel_future_today));
         }
 
         String timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dialogTime).toString();

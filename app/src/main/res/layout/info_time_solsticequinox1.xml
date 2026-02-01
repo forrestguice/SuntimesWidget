@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toStartOf="@+id/text_title"
         app:layout_constraintTop_toTopOf="@+id/text_title"
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
-        android:contentDescription="@string/prevYear" />
+        android:contentDescription="@string/action_prevYear" />
 
     <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/info_time_nextbtn"
@@ -63,7 +63,7 @@
         app:layout_constraintStart_toEndOf="@+id/text_title"
         app:layout_constraintTop_toTopOf="@+id/text_title"
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
-        android:contentDescription="@string/nextYear" />
+        android:contentDescription="@string/action_nextYear" />
 
     <!-- Row 0 (vernal equinox) -->
     <View android:id="@+id/focus_equinox_vernal" android:visibility="visible"

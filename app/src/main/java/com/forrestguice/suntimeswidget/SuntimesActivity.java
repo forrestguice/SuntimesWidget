@@ -1032,7 +1032,7 @@ public class SuntimesActivity extends AppCompatActivity
                     }
                 });
 
-                addWarning(context, WARNINGID_DATE, getString(R.string.dateWarning), card_view, getString(R.string.configAction_setDate), new View.OnClickListener()
+                addWarning(context, WARNINGID_DATE, getString(R.string.card_dateWarning), card_view, getString(R.string.configAction_setDate), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -1531,7 +1531,7 @@ public class SuntimesActivity extends AppCompatActivity
         datePicker.setMaxDate(endDate);
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
         datePicker.setOnNeutralListener(onSeekDateToday(datePicker));
-        datePicker.setNeutralButtonLabel(getString(R.string.today));
+        datePicker.setNeutralButtonLabel(getString(R.string.cardlabel_today));
 
         if (datetime != null) {
             Calendar calendar = Calendar.getInstance(dataset.timezone());

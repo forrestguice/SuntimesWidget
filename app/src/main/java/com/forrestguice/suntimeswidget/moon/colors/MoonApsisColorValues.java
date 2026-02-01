@@ -50,7 +50,7 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMoonApogeeText, R.string.configLabel_themeColorMoonPerigeeText
+                R.string.themes_configLabel_themeColorMoonApogeeText, R.string.themes_configLabel_themeColorMoonPerigeeText
         };
     }
     public int[] getColorRoles() {
@@ -102,7 +102,7 @@ public class MoonApsisColorValues extends ResourceColorValues implements Seriali
 
     @Override
     protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
-        return (darkTheme ? R.string.widgetThemes_dark : R.string.widgetThemes_light);
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
     public static MoonApsisColorValues getColorDefaults(Resources context, boolean darkTheme) {

@@ -157,7 +157,7 @@ public class ColorPickerFragment extends DialogBase
             case ColorPickerModel.PREVIEW_TEXT:
             default:
                 String text = colorViewModel.getPreviewText();
-                return (text != null) ? text : context.getString(R.string.configLabel_themeColorText);
+                return (text != null) ? text : context.getString(R.string.themes_configLabel_themeColorText);
         }
     }
 
