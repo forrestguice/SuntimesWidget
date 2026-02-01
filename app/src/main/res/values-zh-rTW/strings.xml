@@ -1072,8 +1072,6 @@
     <string name="configLabel_alarms_optWhiteList_unlisted">最佳化電池使用。\n鬧鐘至多可延遲 15 分鐘。</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> 索尼 STAMINA 模式啟用。\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message (sony devices only) -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">最佳化電池使用中。\n鬧鐘可能無法可靠地運作。</string>
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 須為 \"未最佳化\" 以獲得更好的更好的結果。</string>
-    <string name="help_battery_optimization_aggressive">這是一個 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 裝置，需要額外配置才能正常運作。</string>
 
     <string name="configLabel_alarms_autostart">自動啟動</string>
     <string name="configLabel_alarms_autostart_on">開啟</string>
@@ -1082,7 +1080,6 @@
     <string name="autostartWarning"><xliff:g id="warningTag">[w] 自動啟動被停用！\n重啟後鬧鐘可能無法可靠地運作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> 應用被限制！\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message -->
-    <string name="help_restricted_bucket">應用被置於罕見或受限應用待機類別中。鬧鐘可能無法可靠地運作。</string>
 
     <string name="configLabel_alarms_notifications">通知</string>
     <string name="configLabel_alarms_notifications_on">開啟</string>
@@ -1687,12 +1684,6 @@
     <string name="worldmap_dialog_speed_1d">&#215; 1天</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
-    <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\n為獲得最佳效果，請選擇與這些屬性匹配的影象。
-    </string>
-
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
@@ -2032,49 +2023,6 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">幫助</string>
-    <string name="help_appearance_allowresize"><![CDATA[
-      <big>交換佈局以填充可用空間</big><br/><br/>
-      <i><b>[啟用]</b></i> 小工具將根據可用空間在佈局之間切換。<br/><br/>
-      <i><b>[停用]</b></i> 調整大小時，小工具保持其初始佈局。將此與“<i>縮放文字和圖示</i>”選項一起作用於超大小工具。<br/>
-    ]]></string>
-    <string name="help_appearance_widgetlayout"><![CDATA[
-      該小工具是使用 <b>%1$s</b> <em>初始佈局</em> 建立的。<br/></br/>
-    ]]></string>
-    <string name="help_appearance_title"><![CDATA[
-       支援下列標題替換:<br/>
-        <br/>
-        <b>全部小工具:</b> <br />
-                * 日期: <b>%d</b>（例如: 2月12日）<br/>
-                * 日（短）: <b>%dd</b>（例如: 一）<br/>
-                * 日（長）: <b>%dD</b>（例如: 星期一）<br/>
-                * 年: <b>%dY</b>（例如: 2018）<br/>
-                * 時間（最近更新）: <b>%dt</b><br/>
-                * 含秒的時間（最近更新）: <b>%dT</b><br/>
-                <br/>
-                * 標籤: <b>%loc</b>（例如: 北京）<br />
-                * 緯度: <b>%lat</b> <br />
-                * 經度: <b>%lon</b> <br/>
-                * 高度: <b>%lel</b>（例如: 0米）<br/>
-                <br/>
-                * 資料來源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
-                * 時區: <b>%t</b>（例如: Asia/Beijing）<br/>
-                * appWidgetID: <b>%id</b><br/>
-         <br/>
-         <b>太陽小工具:</b> <br/>
-                * 模式（短）: <b>%m</b>（例如: 民用）<br/>
-                * 模式（長）: <b>%M</b>（例如: 民用暮光）<br/>
-                * 順序: <b>%o</b>（例如: 前一天/後一天，今天）<br/>
-         <br/>
-         <b>月亮小工具:</b> <br/>
-                * 月光飽滿度: <b>%i</b>（例如: 25%）<br/>
-                * 月相: <b>%M</b>（例如: 眉月）<br/>
-                * 順序: <b>%o</b>（例如: 前一天/後一天，今天）<br/>
-         <br/>
-         <b>至點小工具:</b> <br/>
-                * 模式（短）: <b>%m</b>（例如: 至點）<br/>
-                * 模式（長）: <b>%M</b>（例如: 冬至）<br/>
-                * 順序: <b>%o</b>（例如: 最近事件，即將發生事件）<br/>
-    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2091,134 +2039,6 @@
         <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
-
-    <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>日期格式:</b> 日期格式模式。<br/>
-          <br/>可用的元素可能因日曆而不同，但通常包含…<br/>
-          <br/>
-          <b>E</b>: 星期中日<br/>
-          <b>d</b>: 月中日<br/>
-          <b>D</b>: 年中日<br/>
-          <b>F</b>: 月中星期<br/>
-          <b>M</b>: 月份<br/>
-          <b>y</b>: 年份<br/>
-          <b>G</b>: 年代<br/>
-          <br/>
-    ]]></string>
-
-    <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising] 月出 \t\t[Icon Noon] 月亮正午
-          \n[Icon Setting] 月落 \t\t[Icon Midnight] 月亮午夜
-          \n\n分享 [Icon Share] 將複製文字到剪貼簿。
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
-
-    <string name="help_general_timeMode2_1"><![CDATA[
-          <b>春跨季節:</b> 冬至與春分的中點；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
-          <b>夏跨季節:</b> 春分與夏至的中點；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
-          <b>秋跨季節:</b> 夏至與秋分的中點；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
-          <b>冬跨季節:</b> 秋分與冬至的中點；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->
-
-    <string name="help_eventlist"><![CDATA[
-          [Icon OK] 選擇一個自定義事件。\n
-          [Icon Add] 新增 [Icon Edit] 編輯或 [Icon Delete] 刪除自定義事件。\n
-          \n自定義事件可被應用或小工具顯示，或被用於安排鬧鐘和通知。\n
-          [Icon View] 標記的事件被應用顯示。
-    ]]></string>
-
-    <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] 睡眠模式可用於在睡眠時間內設定<b>勿擾模式</b>。<br/>
-           <br/>
-           [Icon Reminder] 在睡眠前顯示提醒通知。<br/>
-           [Icon Alarm] 設定第二天早上的喚醒鬧鐘。<br/><br/>
-    ]]></string>
-
-    <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] 取消不進行變更。<br/>
-          [Icon Save] 儲存，[Icon Done] 儲存並啟用。<br/>
-          [Icon Cancel] 儲存並停用。<br/>
-          [Icon Delete] 取消並刪除。<br/>
-          <br/>
-          [Icon Offset] 當安排的時間在事件時間上有前後偏移時顯示。
-    ]]></string>
-
-    <string name="help_general_dst"><![CDATA[
-          <b>夏令時:</b> [Icon DST] 當當前時間適用於<b>夏令時</b>，或已被類似規則調整時展示。<br/><br/>
-    ]]></string>
-
-    <string name="help_general_actualTime"><![CDATA[
-          <b>實際時間:</b> 太陽到達地平線；準確的日出和日落時間。<br/>
-    ]]></string>
-    <string name="help_general_twilight"><![CDATA[
-          <b>民用曙暮光:</b> 太陽到達地平線下6度；最亮的星星仍然可見。對於大多數戶外運動來說已不用額外照明。<br/><br/>
-          <b>航海曙暮光:</b> 太陽到達地平線下12度；地平線和物體的輪廓非常模糊。對於大多數戶外運動來說光照不足。<br/><br/>
-          <b>天文曙暮光:</b> 太陽到達地平線下18度；和夜裡差不多。<br/>
-    ]]></string>
-    <string name="help_general_riseSetOrder"><![CDATA[
-          <b>今天:</b> 為今天的日期設定事件時間。<br/><br/>
-          <b>前/後:</b> 上一個事件的時間，以及下一個即將發生的事件。<br/>
-    ]]></string>
-
-    <string name="help_general_timeMode2"><![CDATA[
-          <b>春分:</b> 天文春天的開始；<em>三月</em>[北半球] 或 <em>九月</em>[南半球]。三月分點也被稱為<em>北分點</em>。<br/><br/>
-          <b>夏至:</b> 天文夏季的開始；<em>六月</em>[北半球] 或 <em>十二月</em>[南半球]。六月至點也被稱為<em>北至點</em>。<br/><br/>
-          <b>秋分:</b> 天文秋季的開始；<em>九月</em>[北半球] 或 <em>三月</em>[南半球]。九月分點也被稱為<em>南分點</em>。<br/><br/>
-          <b>冬至:</b> 天文冬季的開始；<em>十二月</em>[北半球] 或 <em>六月</em>[南半球]。十二月至點也稱為<em>南至點</em>。<br/>
-    ]]></string>
-    <string name="help_general_tropicalyear"><![CDATA[
-          <b>迴歸年:</b> 一個完整的季節迴圈。<em>迴歸年</em>的長度是從一個<em>三月分點</em>到下一個。平均<em>~365.24天</em>，確切的長度每年都不同（最多30分鐘）。<br/>
-    ]]></string>
-    <string name="help_general_daylength"><![CDATA[
-        <b>日光:</b> 日出到日落的時間。<br/><br/>
-        <b>天亮時間:</b> 從民用曙光到民用暮光的時間。<br/>
-    ]]></string>
-    <string name="help_general_moonillum"><![CDATA[
-        <b>月光飽滿度:</b> 月亮小工具和主頁會顯示午夜（月出和月落的中間點）時月光飽滿度，月亮對話方塊則會顯示當前時刻月光飽滿度。<br/><br/>
-    ]]></string>
-    <string name="help_general_goldhour"><![CDATA[
-        <b>黃金時刻:</b> 太陽位於地平線上方或下方6度之間。早上，黃金時刻以民用曙光開始，在日出一小段時間後結束。傍晚，黃金時刻在日落前一小段時間開始，以民用暮光結束。<br/>
-    ]]></string>
-    <string name="help_general_bluehour"><![CDATA[
-        <b>藍色時刻:</b> 太陽在地平線以下8度到4度之間。 藍色時刻開始和結束於航海曙暮光和民用曙暮光之間。<br/>
-    ]]></string>
-    <string name="help_action_launch"><![CDATA[
-        所有欄位均為可選。（如值為空則使用預設意圖）
-        <br/>
-        <br/>
-        <b>動作:</b> 動作字串。<br/><small>如 <em>android.intent.action.VIEW</em></small>
-        <br/>
-        <br/>
-        <b>包:</b> 包名。<br/><small>如 <em>app.package.name</em></small>
-        <br/>
-        <br/>
-        <b>類:</b> 完整的類名。<br/><small>如 <em>app.package.name.MainActivity</em></small>
-        <br/>
-        <br/>
-        <b>資料:</b> 包含或指向附帶資料的URI。支援<em>%</em>替換。<small>如 <em>geo:%lat,%lon</em></small>
-        <br/>
-        <br/>
-        <b>MIME:</b> 附帶資料的MIME型別。
-        <br/>
-        <br/>
-        <b>額外:</b> 包含額外值的由 <em>&amp;</em> 分割的字串。支援<em>%</em>替換。<br/><br/>值可為 <em>int</em>、<em>long</em>、<em>double</em>、<em>float</em>、<em>boolean</em> 或 String. <small>如 <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string>
-    <string name="help_widgetlist"><![CDATA[
-          如果要<b>新增一個小工具</b>，您需要去手機的主頁。<br/><br/>
-          如果要<b>配置一個已存在的小工具</b>，您可以從下面的列表中選擇。<br/>
-    ]]></string>
-    <string name="help_themelist">
-          [Icon Add] 新增一個新主題或 [Icon Copy] 從已有主題中複製一份。\n
-          \n
-          [Icon Edit] 編輯或 [Icon Delete] 刪除主題。\n
-          [Icon Default] 預設主題是不能被刪除的。
-    </string>
-
-    <string name="help_calendar"><![CDATA[向 Calendar 應用程式提供事件（月相、至點和分點）。<br />
-        <br />
-        <u><b><font color="#ff9900">日曆權限於 v0.10.0 被移除。</font></b></u><br />
-        <br />
-        此功能現在作為<a href="moreInfoLink">單獨的應用程式</a>使用
-    ]]></string>
 
     <string name="privacy_policy0"><![CDATA[<b>隱私:</b><br/>Suntimes 不會收集、儲存、傳輸個人使用者資料。它<b>沒有廣告</b>，<b>沒有使用者分析</b>，<b>沒有跟蹤器</b>，並且<b>不使用不必要的許可權</b>。]]></string>
     <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會收集、儲存、傳輸個人使用者資料。它<b>沒有廣告</b>，<b>沒有使用者分析</b>，<b>沒有跟蹤器</b>，並且<b>不使用不必要的許可權</b>。<br/><br/>本應用使用位置資訊來配置。位置資訊（和其他用來配置本應用的資料）儲存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
@@ -2253,16 +2073,5 @@
     <string name="calculator_displayString_time4a_noaa">遵循美國國家海洋和大氣管理局（NOAA）釋出的演算法。</string>
     <string name="calculator_displayString_time4a_cc">遵循 Dershowitz 和 Reingold 在他們的書籍《日曆計算》（"Calendrical Calculations"）（第三版）中釋出的演算法。</string>
     <string name="calculator_displayString_time4a_4j">基於 Jean Meeus 在他的書籍《天文演算法》（"Astronomical Algorithms"）（第二版）中釋出的天文計算。</string>
-    <string name="help_datasources">
-        <![CDATA[
-        Suntimes 使用第三方庫進行天文計算。<br/>
-        <br/>
-        <b>資料來源</b>設定允許在不同的庫之間進行選擇（或在這些庫提供的不同演算法之間進行選擇）。預設為 <b>time4a-time4j</b>。<br/>
-        <br/>
-        此設定會影響計算的速度和準確性，並且可能會限制可用的功能。<br/>
-        <br/>
-        有關可用選項的更多資訊，或擴充套件應用程式以支援其他庫，請參閱線上幫助。
-    ]]>
-    </string>
 
 </resources>

@@ -1175,8 +1175,6 @@
     <string name="configLabel_alarms_optWhiteList_unlisted">تحسين استخدام البطارية.\nقد تتأخر التنبيهات حتى 15 دقيقة.</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> وضع سوني STAMINA مفعل.\nقد تفشل التنبيهات في العمل بشكل موثوق.</string>  <!-- snackbar message (sony devices only) -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">تحسين استخدام البطارية.\nقد تفشل التنبيهات في العمل بشكل موثوق.</string>
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> يجب أن يكون "غير مُحسَّن" للحصول على أفضل النتائج.</string>
-    <string name="help_battery_optimization_aggressive">هذا الجهاز هو جهاز <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>، وقد يتطلب تكوين إضافي للعمل بشكل صحيح.</string>
 
     <string name="configLabel_alarms_autostart">تشغيل تلقائي</string>
     <string name="configLabel_alarms_autostart_on">مُفعل</string>
@@ -1185,7 +1183,6 @@
     <string name="autostartWarning"><xliff:g id="warningTag">[w] التشغيل التلقائي معطل!\nقد تفشل التنبيهات في العمل بعد إعادة التشغيل.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
-    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">الإشعارات</string>
     <string name="configLabel_alarms_notifications_on">مُفعل</string>
@@ -1885,12 +1882,6 @@
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
-    <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nلنتائج أفضل، اختر صورة بالمواصفات الآتية
-    </string>
-
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
@@ -2258,53 +2249,6 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">المساعدة</string>
-    <string name="help_appearance_allowresize"><![CDATA[
-      <big>تبديل التخطيطات لملء المساحة المتاحة</big><br/><br/>
-      <i><b>[مُمكّن]</b></i> سيقوم الويدجت بالتبديل بين التخطيطات اعتمادًا على المساحة المتاحة.<br/><br/>
-      <i><b>[مُعطّل]</b></i> يحتفظ الويدجت بتخطيطه الأولي عند تغيير الحجم. استخدم هذا مع الخيار "<i>تكبير النصوص والرموز</i>" للويدجتات الكبيرة الإضافية.
-    ]]></string>
-    <string name="help_appearance_widgetlayout"><![CDATA[
-      تم إنشاء هذا الويدجت بتخطيط <b>%1$s</b> <em>أولي</em>.<br/></br/>
-    ]]></string>
-    <string name="help_appearance_title"><![CDATA[
-        يتم دعم الاستبدالات التالية للعنوان:<br/>
-        <br/>
-        <b>جميع الويدجتات:</b> <br />
-                * <b>%d</b> للتاريخ (مثال: 12 فبراير) <br/>
-                * <b>%dd</b> لليوم (قصير) (مثال: الاثنين) <br/>
-                * <b>%dD</b> لليوم (طويل) (مثال: الاثنين) <br/>
-                * <b>%dY</b> للسنة (مثال: 2018) <br/>
-                * <b>%dt</b> للوقت (آخر تحديث) <br/>
-                * <b>%dT</b> للوقت بالثواني (آخر تحديث) <br/>
-                * <b>%dm</b> للمللي ثانية (آخر تحديث) <br/>
-                <br/>
-                * <b>%loc</b> للتسمية (مثال: فينيكس) <br />
-                * <b>%lat</b> للخط العرض <br />
-                * <b>%lon</b> للخط الطول <br/>
-                * <b>%lel</b> للارتفاع (مثال: 385 متر) <br/>
-                <br/>
-                * <b>%s</b> لمصدر البيانات (مثال: sunrisesunsetlib) <br/>
-                * <b>%t</b> للمنطقة الزمنية (المعرف) (مثال: US/Arizona) <br/>
-                * <b>%id</b> لمعرف الويدجت التطبيقي <br/>
-         <br/>
-         <b>ويدجتات التاريخ:</b> <br/>
-                * <b>%M</b> للوضع (مثال: ميلادي) <br/>
-         <br/>
-         <b>ويدجتات الشمس:</b> <br/>
-                * <b>%m</b> للوضع (قصير) (مثال: مدني) <br/>
-                * <b>%M</b> للوضع (طويل) (مثال: الشفق المدني) <br/>
-                * <b>%o</b> للترتيب (مثال: الأخير/التالي، اليوم) <br/>
-         <br/>
-         <b>ويدجتات القمر:</b> <br/>
-                * <b>%i</b> لإضاءة القمر (مثال: 25%) <br/>
-                * <b>%M</b> لمرحلة القمر (مثال: هلال متزايد) <br/>
-                * <b>%o</b> للترتيب (مثال: الأخير/التالي، اليوم) <br/>
-         <br/>
-         <b>ويدجتات الانقلاب الشتوي:</b> <br/>
-                * <b>%m</b> للوضع (قصير) (مثال: الانقلاب الشتوي) <br/>
-                * <b>%M</b> للوضع (طويل) (مثال: الانقلاب الشتوي) <br/>
-                * <b>%o</b> للترتيب (مثال: الحدث الأقرب، الحدث القادم) <br/>
-    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2321,161 +2265,6 @@
         <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
-
-    <string name="help_general_calendarFormatPattern"><![CDATA[
-      <b>نمط تنسيق التاريخ:</b> نمط لتنسيق التاريخ.<br/>
-      <br/>قد تختلف العناصر المتاحة بين التقاويم، ولكن عادة ما تشمل..<br/>
-      <br/>
-      <b>E</b> : يوم من الأسبوع <br/>
-      <b>d</b> : يوم من الشهر <br/>
-      <b>D</b> : يوم من السنة <br/>
-      <b>F</b> : يوم أسبوعي في الشهر <br/>
-      <b>M</b> : شهر من السنة <br/>
-      <b>y</b> : سنة من العصر <br/>
-      <b>G</b> : عصر <br/>
-      <br/>
-    ]]></string>
-
-    <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  بزوغ القمر \t\t[Icon Noon]  زوال القمر
-          \n[Icon Setting]  افول القمر \t\t[Icon Midnight]  منتصف الليل القمري
-          \n\nمشاركة [Icon Share] ستنسخ النص إلى الحافظة.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
-
-    <string name="help_general_timeMode2_1"><![CDATA[
-          <b>إمبولك (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الشتوي وميزان الربيع؛ <em>فبراير</em> [northern hemisphere]، أو <em>أغسطس</em> [southern hemisphere].<br/><br/>
-          <b>بيلتان (الربع الفاصل):</b> نقطة منتصف الطريق بين ميزان الربيع والانقلاب الصيفي؛ <em>مايو</em> [northern hemisphere]، أو <em>نوفمبر</em> [southern hemisphere].<br/><br/>
-          <b>لوناسا (الربع الفاصل):</b> نقطة منتصف الطريق بين الانقلاب الصيفي والميزان الخريفي؛ <em>أغسطس</em> [northern hemisphere]، أو <em>فبراير</em> [southern hemisphere].<br/><br/>
-          <b>سمهوين (الربع الفاصل):</b> نقطة منتصف الطريق بين الميزان الخريفي والانقلاب الشتوي؛ <em>نوفمبر</em> [northern hemisphere]، أو <em>مايو</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO: update (see default strings.xml); e.g. "Imbolc" to "Spring/Summer Cross-Quarter" -->
-
-    <string name="help_eventlist"><![CDATA[
-          [Icon OK] اختر حدثاً مخصصاً .\n
-          [Icon Add] أضف، [Icon Edit] عدل، أو [Icon Delete] احذف.\n
-          \nالأحداث الخاصة بالإمكان عرضها في التطبيق، أو في الويدجت، أو تُستعمل لجدولة تنبيهات وإشعارات.\n
-          [Icon View] الأحداث المعلمة سيعرضها التطبيق.
-    ]]></string>
-
-    <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
-           <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
-
-    <string name="help_alarms_edit"><![CDATA[
-      [Icon Back] للإلغاء دون إجراء تغييرات.<br/>
-      [Icon Save] للحفظ، و [Icon Done] للحفظ والتمكين.<br/>
-      [Icon Cancel] للحفظ والتعطيل.<br/>
-      [Icon Delete] للإلغاء والحذف.<br/>
-      <br/>
-      [Icon Offset] يظهر عندما يتم تعيين الوقت المجدول بتعويض قبل أو بعد وقت الحدث.
-]]></string>
-
-    <string name="help_general_dst"><![CDATA[
-        <b>Day Light Saving:</b> [Icon DST] يُعرض عندما يتم تطبيق الوقت الحالي <b>DST</b>، أو تم تعديله بواسطة قاعدة مماثلة.<br/><br/>
-    ]]></string>
-    <string name="help_general_actualTime"><![CDATA[
-        <b>Actual Time:</b> الوقت التقريبي لشروق الشمس وغروبها.<br/>
-    ]]></string>
-    <string name="help_general_twilight"><![CDATA[
-        <b>Civil Twilight:</b> الشمس على بُعد 6 درجات تحت الأفق؛ تكون النجوم الألمع واضحة. يوجد كافة الضوء اللازم لمعظم الأنشطة في الهواء الطلق دون الحاجة إلى إضاءة.<br/><br/>
-        <b>Nautical Twilight:</b> الشمس على بُعد 12 درجة تحت الأفق؛ يبدأ تلاشي ملامح الأجسام والأفق. لا يوجد كافة الضوء اللازم لمعظم الأنشطة في الهواء الطلق دون الحاجة إلى إضاءة.<br/><br/>
-        <b>Astronomical Twilight:</b> الشمس على بُعد 18 درجة تحت الأفق. الظلام الكامل لليل.<br/>
-    ]]></string>
-    <string name="help_general_riseSetOrder"><![CDATA[
-        <b>Today:</b> أوقات حدوث الشروق والغروب لتاريخ اليوم.<br/><br/>
-        <b>Last / Next:</b> وقت آخر حدث، والحدث القادم.<br/>
-    ]]></string>
-
-    <string name="help_general_timeMode2"><![CDATA[
-      <b>انقلاب الربيع:</b> بداية الربيع الفلكي؛ <em>مارس</em> [نصف الكرة الشمالي]، أو <em>سبتمبر</em> [نصف الكرة الجنوبي]. يُسمى أيضًا استواء مارس.<br/><br/>
-      <b>انقلاب الصيف:</b> بداية الصيف الفلكي؛ <em>يونيو</em> [نصف الكرة الشمالي]، أو <em>ديسمبر</em> [نصف الكرة الجنوبي]. يُسمى أيضًا الانقلاب الشمالي.<br/><br/>
-      <b>اعتدال الخريف:</b> بداية الخريف الفلكي؛ <em>سبتمبر</em> [نصف الكرة الشمالي]، أو <em>مارس</em> [نصف الكرة الجنوبي]. يُسمى أيضًا استواء سبتمبر.<br/><br/>
-      <b>انقلاب الشتاء:</b> بداية الشتاء الفلكي؛ <em>ديسمبر</em> [نصف الكرة الشمالي]، أو <em>يونيو</em> [نصف الكرة الجنوبي]. يُسمى أيضًا الانقلاب الجنوبي.<br/>
-]]></string>   <!-- help contents: solstice/equinoxes (quarter days) -->
-
-<string name="help_general_tropicalyear"><![CDATA[
-      <b>السنة الاستوائية:</b> دورة كاملة للفصول الأربعة. يُقاس طول الـ <em>السنة الاستوائية</em> من استواء مارس إلى الاستواء التالي. يبلغ طوله <em>~365.24 يومًا</em> في المتوسط، مع طول دقيق يتغير كل عام (يصل إلى 30 دقيقة).<br/>
-]]></string>
-
-<string name="help_general_solartime"><![CDATA[
-      <b>الوقت الشمس الظاهري:</b> وقت الساعة الشمسية. الوقت المحدد عن طريق تتبع حركة الشمس الظاهرة بالنسبة لخط الطول والعرض المعطى.
-      <br/><br/>
-      حركة الشمس الظاهرة ليست ثابتة. تتغير موسميًا بسبب ميلان السمت وانحراف مدار الأرض.
-      طول كل يوم شمسي ظاهري، المقاس من الظهر إلى الظهر التالي، قد يكون أطول أو أقصر قليلاً من 24 ساعة (يصل إلى 30 ثانية).
-      هذه التغييرات الصغيرة تتراكم مع كل يوم مرورًا (وتتوسط على مدى السنة).
-      <br/><br/>
-
-      <b>التوقيت المحلي:</b> الوقت الساعي المحلي. الوقت المحدد من موقع الشمس الوسطى بالنسبة لخط الطول المعطى.
-      <br/><br/>
-      حركة الشمس الوسطى تصحح لميل السمت وانحراف المدار وهي متساوية.
-      طول كل يوم شمسي وسطي هو بالضبط 24 ساعة.<br/><br/>
-
-      <b>معادلة الوقت:</b> الفرق بين الوقت الساعي المحلي ووقت الساعة الشمسية الظاهرة.
-      هذا هو التغيير المتراكم لليوم الشمسي الظاهري.
-      <br/><br/>
-      يمكن أن يختلف وقت الساعة الشمسية الظاهرة عن الوقت الساعي المحلي بما يصل إلى 16 دقيقة اعتمادًا على الموسم.
-      <br/><br/>
-
-      <i>يستخدم هذا التطبيق خوارزمية لحساب معادلة الوقت (واستنتاج الوقت الشمسي الظاهري).
-      يُستخدم موقعك لتحديد الوقت الساعي المحلي.</i>
-      <br/><br/>
-]]></string>
-
-    <string name="help_general_daylength"><![CDATA[
-    <b>طول النهار:</b> كمية الوقت بين شروق الشمس وغروبها.<br/><br/>
-    <b>الضوء المستخدم:</b> كمية الوقت بين الفجر والغسق المدنيين.<br/>
-]]></string>
-<string name="help_general_moonillum"><![CDATA[
-    <b>إضاءة القمر:</b> يعرض الصفحة الرئيسية إضاءة القمر عند ظهيرة القمر، بينما يعرض حوار القمر الإضاءة الحالية للقمر.<br/>
-]]></string>
-<string name="help_general_goldhour"><![CDATA[
-    <b>الساعة الذهبية:</b> تكون الشمس بين 6 درجات فوق أو تحت الأفق. في الصباح، تبدأ الساعة الذهبية مع الفجر المدني وتنتهي بعد وقت قصير من شروق الشمس. في المساء، تبدأ الساعة الذهبية قبل وقت قصير من غروب الشمس وتنتهي مع الغسق المدني.<br/>
-]]></string>
-<string name="help_general_bluehour"><![CDATA[
-    <b>الساعة الزرقاء:</b> تكون الشمس بين 8 درجات و 4 درجات تحت الأفق. يقع بداية ونهاية الساعة الزرقاء بين الفجر البحري والفجر المدني.<br/>
-]]></string>
-<string name="help_action_launch"><![CDATA[
-    جميع الحقول اختيارية (يمكن ترك القيم فارغة لـ <em>نية ضمنية</em>).
-    <br/>
-    <br/>
-    <b>الإجراء:</b> سلسلة إجراء.<br/><small>مثال: <em>android.intent.action.VIEW</em></small>
-    <br/>
-    <br/>
-    <b>الحزمة:</b> اسم حزمة.<br/><small>مثال: <em>app.package.name</em></small>
-    <br/>
-    <br/>
-    <b>الفئة:</b> اسم فئة كامل.<br/><small>مثال: <em>app.package.name.MainActivity</em></small>
-    <br/>
-    <br/>
-    <b>البيانات:</b> يوري يحتوي على بيانات مرفقة أو يشير إليها. يدعم الاستبدالات <em>%s</em>. <small>مثال: <em>geo:%lat,%lon</em></small>
-    <br/>
-    <br/>
-    <b>نوع Mime:</b> نوع mime للبيانات المرفقة.
-    <br/>
-    <br/>
-    <b>إضافات:</b> سلسلة محددة بواسطة <em>&amp;</em> تحتوي على قيم إضافية. يدعم الاستبدالات <em>%s</em>.<br/><br/>القيم يمكن أن تكون <em>int</em>، <em>long</em>، <em>double</em>، <em>float</em>، <em>boolean</em> أو String. <small>مثال: <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-]]></string>
-<string name="help_widgetlist"><![CDATA[
-    لـ <b>إضافة</b> أو <b>إزالة</b> عنصر واجهة المستخدم يجب عليك الانتقال إلى شاشة البداية.<br/><br/>
-    لـ <b>إعادة تكوين</b> عنصر واجهة المستخدم الحالي يمكنك اختيار من القائمة التالية.<br/>
-]]></string>
-
-    <!--<string name="help_alarmclock" />-->
-     <string name="help_themelist">
-        [Icon Add] إضافة سمة جديدة أو [Icon Copy] نسخ من سمة موجودة.\n
-        \n
-        [Icon Edit] تحرير أو [Icon Delete] حذف السمات.\n
-        السمات [Icon Default] الافتراضية لا يمكن تعديلها.\n
-    </string>
-
-    <string name="help_calendar"><![CDATA[تزويد التطبيق بالأحداث إلى تطبيق التقويم (مراحل القمر، والانقلابات الشمسية، والاعتدالات).<br />
-        <br />
-        <u><b><font color="#ff9900">تم إزالة دمج التقويم في الإصدار 0.10.0.</font></b></u><br />
-        <br />
-        هذه الميزة متاحة الآن كتطبيق <a href="moreInfoLink">منفصل</a>.
-    ]]></string>
 
    <string name="privacy_policy0"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>.]]></string>  <!-- brief statement (welcome dialog) -->
 <string name="privacy_policy"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>. <br/><br/>يتم تكوين التطبيق من بيانات الموقع. هذه المعلومات (وغيرها من بيانات التكوين المستخدمة من قبل التطبيق) تُخزن محليًا ولا تغادر الجهاز.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
@@ -2510,16 +2299,6 @@
     <string name="calculator_displayString_time4a_noaa">تتبع خوارزميات نشرتها الإدارة الوطنية للمحيطات والغلاف الجوي.</string>
     <string name="calculator_displayString_time4a_cc">تتبع خوارزميات نشرتها Dershowitz/Reingold في كتابهم "Calendrical Calculations" (الطبعة الثالثة).</string>
     <string name="calculator_displayString_time4a_4j">مستندة إلى الحسابات الفلكية التي نشرها Jean Meeus في كتابه "Astronomical Algorithms" (الطبعة الثانية).</string>
-    <string name="help_datasources">
-        <![CDATA[
-        يستخدم Suntimes مكتبات من جهات خارجية لأداء الحسابات الفلكية.<br/>
-        <br/>
-        إعداد <b>مصدر البيانات</b> يتيح اختيار بين مكتبات مختلفة (أو اختيار بين خوارزميات مختلفة تقدمها تلك المكتبات). الافتراضي هو <b>time4a-time4j</b>.<br/>
-        <br/>
-        يؤثر هذا الإعداد على سرعة ودقة الحسابات، وقد يقتصر على الميزات المتاحة. <br/>
-        <br/>
-        لمزيد من المعلومات حول الخيارات المتاحة، أو توسيع التطبيق لدعم مكتبات أخرى، انظر إلى المساعدة عبر الإنترنت.
-    ]]>
-    </string>
+
 
 </resources>

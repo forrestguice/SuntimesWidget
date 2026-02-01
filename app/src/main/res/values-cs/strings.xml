@@ -1117,8 +1117,6 @@
     <string name="configLabel_alarms_optWhiteList_unlisted">Využití baterie je optimalizováno.\nBudíky mohou být zpožděny až o 15 minut.</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
-    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
     <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
@@ -1127,7 +1125,6 @@
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
     <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
-    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Notifikace</string>
     <string name="configLabel_alarms_notifications_on">Zapnuty</string>
@@ -1776,12 +1773,6 @@
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
-    <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nPro nejlepší výsledek zvolte obrázek odpovídající těmto proporcím.
-    </string>
-
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
@@ -2132,50 +2123,6 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Nápověda</string>
-    <string name="help_appearance_allowresize"><![CDATA[
-      <big>Automaticky měnit rozvržení pro vyplnění dostupného prostoru</big><br/><br/>
-      <i><b>[zapnuto]</b></i> Widget bude měnit rozvržení v závislosti na dostupném prostoru na ploše.<br/><br/>
-      <i><b>[vypnuto]</b></i> Widget zachová své původní rozvržení když bude změněna jeho velikost. Použijte s možností \"<i>škálovat text a ikony</i>\" pro extra velké widgety.<br/>
-    ]]></string>
-    <string name="help_appearance_widgetlayout"><![CDATA[
-      Tento widget byl vytvořen s <b>%1$s</b> <em>počátčním rozvržením</em>.<br/></br/>
-    ]]></string>
-    <string name="help_appearance_title"><![CDATA[
-        Jsou podporovány následující záměny:<br/>
-        <br/>
-        <b>Všechny widgety:</b> <br />
-                * <b>%d</b> pro datum (např. 12. prosince) <br/>
-                * <b>%dd</b> pro den (krátké) (např. Pon) <br/>
-                * <b>%dD</b> pro den (dlouhé) (např. Pondělí) <br/>
-                * <b>%dY</b> pro rok (např. 2018) <br/>
-                * <b>%dt</b> pro čas (poslední aktualizace) <br/>
-                * <b>%dT</b> pro čas včetně vteřin (poslední aktualizace) <br/>
-                * <b>%dm</b> pro milisekundy (poslední aktualizace) <br/>
-                <br/>
-                * <b>%loc</b> pro nadpis (např. Prague) <br />
-                * <b>%lat</b> pro zeměpisnou šířku <br />
-                * <b>%lon</b> pro zeměpisnou délku <br/>
-                * <b>%lel</b> pro nadmořskou výšku (např. 361 metrů) <br/>
-                <br/>
-                * <b>%s</b> pro zdroj dat (např. sunrisesunsetlib) <br/>
-                * <b>%t</b> pro časové pásmo (id) (např. CET) <br/>
-                * <b>%id</b> pro appWidgetID <br/>
-         <br/>
-         <b>Sluneční widget:</b> <br/>
-                * <b>%m</b> pro režim (krátký) (např. Občasnký) <br/>
-                * <b>%M</b> pro režim (dlouhý) (např. Občanský soumrak) <br/>
-                * <b>%o</b> pro pořadí (např. Poslední/Další, Dnes) <br/>
-         <br/>
-         <b>Měsíční widget:</b> <br/>
-                * <b>%i</b> pro osvícenost Měsíce (např. 25%) <br/>
-                * <b>%M</b> pro fázi Měsíce (např Dorůstající srpek) <br/>
-                * <b>%o</b> pro pořadí (např. Poslední/Další, Dnes) <br/>
-         <br/>
-         <b>Widget slunovratů:</b> <br/>
-                * <b>%m</b> pro režim (krátký) (např. Slunovrat) <br/>
-                * <b>%M</b> pro režim (dlouhý) (např. Zimní slunovrat) <br/>
-                * <b>%o</b> pro pořadí (např. Nejbližší událost, Nadcházející událost) <br/>
-    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -2192,158 +2139,6 @@
         <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
-
-    <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
-          <br/>
-          <b>E</b> : day of week <br/>
-          <b>d</b> : day of month <br/>
-          <b>D</b> : day of year <br/>
-          <b>F</b> : weekday in month <br/>
-          <b>M</b> : month of year <br/>
-          <b>y</b> : year of era <br/>
-          <b>G</b> : era <br/>
-          <br/>
-    ]]></string>    <!-- TODO -->
-
-    <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
-
-    <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
-
-    <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
-
-    <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
-           <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
-
-    <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] to cancel without making changes.<br/>
-          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
-          [Icon Cancel] to save and disable.<br/>
-          [Icon Delete] to cancel and delete.<br/>
-          <br/>
-          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
-
-    <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
-
-    <string name="help_general_actualTime"><![CDATA[
-          <b>Skutečný čas:</b> Přibližný čas východu a západu slunce.<br/>
-    ]]></string>
-    <string name="help_general_twilight"><![CDATA[
-          <b>Občanský soumrak:</b> Slunce je 6 stupňů pod obzorem; jsou vidět nejjasnější hvězdy. Je zde dostatek světla pro většinu outdoorových aktivit, aniž byste potřebovali světlo.<br/><br/>
-          <b>Nautický soumrak:</b> Slunce je 12 stupňů pod obzorem; obrysy objektu a horizont jsou čím dál méně jasné. Pro většinu outdoorových aktivit není dostatek světla, aniž byste potřebovali dodatečné světlo.<br/><br/>
-          <b>Astronomický soumrak:</b> Slunce je 18 stupňů pod obzorem. Tma je blízká noci.<br/>
-    ]]></string>
-    <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Dnešní:</b> Časy východů a západů událostí pro dnešní datum.<br/><br/>
-          <b>Poslední / Další:</b> Čas poslední události a další nadcházející událost.<br/>
-    ]]></string>
-
-    <string name="help_general_timeMode2"><![CDATA[
-          <b>Jarní rovnodennost:</b> Začátek astronomického jara; <em>Březen</em> [severní polokoule], nebo <em>Září</em> [jižní polokoule]. Březnová rovnodennost se také nazývá <em>severní rovnodennost</em>.<br/><br/>
-          <b>Letní slunovrat:</b> Začátek astronomického léta; <em>Červen</em> [severní polokoule], nebo <em>Prosinec</em> [jižní polokoule]. Červnový slunovrat se také nazývá <em>severní slunovrat</em>.<br/><br/>
-          <b>Podzimní rovnodennost:</b> Začátek astronomického podzimu; <em>Září</em> [severní polokoule], nebo <em>Březen</em> [jižní polokoule]. Zářijová rovnodennost se také nazývá <em>jižní rovnodennost</em>.<br/><br/>
-          <b>Zimní slunovrat:</b> Začátek astronomické zimy; <em>Prosinec</em> [severní polokoule], nebo <em>Červen</em> [jižní polokoule]. Prosincový slunovrat se také nazývá <em>jižní slunovrat</em>.<br/>
-    ]]></string>
-    <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropický rok:</b> Úplný cyklus ročních období. Délka <em>tropického roku</em> se měří od jedné <em>březnové rovnodennosti</em> do druhé. V průměru trvá <em>~365,24 dne</em>, přičemž přesná délka se každý rok mění (až o 30 minut).<br/>
-    ]]></string>
-    <string name="help_general_solartime"><![CDATA[
-          <b>Pravý sluneční čas:</b> Čas slunečních hodin. Čas určený sledováním pohybu zdánlivého slunce vzhledem k dané zeměpisné délce a šířce.
-          <br/><br/>
-          Pohyb pravého slunečního času není konstantní. Sezónně se mění v důsledku šikmosti ekliptiky a excentricity zemské oběžné dráhy.
-          Délka každého zdánlivého slunečního dne, měřená od jednoho poledne do druhého, může být o něco delší nebo kratší než 24 hodin (až 30 s).
-          Tyto malé odchylky se hromadí s každým dalším dnem (a v průběhu roku se zprůměrují).
-          <br/><br/>
-
-          <b>Střední sluneční čas:</b> Čas na hodinách. Čas určený z polohy středního slunce vzhledem k dané zeměpisné délce.
-          <br/><br/>
-          Pohyb středního slunce koriguje šikmost a excentricitu a je rovnoměrný.
-          Délka každého středního slunečního dne je přesně 24 hodin.<br/><br/>
-
-          <b>Časová rovnice (EOT):</b> Rozdíl mezi místním středním časem a pravým slunečním časem.
-          Toto je akumulovaná změna pravého slunečního dne.
-          <br/><br/>
-          Pravý sluneční čas se může lišit od místního středního času až o 16 minut v závislosti na ročním období.
-          <br/><br/>
-
-          <i>Tato aplikace používá algoritmus k výpočtu časové rovnice (a odvození pravého slunečního času).
-          Vaše poloha se používá k určení místního středního času.</i>
-          <br/><br/>
-
-    ]]></string>
-    <string name="help_general_daylength"><![CDATA[
-        <b>Délka dne:</b> Doba mezi východem a západem slunce.<br/><br/>
-        <b>Použitelné světlo:</b> Doba mezi ranním a večerním občanským soumrakem.<br/>
-    ]]></string>
-    <string name="help_general_moonillum"><![CDATA[
-        <b>Osvícenost měsíce:</b> Hlavní stránka zobrazuje osvícení měsíce v měsíční poledne, zatímco dialogové okno Měsíc zobrazuje aktuální osvícení Měsíce.<br/>
-    ]]></string>
-    <string name="help_general_goldhour"><![CDATA[
-        <b>Zlatá hodina:</b> Slunce je mezi 6 stupni nad nebo pod obzorem. Ráno zlatá hodina začíná občanským soumrakem a končí krátce po východu slunce. Večer zlatá hodina začíná krátce před západem slunce a končí občanským soumrakem.<br/>
-    ]]></string>
-    <string name="help_general_bluehour"><![CDATA[
-        <b>Modrá hodina:</b> Slunce je mezi 8 a 4 stupni pod obzorem. Začátek a konec modré hodiny spadá mezi nautický a civilní soumrak.<br/>
-    ]]></string>
-    <string name="help_action_launch"><![CDATA[
-        Navštivte <b>Intents and Intent Filters</b> <small>(https://developer.android.com/guide/components/intents-filters)</small>.
-        <br/><br/>
-        Všechna pole jsou volitelná (hodnoty mohou být ponechány prázdné pro <em>implicit intent</em>).
-        <br/>
-        <br/>
-        <b>Akce:</b> Řetězec pro akci.<br/><small>např. <em>android.intent.action.VIEW</em></small>
-        <br/>
-        <br/>
-        <b>Třída:</b> Plně kvalifikovaný název třídy.<br/><small>např. <em>suntimeswidget.SuntimesActivity</em></small>
-        <br/>
-        <br/>
-        <b>Data:</b> Uri, který obsahuje připojená data nebo na ně odkazuje. Podporuje <em>%s</em>ubstitutions. <small>např. <em>geo:%lat,%lon</em></small>
-        <br/>
-        <br/>
-        <b>Mime:</b> MIME typ přiložených dat.
-        <br/>
-        <br/>
-        <b>Extra:</b> Řetězec oddělený <em>&amp;</em> obsahující extra parametry. Podporuje <em>%s</em>ubstitutions.<br/><br/>Hodnoty mohou být <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> nebo String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string> <!-- TODO: added Package: -->
-    <string name="help_widgetlist"><![CDATA[
-          Pro <b>přidání</b> nebo <b>odebrání</b> widgetu musíte být na domovské obrazovce.<br/><br/>
-          Pro <b>přenastavení</b> existujícího widgetu ho můžete vybrat z následujícího seznamu.<br/>
-    ]]></string>
-    <!--<string name="help_alarmclock" />-->
-    <string name="help_themelist">
-          [Icon Add] Přidat nové téma nebo [Icon Copy] kopírovat z exitujícího tématu.\n
-          \n
-          [Icon Edit] Upravit nebo [Icon Delete] smazat témata.\n
-          [Icon Default] výchozí témata nemohou být upravena.\n
-    </string>
-
-    <string name="help_calendar"><![CDATA[Přidejte událost do kalendářní aplikace (fáze Měsíce, slunovraty a rovnodennosti).<br />
-        <br />
-        <u><b><font color="#ff9900">Integrace s kalendářem byla odstaněna.</font></b></u><br />
-        <br />
-        Tato funkce je nyní dostupná jako <a href="moreInfoLink">oddělená aplikace</a>.
-    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="privacy_policy0"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>. <br/><br/>Aplikace je nakonfigurována na základě údajů o poloze. Tyto informace (a další konfigurační data používaná aplikací) jsou uloženy lokálně a neopouštějí zařízení.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
@@ -2378,16 +2173,5 @@
     <string name="calculator_displayString_time4a_noaa">Řídí se algoritmy zveřejněnými Národním úřadem pro oceán a atmosféru.</string>
     <string name="calculator_displayString_time4a_cc">Dodržuje algoritmy publikované Dershowitzem/Reingoldem v jejich knize "Calendrical Calculations" (třetí vydání).</string>
     <string name="calculator_displayString_time4a_4j">Na základě astronomických výpočtů publikovaných Jeanem Meeusem ve své knize "Astronomické algoritmy" (druhé vydání).</string>
-    <string name="help_datasources">
-        <![CDATA[
-        Suntimes používá k provádění astronomických výpočtů knihovny třetích stran.<br/>
-        <br/>
-        Nastavení <b>zdroje dat</b> umožňuje výběr mezi různými knihovnami (nebo výběr mezi různými algoritmy nabízenými těmito knihovnami). Výchozí je <b>time4a-time4j</b>.<br/>
-        <br/>
-        Toto nastavení ovlivňuje rychlost a přesnost výpočtů a může omezovat dostupné funkce.<br/>
-        <br/>
-        Další informace o dostupných možnostech nebo o rozšíření aplikace o podporu dalších knihoven najdete v online nápovědě.
-    ]]>
-    </string>
 
 </resources>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> 须为 \"未优化\" 以获得更好的更好的结果。</string>
+    <string name="help_battery_optimization_aggressive">这是一个 <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> 设备，需要额外配置才能正常运作。</string>
+    <string name="help_restricted_bucket">应用被置于罕见或受限应用待机类别中。闹钟可能无法可靠地运作。</string>
+
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes 使用第三方库进行天文计算。<br/>
+        <br/>
+        <b>数据源</b>设置允许在不同的库之间进行选择（或在这些库提供的不同算法之间进行选择）。默认为 <b>time4a-time4j</b>。<br/>
+        <br/>
+        此设置会影响计算的速度和准确性，并且可能会限制可用的功能。<br/>
+        <br/>
+        有关可用选项的更多信息，或扩展应用程序以支持其他库，请参阅在线帮助。
+    ]]>
+    </string>
+
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>交换布局以填充可用空间</big><br/><br/>
+      <i><b>[启用]</b></i> 小部件将根据可用空间在布局之间切换。<br/><br/>
+      <i><b>[禁用]</b></i> 调整大小时，小部件保持其初始布局。将此与“<i>缩放文本和图标</i>”选项一起作用于超大小部件。<br/>
+    ]]></string>
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      该小部件是使用 <b>%1$s</b> <em>初始布局</em> 创建的。<br/></br/>
+    ]]></string>
+    <string name="help_appearance_title"><![CDATA[
+       支持下列标题替换:<br/>
+        <br/>
+        <b>全部小部件:</b> <br />
+                * 日期: <b>%d</b>（例如: 2月12日）<br/>
+                * 日（短）: <b>%dd</b>（例如: 一）<br/>
+                * 日（长）: <b>%dD</b>（例如: 周一）<br/>
+                * 年: <b>%dY</b>（例如: 2018）<br/>
+                * 时间（最近更新）: <b>%dt</b><br/>
+                * 含秒的时间（最近更新）: <b>%dT</b><br/>
+                <br/>
+                * 标签: <b>%loc</b>（例如: 北京）<br />
+                * 纬度: <b>%lat</b> <br />
+                * 经度: <b>%lon</b> <br/>
+                * 高度: <b>%lel</b>（例如: 0米）<br/>
+                <br/>
+                * 数据源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
+                * 时区: <b>%t</b>（例如: Asia/Beijing）<br/>
+                * appWidgetID: <b>%id</b><br/>
+         <br/>
+         <b>太阳小部件:</b> <br/>
+                * 模式（短）: <b>%m</b>（例如: 民用）<br/>
+                * 模式（长）: <b>%M</b>（例如: 民用暮光）<br/>
+                * 顺序: <b>%o</b>（例如: 前一天/后一天，今天）<br/>
+         <br/>
+         <b>月亮小部件:</b> <br/>
+                * 月光饱满度: <b>%i</b>（例如: 25%）<br/>
+                * 月相: <b>%M</b>（例如: 眉月）<br/>
+                * 顺序: <b>%o</b>（例如: 前一天/后一天，今天）<br/>
+         <br/>
+         <b>至点小部件:</b> <br/>
+                * 模式（短）: <b>%m</b>（例如: 至点）<br/>
+                * 模式（长）: <b>%M</b>（例如: 冬至）<br/>
+                * 顺序: <b>%o</b>（例如: 最近事件，即将发生事件）<br/>
+    ]]></string>
+
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>日期格式:</b> 日期格式模式。<br/>
+          <br/>可用的元素可能因日历而不同，但通常包含…<br/>
+          <br/>
+          <b>E</b>: 周中日<br/>
+          <b>d</b>: 月中日<br/>
+          <b>D</b>: 年中日<br/>
+          <b>F</b>: 月中周<br/>
+          <b>M</b>: 月份<br/>
+          <b>y</b>: 年份<br/>
+          <b>G</b>: 年代<br/>
+          <br/>
+    ]]></string>
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising] 月出 \t\t[Icon Noon] 月亮正午
+          \n[Icon Setting] 月落 \t\t[Icon Midnight] 月亮午夜
+          \n\n分享 [Icon Share] 将复制文字到剪贴板。
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>春跨季节:</b> 冬至与春分的中点；<em>二月</em>[北半球]，或 <em>八月</em>[南半球]。<br/><br/>
+          <b>夏跨季节:</b> 春分与夏至的中点；<em>五月</em>[北半球], 或 <em>十一月</em>[南半球]。<br/><br/>
+          <b>秋跨季节:</b> 夏至与秋分的中点；<em>八月</em>[北半球], 或 <em>二月</em>[南半球]。<br/><br/>
+          <b>冬跨季节:</b> 秋分与冬至的中点；<em>十一月</em>[北半球], 或 <em>五月</em>[南半球]。<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] 选择一个自定义事件。\n
+          [Icon Add] 新增 [Icon Edit] 编辑或 [Icon Delete] 删除自定义事件。\n
+          \n自定义事件可被应用或小部件显示，或被用于安排闹钟和通知。\n
+          [Icon View] 标记的事件被应用显示。
+    ]]></string>
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] 睡眠模式可用于在睡眠时间内设置<b>勿扰模式</b>。<br/>
+           <br/>
+           [Icon Reminder] 在睡眠前显示提醒通知。<br/>
+           [Icon Alarm] 设置第二天早上的唤醒闹钟。<br/><br/>
+    ]]></string>
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] 取消不进行变更。<br/>
+          [Icon Save] 保存，[Icon Done] 保存并启用。<br/>
+          [Icon Cancel] 保存并禁用。<br/>
+          [Icon Delete] 取消并删除。<br/>
+          <br/>
+          [Icon Offset] 当安排的时间在事件时间上有前后偏移时显示。
+    ]]></string>
+
+    <string name="help_general_dst"><![CDATA[
+          <b>夏令时:</b> [Icon DST] 当当前时间适用于<b>夏令时</b>，或已被类似规则调整时展示。<br/><br/>
+    ]]></string>
+
+    <string name="help_general_actualTime"><![CDATA[
+          <b>实际时间:</b> 太阳到达地平线；准确的日出和日落时间。<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          <b>民用曙暮光:</b> 太阳到达地平线下6度；最亮的星星仍然可见。对于大多数户外运动来说已不用额外照明。<br/><br/>
+          <b>航海曙暮光:</b> 太阳到达地平线下12度；地平线和物体的轮廓非常模糊。对于大多数户外运动来说光照不足。<br/><br/>
+          <b>天文曙暮光:</b> 太阳到达地平线下18度；和夜里差不多。<br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>今天:</b> 为今天的日期设置事件时间。<br/><br/>
+          <b>前/后:</b> 上一个事件的时间，以及下一个即将发生的事件。<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>春分:</b> 天文春天的开始；<em>三月</em>[北半球] 或 <em>九月</em>[南半球]。三月分点也被称为<em>北分点</em>。<br/><br/>
+          <b>夏至:</b> 天文夏季的开始；<em>六月</em>[北半球] 或 <em>十二月</em>[南半球]。六月至点也被称为<em>北至点</em>。<br/><br/>
+          <b>秋分:</b> 天文秋季的开始；<em>九月</em>[北半球] 或 <em>三月</em>[南半球]。九月分点也被称为<em>南分点</em>。<br/><br/>
+          <b>冬至:</b> 天文冬季的开始；<em>十二月</em>[北半球] 或 <em>六月</em>[南半球]。十二月至点也称为<em>南至点</em>。<br/>
+    ]]></string>
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>回归年:</b> 一个完整的季节循环。<em>回归年</em>的长度是从一个<em>三月分点</em>到下一个。平均<em>~365.24天</em>，确切的长度每年都不同（最多30分钟）。<br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>日光:</b> 日出到日落的时间。<br/><br/>
+        <b>天亮时间:</b> 从民用曙光到民用暮光的时间。<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>月光饱满度:</b> 月亮小部件和主页会显示午夜（月出和月落的中间点）时月光饱满度，月亮对话框则会显示当前时刻月光饱满度。<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>黄金时刻:</b> 太阳位于地平线上方或下方6度之间。早上，黄金时刻以民用曙光开始，在日出一小段时间后结束。傍晚，黄金时刻在日落前一小段时间开始，以民用暮光结束。<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>蓝色时刻:</b> 太阳在地平线以下8度到4度之间。 蓝色时刻开始和结束于航海曙暮光和民用曙暮光之间。<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        所有字段均为可选。（如值为空则使用默认意图）
+        <br/>
+        <br/>
+        <b>动作:</b> 动作字符串。<br/><small>如 <em>android.intent.action.VIEW</em></small>
+        <br/>
+        <br/>
+        <b>包:</b> 包名。<br/><small>如 <em>app.package.name</em></small>
+        <br/>
+        <br/>
+        <b>类:</b> 完整的类名。<br/><small>如 <em>app.package.name.MainActivity</em></small>
+        <br/>
+        <br/>
+        <b>数据:</b> 包含或指向附带数据的URI。支持<em>%</em>替换。<small>如 <em>geo:%lat,%lon</em></small>
+        <br/>
+        <br/>
+        <b>MIME:</b> 附带数据的MIME类型。
+        <br/>
+        <br/>
+        <b>额外:</b> 包含额外值的由 <em>&amp;</em> 分割的字符串。支持<em>%</em>替换。<br/><br/>值可为 <em>int</em>、<em>long</em>、<em>double</em>、<em>float</em>、<em>boolean</em> 或 String. <small>如 <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          如果要<b>新增一个小部件</b>，您需要去手机的主页。<br/><br/>
+          如果要<b>配置一个已存在的小部件</b>，您可以从下面的列表中选择。<br/>
+    ]]></string>
+    <string name="help_themelist">
+          [Icon Add] 新增一个新主题或 [Icon Copy] 从已有主题中复制一份。\n
+          \n
+          [Icon Edit] 编辑或 [Icon Delete] 删除主题。\n
+          [Icon Default] 默认主题是不能被删除的。
+    </string>
+
+    <string name="help_calendar"><![CDATA[向 Calendar 应用程序提供事件（月相、至点和分点）。<br />
+        <br />
+        <u><b><font color="#ff9900">日历权限于 v0.10.0 被移除。</font></b></u><br />
+        <br />
+        此功能现在作为<a href="moreInfoLink">单独的应用程序</a>使用
+    ]]></string>
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\n为获得最佳效果，请选择与这些属性匹配的图像。
+    </string>
+
+</resources>

@@ -1049,8 +1049,6 @@
     <string name="configLabel_alarms_optWhiteList_unlisted">Az akkumulátor optimalizálás be van kapcsolva.\nAz ébresztések akár 15 percet is késhetnek.</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> A Sony STAMINA mód engedélyezve van.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>  <!-- snackbar message (sony devices only) -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Az akkumulátor optimalizálás be van kapcsolva.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>
-    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> a \"nincs optimalizálva\" beállítással működik a legjobban.</string>
-    <string name="help_battery_optimization_aggressive">Ez egy <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> eszköz, amelyek megfelelő működéséhez további beállításra lehet szükség.</string>
 
     <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
     <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
@@ -1059,7 +1057,6 @@
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
     <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
-    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string name="configLabel_alarms_notifications">Értesítések</string>
     <string name="configLabel_alarms_notifications_on">Be</string>
@@ -1660,12 +1657,6 @@
     <string name="worldmap_dialog_speed_1d">&#215; 1n</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
-    <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nA legjobb eredmény érdekében válasszon egy olyan képet, amely megfelel ezeknek a tulajdonságoknak.
-    </string>
-
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
@@ -2002,159 +1993,6 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Segítség</string>
-    <string name="help_appearance_allowresize"><![CDATA[
-      <big>Elrendezések megváltoztatása a rendelkezésre álló hely kitöltéséhez</big><br/><br/>
-      <i><b>[engedélyezve]</b></i> A widget a rendelkezésre álló helytől függően változtatja az elrendezéseket.<br/><br/>
-      <i><b>[letiltva]</b></i> A widget megtartja eredeti elrendezését, amikor átméretezi. Használja ezt a \"<i>szövegek és ikonok méretezése</i>\" opcióval együtt extra nagy widgetekhez.<br/>
-    ]]></string>
-    <string name="help_appearance_widgetlayout"><![CDATA[
-      Ez a widget eredetileg a(z) <b>%1$s</b> <em>elrendezéssel készült</em>.<br/></br/>
-    ]]></string>
-    <string name="help_appearance_title"><![CDATA[
-        Az alábbi szöveghelyettesítések támogatottak:<br/>
-        <br/>
-        <b>All Widgetek:</b> <br />
-                * <b>%d</b> - dátum (pl. Február 12) <br/>
-                * <b>%dd</b> - nap (rövid) (pl. H) <br/>
-                * <b>%dD</b> - nap (hosszú) (pl. Hétfő) <br/>
-                * <b>%dY</b> - év (pl. 2018) <br/>
-                * <b>%dt</b> - idő (legutóbbi frissítéskor) <br/>
-                * <b>%dT</b> - idő másodpercekkel (legutóbbi frissítéskor) <br/>
-                <br/>
-                * <b>%loc</b> - hely (pl. Budapest) <br />
-                * <b>%lat</b> - szélességi fok <br />
-                * <b>%lon</b> - hosszúsági fok <br/>
-                * <b>%lel</b> - magasság (pl. 225 méter) <br/>
-                <br/>
-                * <b>%s</b> - adatforrás (pl. sunrisesunsetlib) <br/>
-                * <b>%t</b> - időzóna (id) (pl. Európa/Budapest) <br/>
-                * <b>%id</b> - appWidgetID <br/>
-         <br/>
-         <b>Nap Widgetek:</b> <br/>
-                * <b>%m</b> - mód (rövid) (pl. polgári) <br/>
-                * <b>%M</b> - mód (hosszú) (pl. polgári szürkület) <br/>
-                * <b>%o</b> - sorrend (pl. utolsó/következő, ma) <br/>
-         <br/>
-         <b>Hold Widgetek:</b> <br/>
-                * <b>%i</b> - megvilágítás (pl. 25%) <br/>
-                * <b>%M</b> - holdfázis (pl. növekvő sarló) <br/>
-                * <b>%o</b> - sorrend (pl. utolsó/következő, ma) <br/>
-         <br/>
-         <b>Napforduló Widgetek:</b> <br/>
-                * <b>%m</b> - mód (rövid) (pl. napforduló) <br/>
-                * <b>%M</b> - mód (hosszú) (pl. téli napforduló) <br/>
-                * <b>%o</b> - sorrend (pl. legközelebbi esemény, következő esemény) <br/>
-    ]]></string>
-
-    <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Dátumformátum:</b> Dátumformátum minta.<br/>
-          <br/>A rendelkezésre álló elemek naptáranként eltérőek lehetnek, de általában a következőket tartalmazzák..<br/>
-          <br/>
-          <b>E</b> : hét napja <br/>
-          <b>d</b> : hónap napja <br/>
-          <b>D</b> : év napja <br/>
-          <b>F</b> : hónap hétköznapja <br/>
-          <b>M</b> : év hónapja <br/>
-          <b>y</b> : időszámítás éve <br/>
-          <b>G</b> : időszámítás <br/>
-          <br/>
-    ]]></string>
-
-    <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  holdkelte \t\t[Icon Noon]  holdi dél
-          \n[Icon Setting]  holdnyugta \t\t[Icon Midnight]  holdi éjfél
-          \n\nA Megosztás [Icon Share] ikon a szöveget a vágólapra másolja.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
-
-    <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Tavaszi keresztnegyed nap:</b> A téli napforduló és a tavaszi napéjegyenlőség közötti nap; <em>Február</em> [északi féltekén], or <em>Augusztus</em> [déli féltekén].<br/><br/>
-          <b>Nyári keresztnegyed nap:</b> A tavaszi napéjegyenlőség és a nyári napforduló közötti nap; <em>Május</em> [északi féltekén], or <em>November</em> [déli féltekén].<br/><br/>
-          <b>Őszi keresztnegyed nap:</b> A nyári napforduló és az őszi napéjegyenlőség közötti nap; <em>Augusztus</em> [északi féltekén], or <em>Február</em> [déli féltekén].<br/><br/>
-          <b>Téli keresztnegyed nap:</b> Az őszi napéjegyenlőség és a téli napforduló közötti nap.; <em>November</em> [északi féltekén], or <em>Május</em> [déli féltekén].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->
-
-    <string name="help_eventlist"><![CDATA[
-          [Icon OK] Egyéni esemény kiválasztása.\n
-          Egyéni események [Icon Add] hozzáadása, [Icon Edit] szerkesztése, vagy [Icon Delete] törlése.\n
-          \nAz egyéni eseményeket az alkalmazás és a kezdőképernyő widgetjei is megjeleníthetik. Továbbá használhatók riasztások és értesítések ütemezésére.\n
-          Az [Icon View] ikonnal jelölt eseményeket az alkalmazás megjeleníti.
-    ]]></string>
-
-    <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
-           <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
-
-    <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] a módosítások nélküli törléshez.<br/>
-          [Icon Save] a mentéshez és [Icon Done] a mentéshez és engedélyezéshez.<br/>
-          [Icon Cancel] a mentéshez és letiltáshoz.<br/>
-          [Icon Delete] a visszavonáshoz és törléshez.<br/>
-          <br/>
-          [Icon Offset] akkor jelenik meg, ha a tervezett időpont az esemény időpontja előtt vagy után van eltolva.
-    ]]></string>
-
-    <string name="help_general_dst"><![CDATA[
-          <b>Nyári időszámítás:</b> [Icon DST] akkor jelenik meg, ha az aktuális idő a <b>nyári időszámítást</b> alkalmazza.<br/><br/>
-    ]]></string>
-
-    <string name="help_general_actualTime"><![CDATA[
-          <b>Valós idő:</b> A nap a horizonton van; ez a napfelkelte és a napnyugta hozzávetőleges időpontja.<br/>
-    ]]></string>
-    <string name="help_general_twilight"><![CDATA[
-          <b>Polgári szürkület:</b> A hajnal utolsó és az alkonyat első szakasza; a Nap ilyenkor a látóhatár és ‒6° között tartózkodik. Ebben az időszakban felhőtlen időben jól lehet látni, és a szokásos tevékenységeinket végezhetjük, akár olvashatunk is. A végén már be kell kapcsolni a világítást, és láthatóak a legfényesebb csillagok és bolygók. A horizont tisztán kivehető.<br/><br/>
-          <b>Navigációs szürkület:</b> Ez azt az időszakot jelenti, amikor a Nap ‒6° és ‒12° között jár. Jó időben a földi tárgyak körvonalai láthatóak, de a horizont már (még) elmosódott. Ilyenkor lámpa nélkül is tudunk tájékozódni a szabadban, de más tevékenységekhez általában már világításra van szükség.<br/><br/>
-          <b>Csillagászati szürkület:</b> Ezt az időszakot nevezzük annak, amikor a Nap ‒12° és ‒18° között jár. Ebben az intervallumban gyakorlatilag sötét van, és tiszta időben látható a csillagok többsége. Az esti csillagászati szürkület végére sötétedik be annyira, hogy minden megfigyelést el lehessen végezni; ekkor kezdődik az éjszaka.<br/>
-    ]]></string>
-    <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Ma:</b> Felkelési és lenyugvási időpontok a mai napra.<br/><br/>
-          <b>Utolsó / Következő:</b> Az utolsó esemény időpontja és a következő közelgő esemény időpontja.<br/>
-    ]]></string>
-    <string name="help_general_timeMode2"><![CDATA[
-          <b>Tavaszi nap-éj egyenlőség:</b> A csillagászati tavasz kezdete; <em>Március</em> [északi féltekén], or <em>Szeptember</em> [déli féltekén]. A márciusi nap-éj egyenlőséget <em>északi nap-éj egyenlőségnek</em> is nevezik.<br/><br/>
-          <b>Nyári napforduló:</b> A csillagászati nyár kezdete; <em>Június</em> [északi féltekén], or <em>December</em> [déli féltekén]. A júniusi napfordulót <em>északi napfordulónak</em> is nevezik.<br/><br/>
-          <b>Autumn nap-éj egyenlőség:</b> A csillagászati ősz kezdete; <em>Szeptember</em> [északi féltekén], or <em>Március</em> [déli féltekén]. A szeptemberi nap-éj egyenlőséget <em>déli nap-éj egyenlőségnek</em> is nevezik.<br/><br/>
-          <b>Téli napforduló:</b> A csillagászati tél kezdete; <em>December</em> [északi féltekén], or <em>Június</em> [déli féltekén]. A decemberi napfordulót <em>déli napfordulónak</em> is nevezik.<br/>
-    ]]></string>
-    <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropikus év:</b> Az évszakok teljes körforgása. A <em>tropikus év</em> hosszát az egyik <em>márciusi nap-éj egyenlőségtől</em> a másikig mérik. Ez átlagosan <em>~365,24 nap</em>, pontos hossza évente változik (akár 30 percenként).<br/>
-    ]]></string>
-    <string name="help_general_daylength"><![CDATA[
-        <b>Nap hossza:</b> a napfelkelte és napnyugta közötti idő.<br/><br/>
-        <b>Használható fény:</b> a reggeli és az esti polgári szürkület közötti idő.</br>
-    ]]>
-    </string>
-    <string name="help_general_moonillum"><![CDATA[
-        <b>Hold megvilágítása:</b> A hold widgetek és a főoldal a hold megvilágítását mutatják holdi délidőben (a holdkelte és a holdnyugta közötti középpontban). A hold panel a hold aktuális megvilágítását mutatja.<br/><br/>
-    ]]></string>
-    <string name="help_general_goldhour"><![CDATA[
-        <b>Arany óra:</b> A nap 6 fokkal a horizont felett vagy alatt van. Reggel az arany óra a polgári szürkületkor kezdődik, és röviddel napkelte után ér véget. Este az arany óra röviddel napnyugta előtt kezdődik és a polgári szürkületkor ér véget.<br/>
-    ]]></string>
-    <string name="help_general_bluehour"><![CDATA[
-        <b>Kék óra:</b> A nap 8 és 4 fok között van a horizont alatt. A kék óra kezdete és vége a navigációs és a polgári szürkület közé esik.<br/>
-    ]]></string>
-    <!--<string name="help_action_launch"><![CDATA[
-        The fully qualified class name of the Activity to be launched.<br/>
-    ]]></string>-->  <!-- TODO: update from strings.xml -->
-    <string name="help_widgetlist"><![CDATA[
-          Új <b>widget hozzáadásához</b> a kezdőképernyőre kell mennie.<br/><br/>
-          Egy meglévő widget <b>újrakonfigurálásához</b> a következő listából választhat.<br/>
-    ]]></string>
-    <string name="help_themelist">
-          Téma [Icon Add] hozzáadása vagy egy meglévő [Icon Copy] másolása.\n
-          \n
-          Téma [Icon Edit] szerkesztése vagy [Icon Delete] törlése.\n
-          Az [Icon Default] alapértelmezett témák nem módosíthatók..
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
-
-    <string name="help_calendar"><![CDATA[Események hozzáadása a naptárba (holdfázisok, napfordulók és nap-éj egyenlőségek).<br />
-        <br />
-        <u><b><font color="#ff9900">A naptár integráció a v0.10.0-ban eltávolításra került.</font></b></u><br />
-        <br />
-        Ez a funkció mostantól <a href="moreInfoLink">külön alkalmazásként</a> érhető el.
-    ]]></string>
 
     <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>A Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>A Suntimes nem gyűjt, nem tárol vagy továbbít személyes felhasználói adatokat. Nem tartalmaz <b>hirdetéseket</b>, <b>elemzéseket</b>, <b>nyomkövetőket</b> és <b>szükségtelen engedélyeket</b>. <br/><br/>Az alkalmazás helyadatokból van konfigurálva. Ezeket az információkat (és az alkalmazás által használt egyéb konfigurációs adatokat) a rendszer helyileg tárolja, és az eszközön maradnak.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
@@ -2189,16 +2027,5 @@
     <string name="calculator_displayString_time4a_noaa">A National Oceanic and Atmospheric Administration (NOAA) által közzétett algoritmusokat használja.</string>
     <string name="calculator_displayString_time4a_cc">A Dershowitz/Reingold a "Calendrical Calculations" (harmadik kiadás) című könyvben közzétett algoritmusokat követi.</string>
     <string name="calculator_displayString_time4a_4j">A Jean Meeus "Astronomical Algorithms" (második kiadás) című könyvében közzétett csillagászati számításokon alapul.</string>
-    <string name="help_datasources">
-        <![CDATA[
-        A Suntimes harmadik féltől származó könyvtárakat használ a csillagászati számítások elvégzéséhez.<br/>
-        <br/>
-        Az <b>adatforrás</b> beállítás lehetővé teszi a különböző könyvtárak közötti választást (vagy a könyvtárak által kínált különböző algoritmusok közötti választást). Alapértelmezett: <b>time4a-time4j</b>.<br/>
-        <br/>
-        Ez a beállítás befolyásolja a számítások sebességét és pontosságát, és korlátozhatja a használható funkciókat. <br/>
-        <br/>
-        A rendelkezésre álló választási lehetőségekről, illetve az alkalmazás bővítéséről, hogy más könyvtárakat is támogasson, további információkat az online súgóban talál.
-    ]]>
-    </string>
 
 </resources>

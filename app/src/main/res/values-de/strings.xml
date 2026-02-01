@@ -1066,8 +1066,6 @@
   <string name="configLabel_alarms_optWhiteList_unlisted">Optimiere Akkuverbrauch.\nAlarme können um bis zu 15 Minuten verzögert sein.</string>
   <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->   <!-- TODO -->
   <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimizing battery use.\nAlarms may fail to work reliably.</string>   <!-- TODO -->
-  <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
-  <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
 
   <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
   <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
@@ -1076,7 +1074,6 @@
   <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
   <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
-  <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
   <string name="configLabel_alarms_notifications">Benachrichtigungen</string>
   <string name="configLabel_alarms_notifications_on">An</string>
@@ -1664,11 +1661,7 @@
   <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
   <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
-    <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nWählen Sie für beste Ergebnisse ein Bild aus, das diesen Eigenschaften entspricht.
-    </string>
+
 
   <!-- Dialog: Light Graph -->
   <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
@@ -2005,171 +1998,6 @@
 
   <!-- Dialog: Help -->
   <string name="help_dialog_title">Hilfe</string>
-  <string name="help_appearance_allowresize"><![CDATA[
-      <big>Tauschen Sie Layouts aus, um den verfügbaren Platz zu füllen</big><br/><br/>
-      <i><b>[enabled]</b></i> Das Widget verändert sich je nach verfügbarem Platz zwischen Layouts.<br/><br/>
-      <i><b>[disabled]</b></i> Das Widget behält sein ursprüngliches Layout bei, wenn die Größe geändert wird. Verwenden Sie dies mit der \"<i>Text und Symbole skalieren</i>\" option für extra große Widgets.<br/>
-    ]]></string>
-  <string name="help_appearance_widgetlayout"><![CDATA[
-      Dieses Widget wurde mit einem Layout von <b>%1$s</b> <em> erstellt</em>.<br/></br/>
-    ]]></string>
-
-  <!--<string name="help_appearance_title"><![CDATA[
-      Es werden folgende Platzhalter unterstützt: <br />
-              * <b>%loc</b> für den Ort <br />
-              * <b>%lat</b> für den Breitengrad <br />
-              * <b>%lon</b> für den Längengrad <br/>
-              * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
-              * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
-              * <b>%s</b> für den Datenquelle (z.B. "sunrisesunsetlib") <br/>
-              * <b>%t</b> Die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-  ]]></string>-->  <!-- translation for previous version -->
-  <string name="help_appearance_title"><![CDATA[
-        Es werden folgende Platzhalter unterstützt: <br />
-        <br/>
-        <b>Alle Widgets:</b> <br />
-                * <b>%d</b> für Datum (z.B. 12. Februar) <br/>
-                * <b>%dd</b> für Wochentag (kurz) (z.B. Mon) <br/>
-                * <b>%dD</b> für Wochentag (lang) (z.B. Montag) <br/>
-                * <b>%dY</b> für Jahr (z.B. 2021) <br/>
-                * <b>%dt</b> für Uhrzeit (der letzten Aktualisierung) <br/>
-                * <b>%dT</b> für Uhrzeit mit Sekunden (der letzten Aktualisierung) <br/>
-                <br/>
-                * <b>%loc</b> für den Ort <br />
-                * <b>%lat</b> für den Breitengrad <br />
-                * <b>%lon</b> für den Längengrad <br/>
-                * <b>%lel</b> für die Höhe (z.B. 385 Meter) <br/>
-                <br/>
-                * <b>%s</b> für den Datenquelle (z.B. "Sonnenaufgang Sonnenuntergang") <br/>
-                * <b>%t</b> für die Zeitzone (id) (z.B. "Europe/Berlin") <br/>
-                * <b>%id</b> für appWidgetID <br/>
-         <br/>
-         <b>Sonnen-Widgets:</b> <br/>
-                * <b>%m</b> für den Zeitmodus (Kurzform) (z.B. "Astron. Abend") <br/>
-                * <b>%M</b> für den Zeitmodus (Langform) (z.B. "Astronomische Abenddämmerung (Ende)") <br/>
-                * <b>%o</b> für auftrag (z. B. Letzte/Nächste, Heute) <br/>
-         <br/>
-         <b>Mond-Widgets:</b> <br/>
-                * <b>%i</b> für Mondillumination (z.B. 25%) <br/>
-                * <b>%M</b> für Mondphase (z.B. erstes Viertel) <br/>
-                * <b>%o</b> für auftrag  (z. B. Letzte/Nächste, Heute) <br/>
-         <br/>
-         <b>Sonnenwende-Widgets:</b> <br/>
-                * <b>%m</b> für Modus (kurz) (z.B. Sonnenwende) <br/>
-                * <b>%M</b> für Modus (lang) (z.B. Wintersonnenwende) <br/>
-                * <b>%o</b> für auftrag  (z. B. nächste Ereignisse, kommende Ereignisse)<br/>
-    ]]></string>
-
-  <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
-          <br/>
-          <b>E</b> : day of week <br/>
-          <b>d</b> : day of month <br/>
-          <b>D</b> : day of year <br/>
-          <b>F</b> : weekday in month <br/>
-          <b>M</b> : month of year <br/>
-          <b>y</b> : year of era <br/>
-          <b>G</b> : era <br/>
-          <br/>
-    ]]></string>    <!-- TODO -->
-
-  <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
-
-  <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
-
-  <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
-
-  <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
-           <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
-
-  <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] to cancel without making changes.<br/>
-          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
-          [Icon Cancel] to save and disable.<br/>
-          [Icon Delete] to cancel and delete.<br/>
-          <br/>
-          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
-
-  <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
-
-  <string name="help_general_actualTime"><![CDATA[
-        <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/>
-  ]]></string>
-  <string name="help_general_twilight"><![CDATA[
-        <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>
-        <b>Nautische Dämmerung:</b> Die Sonne steht 12 Grad unter dem Horizont; Der nautische Horizont (Kimmlinie) ist gerade noch zu erkennen, einige wenige, für die nautische Navigation notwendige, Sterne, sind bereits zu erkennen. Die meisten Aktivitäten unter freiem Himmel sind nur noch mit Beleuchtung möglich.<br/><br/>
-        <b>Astronomische Dämmerung:</b> Die Sonne steht 18 Grad unter dem Horizont; Die astronomische Nacht beginnt und mit ihr die tiefste Dunkelheit, sofern der Himmel nicht von meist künstlichen Lichtquellen erhellt wird (Lichtverschmutzung).<br/>
-    ]]></string>
-  <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Heute:</b> Sonnenaufgang- und -untergangzeiten als Ereignisse für heutiges Datum.<br/><br/>
-          <b>Letztes / Nächstes:</b> Zeit des letzten und nächsten Ereignisses.<br/>
-    ]]></string>
-  <string name="help_general_timeMode2"><![CDATA[
-          <b>Frühlingssonnenwende</b> Der Beginn des astronomischen Frühlings; <em>März</em> [nördliche Hemisphäre] oder <em>September</em> [südliche Hemisphäre]. Die März-Tagundnachtgleiche wird auch <em>Nord-Tagundnachtgleiche</em> genannt.<br/><br/>
-          <b>Sommersonnenwende:</b> Der Beginn des astronomischen Sommers; <in>Juni</in> [nördliche Hemisphäre] oder <em>Dezember</em> [südliche Hemisphäre]. Die Juni-Sonnenwende wird auch <em>nördliche Sonnenwende</em> genannt.<br/><br/>
-          <b>Herbstsonnenwende:</b> Der Beginn des astronomischen Herbstes; <em>September</em> [nördliche Hemisphäre] oder <em>März</em> [südliche Hemisphäre]. Die September-Tagundnachtgleiche wird auch als <em>Süd-Tagundnachtgleiche</em> bezeichnet.<br/><br/>
-          <b>Wintersonnenwende:</b>Der Beginn des astronomischen Winters; <em>Dezember</em> [nördliche Hemisphäre] oder <em>Juni</em> [südliche Hemisphäre]. Die Dezember-Sonnenwende wird auch <em>südliche Sonnenwende</em> genannt.<br/>
-    ]]></string>
-  <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropenjahr:</b> Ein vollständiger Zyklus der Jahreszeiten. Die Länge des <em>Tropenjahres</em> wird von einem <em>Märzäquinoktium</em> zum nächsten gemessen. Sie beträgt im Durchschnitt <em>~365,24 Tage</em>, wobei die genaue Länge jedes Jahr variiert (bis zu 30 Minuten).<br/>
-    ]]></string>
-  <string name="help_general_daylength"><![CDATA[
-      <b>Lichter Tag:</b> Zeit zwischen Sonnenaufgang und Sonnenuntergang.<br/><br/>
-      <b>Nutzbares Licht:</b> Zeit zwischen bürgerlicher Morgen- und Abenddämmerung.</br>
-  ]]>
-  </string>
-  <string name="help_general_moonillum"><![CDATA[
-        <b>Mondillumination:</b> Die Mond Widgets und die Hauptseite zeigen die Mondillumination am Mondmittag (Mittelpunkt zwischen Mondaufgang und -untergang) an. Der Monddialog hingegen zeigt die aktuelle Illumination an.<br/><br/>
-    ]]></string>
-  <string name="help_general_goldhour"><![CDATA[
-        <b>Goldene Stunde:</b> Die Sonne steht 6 Grad unter oder über dem Horizont. Am Morgen beginnt die Goldene Stunde mit der bürgerlichen Dämmerung und endet kurze Zeit nach Sonnenaufgang. Am Abend beginnt die Goldene Stunde kurze Zeit vor Sonnenuntergang und endet mit der bürgerlichen Dämmerung.<br/>
-    ]]></string>
-  <string name="help_general_bluehour"><![CDATA[
-        <b>Blaue Stunde:</b> Die Sonne steht zwischen 8 Grad und 4 Grad unter dem Horizont. Der Beginn und das Ende der Blauen Stunde liegt zwischen nautischer und bürgerlicher Dämmerung.<br/>
-    ]]></string>
-  <string name="help_action_launch"><![CDATA[
-      Der "fully qualified class name" der Android-Activity, die gestartet werden soll.
-  ]]></string>  <!-- TODO: update from strings.xml -->
-  <string name="help_widgetlist"><![CDATA[
-        Benutze deinen Startbildschirm, um <b>ein neues Widget hinzuzufügen</b>. (Meist antippen und halten, bis ein Menü erscheint.)<br/><br/>
-        Um <b>ein bestehendes Widget zu konfigurieren</b>, wähle es aus der folgenden Liste aus.<br/>
-  ]]></string>
-  <string name="help_themelist">
-          [Icon Add] Neues Thema hinzufügen oder [Icon Copy] von bestehendem Thema kopieren.\n
-          \n
-          [Icon Edit] Bearbeiten oder [Icon Delete] löschen von Themen.\n
-          Die [Icon Default] vorgegebenen Themen können nicht geändert werden.
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
-
-  <string
-      name="help_calendar"><![CDATA[Ereignisse (Mondphasen, Sonnenwenden und Tagundnachtgleichen) an die Kalender-App übergeben.<br />
-        <br />
-        <u><b><font color="#ff9900">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
-        <br />
-        Diese Funktion ist jetzt als <a href="moreInfoLink">eigenständige App verfügbar</a>.
-    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
   <string
       name="privacy_policy0"><![CDATA[<b>Datenschutzerklärung:</b><br/>Suntimes erfasst, speichert oder übermittelt keine persönlichen Benutzerdaten. Die App enthält <b>keine Werbung</b>, <b>keine Analytik</b>, <b>keine Tracker</b> und verlangt <b>keine unnötigen Berechtigungen</b>.]]></string>
@@ -2213,15 +2041,5 @@
       deren Buch "Calendrical Calculations" (dritte Auflage).</string>
   <string name="calculator_displayString_time4a_4j">Basiert auf astronomischen Berechnungen, veröffentlicht von
       Jean Meeus in dessen Buch "Astronomical Algorithms" (zweite Auflage).</string>
-  <string name="help_datasources">
-        <![CDATA[
-        Suntimes verwendet Bibliotheken von Drittanbietern, um astronomische Berechnungen durchzuführen.<br/>
-        <br/>
-        Die Einstellung <b>Datenquelle</b> ermöglicht die Auswahl zwischen verschiedenen Bibliotheken (oder zwischen verschiedenen Algorithmen, die von diesen Bibliotheken angeboten werden). Der Standardwert ist <b>time4a-time4j</b>.<br/>        <br/>
-        Diese Einstellung wirkt sich auf die Geschwindigkeit und Genauigkeit der Berechnungen aus und kann die verfügbaren Funktionen einschränken. <br/>
-        <br/>
-        Weitere Informationen zu verfügbaren Auswahlmöglichkeiten oder zur Erweiterung der App zur Unterstützung anderer Bibliotheken finden Sie in der Online-Hilfe.
-    ]]>
-    </string>
 
 </resources>
