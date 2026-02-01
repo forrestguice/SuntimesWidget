@@ -495,23 +495,23 @@ public class GetFixHelper implements LocationHelper
         {
             final Activity context = requireActivity();
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(context.getString(R.string.gps_keeptrying_msg))
+            builder.setMessage(context.getString(R.string.location_keeptrying_msg))
                     .setCancelable(false)
-                    .setPositiveButton(context.getString(R.string.gps_keeptrying_ok), new DialogInterface.OnClickListener()
+                    .setPositiveButton(context.getString(R.string.location_keeptrying_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(final DialogInterface dialog, final int id)
                         {
                             helper.getFix();
                         }
                     })
-                    .setNegativeButton(context.getString(R.string.gps_keeptrying_cancel), new DialogInterface.OnClickListener()
+                    .setNegativeButton(context.getString(R.string.location_keeptrying_cancel), new DialogInterface.OnClickListener()
                     {
                         public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
                         {
                             dialog.cancel();
                         }
                     })
-                    .setNeutralButton(context.getString(R.string.gps_keeptrying_fallback), new DialogInterface.OnClickListener() {
+                    .setNeutralButton(context.getString(R.string.location_keeptrying_fallback), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
@@ -552,16 +552,16 @@ public class GetFixHelper implements LocationHelper
         {
             final Activity context = requireActivity();
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(context.getString(R.string.gps_dialog_msg))
+            builder.setMessage(context.getString(R.string.location_enable_dialog_msg))
                     .setCancelable(false)
-                    .setPositiveButton(context.getString(R.string.gps_dialog_ok), new DialogInterface.OnClickListener()
+                    .setPositiveButton(context.getString(R.string.location_enable_dialog_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(final DialogInterface dialog, final int id)
                         {
                             context.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                         }
                     })
-                    .setNegativeButton(context.getString(R.string.gps_dialog_cancel), new DialogInterface.OnClickListener()
+                    .setNegativeButton(context.getString(R.string.location_enable_dialog_cancel), new DialogInterface.OnClickListener()
                     {
                         public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
                         {

@@ -266,8 +266,8 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
         }
         //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
         //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
-        CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.itemsPlural, numResults, numResults))
-                : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
+        CharSequence message = (result ? context.getString(R.string.themesimport_msg_success, context.getResources().getQuantityString(R.plurals.itemsPlural, numResults, numResults))
+                : context.getString(R.string.themesimport_msg_failure, context.getString(R.string.msg_import_label_file)));
         SuntimesBackupTask.showIOResultSnackbar(context, view, null, result, message, report);
     }
 

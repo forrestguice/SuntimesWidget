@@ -1132,7 +1132,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (locations[0] != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), locations[0]);
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.location_lastfix_title_found), locations[0]);
                     if (getSupportActionBar() != null) {
                         getSupportActionBar().setSubtitle(location.toString());
                     }
@@ -1144,7 +1144,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 if (progress[0] != null && progress[0].getResult() != null)
                 {
-                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), progress[0].getResult());
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.location_lastfix_title_found), progress[0].getResult());
                     if (getSupportActionBar() != null) {
                         getSupportActionBar().setSubtitle(location.toString());
                     }
@@ -1166,7 +1166,7 @@ public class SuntimesActivity extends AppCompatActivity
                 if (refreshItem != null)
                 {
                     if (getSupportActionBar() != null) {
-                        getSupportActionBar().setTitle(getString(R.string.gps_lastfix_title_searching));
+                        getSupportActionBar().setTitle(getString(R.string.location_lastfix_title_searching));
                         getSupportActionBar().setSubtitle("");
                     }
                     refreshItem.setIcon(GetFixUI.ICON_GPS_SEARCHING);
@@ -1185,7 +1185,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     if (result != null)
                     {
-                        com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.gps_lastfix_title_found), result);
+                        com.forrestguice.suntimeswidget.calculator.core.Location location = AndroidLocation.createLocation(getString(R.string.location_lastfix_title_found), result);
                         LocationHelperSettings.saveLastAutoLocationRequest(SuntimesActivity.this, System.currentTimeMillis(), result.getProvider(), result.getAccuracy(), results.getElapsed(), results.getLog());
                         AppSettings.saveLocationPref(SuntimesActivity.this, location);
 
@@ -1193,7 +1193,7 @@ public class SuntimesActivity extends AppCompatActivity
                         if (LocationHelperSettings.keepLastLocationLog(SuntimesActivity.this)) {
                             LocationHelperSettings.saveLastLocationLog(SuntimesActivity.this, false, System.currentTimeMillis(), "", -1, results.getElapsed(), results.getLog());
                         }
-                        String msg = (results.wasCancelled() ? getString(R.string.gps_lastfix_toast_cancelled) : getString(R.string.gps_lastfix_toast_notfound));
+                        String msg = (results.wasCancelled() ? getString(R.string.location_lastfix_toast_cancelled) : getString(R.string.location_lastfix_toast_notfound));
                         Toast.makeText(SuntimesActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
@@ -1932,7 +1932,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        String locationTitle = (locationMode == LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
+        String locationTitle = (locationMode == LocationMode.CURRENT_LOCATION ? getString(R.string.location_lastfix_title_found) : location.getLabel());
 
         if (locationMode == LocationMode.CURRENT_LOCATION) {
             warnings.setShouldShow(WARNINGID_LOCATION_PERMISSION, !getFixHelper.hasLocationPermission(this));    // show warning; "current location" requires location permissions

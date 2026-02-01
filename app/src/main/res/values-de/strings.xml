@@ -1698,8 +1698,8 @@
   <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
   <!-- Dialog: Set Alarm -->
-  <string name="configLabel_schedalarm_mode">Plane einen Alarm für</string>
-  <string name="configLabel_schednotify_mode">Plane eine Benachrichtigung für</string>
+  <string name="schedalarm_label_alarm_mode">Plane einen Alarm für</string>
+  <string name="schedalarm_label_notification_mode">Plane eine Benachrichtigung für</string>
   <string name="schedalarm_dialog_title">Alarm einstellen</string>
   <string name="schedalarm_dialog_tab_event">Ereignis</string>                      <!-- tab text   -->
   <string name="schedalarm_dialog_tab_time">Zeit</string>                        <!-- tab text -->
@@ -1814,23 +1814,23 @@
   </string-array>  <!-- TODO: review -->
 
   <!-- Dialog: Enable GPS? -->
-  <string name="gps_dialog_msg">Standort ist deaktiviert</string>
-  <string name="gps_dialog_ok">Ja</string>
-  <string name="gps_dialog_cancel">Nein</string>
+  <string name="location_enable_dialog_msg">Standort ist deaktiviert</string>
+  <string name="location_enable_dialog_ok">Ja</string>
+  <string name="location_enable_dialog_cancel">Nein</string>
 
-  <string name="gps_lastfix_title_set">Standort bestimmen</string>               <!-- toast text -->
-  <string name="gps_lastfix_title_cached">Letzter Standort</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-  <string name="gps_lastfix_title_found">Letzter Standort</string>            <!-- may appear in ActionBar title -->
-  <string name="gps_lastfix_title_searching">Suche Standort</string>     <!-- may appear in ActionBar title -->
-  <string name="gps_lastfix_toast_notfound">Standortbestimmung fehlgeschlagen; Letzter Standort wird benutzt.</string>
-  <string name="gps_lastfix_toast_cancelled">Standortbestimmung abgebrochen.</string>
+  <string name="location_lastfix_title_set">Standort bestimmen</string>               <!-- toast text -->
+  <string name="location_lastfix_title_cached">Letzter Standort</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+  <string name="location_lastfix_title_found">Letzter Standort</string>            <!-- may appear in ActionBar title -->
+  <string name="location_lastfix_title_searching">Suche Standort</string>     <!-- may appear in ActionBar title -->
+  <string name="location_lastfix_toast_notfound">Standortbestimmung fehlgeschlagen; Letzter Standort wird benutzt.</string>
+  <string name="location_lastfix_toast_cancelled">Standortbestimmung abgebrochen.</string>
 
   <!-- Dialog: KeepTrying GPS? -->
-  <string name="gps_keeptrying_title">Position unbekannt</string>
-  <string name="gps_keeptrying_msg">Position konnte nicht bestimmt werden</string>
-  <string name="gps_keeptrying_ok">Weiter versuchen</string>
-  <string name="gps_keeptrying_cancel">Aufgeben</string>
-  <string name="gps_keeptrying_fallback">Verwende letzte Position</string>
+  <string name="location_keeptrying_title">Position unbekannt</string>
+  <string name="location_keeptrying_msg">Position konnte nicht bestimmt werden</string>
+  <string name="location_keeptrying_ok">Weiter versuchen</string>
+  <string name="location_keeptrying_cancel">Aufgeben</string>
+  <string name="location_keeptrying_fallback">Verwende letzte Position</string>
 
   <!-- Dialog: Use Date -->
   <string name="timedate_dialog_title">Datum einstellen</string>
@@ -1894,9 +1894,9 @@
   <string name="themesimport_dialog_title">Importiere Themen</string>
   <string name="themesimport_dialog_message">Importiere Themen von Datei…</string>
 
-  <string name="msg_import_success"><xliff:g id="themePlural">%s</xliff:g> importiert.</string>
-  <string name="msg_import_failure">Import von <xliff:g id="filepath">%s</xliff:g> fehlgeschlagen!</string>
-  <string name="msg_import_noresults">Import übersprungen; keine neuen Themen gefunden.</string>
+  <string name="themesimport_msg_success"><xliff:g id="themePlural">%s</xliff:g> importiert.</string>
+  <string name="themesimport_msg_failure">Import von <xliff:g id="filepath">%s</xliff:g> fehlgeschlagen!</string>
+  <string name="themesimport_msg_noresults">Import übersprungen; keine neuen Themen gefunden.</string>
   <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
   <plurals name="themePlural">

@@ -1688,8 +1688,8 @@
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Planificar alarma para</string>
-    <string name="configLabel_schednotify_mode">Planificar notificación para</string>  
+    <string name="schedalarm_label_alarm_mode">Planificar alarma para</string>
+    <string name="schedalarm_label_notification_mode">Planificar notificación para</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>
     <string name="schedalarm_dialog_tab_event">Evento</string>                      <!-- tab text -->  
     <string name="schedalarm_dialog_tab_time">Fecha</string>                        <!-- tab text -->  
@@ -1805,24 +1805,24 @@
     </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
-    <string name="gps_dialog_ok">Sí</string>
-    <string name="gps_dialog_cancel">No</string>
+    <string name="location_enable_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>  <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="location_enable_dialog_ok">Sí</string>
+    <string name="location_enable_dialog_cancel">No</string>
 
     
-    <string name="gps_lastfix_title_set">Configurar posición</string>
-    <string name="gps_lastfix_title_cached">Última posición</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Última posición</string>
-    <string name="gps_lastfix_title_searching">Obteniendo posición</string>
-    <string name="gps_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>  <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">Actualización de GPS cancelada.</string>   <!-- TODO: "gps update" to "location update" -->
+    <string name="location_lastfix_title_set">Configurar posición</string>
+    <string name="location_lastfix_title_cached">Última posición</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+    <string name="location_lastfix_title_found">Última posición</string>
+    <string name="location_lastfix_title_searching">Obteniendo posición</string>
+    <string name="location_lastfix_toast_notfound">El GPS no pudo obtener posición; utilizando la última posición conocida.</string>  <!-- TODO: removed "GPS" -->
+    <string name="location_lastfix_toast_cancelled">Actualización de GPS cancelada.</string>   <!-- TODO: "gps update" to "location update" -->
 
     
-    <string name="gps_keeptrying_title">Sin posición</string>
-    <string name="gps_keeptrying_msg">Incapaz de obtener posición</string>
-    <string name="gps_keeptrying_ok">Seguir intentando</string>
-    <string name="gps_keeptrying_cancel">Abandonar</string>
-    <string name="gps_keeptrying_fallback">Utilizar última posición conocida</string>  
+    <string name="location_keeptrying_title">Sin posición</string>
+    <string name="location_keeptrying_msg">Incapaz de obtener posición</string>
+    <string name="location_keeptrying_ok">Seguir intentando</string>
+    <string name="location_keeptrying_cancel">Abandonar</string>
+    <string name="location_keeptrying_fallback">Utilizar última posición conocida</string>
 
     
     <string name="timedate_dialog_title">Configurar fecha</string>
@@ -1889,9 +1889,9 @@
     <string name="themesimport_dialog_title">Importando temas</string>                   
     <string name="themesimport_dialog_message">Importando temas desde archivo…</string>      
 
-    <string name="msg_import_success">Importado <xliff:g id="themePlural">%s</xliff:g>.</string>  
-    <string name="msg_import_failure">¡La importación desde <xliff:g id="filepath">%s</xliff:g> falló!</string>  
-    <string name="msg_import_noresults">La importación no se ha realizado; no se encontraron temas nuevos.</string>
+    <string name="themesimport_msg_success">Importado <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">¡La importación desde <xliff:g id="filepath">%s</xliff:g> falló!</string>
+    <string name="themesimport_msg_noresults">La importación no se ha realizado; no se encontraron temas nuevos.</string>
     <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">

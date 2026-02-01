@@ -1627,7 +1627,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
             int plural = TimeDateDisplay.is24() ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
-            String gender = context.getString(R.string.time_gender);
+            String gender = context.getString(R.string.selectformat_time_gender);
             return formatOffsetMessage(context, offset, offsetText, eventText, plural, gender);
         } else return formatOffsetMessage(context, offset, offsetText, eventText);
     }

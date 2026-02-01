@@ -413,7 +413,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
                                 txt_note.setText(SpanUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                                 icon_note.setVisibility(View.GONE);
 
-                                String modeDescription = context.getString((type == AlarmType.ALARM) ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode);
+                                String modeDescription = context.getString((type == AlarmType.ALARM) ? R.string.schedalarm_label_alarm_mode : R.string.schedalarm_label_notification_mode);
                                 SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());   // TODO: does AlarmCreateDialog also announce?
 
                             } else {
@@ -624,7 +624,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
 
         if (txt_modeLabel != null) {
-            txt_modeLabel.setText(getString(type == AlarmType.ALARM ? R.string.configLabel_schedalarm_mode : R.string.configLabel_schednotify_mode));
+            txt_modeLabel.setText(getString(type == AlarmType.ALARM ? R.string.schedalarm_label_alarm_mode : R.string.schedalarm_label_notification_mode));
         }
 
         updateLocationIcon(context, txt_location, useAppLocation);

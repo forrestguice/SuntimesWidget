@@ -1718,8 +1718,8 @@
     <string name="moon_dialog_controls">Controlli data</string>
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Pianifica una sveglia per</string>
-    <string name="configLabel_schednotify_mode">Pianifica una notifica per</string>
+    <string name="schedalarm_label_alarm_mode">Pianifica una sveglia per</string>
+    <string name="schedalarm_label_notification_mode">Pianifica una notifica per</string>
     <string name="schedalarm_dialog_title">Imposta sveglia</string>
     <string name="schedalarm_dialog_tab_event">Evento</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Ora</string>                        <!-- tab text -->
@@ -1833,28 +1833,28 @@
         <item>@string/timeMode_cross_midautumnal</item>
         <item>@string/timeMode_midnight</item>
     </string-array>
-    <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
-    <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+    <string name="selectformat_time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="selectformat_date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable Location? -->
-    <string name="gps_dialog_msg">Posizione disabilitata. Abilitarla?</string>
-    <string name="gps_dialog_ok">Sì</string>
-    <string name="gps_dialog_cancel">No</string>
+    <string name="location_enable_dialog_msg">Posizione disabilitata. Abilitarla?</string>
+    <string name="location_enable_dialog_ok">Sì</string>
+    <string name="location_enable_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Posizione configurata</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Posizione precedente</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
-    <string name="gps_lastfix_title_found">Ultima posizione</string>            <!-- may appear as place name when location set by lookup -->
-    <string name="gps_lastfix_title_searching">Ottenendo la posizione</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Impossibile ottenere la posizione; verrà usata l\'ultima posizione nota.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Aggiornamento posizione cancellato.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="location_lastfix_title_set">Posizione configurata</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">Posizione precedente</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="location_lastfix_title_found">Ultima posizione</string>            <!-- may appear as place name when location set by lookup -->
+    <string name="location_lastfix_title_searching">Ottenendo la posizione</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">Impossibile ottenere la posizione; verrà usata l\'ultima posizione nota.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="location_lastfix_toast_cancelled">Aggiornamento posizione cancellato.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Nessuna posizione</string>
-    <string name="gps_keeptrying_msg">Impossibile ottenere una posizione.</string>
-    <string name="gps_keeptrying_ok">Continua a provare</string>
-    <string name="gps_keeptrying_cancel">Rinuncia</string>
-    <string name="gps_keeptrying_fallback">Usa ultima posizione</string>
+    <string name="location_keeptrying_title">Nessuna posizione</string>
+    <string name="location_keeptrying_msg">Impossibile ottenere una posizione.</string>
+    <string name="location_keeptrying_ok">Continua a provare</string>
+    <string name="location_keeptrying_cancel">Rinuncia</string>
+    <string name="location_keeptrying_fallback">Usa ultima posizione</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Imposta data</string>
@@ -1921,9 +1921,9 @@
     <string name="themesimport_dialog_title">Importando temi</string>
     <string name="themesimport_dialog_message">Importando temi da file…</string>
 
-    <string name="msg_import_success">Importazione di <xliff:g id="themePlural">%s</xliff:g> riuscita.</string>
-    <string name="msg_import_failure">Importazione da <xliff:g id="filepath">%s</xliff:g> fallita!</string>
-    <string name="msg_import_noresults">Importazione saltata; non sono stati trovati nuovi temi.</string>
+    <string name="themesimport_msg_success">Importazione di <xliff:g id="themePlural">%s</xliff:g> riuscita.</string>
+    <string name="themesimport_msg_failure">Importazione da <xliff:g id="filepath">%s</xliff:g> fallita!</string>
+    <string name="themesimport_msg_noresults">Importazione saltata; non sono stati trovati nuovi temi.</string>
     <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">

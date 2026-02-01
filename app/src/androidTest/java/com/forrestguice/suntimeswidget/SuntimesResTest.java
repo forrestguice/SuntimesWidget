@@ -67,8 +67,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String languageTag : locales)
         {
             AppSettings.loadLocale(context, languageTag);
-            verify_selectFormatGender("time_gender", R.string.time_gender);
-            verify_selectFormatGender("date_gender", R.string.date_gender);
+            verify_selectFormatGender("time_gender", R.string.selectformat_time_gender);
+            verify_selectFormatGender("date_gender", R.string.selectformat_date_gender);
             verify_selectFormatGender("sunevent_phrase_gender", R.string.event_sunevent_phrase_gender);
             verify_selectFormatGender("shadowevent_phrase_gender", R.string.event_shadowevent_phrase_gender);
         }

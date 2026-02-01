@@ -1725,8 +1725,8 @@
     <string name="moon_dialog_controls">Kontrolki symulacji</string>
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Ustaw alarm na</string>
-    <string name="configLabel_schednotify_mode">Ustaw powiadomienie na</string>
+    <string name="schedalarm_label_alarm_mode">Ustaw alarm na</string>
+    <string name="schedalarm_label_notification_mode">Ustaw powiadomienie na</string>
     <string name="schedalarm_dialog_title">Ustaw alarm</string>
     <string name="schedalarm_dialog_tab_event">Wydarzenie</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Czas</string>                        <!-- tab text -->
@@ -1841,24 +1841,24 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">Usługa lokalizacji jest wyłączona. Czy włączyć ją?</string>
-    <string name="gps_dialog_ok">Tak</string>
-    <string name="gps_dialog_cancel">Nie</string>
+    <string name="location_enable_dialog_msg">Usługa lokalizacji jest wyłączona. Czy włączyć ją?</string>
+    <string name="location_enable_dialog_ok">Tak</string>
+    <string name="location_enable_dialog_cancel">Nie</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Ustawiona lokalizację</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Poprzednia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
-    <string name="gps_lastfix_title_found">Obecna lokalizacja</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Anulowano odświeżanie lokalizacji.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="location_lastfix_title_set">Ustawiona lokalizację</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">Poprzednia lokalizacja</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="location_lastfix_title_found">Obecna lokalizacja</string>            <!-- may appear as place name when location set by gps -->
+    <string name="location_lastfix_title_searching">Ustalanie lokalizacji</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">Nie udało się określić Twojej lokalizacji, powrót do ostatniej znanej lokalizacji.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="location_lastfix_toast_cancelled">Anulowano odświeżanie lokalizacji.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Pozycja nieznana</string>
-    <string name="gps_keeptrying_msg">Nie można ustalić pozycji</string>
-    <string name="gps_keeptrying_ok">Próbuj dalej</string>
-    <string name="gps_keeptrying_cancel">Zrezygnuj</string>
-    <string name="gps_keeptrying_fallback">Użyj ostatniej pozycji</string>
+    <string name="location_keeptrying_title">Pozycja nieznana</string>
+    <string name="location_keeptrying_msg">Nie można ustalić pozycji</string>
+    <string name="location_keeptrying_ok">Próbuj dalej</string>
+    <string name="location_keeptrying_cancel">Zrezygnuj</string>
+    <string name="location_keeptrying_fallback">Użyj ostatniej pozycji</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Ustaw datę</string>
@@ -1927,9 +1927,9 @@
     <string name="themesimport_dialog_title">Import skórek</string>
     <string name="themesimport_dialog_message">Importowanie skórek z pliku…</string>
 
-    <string name="msg_import_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
-    <string name="msg_import_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
+    <string name="themesimport_msg_success">Zaimportowano <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">Nie udało się zaimportować z <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="themesimport_msg_noresults">Pominięto importowanie; nie znaleziono nowych skórek.</string>
     <string name="msg_import_label_file">pliku</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">

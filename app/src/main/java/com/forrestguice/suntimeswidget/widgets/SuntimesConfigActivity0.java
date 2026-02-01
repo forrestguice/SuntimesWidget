@@ -2647,7 +2647,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     }
 
                 } else {
-                    Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.themesimport_msg_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -2732,7 +2732,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View view = getWindow().getDecorView();
         if (context != null && view != null)
         {
-            CharSequence message = context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings));
+            CharSequence message = context.getString(R.string.themesimport_msg_success, context.getString(R.string.configAction_settings));
             SnackbarUtils.make(context, view, message, SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {

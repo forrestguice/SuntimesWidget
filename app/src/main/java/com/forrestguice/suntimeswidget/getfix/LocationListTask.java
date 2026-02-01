@@ -53,9 +53,9 @@ public class LocationListTask implements Callable<LocationListTask.LocationListT
         if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, cursor) == -1)
         {
             Log.i("LocationListTask", "Place not found, adding it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
-            boolean isCurrent = selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_found))
-                    || selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_cached))
-                    || selectedPlaceName.equals(db.getContext().getString(R.string.gps_lastfix_title_set));
+            boolean isCurrent = selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_found))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_cached))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_set));
             String comment = (isCurrent ? PlaceTags.TAG_GPS : "");
 
             db.addPlace(selected, comment);

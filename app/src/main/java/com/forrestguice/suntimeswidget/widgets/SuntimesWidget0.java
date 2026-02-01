@@ -614,7 +614,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     {
         android.location.Location currentLocation = GetFixHelper.lastKnownLocation(context);
         if (currentLocation != null) {
-            WidgetSettings.saveLocationPref(context, appWidgetId, AndroidLocation.createLocation(context.getString(R.string.gps_lastfix_title_found), currentLocation));
+            WidgetSettings.saveLocationPref(context, appWidgetId, AndroidLocation.createLocation(context.getString(R.string.location_lastfix_title_found), currentLocation));
         }
     }
 

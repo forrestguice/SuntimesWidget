@@ -288,7 +288,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
 
-                name = (context != null ? context.getString(R.string.gps_lastfix_title_found) : "Last Position");
+                name = (context != null ? context.getString(R.string.location_lastfix_title_found) : "Last Position");
                 spin_locationName.setSelection(GetFixDatabaseAdapter.findPlaceByName(name, getFixAdapter.getCursor()));
                 spin_locationName.setEnabled(false);
                 flipper.setDisplayedChild(1);
@@ -379,7 +379,7 @@ public class LocationConfigView extends LinearLayout
                 flipper2.setDisplayedChild(1);
 
                 if (previousMode == LocationViewMode.MODE_AUTO) {
-                    name = (context != null ? context.getString(R.string.gps_lastfix_title_cached) : "Previous Position");
+                    name = (context != null ? context.getString(R.string.location_lastfix_title_cached) : "Previous Position");
                     text_locationName.setText(name);
                     populateLocationList();
                 }
@@ -900,7 +900,7 @@ public class LocationConfigView extends LinearLayout
     public void loadSettings(@NonNull Context context, Uri data )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
-        loadSettings(context, bundleData(data, context.getString(R.string.gps_lastfix_title_set)));
+        loadSettings(context, bundleData(data, context.getString(R.string.location_lastfix_title_set)));
     }
 
     /**

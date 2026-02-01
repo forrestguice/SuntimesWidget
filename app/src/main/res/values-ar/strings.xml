@@ -1919,8 +1919,8 @@
 
     <!-- Dialog: Set Alarm -->
 
-    <string name="configLabel_schedalarm_mode">جدولة تنبيه لـ</string>
-    <string name="configLabel_schednotify_mode">جدولة إشعار لـ</string>
+    <string name="schedalarm_label_alarm_mode">جدولة تنبيه لـ</string>
+    <string name="schedalarm_label_notification_mode">جدولة إشعار لـ</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>
     <string name="schedalarm_dialog_tab_event">الحدث</string>
     <string name="schedalarm_dialog_tab_time">الوقت</string>
@@ -2037,28 +2037,28 @@
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
-    <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
-    <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+    <string name="selectformat_time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="selectformat_date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable Location? -->
-    <string name="gps_dialog_msg">تم تعطيل الموقع. هل ترغب في تفعيله؟</string>
-    <string name="gps_dialog_ok">نعم</string>
-    <string name="gps_dialog_cancel">لا</string>
+    <string name="location_enable_dialog_msg">تم تعطيل الموقع. هل ترغب في تفعيله؟</string>
+    <string name="location_enable_dialog_ok">نعم</string>
+    <string name="location_enable_dialog_cancel">لا</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">الموقع السابق</string>  <!-- may appear as place name after location mode is changed away from 'current location'  -->
-    <string name="gps_lastfix_title_found">الموقع الأخير</string>    <!-- may appear as place name when location set by lookup -->
-    <string name="gps_lastfix_title_searching">الحصول على الموقع</string>
-    <string name="gps_lastfix_toast_notfound">فشل في الحصول على الموقع؛ الرجوع إلى آخر موقع معروف.</string>
-    <string name="gps_lastfix_toast_cancelled">تم إلغاء تحديث الموقع.</string>
+    <string name="location_lastfix_title_set">الموقع المُعد</string>   <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">الموقع السابق</string>  <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="location_lastfix_title_found">الموقع الأخير</string>    <!-- may appear as place name when location set by lookup -->
+    <string name="location_lastfix_title_searching">الحصول على الموقع</string>
+    <string name="location_lastfix_toast_notfound">فشل في الحصول على الموقع؛ الرجوع إلى آخر موقع معروف.</string>
+    <string name="location_lastfix_toast_cancelled">تم إلغاء تحديث الموقع.</string>
 
     <!-- Dialog: KeepTrying Location? -->
-    <string name="gps_keeptrying_title">لا موقع</string>
-    <string name="gps_keeptrying_msg">تعذر الحصول على الموقع.</string>
-    <string name="gps_keeptrying_ok">محاولة مستمرة</string>
-    <string name="gps_keeptrying_cancel">الاستسلام</string>
-    <string name="gps_keeptrying_fallback">استخدام الموقع السابق</string>
+    <string name="location_keeptrying_title">لا موقع</string>
+    <string name="location_keeptrying_msg">تعذر الحصول على الموقع.</string>
+    <string name="location_keeptrying_ok">محاولة مستمرة</string>
+    <string name="location_keeptrying_cancel">الاستسلام</string>
+    <string name="location_keeptrying_fallback">استخدام الموقع السابق</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">تعيين التاريخ</string>
@@ -2129,9 +2129,9 @@
     <string name="themesimport_dialog_title">جارٍ استيراد السمات</string>
     <string name="themesimport_dialog_message">جارٍ استيراد السمات من الملف…</string>
 
-    <string name="msg_import_success">تم استيراد <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">فشل الاستيراد من <xliff:g id="filepath">%s</xliff:g>!</string>
-    <string name="msg_import_noresults">تم تخطي الاستيراد؛ لم يتم العثور على سمات جديدة.</string>
+    <string name="themesimport_msg_success">تم استيراد <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">فشل الاستيراد من <xliff:g id="filepath">%s</xliff:g>!</string>
+    <string name="themesimport_msg_noresults">تم تخطي الاستيراد؛ لم يتم العثور على سمات جديدة.</string>
     <string name="msg_import_label_file">ملف</string> <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">

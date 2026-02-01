@@ -282,7 +282,7 @@ public class WelcomeAlarmsView extends WelcomeView
                 {
                     Uri uri = result.getUri();   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
-                    String failureMessage = context.getString(R.string.msg_import_failure, path);
+                    String failureMessage = context.getString(R.string.themesimport_msg_failure, path);
                     Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
                 }
             }

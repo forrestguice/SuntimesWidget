@@ -1683,8 +1683,8 @@
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Planifier une alarme pour le</string>
-    <string name="configLabel_schednotify_mode">Planifier une notification pour le</string>
+    <string name="schedalarm_label_alarm_mode">Planifier une alarme pour le</string>
+    <string name="schedalarm_label_notification_mode">Planifier une notification pour le</string>
     <string name="schedalarm_dialog_title">Régler l\'alarme</string>
     <string name="schedalarm_dialog_tab_event">Evénement</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Heure</string>                        <!-- tab text -->
@@ -1799,24 +1799,24 @@
     </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">Activer la localisation ?</string>
-    <string name="gps_dialog_ok">Oui</string>
-    <string name="gps_dialog_cancel">Non</string>
+    <string name="location_enable_dialog_msg">Activer la localisation ?</string>
+    <string name="location_enable_dialog_ok">Oui</string>
+    <string name="location_enable_dialog_cancel">Non</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Sélectionner l\'emplacement</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Dernier emplacement</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Dernier emplacement</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Obtenir l\'emplacement</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
-    <string name="gps_lastfix_toast_cancelled">Recherche GPS annulée</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
+    <string name="location_lastfix_title_set">Sélectionner l\'emplacement</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">Dernier emplacement</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+    <string name="location_lastfix_title_found">Dernier emplacement</string>            <!-- may appear as place name when location set by gps -->
+    <string name="location_lastfix_title_searching">Obtenir l\'emplacement</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">Impossible d\'obtenir l\'emplacement par GPS. Repli sur la dernière position connue.</string>  <!-- displayed briefly after gps has failed to get a location -->    <!-- TODO: removed "GPS" -->
+    <string name="location_lastfix_toast_cancelled">Recherche GPS annulée</string> <!-- displayed briefly when gps refresh cancelled -->  <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Aucun signal</string>
-    <string name="gps_keeptrying_msg">Impossible d\'obtenir le signal GPS</string>
-    <string name="gps_keeptrying_ok">Réessayer</string>
-    <string name="gps_keeptrying_cancel">Abandonner</string>
-    <string name="gps_keeptrying_fallback">Utiliser la dernière position connue</string>
+    <string name="location_keeptrying_title">Aucun signal</string>
+    <string name="location_keeptrying_msg">Impossible d\'obtenir le signal GPS</string>
+    <string name="location_keeptrying_ok">Réessayer</string>
+    <string name="location_keeptrying_cancel">Abandonner</string>
+    <string name="location_keeptrying_fallback">Utiliser la dernière position connue</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Date à afficher</string>
@@ -1879,9 +1879,9 @@
     <string name="themesimport_dialog_title">Import de Thèmes en cours</string>
     <string name="themesimport_dialog_message">Import de Thèmes en cours depuis le fichier …</string>
 
-    <string name="msg_import_success">Importé avec succès <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">Impossible d\'importer depuis <xliff:g id="filepath">%s</xliff:g> !</string>
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="themesimport_msg_success">Importé avec succès <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">Impossible d\'importer depuis <xliff:g id="filepath">%s</xliff:g> !</string>
+    <string name="themesimport_msg_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
     <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">

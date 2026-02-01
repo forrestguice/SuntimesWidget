@@ -761,7 +761,7 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = utils.calendarDateTimeDisplayString(AndroidResources.wrap(getContext()), eventCalendar, true, false);
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
-                    row[i] = context.getString(R.string.date_gender);
+                    row[i] = context.getString(R.string.selectformat_date_gender);
                     break;
                 case COLUMN_EVENT_PHRASE_QUANTITY:
                     row[i] = 1;   // TODO: are there locales where this value should return something other than 1?

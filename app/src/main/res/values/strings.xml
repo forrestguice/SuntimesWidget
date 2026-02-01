@@ -2384,8 +2384,8 @@
     <string name="moon_dialog_controls">Playback Controls</string>
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
-    <string name="configLabel_schednotify_mode">Schedule a notification for</string>
+    <string name="schedalarm_label_alarm_mode">Schedule an alarm for</string>
+    <string name="schedalarm_label_notification_mode">Schedule a notification for</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->  <!-- TODO -->
     <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->
@@ -2398,6 +2398,7 @@
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> does not occur.</string>
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
     <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
+
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomical twilight</item>
         <item>nautical twilight</item>
@@ -2570,28 +2571,28 @@
         <item>1</item>    <!-- cross winter -->
         <item>1</item>    <!-- midnight -->
     </integer-array>
-    <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
-    <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+    <string name="selectformat_time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="selectformat_date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable Location? -->
-    <string name="gps_dialog_msg">Location is disabled. Enable it?</string>
-    <string name="gps_dialog_ok">Yes</string>
-    <string name="gps_dialog_cancel">No</string>
+    <string name="location_enable_dialog_msg">Location is disabled. Enable it?</string>
+    <string name="location_enable_dialog_ok">Yes</string>
+    <string name="location_enable_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Configured Position</string>               <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
-    <string name="gps_lastfix_title_cached">Previous Position</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
-    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
-    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
-    <string name="gps_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
+    <string name="location_lastfix_title_set">Configured Position</string>               <!-- may appear as place name when location set by intent -->   <!-- TODO: changed from "Set Position" to "Configured Position" -->
+    <string name="location_lastfix_title_cached">Previous Position</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="location_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by lookup -->
+    <string name="location_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while lookup in progress -->
+    <string name="location_lastfix_toast_notfound">Failed to get location; falling back to last known position.</string>  <!-- displayed briefly after failing to get a location -->
+    <string name="location_lastfix_toast_cancelled">Location update cancelled.</string> <!-- displayed briefly when location refresh cancelled -->
 
     <!-- Dialog: KeepTrying Location? -->
-    <string name="gps_keeptrying_title">No Location</string>
-    <string name="gps_keeptrying_msg">Unable to get location.</string>
-    <string name="gps_keeptrying_ok">Keep Trying</string>
-    <string name="gps_keeptrying_cancel">Give Up</string>
-    <string name="gps_keeptrying_fallback">Use Last Position</string>
+    <string name="location_keeptrying_title">No Location</string>
+    <string name="location_keeptrying_msg">Unable to get location.</string>
+    <string name="location_keeptrying_ok">Keep Trying</string>
+    <string name="location_keeptrying_cancel">Give Up</string>
+    <string name="location_keeptrying_fallback">Use Last Position</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Set Date</string>
@@ -2657,15 +2658,14 @@
     <string name="msg_export_success">Saved to <xliff:g id="filepath">%s</xliff:g></string>   <!-- TODO: update -->
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <!-- Dialog: Import Themes -->
     <string name="themesimport_dialog_title">Importing Themes</string>
     <string name="themesimport_dialog_message">Importing themes from file…</string>
-
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
-    <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
+    <string name="themesimport_msg_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
+    <string name="themesimport_msg_noresults">Import skipped; no new themes were found.</string>
 
     <plurals name="themePlural">
         <item quantity="one">%d theme</item>

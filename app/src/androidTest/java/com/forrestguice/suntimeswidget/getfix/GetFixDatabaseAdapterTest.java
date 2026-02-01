@@ -130,9 +130,9 @@ public class GetFixDatabaseAdapterTest
             String alt = resources.getString(R.string.default_location_altitude);
 
             Location[] locations = new Location[] {
-                    new Location(resources.getString(R.string.gps_lastfix_title_found), lat, lon, alt),
-                    new Location(resources.getString(R.string.gps_lastfix_title_searching), lat, lon, alt),
-                    new Location(resources.getString(R.string.gps_lastfix_title_set), lat, lon, alt)
+                    new Location(resources.getString(R.string.location_lastfix_title_found), lat, lon, alt),
+                    new Location(resources.getString(R.string.location_lastfix_title_searching), lat, lon, alt),
+                    new Location(resources.getString(R.string.location_lastfix_title_set), lat, lon, alt)
             };
 
             for (Location location : locations)

@@ -290,7 +290,7 @@ public class EventListFragment extends DialogBase
                 {
                     Uri uri = result.getUri();   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
-                    String failureMessage = getString(R.string.msg_import_failure, path);
+                    String failureMessage = getString(R.string.themesimport_msg_failure, path);
                     Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
 
                 } //else {

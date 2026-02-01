@@ -1808,8 +1808,8 @@
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Naplánovat budík pro</string>
-    <string name="configLabel_schednotify_mode">Naplánovat oznámení pro</string>
+    <string name="schedalarm_label_alarm_mode">Naplánovat budík pro</string>
+    <string name="schedalarm_label_notification_mode">Naplánovat oznámení pro</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->
     <string name="schedalarm_dialog_tab_event">Událost</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Čas</string>                        <!-- tab text -->
@@ -1926,24 +1926,24 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">Určení polohy je vypnutu. Chcete ho zapnout?</string>
-    <string name="gps_dialog_ok">Ano</string>
-    <string name="gps_dialog_cancel">Ne</string>
+    <string name="location_enable_dialog_msg">Určení polohy je vypnutu. Chcete ho zapnout?</string>
+    <string name="location_enable_dialog_ok">Ano</string>
+    <string name="location_enable_dialog_cancel">Ne</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Poslední poloha</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Získávaní polohy selhalo; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Aktualizace polohy zrušena</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="location_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">Poslední poloha</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+    <string name="location_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
+    <string name="location_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">Získávaní polohy selhalo; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="location_lastfix_toast_cancelled">Aktualizace polohy zrušena</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Nezaměřeno</string>
-    <string name="gps_keeptrying_msg">Nebylo možno zaměřit zařízení.</string>
-    <string name="gps_keeptrying_ok">Pokračovat v pokusu o zaměření</string>
-    <string name="gps_keeptrying_cancel">Vzdát pokus o zaměření</string>
-    <string name="gps_keeptrying_fallback">Použít poslední polohu</string>
+    <string name="location_keeptrying_title">Nezaměřeno</string>
+    <string name="location_keeptrying_msg">Nebylo možno zaměřit zařízení.</string>
+    <string name="location_keeptrying_ok">Pokračovat v pokusu o zaměření</string>
+    <string name="location_keeptrying_cancel">Vzdát pokus o zaměření</string>
+    <string name="location_keeptrying_fallback">Použít poslední polohu</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Nastavit datum</string>
@@ -2011,9 +2011,9 @@
     <string name="themesimport_dialog_title">Import témat</string>
     <string name="themesimport_dialog_message">Importuji témata ze souboru…</string>
 
-    <string name="msg_import_success">Importováno <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">Import z <xliff:g id="filepath">%s</xliff:g> selhal!</string>
-    <string name="msg_import_noresults">Import přeskočen; nenalezena žádná nová témata.</string>
+    <string name="themesimport_msg_success">Importováno <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">Import z <xliff:g id="filepath">%s</xliff:g> selhal!</string>
+    <string name="themesimport_msg_noresults">Import přeskočen; nenalezena žádná nová témata.</string>
     <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">

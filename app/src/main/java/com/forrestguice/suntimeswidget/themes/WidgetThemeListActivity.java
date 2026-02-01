@@ -500,7 +500,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 if (importCount > 0)
                 {
                     String countString = getResources().getQuantityString(R.plurals.themePlural, importCount, importCount);
-                    String successMessage = getString(R.string.msg_import_success, countString);
+                    String successMessage = getString(R.string.themesimport_msg_success, countString);
                     Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
 
                     if (adapterModified) {
@@ -508,11 +508,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
                     }
 
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.msg_import_noresults), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.themesimport_msg_noresults), Toast.LENGTH_LONG).show();
                 }
 
             } else {
-                String failureMessage = getString(R.string.msg_import_failure, results.getUri());
+                String failureMessage = getString(R.string.themesimport_msg_failure, results.getUri());
                 Exception error = results.getException();
                 if (error != null) {
                     failureMessage += "\n\n" + error.getLocalizedMessage();

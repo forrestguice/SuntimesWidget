@@ -1719,8 +1719,8 @@
     <string name="moon_dialog_controls">播放控制</string>
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">新建一個鬧鐘排程</string>
-    <string name="configLabel_schednotify_mode">安排通知為</string>
+    <string name="schedalarm_label_alarm_mode">新建一個鬧鐘排程</string>
+    <string name="schedalarm_label_notification_mode">安排通知為</string>
     <string name="schedalarm_dialog_title">設定鬧鐘</string>
     <string name="schedalarm_dialog_tab_event">事件</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">時間</string>                        <!-- tab text -->
@@ -1836,24 +1836,24 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">位置已被停用，要啟用嗎？</string>
-    <string name="gps_dialog_ok">是</string>
-    <string name="gps_dialog_cancel">否</string>
+    <string name="location_enable_dialog_msg">位置已被停用，要啟用嗎？</string>
+    <string name="location_enable_dialog_ok">是</string>
+    <string name="location_enable_dialog_cancel">否</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">配置的位置</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">上次的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
-    <string name="gps_lastfix_title_found">最後的位置</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">正在獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">位置更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="location_lastfix_title_set">配置的位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">上次的位置</string>       <!-- may appear as place name after location mode is changed away from 'current location'  -->
+    <string name="location_lastfix_title_found">最後的位置</string>            <!-- may appear as place name when location set by gps -->
+    <string name="location_lastfix_title_searching">正在獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="location_lastfix_toast_cancelled">位置更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">沒有位置</string>
-    <string name="gps_keeptrying_msg">無法獲取位置。</string>
-    <string name="gps_keeptrying_ok">繼續嘗試</string>
-    <string name="gps_keeptrying_cancel">放棄</string>
-    <string name="gps_keeptrying_fallback">使用最後的位置</string>
+    <string name="location_keeptrying_title">沒有位置</string>
+    <string name="location_keeptrying_msg">無法獲取位置。</string>
+    <string name="location_keeptrying_ok">繼續嘗試</string>
+    <string name="location_keeptrying_cancel">放棄</string>
+    <string name="location_keeptrying_fallback">使用最後的位置</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">設定日期</string>
@@ -1919,9 +1919,9 @@
     <string name="themesimport_dialog_title">匯入主題</string>
     <string name="themesimport_dialog_message">正從檔案中匯入主題……</string>
 
-    <string name="msg_import_success">匯入 <xliff:g id="themePlural">%s</xliff:g>。</string>
-    <string name="msg_import_failure">從 <xliff:g id="filepath">%s</xliff:g> 匯入失敗！</string>
-    <string name="msg_import_noresults">匯入已跳過；沒有找到新的主題。</string>
+    <string name="themesimport_msg_success">匯入 <xliff:g id="themePlural">%s</xliff:g>。</string>
+    <string name="themesimport_msg_failure">從 <xliff:g id="filepath">%s</xliff:g> 匯入失敗！</string>
+    <string name="themesimport_msg_noresults">匯入已跳過；沒有找到新的主題。</string>
     <string name="msg_import_label_file">檔案</string>   <!-- used in import failure messages; e.g. "Import from file failed!" -->
 
     <plurals name="themePlural">

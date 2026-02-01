@@ -1704,8 +1704,8 @@
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
-    <string name="configLabel_schednotify_mode">Planificar una notificació per a</string>
+    <string name="schedalarm_label_alarm_mode">Planificar alarma per a</string>
+    <string name="schedalarm_label_notification_mode">Planificar una notificació per a</string>
     <string name="schedalarm_dialog_title">Establir alarma</string>
     <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  
     <string name="schedalarm_dialog_tab_time">Data</string>                        <!-- tab text -->  
@@ -1821,24 +1821,24 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">El GPS està desactivat. Activar-lo?</string>     <!-- TODO: "GPS is disabled" to "Location is disabled" -->
-    <string name="gps_dialog_ok">Sí</string>
-    <string name="gps_dialog_cancel">No</string>
+    <string name="location_enable_dialog_msg">El GPS està desactivat. Activar-lo?</string>     <!-- TODO: "GPS is disabled" to "Location is disabled" -->
+    <string name="location_enable_dialog_ok">Sí</string>
+    <string name="location_enable_dialog_cancel">No</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Configurar posició</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_cached">Última posició</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
-    <string name="gps_lastfix_title_found">Última posició</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Obtenint posició</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">Posició no trobada; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Actualizació de GPS canceŀlada.</string> <!-- displayed briefly when gps refresh cancelled -->   <!-- TODO: "gps update" to "location update" -->
+    <string name="location_lastfix_title_set">Configurar posició</string>               <!-- may appear as place name when location set by intent -->
+    <string name="location_lastfix_title_cached">Última posició</string>       <!-- may appear as place name after location mode is changed away from 'current location'  --> <!-- TODO: "Last Postion" to "Previous Position" -->
+    <string name="location_lastfix_title_found">Última posició</string>            <!-- may appear as place name when location set by gps -->
+    <string name="location_lastfix_title_searching">Obtenint posició</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="location_lastfix_toast_notfound">Posició no trobada; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="location_lastfix_toast_cancelled">Actualizació de GPS canceŀlada.</string> <!-- displayed briefly when gps refresh cancelled -->   <!-- TODO: "gps update" to "location update" -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">Sense posició</string>
-    <string name="gps_keeptrying_msg">Incapaç d\'obtenir posició</string>
-    <string name="gps_keeptrying_ok">Segueix intentant</string>
-    <string name="gps_keeptrying_cancel">Abandonar</string>
-    <string name="gps_keeptrying_fallback">Utilitza última posició coneguda</string>  
+    <string name="location_keeptrying_title">Sense posició</string>
+    <string name="location_keeptrying_msg">Incapaç d\'obtenir posició</string>
+    <string name="location_keeptrying_ok">Segueix intentant</string>
+    <string name="location_keeptrying_cancel">Abandonar</string>
+    <string name="location_keeptrying_fallback">Utilitza última posició coneguda</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Configurar data</string>
@@ -1905,9 +1905,9 @@
     <string name="themesimport_dialog_title">Important temes</string>                   
     <string name="themesimport_dialog_message">Important temes des d\'un arxiu…</string>      
 
-    <string name="msg_import_success">Importat <xliff:g id="themePlural">%s</xliff:g>.</string>  
-    <string name="msg_import_failure">La importació des de <xliff:g id="filepath">%s</xliff:g> ha fallat!</string>  
-    <string name="msg_import_noresults">La importació no s\'ha fet; no s\'han trobat temes nous.</string>
+    <string name="themesimport_msg_success">Importat <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="themesimport_msg_failure">La importació des de <xliff:g id="filepath">%s</xliff:g> ha fallat!</string>
+    <string name="themesimport_msg_noresults">La importació no s\'ha fet; no s\'han trobat temes nous.</string>
     <string name="msg_import_label_file">file</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
