@@ -21,15 +21,15 @@
         android:id="@+id/button_rising"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
-        android:text="@string/seekAltitude_rising" android:textColor="?attr/text_accentColor"
-        android:contentDescription="@string/seekAltitude_rising_contentDescription" />
+        android:text="@string/lightmap_seekAltitude_rising" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/lightmap_seekAltitude_rising_contentDescription" />
 
     <Button
         android:id="@+id/button_setting"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
-        android:text="@string/seekAltitude_setting" android:textColor="?attr/text_accentColor"
-        android:contentDescription="@string/seekAltitude_setting_contentDescription" />
+        android:text="@string/lightmap_seekAltitude_setting" android:textColor="?attr/text_accentColor"
+        android:contentDescription="@string/lightmap_seekAltitude_setting_contentDescription" />
 
     <TextView android:id="@+id/text_title"
         android:layout_width="wrap_content" android:layout_height="wrap_content"

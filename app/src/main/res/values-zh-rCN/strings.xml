@@ -1682,37 +1682,37 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5分</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15分</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1天</string>
-    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">最早日出</string>       <!-- label / contentDescription -->
-    <string name="configLabel_earliest_sunset">最早日落</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunrise">最晚日出</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunset">最晚日落</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunrise">最早日出</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunset">最早日落</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunrise">最晚日出</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunset">最晚日落</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_crosshair">十字线</string>
-    <string name="graph_option_grid">网格</string>
-    <string name="graph_option_labels">标签</string>
-    <string name="graph_option_axis">轴</string>
-    <string name="graph_option_points">点</string>
-    <string name="graph_option_twilights">黎明和黄昏</string>
-    <string name="graph_option_seasons">季节</string>
-    <string name="graph_option_filledpath">填充路径</string>
-    <string name="graph_option_moon">显示月亮</string>
+    <string name="lightmap_graph_option_crosshair">十字线</string>
+    <string name="lightmap_graph_option_grid">网格</string>
+    <string name="lightmap_graph_option_labels">标签</string>
+    <string name="lightmap_graph_option_axis">轴</string>
+    <string name="lightmap_graph_option_points">点</string>
+    <string name="lightmap_graph_option_twilights">黎明和黄昏</string>
+    <string name="lightmap_graph_option_seasons">季节</string>
+    <string name="lightmap_graph_option_filledpath">填充路径</string>
+    <string name="lightmap_graph_option_moon">显示月亮</string>
 
-    <string name="seekAltitude_configHint">角度</string>
-    <string name="seekAltitude_suffix">°∠</string>
-    <string name="seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
-    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
-    <string name="seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
-    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+    <string name="lightmap_seekAltitude_configHint">角度</string>
+    <string name="lightmap_seekAltitude_suffix">°∠</string>
+    <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
+    <string name="lightmap_seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="lightmap_seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
+    <string name="lightmap_seekAltitude_setting_contentDescription">@string/sunset</string>
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

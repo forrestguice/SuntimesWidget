@@ -14,32 +14,32 @@
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showCrosshair"
-                android:title="@string/graph_option_crosshair"
+                android:title="@string/lightmap_graph_option_crosshair"
                 android:checkable="true"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showGrid"
-                android:title="@string/graph_option_grid"
+                android:title="@string/lightmap_graph_option_grid"
                 android:checkable="true"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showLabels"
-                android:title="@string/graph_option_labels"
+                android:title="@string/lightmap_graph_option_labels"
                 android:checkable="true"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showAxis"
-                android:title="@string/graph_option_axis"
+                android:title="@string/lightmap_graph_option_axis"
                 android:checkable="true"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showPoints"
-                android:title="@string/graph_option_points"
+                android:title="@string/lightmap_graph_option_points"
                 android:checkable="true"
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showTwilights"
-                android:title="@string/graph_option_twilights"
+                android:title="@string/lightmap_graph_option_twilights"
                 android:checkable="true"
                 app:showAsAction="never" />
 
@@ -59,7 +59,7 @@
                 app:showAsAction="never" />
 
             <item android:id="@+id/graphOption_showSeasons"
-                android:title="@string/graph_option_seasons"
+                android:title="@string/lightmap_graph_option_seasons"
                 android:checkable="true"
                 app:showAsAction="never" />
 

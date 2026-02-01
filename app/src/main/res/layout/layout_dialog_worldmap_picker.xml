@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
                 style="@style/Base.DialogWindowTitle.AppCompat"
-                android:text="@string/mappick_dialog_title" />
+                android:text="@string/worldmap_pickplace_title" />
 
             <TextView
                 android:id="@+id/dialog_subtitle"

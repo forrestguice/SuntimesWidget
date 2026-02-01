@@ -18,7 +18,7 @@
             <TextView android:labelFor="@+id/text_time_sunrise_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small" android:textStyle="bold"
-                android:text="@string/configLabel_earliest_sunrise" />
+                android:text="@string/lightgraph_label_earliest_sunrise" />
             <TextView android:id="@+id/text_time_sunrise_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
@@ -33,7 +33,7 @@
             <TextView android:labelFor="@+id/text_time_sunrise_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small" android:textStyle="bold"
-                android:text="@string/configLabel_latest_sunset" />
+                android:text="@string/lightgraph_label_latest_sunset" />
             <TextView android:id="@+id/text_time_sunset_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
@@ -56,7 +56,7 @@
             <TextView android:labelFor="@+id/text_time_sunrise_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small" android:textStyle="bold"
-                android:text="@string/configLabel_latest_sunrise" />
+                android:text="@string/lightgraph_label_latest_sunrise" />
             <TextView android:id="@+id/text_time_sunrise_late"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
@@ -71,7 +71,7 @@
             <TextView android:labelFor="@+id/text_time_sunset_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small" android:textStyle="bold"
-                android:text="@string/configLabel_earliest_sunset" />
+                android:text="@string/lightgraph_label_earliest_sunset" />
             <TextView android:id="@+id/text_time_sunset_early"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"

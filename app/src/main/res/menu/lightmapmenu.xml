@@ -89,25 +89,25 @@
 
                 <item android:id="@+id/graphOption_sunSymbol"
                     android:icon="?attr/icActionSettings"
-                    android:title="@string/graph_option_symbol"
+                    android:title="@string/lightmap_graph_option_symbol"
                     app:showAsAction="never">
                     <menu>
                         <group android:checkableBehavior="single">
 
                             <item android:id="@+id/graphOption_sunSymbol_circle"
-                                android:title="@string/graph_option_symbol_circle"
+                                android:title="@string/lightmap_graph_option_symbol_circle"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_cross"
-                                android:title="@string/graph_option_symbol_cross"
+                                android:title="@string/lightmap_graph_option_symbol_cross"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_circledot"
-                                android:title="@string/graph_option_symbol_dot"
+                                android:title="@string/lightmap_graph_option_symbol_dot"
                                 app:showAsAction="never" />
 
                             <item android:id="@+id/graphOption_sunSymbol_line"
-                                android:title="@string/graph_option_symbol_line"
+                                android:title="@string/lightmap_graph_option_symbol_line"
                                 app:showAsAction="never" />
 
                         </group>
@@ -121,32 +121,32 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showGrid"
-                    android:title="@string/graph_option_grid"
+                    android:title="@string/lightmap_graph_option_grid"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showLabels"
-                    android:title="@string/graph_option_labels"
+                    android:title="@string/lightmap_graph_option_labels"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showAxis"
-                    android:title="@string/graph_option_axis"
+                    android:title="@string/lightmap_graph_option_axis"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_fillPath"
-                    android:title="@string/graph_option_filledpath"
+                    android:title="@string/lightmap_graph_option_filledpath"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showMoon"
-                    android:title="@string/graph_option_moon"
+                    android:title="@string/lightmap_graph_option_moon"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showNoon"
-                    android:title="@string/graph_option_noon"
+                    android:title="@string/lightmap_graph_option_noon"
                     android:checkable="true"
                     app:showAsAction="never" />
 

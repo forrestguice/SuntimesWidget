@@ -538,7 +538,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_SeekAltitude(Context context) {
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ObjectShadow(Context context) {
@@ -558,11 +558,11 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot click_SeekAltitude_rising(Context context) {
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot click_SeekAltitude_setting(Context context) {
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot input_SeekAltitude_altitude(Context context, double altitude)
@@ -617,11 +617,11 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         {
             onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_lineGraph)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_axis)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_grid)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_labels)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_filledpath)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_axis)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_grid)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_labels)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_filledpath)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_TimeZone(Context context)
@@ -636,12 +636,12 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         {
             onView(withId(R.id.edit_altitude)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withId(R.id.edit_altitude)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_ObjectShadow(Context context)

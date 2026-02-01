@@ -524,16 +524,16 @@ public class LightGraphDialog extends BottomSheetDialogBase
         if (options.earliestLatestData != null)
         {
             if (text_sunrise_early != null) {
-                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.configLabel_earliest_sunrise);
+                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.lightgraph_label_earliest_sunrise);
             }
             if (text_sunrise_late != null) {
-                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise_day, options.earliestLatestData.late_sunrise_hour, R.string.configLabel_latest_sunrise);
+                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise_day, options.earliestLatestData.late_sunrise_hour, R.string.lightgraph_label_latest_sunrise);
             }
             if (text_sunset_early != null) {
-                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset_day, options.earliestLatestData.early_sunset_hour, R.string.configLabel_earliest_sunset);
+                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset_day, options.earliestLatestData.early_sunset_hour, R.string.lightgraph_label_earliest_sunset);
             }
             if (text_sunset_late != null) {
-                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset_day, options.earliestLatestData.late_sunset_hour, R.string.configLabel_latest_sunset);
+                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset_day, options.earliestLatestData.late_sunset_hour, R.string.lightgraph_label_latest_sunset);
             }
         }
     }

@@ -1573,7 +1573,7 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5 min</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 t</string>
-    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
 
 
@@ -1581,31 +1581,31 @@
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">Plej frua sunleviĝo</string>       <!-- label / contentDescription -->
-    <string name="configLabel_earliest_sunset">Plej frua sunsubiro</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunrise">Plej malfrua sunleviĝo</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunset">Plej malfrua sunsubiro</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunrise">Plej frua sunleviĝo</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunset">Plej frua sunsubiro</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunrise">Plej malfrua sunleviĝo</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunset">Plej malfrua sunsubiro</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="graph_option_crosshair">Kruco</string>
-    <string name="graph_option_grid">Krado (detala)</string>
-    <string name="graph_option_labels">Etikedoj</string> 
-    <string name="graph_option_axis">Krado</string>
-    <string name="graph_option_points">Punktoj</string>
-    <string name="graph_option_twilights">Krepuskoj</string>
-    <string name="graph_option_seasons">Sezonoj</string>
-    <string name="graph_option_filledpath">Plenigi areon</string>
-    <string name="graph_option_moon">Montri Lunon</string>
+    <string name="lightmap_graph_option_crosshair">Kruco</string>
+    <string name="lightmap_graph_option_grid">Krado (detala)</string>
+    <string name="lightmap_graph_option_labels">Etikedoj</string>
+    <string name="lightmap_graph_option_axis">Krado</string>
+    <string name="lightmap_graph_option_points">Punktoj</string>
+    <string name="lightmap_graph_option_twilights">Krepuskoj</string>
+    <string name="lightmap_graph_option_seasons">Sezonoj</string>
+    <string name="lightmap_graph_option_filledpath">Plenigi areon</string>
+    <string name="lightmap_graph_option_moon">Montri Lunon</string>
 
-    <string name="seekAltitude_configHint">gradoj</string>
-    <string name="seekAltitude_suffix">°∠</string>
-    <string name="seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
-    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
-    <string name="seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
-    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+    <string name="lightmap_seekAltitude_configHint">gradoj</string>
+    <string name="lightmap_seekAltitude_suffix">°∠</string>
+    <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
+    <string name="lightmap_seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="lightmap_seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
+    <string name="lightmap_seekAltitude_setting_contentDescription">@string/sunset</string>
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

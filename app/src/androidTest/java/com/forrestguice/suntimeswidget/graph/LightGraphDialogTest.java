@@ -219,10 +219,10 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
         }
         public LightGraphDialogRobot assertOverflowMenuShown_Options(Context context) {
             onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.graph_option_crosshair)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.graph_option_axis)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.graph_option_grid)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.graph_option_points)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.lightmap_graph_option_crosshair)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.lightmap_graph_option_axis)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.lightmap_graph_option_grid)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.lightmap_graph_option_points)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             return this;
         }
         public LightGraphDialogRobot assertOverflowMenuShown_TimeZone(Context context) {

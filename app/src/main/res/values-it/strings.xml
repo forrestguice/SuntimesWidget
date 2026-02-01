@@ -1691,27 +1691,27 @@
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1g</string>
 
-    <string name="configLabel_earliest_sunrise">Prima Alba</string>       <!-- label / contentDescription -->
-    <string name="configLabel_earliest_sunset">Primo Tramonto</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunrise">Ultima Alba</string>       <!-- label / contentDescription -->
-    <string name="configLabel_latest_sunset">Ultimo Tramonto</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunrise">Prima Alba</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_earliest_sunset">Primo Tramonto</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunrise">Ultima Alba</string>       <!-- label / contentDescription -->
+    <string name="lightgraph_label_latest_sunset">Ultimo Tramonto</string>       <!-- label / contentDescription -->
 
-    <string name="graph_option_crosshair">Mirino</string>
-    <string name="graph_option_grid">Griglia</string>
-    <string name="graph_option_labels">Etichette</string>
-    <string name="graph_option_axis">Assi</string>
-    <string name="graph_option_points">Punti</string>
-    <string name="graph_option_twilights">Crepuscoli</string>
-    <string name="graph_option_seasons">Stagioni</string>
-    <string name="graph_option_filledpath">Percorsi pieni</string>
-    <string name="graph_option_moon">Mostra luna</string>
+    <string name="lightmap_graph_option_crosshair">Mirino</string>
+    <string name="lightmap_graph_option_grid">Griglia</string>
+    <string name="lightmap_graph_option_labels">Etichette</string>
+    <string name="lightmap_graph_option_axis">Assi</string>
+    <string name="lightmap_graph_option_points">Punti</string>
+    <string name="lightmap_graph_option_twilights">Crepuscoli</string>
+    <string name="lightmap_graph_option_seasons">Stagioni</string>
+    <string name="lightmap_graph_option_filledpath">Percorsi pieni</string>
+    <string name="lightmap_graph_option_moon">Mostra luna</string>
 
-    <string name="seekAltitude_configHint">gradi</string>
-    <string name="seekAltitude_suffix">°∠</string>
-    <string name="seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
-    <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
-    <string name="seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
-    <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
+    <string name="lightmap_seekAltitude_configHint">gradi</string>
+    <string name="lightmap_seekAltitude_suffix">°∠</string>
+    <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
+    <string name="lightmap_seekAltitude_rising_contentDescription">@string/sunrise</string>
+    <string name="lightmap_seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
+    <string name="lightmap_seekAltitude_setting_contentDescription">@string/sunset</string>
 
     <!-- Dialog: Moon -->
     <string name="moon_dialog_title">@string/configAction_moon</string>

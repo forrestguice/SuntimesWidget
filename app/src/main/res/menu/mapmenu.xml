@@ -123,12 +123,12 @@
     <group android:id="@+id/mapOption_group_share">
 
         <item android:id="@+id/recordMap"
-            android:title="@string/configAction_recordMap"
+            android:title="@string/worldmap_action_recordMap"
             android:icon="?attr/icActionRecord"
             app:showAsAction="never" android:visible="false" />
 
         <item android:id="@+id/shareMap"
-            android:title="@string/configAction_shareMap"
+            android:title="@string/worldmap_action_shareMap"
             android:icon="?attr/icActionShare"
             app:showAsAction="never" />
 
