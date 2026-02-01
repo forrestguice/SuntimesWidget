@@ -51,7 +51,7 @@
     <string name="action_prevYear">Előző év</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Figyelmeztetés!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="contentDescription_warning">Figyelmeztetés!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).

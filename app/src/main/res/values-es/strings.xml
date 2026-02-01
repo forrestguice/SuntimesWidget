@@ -54,7 +54,7 @@
     <string name="action_prevYear">Año anterior</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">¡Atención!</string>
+    <string name="contentDescription_warning">¡Atención!</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).

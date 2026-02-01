@@ -78,7 +78,7 @@
     <string name="action_prevYear">Предыдущий год</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Внимание!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="contentDescription_warning">Внимание!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).

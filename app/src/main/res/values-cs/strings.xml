@@ -78,7 +78,7 @@
     <string name="action_prevYear">Předchozí rok</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Pozor!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="contentDescription_warning">Pozor!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).

@@ -77,7 +77,7 @@
     <string name="action_prevYear">Ano Anterior</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Aviso!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="contentDescription_warning">Aviso!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
