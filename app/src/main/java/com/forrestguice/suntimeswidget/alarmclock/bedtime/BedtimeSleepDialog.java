@@ -80,7 +80,7 @@ public class BedtimeSleepDialog extends DialogBase
     }
     public String getDialogTitle(Context context) {
         String title = getArgs().getString("dialogTitle");
-        return (title != null ? title : context.getString(R.string.configLabel_sleepCycles));
+        return (title != null ? title : context.getString(R.string.bedtime_label_sleepCycles));
     }
 
     /**
@@ -229,9 +229,9 @@ public class BedtimeSleepDialog extends DialogBase
 
             String sleepCycleMsText = utils.timeDeltaLongDisplayString(sleepCycleMs).toString();
             String totalSleepMsText = utils.timeDeltaLongDisplayString(totalSleepMs).toString();
-            String numCyclesText = getResources().getQuantityString(R.plurals.cyclePlural, (int)numCycles, (int)numCycles);
+            String numCyclesText = getResources().getQuantityString(R.plurals.bedtime_cyclePlural, (int)numCycles, (int)numCycles);
 
-            String sleepCycleText = getString(R.string.configLabel_numSleepCycles, numCyclesText, sleepCycleMsText, totalSleepMsText);
+            String sleepCycleText = getString(R.string.bedtime_label_numSleepCycles, numCyclesText, sleepCycleMsText, totalSleepMsText);
             SpannableString sleepCycleDisplay = SpanUtils.createBoldSpan(null, sleepCycleText, sleepCycleMsText);
             sleepCycleDisplay = SpanUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, sleepCycleMsText);
             sleepCycleDisplay = SpanUtils.createBoldSpan(sleepCycleDisplay, sleepCycleText, totalSleepMsText);

@@ -1197,75 +1197,75 @@
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">Dormtempo</string>              <!-- group title -->
+    <string name="bedtime_label">Dormtempo</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">Aktivigi nun</string>
-    <string name="configAction_dismissBedtime">Malaktivigi</string>
+    <string name="bedtime_action_startBedtime">Aktivigi nun</string>
+    <string name="bedtime_action_dismissBedtime">Malaktivigi</string>
 
-    <string name="configAction_set">Agordi</string>
-    <string name="configAction_setBedtime">Agordi dormtempon</string>
-    <string name="configAction_setBedtime_fromAlarm">Agordi dormtempon ĝis alarmo</string>
-    <string name="configAction_setBedtime_toNow">Agordi dormtempon ekde nun</string>
-    <string name="configAction_pauseBedtime">Paŭzigi</string>
-    <string name="configAction_resumeBedtime">Daŭrigi</string>
+    <string name="bedtime_action_set">Agordi</string>
+    <string name="bedtime_action_setBedtime">Agordi dormtempon</string>
+    <string name="bedtime_action_setBedtime_fromAlarm">Agordi dormtempon ĝis alarmo</string>
+    <string name="bedtime_action_setBedtime_toNow">Agordi dormtempon ekde nun</string>
+    <string name="bedtime_action_pauseBedtime">Paŭzigi</string>
+    <string name="bedtime_action_resumeBedtime">Daŭrigi</string>
 
-    <string name="configAction_setSleep">Agordi dormtempon</string>
+    <string name="bedtime_action_setSleep">Agordi dormtempon</string>
 
-    <string name="msg_bedtime_sleep_length">Dormo daŭros %s.</string>                             <!-- e.g. "Sleep for 8h" -->
-    <string name="msg_bedtime_sleep_length_other_plus">Tio ĉi estas %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
-    <string name="msg_bedtime_sleep_length_cycles">Tio ĉi estas %1$s po %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">Tio ĉi estas %1$s po %2$s, plus %3$s da endormiĝo.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
+    <string name="bedtime_msg_sleep_length">Dormo daŭros %s.</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="bedtime_msg_sleep_length_other_plus">Tio ĉi estas %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="bedtime_msg_sleep_length_cycles">Tio ĉi estas %1$s po %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="bedtime_msg_sleep_length_cycles_plus">Tio ĉi estas %1$s po %2$s, plus %3$s da endormiĝo.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">Aŭtomate fini dormtempon</string>
-    <string name="configLabel_sleepBedtimeAlarmOff">Fini dormtempon ku alarmo</string>
+    <string name="bedtime_label_sleepBedtimeAutoOff">Aŭtomate fini dormtempon</string>
+    <string name="bedtime_label_sleepBedtimeAlarmOff">Fini dormtempon ku alarmo</string>
 
-    <string name="configLabel_sleepOffset">Daŭro de endormiĝo</string>
-    <string name="configLabel_sleepCycle">Daŭro de dormociklo</string>
-    <string name="configLabel_sleepCycles">Nombro de dormocikloj</string>
-    <string name="configLabel_numSleepCycles">Dormi %1$sn po %2$s, aŭ %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
-    <plurals name="cyclePlural">
+    <string name="bedtime_label_sleepOffset">Daŭro de endormiĝo</string>
+    <string name="bedtime_label_sleepCycle">Daŭro de dormociklo</string>
+    <string name="bedtime_label_sleepCycles">Nombro de dormocikloj</string>
+    <string name="bedtime_label_numSleepCycles">Dormi %1$sn po %2$s, aŭ %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
+    <plurals name="bedtime_cyclePlural">
         <item quantity="one">%d dormociklo</item>
         <item quantity="other">%d dormocikloj</item>
     </plurals>
-    <string name="cycleNone">neniu</string>
+    <string name="bedtime_cycleNone">neniu</string>
 
-    <string name="configAction_setWakeUp">Agordi vektempon</string>
-    <string name="configAction_setWakeUp_fromBedtime">Agordi vektempon post dormtempo</string>
+    <string name="bedtime_action_setWakeUp">Agordi vektempon</string>
+    <string name="bedtime_action_setWakeUp_fromBedtime">Agordi vektempon post dormtempo</string>
 
-    <string name="msg_bedtime_active">Dormtempa reĝimo estas aktiva.</string>              <!-- textview text -->
-    <string name="msg_bedtime_paused">Dormtempa reĝimo estas paŭzigita.</string>              <!-- textview text -->
-    <string name="msg_bedtime_set">Dormtempo komenciĝas je</string>                                        <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_notset">Dormtempo ne estas agordita.</string>                            <!-- textview text -->
-    <string name="msg_bedtime_reminder">Montri rememorigon %1$s antaŭ dormtempo.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
-    <string name="msg_bedtime_wakeup_set">Veko je</string>                                 <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_wakeup_notset">Vektempo ne estas agordita.</string>                <!-- textview text -->
-    <string name="msg_bedtime_note">Dormtempo komenciĝos post %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
+    <string name="bedtime_msg_active">Dormtempa reĝimo estas aktiva.</string>              <!-- textview text -->
+    <string name="bedtime_msg_paused">Dormtempa reĝimo estas paŭzigita.</string>              <!-- textview text -->
+    <string name="bedtime_msg_set">Dormtempo komenciĝas je</string>                                        <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_notset">Dormtempo ne estas agordita.</string>                            <!-- textview text -->
+    <string name="bedtime_msg_reminder">Montri rememorigon %1$s antaŭ dormtempo.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="bedtime_msg_wakeup_set">Veko je</string>                                 <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_wakeup_notset">Vektempo ne estas agordita.</string>                <!-- textview text -->
+    <string name="bedtime_msg_note">Dormtempo komenciĝos post %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
-    <string name="configLabel_bedtime_alarm_notify">dormtempo</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_notify_off">dormtempo (fino)</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_reminder">dormtempo (rememorigo)</string>    <!-- AlarmItem label for reminder notification -->
-    <string name="configLabel_bedtime_alarm_wakeup">veko</string>             <!-- AlarmItem label for wake up alarm -->
+    <string name="bedtime_label_alarm_notify">dormtempo</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_notify_off">dormtempo (fino)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_reminder">dormtempo (rememorigo)</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="bedtime_label_alarm_wakeup">veko</string>             <!-- AlarmItem label for wake up alarm -->
 
-    <string name="configLabel_bedtime_tile_normal">Dormtempo</string>             <!-- Quick Settings Tile labels -->
-    <string name="configLabel_bedtime_tile_active">Dormtempo (aktiva)</string>
-    <string name="configLabel_bedtime_tile_paused">Dormtempo (paŭzigita)</string>
+    <string name="bedtime_label_tile_normal">Dormtempo</string>             <!-- Quick Settings Tile labels -->
+    <string name="bedtime_label_tile_active">Dormtempo (aktiva)</string>
+    <string name="bedtime_label_tile_paused">Dormtempo (paŭzigita)</string>
 
-    <string name="configLabel_dnd_rulebased">Regulo por senĝena reĝimo</string>
-    <string name="configLabel_dnd_rulebased_summary">Regi agordojn pri senĝena reĝimo per aŭtomata regulo.</string>
+    <string name="bedtime_label_dnd_rulebased">Regulo por senĝena reĝimo</string>
+    <string name="bedtime_label_dnd_rulebased_summary">Regi agordojn pri senĝena reĝimo per aŭtomata regulo.</string>
 
-    <string name="configLabel_bedtime_zenrule_name">Dormtempo (Suntempoj)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
+    <string name="bedtime_label_bedtime_zenrule_name">Dormtempo (Suntempoj)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
-    <string name="configAction_dnd_allow">Doni permeson</string>              <!-- button label when requesting permission -->
-    <string name="configLabel_dnd">Sengena reĝimo</string>              <!-- textview text (next line shows time) -->
-    <string name="configLabel_dnd_disabled">Senĝena reĝimo: malaktiva</string>         <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_priority">Senĝena reĝimo: nur prioritataj</string>    <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_alarms">Senĝena reĝimo: nur alarmoj</string>        <!-- do-not-disturb menu item -->
+    <string name="bedtime_action_dnd_allow">Doni permeson</string>              <!-- button label when requesting permission -->
+    <string name="bedtime_label_dnd">Sengena reĝimo</string>              <!-- textview text (next line shows time) -->
+    <string name="bedtime_label_dnd_disabled">Senĝena reĝimo: malaktiva</string>         <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_priority">Senĝena reĝimo: nur prioritataj</string>    <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_alarms">Senĝena reĝimo: nur alarmoj</string>        <!-- do-not-disturb menu item -->
 
-    <string name="prompt_bedtime_setFrom_wakeup">Ĉu agordi dormtempon al %s antaŭ la vektempo?</string>    <!-- snackbar message -->
-    <string name="prompt_bedtime_setFrom_bedtime">Ĉu agordi vekan alarmon al %s post la dormtempo?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_wakeup">Ĉu agordi dormtempon al %s antaŭ la vektempo?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_bedtime">Ĉu agordi vekan alarmon al %s post la dormtempo?</string>    <!-- snackbar message -->
 
-    <string name="configActionDesc_triggerBedtime">Aktivigi dormtempan reĝimon</string>
-    <string name="configActionDesc_dismissBedtime">Malaktivigi dormtempan reĝimon</string>
+    <string name="bedtime_actionDesc_triggerBedtime">Aktivigi dormtempan reĝimon</string>
+    <string name="bedtime_actionDesc_dismissBedtime">Malaktivigi dormtempan reĝimon</string>
 
     <!--
          APP SETTINGS

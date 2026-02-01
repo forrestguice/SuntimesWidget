@@ -568,7 +568,7 @@ public class BedtimeDialog extends DialogBase
                         getResources().getInteger(R.integer.maxSleepCycleMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepCycleMs(context));
         dialog.setDialogListener(onSleepCycleDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepCycle));
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepCycle));
         dialog.setRestoreDefault(getString(R.string.configAction_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLE);
     }
@@ -604,7 +604,7 @@ public class BedtimeDialog extends DialogBase
     {
         final BedtimeSleepDialog dialog = new BedtimeSleepDialog();
         dialog.setNumCycles(BedtimeSettings.loadPrefSleepCycleCount(context));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepCycles));
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepCycles));
         dialog.setOnAcceptedListener(onSleepCyclesDialogAccepted(item));
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLES);
     }
@@ -646,8 +646,8 @@ public class BedtimeDialog extends DialogBase
                         getResources().getInteger(R.integer.maxFallAsleepMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepOffsetMs(context));
         dialog.setDialogListener(onSleepOffsetDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepOffset));
-        dialog.setZeroText(getString(R.string.cycleNone));
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepOffset));
+        dialog.setZeroText(getString(R.string.bedtime_cycleNone));
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_OFFSET);
     }
 
@@ -1024,11 +1024,11 @@ public class BedtimeDialog extends DialogBase
         a.recycle();
 
         String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context)).toString();
-        String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
+        String messageString = context.getString(R.string.bedtime_prompt_setFrom_wakeup, sleepHours);
         CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         SnackbarUtils.make(context, getList(), message, 7000)
-                .setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
+                .setAction(context.getString(R.string.bedtime_action_setBedtime), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
@@ -1045,7 +1045,7 @@ public class BedtimeDialog extends DialogBase
         a.recycle();
 
         String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context)).toString();
-        String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
+        String messageString = context.getString(R.string.bedtime_prompt_setFrom_bedtime, sleepHours);
         CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         SnackbarUtils.make(context, getList(), message, 7000)
@@ -1113,7 +1113,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
-        dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_notify));         // override type labels
+        dialog.setLabelOverride(context.getString(R.string.bedtime_label_alarm_notify));         // override type labels
         dialog.setAlarmType(AlarmType.NOTIFICATION1);    // restrict type to notification
 
         dialog.setOnAcceptedListener(onAddBedtimeDialogAccept(DIALOG_ADD_BEDTIME, BedtimeSettings.SLOT_BEDTIME_NOTIFY, item));
@@ -1201,7 +1201,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
-        dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_wakeup));         // override type labels
+        dialog.setLabelOverride(context.getString(R.string.bedtime_label_alarm_wakeup));         // override type labels
         dialog.setAlarmType(AlarmType.ALARM);    // restrict type to alarms only
         // TODO: locked/disabled events
 

@@ -1233,75 +1233,75 @@
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">Hora de dormir</string>              <!-- group title -->
+    <string name="bedtime_label">Hora de dormir</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">Ligar agora</string>
-    <string name="configAction_dismissBedtime">Desligar</string>
+    <string name="bedtime_action_startBedtime">Ligar agora</string>
+    <string name="bedtime_action_dismissBedtime">Desligar</string>
 
-    <string name="configAction_set">Definir</string>
-    <string name="configAction_setBedtime">Definir hora de dormir</string>
-    <string name="configAction_setBedtime_fromAlarm">Definir hora de dormir a partir do alarme</string>
-    <string name="configAction_setBedtime_toNow">Definir hora de dormir para agora</string>
-    <string name="configAction_pauseBedtime">Pausar</string>
-    <string name="configAction_resumeBedtime">Retomar</string>
+    <string name="bedtime_action_set">Definir</string>
+    <string name="bedtime_action_setBedtime">Definir hora de dormir</string>
+    <string name="bedtime_action_setBedtime_fromAlarm">Definir hora de dormir a partir do alarme</string>
+    <string name="bedtime_action_setBedtime_toNow">Definir hora de dormir para agora</string>
+    <string name="bedtime_action_pauseBedtime">Pausar</string>
+    <string name="bedtime_action_resumeBedtime">Retomar</string>
 
-    <string name="configAction_setSleep">Definir tempo de sono</string>
+    <string name="bedtime_action_setSleep">Definir tempo de sono</string>
 
-    <string name="msg_bedtime_sleep_length">Dormir por %s.</string>                             <!-- e.g. "Sleep for 8h" -->
-    <string name="msg_bedtime_sleep_length_other_plus">Isto é %1$s, mais %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
-    <string name="msg_bedtime_sleep_length_cycles">Isto é %1$s de %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">Isto é %1$s de %2$s, mais %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
+    <string name="bedtime_msg_sleep_length">Dormir por %s.</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="bedtime_msg_sleep_length_other_plus">Isto é %1$s, mais %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="bedtime_msg_sleep_length_cycles">Isto é %1$s de %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="bedtime_msg_sleep_length_cycles_plus">Isto é %1$s de %2$s, mais %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">Desligar hora de dormir automaticamente</string>
-    <string name="configLabel_sleepBedtimeAlarmOff">Desligar hora de dormir com o alarme</string>
+    <string name="bedtime_label_sleepBedtimeAutoOff">Desligar hora de dormir automaticamente</string>
+    <string name="bedtime_label_sleepBedtimeAlarmOff">Desligar hora de dormir com o alarme</string>
 
-    <string name="configLabel_sleepOffset">Duração do Sono Profundo</string>
-    <string name="configLabel_sleepCycle">Duração do Ciclo de Sono</string>
-    <string name="configLabel_sleepCycles">Ciclos de Sono</string>
-    <string name="configLabel_numSleepCycles">Dormir por %1$s de %2$s, ou %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
-    <plurals name="cyclePlural">
+    <string name="bedtime_label_sleepOffset">Duração do Sono Profundo</string>
+    <string name="bedtime_label_sleepCycle">Duração do Ciclo de Sono</string>
+    <string name="bedtime_label_sleepCycles">Ciclos de Sono</string>
+    <string name="bedtime_label_numSleepCycles">Dormir por %1$s de %2$s, ou %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
+    <plurals name="bedtime_cyclePlural">
         <item quantity="one">%d ciclo</item>
         <item quantity="other">%d ciclos</item>
     </plurals>
-    <string name="cycleNone">Nenhum</string>
+    <string name="bedtime_cycleNone">Nenhum</string>
 
-    <string name="configAction_setWakeUp">Definir hora de acordar</string>
-    <string name="configAction_setWakeUp_fromBedtime">Definir hora de acordar a partir da hora de dormir</string>
+    <string name="bedtime_action_setWakeUp">Definir hora de acordar</string>
+    <string name="bedtime_action_setWakeUp_fromBedtime">Definir hora de acordar a partir da hora de dormir</string>
 
-    <string name="msg_bedtime_active">Modo de hora de dormir está ativo.</string>              <!-- textview text -->
-    <string name="msg_bedtime_paused">Modo de hora de dormir está pausado.</string>              <!-- textview text -->
-    <string name="msg_bedtime_set">Hora de dormir às</string>                                        <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_notset">Hora de dormir não está definida.</string>                            <!-- textview text -->
-    <string name="msg_bedtime_reminder">Mostrar um lembrete %1$s antes da hora de dormir</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
-    <string name="msg_bedtime_wakeup_set">Acordar às</string>                                 <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_wakeup_notset">Hora de acordar não está definida.</string>                <!-- textview text -->
-    <string name="msg_bedtime_note">Hora de dormir em %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
+    <string name="bedtime_msg_active">Modo de hora de dormir está ativo.</string>              <!-- textview text -->
+    <string name="bedtime_msg_paused">Modo de hora de dormir está pausado.</string>              <!-- textview text -->
+    <string name="bedtime_msg_set">Hora de dormir às</string>                                        <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_notset">Hora de dormir não está definida.</string>                            <!-- textview text -->
+    <string name="bedtime_msg_reminder">Mostrar um lembrete %1$s antes da hora de dormir</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="bedtime_msg_wakeup_set">Acordar às</string>                                 <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_wakeup_notset">Hora de acordar não está definida.</string>                <!-- textview text -->
+    <string name="bedtime_msg_note">Hora de dormir em %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
-    <string name="configLabel_bedtime_alarm_notify">Hora de dormir</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_notify_off">Hora de dormir (desligado)</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_reminder">Hora de dormir (lembrete)</string>    <!-- AlarmItem label for reminder notification -->
-    <string name="configLabel_bedtime_alarm_wakeup">Acordar</string>             <!-- AlarmItem label for wake up alarm -->
+    <string name="bedtime_label_alarm_notify">Hora de dormir</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_notify_off">Hora de dormir (desligado)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_reminder">Hora de dormir (lembrete)</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="bedtime_label_alarm_wakeup">Acordar</string>             <!-- AlarmItem label for wake up alarm -->
 
-    <string name="configLabel_bedtime_tile_normal">Hora de dormir</string>             <!-- Quick Settings Tile labels -->
-    <string name="configLabel_bedtime_tile_active">Hora de dormir (Ativo)</string>
-    <string name="configLabel_bedtime_tile_paused">Hora de dormir (Pausado)</string>
+    <string name="bedtime_label_tile_normal">Hora de dormir</string>             <!-- Quick Settings Tile labels -->
+    <string name="bedtime_label_tile_active">Hora de dormir (Ativo)</string>
+    <string name="bedtime_label_tile_paused">Hora de dormir (Pausado)</string>
 
-    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
-    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+    <string name="bedtime_label_dnd_rulebased">DND Rules</string>    <!-- TODO -->
+    <string name="bedtime_label_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
 
-    <string name="configLabel_bedtime_zenrule_name">Hora de dormir (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
+    <string name="bedtime_label_bedtime_zenrule_name">Hora de dormir (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
-    <string name="configAction_dnd_allow">Permitir Acesso</string>              <!-- button label when requesting permission -->
-    <string name="configLabel_dnd">Não Perturbe</string>              <!-- textview text (next line shows time) -->
-    <string name="configLabel_dnd_disabled">NP: Desativado</string>         <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_priority">NP: Apenas prioridades</string>    <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_alarms">NP: Apenas alarmes</string>        <!-- do-not-disturb menu item -->
+    <string name="bedtime_action_dnd_allow">Permitir Acesso</string>              <!-- button label when requesting permission -->
+    <string name="bedtime_label_dnd">Não Perturbe</string>              <!-- textview text (next line shows time) -->
+    <string name="bedtime_label_dnd_disabled">NP: Desativado</string>         <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_priority">NP: Apenas prioridades</string>    <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_alarms">NP: Apenas alarmes</string>        <!-- do-not-disturb menu item -->
 
-    <string name="prompt_bedtime_setFrom_wakeup">Definir a hora de dormir para %s antes da hora de acordar?</string>    <!-- snackbar message -->
-    <string name="prompt_bedtime_setFrom_bedtime">Definir o alarme de acordar para %s após a hora de dormir?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_wakeup">Definir a hora de dormir para %s antes da hora de acordar?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_bedtime">Definir o alarme de acordar para %s após a hora de dormir?</string>    <!-- snackbar message -->
 
-    <string name="configActionDesc_triggerBedtime">Ativar modo de hora de dormir</string>
-    <string name="configActionDesc_dismissBedtime">Desativar modo de hora de dormir</string>
+    <string name="bedtime_actionDesc_triggerBedtime">Ativar modo de hora de dormir</string>
+    <string name="bedtime_actionDesc_dismissBedtime">Desativar modo de hora de dormir</string>
 
     <!--
          APP SETTINGS

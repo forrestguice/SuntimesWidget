@@ -99,7 +99,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.ALARM,
-                context.getString(R.string.configLabel_bedtime_alarm_wakeup),
+                context.getString(R.string.bedtime_label_alarm_wakeup),
                 null, location, -1, hour, minute, null,
                 AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
 
@@ -115,7 +115,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.NOTIFICATION1,
-                context.getString(R.string.configLabel_bedtime_alarm_reminder),
+                context.getString(R.string.bedtime_label_alarm_reminder),
                 null, location, -1, hour, minute, null,
                 AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, AlarmType.NOTIFICATION1), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION1), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;
@@ -129,7 +129,7 @@ public class BedtimeAlarmHelper
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.NOTIFICATION1,
-                context.getString(slot == null || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY) ? R.string.configLabel_bedtime_alarm_notify : R.string.configLabel_bedtime_alarm_notify_off),
+                context.getString(slot == null || slot.equals(BedtimeSettings.SLOT_BEDTIME_NOTIFY) ? R.string.bedtime_label_alarm_notify : R.string.bedtime_label_alarm_notify_off),
                 null, location, -1, hour, minute, null,
                 false, null, null, AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         alarmItem.offset = offset;

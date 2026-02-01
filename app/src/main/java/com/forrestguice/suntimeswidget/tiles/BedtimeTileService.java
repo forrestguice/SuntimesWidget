@@ -59,13 +59,13 @@ public class BedtimeTileService extends SuntimesTileService
         switch (BedtimeSettings.getBedtimeState(context))
         {
             case BedtimeSettings.STATE_BEDTIME_ACTIVE:
-                label = context.getString(R.string.configLabel_bedtime_tile_active);
+                label = context.getString(R.string.bedtime_label_tile_active);
                 break;
             case BedtimeSettings.STATE_BEDTIME_PAUSED:
-                label = context.getString(R.string.configLabel_bedtime_tile_paused);
+                label = context.getString(R.string.bedtime_label_tile_paused);
                 break;
             default:
-                label = context.getString(R.string.configLabel_bedtime_tile_normal);
+                label = context.getString(R.string.bedtime_label_tile_normal);
                 break;
         }
 

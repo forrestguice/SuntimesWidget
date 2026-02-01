@@ -10,7 +10,7 @@
             android:orderInCategory="1" />
 
         <item android:id="@+id/action_wakeup_from_bedtime"
-            android:title="@string/configAction_setWakeUp_fromBedtime"
+            android:title="@string/bedtime_action_setWakeUp_fromBedtime"
             app:showAsAction="never"
             android:icon="?attr/icActionAlarm"
             android:orderInCategory="2" />
@@ -22,7 +22,7 @@
             android:orderInCategory="3" />
 
         <item android:id="@+id/action_bedtime_alarmoff"
-            android:title="@string/configLabel_sleepBedtimeAlarmOff"
+            android:title="@string/bedtime_label_sleepBedtimeAlarmOff"
             app:showAsAction="never"
             android:checkable="true"
             android:icon="?attr/icActionCancel"

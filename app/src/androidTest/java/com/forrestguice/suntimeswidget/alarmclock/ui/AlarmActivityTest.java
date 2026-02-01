@@ -324,8 +324,8 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
         public AlarmActivityRobot assertActivityShown()
         {
             onView(allOf(withText(R.string.alarms_label_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
-            onView(withContentDescription(R.string.configLabel_bedtime)).check(assertShown);
-            onView(withContentDescription(R.string.configLabel_bedtime)).check(assertClickable);
+            onView(withContentDescription(R.string.bedtime_label)).check(assertShown);
+            onView(withContentDescription(R.string.bedtime_label)).check(assertClickable);
             // TODO: fab, navDrawer
             return this;
         }

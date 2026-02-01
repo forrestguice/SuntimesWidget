@@ -423,7 +423,7 @@
         </activity>
 
         <activity android:name=".alarmclock.bedtime.BedtimeActivity"
-            android:label="@string/configLabel_bedtime"
+            android:label="@string/bedtime_label"
             android:icon="@mipmap/ic_launcher_alarms"
             android:taskAffinity=".alarmclock.ui.bedtime.BedtimeActivity"
             android:launchMode="singleTask"
@@ -439,7 +439,7 @@
             android:exported="true"
             android:enabled="@bool/supports_condition_service"
             android:directBootAware="true"
-            android:label="@string/configLabel_bedtime"
+            android:label="@string/bedtime_label"
             android:permission="android.permission.BIND_CONDITION_PROVIDER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.ConditionProviderService" />
@@ -499,7 +499,7 @@
         <service
             android:name=".tiles.BedtimeTileService"
             android:exported="true"
-            android:label="@string/configLabel_bedtime"
+            android:label="@string/bedtime_label"
             android:icon="@drawable/ic_action_bedtime"
             android:enabled="@bool/api_24_plus"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

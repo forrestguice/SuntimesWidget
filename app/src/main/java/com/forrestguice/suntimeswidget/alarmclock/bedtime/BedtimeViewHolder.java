@@ -41,7 +41,6 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 
@@ -653,7 +652,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 if (alarmItem != null)
                 {
                     if (text_label != null) {
-                        text_label.setText(context.getString(R.string.msg_bedtime_set));
+                        text_label.setText(context.getString(R.string.bedtime_msg_set));
                     }
                     if (button_add != null) {
                         button_add.hide();  //setVisibility(View.GONE);
@@ -663,7 +662,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
                 } else {
                     if (text_label != null) {
-                        text_label.setText(context.getString(R.string.msg_bedtime_notset));
+                        text_label.setText(context.getString(R.string.bedtime_msg_notset));
                     }
                     if (button_add != null) {
                         button_add.show();  //setVisibility(View.VISIBLE);
@@ -759,7 +758,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     }
 
                     String offsetString = delta_utils.timeDeltaLongDisplayString(offset).toString();
-                    String labelString = context.getString(R.string.msg_bedtime_reminder, offsetString);
+                    String labelString = context.getString(R.string.bedtime_msg_reminder, offsetString);
                     CharSequence labelDisplay = SpanUtils.createBoldSpan(null, labelString, offsetString);
                     text_label.setText(labelDisplay);
 
@@ -801,7 +800,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (alarmItem != null)
             {
                 if (text_label != null) {
-                    text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_set) : "");
+                    text_label.setText(context != null ? context.getString(R.string.bedtime_msg_wakeup_set) : "");
                 }
                 if (button_add != null) {
                     button_add.hide();  //setVisibility(View.GONE);
@@ -812,7 +811,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             } else {
                 if (text_label != null) {
-                    text_label.setText(context != null ? context.getString(R.string.msg_bedtime_wakeup_notset) : "");
+                    text_label.setText(context != null ? context.getString(R.string.bedtime_msg_wakeup_notset) : "");
                 }
                 if (button_add != null) {
                     button_add.show();  //.setVisibility(View.VISIBLE);
@@ -878,7 +877,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 {
                     long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
                     String sleepTotalString = delta_utils.timeDeltaLongDisplayString(sleepTotalMs).toString();
-                    String displayString = context.getString(R.string.msg_bedtime_sleep_length, sleepTotalString);
+                    String displayString = context.getString(R.string.bedtime_msg_sleep_length, sleepTotalString);
                     SpannableString sleepTimeDisplay = SpanUtils.createBoldSpan(null, displayString, sleepTotalString);
                     text_totalsleep.setText(sleepTimeDisplay);
                 }
@@ -894,13 +893,13 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         long sleepCycleMs = BedtimeSettings.loadPrefSleepCycleMs(context);
                         int sleepCycleCount = (int) BedtimeSettings.loadPrefSleepCycleCount(context);
 
-                        String sleepCycleCountString = context.getResources().getQuantityString(R.plurals.cyclePlural, sleepCycleCount, sleepCycleCount);  //String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
+                        String sleepCycleCountString = context.getResources().getQuantityString(R.plurals.bedtime_cyclePlural, sleepCycleCount, sleepCycleCount);  //String.format(SuntimesUtils.getLocale(), "%.0f", sleepCycleCount);
                         String sleepCycleString = delta_utils.timeDeltaLongDisplayString(sleepCycleMs).toString();
                         String sleepCycleHoursString = delta_utils.timeDeltaLongDisplayString((long)(sleepCycleMs * sleepCycleCount)).toString();
 
                         String displayString = (sleepOffsetMs > 0)
-                                ? context.getString(R.string.msg_bedtime_sleep_length_cycles_plus, sleepCycleCountString, sleepCycleString, offsetString)
-                                : context.getString(R.string.msg_bedtime_sleep_length_cycles, sleepCycleCountString, sleepCycleString);
+                                ? context.getString(R.string.bedtime_msg_sleep_length_cycles_plus, sleepCycleCountString, sleepCycleString, offsetString)
+                                : context.getString(R.string.bedtime_msg_sleep_length_cycles, sleepCycleCountString, sleepCycleString);
 
                         SpannableString sleepTimeDisplay = SpanUtils.createBoldSpan(null, displayString, sleepCycleString);
                         sleepTimeDisplay = SpanUtils.createBoldSpan(sleepTimeDisplay, displayString, sleepCycleCountString);
@@ -912,7 +911,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                         long sleepMs = BedtimeSettings.loadPrefSleepMs(context);
                         String sleepTimeString = delta_utils.timeDeltaLongDisplayString(sleepMs).toString();
                         String displayString = (sleepOffsetMs > 0)
-                                ? context.getString(R.string.msg_bedtime_sleep_length_other_plus, sleepTimeString, offsetString)
+                                ? context.getString(R.string.bedtime_msg_sleep_length_other_plus, sleepTimeString, offsetString)
                                 : "";
 
                         SpannableString sleepTimeDisplay = SpanUtils.createBoldSpan(null, displayString, sleepTimeString);
@@ -1034,7 +1033,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                 Calendar now = Calendar.getInstance();
                 AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), bedtime, now, true);
                 String deltaString = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), bedtime.timestamp + bedtime.offset).getValue();
-                String noteString = context.getString(R.string.msg_bedtime_note, deltaString);
+                String noteString = context.getString(R.string.bedtime_msg_note, deltaString);
                 CharSequence noteDisplay = SpanUtils.createBoldSpan(null, noteString, deltaString);
                 note.setText(noteDisplay);
                 return true;
@@ -1143,7 +1142,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
                     headerLayout.setVisibility(isActive ? View.VISIBLE : View.GONE);
                 }
                 if (label != null) {
-                    label.setText(SpanUtils.fromHtml(!isActive ? "" : context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active)));
+                    label.setText(SpanUtils.fromHtml(!isActive ? "" : context.getString(isPaused ? R.string.bedtime_msg_paused : R.string.bedtime_msg_active)));
                     //animateColorChange(label, colorTo, colorFrom, 1500).start();    // TODO: duration from resource
                     //label.setVisibility(isActive ? View.VISIBLE : View.GONE);
                     setTextColor(label, colorTo);

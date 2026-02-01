@@ -37,7 +37,7 @@
 
 			<com.forrestguice.support.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-				app:title="@string/configLabel_bedtime" />
+				app:title="@string/bedtime_label" />
 
 		</com.forrestguice.support.widget.AppBarLayout>
 

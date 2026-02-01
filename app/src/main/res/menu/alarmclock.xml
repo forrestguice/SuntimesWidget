@@ -5,7 +5,7 @@
 
         <item android:id="@+id/action_bedtime"
             android:icon="?attr/icActionBedtime"
-            android:title="@string/configLabel_bedtime"
+            android:title="@string/bedtime_label"
             app:showAsAction="ifRoom"
             android:orderInCategory="10" />
 

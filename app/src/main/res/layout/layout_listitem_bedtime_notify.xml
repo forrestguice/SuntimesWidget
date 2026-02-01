@@ -20,7 +20,7 @@
                 android:drawableLeft="?attr/icActionBedtime" android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/msg_bedtime_set" />
+                android:text="@string/bedtime_msg_set" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -53,7 +53,7 @@
                 <CheckBox android:id="@+id/check_dnd"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:text="@string/configLabel_dnd"
+                    android:text="@string/bedtime_label_dnd"
                     android:paddingLeft="8dp" android:paddingStart="8dp" android:button="?attr/checkDnd" />
 
             </LinearLayout>
@@ -74,7 +74,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:textSize="?attr/text_size_small"
                     android:gravity="center_vertical" android:layout_gravity="end"
-                    android:text="@string/configAction_dnd_allow" />
+                    android:text="@string/bedtime_action_dnd_allow" />
 
             </LinearLayout>
 
@@ -103,7 +103,7 @@
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="@string/configAction_setBedtime" />
+                android:contentDescription="@string/bedtime_action_setBedtime" />
 
             <com.forrestguice.support.widget.FloatingActionButton
                 android:id="@+id/button_edit"

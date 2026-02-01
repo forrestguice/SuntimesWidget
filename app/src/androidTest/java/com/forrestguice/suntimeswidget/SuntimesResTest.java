@@ -268,7 +268,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_pluralFormatI("alarmPlural", R.plurals.alarmPlural, values);
             verify_pluralFormatI("eventPlural", R.plurals.eventPlural, values);
             verify_pluralFormatI("placePlural", R.plurals.placePlural, values);
-            verify_pluralFormatI("cyclePlural", R.plurals.cyclePlural, values);
+            verify_pluralFormatI("cyclePlural", R.plurals.bedtime_cyclePlural, values);
             verify_pluralFormatI("itemsPlural", R.plurals.itemsPlural, values);
             verify_pluralFormatI("widgetPlural", R.plurals.widgetPlural, values);
             verify_pluralFormatI("locationdelete_dialog_success", R.plurals.locationdelete_dialog_success, values);

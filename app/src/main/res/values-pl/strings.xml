@@ -1215,77 +1215,77 @@
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">Czas snu</string>              <!-- group title -->
+    <string name="bedtime_label">Czas snu</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">Włącz teraz</string>
-    <string name="configAction_dismissBedtime">Zakończ</string>
+    <string name="bedtime_action_startBedtime">Włącz teraz</string>
+    <string name="bedtime_action_dismissBedtime">Zakończ</string>
 
-    <string name="configAction_set">Ustaw</string>
-    <string name="configAction_setBedtime">Ustaw czas snu</string>
-    <string name="configAction_setBedtime_fromAlarm">Ustaw czas snu do alarmu</string>
-    <string name="configAction_setBedtime_toNow">Ustaw czas snu od teraz</string>
-    <string name="configAction_pauseBedtime">Wstrzymaj</string>
-    <string name="configAction_resumeBedtime">Wznów</string>
+    <string name="bedtime_action_set">Ustaw</string>
+    <string name="bedtime_action_setBedtime">Ustaw czas snu</string>
+    <string name="bedtime_action_setBedtime_fromAlarm">Ustaw czas snu do alarmu</string>
+    <string name="bedtime_action_setBedtime_toNow">Ustaw czas snu od teraz</string>
+    <string name="bedtime_action_pauseBedtime">Wstrzymaj</string>
+    <string name="bedtime_action_resumeBedtime">Wznów</string>
 
-    <string name="configAction_setSleep">Ustaw czas snu</string>
+    <string name="bedtime_action_setSleep">Ustaw czas snu</string>
 
-    <string name="msg_bedtime_sleep_length">Śpij przez %s.</string>                             <!-- e.g. "Sleep for 8h" -->
-    <string name="msg_bedtime_sleep_length_other_plus">To jest %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
-    <string name="msg_bedtime_sleep_length_cycles">To jest %1$s po %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">To jest %1$s po %2$s, plus %3$s zasypiania.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
+    <string name="bedtime_msg_sleep_length">Śpij przez %s.</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="bedtime_msg_sleep_length_other_plus">To jest %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="bedtime_msg_sleep_length_cycles">To jest %1$s po %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="bedtime_msg_sleep_length_cycles_plus">To jest %1$s po %2$s, plus %3$s zasypiania.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">Automatycznie zakończ czas snu</string>
-    <string name="configLabel_sleepBedtimeAlarmOff">Zakończ czas snu wraz z alarmem</string>
+    <string name="bedtime_label_sleepBedtimeAutoOff">Automatycznie zakończ czas snu</string>
+    <string name="bedtime_label_sleepBedtimeAlarmOff">Zakończ czas snu wraz z alarmem</string>
 
-    <string name="configLabel_sleepOffset">Czas zasypiania</string>
-    <string name="configLabel_sleepCycle">Długość cyklu snu</string>
-    <string name="configLabel_sleepCycles">Liczba cykli</string>
-    <string name="configLabel_numSleepCycles">Śpij przez %1$s po %2$s, lub %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
-    <plurals name="cyclePlural">
+    <string name="bedtime_label_sleepOffset">Czas zasypiania</string>
+    <string name="bedtime_label_sleepCycle">Długość cyklu snu</string>
+    <string name="bedtime_label_sleepCycles">Liczba cykli</string>
+    <string name="bedtime_label_numSleepCycles">Śpij przez %1$s po %2$s, lub %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
+    <plurals name="bedtime_cyclePlural">
         <item quantity="one">%d cykl</item>
         <item quantity="other">%d cykli</item>
         <item quantity="few">%d cykle</item>
         <item quantity="many">%d cykli</item>
     </plurals>
-    <string name="cycleNone">brak</string>
+    <string name="bedtime_cycleNone">brak</string>
 
-    <string name="configAction_setWakeUp">Ustaw czas pobudki</string>
-    <string name="configAction_setWakeUp_fromBedtime">Ustaw czas pobudki po czasie snu</string>
+    <string name="bedtime_action_setWakeUp">Ustaw czas pobudki</string>
+    <string name="bedtime_action_setWakeUp_fromBedtime">Ustaw czas pobudki po czasie snu</string>
 
-    <string name="msg_bedtime_active">Tryb czasu snu jest aktywny.</string>              <!-- textview text -->
-    <string name="msg_bedtime_paused">Tryb czasu snu jest wstrzymany.</string>              <!-- textview text -->
-    <string name="msg_bedtime_set">Czas snu rozpocznie się o</string>                                        <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_notset">Czas snu nie jest ustawiony.</string>                            <!-- textview text -->
-    <string name="msg_bedtime_reminder">Wyświetl przypomnienie %1$s przed czasem snu.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
-    <string name="msg_bedtime_wakeup_set">Pobudka o</string>                                 <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_wakeup_notset">Czas pobudki nie jest ustawiony.</string>                <!-- textview text -->
-    <string name="msg_bedtime_note">Czas snu rozpocznie się za %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
+    <string name="bedtime_msg_active">Tryb czasu snu jest aktywny.</string>              <!-- textview text -->
+    <string name="bedtime_msg_paused">Tryb czasu snu jest wstrzymany.</string>              <!-- textview text -->
+    <string name="bedtime_msg_set">Czas snu rozpocznie się o</string>                                        <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_notset">Czas snu nie jest ustawiony.</string>                            <!-- textview text -->
+    <string name="bedtime_msg_reminder">Wyświetl przypomnienie %1$s przed czasem snu.</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="bedtime_msg_wakeup_set">Pobudka o</string>                                 <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_wakeup_notset">Czas pobudki nie jest ustawiony.</string>                <!-- textview text -->
+    <string name="bedtime_msg_note">Czas snu rozpocznie się za %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
-    <string name="configLabel_bedtime_alarm_notify">czas snu</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_notify_off">czas snu (koniec)</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_reminder">czas snu (przypomnienie)</string>    <!-- AlarmItem label for reminder notification -->
-    <string name="configLabel_bedtime_alarm_wakeup">pobudka</string>             <!-- AlarmItem label for wake up alarm -->
+    <string name="bedtime_label_alarm_notify">czas snu</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_notify_off">czas snu (koniec)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_reminder">czas snu (przypomnienie)</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="bedtime_label_alarm_wakeup">pobudka</string>             <!-- AlarmItem label for wake up alarm -->
 
-    <string name="configLabel_bedtime_tile_normal">Czas snu</string>             <!-- Quick Settings Tile labels -->
-    <string name="configLabel_bedtime_tile_active">Czas snu (aktywny)</string>
-    <string name="configLabel_bedtime_tile_paused">Czas snu (wstrzymany)</string>
+    <string name="bedtime_label_tile_normal">Czas snu</string>             <!-- Quick Settings Tile labels -->
+    <string name="bedtime_label_tile_active">Czas snu (aktywny)</string>
+    <string name="bedtime_label_tile_paused">Czas snu (wstrzymany)</string>
 
-    <string name="configLabel_dnd_rulebased">Reguła dla trybu „Nie przeszkadzać”</string>
-    <string name="configLabel_dnd_rulebased_summary">Kontroluj ustawienie trybu „Nie przeszkadzać” za pomocą automatycznej reguły.</string>
+    <string name="bedtime_label_dnd_rulebased">Reguła dla trybu „Nie przeszkadzać”</string>
+    <string name="bedtime_label_dnd_rulebased_summary">Kontroluj ustawienie trybu „Nie przeszkadzać” za pomocą automatycznej reguły.</string>
 
-    <string name="configLabel_bedtime_zenrule_name">Czasu snu (Czasy Słońca)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
+    <string name="bedtime_label_bedtime_zenrule_name">Czasu snu (Czasy Słońca)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
-    <string name="configAction_dnd_allow">Nadaj uprawnienie</string>              <!-- button label when requesting permission -->
-    <string name="configLabel_dnd">Nie przeszkadzać</string>              <!-- textview text (next line shows time) -->
-    <string name="configLabel_dnd_disabled">Nie przeszkadzać: wyłączony</string>         <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_priority">Nie przeszkadzać: tylko priorytetowe</string>    <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_alarms">Nie przeszkadzać: tylko alarmy</string>        <!-- do-not-disturb menu item -->
+    <string name="bedtime_action_dnd_allow">Nadaj uprawnienie</string>              <!-- button label when requesting permission -->
+    <string name="bedtime_label_dnd">Nie przeszkadzać</string>              <!-- textview text (next line shows time) -->
+    <string name="bedtime_label_dnd_disabled">Nie przeszkadzać: wyłączony</string>         <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_priority">Nie przeszkadzać: tylko priorytetowe</string>    <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_alarms">Nie przeszkadzać: tylko alarmy</string>        <!-- do-not-disturb menu item -->
 
-    <string name="prompt_bedtime_setFrom_wakeup">Czy ustawić czas snu na %s przed pobudką?</string>    <!-- snackbar message -->
-    <string name="prompt_bedtime_setFrom_bedtime">Czy ustawić budzik na %s po czasie snu?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_wakeup">Czy ustawić czas snu na %s przed pobudką?</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_bedtime">Czy ustawić budzik na %s po czasie snu?</string>    <!-- snackbar message -->
 
-    <string name="configActionDesc_triggerBedtime">Włącz tryb czasu snu</string>
-    <string name="configActionDesc_dismissBedtime">Wyłącz tryb czasu snu</string>
+    <string name="bedtime_actionDesc_triggerBedtime">Włącz tryb czasu snu</string>
+    <string name="bedtime_actionDesc_dismissBedtime">Wyłącz tryb czasu snu</string>
 
     <!--
          APP SETTINGS

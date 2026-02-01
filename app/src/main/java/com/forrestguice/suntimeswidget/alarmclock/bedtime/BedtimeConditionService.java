@@ -112,7 +112,7 @@ public class BedtimeConditionService extends ConditionProviderService
         if (BuildConfig.DEBUG) {
             Log.d("DEBUG", "BedtimeConditionService :: notifyCondition: " + value);
         }
-        String conditionSummary = value ? getString(R.string.msg_bedtime_active) : "";
+        String conditionSummary = value ? getString(R.string.bedtime_msg_active) : "";
         notifyCondition( createAutomaticZenRuleCondition(conditionSummary, value) );
     }
 
@@ -133,7 +133,7 @@ public class BedtimeConditionService extends ConditionProviderService
     }
 
     public static String getAutomaticZenRuleName(Context context) {
-        return context.getString(R.string.configLabel_bedtime_zenrule_name);
+        return context.getString(R.string.bedtime_label_bedtime_zenrule_name);
     }
     public static Uri getAutomaticZenRuleConditionId() {
         return Uri.parse("condition://bedtime");   // note: this is not the same as the AutomaticZenRule id, which is a random id issued when calling `addAutomaticZenRule`
@@ -189,7 +189,7 @@ public class BedtimeConditionService extends ConditionProviderService
                 if (BuildConfig.DEBUG) {
                     Log.d("DEBUG", "NotificationManager :: setAutomaticZenRuleState: " + value + ", " + BedtimeSettings.getRecentAutomaticZenRuleID(context));
                 }
-                String conditionSummary = (value ? context.getString(R.string.msg_bedtime_active) : "");
+                String conditionSummary = (value ? context.getString(R.string.bedtime_msg_active) : "");
                 Condition condition = createAutomaticZenRuleCondition(conditionSummary, value);
                 NotificationManagerHelper.setAutomaticZenRuleState(context, BedtimeSettings.getRecentAutomaticZenRuleID(context), condition);
             }

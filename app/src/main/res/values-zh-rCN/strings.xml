@@ -1197,74 +1197,74 @@
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">就寝时间</string>              <!-- group title -->
+    <string name="bedtime_label">就寝时间</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">现在打开</string>
-    <string name="configAction_dismissBedtime">关闭</string>
+    <string name="bedtime_action_startBedtime">现在打开</string>
+    <string name="bedtime_action_dismissBedtime">关闭</string>
 
-    <string name="configAction_set">设定</string>
-    <string name="configAction_setBedtime">设定就寝时间</string>
-    <string name="configAction_setBedtime_fromAlarm">从闹钟设定就寝时间</string>
-    <string name="configAction_setBedtime_toNow">设定现在为就寝时间</string>
-    <string name="configAction_pauseBedtime">暂停</string>
-    <string name="configAction_resumeBedtime">继续</string>
+    <string name="bedtime_action_set">设定</string>
+    <string name="bedtime_action_setBedtime">设定就寝时间</string>
+    <string name="bedtime_action_setBedtime_fromAlarm">从闹钟设定就寝时间</string>
+    <string name="bedtime_action_setBedtime_toNow">设定现在为就寝时间</string>
+    <string name="bedtime_action_pauseBedtime">暂停</string>
+    <string name="bedtime_action_resumeBedtime">继续</string>
 
-    <string name="configAction_setSleep">设置睡觉时间</string>  
+    <string name="bedtime_action_setSleep">设置睡觉时间</string>
 
-    <string name="msg_bedtime_sleep_length">睡 %s。</string>                             <!-- e.g. "Sleep for 8h" -->
-    <string name="msg_bedtime_sleep_length_other_plus">这是 %1$s，加 %2$s。</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
-    <string name="msg_bedtime_sleep_length_cycles">这是 %1$s %2$s。</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">这是 %1$s %2$s，加 %3$s。</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
+    <string name="bedtime_msg_sleep_length">睡 %s。</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="bedtime_msg_sleep_length_other_plus">这是 %1$s，加 %2$s。</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="bedtime_msg_sleep_length_cycles">这是 %1$s %2$s。</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="bedtime_msg_sleep_length_cycles_plus">这是 %1$s %2$s，加 %3$s。</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">自动关闭就寝时间</string>
-    <string name="configLabel_sleepBedtimeAlarmOff">同闹钟关闭就寝时间</string>
+    <string name="bedtime_label_sleepBedtimeAutoOff">自动关闭就寝时间</string>
+    <string name="bedtime_label_sleepBedtimeAlarmOff">同闹钟关闭就寝时间</string>
 
-    <string name="configLabel_sleepOffset">睡眠持续时间偏移</string>
-    <string name="configLabel_sleepCycle">睡眠周期长度</string>
-    <string name="configLabel_sleepCycles">睡眠周期</string>
-    <string name="configLabel_numSleepCycles">睡了 %1$s %2$s，或 %3$s。</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
-    <plurals name="cyclePlural">
+    <string name="bedtime_label_sleepOffset">睡眠持续时间偏移</string>
+    <string name="bedtime_label_sleepCycle">睡眠周期长度</string>
+    <string name="bedtime_label_sleepCycles">睡眠周期</string>
+    <string name="bedtime_label_numSleepCycles">睡了 %1$s %2$s，或 %3$s。</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
+    <plurals name="bedtime_cyclePlural">
         <item quantity="other">%d 周期</item>
     </plurals>
-    <string name="cycleNone">无</string>
+    <string name="bedtime_cycleNone">无</string>
 
-    <string name="configAction_setWakeUp">设置唤醒时间</string>
-    <string name="configAction_setWakeUp_fromBedtime">设置从睡眠时间唤醒</string>
+    <string name="bedtime_action_setWakeUp">设置唤醒时间</string>
+    <string name="bedtime_action_setWakeUp_fromBedtime">设置从睡眠时间唤醒</string>
     
-    <string name="msg_bedtime_active">睡眠模式已激活。</string>              <!-- textview text -->
-    <string name="msg_bedtime_paused">睡眠模式已暂停。</string>              <!-- textview text -->
-    <string name="msg_bedtime_set">睡眠时间</string>                                        <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_notset">未设置睡眠时间。</string>                            <!-- textview text -->
-    <string name="msg_bedtime_reminder">在睡眠前 %1$s 显示提醒</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
-    <string name="msg_bedtime_wakeup_set">唤醒时间</string>                                 <!-- textview text (next line shows time) -->
-    <string name="msg_bedtime_wakeup_notset">未设置唤醒时间。</string>                <!-- textview text -->
-    <string name="msg_bedtime_note">睡眠时间为 %1$s。</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
+    <string name="bedtime_msg_active">睡眠模式已激活。</string>              <!-- textview text -->
+    <string name="bedtime_msg_paused">睡眠模式已暂停。</string>              <!-- textview text -->
+    <string name="bedtime_msg_set">睡眠时间</string>                                        <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_notset">未设置睡眠时间。</string>                            <!-- textview text -->
+    <string name="bedtime_msg_reminder">在睡眠前 %1$s 显示提醒</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="bedtime_msg_wakeup_set">唤醒时间</string>                                 <!-- textview text (next line shows time) -->
+    <string name="bedtime_msg_wakeup_notset">未设置唤醒时间。</string>                <!-- textview text -->
+    <string name="bedtime_msg_note">睡眠时间为 %1$s。</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
     
-    <string name="configLabel_bedtime_alarm_notify">睡眠</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_notify_off">睡眠（关闭）</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="configLabel_bedtime_alarm_reminder">睡眠（提醒）</string>    <!-- AlarmItem label for reminder notification -->
-    <string name="configLabel_bedtime_alarm_wakeup">唤醒</string>             <!-- AlarmItem label for wake up alarm -->
+    <string name="bedtime_label_alarm_notify">睡眠</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_notify_off">睡眠（关闭）</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_reminder">睡眠（提醒）</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="bedtime_label_alarm_wakeup">唤醒</string>             <!-- AlarmItem label for wake up alarm -->
     
-    <string name="configLabel_bedtime_tile_normal">睡眠</string>             <!-- Quick Settings Tile labels -->
-    <string name="configLabel_bedtime_tile_active">睡眠（激活）</string>
-    <string name="configLabel_bedtime_tile_paused">睡眠（暂停）</string>
+    <string name="bedtime_label_tile_normal">睡眠</string>             <!-- Quick Settings Tile labels -->
+    <string name="bedtime_label_tile_active">睡眠（激活）</string>
+    <string name="bedtime_label_tile_paused">睡眠（暂停）</string>
 
-    <string name="configLabel_dnd_rulebased">勿扰模式规则</string>
-    <string name="configLabel_dnd_rulebased_summary">使用自动规则控制勿扰模式设置。</string>
+    <string name="bedtime_label_dnd_rulebased">勿扰模式规则</string>
+    <string name="bedtime_label_dnd_rulebased_summary">使用自动规则控制勿扰模式设置。</string>
 
-    <string name="configLabel_bedtime_zenrule_name">睡眠（日落时间）</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
+    <string name="bedtime_label_bedtime_zenrule_name">睡眠（日落时间）</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
     
-    <string name="configAction_dnd_allow">允许访问</string>              <!-- button label when requesting permission -->
-    <string name="configLabel_dnd">勿扰模式</string>              <!-- textview text (next line shows time) -->
-    <string name="configLabel_dnd_disabled">勿扰模式：已禁用</string>         <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_priority">勿扰模式：仅优先级</string>    <!-- do-not-disturb menu item -->
-    <string name="configLabel_dnd_alarms">勿扰模式：仅闹钟</string>        <!-- do-not-disturb menu item -->
+    <string name="bedtime_action_dnd_allow">允许访问</string>              <!-- button label when requesting permission -->
+    <string name="bedtime_label_dnd">勿扰模式</string>              <!-- textview text (next line shows time) -->
+    <string name="bedtime_label_dnd_disabled">勿扰模式：已禁用</string>         <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_priority">勿扰模式：仅优先级</string>    <!-- do-not-disturb menu item -->
+    <string name="bedtime_label_dnd_alarms">勿扰模式：仅闹钟</string>        <!-- do-not-disturb menu item -->
     
-    <string name="prompt_bedtime_setFrom_wakeup">在唤醒时间前 %s 设置睡眠时间？</string>    <!-- snackbar message -->
-    <string name="prompt_bedtime_setFrom_bedtime">在睡眠时间后 %s 设置唤醒闹钟？</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_wakeup">在唤醒时间前 %s 设置睡眠时间？</string>    <!-- snackbar message -->
+    <string name="bedtime_prompt_setFrom_bedtime">在睡眠时间后 %s 设置唤醒闹钟？</string>    <!-- snackbar message -->
     
-    <string name="configActionDesc_triggerBedtime">开启睡眠模式</string>
-    <string name="configActionDesc_dismissBedtime">关闭睡眠模式</string>
+    <string name="bedtime_actionDesc_triggerBedtime">开启睡眠模式</string>
+    <string name="bedtime_actionDesc_dismissBedtime">关闭睡眠模式</string>
 
     <!--
          APP SETTINGS

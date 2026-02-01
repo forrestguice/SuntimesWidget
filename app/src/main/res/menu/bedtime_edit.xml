@@ -10,7 +10,7 @@
             android:orderInCategory="1" />
 
         <item android:id="@+id/action_bedtime_set_menu"
-            android:title="@string/configAction_set"
+            android:title="@string/bedtime_action_set"
             app:showAsAction="never"
             android:icon="?attr/icActionTime"
             android:orderInCategory="2">
@@ -18,19 +18,19 @@
             <menu>
 
                 <item android:id="@+id/action_bedtime_set"
-                    android:title="@string/configAction_setBedtime"
+                    android:title="@string/bedtime_action_setBedtime"
                     app:showAsAction="never"
                     android:icon="?attr/icActionTime"
                     android:orderInCategory="1" />
 
                 <item android:id="@+id/action_bedtime_from_wakeup"
-                    android:title="@string/configAction_setBedtime_fromAlarm"
+                    android:title="@string/bedtime_action_setBedtime_fromAlarm"
                     app:showAsAction="never"
                     android:icon="?attr/icActionAlarm"
                     android:orderInCategory="2" />
 
                 <item android:id="@+id/action_bedtime_now"
-                    android:title="@string/configAction_setBedtime_toNow"
+                    android:title="@string/bedtime_action_setBedtime_toNow"
                     app:showAsAction="never"
                     android:icon="?attr/icActionTime"
                     android:orderInCategory="3" />

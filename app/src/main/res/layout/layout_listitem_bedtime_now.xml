@@ -23,7 +23,7 @@
             <com.forrestguice.support.widget.ImageView android:id="@+id/icon_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:src="@drawable/ic_bedtime_96dp"
-                android:contentDescription="@string/configLabel_bedtime" />
+                android:contentDescription="@string/bedtime_label" />
 
             <TextSwitcher android:id="@+id/text_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -73,12 +73,12 @@
             <Button android:id="@+id/button_bedtime_pause" android:visibility="gone"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center" style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="@string/configAction_pauseBedtime" />
+                android:text="@string/bedtime_action_pauseBedtime" />
 
             <Button android:id="@+id/button_bedtime_resume" android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center" style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:text="@string/configAction_resumeBedtime" />
+                android:text="@string/bedtime_action_resumeBedtime" />
 
             <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"
                 android:background="@null" />
@@ -86,12 +86,12 @@
             <Button android:id="@+id/button_bedtime_dismiss" android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end" style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="@string/configAction_dismissBedtime" />
+                android:text="@string/bedtime_action_dismissBedtime" />
 
             <Button android:id="@+id/button_bedtime_now" android:visibility="gone"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical" style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="@string/configAction_startBedtime" />
+                android:text="@string/bedtime_action_startBedtime" />
 
         </LinearLayout>
 

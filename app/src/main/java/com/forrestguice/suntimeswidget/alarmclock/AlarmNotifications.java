@@ -1433,7 +1433,7 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setCategory(NotificationCompat.CATEGORY_ALARM);
         builder.setAutoCancel(false);
         builder.setOngoing(true);
-        builder.setContentTitle(context.getString(R.string.configLabel_bedtime));
+        builder.setContentTitle(context.getString(R.string.bedtime_label));
         builder.setSmallIcon(R.drawable.ic_action_bedtime_light);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setOnlyAlertOnce(false);
@@ -1444,15 +1444,15 @@ public class AlarmNotifications extends BroadcastReceiver
         }
 
         boolean isPaused = BedtimeSettings.isBedtimeModePaused(context);
-        builder.setContentText(context.getString(isPaused ? R.string.msg_bedtime_paused : R.string.msg_bedtime_active));
+        builder.setContentText(context.getString(isPaused ? R.string.bedtime_msg_paused : R.string.bedtime_msg_active));
         builder.setContentIntent(PendingIntent.getActivity(context, builder.hashCode(), getManageBedtimeIntent(context), flags));
 
         if (isPaused) {
             PendingIntent pendingResume = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_RESUME), flags);
-            builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.configAction_resumeBedtime), pendingResume);
+            builder.addAction(R.drawable.ic_action_bedtime, context.getString(R.string.bedtime_action_resumeBedtime), pendingResume);
         } else {
             PendingIntent pendingPause = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_PAUSE), flags);
-            builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.configAction_pauseBedtime), pendingPause);
+            builder.addAction(R.drawable.ic_action_pause, context.getString(R.string.bedtime_action_pauseBedtime), pendingPause);
         }
 
         int flags0 = 0;
@@ -1460,7 +1460,7 @@ public class AlarmNotifications extends BroadcastReceiver
             flags0 = flags0 | PendingIntent.FLAG_IMMUTABLE;
         }
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, 0, getBedtimeBroadcast(AlarmNotifications.ACTION_BEDTIME_DISMISS), flags0);
-        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.configAction_dismissBedtime), pendingDismiss);
+        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.bedtime_action_dismissBedtime), pendingDismiss);
         return builder.build();
     }
 
