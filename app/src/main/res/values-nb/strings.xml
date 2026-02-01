@@ -2028,22 +2028,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Hjelp</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="privacy_policy0"><![CDATA[<b>Personvern:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>.]]></string>  <!-- brief statement (welcome dialog) -->
     <string name="privacy_policy"><![CDATA[<b>Personvern:</b><br/>Suntimes samler ikke inn, lagrer eller overfører personlige data. Inneholder <b>ingen reklame</b>, <b>ingen analyser</b>, <b>ingen sporere</b> og <b>ingen unødvendige tillatelser</b>. <br/><br/>Appen stilles inn med posisjonsdata. Denne informasjonen (og andre innstilte data brukt av appen) lagres lokalt og forlater ikke enheten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
     <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>posisjonstillatelse</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; posisjonen er manuelt innstilt som standard.]]></string>

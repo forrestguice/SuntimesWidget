@@ -2024,22 +2024,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">幫助</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="privacy_policy0"><![CDATA[<b>隱私:</b><br/>Suntimes 不會收集、儲存、傳輸個人使用者資料。它<b>沒有廣告</b>，<b>沒有使用者分析</b>，<b>沒有跟蹤器</b>，並且<b>不使用不必要的許可權</b>。]]></string>
     <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會收集、儲存、傳輸個人使用者資料。它<b>沒有廣告</b>，<b>沒有使用者分析</b>，<b>沒有跟蹤器</b>，並且<b>不使用不必要的許可權</b>。<br/><br/>本應用使用位置資訊來配置。位置資訊（和其他用來配置本應用的資料）儲存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>許可權以確認您當前的經緯度。<br/><br/>此許可權是可選的；位置預設可被手動配置。]]></string>

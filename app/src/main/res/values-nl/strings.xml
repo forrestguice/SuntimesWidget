@@ -2103,22 +2103,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>

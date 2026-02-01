@@ -2208,22 +2208,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Помощь</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="privacy_policy0"><![CDATA[<b>Заявление о конфиденциальности:</b><br/>Suntimes <b>не собирает, не хранит и не передает</b> личные данные пользователя. Приложение <b>не содержит рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и <b>не требует лишних разрешений</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Заявление о конфиденциальности:</b><br/>Suntimes <b>не собирает, не хранит и не передает</b> личные данные пользователя. Приложение <b>не содержит рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и <b>не требует лишних разрешений</b>. <br/><br/>Приложение настраивается на основе данных о местоположении. Эта информация (и другие данные конфигурации, используемые приложением) хранятся локально и не покидают устройство.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. Данное разрешение является <b>необязательным</b>: по умолчанию местоположение настраивается вручную.]]></string>

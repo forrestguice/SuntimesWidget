@@ -2250,22 +2250,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">المساعدة</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
    <string name="privacy_policy0"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>.]]></string>  <!-- brief statement (welcome dialog) -->
 <string name="privacy_policy"><![CDATA[<b>الخصوصية:</b><br/>Suntimes لا تقوم بجمع أو تخزين أو نقل بيانات المستخدم الشخصية. لا يحتوي على <b>إعلانات</b>، <b>تحليلات</b>، <b>متتبعات</b>، أو <b>أذونات غير ضرورية</b>. <br/><br/>يتم تكوين التطبيق من بيانات الموقع. هذه المعلومات (وغيرها من بيانات التكوين المستخدمة من قبل التطبيق) تُخزن محليًا ولا تغادر الجهاز.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
 <string name="privacy_permission_location"><![CDATA[Suntimes تستخدم أذونة <b>الموقع</b> لتحديد خط الطول والعرض الحاليين الخاصين بك.<br/><br/>هذه الأذونة اختيارية؛ يتم تكوين الموقع يدويًا افتراضيًا.]]></string>

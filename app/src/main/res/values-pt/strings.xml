@@ -2062,22 +2062,6 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Ajuda</string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="privacy_policy0"><![CDATA[<b>Privacidade:</b><br/>Suntimes não coleta, armazena ou distribui dados do usuário. Não contém <b>propagandas</b>, <b>ferramentas de análise</b>, <b>rastreadores</b>, e <b>nem permissões desnecessárias</b>.]]></string>
     <string name="privacy_policy"><![CDATA[<b>Privacidade:</b><br/>Suntimes não coleta, armazena ou distribui dados do usuário. Não contém <b>propagandas</b>, <b>ferramentas de análise</b>, <b>rastreadores</b>, e <b>nem permissões desnecessárias</b>. <br/><br/>Os dados são armazenados localmente e não saem do aparelho.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes usa a permissão de <b>localização</b> para determinar sua atual localização.<br/><br/>Permissão opcional, você pode definir seu local manualmente.]]></string>
