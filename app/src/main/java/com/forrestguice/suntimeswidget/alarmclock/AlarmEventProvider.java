@@ -526,7 +526,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
 
                 case COLUMN_EVENT_TITLE:
-                    row[i] = context.getString(R.string.eventalias_title_format, event.getLabel(), context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting));
+                    row[i] = context.getString(R.string.event_eventalias_title_format, event.getLabel(), context.getString(rising ? R.string.event_eventalias_title_tag_rising : R.string.event_eventalias_title_tag_setting));
                     break;
 
                 case COLUMN_EVENT_PHRASE:

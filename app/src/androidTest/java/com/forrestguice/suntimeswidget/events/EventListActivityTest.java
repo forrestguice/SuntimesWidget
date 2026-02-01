@@ -298,19 +298,19 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickAddButton(Context context) {
-            onView(withContentDescription(R.string.configAction_addEvent)).perform(click());
+            onView(withContentDescription(R.string.events_configAction_addEvent)).perform(click());
             return this;
         }
         public EventListActivityRobot cancelAddMenu(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EventListActivityRobot clickAddMenu_elevation(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickAddMenu_shadow(Context context) {
-            onView(withText(R.string.configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
@@ -320,15 +320,15 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_clearEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.configAction_exportEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_exportEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.configAction_importEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_importEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot cancelOverflowMenu(Context context) {
@@ -337,7 +337,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickConfirmClear() {
-            onView(withText(R.string.configAction_clearEvents)).perform(click());
+            onView(withText(R.string.events_configAction_clearEvents)).perform(click());
             return this;
         }
 
@@ -350,21 +350,21 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot assertAddMenuIsShown(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public EventListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public EventListActivityRobot assertClearDialogShown() {
-            onView(withText(R.string.clearevents_dialog_msg)).check(assertShown);
+            onView(withText(R.string.events_clearevents_dialog_msg)).check(assertShown);
             return this;
         }
 
@@ -420,7 +420,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
 
         @Override
         public T assertDialogShown(Context context) {
-            onView(withText(R.string.editevent_dialog_title)).check(assertShown);
+            onView(withText(R.string.events_editevent_dialog_title)).check(assertShown);
             onView(withId(R.id.edit_event_label)).check(assertShown);
             onView(withId(R.id.edit_event_offset)).check(assertShown);
             onView(withId(R.id.cancel_button)).check(assertShown);
@@ -429,7 +429,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public T assertLabelErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_label_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_label_error)))).check(isShown ? assertShown : doesNotExist());
             return robot;
         }
     }
@@ -451,7 +451,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public ElevationEventDialogRobot assertAngleErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_angle_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_angle_error)))).check(isShown ? assertShown : doesNotExist());
             return robot;
         }
 
@@ -491,11 +491,11 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public ShadowEventDialogRobot assertLengthErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_length_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_length_error)))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
         public ShadowEventDialogRobot assertHeightErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_height_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_height_error)))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
 

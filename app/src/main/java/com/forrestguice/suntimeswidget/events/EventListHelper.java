@@ -53,14 +53,10 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
-import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -754,7 +750,7 @@ public class EventListHelper
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.eventPlural, items.size(), items.size());
-            SnackbarUtils.make(context, view, context.getString(R.string.importevents_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
+            SnackbarUtils.make(context, view, context.getString(R.string.events_importevents_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
@@ -789,9 +785,9 @@ public class EventListHelper
         if (context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setMessage(context.getString(R.string.clearevents_dialog_msg))
-                    .setNegativeButton(context.getString(R.string.clearevents_dialog_cancel), null)
-                    .setPositiveButton(context.getString(R.string.clearevents_dialog_ok),
+            dialog.setMessage(context.getString(R.string.events_clearevents_dialog_msg))
+                    .setNegativeButton(context.getString(R.string.events_clearevents_dialog_cancel), null)
+                    .setPositiveButton(context.getString(R.string.events_clearevents_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -799,7 +795,7 @@ public class EventListHelper
                                 {
                                     EventSettings.deletePrefs(AndroidEventSettings.wrap(context));
                                     EventSettings.initDefaults(AndroidEventSettings.wrap(context));
-                                    Toast.makeText(context, context.getString(R.string.clearevents_toast), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getString(R.string.events_clearevents_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
                                     updateViews(context);
                                     adapterModified = true;
@@ -817,9 +813,9 @@ public class EventListHelper
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String label = EventSettings.loadEventValue(AndroidEventSettings.wrap(context), eventID, EventSettingsInterface.PREF_KEY_EVENT_LABEL);
 
-            dialog.setMessage(context.getString(R.string.delevent_dialog_msg, label, eventID))
-                    .setNegativeButton(context.getString(R.string.delevent_dialog_cancel), null)
-                    .setPositiveButton(context.getString(R.string.delevent_dialog_ok),
+            dialog.setMessage(context.getString(R.string.events_delevent_dialog_msg, label, eventID))
+                    .setNegativeButton(context.getString(R.string.events_delevent_dialog_cancel), null)
+                    .setPositiveButton(context.getString(R.string.events_delevent_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -1016,7 +1012,7 @@ public class EventListHelper
 
             boolean rising = (childPosition == 0);
             EventAlias item = (EventAlias) getGroup(groupPosition);
-            String displayString = item.toString() + " " + context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting);  // TODO
+            String displayString = item.toString() + " " + context.getString(rising ? R.string.event_eventalias_title_tag_rising : R.string.event_eventalias_title_tag_setting);  // TODO
 
             if (selectedItem != null && item.getID().equals(selectedItem.getID()) && (selectedChild == childPosition)) {
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
@@ -1261,7 +1257,7 @@ public class EventListHelper
                     {
                         if (i >= 0) {
                             boolean rising = (i == 0);
-                            actionMode.setTitle(context.getString(R.string.eventalias_title_format, item.getLabel(), context.getString(rising ? R.string.eventalias_title_tag_rising : R.string.eventalias_title_tag_setting)));
+                            actionMode.setTitle(context.getString(R.string.event_eventalias_title_format, item.getLabel(), context.getString(rising ? R.string.event_eventalias_title_tag_rising : R.string.event_eventalias_title_tag_setting)));
                         } else actionMode.setTitle(item.getLabel());
                     }
                 }

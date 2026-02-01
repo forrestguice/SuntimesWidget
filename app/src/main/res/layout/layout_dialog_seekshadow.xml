@@ -10,7 +10,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:singleLine="true" android:maxLines="1" android:gravity="end" tools:text="45"
         android:inputType="numberSigned" android:minWidth="72dp"
-        android:hint="@string/editevent_dialog_length_hint" />
+        android:hint="@string/events_editevent_dialog_length_hint" />
 
     <TextView android:id="@+id/suffix_shadowlength"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textSize="?attr/text_size_small" android:textStyle="bold"
-        android:text="@string/editevent_dialog_length" />
+        android:text="@string/events_editevent_dialog_length" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"

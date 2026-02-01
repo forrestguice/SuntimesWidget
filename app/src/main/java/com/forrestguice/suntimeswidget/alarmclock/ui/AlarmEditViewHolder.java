@@ -583,8 +583,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 int color = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
                 a.recycle();
 
-                summary = context.getString(R.string.configLabel_event_alarmitem_desc, summary);
-                String displayString = context.getString(R.string.configLabel_event_alarmitem, eventItem.getTitle(), summary);
+                summary = context.getString(R.string.event_configLabel_alarmitem_desc, summary);
+                String displayString = context.getString(R.string.event_configLabel_alarmitem, eventItem.getTitle(), summary);
                 SpannableString s = SpanUtils.createRelativeSpan(null, displayString, summary, 0.75f);
                 s = SpanUtils.createColorSpan(s, displayString, summary, color);
                 return s;

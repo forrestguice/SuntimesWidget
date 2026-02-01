@@ -8,7 +8,7 @@
         app:showAsAction="never" />
 
     <item android:id="@+id/addEvent_shadowEvent"
-        android:title="@string/configAction_addEvent_shadowEvent"
+        android:title="@string/events_configAction_addEvent_shadowEvent"
         android:icon="?attr/icActionNew"
         app:showAsAction="never" />
 

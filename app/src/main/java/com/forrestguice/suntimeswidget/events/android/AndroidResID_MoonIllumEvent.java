@@ -25,21 +25,21 @@ public class AndroidResID_MoonIllumEvent extends AndroidResID_BaseEvent implemen
 {
     @Override
     public int string_title() {
-        return R.string.moonillumevent_title;
+        return R.string.event_moonillumevent_title;
     }
 
     @Override
     public int string_phrase_gender() {
-        return R.string.moonillumevent_phrase_gender;
+        return R.string.event_moonillumevent_phrase_gender;
     }
 
     @Override
     public int string_summary_format() {
-        return R.string.moonillumevent_summary_format;
+        return R.string.event_moonillumevent_summary_format;
     }
 
     @Override
     public int string_summary_format1() {
-        return R.string.moonillumevent_summary_format1;
+        return R.string.event_moonillumevent_summary_format1;
     }
 }

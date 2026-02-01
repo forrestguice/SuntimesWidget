@@ -364,7 +364,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         text_label = (TextView) dialogContent.findViewById(R.id.text_event_label);
         if (text_label != null) {
-            text_label.setText(context.getString((dialogMode() == DIALOG_MODE_ADD) ? R.string.editevent_dialog_title : R.string.editevent_dialog_title1));
+            text_label.setText(context.getString((dialogMode() == DIALOG_MODE_ADD) ? R.string.events_editevent_dialog_title : R.string.events_editevent_dialog_title1));
         }
 
         edit_label = (EditText) dialogContent.findViewById(R.id.edit_event_label);
@@ -738,7 +738,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         String id = edit_eventID.getText().toString();
         if (id.trim().isEmpty() || id.contains(" ")) {
-            edit_eventID.setError(getString(R.string.editevent_dialog_id_error));
+            edit_eventID.setError(getString(R.string.events_editevent_dialog_id_error));
             return false;
         }
         edit_eventID.setError(null);
@@ -749,7 +749,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     {
         String label = edit_label.getText().toString();
         if (label.trim().isEmpty()) {
-            edit_label.setError(getString(R.string.editevent_dialog_label_error));
+            edit_label.setError(getString(R.string.events_editevent_dialog_label_error));
             return false;
         }
         edit_label.setError(null);
@@ -764,11 +764,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         try {
             double angle = Double.parseDouble(edit_angle.getText().toString());
             if (angle < MIN_ANGLE || angle > MAX_ANGLE) {
-                edit_angle.setError(getString(R.string.editevent_dialog_angle_error));
+                edit_angle.setError(getString(R.string.events_editevent_dialog_angle_error));
                 return false;
             }
         } catch (NumberFormatException e) {
-            edit_angle.setError(getString(R.string.editevent_dialog_angle_error));
+            edit_angle.setError(getString(R.string.events_editevent_dialog_angle_error));
             return false;
         }
         edit_angle.setError(null);
@@ -785,11 +785,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         try {
             double length = Double.parseDouble(edit_shadowLength.getText().toString());
             if (length < MIN_LENGTH || length > MAX_LENGTH) {
-                edit_shadowLength.setError(getString(R.string.editevent_dialog_length_error));
+                edit_shadowLength.setError(getString(R.string.events_editevent_dialog_length_error));
                 return false;
             }
         } catch (NumberFormatException e) {
-            edit_shadowLength.setError(getString(R.string.editevent_dialog_length_error));
+            edit_shadowLength.setError(getString(R.string.events_editevent_dialog_length_error));
             return false;
         }
         edit_shadowLength.setError(null);
@@ -806,11 +806,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         try {
             double length = Double.parseDouble(edit_objHeight.getText().toString());
             if (length < MIN_HEIGHT || length > MAX_HEIGHT) {
-                edit_objHeight.setError(getString(R.string.editevent_dialog_height_error));
+                edit_objHeight.setError(getString(R.string.events_editevent_dialog_height_error));
                 return false;
             }
         } catch (NumberFormatException e) {
-            edit_objHeight.setError(getString(R.string.editevent_dialog_height_error));
+            edit_objHeight.setError(getString(R.string.events_editevent_dialog_height_error));
             return false;
         }
         edit_objHeight.setError(null);
@@ -1031,11 +1031,11 @@ public class EditEventDialog extends EditBottomSheetDialog
         try {
             double percent = Double.parseDouble(edit_percentValue.getText().toString());
             if (percent < MIN_PERCENT || percent > MAX_PERCENT) {
-                edit_percentValue.setError(getString(R.string.editevent_dialog_percent_error));
+                edit_percentValue.setError(getString(R.string.events_editevent_dialog_percent_error));
                 return false;
             }
         } catch (NumberFormatException e) {
-            edit_percentValue.setError(getString(R.string.editevent_dialog_percent_error));
+            edit_percentValue.setError(getString(R.string.events_editevent_dialog_percent_error));
             return false;
         }
         edit_percentValue.setError(null);

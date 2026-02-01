@@ -313,11 +313,11 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public AlarmDialogRobot clickOverflowMenuItem_manageEvents(Context context) {
-            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
@@ -347,7 +347,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         }
 
         public AlarmDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_manageEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 

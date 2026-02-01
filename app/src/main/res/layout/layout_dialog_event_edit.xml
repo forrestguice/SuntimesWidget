@@ -48,7 +48,7 @@
             <TextView android:id="@+id/text_event_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="64dp"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:textSize="?attr/text_size_medium"
-                android:text="@string/editevent_dialog_title"
+                android:text="@string/events_editevent_dialog_title"
                 android:gravity="center" android:padding="0dp"
                 android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
@@ -58,7 +58,7 @@
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:minWidth="150dp"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                android:hint="@string/editevent_dialog_label_hint" android:inputType="text"
+                android:hint="@string/events_editevent_dialog_label_hint" android:inputType="text"
                 android:paddingLeft="5dp" android:paddingRight="5dp"
                 android:nextFocusDown="@+id/edit_event_angle"
                 android:layout_gravity="center_vertical" />
@@ -71,7 +71,7 @@
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/save_button" style="@style/ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionSave"
-                    android:contentDescription="@string/configAction_saveEvent" />
+                    android:contentDescription="@string/events_configAction_saveEvent" />
 
             </LinearLayout>
 
@@ -102,13 +102,13 @@
                     android:labelFor="@+id/edit_event_height" android:textSize="?attr/text_size_small"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="@string/editevent_dialog_height" />
+                    android:text="@string/events_editevent_dialog_height" />
 
                 <EditText android:id="@+id/edit_event_height"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_height_hint" android:inputType="numberSigned|numberDecimal"
+                    android:hint="@string/events_editevent_dialog_height_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
@@ -127,13 +127,13 @@
                 <TextView android:labelFor="@+id/edit_event_length" android:textSize="?attr/text_size_small"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="@string/editevent_dialog_length" />
+                    android:text="@string/events_editevent_dialog_length" />
 
                 <EditText android:id="@+id/edit_event_length"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_length_hint" android:inputType="numberSigned|numberDecimal"
+                    android:hint="@string/events_editevent_dialog_length_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
@@ -153,20 +153,20 @@
                 <TextView android:labelFor="@+id/edit_event_angle" android:textSize="?attr/text_size_small"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="@string/editevent_dialog_angle" />
+                    android:text="@string/events_editevent_dialog_angle" />
 
                 <EditText android:id="@+id/edit_event_angle"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_angle_hint" android:inputType="numberSigned|numberDecimal"
+                    android:hint="@string/events_editevent_dialog_angle_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_angle_suffix" />
+                    android:textSize="?attr/text_size_small" android:text="@string/events_editevent_dialog_angle_suffix" />
 
             </LinearLayout>
 
@@ -179,20 +179,20 @@
                 <TextView android:labelFor="@+id/edit_event_percent" android:textSize="?attr/text_size_small"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                    android:text="@string/editevent_dialog_percent" />
+                    android:text="@string/events_editevent_dialog_percent" />
 
                 <EditText android:id="@+id/edit_event_percent"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:minWidth="50dp"
                     android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                    android:hint="@string/editevent_dialog_percent_hint" android:inputType="numberSigned|numberDecimal"
+                    android:hint="@string/events_editevent_dialog_percent_hint" android:inputType="numberSigned|numberDecimal"
                     android:paddingLeft="5dp" android:paddingRight="5dp"
                     android:gravity="end|right"
                     android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="?attr/text_size_small" android:text="@string/editevent_dialog_percent_suffix" />
+                    android:textSize="?attr/text_size_small" android:text="@string/events_editevent_dialog_percent_suffix" />
 
                 <RadioGroup android:id="@+id/radiogroup_event_percent"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -203,13 +203,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="@string/editevent_dialog_percent_ofday" />
+                        android:text="@string/events_editevent_dialog_percent_ofday" />
 
                     <RadioButton
                         android:id="@+id/radiobutton_event_percent_night"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/editevent_dialog_percent_ofnight" />
+                        android:text="@string/events_editevent_dialog_percent_ofnight" />
 
                 </RadioGroup>
 
@@ -231,12 +231,12 @@
             <TextView android:labelFor="@+id/edit_event_id" android:textSize="?attr/text_size_small"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                android:text="@string/editevent_dialog_id_label" />
+                android:text="@string/events_editevent_dialog_id_label" />
 
             <EditText android:id="@+id/edit_event_id"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-                android:hint="@string/editevent_dialog_id_hint" android:inputType="text"
+                android:hint="@string/events_editevent_dialog_id_hint" android:inputType="text"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
                 android:layout_gravity="center_vertical" />
@@ -244,7 +244,7 @@
             <CheckBox
                 android:id="@+id/check_shown"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:contentDescription="@string/editevent_dialog_showevent"
+                android:contentDescription="@string/events_editevent_dialog_showevent"
                 android:button="?attr/checkVisibility" />
 
         </LinearLayout>
@@ -252,14 +252,14 @@
         <EditText android:id="@+id/edit_uri1"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:enabled="false"
-            android:hint="@string/editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="@dimen/text_size_small"
+            android:hint="@string/events_editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="@dimen/text_size_small"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_gravity="center_vertical" />
 
         <EditText android:id="@+id/edit_uri"
             android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:enabled="false"
-            android:hint="@string/editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="@dimen/text_size_small"
+            android:hint="@string/events_editevent_dialog_uri_hint" android:inputType="textUri" android:textSize="@dimen/text_size_small"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_gravity="center_vertical" />
 

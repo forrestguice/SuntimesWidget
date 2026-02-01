@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/addEvent_sunEvent"
-        android:title="@string/configAction_addEvent_sunEvent"
+        android:title="@string/events_configAction_addEvent_sunEvent"
         android:icon="?attr/icActionNew"
         app:showAsAction="never" />
 

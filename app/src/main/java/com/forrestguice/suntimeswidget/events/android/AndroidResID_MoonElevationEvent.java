@@ -25,21 +25,21 @@ public class AndroidResID_MoonElevationEvent extends AndroidResID_BaseEvent impl
 {
     @Override
     public int string_title() {
-        return R.string.moonevent_title;
+        return R.string.event_moonevent_title;
     }
 
     @Override
     public int string_phrase_gender() {
-        return R.string.moonevent_phrase_gender;
+        return R.string.event_moonevent_phrase_gender;
     }
 
     @Override
     public int string_summary_format() {
-        return R.string.moonevent_summary_format;
+        return R.string.event_moonevent_summary_format;
     }
 
     @Override
     public int string_summary_format1() {
-        return R.string.moonevent_summary_format1;
+        return R.string.event_moonevent_summary_format1;
     }
 }

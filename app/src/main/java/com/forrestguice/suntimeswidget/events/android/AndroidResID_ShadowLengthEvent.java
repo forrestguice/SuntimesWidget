@@ -25,22 +25,22 @@ public class AndroidResID_ShadowLengthEvent extends AndroidResID_BaseEvent imple
 {
     @Override
     public int string_title() {
-        return R.string.shadowevent_title;
+        return R.string.event_shadowevent_title;
     }
 
     @Override
     public int string_phrase_gender() {
-        return R.string.shadowevent_phrase_gender;
+        return R.string.event_shadowevent_phrase_gender;
     }
 
     @Override
     public int string_summary_format() {
-        return R.string.shadowevent_summary_format;
+        return R.string.event_shadowevent_summary_format;
     }
 
     @Override
     public int string_summary_format1() {
-        return R.string.shadowevent_summary_format1;
+        return R.string.event_shadowevent_summary_format1;
     }
 
     @Override

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="?attr/text_size_small" android:textAlignment="center"
             android:minEms="5" android:maxLines="1"
-            android:inputType="numberDecimal" android:hint="@string/editevent_dialog_height_hint" />
+            android:inputType="numberDecimal" android:hint="@string/events_editevent_dialog_height_hint" />
 
         <TextView android:id="@+id/suffix_height" android:labelFor="@+id/edit_height"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         <TextView android:id="@+id/text_title"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="?attr/text_size_small" android:textStyle="bold"
-            android:text="@string/editevent_dialog_height" />
+            android:text="@string/events_editevent_dialog_height" />
 
         <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
             style="@style/Widget.AppCompat.ActionButton.Overflow"

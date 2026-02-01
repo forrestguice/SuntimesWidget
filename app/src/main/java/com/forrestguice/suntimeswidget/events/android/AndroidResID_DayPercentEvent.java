@@ -25,26 +25,26 @@ public class AndroidResID_DayPercentEvent extends AndroidResID_BaseEvent impleme
 {
     @Override
     public int string_title_day() {
-        return R.string.daypercentevent_title_day;
+        return R.string.event_daypercentevent_title_day;
     }
 
     @Override
     public int string_title_night() {
-        return R.string.daypercentevent_title_night;
+        return R.string.event_daypercentevent_title_night;
     }
 
     @Override
     public int string_phrase_gender() {
-        return R.string.daypercentevent_phrase_gender;
+        return R.string.event_daypercentevent_phrase_gender;
     }
 
     @Override
     public int string_summary_format() {
-        return R.string.daypercentevent_summary_format;
+        return R.string.event_daypercentevent_summary_format;
     }
 
     @Override
     public int string_summary_format1() {
-        return R.string.daypercentevent_summary_format1;
+        return R.string.event_daypercentevent_summary_format1;
     }
 }

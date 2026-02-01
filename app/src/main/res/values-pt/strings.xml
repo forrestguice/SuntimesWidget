@@ -906,79 +906,79 @@
     <string name="eventType_sun_elevation">Sol (elevação)</string>
     <string name="eventlist_dialog_title">Eventos Personalizados</string>
 
-    <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="configLabel_event_alarmitem_desc">%1$s</string>
+    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_configLabel_alarmitem_desc">%1$s</string>
 
-    <string name="eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="eventalias_title_tag_rising" >↑</string>
-    <string name="eventalias_title_tag_setting">↓</string>
+    <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_tag_setting">↓</string>
 
-    <string name="sunevent_title">Sol</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
-    <string name="sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
-    <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> em <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_sunevent_title">Sol</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="event_sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
+    <string name="event_sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> em <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
+    <string name="event_sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="shadowevent_title">Sombra</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
+    <string name="event_shadowevent_title">Sombra</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
-    <string name="configLabel_manageEvents">Gerenciar Eventos</string>  <!-- settings activity / pref -->
-    <string name="configLabel_manageEvents_summary">Adicionar ou remover eventos personalizados.</string>
-    <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
+    <string name="events_configLabel_manageEvents">Gerenciar Eventos</string>  <!-- settings activity / pref -->
+    <string name="events_configLabel_manageEvents_summary">Adicionar ou remover eventos personalizados.</string>
+    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>
 
-    <string name="configAction_manageEvents">Eventos Personalizados</string>
-    <string name="configAction_selectEvent">Selecionar</string>           <!-- button (contentDescription) -->
-    <string name="configAction_addEvent">Adicionar</string>           <!-- button (contentDescription) -->
-    <string name="configAction_editEvent">Editar</string>           <!-- button (contentDescription) -->
-    <string name="configAction_saveEvent">Salvar</string>           <!-- button (contentDescription) -->
-    <string name="configAction_deleteEvent">Excluir</string>           <!-- button (contentDescription) -->
-    <string name="configAction_clearEvents">Limpar</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_manageEvents">Eventos Personalizados</string>
+    <string name="events_configAction_selectEvent">Selecionar</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_addEvent">Adicionar</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_editEvent">Editar</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_saveEvent">Salvar</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_deleteEvent">Excluir</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_clearEvents">Limpar</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_addEvent_sunEvent">Adicionar (Elevação do Sol)</string>           <!-- button (contentDescription) -->
-    <string name="configAction_addEvent_shadowEvent">Adicionar (Comprimento da Sombra)</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_addEvent_sunEvent">Adicionar (Elevação do Sol)</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_addEvent_shadowEvent">Adicionar (Comprimento da Sombra)</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
-    <string name="importevents_toast_success">Importado <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_importevents_toast_success">Importado <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d evento</item>
         <item quantity="other">%d eventos</item>
     </plurals>
 
-    <string name="editevent_dialog_id_label">ID</string>
-    <string name="editevent_dialog_id_hint">ID do Evento</string>
-    <string name="editevent_dialog_id_error">@string/actions_addaction_error_id</string>
-    <string name="editevent_dialog_uri_hint">URI do Evento</string>
-    <string name="editevent_dialog_showevent">Exibir este evento dentro do aplicativo.</string>
-    <string name="editevent_dialog_showevent_off">Este evento não será mais exibido.</string>
+    <string name="events_editevent_dialog_id_label">ID</string>
+    <string name="events_editevent_dialog_id_hint">ID do Evento</string>
+    <string name="events_editevent_dialog_id_error">@string/actions_addaction_error_id</string>
+    <string name="events_editevent_dialog_uri_hint">URI do Evento</string>
+    <string name="events_editevent_dialog_showevent">Exibir este evento dentro do aplicativo.</string>
+    <string name="events_editevent_dialog_showevent_off">Este evento não será mais exibido.</string>
 
-    <string name="editevent_dialog_title">Evento</string>    <!-- 'add event' title -->
-    <string name="editevent_dialog_title1">Evento</string>    <!-- 'edit event' title -->
-    <string name="editevent_dialog_label_label">Etiqueta</string>
-    <string name="editevent_dialog_label_hint">Etiqueta do Evento</string>
-    <string name="editevent_dialog_label_error">@string/actions_addaction_error_title</string>
-    <string name="editevent_dialog_label_suggested">Ângulo Personalizado</string>
+    <string name="events_editevent_dialog_title">Evento</string>    <!-- 'add event' title -->
+    <string name="events_editevent_dialog_title1">Evento</string>    <!-- 'edit event' title -->
+    <string name="events_editevent_dialog_label_label">Etiqueta</string>
+    <string name="events_editevent_dialog_label_hint">Etiqueta do Evento</string>
+    <string name="events_editevent_dialog_label_error">@string/actions_addaction_error_title</string>
+    <string name="events_editevent_dialog_label_suggested">Ângulo Personalizado</string>
 
-    <string name="editevent_dialog_angle">Ângulo</string>
-    <string name="editevent_dialog_angle_hint">-6</string>
-    <string name="editevent_dialog_angle_suffix">°</string>
-    <string name="editevent_dialog_angle_error">Ângulo é obrigatório!</string>
+    <string name="events_editevent_dialog_angle">Ângulo</string>
+    <string name="events_editevent_dialog_angle_hint">-6</string>
+    <string name="events_editevent_dialog_angle_suffix">°</string>
+    <string name="events_editevent_dialog_angle_error">Ângulo é obrigatório!</string>
 
-    <string name="editevent_dialog_length">Comprimento da Sombra</string>
-    <string name="editevent_dialog_length_hint">6</string>
-    <string name="editevent_dialog_length_error">O comprimento da sombra é necessário!</string>
-    <string name="editevent_dialog_label_suggested1">Comprimento da Sombra</string>
+    <string name="events_editevent_dialog_length">Comprimento da Sombra</string>
+    <string name="events_editevent_dialog_length_hint">6</string>
+    <string name="events_editevent_dialog_length_error">O comprimento da sombra é necessário!</string>
+    <string name="events_editevent_dialog_label_suggested1">Comprimento da Sombra</string>
 
-    <string name="editevent_dialog_height">Altura do Objeto</string>
-    <string name="editevent_dialog_height_hint">1</string>
-    <string name="editevent_dialog_height_error">A altura do objeto é necessária!</string>
+    <string name="events_editevent_dialog_height">Altura do Objeto</string>
+    <string name="events_editevent_dialog_height_hint">1</string>
+    <string name="events_editevent_dialog_height_error">A altura do objeto é necessária!</string>
 
-    <string name="delevent_dialog_msg">Tem certeza de que deseja excluir %1$s (%2$s)?\n\nlarmes, notificações ou widgets que utilizam este evento podem deixar de funcionar e devem ser reatribuídos.</string>
-    <string name="delevent_dialog_ok">Excluir</string>
-    <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
+    <string name="events_delevent_dialog_msg">Tem certeza de que deseja excluir %1$s (%2$s)?\n\nlarmes, notificações ou widgets que utilizam este evento podem deixar de funcionar e devem ser reatribuídos.</string>
+    <string name="events_delevent_dialog_ok">Excluir</string>
+    <string name="events_delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Tem certeza de que deseja limpar os eventos personalizados?\n\nAlarmes, notificações ou widgets que utilizam esses eventos podem deixar de funcionar e devem ser reatribuídos.</string>
-    <string name="clearevents_dialog_ok">Limpar</string>
-    <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearevents_toast">Eventos personalizados limpos.</string>
+    <string name="events_clearevents_dialog_msg">Tem certeza de que deseja limpar os eventos personalizados?\n\nAlarmes, notificações ou widgets que utilizam esses eventos podem deixar de funcionar e devem ser reatribuídos.</string>
+    <string name="events_clearevents_dialog_ok">Limpar</string>
+    <string name="events_clearevents_dialog_cancel">@string/dialog_cancel</string>
+    <string name="events_clearevents_toast">Eventos personalizados limpos.</string>
 
 
     <!--
@@ -1748,9 +1748,9 @@
 
     <string name="seekAltitude_configHint">graus</string>
     <string name="seekAltitude_suffix">°∠</string>
-    <string name="seekAltitude_rising">@string/eventalias_title_tag_rising</string>
+    <string name="seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
     <string name="seekAltitude_rising_contentDescription">@string/sunrise</string>
-    <string name="seekAltitude_setting">@string/eventalias_title_tag_setting</string>
+    <string name="seekAltitude_setting">@string/event_eventalias_title_tag_setting</string>
     <string name="seekAltitude_setting_contentDescription">@string/sunset</string>
 
     <!-- Dialog: Moon -->
