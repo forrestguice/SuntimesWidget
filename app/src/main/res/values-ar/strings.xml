@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Cairo</string>
-    <string name="default_location_latitude">30.0594</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">31.2234</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">36</string>         <!-- meters -->
-    <string name="default_timezone">Africa/Cairo</string>         <!-- tzid -->
-
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar
@@ -2527,8 +2521,5 @@
         لمزيد من المعلومات حول الخيارات المتاحة، أو توسيع التطبيق لدعم مكتبات أخرى، انظر إلى المساعدة عبر الإنترنت.
     ]]>
     </string>
-
-    <!-- pref defaults -->
-    <string name="def_app_ui_showheader_text">1</string>  <!-- 1: labels -->
 
 </resources>

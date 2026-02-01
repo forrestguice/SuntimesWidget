@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-  <string name="default_location_label">Berlin</string>
-  <string name="default_location_latitude">52.5243</string>    <!-- decimal degrees (DD) -->
-  <string name="default_location_longitude">13.4105</string>   <!-- decimal degrees (DD) -->
-  <string name="default_location_altitude">40</string>         <!-- meters -->
-  <string name="default_timezone">Europe/Berlin</string>         <!-- tzid -->
-
   <!-- MAIN ACTIVITY -->
 
   <!-- Action Bar
@@ -2229,7 +2223,5 @@
         Weitere Informationen zu verfügbaren Auswahlmöglichkeiten oder zur Erweiterung der App zur Unterstützung anderer Bibliotheken finden Sie in der Online-Hilfe.
     ]]>
     </string>
-
-  <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
 
 </resources>

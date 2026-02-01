@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Paris</string>         <!-- from wikipedia-fr -->
-    <string name="default_location_latitude">48.8566</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">2.3518</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">41</string>         <!-- meters -->
-    <string name="default_timezone">Europe/Paris</string>         <!-- tzid -->
-
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar
@@ -2197,7 +2191,5 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>   <!-- TODO -->
-
-    <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
 
 </resources>
