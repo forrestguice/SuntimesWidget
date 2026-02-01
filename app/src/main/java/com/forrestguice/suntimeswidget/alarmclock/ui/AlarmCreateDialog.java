@@ -351,7 +351,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
             if (btn_neutral != null)
             {
-                btn_neutral.setText(context.getString(R.string.configAction_clearDate));
+                btn_neutral.setText(context.getString(R.string.alarms_action_clearDate));
                 btn_neutral.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -519,7 +519,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         boolean showPreview = showTimePreview();
 
         if (text_title != null) {
-            text_title.setText(context.getString(alarmType == AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
+            text_title.setText(context.getString(alarmType == AlarmType.ALARM ? R.string.alarms_action_addAlarm : R.string.alarms_action_addNotification));
         }
         if (spin_type != null) {
             spin_type.setEnabled(allowSelectType());

@@ -1441,7 +1441,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View clickArea = new View(context);
         clickArea.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(context, context.getString(R.string.configAction_preview), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.action_preview), Toast.LENGTH_SHORT).show();
             }
         });
 

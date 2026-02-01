@@ -926,38 +926,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Értesítések</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">Nincsenek ébresztések</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Ébresztés beállítása</string>               <!-- button (contentDescription) --> 
-    <string name="configAction_addNotification">Értesítés beállítása</string> <!-- button (contentDescription) --> 
-    <string name="configAction_editAlarm">Szerkesztés</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Törlés</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Minden törlése</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms">Rendezés</string>                <!-- action button / menu item --> 
-    <string name="configAction_sortAlarms_by_time">Ébresztés ideje</string>                <!-- action button / menu item -->  
-    <string name="configAction_sortAlarms_by_creation">Hozzáadás dátuma</string>                <!-- action button / menu item --> 
-    <string name="configAction_sortAlarms_enabled_first">Engedélyezett elől</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">Előtte/utána</string>                <!-- action button / menu item --> 
-    <string name="configAction_clearOffset">Törlés</string>                <!-- action button / menu item --> 
-    <string name="configAction_clearDate">Törlés</string>                <!-- action button / menu item -->  
-    <string name="configAction_setAlarmOffset">Előtte/utána eltolás</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_setAlarmType">Típus</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_setAlarmLabel">Név</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmNote">Jegyzet</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmDismissChallenge">Riaszt. elvetés kihívás</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_configAlarmDismissChallenge">Beállítás</string>         <!-- button (contentDescription) -->
-    <string name="configAction_testAlarmDismissChallenge">Kipróbálás</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">Hely</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_setAlarmRepeat">Ismétlés</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_setAlarmEvent">Esemény</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Idő felülírása</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_setAlarmAction">Művelet</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmSound">Hang</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_alarmMenu">Értesítés menü</string>         <!-- button (contentDescription) --> 
-    <string name="configAction_saveAlarm">Mentés</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_enableAlarm">Mentés és bekapcsolás</string>               <!-- button (contentDescription) --> 
-    <string name="configAction_disableAlarm">Mentés és kikapcsolás</string>               <!-- button (contentDescription) -->  
+    <string name="alarms_label_alarmClock">Értesítések</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">Nincsenek ébresztések</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">Ébresztés beállítása</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">Értesítés beállítása</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">Szerkesztés</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">Törlés</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">Minden törlése</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="alarms_action_sortAlarms">Rendezés</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">Ébresztés ideje</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">Hozzáadás dátuma</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">Engedélyezett elől</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">Előtte/utána</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">Törlés</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">Törlés</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">Előtte/utána eltolás</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmType">Típus</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">Név</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">Jegyzet</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmDismissChallenge">Riaszt. elvetés kihívás</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_configAlarmDismissChallenge">Beállítás</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_testAlarmDismissChallenge">Kipróbálás</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLocation">Hely</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">Ismétlés</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">Esemény</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">Idő felülírása</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">Művelet</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">Hang</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">Értesítés menü</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">Mentés</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">Mentés és bekapcsolás</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">Mentés és kikapcsolás</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Visszavonás</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Elvetés</string>                <!-- notification action button -->
@@ -976,10 +976,10 @@
     <string name="alarmMode_notification">Értesítés</string>                <!-- alarm type (setting) --> 
     <string name="alarmMode_notification1">Gyors értesítés</string>                <!-- alarm type (setting) --> 
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Ébreszés előtt:</string>               <!-- group title -->  
-    <string name="configLabel_alarmEdit_scheduleTray">Időzítés:</string>               <!-- group title --> 
-    <string name="configLabel_alarmEdit_onAlertTray">Ébresztéskor:</string>               <!-- group title -->  
-    <string name="configLabel_alarmEdit_onDismissTray">Elvetéskor:</string>               <!-- group title --> 
+    <string name="alarmEdit_label_beforeAlertTray">Ébreszés előtt:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">Időzítés:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">Ébresztéskor:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">Elvetéskor:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">Rezgés</string>                <!-- checkbox text --> 
     <string name="alarmOption_ringtone_none">Nincs hang</string>          <!-- ringtone label (none) -->  
@@ -992,32 +992,32 @@
     <string name="alarmOption_repeat_none">Nincs ismétlés</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">Minden nap</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Törlés</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Biztos hogy törölni szeretné ezt?\n<xliff:g id="type">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Törlés</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Mégse</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Az értesítés <xliff:g id="type" example="Notification">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) törölve lett.</string> <!-- toast msg --> 
+    <string name="alarmdelete_dialog_title">Törlés</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">Biztos hogy törölni szeretné ezt?\n<xliff:g id="type">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">Törlés</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">Mégse</string>    <!-- button -->
+    <string name="alarmdelete_toast_success">Az értesítés <xliff:g id="type" example="Notification">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) törölve lett.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Nem mentett változtatások vannak.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Elvetés</string>                              <!-- button --> 
     <string name="discardchanges_dialog_cancel">Mégse</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Mentés</string>                            <!-- button --> 
 
-    <string name="clearalarms_dialog_title">Ébresztések törlése</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Biztos benne hogy törölni szeretne minden ébresztést?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Törlés</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Mégse</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Ébresztések törölve</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">Ébresztések törlése</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">Biztos benne hogy törölni szeretne minden ébresztést?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">Törlés</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">Mégse</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">Ébresztések törölve</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Importálás figyelmeztetés</string> <!-- dialog title -->
-    <string name="importalarms_msg_warning">Az importált riasztások visszaállíthatnak bizonyos beállításokat az alapértelmezettre.\n\nLehet, hogy (újra) ki kell választania a hangokat és a műveleteket.</string> <!-- toast msg --> 
-    <string name="importalarms_toast_success">%s ébresztés importálva.</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">Importálás figyelmeztetés</string> <!-- dialog title -->
+    <string name="alarmsimport_msg_warning">Az importált riasztások visszaállíthatnak bizonyos beállításokat az alapértelmezettre.\n\nLehet, hogy (újra) ki kell választania a hangokat és a műveleteket.</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">%s ébresztés importálva.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d ébresztés</item>
         <item quantity="other">%d ébresztés</item>
     </plurals> 
 
-    <string name="configLabel_alarms_dismissChallenge">Riasztás elvetés kihívás</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">Riasztás elvetés kihívás</string>            <!-- pref title -->
     <string name="alarmDismiss_none">Nincs</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">Nincs kihívás</string>            <!-- chip label -->
     <string name="alarmDismiss_math">Egyszerű matek</string>           <!-- alarm setting -->
@@ -1044,92 +1044,92 @@
 
     <string name="alarmenabled_toast">Az <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> ennyi idő múlva indul: <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- toast msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Akkumulátor optimalizálás</string> 
-    <string name="configLabel_alarms_optWhiteList_listed">Nincs optimalizálva (ajánlott)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Az akkumulátor optimalizálás be van kapcsolva.\nAz ébresztések akár 15 percet is késhetnek.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> A Sony STAMINA mód engedélyezve van.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Az akkumulátor optimalizálás be van kapcsolva.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>
+    <string name="alarms_label_optWhiteList">Akkumulátor optimalizálás</string>
+    <string name="alarms_label_optWhiteList_listed">Nincs optimalizálva (ajánlott)</string>
+    <string name="alarms_label_optWhiteList_unlisted">Az akkumulátor optimalizálás be van kapcsolva.\nAz ébresztések akár 15 percet is késhetnek.</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> A Sony STAMINA mód engedélyezve van.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">Az akkumulátor optimalizálás be van kapcsolva.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően működni.</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="alarms_label_autostart">Autostart</string>   <!-- TODO -->
+    <string name="alarms_label_autostart_on">On</string>   <!-- TODO -->
+    <string name="alarms_label_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_notifications">Értesítések</string>
-    <string name="configLabel_alarms_notifications_on">Be</string>
-    <string name="configLabel_alarms_notifications_off">Ki.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően megjelenni.</string>
+    <string name="alarms_label_notifications">Értesítések</string>
+    <string name="alarms_label_notifications_on">Be</string>
+    <string name="alarms_label_notifications_off">Ki.\nElőfordulhat, hogy az ébresztések nem fognak megfelelően megjelenni.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">A zárolási képernyőn: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Az értesítések ki vannak kapcsolva. Előfordulhat, hogy az ébresztések nem fognak megfelelően megjelenni.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_summary1">A zárolási képernyőn: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Az értesítések ki vannak kapcsolva. Előfordulhat, hogy az ébresztések nem fognak megfelelően megjelenni.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_on">On</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_bootcompleted">Rendszerindítás befejezve</string>
-    <string name="configLabel_alarms_bootcompleted_summary">A riasztások automatikusan átütemeződnek néhány perccel az újraindítás után.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Legutóbb futott <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> újraindítás után (időtartam <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">Soha</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Átütemezi az összes ébresztést és értesítést?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Ébresztések és értesítések átütemezése…</string>
+    <string name="alarms_label_bootcompleted">Rendszerindítás befejezve</string>
+    <string name="alarms_label_bootcompleted_summary">A riasztások automatikusan átütemeződnek néhány perccel az újraindítás után.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Legutóbb futott <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> újraindítás után (időtartam <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_info_never">Soha</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Átütemezi az összes ébresztést és értesítést?</string>
+    <string name="alarms_label_bootcompleted_action_message">Ébresztések és értesítések átütemezése…</string>
 
-    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
+    <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Némítás ennyi idő után</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_silenceAfter">Némítás ennyi idő után</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_timeoutAfter">Lejárat ennyi idő után</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_timeoutAfter">Lejárat ennyi idő után</string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_autoDismissAfter">Elvetés ennyi idő után</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">Elvetés ennyi idő után</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Szundi korlát</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">Nincs korlát</string>
+    <string name="alarms_label_snoozeLimit">Szundi korlát</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">Nincs korlát</string>
 
-    <string name="configLabel_alarms_snooze">Szundi ennyi ideig</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_snooze">Szundi ennyi ideig</string>
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_upcoming">Értesítés ennyi időn belül</string>
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
-    <string name="configLabel_alarms_upcoming_checkbox">Ébresztési emlékeztető értesítések megjelenítése.</string>
+    <string name="alarms_label_upcoming">Értesítés ennyi időn belül</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_upcoming_checkbox">Ébresztési emlékeztető értesítések megjelenítése.</string>
 
-    <string name="configLabel_alarms_fadein">Hangerő fokozatos növelése</string>
+    <string name="alarms_label_fadein">Hangerő fokozatos növelése</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Ki</string>
+    <string name="alarms_label_fadein_disabled">Ki</string>
 
-    <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
+    <string name="alarms_label_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
+    <string name="alarms_label_brightMode">Bright Alarms</string>    <!-- TODO -->
+    <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
-    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
     <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
     <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_hardwarebuttons">Fizikai gombok</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_hardwarebuttons">Fizikai gombok</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Elvetés</item>
         <item>Némítás</item>
@@ -1137,13 +1137,13 @@
         <item>Nincs művelet</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Hangok</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Hangerők</string>
-    <string name="configLabel_alarms_allRingtones">Minden csengőhang megjelenítése</string> 
-    <string name="configLabel_alarms_allRingtones_summary">Az összes rendszerhang megjelenítése a kiválasztás során (a csengőhang típusának figyelmen kívül hagyása).</string>
+    <string name="alarms_label_alarmSounds">Hangok</string>            <!-- group title -->
+    <string name="alarms_label_volumes">Hangerők</string>
+    <string name="alarms_label_allRingtones">Minden csengőhang megjelenítése</string>
+    <string name="alarms_label_allRingtones_summary">Az összes rendszerhang megjelenítése a kiválasztás során (a csengőhang típusának figyelmen kívül hagyása).</string>
 
-    <string name="no_reminder">Soha</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> emlékeztető</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">Soha</string>
+    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> emlékeztető</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d óra</item>
@@ -1165,12 +1165,12 @@
         <item quantity="other">%s nap</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
-    <string name="configLabel_alarmMisc">Egyéb</string>
-    <string name="configLabel_alarms_showlauncher">Indító ikon</string>
-    <string name="configLabel_alarms_showlauncher_summary">Ébresztőóra ikon megjelenítése az alkalmazástálcán.</string>
+    <string name="alarms_label_alarmMisc">Egyéb</string>
+    <string name="alarms_label_showlauncher">Indító ikon</string>
+    <string name="alarms_label_showlauncher_summary">Ébresztőóra ikon megjelenítése az alkalmazástálcán.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Kikapcsolt ébresztés</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">A készülék felébresztése kikapcsolt állapotból.\nCsomag: <xliff:g id="packageName">%s</xliff:g></string>
+    <string name="alarms_label_poweroffalarms">Kikapcsolt ébresztés</string>
+    <string name="alarms_label_poweroffalarms_summary">A készülék felébresztése kikapcsolt állapotból.\nCsomag: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME

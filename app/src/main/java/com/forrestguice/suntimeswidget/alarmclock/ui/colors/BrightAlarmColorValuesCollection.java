@@ -181,18 +181,18 @@ public class BrightAlarmColorValuesCollection<T> extends ColorValuesCollection<C
     public String getDefaultLabel(Context context, @Nullable String colorsID)
     {
         if (colorsID == null) {
-            return context.getString(R.string.brightMode_colors_label_default);
+            return context.getString(R.string.alarms_brightMode_colors_label_default);
         }
         switch(colorsID)
         {
             case DEFAULT_ID_SUNRISE:
-                return context.getString(R.string.brightMode_colors_label_sunrise);
+                return context.getString(R.string.alarms_brightMode_colors_label_sunrise);
 
             case DEFAULT_ID_FOLIAGE:
-                return context.getString(R.string.brightMode_colors_label_foliage);
+                return context.getString(R.string.alarms_brightMode_colors_label_foliage);
 
             case DEFAULT_ID_BLUESKY:
-                return context.getString(R.string.brightMode_colors_label_bluesky);
+                return context.getString(R.string.alarms_brightMode_colors_label_bluesky);
 
             default:
                 return colorsID;

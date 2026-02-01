@@ -944,38 +944,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Alarmoj</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">Neniu alarmo</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Agordi alarmon</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">Agordi sciigon</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Redakti</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Forigi ĉiujn</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Ordigi</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">tempo de alarmo</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">tempo de kreo</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Aktivaj unue</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">Montri deŝovojn</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Forviŝi</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Agordi deŝovon (antaŭ/post)</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">Agordi noton</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmDismissChallenge">Agordi silentigan defion</string>         <!-- button (contentDescription) -->
-    <string name="configAction_configAlarmDismissChallenge">Alĝustigi silentigan defion</string>         <!-- button (contentDescription) -->
-    <string name="configAction_testAlarmDismissChallenge">Testi silentigan defion</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">Agordi pozicion</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">Agordi ripeton</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Agordi okazaĵon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Agordi konstantan tempon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Agordi agon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Konservi</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Konservi kaj aktivigi</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">Konservi kaj malaktivigi</string>               <!-- button (contentDescription) -->
+    <string name="alarms_label_alarmClock">Alarmoj</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">Neniu alarmo</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">Agordi alarmon</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">Agordi sciigon</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">Redakti</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">Forigi ĉiujn</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms">Ordigi</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">tempo de alarmo</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">tempo de kreo</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">Aktivaj unue</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">Montri deŝovojn</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">Forviŝi</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">Agordi deŝovon (antaŭ/post)</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">Agordi noton</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmDismissChallenge">Agordi silentigan defion</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_configAlarmDismissChallenge">Alĝustigi silentigan defion</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_testAlarmDismissChallenge">Testi silentigan defion</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLocation">Agordi pozicion</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">Agordi ripeton</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">Agordi okazaĵon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">Agordi konstantan tempon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">Agordi agon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">Konservi</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">Konservi kaj aktivigi</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">Konservi kaj malaktivigi</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Malfari</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
@@ -990,16 +990,16 @@
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Fiaskis ludi sonon!</string>         <!-- error toast -->
 
-    <string name="configLabel_alarmQuick_notification">Rapida sciigo</string>               <!-- group title -->-->
+    <string name="alarms_configLabel_alarmQuick_notification">Rapida sciigo</string>               <!-- group title -->-->
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">rapida sciigo</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Antaŭ alarmo:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_scheduleTray">Plani:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">Post premi “silentigi”:</string>               <!-- group title -->
+    <string name="alarmEdit_label_beforeAlertTray">Antaŭ alarmo:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">Plani:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">Post premi “silentigi”:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">vibri</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">sen sono</string>          <!-- ringtone label (none) -->
@@ -1012,33 +1012,33 @@
     <string name="alarmOption_repeat_none">ne ripeti</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">ĉiutage</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Forigi</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Ĉu vi certe volas forigi: <xliff:g id="type">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Forigi</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Nuligi</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Forigita: <xliff:g id="type" example="sciigo">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
-    <string name="deletealarm_toast_success1">Forigita: <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmdelete_dialog_title">Forigi</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">Ĉu vi certe volas forigi: <xliff:g id="type">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">Forigi</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">Nuligi</string>    <!-- button -->
+    <string name="alarmdelete_toast_success">Forigita: <xliff:g id="type" example="sciigo">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1">Forigita: <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Estas nekonservitaj ŝanĝoj.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Ne konservi</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Nuligi</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Konservi</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Forigi ĉiujn alarmojn</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Ĉu vi certe volas forigi ĉiujn alarmojn?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Forigi</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Nuligi</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Forigis ĉiujn alarmojn.</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">Forigi ĉiujn alarmojn</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">Ĉu vi certe volas forigi ĉiujn alarmojn?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">Forigi</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">Nuligi</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">Forigis ĉiujn alarmojn.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Averto pri enportado</string> <!-- toast msg -->
-    <string name="importalarms_msg_warning">Enportitaj alarmoj povas restarigi iujn agordojn al implicitaj valoroj.\n\nEble vi devos reagordi iujn sonojn kaj agojn.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">Enportis <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">Averto pri enportado</string> <!-- toast msg -->
+    <string name="alarmsimport_msg_warning">Enportitaj alarmoj povas restarigi iujn agordojn al implicitaj valoroj.\n\nEble vi devos reagordi iujn sonojn kaj agojn.</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">Enportis <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarmon</item>
         <item quantity="other">%d alarmojn</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Silentiga defio</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">Silentiga defio</string>            <!-- pref title -->
     <string name="alarmDismiss_none">neniu</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">neniu defio</string>            <!-- chip label -->
     <string name="alarmDismiss_math">simpla aritmetiko</string>           <!-- alarm setting -->
@@ -1066,92 +1066,92 @@
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
     <string name="alarmdetails_snack">La <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- snackbar msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
-    <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de baterio.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> La reĝimo Sony STAMINA estas aktiva.\nAlarmoj povas ne funkcii ĝuste.</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimimigo de baterio estas aktiva\nAlarmoj povas ne funkcii ĝuste.</string>
+    <string name="alarms_label_optWhiteList">Optimumigo de baterio</string>
+    <string name="alarms_label_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
+    <string name="alarms_label_optWhiteList_unlisted">Aktiva optimumigo de baterio.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> La reĝimo Sony STAMINA estas aktiva.\nAlarmoj povas ne funkcii ĝuste.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">Optimimigo de baterio estas aktiva\nAlarmoj povas ne funkcii ĝuste.</string>
 
-    <string name="configLabel_alarms_autostart">Memstarto</string>
-    <string name="configLabel_alarms_autostart_on">jes</string>
-    <string name="configLabel_alarms_autostart_off">ne.\nAlarmoj povos ne funkcii post restarto.</string>
+    <string name="alarms_label_autostart">Memstarto</string>
+    <string name="alarms_label_autostart_on">jes</string>
+    <string name="alarms_label_autostart_off">ne.\nAlarmoj povos ne funkcii post restarto.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Memstarto estas malŝaltita!\nAlarmoj povos ne funkcii post restarto.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] Memstarto estas malŝaltita!\nAlarmoj povos ne funkcii post restarto.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Aplikaĵo estas limigita!\nAlarmoj povos ne funkcii ĝuste.</string>  <!-- snackbar message -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Aplikaĵo estas limigita!\nAlarmoj povos ne funkcii ĝuste.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications">Sciigoj</string>
-    <string name="configLabel_alarms_notifications_on">Aktivaj</string>
-    <string name="configLabel_alarms_notifications_off">Malaktivaj.\nAlarmoj povas ne vidiĝi ĝuste.</string>
+    <string name="alarms_label_notifications">Sciigoj</string>
+    <string name="alarms_label_notifications_on">Aktivaj</string>
+    <string name="alarms_label_notifications_off">Malaktivaj.\nAlarmoj povas ne vidiĝi ĝuste.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">Sur ŝlos‑ekrano: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Sciigoj estas malaktivaj. Alarmoj povas ne vidiĝi ĝuste.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_summary1">Sur ŝlos‑ekrano: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Sciigoj estas malaktivaj. Alarmoj povas ne vidiĝi ĝuste.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Plenekranaj sciigoj</string>
-    <string name="configLabel_alarms_notifications_fullscreen_on">Aktivaj</string>
-    <string name="configLabel_alarms_notifications_fullscreen_off">Malaktivaj.\nAlarmoj povos ne montriĝi sur la ŝlosita ekrano.</string>
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Administri permesojn por plenekranaj sciigoj.</string>
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Plenekranaj sciigoj estas malaktivaj. Alarmoj povos ne montriĝi sur la ŝlosita ekrano.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_fullscreen">Plenekranaj sciigoj</string>
+    <string name="alarms_label_notifications_fullscreen_on">Aktivaj</string>
+    <string name="alarms_label_notifications_fullscreen_off">Malaktivaj.\nAlarmoj povos ne montriĝi sur la ŝlosita ekrano.</string>
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">Administri permesojn por plenekranaj sciigoj.</string>
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Plenekranaj sciigoj estas malaktivaj. Alarmoj povos ne montriĝi sur la ŝlosita ekrano.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">Kompleta starto</string>
-    <string name="configLabel_alarms_bootcompleted_summary">Alarmoj estas aŭtomate replanataj kelkaj minutoj post starto.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Antaŭa replanado: <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> post starto de la aparato (plenumiĝis dum <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">neniam</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Ĉu replani ĉiujn alarmojn kaj sciigojn?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Replanado de alarmoj kaj sciigoj…</string>
+    <string name="alarms_label_bootcompleted">Kompleta starto</string>
+    <string name="alarms_label_bootcompleted_summary">Alarmoj estas aŭtomate replanataj kelkaj minutoj post starto.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Antaŭa replanado: <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> post starto de la aparato (plenumiĝis dum <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_info_never">neniam</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Ĉu replani ĉiujn alarmojn kaj sciigojn?</string>
+    <string name="alarms_label_bootcompleted_action_message">Replanado de alarmoj kaj sciigoj…</string>
 
-    <string name="configLabel_alarms_background_action_message">%s laboras fone.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
+    <string name="alarms_message_background_action">%s laboras fone.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
-    <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter">Silentiĝi (ne-malaktivigi) post</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter">Silentiĝi post</string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Aŭtomate malaktivigi post</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">Aŭtomate malaktivigi post</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Tempolimo de dormeto</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">Neniu limigo</string>
+    <string name="alarms_label_snoozeLimit">Tempolimo de dormeto</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">Neniu limigo</string>
 
-    <string name="configLabel_alarms_snooze">Dormeti por</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
+    <string name="alarms_label_snooze">Dormeti por</string>
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Rememori antaŭ</string>
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
-    <string name="configLabel_alarms_upcoming_checkbox">Montri sciigojn rememorigantajn pri alarmo.</string>
+    <string name="alarms_label_upcoming">Rememori antaŭ</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_checkbox">Montri sciigojn rememorigantajn pri alarmo.</string>
 
-    <string name="configLabel_alarms_fadein">Laŭgrade pliigi sonfortecon</string>
+    <string name="alarms_label_fadein">Laŭgrade pliigi sonfortecon</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Malaktiva</string>
+    <string name="alarms_label_fadein_disabled">Malaktiva</string>
 
-    <string name="configLabel_alarmFullscreen">Plenekrano</string>            <!-- group title -->
-    <string name="configLabel_alarms_brightMode">Helegaj alarmoj</string>
-    <string name="configLabel_alarms_brightMode_summary">Plenekranaj alarmoj estas komence malhelaj kaj sekve ŝanĝas koloron kaj pliheliĝas.</string>
+    <string name="alarms_label_alarmFullscreen">Plenekrano</string>            <!-- group title -->
+    <string name="alarms_label_brightMode">Helegaj alarmoj</string>
+    <string name="alarms_label_brightMode_summary">Plenekranaj alarmoj estas komence malhelaj kaj sekve ŝanĝas koloron kaj pliheliĝas.</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">Laŭgrade pliigi helecon</string>
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein">Laŭgrade pliigi helecon</string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Koloroj de helegaj alarmoj</string>
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">Koloroj de helegaj alarmoj</string>
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">flava</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">helverda</string>
-    <string name="brightMode_colors_label_bluesky">helblua</string>
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">flava</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">helverda</string>
+    <string name="alarms_brightMode_colors_label_bluesky">helblua</string>
 
-    <string name="configLabel_alarms_nextAlarm">Alarmo</string>                             <!-- widget label ("next alarm") -->
-    <string name="configLabel_alarms_nextAlarm_none">neniu alarmo</string>            <!-- widget text (no alarm set msg) -->
-    <string name="configLabel_alarms_nextAlarm_error">Malsukcesis enlegi!</string>            <!-- widget text (null/missing error) -->
+    <string name="alarms_widgetLabel_nextAlarm">Alarmo</string>                             <!-- widget label ("next alarm") -->
+    <string name="alarms_widgetLabel_nextAlarm_none">neniu alarmo</string>            <!-- widget text (no alarm set msg) -->
+    <string name="alarms_widgetLabel_nextAlarm_error">Malsukcesis enlegi!</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">Neniu agordita alarmo.</string>
     <string name="alarmtile_dialogmsg_format0">La sekva alarmo estas agordita al <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
     <string name="alarmtile_dialogmsg_format1">La sekva alarmo estas agordita al <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons">Fizikaj butonoj</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Malaktivigi</item>
         <item>Silentigi</item>
@@ -1159,13 +1159,13 @@
         <item>Fari nenion</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sonoj</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Sonforteco</string>
-    <string name="configLabel_alarms_allRingtones">Montri ĉiujn voksonojn</string>
-    <string name="configLabel_alarms_allRingtones_summary">Montri ĉiujn sistemajn sonojn dum elekti (ignori tipon de voksono).</string>
+    <string name="alarms_label_alarmSounds">Sonoj</string>            <!-- group title -->
+    <string name="alarms_label_volumes">Sonforteco</string>
+    <string name="alarms_label_allRingtones">Montri ĉiujn voksonojn</string>
+    <string name="alarms_label_allRingtones_summary">Montri ĉiujn sistemajn sonojn dum elekti (ignori tipon de voksono).</string>
 
-    <string name="no_reminder">neniam</string>
-    <string name="reminder_label">Rememorigo <xliff:g id="hours" example="12h">%s</xliff:g> antaŭ</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">neniam</string>
+    <string name="alarms_label_reminder">Rememorigo <xliff:g id="hours" example="12h">%s</xliff:g> antaŭ</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d horo</item>
@@ -1187,12 +1187,12 @@
         <item quantity="other">%s tagoj</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
     
-    <string name="configLabel_alarmMisc">Aliaj</string>
-    <string name="configLabel_alarms_showlauncher">Bildsimbolo en lanĉilo</string>
-    <string name="configLabel_alarms_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
+    <string name="alarms_label_alarmMisc">Aliaj</string>
+    <string name="alarms_label_showlauncher">Bildsimbolo en lanĉilo</string>
+    <string name="alarms_label_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Alarmo dum malŝaltita</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">Ebligi al alarmo veki la aparaton el “malŝaltita” reĝimo.\n(Uzante la aplikaĵon <xliff:g id="packageName">%s</xliff:g>.)</string>
+    <string name="alarms_label_poweroffalarms">Alarmo dum malŝaltita</string>
+    <string name="alarms_label_poweroffalarms_summary">Ebligi al alarmo veki la aparaton el “malŝaltita” reĝimo.\n(Uzante la aplikaĵon <xliff:g id="packageName">%s</xliff:g>.)</string>
 
     <!--
       BEDTIME

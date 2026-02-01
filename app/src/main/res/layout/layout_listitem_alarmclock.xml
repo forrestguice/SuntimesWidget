@@ -68,7 +68,7 @@
             <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
-                android:contentDescription="@string/configAction_alarmMenu"
+                android:contentDescription="@string/alarms_action_alarmMenu"
                 style="?attr/actionOverflowButtonStyle" />
 
             <include layout="@layout/layout_listitem_alarmclock_switch" />

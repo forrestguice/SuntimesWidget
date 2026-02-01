@@ -246,7 +246,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmActivityRobot clickAddAlarmButton() {
-            onView(allOf(withContentDescription(R.string.configAction_addAlarm), withClassName(endsWith("ActionButton")))).perform(click());
+            onView(allOf(withContentDescription(R.string.alarms_action_addAlarm), withClassName(endsWith("ActionButton")))).perform(click());
             return this;
         }
         public AlarmActivityRobot clickClearSelectionButton(int position) {
@@ -260,7 +260,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
         }
         public AlarmActivityRobot clickAlarmItem_delete(int position) {
             onView(allOf( isDescendantOfA(withId(R.id.layout_alarmcard)),
-                    withContentDescription(R.string.configAction_deleteAlarm)
+                    withContentDescription(R.string.alarms_action_deleteAlarm)
             )).perform(click());
             return this;
         }
@@ -295,27 +295,27 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearAlarms)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.alarms_action_clearAlarms)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.configAction_exportAlarms)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.alarms_action_exportAlarms)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.configAction_importAlarms)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.alarms_action_importAlarms)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmActivityRobot clickOverflowMenu_sort(Context context) {
-            onView(withText(R.string.configAction_sortAlarms)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.alarms_action_sortAlarms)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_clearAlarms)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.alarms_action_clearAlarms)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public AlarmActivityRobot cancelSortMenu(Context context) {
-            onView(withText(R.string.configAction_sortAlarms_by_time)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.alarms_action_sortAlarms_by_time)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -323,30 +323,30 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
 
         public AlarmActivityRobot assertActivityShown()
         {
-            onView(allOf(withText(R.string.configLabel_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
+            onView(allOf(withText(R.string.alarms_label_alarmClock), withParent(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(withContentDescription(R.string.configLabel_bedtime)).check(assertShown);
             onView(withContentDescription(R.string.configLabel_bedtime)).check(assertClickable);
             // TODO: fab, navDrawer
             return this;
         }
         public AlarmActivityRobot assertOverflowMenuShown() {
-            onView(withText(R.string.configAction_clearAlarms)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_importAlarms)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportAlarms)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sortAlarms)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_clearAlarms)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_importAlarms)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_exportAlarms)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_sortAlarms)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public AlarmActivityRobot assertSortMenuShown() {
-            onView(withText(R.string.configAction_sortAlarms_by_creation)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sortAlarms_by_time)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sortAlarms_offset)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sortAlarms_enabled_first)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_sortAlarms_by_creation)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_sortAlarms_by_time)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_sortAlarms_offset)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_sortAlarms_enabled_first)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public AlarmActivityRobot assertAddAlarmButtonShown(boolean isShown)
         {
-            onView(allOf(withContentDescription(R.string.configAction_addAlarm),
+            onView(allOf(withContentDescription(R.string.alarms_action_addAlarm),
                     withClassName(endsWith("ActionButton"))
             )).check(isShown ? assertShown : assertHidden);
             return this;

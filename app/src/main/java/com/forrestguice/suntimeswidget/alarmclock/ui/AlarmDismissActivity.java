@@ -744,8 +744,8 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         AlarmClockItem item = new AlarmClockItem();
         item.enabled = true;
         item.rowID = alarmID;
-        item.label = context.getString(R.string.configAction_preview);
-        item.note = context.getString(R.string.configLabel_alarms_brightMode_summary);
+        item.label = context.getString(R.string.action_preview);
+        item.note = context.getString(R.string.alarms_label_brightMode_summary);
         item.setState(AlarmState.STATE_SOUNDING);
         return item;
     }

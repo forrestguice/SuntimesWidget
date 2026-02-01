@@ -775,8 +775,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setParamMinMax(0, getResources().getInteger(R.integer.maxAlarmSnoozeLimit));
         dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(AlarmEditActivity.this)));
         dialog.setDialogListener(onSnoozeLimitDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snoozeLimit));
-        dialog.setParamZeroText(getString(R.string.configLabel_alarms_snoozeLimit_none));
+        dialog.setDialogTitle(getString(R.string.alarms_label_snoozeLimit));
+        dialog.setParamZeroText(getString(R.string.alarms_label_snoozeLimit_none));
         dialog.show(getSupportFragmentManager(), DIALOGTAG_SNOOZELIMIT);
     }
 
@@ -805,7 +805,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setParamMinMax(getResources().getInteger(R.integer.minAlarmSnoozeMinutes), getResources().getInteger(R.integer.maxAlarmSnoozeMinutes));
         dialog.setValue((int) item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(AlarmEditActivity.this)));
         dialog.setDialogListener(onSnoozeLengthDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_alarms_snooze));
+        dialog.setDialogTitle(getString(R.string.alarms_label_snooze));
         dialog.show(getSupportFragmentManager(), DIALOGTAG_SNOOZELENGTH);
     }
 
@@ -948,7 +948,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.alarms_action_setAlarmSound)), REQUEST_RINGTONE);
     }
 
     protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
@@ -1055,7 +1055,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         intent.setType("audio/*");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE1);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.alarms_action_setAlarmSound)), REQUEST_RINGTONE1);
     }
 
     protected void onRingtoneResult1(int resultCode, Intent data)

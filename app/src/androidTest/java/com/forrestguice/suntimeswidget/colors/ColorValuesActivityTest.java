@@ -203,7 +203,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
                 {
                     @Override
                     public String getActivityTitle() {
-                        return activity.getString(R.string.configLabel_alarms_brightMode_colors);
+                        return activity.getString(R.string.alarms_label_brightMode_colors);
                     }
                     @Override
                     public boolean supportsPreview() {
@@ -259,7 +259,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
         }
 
         public ColorValuesActivityRobot clickOverflowMenu_preview() {
-            onView(withText(R.string.configAction_previewColors)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.colors_action_previewColors)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public ColorValuesActivityRobot cancelOverflowMenu() {
@@ -278,7 +278,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
 
         public ColorValuesActivityRobot assertOverflowMenuShown() {
             if (config.supportsPreview()) {
-                onView(withText(R.string.configAction_previewColors)).check(assertShown);
+                onView(withText(R.string.colors_action_previewColors)).check(assertShown);
             }
             onView(withText(R.string.configAction_import)).check(assertShown);
             onView(withText(R.string.configAction_share)).check(assertShown);

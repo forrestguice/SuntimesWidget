@@ -5,7 +5,7 @@
     <TextView style="@style/ChipTrayLabel"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-        android:text="@string/configLabel_alarmEdit_onDismissTray" />
+        android:text="@string/alarmEdit_label_onDismissTray" />
 
     <LinearLayout
         android:id="@+id/layout_options1" style="@style/ChipTray"
@@ -29,7 +29,7 @@
             <FrameLayout
                 android:id="@+id/chip_dismiss_challenge"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:contentDescription="@string/configLabel_alarms_dismissChallenge">
+                android:contentDescription="@string/alarms_label_dismissChallenge">
 
                 <TextView
                     android:id="@+id/text_dismiss_challenge" style="@style/ChipText1"
@@ -43,7 +43,7 @@
 
             <FrameLayout
                 android:id="@+id/chip_action1"
-                android:contentDescription="@string/configAction_setAlarmAction"
+                android:contentDescription="@string/alarms_action_setAlarmAction"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                 <TextView
@@ -58,7 +58,7 @@
 
             <FrameLayout
                 android:id="@+id/chip_snoozeLimit"
-                android:contentDescription="@string/configLabel_alarms_snoozeLimit"
+                android:contentDescription="@string/alarms_label_snoozeLimit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                 <TextView
@@ -73,7 +73,7 @@
 
             <FrameLayout
                 android:id="@+id/chip_snoozeLength"
-                android:contentDescription="@string/configLabel_alarms_snooze"
+                android:contentDescription="@string/alarms_label_snooze"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                 <TextView

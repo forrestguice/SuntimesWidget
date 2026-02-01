@@ -1028,18 +1028,18 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void confirmDeleteAlarm(final AlarmClockItem item, final View itemView)
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
+        String message = context.getString(R.string.alarmdelete_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title))
+                .setTitle(context.getString(R.string.alarmdelete_dialog_title))
                 .setMessage(message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.alarmdelete_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         deleteAlarm(item, itemView);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+                .setNegativeButton(context.getString(R.string.alarmdelete_dialog_cancel), null);
         confirm.show();
     }
 
@@ -1066,7 +1066,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                public void onAnimationEnd(Animation animation) {
                    items.remove(item);
                    notifyDataSetChanged();
-                   CharSequence message = context.getString(R.string.deletealarm_toast_success, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
+                   CharSequence message = context.getString(R.string.alarmdelete_toast_success, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                }
            });

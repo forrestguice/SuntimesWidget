@@ -151,7 +151,7 @@ public class AlarmTileBase extends SuntimesTileBase
             title.append(timeDisplay);
 
         } else {
-            title.append(context.getString(R.string.configLabel_alarms_nextAlarm));
+            title.append(context.getString(R.string.alarms_widgetLabel_nextAlarm));
         }
         return title;
     }

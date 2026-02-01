@@ -32,7 +32,7 @@
 
 			<com.forrestguice.support.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-				app:title="@string/configLabel_alarmClock" />
+				app:title="@string/alarms_label_alarmClock" />
 
 		</com.forrestguice.support.widget.AppBarLayout>
 

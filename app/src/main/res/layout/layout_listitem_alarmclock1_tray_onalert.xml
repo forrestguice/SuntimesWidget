@@ -5,7 +5,7 @@
     <TextView style="@style/ChipTrayLabel"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-        android:text="@string/configLabel_alarmEdit_onAlertTray" />
+        android:text="@string/alarmEdit_label_onAlertTray" />
 
     <LinearLayout style="@style/ChipTray"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
             <FrameLayout
                 android:id="@+id/chip_ringtone"
-                android:contentDescription="@string/configAction_setAlarmSound"
+                android:contentDescription="@string/alarms_action_setAlarmSound"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
 
                 <TextView
@@ -68,7 +68,7 @@
 
             <FrameLayout
                 android:id="@+id/chip_action0"
-                android:contentDescription="@string/configAction_setAlarmAction"
+                android:contentDescription="@string/alarms_action_setAlarmAction"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:minHeight="@dimen/chip_minHeight">
 

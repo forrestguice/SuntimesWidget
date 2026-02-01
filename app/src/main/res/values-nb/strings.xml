@@ -954,38 +954,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Alarmer</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">Ingen alarmer</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Sett alarm</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">Sett varsel</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Rediger</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Slett</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms">Sorter</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Aktivert først</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">Vis forskyvning</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Fjern</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Sett forskyvning før/etter</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">Sett gjentagelse</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Sett hendelse</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Overstyr tid</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Sett handling</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">Sett lyd</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Alarmmeny</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Lagre</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Lagre &amp; Aktiver</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">Lagre &amp; Deaktiver</string>               <!-- button (contentDescription) -->
+    <string name="alarms_label_alarmClock">Alarmer</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">Ingen alarmer</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">Sett alarm</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">Sett varsel</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">Rediger</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">Slett</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">Fjern</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="alarms_action_sortAlarms">Sorter</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">Alarmtid</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">Opprettelsesdato</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">Aktivert først</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">Vis forskyvning</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">Fjern</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">Fjern</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">Sett forskyvning før/etter</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmType">Sett type</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">Sett påskrift</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">Set Note</string>         <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="alarms_action_setAlarmDismissChallenge">Set Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="alarms_action_configAlarmDismissChallenge">Configure Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="alarms_action_testAlarmDismissChallenge">Test Dismiss Challenge</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="alarms_action_setAlarmLocation">Sett sted</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">Sett gjentagelse</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">Sett hendelse</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">Overstyr tid</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">Sett handling</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">Sett lyd</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">Alarmmeny</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">Lagre</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">Lagre &amp; Aktiver</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">Lagre &amp; Deaktiver</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Angre</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Slå av</string>                <!-- notification action button -->
@@ -1005,10 +1005,10 @@
     <string name="alarmMode_notification1">Hurtigvarsel</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification2">Varsel (vedvarende)</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Før varsel:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_scheduleTray">Planlegg:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">På varsel:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">På avslåing:</string>               <!-- group title -->
+    <string name="alarmEdit_label_beforeAlertTray">Før varsel:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">Planlegg:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">På varsel:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">På avslåing:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">Vibrer</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Ingen lyd</string>          <!-- ringtone label (none) -->
@@ -1021,33 +1021,33 @@
     <string name="alarmOption_repeat_none">Ingen gjentagelse</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">Hver dag</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Slett</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Er du sikker på at du vil slette <xliff:g id="type">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Slett</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) ble slettet.</string> <!-- toast msg -->
-    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> ble slettet.</string> <!-- toast msg -->
+    <string name="alarmdelete_dialog_title">Slett</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">Er du sikker på at du vil slette <xliff:g id="type">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">Slett</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">Avbryt</string>    <!-- button -->
+    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> kl. <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) ble slettet.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> ble slettet.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Det er ulagrede endringer.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Forkast</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Avbryt</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Lagre</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Fjern alarmer</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Er du sikker på at du vil slette alle alarmer?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Fjern</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Avbryt</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Alarmer fjernet.</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">Fjern alarmer</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">Er du sikker på at du vil slette alle alarmer?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">Fjern</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">Avbryt</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">Alarmer fjernet.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Importadvarsel</string> <!-- dialog title -->
-    <string name="importalarms_msg_warning">Importerte alarmer kan tilbakestille noen innstillinger til standardinnstillingene.\n\nDu må kanskje velge lyder og handlinger på nytt.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">Importert <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">Importadvarsel</string> <!-- dialog title -->
+    <string name="alarmsimport_msg_warning">Importerte alarmer kan tilbakestille noen innstillinger til standardinnstillingene.\n\nDu må kanskje velge lyder og handlinger på nytt.</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">Importert <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarm</item>
         <item quantity="other">%d alarmer</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Avslåingsutfordring</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">Avslåingsutfordring</string>            <!-- pref title -->
     <string name="alarmDismiss_none">Ingen</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">Ingen utfordring</string>            <!-- chip label -->
     <string name="alarmDismiss_math">Enkel matematikk</string>           <!-- alarm setting -->
@@ -1075,92 +1075,92 @@
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> satt for <xliff:g id="duration" example="8h">%2$s</xliff:g> fra nå.</string> <!-- toast msg -->
     <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> om <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Batterioptimalisering</string>
-    <string name="configLabel_alarms_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimaliserer batteribruk.\nAlarmer kan bli forsinket opptil 15 minutter.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA-modus er aktivert.\nAlarmer kan feile i å virke pålitelig.</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimaliserer batteribruk.\nAlarmer kan feile i å virke pålitelig.</string>
+    <string name="alarms_label_optWhiteList">Batterioptimalisering</string>
+    <string name="alarms_label_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
+    <string name="alarms_label_optWhiteList_unlisted">Optimaliserer batteribruk.\nAlarmer kan bli forsinket opptil 15 minutter.</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA-modus er aktivert.\nAlarmer kan feile i å virke pålitelig.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">Optimaliserer batteribruk.\nAlarmer kan feile i å virke pålitelig.</string>
 
-    <string name="configLabel_alarms_autostart">Autostart</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_on">On</string>   <!-- TODO -->
-    <string name="configLabel_alarms_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
+    <string name="alarms_label_autostart">Autostart</string>   <!-- TODO -->
+    <string name="alarms_label_autostart_on">On</string>   <!-- TODO -->
+    <string name="alarms_label_autostart_off">Off.\nAlarms may fail to work after reboot.</string>   <!-- TODO -->
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] Autostart is disabled!\nAlarms may fail to work after reboot.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->  <!-- TODO -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_notifications">Varsler</string>
-    <string name="configLabel_alarms_notifications_on">På</string>
-    <string name="configLabel_alarms_notifications_off">Av.\nAlarmer kan mislykkes i å vises korrekt.</string>
+    <string name="alarms_label_notifications">Varsler</string>
+    <string name="alarms_label_notifications_on">På</string>
+    <string name="alarms_label_notifications_off">Av.\nAlarmer kan mislykkes i å vises korrekt.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_summary1">På låseskjerm: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Varsler er av. Alarmer kan mislykkes i å vises korrekt.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Fullskjermvarslinger</string>
-    <string name="configLabel_alarms_notifications_fullscreen_on">På</string>
-    <string name="configLabel_alarms_notifications_fullscreen_off">Av.\nAlarmer kan mislykkes i å vises over låseskjermen.</string>
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen">Fullskjermvarslinger</string>
+    <string name="alarms_label_notifications_fullscreen_on">På</string>
+    <string name="alarms_label_notifications_fullscreen_off">Av.\nAlarmer kan mislykkes i å vises over låseskjermen.</string>
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_bootcompleted">Oppstart fullført</string>
-    <string name="configLabel_alarms_bootcompleted_summary">Alarmer er automatisk planlagt på nytt noen få minutter etter omstart.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Siste kjøring <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> etter oppstart (tok <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">Aldri</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Planlegge alle alarmer og varsler på nytt?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Planlegger alarmer og varsler på nytt.</string>
+    <string name="alarms_label_bootcompleted">Oppstart fullført</string>
+    <string name="alarms_label_bootcompleted_summary">Alarmer er automatisk planlagt på nytt noen få minutter etter omstart.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Siste kjøring <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> etter oppstart (tok <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_info_never">Aldri</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Planlegge alle alarmer og varsler på nytt?</string>
+    <string name="alarms_label_bootcompleted_action_message">Planlegger alarmer og varsler på nytt.</string>
 
-    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
+    <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Bli stille etter</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_silenceAfter">Bli stille etter</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_timeoutAfter">Tidsavbrudd etter</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter">Tidsavbrudd etter</string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Auto-avslå etter</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">Auto-avslå etter</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Snooze (slumre)-begrensning</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">Ingen begrensning</string>
+    <string name="alarms_label_snoozeLimit">Snooze (slumre)-begrensning</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">Ingen begrensning</string>
 
-    <string name="configLabel_alarms_snooze">Snooze (slumre) for</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_snooze">Snooze (slumre) for</string>
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Påminnelse innen</string>
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
-    <string name="configLabel_alarms_upcoming_checkbox">Vis alarmpåminnelsesvarsler.</string>
+    <string name="alarms_label_upcoming">Påminnelse innen</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_checkbox">Vis alarmpåminnelsesvarsler.</string>
 
-    <string name="configLabel_alarms_fadein">Øk volum gradvis</string>
+    <string name="alarms_label_fadein">Øk volum gradvis</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Av</string>
+    <string name="alarms_label_fadein_disabled">Av</string>
 
-    <string name="configLabel_alarmFullscreen">Fullskjerm</string>            <!-- group title -->
-    <string name="configLabel_alarms_brightMode">Lyse alarmer</string>
-    <string name="configLabel_alarms_brightMode_summary">Fullskjermalarmer er i utgangspunktet mørke, endrer så langsomt farge og øker i lysstyrke.</string>
+    <string name="alarms_label_alarmFullscreen">Fullskjerm</string>            <!-- group title -->
+    <string name="alarms_label_brightMode">Lyse alarmer</string>
+    <string name="alarms_label_brightMode_summary">Fullskjermalarmer er i utgangspunktet mørke, endrer så langsomt farge og øker i lysstyrke.</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">Øk lysstyrke gradvis</string>
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein">Øk lysstyrke gradvis</string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Farge for lyse alarmer</string>
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">Farge for lyse alarmer</string>
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
-    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
     <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
     <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_hardwarebuttons">Maskinvareknapper</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_hardwarebuttons">Maskinvareknapper</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Slå av</item>
         <item>Stilne</item>
@@ -1168,13 +1168,13 @@
         <item>Gjør ingenting</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Lyder</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Volum</string>
-    <string name="configLabel_alarms_allRingtones">Vis alle ringetoner</string>
-    <string name="configLabel_alarms_allRingtones_summary">Vis alle systemlyder under valg (ignorer ringetonetype).</string>
+    <string name="alarms_label_alarmSounds">Lyder</string>            <!-- group title -->
+    <string name="alarms_label_volumes">Volum</string>
+    <string name="alarms_label_allRingtones">Vis alle ringetoner</string>
+    <string name="alarms_label_allRingtones_summary">Vis alle systemlyder under valg (ignorer ringetonetype).</string>
 
-    <string name="no_reminder">Aldri</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> påminnelse</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">Aldri</string>
+    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> påminnelse</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d time</item>
@@ -1196,12 +1196,12 @@
         <item quantity="other">%s døgn</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
-    <string name="configLabel_alarmMisc">Diverse</string>
-    <string name="configLabel_alarms_showlauncher">App-ikon</string>
-    <string name="configLabel_alarms_showlauncher_summary">Vis alarmklokkeikon i app-skuffen.</string>
+    <string name="alarms_label_alarmMisc">Diverse</string>
+    <string name="alarms_label_showlauncher">App-ikon</string>
+    <string name="alarms_label_showlauncher_summary">Vis alarmklokkeikon i app-skuffen.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Avslåttalarm</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">Vekk enheten fra avslått-tilstand.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
+    <string name="alarms_label_poweroffalarms">Avslåttalarm</string>
+    <string name="alarms_label_poweroffalarms_summary">Vekk enheten fra avslått-tilstand.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME

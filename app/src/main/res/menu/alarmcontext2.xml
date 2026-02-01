@@ -4,64 +4,64 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/setAlarmType"
-            android:title="@string/configAction_setAlarmType"
+            android:title="@string/alarms_action_setAlarmType"
             android:icon="?attr/icActionNotification"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmLabel"
-            android:title="@string/configAction_setAlarmLabel"
+            android:title="@string/alarms_action_setAlarmLabel"
             android:icon="?attr/icActionEdit"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmNote"
-            android:title="@string/configAction_setAlarmNote"
+            android:title="@string/alarms_action_setAlarmNote"
             android:icon="?attr/icActionEdit"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmOffset"
-            android:title="@string/configAction_setAlarmOffset"
+            android:title="@string/alarms_action_setAlarmOffset"
             android:icon="?attr/icActionTimeReset"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmEvent"
-            android:title="@string/configAction_setAlarmEvent"
+            android:title="@string/alarms_action_setAlarmEvent"
             android:icon="?attr/icActionAlarm"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmLocation"
-            android:title="@string/configAction_setAlarmLocation"
+            android:title="@string/alarms_action_setAlarmLocation"
             android:icon="?attr/icActionPlace"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmRepeat"
-            android:title="@string/configAction_setAlarmRepeat"
+            android:title="@string/alarms_action_setAlarmRepeat"
             android:icon="?attr/icActionCalendar"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmSound"
-            android:title="@string/configAction_setAlarmSound"
+            android:title="@string/alarms_action_setAlarmSound"
             android:icon="?attr/icActionSoundEnabled"
             app:showAsAction="never" />
 
         <item android:id="@+id/menuAlarmDismissChallenge"
             android:icon="?attr/icActionSettings"
-            android:title="@string/configAction_setAlarmDismissChallenge"
+            android:title="@string/alarms_action_setAlarmDismissChallenge"
             app:showAsAction="never">
 
             <menu>
 
                 <item android:id="@+id/setAlarmDismissChallenge"
-                    android:title="@string/configAction_setAlarmDismissChallenge"
+                    android:title="@string/alarms_action_setAlarmDismissChallenge"
                     android:icon="?attr/icActionDismiss"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/configAlarmDismissChallenge"
-                    android:title="@string/configAction_configAlarmDismissChallenge"
+                    android:title="@string/alarms_action_configAlarmDismissChallenge"
                     android:icon="?attr/icActionSettings" android:visible="false" android:enabled="false"
                     app:showAsAction="never" />   <!-- TODO -->
 
                 <item android:id="@+id/testAlarmDismissChallenge"
-                    android:title="@string/configAction_testAlarmDismissChallenge" android:visible="false" android:enabled="false"
+                    android:title="@string/alarms_action_testAlarmDismissChallenge" android:visible="false" android:enabled="false"
                     android:icon="?attr/icActionPlay"
                     app:showAsAction="never" />   <!-- TODO -->
 
@@ -69,12 +69,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         </item>
 
         <item android:id="@+id/setAlarmSnoozeLimit"
-            android:title="@string/configLabel_alarms_snoozeLimit"
+            android:title="@string/alarms_label_snoozeLimit"
             android:icon="?attr/icActionSnooze"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmSnoozeLength"
-            android:title="@string/configLabel_alarms_snooze"
+            android:title="@string/alarms_label_snooze"
             android:icon="?attr/icActionSnooze"
             app:showAsAction="never" />
 

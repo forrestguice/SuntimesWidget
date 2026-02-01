@@ -14,7 +14,7 @@
         android:id="@+id/action_colors_preview"
         android:orderInCategory="100"
         android:icon="?attr/icActionPlay"
-        android:title="@string/configAction_previewColors"
+        android:title="@string/colors_action_previewColors"
         app:showAsAction="never" />
 
     <item

@@ -38,7 +38,7 @@
 			app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
 			app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
 			app:popupTheme="?attr/actionBarPopupTheme"
-			app:title="@string/configLabel_alarmClock" />
+			app:title="@string/alarms_label_alarmClock" />
 
 	</com.forrestguice.support.widget.AppBarLayout>
 

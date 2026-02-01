@@ -59,7 +59,7 @@
             android:button="?attr/checkExpand"
             app:layout_constraintTop_toTopOf="@+id/activity_title" app:layout_constraintBottom_toBottomOf="@+id/activity_title"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/configAction_preview" />
+            android:contentDescription="@string/action_preview" />
 
     </com.forrestguice.support.constraint.ConstraintLayout>
 

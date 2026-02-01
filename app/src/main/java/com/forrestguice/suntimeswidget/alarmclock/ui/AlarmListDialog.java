@@ -424,11 +424,11 @@ public class AlarmListDialog extends DialogBase
         a.recycle();
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.clearalarms_dialog_title))
-                .setMessage(context.getString(R.string.clearalarms_dialog_message))
+                .setTitle(context.getString(R.string.alarmsclear_dialog_title))
+                .setMessage(context.getString(R.string.alarmsclear_dialog_message))
                 .setIcon(iconResID)
-                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), onClearAlarmsConfirmed(context))
-                .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+                .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onClearAlarmsConfirmed(context))
+                .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
         confirm.show();
     }
 
@@ -438,7 +438,7 @@ public class AlarmListDialog extends DialogBase
         View view = getView();
         if (context != null && view != null)
         {
-            SnackbarUtils.make(context, view, context.getString(R.string.clearalarms_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
+            SnackbarUtils.make(context, view, context.getString(R.string.alarmsclear_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
@@ -460,7 +460,7 @@ public class AlarmListDialog extends DialogBase
         if (context != null && view != null && deletedItem != null)
         {
             String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
-            SnackbarUtils.make(context, view, context.getString(R.string.deletealarm_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
+            SnackbarUtils.make(context, view, context.getString(R.string.alarmdelete_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override
@@ -712,7 +712,7 @@ public class AlarmListDialog extends DialogBase
         if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
             AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, layoutInflater,
                     R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
-                    context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
+                    context.getString(R.string.alarmsimport_msg_warning), onWarningAcknowledged).show();
         } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
     }
 
@@ -785,7 +785,7 @@ public class AlarmListDialog extends DialogBase
         if (context != null && view != null)
         {
             String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
-            SnackbarUtils.make(context, view, context.getString(R.string.importalarms_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
+            SnackbarUtils.make(context, view, context.getString(R.string.alarmsimport_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
                 @Override

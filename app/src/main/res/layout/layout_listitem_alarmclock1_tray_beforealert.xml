@@ -5,7 +5,7 @@
     <TextView style="@style/ChipTrayLabel"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-        android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
+        android:text="@string/alarmEdit_label_beforeAlertTray" />
 
     <LinearLayout
         android:id="@+id/layout_options2" style="@style/ChipTray"
@@ -54,7 +54,7 @@
                 android:id="@+id/chip_action2"
                 android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:contentDescription="@string/configAction_setAlarmAction">
+                android:contentDescription="@string/alarms_action_setAlarmAction">
 
                 <TextView
                     android:id="@+id/text_action2" style="@style/ChipText1"

@@ -531,7 +531,7 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickSidebarMenu_alarms(Context context) {
-            onView(allOf(withText(R.string.configLabel_alarmClock),
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
@@ -586,7 +586,7 @@ public abstract class SuntimesActivityTestBase
         public T assertSideBarMenuShown(Activity context) {
             onView(allOf(withText(R.string.configAction_clock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configLabel_alarmClock),
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
             onView(allOf(withText(R.string.configAction_settings),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);

@@ -73,10 +73,10 @@ public class AlarmTileService extends ClockTileService
                 tile.setLabel(timeDisplay);
 
             } else {
-                tile.setLabel(context.getString(R.string.configLabel_alarms_nextAlarm_none));
+                tile.setLabel(context.getString(R.string.alarms_widgetLabel_nextAlarm_none));
             }
         } else {
-            tile.setLabel(context.getString(R.string.configLabel_alarms_nextAlarm_none));
+            tile.setLabel(context.getString(R.string.alarms_widgetLabel_nextAlarm_none));
             getAlarmTileBase().clearAlarmItem();
         }
 

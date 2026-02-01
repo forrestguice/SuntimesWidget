@@ -1000,7 +1000,7 @@ public class AlarmClockActivity extends AppCompatActivity
             protected void initWarnings(Context context)
             {
                 // notification warning
-                addWarning(context, WARNINGID_NOTIFICATIONS, getString(R.string.notificationsWarning), addButton, getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+                addWarning(context, WARNINGID_NOTIFICATIONS, getString(R.string.alarms_warning_notifications), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -1015,7 +1015,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     for (int i=0; i<types.length; i++)
                     {
                         final int j = ((i < types.length) ? i : 0);
-                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.notificationChannelWarning), addButton, getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.notificationChannelWarning), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
                         {
                             @Override
                             public void onClick(View view) {
@@ -1028,8 +1028,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 // battery optimization warning
                 if (Build.VERSION.SDK_INT >= 23)
                 {
-                    String message = getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION, "[w]" + message, addButton, getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
+                    String message = getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.alarms_label_optWhiteList_unlisted_aggressive : R.string.alarms_label_optWhiteList_unlisted);
+                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION, "[w]" + message, addButton, getString(R.string.alarms_label_optWhiteList), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View view) {
@@ -1040,13 +1040,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 // sony stamina mode warning
                 if (AlarmSettings.isSony()) {
-                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION_SONY, getString(R.string.sonyStaminaModeWarning), addButton, null, null);
+                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION_SONY, getString(R.string.alarms_warning_sonyStaminaMode), addButton, null, null);
                 }
 
                 // xiamoi autostart warning
                 if (AlarmSettings.isXiomi())
                 {
-                    addWarning(context, WARNINGID_AUTOSTART, getString(R.string.autostartWarning), addButton, getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
+                    addWarning(context, WARNINGID_AUTOSTART, getString(R.string.alarms_warning_autostart), addButton, getString(R.string.alarms_label_autostart), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View view) {
@@ -1058,7 +1058,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 // restricted bucket warning
                 if (Build.VERSION.SDK_INT >= 28)
                 {
-                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.restrictedBucketWarning), addButton, getString(R.string.configAction_help), new View.OnClickListener()
+                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.alarms_warning_restrictedBucket), addButton, getString(R.string.configAction_help), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v) {

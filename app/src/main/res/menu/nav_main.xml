@@ -15,7 +15,7 @@
         <item
             android:id="@+id/action_alarms"
             android:icon="@drawable/ic_action_alarms"
-            android:title="@string/configLabel_alarmClock" />
+            android:title="@string/alarms_label_alarmClock" />
 
     </group>
 

@@ -4,7 +4,7 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/action_wakeup_edit"
-            android:title="@string/configAction_editAlarm"
+            android:title="@string/alarms_action_editAlarm"
             app:showAsAction="never"
             android:icon="?attr/icActionEdit"
             android:orderInCategory="1" />
@@ -16,7 +16,7 @@
             android:orderInCategory="2" />
 
         <item android:id="@+id/action_wakeup_delete"
-            android:title="@string/configAction_deleteAlarm"
+            android:title="@string/alarms_action_deleteAlarm"
             app:showAsAction="never"
             android:icon="?attr/icActionDelete"
             android:orderInCategory="3" />

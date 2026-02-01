@@ -95,7 +95,7 @@
                 android:scaleType="center"
                 android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:contentDescription="@string/configAction_editAlarm" />
+                android:contentDescription="@string/alarms_action_editAlarm" />
 
         </LinearLayout>
 

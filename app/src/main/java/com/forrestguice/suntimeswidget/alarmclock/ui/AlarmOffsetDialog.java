@@ -102,7 +102,7 @@ public class AlarmOffsetDialog extends DialogBase
                 }
         );
 
-        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, getString(R.string.alarms_action_clearOffset), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
         });

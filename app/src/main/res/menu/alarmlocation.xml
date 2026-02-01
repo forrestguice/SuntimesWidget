@@ -11,7 +11,7 @@
 
         <item android:id="@+id/action_location_set"
             android:icon="?attr/icActionPlace"
-            android:title="@string/configAction_setAlarmLocation"
+            android:title="@string/alarms_action_setAlarmLocation"
             android:orderInCategory="200" />
 
     </group>

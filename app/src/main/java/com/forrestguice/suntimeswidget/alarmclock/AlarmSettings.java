@@ -768,7 +768,7 @@ public class AlarmSettings
      */
     public static boolean aggressiveBatteryOptimizations(Context context)
     {
-        String[] manufacturers = context.getResources().getStringArray(R.array.aggressive_battery_known_offenders);
+        String[] manufacturers = context.getResources().getStringArray(R.array.alarms_aggressive_battery_known_offenders);
         for (String manufacturer : manufacturers) {
             if (manufacturer != null && manufacturer.equalsIgnoreCase(Build.MANUFACTURER)) {
                 return true;
@@ -854,12 +854,12 @@ public class AlarmSettings
             int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
             typedArray.recycle();
 
-            String disabledString = context.getString(R.string.configLabel_alarms_autostart_off);
-            String summaryString = context.getString(R.string.configLabel_alarms_autostart_summary, disabledString);
+            String disabledString = context.getString(R.string.alarms_label_autostart_off);
+            String summaryString = context.getString(R.string.alarms_label_autostart_summary, disabledString);
             return SpanUtils.createColorSpan(null, summaryString, disabledString, colorWarning);
 
         } else {
-            return context.getString(R.string.configLabel_alarms_autostart_summary, context.getString(R.string.configLabel_alarms_autostart_on));
+            return context.getString(R.string.alarms_label_autostart_summary, context.getString(R.string.alarms_label_autostart_on));
         }
     }
 
@@ -873,10 +873,10 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 23)
         {
             if (AlarmSettings.isIgnoringBatteryOptimizations(context)) {
-                return context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+                return context.getString(R.string.alarms_label_optWhiteList_listed);
 
             } else {
-                String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
+                String unlisted = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.alarms_label_optWhiteList_unlisted_aggressive : R.string.alarms_label_optWhiteList_unlisted);
                 return SpanUtils.createColorSpan(null, unlisted, unlisted, colorWarning);
             }
         } else return "";

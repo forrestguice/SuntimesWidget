@@ -472,7 +472,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmDialogRobot clickAlarmLocationMenu_setLocation(Context context) {
-            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.alarms_action_setAlarmLocation)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmDialogRobot cancelAlarmLocationMenu(Context context) {
@@ -482,7 +482,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         public AlarmDialogRobot assertAlarmLocationMenuShown(Context context)
         {
             onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }

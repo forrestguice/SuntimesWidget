@@ -160,7 +160,7 @@
     </com.forrestguice.support.preference.PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/configLabel_alarmMisc">
+        android:title="@string/alarms_label_alarmMisc">
 
         <com.forrestguice.support.preference.CheckBoxPreference
             android:key="dialog_importwarning_donotshowagain"

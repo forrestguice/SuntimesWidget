@@ -5,7 +5,7 @@
 
         <item android:id="@+id/action_clear"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configAction_clearAlarms"
+            android:title="@string/alarms_action_clearAlarms"
             app:showAsAction="never"
             android:orderInCategory="510" />
 

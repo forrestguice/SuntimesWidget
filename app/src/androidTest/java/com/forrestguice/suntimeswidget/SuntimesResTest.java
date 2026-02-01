@@ -152,8 +152,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("emphasizefield_values", R.array.emphasizefield_values, "emphasizefield_display", R.array.emphasizefield_display);
             verify_stringArrayLength("headerText_values", R.array.headerText_values, "headerText_display", R.array.headerText_display);
 
-            verify_stringArrayLength("dismissChallenge_values", R.array.dismissChallenge_values, "dismissChallenge_display", R.array.dismissChallenge_display);
-            verify_stringArrayValuesOfEnum("dismissChallenge_values", R.array.dismissChallenge_values, AlarmSettings.DismissChallenge.class);
+            verify_stringArrayLength("dismissChallenge_values", R.array.alarmDismissChallenge_values, "dismissChallenge_display", R.array.alarmDismissChallenge_display);
+            verify_stringArrayValuesOfEnum("dismissChallenge_values", R.array.alarmDismissChallenge_values, AlarmSettings.DismissChallenge.class);
         }
     }
 

@@ -1465,7 +1465,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     public static Notification createProgressNotification(Context context) {
-        return createProgressNotification(context, null, context.getString(R.string.configLabel_alarms_background_action_message, context.getString(R.string.app_name_alarmclock)));
+        return createProgressNotification(context, null, context.getString(R.string.alarms_message_background_action, context.getString(R.string.app_name_alarmclock)));
     }
     public static Notification createProgressNotification(Context context, String message) {
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
@@ -1530,7 +1530,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Notification createAutostartWarningNotification(Context context)
     {
         NotificationCompat.Builder builder = warningNotificationBuilder(context);
-        String message = context.getString(R.string.autostartWarning).replaceAll("\\[w\\]", "").trim();
+        String message = context.getString(R.string.alarms_warning_autostart).replaceAll("\\[w\\]", "").trim();
         builder.setContentText(message);
 
         Intent intent = AlarmSettings.getAutostartSettingsIntent(context);
@@ -1552,7 +1552,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static Notification createBatteryOptWarningNotification(Context context)
     {
         NotificationCompat.Builder builder = warningNotificationBuilder(context);
-        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive  : R.string.configLabel_alarms_optWhiteList_unlisted)
+        String message = context.getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.alarms_label_optWhiteList_unlisted_aggressive : R.string.alarms_label_optWhiteList_unlisted)
                 + "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
         builder.setContentText(message);
 
@@ -1842,7 +1842,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     } else if (AlarmNotifications.ACTION_LOCATION_CHANGED.equals(action)) {
                         Log.d(TAG, "ACTION_LOCATION_CHANGED received");
-                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+                        notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.alarms_label_bootcompleted_action_message)));
                         findAppLocationAlarms(getApplicationContext(), rescheduleTaskListener(startId, null));
 
                     } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
@@ -1859,7 +1859,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             if (tzOffset != tzOffset_prev)
                             {
                                 Log.i(TAG, "system tz offset changed from " + tzOffset_prev + " to " + tzOffset);
-                                notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.configLabel_alarms_bootcompleted_action_message)));
+                                notifications.startForeground(NOTIFICATION_SCHEDULE_ALL_ID, createProgressNotification(getApplicationContext(), getString(R.string.app_name_alarmclock), getString(R.string.alarms_label_bootcompleted_action_message)));
                                 findEnabledAlarms(getApplicationContext(), rescheduleTaskListener_clocktime(startId));
                                 rescheduling = true;
                             }

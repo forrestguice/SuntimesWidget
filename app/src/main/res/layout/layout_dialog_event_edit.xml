@@ -80,7 +80,7 @@
         <LinearLayout android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="12dp"
             android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
-            <FrameLayout android:id="@+id/chip_event_offset" android:contentDescription="@string/configAction_setAlarmOffset"
+            <FrameLayout android:id="@+id/chip_event_offset" android:contentDescription="@string/alarms_action_setAlarmOffset"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:orientation="horizontal" android:gravity="start|center_vertical"
                 android:background="?attr/selectableItemBackground"

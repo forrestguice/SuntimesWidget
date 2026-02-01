@@ -237,9 +237,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         boolean showWarnings = AppSettings.loadShowWarningsPref(this);
         if (showWarnings && notificationWarning.shouldShow() && !notificationWarning.wasDismissed())
         {
-            notificationWarning.setMessage(AlarmClockLegacyActivity.this, getString(R.string.notificationsWarning));
+            notificationWarning.setMessage(AlarmClockLegacyActivity.this, getString(R.string.alarms_warning_notifications));
             notificationWarning.initWarning(this, alarmList, null);
-            notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+            notificationWarning.getSnackbar().setAction(getString(R.string.alarms_label_notifications), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view) {
@@ -669,7 +669,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         if (eventDialog0 == null)
         {
             final AlarmEventDialog dialog = new AlarmEventDialog();
-            dialog.setDialogTitle(getString((type == AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
+            dialog.setDialogTitle(getString((type == AlarmType.ALARM) ? R.string.alarms_action_addAlarm : R.string.alarms_action_addNotification));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE.name());
@@ -1015,7 +1015,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmEventDialog dialog = new AlarmEventDialog();
-        dialog.setDialogTitle(getString((item.type == AlarmType.ALARM) ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
+        dialog.setDialogTitle(getString((item.type == AlarmType.ALARM) ? R.string.alarms_action_addAlarm : R.string.alarms_action_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
@@ -1486,16 +1486,16 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         final Context context = this;
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.clearalarms_dialog_title))
-                .setMessage(context.getString(R.string.clearalarms_dialog_message))
+                .setTitle(context.getString(R.string.alarmsclear_dialog_title))
+                .setMessage(context.getString(R.string.alarmsclear_dialog_message))
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         clearAlarms(context);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+                .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
         confirm.show();
     }
 
@@ -1508,7 +1508,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void onClearAlarms(boolean result)
     {
         if (result) {
-            Toast.makeText(this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.alarmsclear_toast_success), Toast.LENGTH_LONG).show();
             updateViews(this);
         }
     }

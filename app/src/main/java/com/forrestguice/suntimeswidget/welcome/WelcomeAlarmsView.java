@@ -261,7 +261,7 @@ public class WelcomeAlarmsView extends WelcomeView
                         if (result.getResult())
                         {
                             String plural = getResources().getQuantityString(R.plurals.alarmPlural, items.length, items.length);
-                            importAlarmsButton.setText(getContext().getString(R.string.importalarms_toast_success, plural));
+                            importAlarmsButton.setText(getContext().getString(R.string.alarmsimport_toast_success, plural));
 
                             for (AlarmClockItem item : items) {
                                 if (item.enabled) {

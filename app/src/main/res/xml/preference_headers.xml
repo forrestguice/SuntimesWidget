@@ -12,7 +12,7 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment"
         android:icon="?attr/icActionAlarm"
-        android:title="@string/configLabel_alarmClock"
+        android:title="@string/alarms_label_alarmClock"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>

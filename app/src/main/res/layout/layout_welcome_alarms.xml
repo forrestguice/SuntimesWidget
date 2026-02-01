@@ -22,7 +22,7 @@
         <TextView android:visibility="visible"
             android:id="@+id/txt_title"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:text="@string/configLabel_alarmClock"
+            android:text="@string/alarms_label_alarmClock"
             android:gravity="center" android:textSize="?attr/text_size_xlarge"
             android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceLarge" />

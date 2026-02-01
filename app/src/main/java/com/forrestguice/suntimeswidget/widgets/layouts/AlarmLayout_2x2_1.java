@@ -70,7 +70,7 @@ public class AlarmLayout_2x2_1 extends AlarmLayout
         Set<String> types = AlarmWidgetSettings.loadAlarmWidgetStringSet(context, appWidgetId, AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES, AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_TYPES);
         Long upcomingAlarmId = AlarmWidget0.findUpcomingAlarmId(context, data.now().getTimeInMillis(), types.toArray(new String[0]));
         if (upcomingAlarmId == null || upcomingAlarmId == -1) {
-            displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
+            displayString = context.getString(R.string.alarms_widgetLabel_nextAlarm_none);
 
         } else {
             AlarmClockItem item = AlarmWidget0.loadAlarmClockItem(context, upcomingAlarmId);
@@ -83,7 +83,7 @@ public class AlarmLayout_2x2_1 extends AlarmLayout
                 updateNoteView(context, views, item);
 
             } else {
-                displayString = context.getString(R.string.configLabel_alarms_nextAlarm_error);
+                displayString = context.getString(R.string.alarms_widgetLabel_nextAlarm_error);
             }
         }
 

@@ -324,8 +324,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action1.setText(displayAction(context, item, 1));
 
             long snoozeLimit = item.getFlag(AlarmClockItem.FLAG_SNOOZE_LIMIT, AlarmSettings.loadPrefAlarmSnoozeLimit(context));
-            String snoozeLimitLabel = context.getString(R.string.configLabel_alarms_snoozeLimit);
-            String snoozeLimitString = (snoozeLimit > 0 ? "(" + snoozeLimit + ")" : context.getString(R.string.configLabel_alarms_snoozeLimit_none));
+            String snoozeLimitLabel = context.getString(R.string.alarms_label_snoozeLimit);
+            String snoozeLimitString = (snoozeLimit > 0 ? "(" + snoozeLimit + ")" : context.getString(R.string.alarms_label_snoozeLimit_none));
             String snoozeLimitDisplay = snoozeLimitLabel + (snoozeLimit > 0 ? " " : "\n") + snoozeLimitString;
             CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SpanUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
             text_snoozeLimit.setText(snoozeLimitDisplay1);
@@ -334,7 +334,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             long snoozeMillis = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
             int snoozeMinutes = (int)(snoozeMillis / (1000 * 60));
             String snoozeLength = context.getResources().getQuantityString(R.plurals.units_minutes, snoozeMinutes, snoozeMinutes);
-            String snoozeLengthLabel = context.getString(R.string.configLabel_alarms_snooze);
+            String snoozeLengthLabel = context.getString(R.string.alarms_label_snooze);
             String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
             CharSequence snoozeLengthDisplay = SpanUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
             text_snoozeLength.setText(snoozeLengthDisplay);
@@ -349,7 +349,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
             //Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
-            check_reminder.setText(context.getString(R.string.reminder_label, delta_utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
+            check_reminder.setText(context.getString(R.string.alarms_label_reminder, delta_utils.timeDeltaLongDisplayString(reminderWithin != 0 ? reminderWithin : defaultReminderWithin)));
             check_reminder.setChecked(reminderWithin > 0);
 
             text_action2.setText(displayAction(context, item, 2));

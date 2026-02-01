@@ -141,7 +141,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public TimeDateDialogRobot clickClearButton() {
-            onView(withText(R.string.configAction_clearDate)).perform(click());
+            onView(withText(R.string.alarms_action_clearDate)).perform(click());
             return this;
         }
 

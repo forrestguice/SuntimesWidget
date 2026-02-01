@@ -61,13 +61,13 @@
     <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_disabled">@string/themes_configLabel_widgetThemeList</string>
 
-    <string name="shortcut_alarmclock_addalarm_short">@string/configAction_addAlarm</string>
-    <string name="shortcut_alarmclock_addalarm_long">@string/configAction_addAlarm</string>
-    <string name="shortcut_alarmclock_addalarm_disabled">@string/configAction_addAlarm</string>
+    <string name="shortcut_alarmclock_addalarm_short">@string/alarms_action_addAlarm</string>
+    <string name="shortcut_alarmclock_addalarm_long">@string/alarms_action_addAlarm</string>
+    <string name="shortcut_alarmclock_addalarm_disabled">@string/alarms_action_addAlarm</string>
 
-    <string name="shortcut_alarmclock_addnotify_short">@string/configAction_addNotification</string>
-    <string name="shortcut_alarmclock_addnotify_long">@string/configAction_addNotification</string>
-    <string name="shortcut_alarmclock_addnotify_disabled">@string/configAction_addNotification</string>
+    <string name="shortcut_alarmclock_addnotify_short">@string/alarms_action_addNotification</string>
+    <string name="shortcut_alarmclock_addnotify_long">@string/alarms_action_addNotification</string>
+    <string name="shortcut_alarmclock_addnotify_disabled">@string/alarms_action_addNotification</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -1001,38 +1001,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Будильники</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">Нет будильников</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Установить будильник</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">Установить уведомление</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Изменить</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Удалить</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Очистить</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms">Сортировка</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Включено первым</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">Показать смещение</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">Очистить</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Очистить</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
-    <string name="configAction_setAlarmType">Выбрать тип</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">Выбрать название</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">Добавить примечание</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmDismissChallenge">Установить вызов при отключении</string>         <!-- button (contentDescription) -->
-    <string name="configAction_configAlarmDismissChallenge">Настроить вызов при отключении</string>         <!-- button (contentDescription) -->
-    <string name="configAction_testAlarmDismissChallenge">Проверить вызов при отключении</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">Выбрать местоположение</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">Добавить повторение</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Выбрать событие</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Выбрать действие</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">Выбрать звуковой сигнал</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Меню будильника</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Сохранить</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Сохранить и активировать</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">Сохранить и выключить</string>               <!-- button (contentDescription) -->
+    <string name="alarms_label_alarmClock">Будильники</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">Нет будильников</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">Установить будильник</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">Установить уведомление</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">Изменить</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">Удалить</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">Очистить</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="alarms_action_sortAlarms">Сортировка</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">Включено первым</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">Показать смещение</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">Очистить</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">Очистить</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->  <!-- TODO: "Set Offset" -> "Set Before / After Offset" -->
+    <string name="alarms_action_setAlarmType">Выбрать тип</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">Выбрать название</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">Добавить примечание</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmDismissChallenge">Установить вызов при отключении</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_configAlarmDismissChallenge">Настроить вызов при отключении</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_testAlarmDismissChallenge">Проверить вызов при отключении</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLocation">Выбрать местоположение</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">Добавить повторение</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">Выбрать событие</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">Выбрать действие</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">Выбрать звуковой сигнал</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">Меню будильника</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">Сохранить</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">Сохранить и активировать</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">Сохранить и выключить</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Отменить</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Отключить</string>                <!-- notification action button -->
@@ -1051,10 +1051,10 @@
     <string name="alarmMode_notification">Уведомление</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">Быстрое уведомление</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Перед оповещением:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_scheduleTray">Планирование:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">При срабатывании:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">При отключении:</string>               <!-- group title -->
+    <string name="alarmEdit_label_beforeAlertTray">Перед оповещением:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">Планирование:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">При срабатывании:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">При отключении:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">Вибросигнал</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Без звука</string>          <!-- ringtone label (none) -->
@@ -1068,27 +1068,27 @@
     <string name="alarmOption_repeat_none">Без повторений</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">Каждый день</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Удалить</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Вы уверены, что хотите удалить <xliff:g id="type">%1$s</xliff:g> в <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Удалить</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Отмена</string>    <!-- button -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> в <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) удален.</string> <!-- toast msg -->
-    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> удален.</string> <!-- toast msg -->
+    <string name="alarmdelete_dialog_title">Удалить</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">Вы уверены, что хотите удалить <xliff:g id="type">%1$s</xliff:g> в <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">Удалить</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">Отмена</string>    <!-- button -->
+    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> в <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) удален.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> удален.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Есть несохраненные изменения.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Отклонить</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Отмена</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Сохранить</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Удаление будильников</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Вы уверены, что хотите удалить все будильники?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Удалить</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Отмена</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Все будильники удалены.</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">Удаление будильников</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">Вы уверены, что хотите удалить все будильники?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">Удалить</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">Отмена</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">Все будильники удалены.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Предупреждение об импортировании</string> <!-- dialog title -->
-    <string name="importalarms_msg_warning">Импортированные будильники могут сбросить некоторые настройки на значения по умолчанию\n\nВозможно, вам придется повторно выбрать звуки и действия.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">Импортированные %s будильники.</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">Предупреждение об импортировании</string> <!-- dialog title -->
+    <string name="alarmsimport_msg_warning">Импортированные будильники могут сбросить некоторые настройки на значения по умолчанию\n\nВозможно, вам придется повторно выбрать звуки и действия.</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">Импортированные %s будильники.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d будильник</item>
         <item quantity="other">%d будильник</item>
@@ -1096,7 +1096,7 @@
         <item quantity="many">%d будильники</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Вызов при отключении</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">Вызов при отключении</string>            <!-- pref title -->
     <string name="alarmDismiss_none">Нет</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">Нет вызова</string>            <!-- chip label -->
     <string name="alarmDismiss_math">Простой подсчет</string>           <!-- alarm setting -->
@@ -1124,92 +1124,92 @@
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> сработает через <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- toast msg -->
     <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> через <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Оптимизация энергопотребления</string>
-    <string name="configLabel_alarms_optWhiteList_listed">Не оптимизировано (рекомендовано)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигнала может задерживаться до 15 минут.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Режим Sony STAMINA выключен.\nСигналы будильников могут работать ненадежно.</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Оптимизация использования батареи.\nСигналы будильников могут работать ненадежно.</string>
+    <string name="alarms_label_optWhiteList">Оптимизация энергопотребления</string>
+    <string name="alarms_label_optWhiteList_listed">Не оптимизировано (рекомендовано)</string>
+    <string name="alarms_label_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигнала может задерживаться до 15 минут.</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> Режим Sony STAMINA выключен.\nСигналы будильников могут работать ненадежно.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">Оптимизация использования батареи.\nСигналы будильников могут работать ненадежно.</string>
 
-    <string name="configLabel_alarms_autostart">Автозапуск</string>
-    <string name="configLabel_alarms_autostart_on">Вкл.</string>
-    <string name="configLabel_alarms_autostart_off">Выкл.\nБудильники могут перестать работать после перезагрузки.</string>
+    <string name="alarms_label_autostart">Автозапуск</string>
+    <string name="alarms_label_autostart_on">Вкл.</string>
+    <string name="alarms_label_autostart_off">Выкл.\nБудильники могут перестать работать после перезагрузки.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Автозапуск отключен!\nБудильники могут перестать работать после перезагрузки.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] Автозапуск отключен!\nБудильники могут перестать работать после перезагрузки.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_notifications">Уведомления от приложения</string>
-    <string name="configLabel_alarms_notifications_on">Разрешены</string>
-    <string name="configLabel_alarms_notifications_off">Запрещены.\nСигналы могут работать некорректно.</string>
-    <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications">Уведомления от приложения</string>
+    <string name="alarms_label_notifications_on">Разрешены</string>
+    <string name="alarms_label_notifications_off">Запрещены.\nСигналы могут работать некорректно.</string>
+    <string name="alarms_label_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen">Full-screen Notifications</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_on">On</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>    <!-- TODO -->
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>        <!-- TODO -->
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_bootcompleted">Загрузка завершена</string>
-    <string name="configLabel_alarms_bootcompleted_summary">Будильники автоматически перенастраиваются через несколько минут после перезагрузки.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Последний запуск <xliff:g id="timestamp" example="никогда">%1$s</xliff:g>,\n<xliff:g id="time" example="30с">%2$s</xliff:g> после загрузки (заняло <xliff:g id="time" example="10с">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">Никогда</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Перенастроить все будильники и уведомления?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Перенастройка будильников и уведомлений..</string>
+    <string name="alarms_label_bootcompleted">Загрузка завершена</string>
+    <string name="alarms_label_bootcompleted_summary">Будильники автоматически перенастраиваются через несколько минут после перезагрузки.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Последний запуск <xliff:g id="timestamp" example="никогда">%1$s</xliff:g>,\n<xliff:g id="time" example="30с">%2$s</xliff:g> после загрузки (заняло <xliff:g id="time" example="10с">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_info_never">Никогда</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Перенастроить все будильники и уведомления?</string>
+    <string name="alarms_label_bootcompleted_action_message">Перенастройка будильников и уведомлений..</string>
 
-    <string name="configLabel_alarms_background_action_message">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
+    <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Воспроизводить сигнал в течение</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 hours">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter">Воспроизводить сигнал в течение</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 hours">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Автовыключение</string>
-    <string name="configLabel_alarms_timeoutAfter_summary">Выключать сигнал автоматически после <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> работы.</string>
+    <string name="alarms_label_timeoutAfter">Автовыключение</string>
+    <string name="alarms_label_timeoutAfter_summary">Выключать сигнал автоматически после <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> работы.</string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Автоотключение через</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">Автоотключение через</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Ограничение по времени ожидания</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">Без ограничений</string>
+    <string name="alarms_label_snoozeLimit">Ограничение по времени ожидания</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">Без ограничений</string>
 
-    <string name="configLabel_alarms_snooze">Время откладывания</string>
-    <string name="configLabel_alarms_snooze_summary">Откладывать сигнал на <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> при нажатии на соответствующую кнопку.</string>
+    <string name="alarms_label_snooze">Время откладывания</string>
+    <string name="alarms_label_snooze_summary">Откладывать сигнал на <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> при нажатии на соответствующую кнопку.</string>
 
-    <string name="configLabel_alarms_upcoming">Уведомление о сигнале</string>
-    <string name="configLabel_alarms_upcoming_summary">Начать показывать уведомление о сигнале за <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> до его начала.</string>
-    <string name="configLabel_alarms_upcoming_checkbox">Показывать уведомления напоминания о будильнике.</string>
+    <string name="alarms_label_upcoming">Уведомление о сигнале</string>
+    <string name="alarms_label_upcoming_summary">Начать показывать уведомление о сигнале за <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> до его начала.</string>
+    <string name="alarms_label_upcoming_checkbox">Показывать уведомления напоминания о будильнике.</string>
 
-    <string name="configLabel_alarms_fadein">Увеличение громкости</string>
-    <string name="configLabel_alarms_fadein_summary">Постепенно увеличивать громкость сигнала в начале срабатывания в течение<xliff:g id="timePeriod" example="30 seconds">%s</xliff:g>.</string>
-    <string name="configLabel_alarms_fadein_disabled">Выкл.</string>
+    <string name="alarms_label_fadein">Увеличение громкости</string>
+    <string name="alarms_label_fadein_summary">Постепенно увеличивать громкость сигнала в начале срабатывания в течение<xliff:g id="timePeriod" example="30 seconds">%s</xliff:g>.</string>
+    <string name="alarms_label_fadein_disabled">Выкл.</string>
 
-    <string name="configLabel_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode">Bright Alarms</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
+    <string name="alarms_label_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
+    <string name="alarms_label_brightMode">Bright Alarms</string>    <!-- TODO -->
+    <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
-    <string name="brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
+    <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
-    <string name="configLabel_alarms_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->       <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_none">No alarm set</string>            <!-- widget text (no alarm set msg) -->    <!-- TODO -->
+    <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
     <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
     <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
 
-    <string name="configLabel_alarms_hardwarebuttons">Аппаратные кнопки</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons">Аппаратные кнопки</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Отключить</item>
         <item>Без звука</item>
@@ -1217,13 +1217,13 @@
         <item>Не назначено</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Звуковые сигналы</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Настройки звукового профиля</string>
-    <string name="configLabel_alarms_allRingtones">Показывать все звуки</string>
-    <string name="configLabel_alarms_allRingtones_summary">Показывать все системные звуки при выборе сигнала (игнорируя тип звука).</string>
+    <string name="alarms_label_alarmSounds">Звуковые сигналы</string>            <!-- group title -->
+    <string name="alarms_label_volumes">Настройки звукового профиля</string>
+    <string name="alarms_label_allRingtones">Показывать все звуки</string>
+    <string name="alarms_label_allRingtones_summary">Показывать все системные звуки при выборе сигнала (игнорируя тип звука).</string>
 
-    <string name="no_reminder">Никогда</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> напоминание</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">Никогда</string>
+    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> напоминание</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d час</item>
@@ -1253,12 +1253,12 @@
         <item quantity="many">%s дней</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
-    <string name="configLabel_alarmMisc">Прочие настройки</string>
-    <string name="configLabel_alarms_showlauncher">Отображать ярлык</string>
-    <string name="configLabel_alarms_showlauncher_summary">Показывать ярлык приложения будильников Suntimes Alarms в общем списке приложений.</string>
+    <string name="alarms_label_alarmMisc">Прочие настройки</string>
+    <string name="alarms_label_showlauncher">Отображать ярлык</string>
+    <string name="alarms_label_showlauncher_summary">Показывать ярлык приложения будильников Suntimes Alarms в общем списке приложений.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Будильник при выключенном питании</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">Разбудить устройство из состояния выключения питания.\nпакет: <xliff:g id="packageName">%s</xliff:g></string>
+    <string name="alarms_label_poweroffalarms">Будильник при выключенном питании</string>
+    <string name="alarms_label_poweroffalarms_summary">Разбудить устройство из состояния выключения питания.\nпакет: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME

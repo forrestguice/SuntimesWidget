@@ -303,7 +303,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public SettingsActivityRobot clickHeader_alarmSettings() {
-            onView(withText(R.string.configLabel_alarmClock)).perform(click());
+            onView(withText(R.string.alarms_label_alarmClock)).perform(click());
             return this;
         }
         public SettingsActivityRobot clickHeader_userInterfaceSettings() {

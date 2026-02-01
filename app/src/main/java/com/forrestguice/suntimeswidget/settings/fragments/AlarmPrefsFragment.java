@@ -219,20 +219,20 @@ public class AlarmPrefsFragment extends PreferenceFragment
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
                 if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String warning = context.getString(R.string.alarms_label_notifications_off);
                     notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
 
                 } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
+                    String warning = context.getString(R.string.alarms_label_notifications_off);
+                    String summaryString = context.getString(R.string.alarms_label_notifications_summary1, warning);
                     notificationPrefs.setSummary(SpanUtils.createColorSpan(null, summaryString, warning, colorWarning));
 
                 } else {
-                    String message = context.getString(R.string.configLabel_alarms_notifications_on);
-                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, message));
+                    String message = context.getString(R.string.alarms_label_notifications_on);
+                    notificationPrefs.setSummary(context.getString(R.string.alarms_label_notifications_summary0, message));
                 }
             } else {
-                String warning = context.getString(R.string.configLabel_alarms_notifications_off);
+                String warning = context.getString(R.string.alarms_label_notifications_off);
                 notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
@@ -244,10 +244,10 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             if (NotificationManagerHelper.canUseFullScreenIntent(context))
             {
-                String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
-                fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
+                String enabledString = context.getString(R.string.alarms_label_notifications_fullscreen_on);
+                fullscreenNotificationPrefs.setSummary(context.getString(R.string.alarms_label_notifications_fullscreen_summary0, enabledString));
             } else {
-                String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
+                String disabledString = context.getString(R.string.alarms_label_notifications_fullscreen_off);
                 fullscreenNotificationPrefs.setSummary(SpanUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
             }
         }
@@ -283,7 +283,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             });
 
             AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(context);
-            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
+            powerOffAlarmsPref.setSummary(context.getString(R.string.alarms_label_poweroffalarms_summary, findPermission(context, info.getPermission())));
         }
 
         CheckBoxPreference dndPermission = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
@@ -409,7 +409,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 public boolean onPreferenceClick(Preference preference)
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                            .setMessage(context.getString(R.string.configLabel_alarms_bootcompleted_action_confirm))
+                            .setMessage(context.getString(R.string.alarms_label_bootcompleted_action_confirm))
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
@@ -430,9 +430,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
             String lastBootCompleted = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), lastRunMillis).toString();
             String afterDelay = (lastRunMillis >= 0 ? delta_utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
             String took = (lastRunMillis >= 0 ? bootCompletedInfo.getDurationMillis() + "ms": "");
-            CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)
-                    : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
-            bootCompletedPref.setSummary(context.getString(R.string.configLabel_alarms_bootcompleted_summary, infoSpan));
+            CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.alarms_label_bootcompleted_info, lastBootCompleted, afterDelay, took)
+                    : context.getString(R.string.alarms_label_bootcompleted_info_never));
+            bootCompletedPref.setSummary(context.getString(R.string.alarms_label_bootcompleted_summary, infoSpan));
         }
     }
 
@@ -610,9 +610,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
         final boolean isAggressive = AlarmSettings.aggressiveBatteryOptimizations(context);
 
         String message =
-                isIgnoringOptimizations ? "[i] " + context.getString(R.string.configLabel_alarms_optWhiteList_listed)
-                        : (isAggressive ? "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted_aggressive)
-                        : "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+                isIgnoringOptimizations ? "[i] " + context.getString(R.string.alarms_label_optWhiteList_listed)
+                        : (isAggressive ? "[w] " + context.getString(R.string.alarms_label_optWhiteList_unlisted_aggressive)
+                        : "[w] " + context.getString(R.string.alarms_label_optWhiteList_unlisted));
         if (!isIgnoringOptimizations) {
             message += "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
         }
@@ -636,7 +636,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
         return new AlertDialog.Builder(context)
                 .setMessage(messageSpan)
-                .setPositiveButton(context.getString(R.string.configLabel_alarms_optWhiteList),
+                .setPositiveButton(context.getString(R.string.alarms_label_optWhiteList),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which)

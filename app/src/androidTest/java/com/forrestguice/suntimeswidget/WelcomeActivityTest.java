@@ -298,7 +298,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WelcomeActivityRobot assertAlarmsPageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_alarmClock))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_title), withText(R.string.alarms_label_alarmClock))).check(assertShownCompletely);
             return this;
         }
 

@@ -1337,11 +1337,11 @@ public class BedtimeDialog extends DialogBase
             int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
             a.recycle();
 
-            String message = context.getString(R.string.clearalarms_dialog_message);
+            String message = context.getString(R.string.alarmsclear_dialog_message);
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.clearalarms_dialog_title)).setMessage(message).setIcon(iconResID)
-                    .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), onDeleteConfirmed)
-                    .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+                    .setTitle(context.getString(R.string.alarmsclear_dialog_title)).setMessage(message).setIcon(iconResID)
+                    .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onDeleteConfirmed)
+                    .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
             confirm.show();
         }
     }

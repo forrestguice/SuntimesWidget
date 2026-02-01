@@ -953,38 +953,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Alarmy</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">Brak alarmów</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Ustaw alarm</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">Ustaw powiadomienie</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Edytuj</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sortuj</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">Najpierw aktywne</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">Wyświetl przesunięcia</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Wyczyść</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Ustaw przesunięcie (przed/po)</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">Ustaw notatkę</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmDismissChallenge">Ustaw antyśpiocha</string>         <!-- button (contentDescription) -->
-    <string name="configAction_configAlarmDismissChallenge">Konfiguruj antyśpiocha</string>         <!-- button (contentDescription) -->
-    <string name="configAction_testAlarmDismissChallenge">Testuj antyśpiocha</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">Ustaw lokalizację</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">Ustaw powtarzanie</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Ustaw wydarzenie</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Ustaw stały czas</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Ustaw czynność</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">Ustaw dźwięk</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Menu alarmu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Zapisz</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Zapisz i aktywuj</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">Zapisz i nie aktywuj</string>               <!-- button (contentDescription) -->
+    <string name="alarms_label_alarmClock">Alarmy</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">Brak alarmów</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">Ustaw alarm</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">Ustaw powiadomienie</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">Edytuj</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms">Sortuj</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">Najpierw aktywne</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">Wyświetl przesunięcia</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">Usuń</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">Wyczyść</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">Ustaw przesunięcie (przed/po)</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">Ustaw notatkę</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmDismissChallenge">Ustaw antyśpiocha</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_configAlarmDismissChallenge">Konfiguruj antyśpiocha</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_testAlarmDismissChallenge">Testuj antyśpiocha</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLocation">Ustaw lokalizację</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">Ustaw powtarzanie</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">Ustaw wydarzenie</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">Ustaw stały czas</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">Ustaw czynność</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">Ustaw dźwięk</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">Menu alarmu</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">Zapisz</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">Zapisz i aktywuj</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">Zapisz i nie aktywuj</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Cofnij</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
@@ -999,16 +999,16 @@
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Nie udało się odtworzyć dźwięku!</string>         <!-- error toast -->
 
-    <string name="configLabel_alarmQuick_notification">Szybkie powiadomienie</string>               <!-- group title -->-->-->
+    <string name="alarms_configLabel_alarmQuick_notification">Szybkie powiadomienie</string>               <!-- group title -->-->-->
 
     <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">szybkie powiadomienie</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">Przed alarmem:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_scheduleTray">Zaplanuj:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">Odtwórz dźwięk &#47; wywołaj:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">Po wciśnięciu „wycisz”:</string>               <!-- group title -->
+    <string name="alarmEdit_label_beforeAlertTray">Przed alarmem:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">Zaplanuj:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">Odtwórz dźwięk &#47; wywołaj:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">Po wciśnięciu „wycisz”:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">Wibruj</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Bez dźwięku</string>          <!-- ringtone label (none) -->
@@ -1021,27 +1021,27 @@
     <string name="alarmOption_repeat_none">jednorazowo</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">codziennie</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Usuń</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="type">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Usuń</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Anuluj</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Usunięto <xliff:g id="type" example="powiadomienie">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
-    <string name="deletealarm_toast_success1">Usunięto <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmdelete_dialog_title">Usuń</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="type">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">Usuń</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">Anuluj</string>    <!-- button -->
+    <string name="alarmdelete_toast_success">Usunięto <xliff:g id="type" example="powiadomienie">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1">Usunięto <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Są niezapisane zmiany.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Nie zapisuj</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Anuluj</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Zapisz</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Usuń wszystkie alarmy</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Czy na pewno chcesz usunąć wszystkie alarmy?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Usuń</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Anuluj</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Usunięto wszystkie alarmy.</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">Usuń wszystkie alarmy</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">Czy na pewno chcesz usunąć wszystkie alarmy?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">Usuń</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">Anuluj</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">Usunięto wszystkie alarmy.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Błąd podczas importu</string> <!-- toast msg -->
-    <string name="importalarms_msg_warning">Zaimportowane alarmy mogą przywrócić niektóre ustawienia do wartości domyślnych.\n\nByć może trzeba będzie ponownie ustawić dźwięki i czynności.</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">Zaimportowano <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">Błąd podczas importu</string> <!-- toast msg -->
+    <string name="alarmsimport_msg_warning">Zaimportowane alarmy mogą przywrócić niektóre ustawienia do wartości domyślnych.\n\nByć może trzeba będzie ponownie ustawić dźwięki i czynności.</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">Zaimportowano <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarm</item>
         <item quantity="few">%d alarmy</item>
@@ -1049,7 +1049,7 @@
         <item quantity="other">%d alarmów</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">Antyśpioch</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">Antyśpioch</string>            <!-- pref title -->
     <string name="alarmDismiss_none">Brak</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">Brak antyśpiocha</string>            <!-- chip label -->
     <string name="alarmDismiss_math">Prosta arytmetyka</string>           <!-- alarm setting --> 
@@ -1076,92 +1076,92 @@
 
     <string name="alarmenabled_toast">Ustawiono <xliff:g id="alarmType" example="powiadomienie">%1$s</xliff:g> za <xliff:g id="duration" example="8h">%2$s</xliff:g> od teraz.</string> <!-- toast msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Optymalizacja baterii</string>
-    <string name="configLabel_alarms_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Tryb Sony STAMINA jest aktywny.\nAlarmy mogą nie działać bezawaryjnie.</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optymalizacja baterii jest włączona.\nAlarmy mogą nie działać bezawaryjnie. </string>
+    <string name="alarms_label_optWhiteList">Optymalizacja baterii</string>
+    <string name="alarms_label_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
+    <string name="alarms_label_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> Tryb Sony STAMINA jest aktywny.\nAlarmy mogą nie działać bezawaryjnie.</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">Optymalizacja baterii jest włączona.\nAlarmy mogą nie działać bezawaryjnie. </string>
 
-    <string name="configLabel_alarms_autostart">Uruchomienie przy starcie</string>
-    <string name="configLabel_alarms_autostart_on">wł.</string>
-    <string name="configLabel_alarms_autostart_off">wył.\nAlarmy mogą nie działać po ponownym uruchomieniu.</string>
+    <string name="alarms_label_autostart">Uruchomienie przy starcie</string>
+    <string name="alarms_label_autostart_on">wł.</string>
+    <string name="alarms_label_autostart_off">wył.\nAlarmy mogą nie działać po ponownym uruchomieniu.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] Uruchomienie przy starcie urządzenia jest wyłączone!\nAlarmy mogą nie działać po ponownym uruchomieniu.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] Uruchomienie przy starcie urządzenia jest wyłączone!\nAlarmy mogą nie działać po ponownym uruchomieniu.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> Aplikacja jest ograniczona!\nAlarmy mogą nie działać bezawaryjnie.</string>  <!-- snackbar message -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Aplikacja jest ograniczona!\nAlarmy mogą nie działać bezawaryjnie.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications">Powiadomienia</string>
-    <string name="configLabel_alarms_notifications_on">Włączone</string>
-    <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
+    <string name="alarms_label_notifications">Powiadomienia</string>
+    <string name="alarms_label_notifications_on">Włączone</string>
+    <string name="alarms_label_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">Powiadomienia pełnoekranowe</string>
-    <string name="configLabel_alarms_notifications_fullscreen_on">Włączone</string>
-    <string name="configLabel_alarms_notifications_fullscreen_off">Wyłączone.\nAlarmy mogą nie wyświetlić się na zablokowanym ekranie.</string>
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">Zarządza uprawnieniami powiadomień pełnoekranowych.</string>
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia pełnoekranowe są wyłączone. Alarmy mogą się nie wyświetlać na zablokowanym ekranie.</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_fullscreen">Powiadomienia pełnoekranowe</string>
+    <string name="alarms_label_notifications_fullscreen_on">Włączone</string>
+    <string name="alarms_label_notifications_fullscreen_off">Wyłączone.\nAlarmy mogą nie wyświetlić się na zablokowanym ekranie.</string>
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">Zarządza uprawnieniami powiadomień pełnoekranowych.</string>
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia pełnoekranowe są wyłączone. Alarmy mogą się nie wyświetlać na zablokowanym ekranie.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">Rozruch zakończono</string>
-    <string name="configLabel_alarms_bootcompleted_summary">Alarmy są automatycznie ponownie planowane kilka minut po starcie systemu.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">Ostatnio zaplanowano: <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> po starcie (czas trwania: <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">nigdy</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">Czy zaplanować ponownie wszystkie alarmy i powiadomienia?</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">Ponowne planowanie alarmów i powiadomień…</string>
+    <string name="alarms_label_bootcompleted">Rozruch zakończono</string>
+    <string name="alarms_label_bootcompleted_summary">Alarmy są automatycznie ponownie planowane kilka minut po starcie systemu.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Ostatnio zaplanowano: <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> po starcie (czas trwania: <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_info_never">nigdy</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Czy zaplanować ponownie wszystkie alarmy i powiadomienia?</string>
+    <string name="alarms_label_bootcompleted_action_message">Ponowne planowanie alarmów i powiadomień…</string>
 
-    <string name="configLabel_alarms_background_action_message">%s pracuje w tle.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
+    <string name="alarms_message_background_action">%s pracuje w tle.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
-    <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Wycisz po</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter">Wycisz po</string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">Wyłącz po</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">Wyłącz po</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">Limit drzemki</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">Brak limitu</string>
+    <string name="alarms_label_snoozeLimit">Limit drzemki</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">Brak limitu</string>
 
-    <string name="configLabel_alarms_snooze">Długość drzemki</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+    <string name="alarms_label_snooze">Długość drzemki</string>
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Przypomnienie</string>
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g> przed</string>
-    <string name="configLabel_alarms_upcoming_checkbox">Wyświetl powiadomienia przypominające o alarmie.</string>
+    <string name="alarms_label_upcoming">Przypomnienie</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g> przed</string>
+    <string name="alarms_label_upcoming_checkbox">Wyświetl powiadomienia przypominające o alarmie.</string>
 
-    <string name="configLabel_alarms_fadein">Stopniowo zwiększaj głośność</string>
+    <string name="alarms_label_fadein">Stopniowo zwiększaj głośność</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Wył.</string>
+    <string name="alarms_label_fadein_disabled">Wył.</string>
 
-    <string name="configLabel_alarmFullscreen">Pełny ekran</string>            <!-- group title -->
-    <string name="configLabel_alarms_brightMode">Jasne alarmy</string>
-    <string name="configLabel_alarms_brightMode_summary">Pełnoekranowe alarmy są początkowo ciemne, a następnie powoli zmieniają kolor i zwiększają swoją jasność.</string>
+    <string name="alarms_label_alarmFullscreen">Pełny ekran</string>            <!-- group title -->
+    <string name="alarms_label_brightMode">Jasne alarmy</string>
+    <string name="alarms_label_brightMode_summary">Pełnoekranowe alarmy są początkowo ciemne, a następnie powoli zmieniają kolor i zwiększają swoją jasność.</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">Stopniowo zwiększaj jasność</string>
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein">Stopniowo zwiększaj jasność</string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">Kolory jasnych alarmów</string>
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">Kolory jasnych alarmów</string>
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">słoneczny</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">zielony</string>
-    <string name="brightMode_colors_label_bluesky">błękitny</string>
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">słoneczny</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">zielony</string>
+    <string name="alarms_brightMode_colors_label_bluesky">błękitny</string>
 
-    <string name="configLabel_alarms_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
-    <string name="configLabel_alarms_nextAlarm_none">brak alarmu</string>            <!-- widget text (no alarm set msg) -->
-    <string name="configLabel_alarms_nextAlarm_error">Nie udało się wczytać!</string>            <!-- widget text (null/missing error) -->
+    <string name="alarms_widgetLabel_nextAlarm">Alarm</string>                             <!-- widget label ("next alarm") -->
+    <string name="alarms_widgetLabel_nextAlarm_none">brak alarmu</string>            <!-- widget text (no alarm set msg) -->
+    <string name="alarms_widgetLabel_nextAlarm_error">Nie udało się wczytać!</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">Brak ustawionego alarmu.</string>
     <string name="alarmtile_dialogmsg_format0">Następny alarm jest ustawiony na <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
     <string name="alarmtile_dialogmsg_format1">Następny alarm jest ustawiony na <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">Fizyczne przyciski</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Drzemka">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons">Fizyczne przyciski</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Drzemka">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Wyłącz</item>
         <item>Wycisz</item>
@@ -1169,13 +1169,13 @@
         <item>Nie rób nic</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Dźwięki</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Głośność</string>
-    <string name="configLabel_alarms_allRingtones">Pokaż wszystkie dzwonki</string>
-    <string name="configLabel_alarms_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
+    <string name="alarms_label_alarmSounds">Dźwięki</string>            <!-- group title -->
+    <string name="alarms_label_volumes">Głośność</string>
+    <string name="alarms_label_allRingtones">Pokaż wszystkie dzwonki</string>
+    <string name="alarms_label_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
 
-    <string name="no_reminder">nigdy</string>
-    <string name="reminder_label">Przypomnienie <xliff:g id="hours" example="12h">%s</xliff:g> przed</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">nigdy</string>
+    <string name="alarms_label_reminder">Przypomnienie <xliff:g id="hours" example="12h">%s</xliff:g> przed</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <item quantity="one">%d godzina</item>
@@ -1205,12 +1205,12 @@
         <item quantity="other">%s dni</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
-    <string name="configLabel_alarmMisc">Inne</string>
-    <string name="configLabel_alarms_showlauncher">Ikona na ekranie startowym</string>
-    <string name="configLabel_alarms_showlauncher_summary">Pokaż ikonę „Czasy Słońca: alarmy” na ekranie startowym.</string>
+    <string name="alarms_label_alarmMisc">Inne</string>
+    <string name="alarms_label_showlauncher">Ikona na ekranie startowym</string>
+    <string name="alarms_label_showlauncher_summary">Pokaż ikonę „Czasy Słońca: alarmy” na ekranie startowym.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Alarm po wyłączeniu</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">Alarm włączy się nawet, gdy urządzenie jest „wyłączone”.\n(Korzysta z aplikacji <xliff:g id="packageName">%s</xliff:g>.)</string>
+    <string name="alarms_label_poweroffalarms">Alarm po wyłączeniu</string>
+    <string name="alarms_label_poweroffalarms_summary">Alarm włączy się nawet, gdy urządzenie jest „wyłączone”.\n(Korzysta z aplikacji <xliff:g id="packageName">%s</xliff:g>.)</string>
 
     <!--
       BEDTIME

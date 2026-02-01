@@ -5,25 +5,25 @@
         
         <item android:id="@+id/action_enable"
             android:icon="?attr/icActionEnableAlarm"
-            android:title="@string/configAction_enableAlarm"
+            android:title="@string/alarms_action_enableAlarm"
             app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="800" />
 
         <item android:id="@+id/action_save"
             android:icon="?attr/icActionSave"
-            android:title="@string/configAction_saveAlarm"
+            android:title="@string/alarms_action_saveAlarm"
             app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="810" />
 
         <item android:id="@+id/action_disable"
             android:icon="?attr/icActionCancel"
-            android:title="@string/configAction_disableAlarm"
+            android:title="@string/alarms_action_disableAlarm"
             app:showAsAction="always" tools:ignore="AlwaysShowAction"
             android:orderInCategory="820" />
 
         <item android:id="@+id/action_delete"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configAction_deleteAlarm"
+            android:title="@string/alarms_action_deleteAlarm"
             app:showAsAction="never"
             android:orderInCategory="899" />
 

@@ -41,7 +41,7 @@
             android:id="@+id/dialog_button_accept" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="?attr/icActionSave" android:contentDescription="@string/configAction_saveAlarm" />
+            android:src="?attr/icActionSave" android:contentDescription="@string/alarms_action_saveAlarm" />
 
     </LinearLayout>
 

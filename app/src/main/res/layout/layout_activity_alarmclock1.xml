@@ -50,7 +50,7 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_gravity="bottom|end" android:layout_margin="16dp"
 		android:src="?attr/icActionNew" android:scaleType="center"
-		android:contentDescription="@string/configAction_addAlarm"
+		android:contentDescription="@string/alarms_action_addAlarm"
 		android:tint="?attr/fab_foregroundColor"
 		app:backgroundTint="?attr/fab_backgroundColor" app:rippleColor="?attr/fab_rippleColor"
 		app:layout_dodgeInsetEdges="bottom"

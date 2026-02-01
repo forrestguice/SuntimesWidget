@@ -643,7 +643,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 dialog.setRange(0, getResources().getInteger(R.integer.maxAlarmOffsetMillis));
                 dialog.setShowLabel(false);
                 dialog.setValue(getOffset());
-                dialog.setZeroText(getString(R.string.configAction_clearOffset));
+                dialog.setZeroText(getString(R.string.alarms_action_clearOffset));
                 dialog.setDialogListener(onOffsetChanged);
                 dialog.show(getChildFragmentManager(), DIALOGTAG_OFFSET);
 

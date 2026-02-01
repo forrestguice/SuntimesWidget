@@ -367,12 +367,12 @@ public class AlarmWidget0ConfigFragment extends DialogBase
             switch (value)
             {
                 case AlarmSettings.SORT_BY_CREATION:
-                    displayString = context.getString(R.string.configAction_sortAlarms_by_creation);
+                    displayString = context.getString(R.string.alarms_action_sortAlarms_by_creation);
                     break;
 
                 case AlarmSettings.SORT_BY_ALARMTIME:
                 default:
-                    displayString = context.getString(R.string.configAction_sortAlarms_by_time);
+                    displayString = context.getString(R.string.alarms_action_sortAlarms_by_time);
                     break;
             }
         }

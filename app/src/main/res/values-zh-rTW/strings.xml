@@ -950,38 +950,38 @@
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">鬧鐘</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">無鬧鐘</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">設定鬧鐘</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">設定通知</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">編輯</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">刪除</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">排序</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">建立時間</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_enabled_first">啟用第一個</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_offset">顯示偏移</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">設定前後偏移</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">設定型別</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">設定標籤</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmNote">設定筆記</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmDismissChallenge">設定解除挑戰</string>         <!-- button (contentDescription) -->
-    <string name="configAction_configAlarmDismissChallenge">配置解除挑戰</string>         <!-- button (contentDescription) -->
-    <string name="configAction_testAlarmDismissChallenge">測試解除挑戰</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">設定位置</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">設定重複</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">設定事件</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">覆蓋時間</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">設定動作</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">設定聲音</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">鬧鐘選單</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">儲存</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">儲存 &amp; 啟用</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">儲存 &amp; 停用</string>               <!-- button (contentDescription) -->
+    <string name="alarms_label_alarmClock">鬧鐘</string>            <!-- group title -->
+    <string name="alarms_label_alarmClock_emptyMsg">無鬧鐘</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="alarms_action_addAlarm">設定鬧鐘</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addNotification">設定通知</string> <!-- button (contentDescription) -->
+    <string name="alarms_action_editAlarm">編輯</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_deleteAlarm">刪除</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_clearAlarms">清空</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms">排序</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_by_creation">建立時間</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_enabled_first">啟用第一個</string>                <!-- action button / menu item -->
+    <string name="alarms_action_sortAlarms_offset">顯示偏移</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearOffset">清空</string>                <!-- action button / menu item -->
+    <string name="alarms_action_clearDate">清空</string>                <!-- action button / menu item -->
+    <string name="alarms_action_setAlarmOffset">設定前後偏移</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmType">設定型別</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLabel">設定標籤</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmNote">設定筆記</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmDismissChallenge">設定解除挑戰</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_configAlarmDismissChallenge">配置解除挑戰</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_testAlarmDismissChallenge">測試解除挑戰</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmLocation">設定位置</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmRepeat">設定重複</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmEvent">設定事件</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmTime">覆蓋時間</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmAction">設定動作</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_setAlarmSound">設定聲音</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_alarmMenu">鬧鐘選單</string>         <!-- button (contentDescription) -->
+    <string name="alarms_action_saveAlarm">儲存</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_enableAlarm">儲存 &amp; 啟用</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_disableAlarm">儲存 &amp; 停用</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">撤銷</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">解除</string>                <!-- notification action button -->
@@ -1000,10 +1000,10 @@
     <string name="alarmMode_notification">通知</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">快速通知</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_beforeAlertTray">響起前:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_scheduleTray">日程:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">響起時:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">解除時:</string>               <!-- group title -->
+    <string name="alarmEdit_label_beforeAlertTray">響起前:</string>               <!-- group title -->
+    <string name="alarmEdit_label_scheduleTray">日程:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onAlertTray">響起時:</string>               <!-- group title -->
+    <string name="alarmEdit_label_onDismissTray">解除時:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">震動</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">無聲</string>          <!-- ringtone label (none) -->
@@ -1016,31 +1016,31 @@
     <string name="alarmOption_repeat_none">無重複</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">每日</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">刪除</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">您確認要刪除 <xliff:g id="type">%1$s</xliff:g> 於 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）嗎？</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">刪除</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">取消</string>    <!-- button -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> 於 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）已被刪除。</string> <!-- toast msg -->
+    <string name="alarmdelete_dialog_title">刪除</string>        <!-- dialog title -->
+    <string name="alarmdelete_dialog_message">您確認要刪除 <xliff:g id="type">%1$s</xliff:g> 於 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）嗎？</string>   <!-- dialog msg -->
+    <string name="alarmdelete_dialog_ok">刪除</string>        <!-- button -->
+    <string name="alarmdelete_dialog_cancel">取消</string>    <!-- button -->
+    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> 於 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）已被刪除。</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">有未儲存的變更。</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">丟棄</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">取消</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">儲存</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">清空鬧鐘</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">您確認要刪除所有鬧鐘嗎？</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">清空</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
-    <string name="clearalarms_toast_success">鬧鐘已被清空。</string> <!-- toast msg -->
+    <string name="alarmsclear_dialog_title">清空鬧鐘</string>        <!-- dialog title -->
+    <string name="alarmsclear_dialog_message">您確認要刪除所有鬧鐘嗎？</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_ok">清空</string>        <!-- button -->
+    <string name="alarmsclear_dialog_cancel">取消</string>    <!-- button -->
+    <string name="alarmsclear_toast_success">鬧鐘已被清空。</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">匯入警告</string> <!-- dialog title -->
-    <string name="importalarms_msg_warning">匯入的鬧鐘可能會將一些設定恢復至預設狀態。\n\n您可能需要重新選擇聲音和動作。</string> <!-- toast msg -->
-    <string name="importalarms_toast_success">匯入了 %s 個鬧鐘。</string> <!-- toast msg -->
+    <string name="alarmsimport_title_warning">匯入警告</string> <!-- dialog title -->
+    <string name="alarmsimport_msg_warning">匯入的鬧鐘可能會將一些設定恢復至預設狀態。\n\n您可能需要重新選擇聲音和動作。</string> <!-- toast msg -->
+    <string name="alarmsimport_toast_success">匯入了 %s 個鬧鐘。</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="other">%d 個鬧鐘</item>
     </plurals>
 
-    <string name="configLabel_alarms_dismissChallenge">解除挑戰</string>            <!-- pref title -->
+    <string name="alarms_label_dismissChallenge">解除挑戰</string>            <!-- pref title -->
     <string name="alarmDismiss_none">無</string>                         <!-- alarm setting -->
     <string name="alarmDismiss_none_long">無挑戰</string>            <!-- chip label -->
     <string name="alarmDismiss_math">簡單數學題</string>           <!-- alarm setting -->
@@ -1067,92 +1067,92 @@
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> 設置於自現在起 <xliff:g id="duration" example="8h">%2$s</xliff:g>。</string> <!-- toast msg -->
 
-    <string name="configLabel_alarms_optWhiteList">電池最佳化</string>
-    <string name="configLabel_alarms_optWhiteList_listed">未最佳化（推薦）</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">最佳化電池使用。\n鬧鐘至多可延遲 15 分鐘。</string>
-    <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> 索尼 STAMINA 模式啟用。\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message (sony devices only) -->
-    <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">最佳化電池使用中。\n鬧鐘可能無法可靠地運作。</string>
+    <string name="alarms_label_optWhiteList">電池最佳化</string>
+    <string name="alarms_label_optWhiteList_listed">未最佳化（推薦）</string>
+    <string name="alarms_label_optWhiteList_unlisted">最佳化電池使用。\n鬧鐘至多可延遲 15 分鐘。</string>
+    <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> 索尼 STAMINA 模式啟用。\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message (sony devices only) -->
+    <string name="alarms_label_optWhiteList_unlisted_aggressive">最佳化電池使用中。\n鬧鐘可能無法可靠地運作。</string>
 
-    <string name="configLabel_alarms_autostart">自動啟動</string>
-    <string name="configLabel_alarms_autostart_on">開啟</string>
-    <string name="configLabel_alarms_autostart_off">關閉\n重啟後鬧鐘可能無法可靠地運作。</string>
+    <string name="alarms_label_autostart">自動啟動</string>
+    <string name="alarms_label_autostart_on">開啟</string>
+    <string name="alarms_label_autostart_off">關閉\n重啟後鬧鐘可能無法可靠地運作。</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="autostartWarning"><xliff:g id="warningTag">[w] 自動啟動被停用！\n重啟後鬧鐘可能無法可靠地運作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w] 自動啟動被停用！\n重啟後鬧鐘可能無法可靠地運作。</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
-    <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> 應用被限制！\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message -->
+    <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> 應用被限制！\n鬧鐘可能無法可靠地運作。</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications">通知</string>
-    <string name="configLabel_alarms_notifications_on">開啟</string>
-    <string name="configLabel_alarms_notifications_off">關閉\n鬧鐘可能無法正確顯示。</string>
+    <string name="alarms_label_notifications">通知</string>
+    <string name="alarms_label_notifications_on">開啟</string>
+    <string name="alarms_label_notifications_off">關閉\n鬧鐘可能無法正確顯示。</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">鎖定螢幕時: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> 通知已關閉。鬧鐘可能無法正確顯示。</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_summary1">鎖定螢幕時: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> 通知已關閉。鬧鐘可能無法正確顯示。</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_notifications_fullscreen">全屏通知</string>
-    <string name="configLabel_alarms_notifications_fullscreen_on">開啟</string>
-    <string name="configLabel_alarms_notifications_fullscreen_off">關閉\n鬧鐘可能無法正確在鎖定螢幕顯示。</string>
-    <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_fullscreen_summary1">管理全屏通知許可權。</string>
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> 全屏通知已關閉。鬧鐘可能無法正確在鎖定螢幕顯示。</string>  <!-- snackbar message -->
+    <string name="alarms_label_notifications_fullscreen">全屏通知</string>
+    <string name="alarms_label_notifications_fullscreen_on">開啟</string>
+    <string name="alarms_label_notifications_fullscreen_off">關閉\n鬧鐘可能無法正確在鎖定螢幕顯示。</string>
+    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary1">管理全屏通知許可權。</string>
+    <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> 全屏通知已關閉。鬧鐘可能無法正確在鎖定螢幕顯示。</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_bootcompleted">啟動完成</string>
-    <string name="configLabel_alarms_bootcompleted_summary">鬧鐘在重啟幾分鐘後自動重新安排。\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="configLabel_alarms_bootcompleted_info">上一次運行於 <xliff:g id="timestamp" example="never">%1$s</xliff:g>\n啟動後 <xliff:g id="time" example="30s">%2$s</xliff:g>（用時 <xliff:g id="time" example="10s">%3$s</xliff:g>）。</string>
-    <string name="configLabel_alarms_bootcompleted_info_never">永不</string>
-    <string name="configLabel_alarms_bootcompleted_action_confirm">重新安排所有鬧鐘和通知？</string>
-    <string name="configLabel_alarms_bootcompleted_action_message">重新安排所有鬧鐘和通知…</string>
+    <string name="alarms_label_bootcompleted">啟動完成</string>
+    <string name="alarms_label_bootcompleted_summary">鬧鐘在重啟幾分鐘後自動重新安排。\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">上一次運行於 <xliff:g id="timestamp" example="never">%1$s</xliff:g>\n啟動後 <xliff:g id="time" example="30s">%2$s</xliff:g>（用時 <xliff:g id="time" example="10s">%3$s</xliff:g>）。</string>
+    <string name="alarms_label_bootcompleted_info_never">永不</string>
+    <string name="alarms_label_bootcompleted_action_confirm">重新安排所有鬧鐘和通知？</string>
+    <string name="alarms_label_bootcompleted_action_message">重新安排所有鬧鐘和通知…</string>
 
-    <string name="configLabel_alarms_background_action_message">%s 正在後臺執行任務。</string>    <!-- message shown whenever alarm foreground service does periodic work -->
+    <string name="alarms_message_background_action">%s 正在後臺執行任務。</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
-    <string name="configLabel_alarms_silenceAfter">在…後靜音</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter">在…後靜音</string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">在…後超時</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter">在…後超時</string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_autoDismissAfter">在…後自動解除</string>
-    <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter">在…後自動解除</string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">延時限制</string>
-    <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
-    <string name="configLabel_alarms_snoozeLimit_none">無限制</string>
+    <string name="alarms_label_snoozeLimit">延時限制</string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_none">無限制</string>
 
-    <string name="configLabel_alarms_snooze">延時</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_snooze">延時</string>
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">在…後提醒</string>
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
-    <string name="configLabel_alarms_upcoming_checkbox">顯示鬧鐘提醒通知。</string>
+    <string name="alarms_label_upcoming">在…後提醒</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_checkbox">顯示鬧鐘提醒通知。</string>
 
-    <string name="configLabel_alarms_fadein">逐漸增加音量</string>
+    <string name="alarms_label_fadein">逐漸增加音量</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">關閉</string>
+    <string name="alarms_label_fadein_disabled">關閉</string>
 
-    <string name="configLabel_alarmFullscreen">全屏</string>            <!-- group title -->
-    <string name="configLabel_alarms_brightMode">明亮鬧鐘</string>
-    <string name="configLabel_alarms_brightMode_summary">全屏鬧鐘最初是暗的，然後會慢慢改變顏色並增加亮度。</string>
+    <string name="alarms_label_alarmFullscreen">全屏</string>            <!-- group title -->
+    <string name="alarms_label_brightMode">明亮鬧鐘</string>
+    <string name="alarms_label_brightMode_summary">全屏鬧鐘最初是暗的，然後會慢慢改變顏色並增加亮度。</string>
 
-    <string name="configLabel_alarms_brightMode_fadein">逐漸增加亮度</string>
-    <string name="configLabel_alarms_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein">逐漸增加亮度</string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_brightMode_colors">明亮鬧鐘顏色</string>
-    <string name="configLabel_alarms_brightMode_colors_summary">%s</string>
+    <string name="alarms_label_brightMode_colors">明亮鬧鐘顏色</string>
+    <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="brightMode_colors_label_default">@string/configLabel_tagDefault</string>
-    <string name="brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
-    <string name="brightMode_colors_label_foliage">綠葉</string>
-    <string name="brightMode_colors_label_bluesky">藍天</string>
+    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
+    <string name="alarms_brightMode_colors_label_foliage">綠葉</string>
+    <string name="alarms_brightMode_colors_label_bluesky">藍天</string>
 
-    <string name="configLabel_alarms_nextAlarm">鬧鐘</string>                             <!-- widget label ("next alarm") -->
-    <string name="configLabel_alarms_nextAlarm_none">沒有設定鬧鐘</string>            <!-- widget text (no alarm set msg) -->
-    <string name="configLabel_alarms_nextAlarm_error">載入失敗！</string>            <!-- widget text (null/missing error) -->
+    <string name="alarms_widgetLabel_nextAlarm">鬧鐘</string>                             <!-- widget label ("next alarm") -->
+    <string name="alarms_widgetLabel_nextAlarm_none">沒有設定鬧鐘</string>            <!-- widget text (no alarm set msg) -->
+    <string name="alarms_widgetLabel_nextAlarm_error">載入失敗！</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">沒有設定鬧鐘。</string>
     <string name="alarmtile_dialogmsg_format0">下一個鬧鐘在 <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>，<xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>。</string>
     <string name="alarmtile_dialogmsg_format1">下一個鬧鐘在 <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>)，<xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>。</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">硬體按鈕</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons">硬體按鈕</string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>解除</item>
         <item>靜音</item>
@@ -1160,13 +1160,13 @@
         <item>什麼都不做</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">聲音</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">音量</string>
-    <string name="configLabel_alarms_allRingtones">展示所有的鈴聲</string>
-    <string name="configLabel_alarms_allRingtones_summary">顯示所有系統鈴聲（忽略鈴聲型別）。</string>
+    <string name="alarms_label_alarmSounds">聲音</string>            <!-- group title -->
+    <string name="alarms_label_volumes">音量</string>
+    <string name="alarms_label_allRingtones">展示所有的鈴聲</string>
+    <string name="alarms_label_allRingtones_summary">顯示所有系統鈴聲（忽略鈴聲型別）。</string>
 
-    <string name="no_reminder">永不</string>
-    <string name="reminder_label"><xliff:g id="hours" example="12h">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder_none">永不</string>
+    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="units_hours">
         <!--<item quantity="one">%d hour</item>-->
@@ -1187,12 +1187,12 @@
         <item quantity="other">%s 天</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
-    <string name="configLabel_alarmMisc">雜項</string>
-    <string name="configLabel_alarms_showlauncher">啟動器圖示</string>
-    <string name="configLabel_alarms_showlauncher_summary">在應用程式托盤中顯示鬧鐘圖示。</string>
+    <string name="alarms_label_alarmMisc">雜項</string>
+    <string name="alarms_label_showlauncher">啟動器圖示</string>
+    <string name="alarms_label_showlauncher_summary">在應用程式托盤中顯示鬧鐘圖示。</string>
 
-    <string name="configLabel_alarms_poweroffalarms">關機鬧鐘</string>
-    <string name="configLabel_alarms_poweroffalarms_summary">將裝置從關機狀態喚醒。\n包: <xliff:g id="packageName">%s</xliff:g></string>
+    <string name="alarms_label_poweroffalarms">關機鬧鐘</string>
+    <string name="alarms_label_poweroffalarms_summary">將裝置從關機狀態喚醒。\n包: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME
