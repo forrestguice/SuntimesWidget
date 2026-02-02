@@ -514,14 +514,14 @@
     <string name="configHint_location_name0">Nombre del lugar</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
-    <string name="configAction_getFix">Adquirir ubicación</string>
-    <string name="configAction_editPlace">Editar</string>         
-    <string name="configAction_savePlace">Guardar</string>         
+    <string name="action_getLocation">Adquirir ubicación</string>
+    <string name="places_action_editPlace">Editar</string>
+    <string name="places_action_savePlace">Guardar</string>
 
     
-    <string name="timezoneMode_standard">Hora solar</string>    <!-- TODO: "solar time" -> "Time Standard" -->
-    <string name="timezoneMode_current">Zona horaria de sistema</string>               
-    <string name="timezoneMode_custom">Definida por usuario</string>
+    <string name="settings_timezoneMode_standard">Hora solar</string>    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezoneMode_current">Zona horaria de sistema</string>
+    <string name="settings_timezoneMode_custom">Definida por usuario</string>
 
     <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
     <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
@@ -530,21 +530,21 @@
     <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
     <string name="timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
+    <string name="action_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
-    <string name="configLabel_timezone">Opciones de zona horaria</string>      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
-    <string name="configLabel_timezone_mode">Modo:</string>       
-    <string name="configLabel_timezone_custom">Zona horaria:</string>
-    <string name="configLabel_timezone_standard">Hora solar:</string>    <!-- TODO: "solar time" -> "Time Standard" -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
+    <string name="settings_timezone">Opciones de zona horaria</string>      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="settings_timezone_mode">Modo:</string>
+    <string name="settings_timezone_custom">Zona horaria:</string>
+    <string name="settings_timezone_standard">Hora solar:</string>    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
 
     
-    <string name="timeFormatMode_system">Formato del sistema</string>
-    <string name="timeFormatMode_12hr">12 horas</string>     
-    <string name="timeFormatMode_24hr">24 horas</string>
+    <string name="settings_timeFormatMode_system">Formato del sistema</string>
+    <string name="settings_timeFormatMode_12hr">12 horas</string>
+    <string name="settings_timeFormatMode_24hr">24 horas</string>
 
-    <string name="configLabel_timeFormatMode">Formato de hora</string>
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>
+    <string name="settings_timeFormatMode">Formato de hora</string>
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
@@ -563,12 +563,12 @@
     <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
     <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
 
-    <string name="dateMode_current">Hoy</string>
-    <string name="dateMode_custom">Definido por el usuario</string>
+    <string name="settings_dateMode_current">Hoy</string>
+    <string name="settings_dateMode_custom">Definido por el usuario</string>
 
-    <string name="configLabel_date">Opciones de fecha</string>                 
-    <string name="configLabel_date_mode">Modo:</string>                   
-    <string name="configLabel_date_custom">Fecha:</string>
+    <string name="settings_date">Opciones de fecha</string>
+    <string name="settings_date_mode">Modo:</string>
+    <string name="settings_date_custom">Fecha:</string>
 
     
     <string name="settings_general_compareMode_yesterday">Ayer</string>
@@ -578,16 +578,16 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
-    <string name="trackingMode_closest">Evento más cercano</string>                 
-    <string name="trackingMode_soonest">Evento más temprano</string>
-    <string name="configLabel_general_trackingMode">Seguimiento:</string>
+    <string name="stetings_trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="settings_trackingMode_closest">Evento más cercano</string>
+    <string name="settings_trackingMode_soonest">Evento más temprano</string>
+    <string name="settings_general_trackingMode">Seguimiento:</string>
 
     
-    <string name="configLabel_general_timeMode_override">Modo de sustitución de seguimiento</string>     
+    <string name="settings_general_timeMode_override">Modo de sustitución de seguimiento</string>
 
     
-    <string name="configLabel_general_showNoon">Mostrar mediodía solar</string>
+    <string name="settings_general_showNoon">Mostrar mediodía solar</string>
 
 
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1421,10 +1421,10 @@
     <string name="themes_appThemes_darkTheme1">Contrast (Oscuro)</string>   <!-- TODO -->
     <string name="themes_appThemes_lightTheme1">Contrast (Claro)</string>   <!-- TODO -->
     
-    <string-array name="timeFormatMode_display">                      
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1443,9 +1443,9 @@
     </string-array>
     
     <string-array name="settings_solsticeTrackingMode_display">
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
 
@@ -1914,7 +1914,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>  
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="action_colors">Colors</string>    <!-- TODO -->
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="colors_action_addColors">Add</string>    <!-- TODO -->
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->

@@ -535,14 +535,14 @@
     <string name="configHint_location_name0">地點名稱</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">使用應用位置</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">獲取位置</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">編輯</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">儲存</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">獲取位置</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">編輯</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">儲存</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">時間標準</string>                       <!-- setting -->
-    <string name="timezoneMode_current">系統時區</string>               <!-- setting -->
-    <string name="timezoneMode_custom">使用者自定</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">時間標準</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">系統時區</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">使用者自定</string>                    <!-- setting -->
 
     <string name="time_lmst">本地恆星時</string>                  <!-- timezone label -->
     <string name="time_gmst">格林尼治恆星時</string>              <!-- timezone label -->
@@ -551,21 +551,21 @@
     <string name="time_apparent">視太陽時間</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">推薦時區</string>
+    <string name="action_suggestTimeZone">推薦時區</string>
 
-    <string name="configLabel_timezone">時區</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">時區:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">標準:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">使用應用時區</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">時區</string>             <!-- group title -->
+    <string name="settings_timezone_mode">模式:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">時區:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">標準:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">使用應用時區</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">系統格式</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12小時格式</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24小時格式</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">系統格式</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12小時格式</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24小時格式</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">時間格式</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">時間格式</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">科普特曆</string>
@@ -585,12 +585,12 @@
     <string name="calendarMode_japanese">和曆</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">今天</string>                  <!-- setting -->
-    <string name="dateMode_custom">使用者自定</string>            <!-- setting -->
+    <string name="settings_dateMode_current">今天</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">使用者自定</string>            <!-- setting -->
 
-    <string name="configLabel_date">日期</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">模式:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">日期:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">日期</string>                      <!-- group title -->
+    <string name="settings_date_mode">模式:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">日期:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">昨天</string>                     <!-- setting -->
@@ -600,16 +600,16 @@
     <string name="settings_general_showComparison_summary">將今天的日照量與昨天或明天進行比較。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
-    <string name="trackingMode_closest">最近事件</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">即將發生事件</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">追蹤:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">近期事件</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">最近事件</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">即將發生事件</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">追蹤:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">追蹤覆蓋模式</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">追蹤覆蓋模式</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">顯示太陽正午</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">顯示太陽正午</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1451,10 +1451,10 @@
     <string name="themes_appThemes_lightTheme1">高對比度（淺色）</string>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1474,9 +1474,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
     <string name="actionDesc_doNothing">什麼也不做</string>
@@ -1944,7 +1944,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">顏色</string>
+    <string name="action_colors">顏色</string>
     <string name="colors_action_filterColors">篩選</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">新增</string>
     <string name="colors_action_editColors">編輯</string>

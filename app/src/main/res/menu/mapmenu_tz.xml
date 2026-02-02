@@ -40,7 +40,7 @@
             app:showAsAction="never" />
 
         <item android:id="@+id/tz_item_system"
-            android:title="@string/timezoneMode_current"
+            android:title="@string/settings_timezoneMode_current"
             android:visible="false"
             app:showAsAction="never" />
 

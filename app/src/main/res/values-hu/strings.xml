@@ -513,14 +513,14 @@
     <string name="configHint_location_name0">Helységnév</string>                  <!-- edittext hint --> 
     <string name="configLabel_location_fromapp">Használja az alkalmazás tartózkodási helyét</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Hely mutatása</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Szerkesztés</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Mentés</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Hely mutatása</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Szerkesztés</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Mentés</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Időrendszer</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Időrendszer</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">Zónaidő</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
 
     <string name="time_lmst">Sziderikus idő</string>                  <!-- timezone label -->  
     <string name="time_gmst">Greenwich sziderikus idő</string>              <!-- timezone label --> 
@@ -529,21 +529,21 @@
     <string name="time_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Időzóna ajánlása</string> 
+    <string name="action_suggestTimeZone">Időzóna ajánlása</string>
 
-    <string name="configLabel_timezone">Időzóna:</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Időrendszer:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Használja az alkalmazás időzónáját</string>                  <!-- checkbox text --> 
+    <string name="settings_timezone">Időzóna:</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Mód:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Időzóna:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Időrendszer:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Használja az alkalmazás időzónáját</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-órás</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-órás</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-órás</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-órás</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Idő megjelenítése</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Idő megjelenítése</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Kopt</string>                     
@@ -563,12 +563,12 @@
     <string name="calendarMode_japanese">Japán</string> 
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Mai nap</string>                  <!-- setting -->
-    <string name="dateMode_custom">Felhasználó által megadott</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Mai nap</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Felhasználó által megadott</string>            <!-- setting -->
 
-    <string name="configLabel_date">Dátum beállításai</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Mód:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Dátum:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Dátum beállításai</string>                      <!-- group title -->
+    <string name="settings_date_mode">Mód:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Dátum:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Tegnap</string>                     <!-- setting -->
@@ -578,16 +578,16 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->   
-    <string name="trackingMode_closest">Legközelebbi esemény</string>                 <!-- setting --> 
-    <string name="trackingMode_soonest">Közelgő esemény</string>                <!-- setting -->  
-    <string name="configLabel_general_trackingMode">Követés:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">Legközelebbi esemény</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Közelgő esemény</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Követés:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Követés felülírja a módot</string>     <!-- checkbox label -->  
+    <string name="settings_general_timeMode_override">Követés felülírja a módot</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Szoláris nap megjelenítése</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Szoláris nap megjelenítése</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">Azonosító:</string>                 <!-- edittext label -->
@@ -1431,10 +1431,10 @@
     <string name="themes_appThemes_lightTheme1">Kontraszt (világos)</string>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1914,7 +1914,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="action_colors">Colors</string>    <!-- TODO -->
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="colors_action_addColors">Add</string>    <!-- TODO -->
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->

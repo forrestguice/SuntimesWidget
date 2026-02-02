@@ -537,14 +537,14 @@
     <string name="configHint_location_name0">Stedsnavn</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Bruk sted fra app</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Hent posisjon</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Rediger</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Lagre</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Hent posisjon</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Rediger</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Lagre</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Tidsstandard</string>                       <!-- setting -->
-    <string name="timezoneMode_current">System-tidssone</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Brukerdefinert</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Tidsstandard</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">System-tidssone</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">Brukerdefinert</string>                    <!-- setting -->
 
     <string name="time_lmst">Lokal siderisk tid</string>                  <!-- timezone label -->
     <string name="time_gmst">Greenwich siderisk tid</string>              <!-- timezone label -->
@@ -553,21 +553,21 @@
     <string name="time_apparent">Tilsynelatende soltid</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Anbefalt tidssone</string>
+    <string name="action_suggestTimeZone">Anbefalt tidssone</string>
 
-    <string name="configLabel_timezone">Tidssone</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Tidssone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Bruk appens tidssone</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Tidssone</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Modus:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Tidssone:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Standard:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Bruk appens tidssone</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-timer</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-timer</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">Systemformat</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-timer</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-timer</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Tidsformat</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Tidsformat</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Koptisk</string>
@@ -587,12 +587,12 @@
     <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">I dag</string>                  <!-- setting -->
-    <string name="dateMode_custom">Brukerdefinert</string>            <!-- setting -->
+    <string name="settings_dateMode_current">I dag</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Brukerdefinert</string>            <!-- setting -->
 
-    <string name="configLabel_date">Datoinnstillinger</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Modus:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Dato:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Datoinnstillinger</string>                      <!-- group title -->
+    <string name="settings_date_mode">Modus:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Dato:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">I går</string>                     <!-- setting -->
@@ -602,16 +602,16 @@
     <string name="settings_general_showComparison_summary">Sammenlign mengden dagslys i dag med i går eller i morgen.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
-    <string name="trackingMode_closest">Nærmeste hendelse</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Kommende hendelse</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Spor:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">Nærmeste hendelse</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Kommende hendelse</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Spor:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Vis lokal middag</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Vis lokal middag</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
@@ -1950,7 +1950,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Farger</string>
+    <string name="action_colors">Farger</string>
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Legg til</string>
     <string name="colors_action_editColors">Rediger</string>

@@ -83,7 +83,7 @@
             <menu>
 
                 <item android:id="@+id/graphOption_colors"
-                    android:title="@string/configAction_colors"
+                    android:title="@string/action_colors"
                     android:icon="?attr/icActionAppearance"
                     app:showAsAction="never" />
 
@@ -165,7 +165,7 @@
 
         <item android:id="@+id/action_timezone"
             android:icon="?attr/icActionTime"
-            android:title="@string/configLabel_timezone"
+            android:title="@string/settings_timezone"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_help"

@@ -494,7 +494,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickAddDialog_saveButton() {
-            onView(withContentDescription(R.string.configAction_savePlace)).perform(click());
+            onView(withContentDescription(R.string.places_action_savePlace)).perform(click());
             return this;
         }
         public PlacesActivityRobot clickAddDialog_cancelButton() {

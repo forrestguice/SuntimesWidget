@@ -323,7 +323,7 @@
         </activity>
         <activity
             android:name=".colors.ColorValuesSheetActivity"
-            android:label="@string/configAction_colors"
+            android:label="@string/action_colors"
             android:icon="@drawable/ic_palette"
             android:exported="false">
         </activity>

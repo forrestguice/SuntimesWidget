@@ -17,7 +17,7 @@
 
         <item android:id="@+id/editPlace"
             android:icon="?attr/icActionEdit"
-            android:title="@string/configAction_editPlace"
+            android:title="@string/places_action_editPlace"
             app:showAsAction="ifRoom"
             android:orderInCategory="200" />
 

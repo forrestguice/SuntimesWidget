@@ -1076,15 +1076,15 @@ public class WidgetSettings
 
     public static void initDisplayStrings_DateMode( Context context )
     {
-        DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
-        DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
+        DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.settings_dateMode_current));
+        DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.settings_dateMode_custom));
     }
 
     public static void initDisplayStrings_TimezoneMode( Context context )
     {
-        TimezoneMode.TIME_STANDARD.setDisplayString(context.getString(R.string.timezoneMode_standard));
-        TimezoneMode.CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
-        TimezoneMode.CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
+        TimezoneMode.TIME_STANDARD.setDisplayString(context.getString(R.string.settings_timezoneMode_standard));
+        TimezoneMode.CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.settings_timezoneMode_current));
+        TimezoneMode.CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.settings_timezoneMode_custom));
     }
 
 
@@ -1099,10 +1099,10 @@ public class WidgetSettings
 
     public static void initDisplayStrings_TimeFormatMode( Context context )
     {
-        TimeFormatMode.MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
-        TimeFormatMode.MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
-        TimeFormatMode.MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
-        TimeFormatMode.MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
+        TimeFormatMode.MODE_SYSTEM.setDisplayString(context.getString(R.string.settings_timeFormatMode_system));
+        TimeFormatMode.MODE_12HR.setDisplayString(context.getString(R.string.settings_timeFormatMode_12hr));
+        TimeFormatMode.MODE_24HR.setDisplayString(context.getString(R.string.settings_timeFormatMode_24hr));
+        TimeFormatMode.MODE_SUNTIMES.setDisplayString(context.getString(R.string.settings_timeFormatMode_suntimes));
     }
 
     public static void initDisplayStrings_LocationMode( Context context )
@@ -1119,9 +1119,9 @@ public class WidgetSettings
 
     public static void initDisplayStrings_TrackingMode( Context context )
     {
-        TrackingMode.RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
-        TrackingMode.CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
-        TrackingMode.SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
+        TrackingMode.RECENT.setDisplayString( context.getString(R.string.stetings_trackingMode_recent) );
+        TrackingMode.CLOSEST.setDisplayString( context.getString(R.string.settings_trackingMode_closest) );
+        TrackingMode.SOONEST.setDisplayString( context.getString(R.string.settings_trackingMode_soonest) );
     }
 
     public static void initDisplayStrings_SolsticeEquinoxMode( Context context )

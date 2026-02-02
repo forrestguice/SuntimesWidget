@@ -436,11 +436,11 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
 
         public AlarmDialogRobot selectTZ_SystemTime() {
             onView(withId(R.id.modepicker)).perform(click());
-            onView(withText(R.string.timezoneMode_current)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_timezoneMode_current)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmDialogRobot assertTZ_SystemTime(Context context) {
-            spinnerDisplaysText(context, R.id.modepicker, R.string.timezoneMode_current);
+            spinnerDisplaysText(context, R.id.modepicker, R.string.settings_timezoneMode_current);
             onView(withId(R.id.locationPicker)).check(assertHidden);
             return this;
         }

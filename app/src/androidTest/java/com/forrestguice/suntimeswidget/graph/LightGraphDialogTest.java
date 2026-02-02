@@ -156,7 +156,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightGraphDialogRobot cancelOverflowMenu_TimeZone(Context context) {
@@ -168,7 +168,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot clickOverflowMenuItem_TimeZone(Context context) {
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightGraphDialogRobot clickOverflowMenuItem_TimeZone_LocalMean(Context context) {
@@ -213,12 +213,12 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
         }
         public LightGraphDialogRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             return this;
         }
         public LightGraphDialogRobot assertOverflowMenuShown_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             onView(withText(R.string.lightmap_graph_option_crosshair)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             onView(withText(R.string.lightmap_graph_option_axis)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             onView(withText(R.string.lightmap_graph_option_grid)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);

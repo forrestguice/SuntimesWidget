@@ -534,14 +534,14 @@
     <string name="configHint_location_name0">Nazwa miejsca</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Pozycja określona przez aplikację</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Obecna lokalizacja</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Edytuj</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Obecna lokalizacja</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Edytuj</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">standard</string>                       <!-- setting -->
-    <string name="timezoneMode_current">systemowa</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">użytkownika</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">standard</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">systemowa</string>                         <!-- setting -->
+    <string name="settings_timezoneMode_custom">użytkownika</string>                    <!-- setting -->
     
     <string name="time_lmst">lokalny czas gwiazdowy</string>                  <!-- timezone label -->
     <string name="time_gmst">czas gwiazdowy Greenwich</string>              <!-- timezone label -->
@@ -550,21 +550,21 @@
     <string name="time_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Zalecana strefa czasowa</string>
+    <string name="action_suggestTimeZone">Zalecana strefa czasowa</string>
 
-    <string name="configLabel_timezone">Strefa czasowa</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Użyj strefy czasowej aplikacji</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Strefa czasowa</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Tryb:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Standard:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Użyj strefy czasowej aplikacji</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Systemowy</string>
-    <string name="timeFormatMode_12hr">12-godzinny</string>
-    <string name="timeFormatMode_24hr">24-godzinny</string>
+    <string name="settings_timeFormatMode_system">Systemowy</string>
+    <string name="settings_timeFormatMode_12hr">12-godzinny</string>
+    <string name="settings_timeFormatMode_24hr">24-godzinny</string>
 
-    <string name="configLabel_timeFormatMode">Format czasu</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Format czasu</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">koptyjski</string>
@@ -584,12 +584,12 @@
     <string name="calendarMode_japanese">japoński</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Dzisiaj</string>                  <!-- setting -->
-    <string name="dateMode_custom">Własna</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Dzisiaj</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Własna</string>            <!-- setting -->
 
-    <string name="configLabel_date">Ustawienia daty</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Tryb:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Data:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Ustawienia daty</string>                      <!-- group title -->
+    <string name="settings_date_mode">Tryb:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Data:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Wczoraj</string>                     <!-- setting -->
@@ -599,16 +599,16 @@
     <string name="settings_general_showComparison_summary">Porównaj ilość światła słonecznego dzisiaj z wczoraj lub jutrem.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
-    <string name="trackingMode_closest">najbliższe</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">następne</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Śledź:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">poprzednie</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">najbliższe</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">następne</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Śledź:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Śledzenie pomija tryb</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Śledzenie pomija tryb</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Pokaż górowanie Słońca</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Pokaż górowanie Słońca</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">Identyfikator:</string>                 <!-- edittext label -->
@@ -1955,7 +1955,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Kolory</string>
+    <string name="action_colors">Kolory</string>
     <string name="colors_action_filterColors">Filtruj</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Dodaj</string>
     <string name="colors_action_editColors">Edytuj</string>

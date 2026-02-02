@@ -5,7 +5,7 @@
 
         <item android:id="@+id/savePlace"
             android:icon="?attr/icActionSave"
-            android:title="@string/configAction_savePlace"
+            android:title="@string/places_action_savePlace"
             app:showAsAction="always"
             android:orderInCategory="50" />
 

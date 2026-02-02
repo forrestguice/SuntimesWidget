@@ -294,7 +294,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WelcomeActivityRobot assertTimeZonePageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_about_name), withText(R.string.configLabel_timezone))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_about_name), withText(R.string.settings_timezone))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertAlarmsPageIsShown(Context context) {

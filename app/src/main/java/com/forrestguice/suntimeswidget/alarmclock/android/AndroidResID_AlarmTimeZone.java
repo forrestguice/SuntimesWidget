@@ -28,7 +28,7 @@ public class AndroidResID_AlarmTimeZone implements AlarmTimeZone.ResID_AlarmTime
     }
 
     public int string_timezoneMode_current() {
-        return R.string.timezoneMode_current;
+        return R.string.settings_timezoneMode_current;
     }
     public int string_time_localMean() {
         return R.string.time_localMean;

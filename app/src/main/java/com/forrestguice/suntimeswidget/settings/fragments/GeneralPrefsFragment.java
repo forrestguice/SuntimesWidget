@@ -291,7 +291,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             String sysPref = android.text.format.DateFormat.is24HourFormat(context)
                     ? TimeFormatMode.MODE_24HR.getDisplayString()
                     : TimeFormatMode.MODE_12HR.getDisplayString();
-            summary = context.getString(R.string.configLabel_timeFormatMode_systemsummary, "%s", sysPref);
+            summary = context.getString(R.string.settings_timeFormatMode_systemsummary, "%s", sysPref);
         }
         return summary;
     }

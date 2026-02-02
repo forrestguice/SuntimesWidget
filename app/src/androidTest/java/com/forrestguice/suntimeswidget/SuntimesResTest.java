@@ -134,8 +134,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("dateTapActions_values", R.array.actions_dateTapActions_values, "dateTapActions_display", R.array.actions_dateTapActions_display);
             verify_enumTapActions("dateTapActions_values", R.array.actions_dateTapActions_values);
 
-            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, TimeFormatMode.class);
-            verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
+            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.settings_timeFormatMode_values, TimeFormatMode.class);
+            verify_stringArrayLength("timeFormatMode_values", R.array.settings_timeFormatMode_values, "timeFormatMode_display", R.array.settings_timeFormatMode_display);
 
             verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.settings_lengthUnits_values, LengthUnit.class);
             verify_stringArrayLength("lengthUnits_values", R.array.settings_lengthUnits_values, "lengthUnits_display", R.array.settings_lengthUnits_display);

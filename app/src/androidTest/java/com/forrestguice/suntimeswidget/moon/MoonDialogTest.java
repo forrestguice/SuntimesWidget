@@ -208,11 +208,11 @@ public class MoonDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public MoonDialogRobot clickOverflowMenu_Options_Colors(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -257,7 +257,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public MoonDialogRobot assertOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             // TODO: other options
             return this;
         }

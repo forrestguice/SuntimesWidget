@@ -15,7 +15,7 @@
 
                 <com.forrestguice.support.widget.Toolbar
                     android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-                    app:title="@string/configAction_colors"
+                    app:title="@string/action_colors"
                     app:popupTheme="?attr/actionBarPopupTheme" />
 
             </com.forrestguice.support.widget.AppBarLayout>

@@ -13,7 +13,7 @@
         <menu>
 
             <item android:id="@+id/action_colors"
-                android:title="@string/configAction_colors"
+                android:title="@string/action_colors"
                 android:icon="?attr/icActionAppearance"
                 app:showAsAction="never" />
 

@@ -567,14 +567,14 @@
     <string name="configHint_location_name0">Nome do Local</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Usar localização do app</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Obter Localização</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Editar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Salvar</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Obter Localização</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Editar</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Salvar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Hora Padrão</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Fuso Horário do Sistema</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Definido pelo Usuário</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Hora Padrão</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">Fuso Horário do Sistema</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">Definido pelo Usuário</string>                    <!-- setting -->
 
     <string name="time_lmst">Hora Sidereal Local</string>                  <!-- timezone label -->
     <string name="time_gmst">Hora Sideral de Greenwich</string>              <!-- timezone label -->
@@ -583,21 +583,21 @@
     <string name="time_apparent">Horário Solar Aparente</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="America/Sao_Paulo">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Recomendar Fuso Horário</string>
+    <string name="action_suggestTimeZone">Recomendar Fuso Horário</string>
 
-    <string name="configLabel_timezone">Fuso Horário</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Modo:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Fuso Horário:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Padrão:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Usar o fuso horário do app</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Fuso Horário</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Modo:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Fuso Horário:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Padrão:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Usar o fuso horário do app</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Do sistema</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-horas</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-horas</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">Do sistema</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-horas</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-horas</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Formato da Hora</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Formato da Hora</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Copta</string>
@@ -617,12 +617,12 @@
     <string name="calendarMode_japanese">Japonês</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Hoje</string>                  <!-- setting -->
-    <string name="dateMode_custom">Definido pelo Usuário</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Hoje</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Definido pelo Usuário</string>            <!-- setting -->
 
-    <string name="configLabel_date">Configurações de Data</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Modo:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Data:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Configurações de Data</string>                      <!-- group title -->
+    <string name="settings_date_mode">Modo:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Data:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Ontem</string>                     <!-- setting -->
@@ -632,16 +632,16 @@
     <string name="settings_general_showComparison_summary">Comparar a quantidade de luz do dia de hoje com a de ontem ou amanhã.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Evento recente</string>                   <!-- setting -->
-    <string name="trackingMode_closest">Evento mais próximo</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Próximo evento</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Rastrear:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Evento recente</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">Evento mais próximo</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Próximo evento</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Rastrear:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Modo de substituição de rastreamento</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Modo de substituição de rastreamento</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Mostrar Sol Centralizado</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Mostrar Sol Centralizado</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1490,10 +1490,10 @@
     <string name="themes_appThemes_lightTheme1">Contraste (Claro)</string>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1513,9 +1513,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
     <string name="actionDesc_doNothing">Fazer nada</string>
@@ -1985,7 +1985,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Cores</string>
+    <string name="action_colors">Cores</string>
     <string name="colors_action_filterColors">Filtrar</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Adicionar</string>
     <string name="colors_action_editColors">Editar</string>

@@ -637,25 +637,25 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
 
         public EquinoxDialogRobot clickOverflowMenu_Track(Context context) {
-            String text = context.getString(R.string.configLabel_general_trackingMode);
+            String text = context.getString(R.string.settings_general_trackingMode);
             text = text.replaceAll(":", "");
             onView(withText(text)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Track_Closest(Context context) {
-            onView(withText(R.string.trackingMode_closest)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_trackingMode_closest)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Track_Recent(Context context) {
-            onView(withText(R.string.trackingMode_recent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.stetings_trackingMode_recent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Track_Soonest(Context context) {
-            onView(withText(R.string.trackingMode_soonest)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_trackingMode_soonest)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot cancelOverflowMenu_Track(Context context) {
-            onView(withText(R.string.trackingMode_closest)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.settings_trackingMode_closest)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -677,7 +677,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EquinoxDialogRobot cancelHelp(Context context) {
@@ -714,9 +714,9 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 
         public EquinoxDialogRobot assertOverflowMenu_Track(Context context)
         {
-            onView(withText(R.string.trackingMode_soonest)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.trackingMode_closest)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.trackingMode_recent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.settings_trackingMode_soonest)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.settings_trackingMode_closest)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.stetings_trackingMode_recent)).inRoot(isPlatformPopup()).check(assertShown);
 
             switch (WidgetSettings.loadTrackingModePref(context, 0)) {
                 case RECENT: assertOverflowMenu_Track_isRecent(context); break;
@@ -726,17 +726,17 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot assertOverflowMenu_Track_isSoonest(Context context) {
-            onView(isRadioButtonWithTextInDropDownMenu(R.string.trackingMode_soonest)).inRoot(isPlatformPopup())
+            onView(isRadioButtonWithTextInDropDownMenu(R.string.settings_trackingMode_soonest)).inRoot(isPlatformPopup())
                     .check(ViewAssertionHelper.assertChecked);
             return this;
         }
         public EquinoxDialogRobot assertOverflowMenu_Track_isClosest(Context context) {
-            onView(isRadioButtonWithTextInDropDownMenu(R.string.trackingMode_closest)).inRoot(isPlatformPopup())
+            onView(isRadioButtonWithTextInDropDownMenu(R.string.settings_trackingMode_closest)).inRoot(isPlatformPopup())
                     .check(ViewAssertionHelper.assertChecked);
             return this;
         }
         public EquinoxDialogRobot assertOverflowMenu_Track_isRecent(Context context) {
-            onView(isRadioButtonWithTextInDropDownMenu(R.string.trackingMode_recent)).inRoot(isPlatformPopup())
+            onView(isRadioButtonWithTextInDropDownMenu(R.string.stetings_trackingMode_recent)).inRoot(isPlatformPopup())
                     .check(ViewAssertionHelper.assertChecked);
             return this;
         }
@@ -744,7 +744,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         public EquinoxDialogRobot assertOverflowMenu_Options(Context context)
         {
             onView(isMenuDropDownListView()).inRoot(isPlatformPopup()).check(matches(hasMinimumChildCount(2)));
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(assertShown);
 
             onView(withText(R.string.settings_ui_showCrossQuarter)).inRoot(isPlatformPopup()).check(assertShown);
             if (AppSettings.loadShowCrossQuarterPref(context)) {

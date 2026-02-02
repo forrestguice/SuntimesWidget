@@ -413,11 +413,11 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_Options_Colors(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -447,7 +447,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
 
         public WorldMapDialogRobot clickOverflowMenu_TimeZone(Context context) {
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_TimeZone_UTC(Context context) {
@@ -491,12 +491,12 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         public WorldMapDialogRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(assertShown);
             // TODO: other options
             return this;
         }

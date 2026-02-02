@@ -12,7 +12,7 @@
     <TextView android:id="@+id/color_values_selector_label" android:visibility="gone"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-        android:text="@string/configAction_colors" android:labelFor="@+id/colorvalues_selector" />
+        android:text="@string/action_colors" android:labelFor="@+id/colorvalues_selector" />
 
     <Spinner android:id="@+id/colorvalues_selector"
         android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"

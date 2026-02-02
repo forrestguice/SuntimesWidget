@@ -3,12 +3,12 @@
 
     <item android:id="@+id/action_location_quickfix"
         android:icon="?attr/icActionGPS"
-        android:title="@string/configAction_getFix"
+        android:title="@string/action_getLocation"
         android:orderInCategory="10" />
 
     <item android:id="@+id/action_location_average"
         android:icon="?attr/icActionGPS"
-        android:title="@string/configAction_avgFix"
+        android:title="@string/action_avgLocation"
         android:orderInCategory="20" />
 
     <item android:id="@+id/action_location_agps_reload"

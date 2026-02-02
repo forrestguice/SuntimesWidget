@@ -38,7 +38,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/save_button" style="@style/ActionButton"
                 android:layout_width="wrap_content" android:layout_height="48dp"
                 android:src="?attr/icActionSave"
-                android:contentDescription="@string/configAction_savePlace" />
+                android:contentDescription="@string/places_action_savePlace" />
 
         </LinearLayout>
 
@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:src="?attr/icActionGPS_searching"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/configAction_getFix" />
+                        android:contentDescription="@string/action_getLocation" />
 
                     <ProgressBar
                         android:id="@+id/appwidget_location_getfixprogress"

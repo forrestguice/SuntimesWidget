@@ -526,14 +526,14 @@
     <string name="configHint_location_name0">Nomo de loko</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Pozicio determinita de aplikaĵo</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Determini pozicion</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Redakti</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Determini pozicion</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Redakti</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">normo</string>                       <!-- setting -->
-    <string name="timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">propra</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">normo</string>                       <!-- setting -->
+    <string name="settings_timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
+    <string name="settings_timezoneMode_custom">propra</string>                    <!-- setting -->
 
     <string name="time_lmst">loka laŭstela tempo</string>                  <!-- timezone label -->
     <string name="time_gmst">Grenviĉa laŭstela tempo</string>              <!-- timezone label -->
@@ -542,22 +542,22 @@
     <string name="time_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Sugesti horzonon</string>
+    <string name="action_suggestTimeZone">Sugesti horzonon</string>
 
-    <string name="configLabel_timezone">Horzono</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Normo:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Uzi horzonon de la aplikaĵo</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Horzono</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Horzono:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Normo:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Uzi horzonon de la aplikaĵo</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">laŭ operaciumo</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
-    <string name="timeFormatMode_suntimes">laŭ aplikaĵo</string>     <!-- setting -->
+    <string name="settings_timeFormatMode_system">laŭ operaciumo</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_suntimes">laŭ aplikaĵo</string>     <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Formo de tempo</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Formo de tempo</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">kopta</string>
@@ -577,12 +577,12 @@
     <string name="calendarMode_japanese">japana</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Hodiaŭ</string>                  <!-- setting -->
-    <string name="dateMode_custom">Propra</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Hodiaŭ</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Propra</string>            <!-- setting -->
 
-    <string name="configLabel_date">Agordoj de dato</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Reĝimo:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Dato:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Agordoj de dato</string>                      <!-- group title -->
+    <string name="settings_date_mode">Reĝimo:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Dato:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Hieraŭ</string>                     <!-- setting -->
@@ -592,16 +592,16 @@
     <string name="settings_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ morgaŭ.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">antaŭan</string>                   <!-- setting -->
-    <string name="trackingMode_closest">plej proksiman</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">sekvan</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Spuri:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">antaŭan</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">plej proksiman</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">sekvan</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Spuri:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Spurado transpasas reĝimon</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Spurado transpasas reĝimon</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
@@ -1920,7 +1920,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
-    <string name="configAction_colors">Koloroj</string>
+    <string name="action_colors">Koloroj</string>
     <string name="colors_action_filterColors">Filtri</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Aldoni</string>
     <string name="colors_action_editColors">Redakti</string>

@@ -583,14 +583,14 @@
     <string name="configHint_location_name0">Название места</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Использовать местоположение приложения</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">Определить местоположение</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Изменить</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Определить местоположение</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Изменить</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
-    <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Солнечное время</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
     <string name="time_lmst">Местное звёздное время</string>                  <!-- timezone label -->
     <string name="time_gmst">Звёздное вреся по Гринвичу</string>              <!-- timezone label -->
@@ -599,21 +599,21 @@
     <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="configAction_suggestTimeZone">Рекомендуемый часовой пояс</string>
+    <string name="action_suggestTimeZone">Рекомендуемый часовой пояс</string>
 
-    <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
-    <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
-    <string name="configLabel_timezone_fromapp">Используйте часовой пояс приложения</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Настройки часового пояса</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="settings_timezone_mode">Режим:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezone_fromapp">Используйте часовой пояс приложения</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Системный</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-часовой</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-часовой</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">Системный</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-часовой</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-часовой</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Формат времени</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Формат времени</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Коптский</string>
@@ -633,12 +633,12 @@
     <string name="calendarMode_japanese">Японский</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Сегодня</string>                  <!-- setting -->
-    <string name="dateMode_custom">Пользовательский</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Сегодня</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Пользовательский</string>            <!-- setting -->
 
-    <string name="configLabel_date">Настройки даты</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Режим:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Дата:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Настройки даты</string>                      <!-- group title -->
+    <string name="settings_date_mode">Режим:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Дата:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Вчерашним днем</string>                     <!-- setting -->
@@ -648,16 +648,16 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Последнее событие</string>                   <!-- setting -->
-    <string name="trackingMode_closest">Ближайшее событие</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Предстоящее событие</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Отслеживать:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Последнее событие</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">Ближайшее событие</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Предстоящее событие</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Отслеживать:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Отслеживание переопределяет режим</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Отслеживание переопределяет режим</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Показывать солнечный полдень</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Показывать солнечный полдень</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1528,10 +1528,10 @@
     <string name="themes_appThemes_lightTheme1">Контраст (Светлый)</string>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1551,9 +1551,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -2122,7 +2122,7 @@
     <string name="color_dialog_label_a">A</string>
     <string name="color_dialog_hint_rgba">0–255</string>
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="action_colors">Colors</string>    <!-- TODO -->
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="colors_action_addColors">Add</string>    <!-- TODO -->
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->

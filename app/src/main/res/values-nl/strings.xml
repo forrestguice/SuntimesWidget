@@ -564,14 +564,14 @@
     <string name="configHint_location_name0">Plaatsnaam</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
-    <string name="configAction_getFix">Verkrijg locatie</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Bewerk</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Opslaan</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Verkrijg locatie</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Bewerk</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Opslaan</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Tijdstandaard</string>                   <!-- setting -->
-    <string name="timezoneMode_current">Tijdzone systeem</string>               <!-- setting -->
-    <string name="timezoneMode_custom">Gebruiker gedefinieerd</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Tijdstandaard</string>                   <!-- setting -->
+    <string name="settings_timezoneMode_current">Tijdzone systeem</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">Gebruiker gedefinieerd</string>                    <!-- setting -->
 
     <string name="time_lmst">Lokale sterrentijd</string>                  <!-- timezone label -->
     <string name="time_gmst">Greenwich sterrentijd</string>              <!-- timezone label -->
@@ -581,21 +581,21 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
+    <string name="action_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
-    <string name="configLabel_timezone">Tijdzone instellingen</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
-    <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Tijdzone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standaard:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
+    <string name="settings_timezone">Tijdzone instellingen</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="settings_timezone_mode">Modus:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Tijdzone:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Standaard:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->   <!-- TODO -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Systeemformaat</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-uurs</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-uurs</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_system">Systeemformaat</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-uurs</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-uurs</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Tijdformaat</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Tijdformaat</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
@@ -615,12 +615,12 @@
     <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Vandaag</string>                  <!-- setting -->
-    <string name="dateMode_custom">Gebruiker gedefinieerd</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Vandaag</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">Gebruiker gedefinieerd</string>            <!-- setting -->
 
-    <string name="configLabel_date">Datuminstellingen</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Modus:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Datum:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Datuminstellingen</string>                      <!-- group title -->
+    <string name="settings_date_mode">Modus:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Datum:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Gisteren</string>                     <!-- setting -->
@@ -630,16 +630,16 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
-    <string name="trackingMode_closest">Dichtstbijzijnde gebeurtenis</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Aankomende gebeurtenis</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="settings_trackingMode_closest">Dichtstbijzijnde gebeurtenis</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Aankomende gebeurtenis</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Track:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overschrijft modus</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Tracking overschrijft modus</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1491,10 +1491,10 @@
     <string name="themes_appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1514,9 +1514,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -2018,7 +2018,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="action_colors">Colors</string>    <!-- TODO -->
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="colors_action_addColors">Add</string>    <!-- TODO -->
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->

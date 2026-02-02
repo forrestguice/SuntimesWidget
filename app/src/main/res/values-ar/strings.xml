@@ -603,14 +603,14 @@
     <string name="configHint_location_name0">اسم المكان</string>                  <!-- edittext hint -->
     <string name="configLabel_location_fromapp">استخدم موقع التطبيق</string>                  <!-- checkbox text -->
 
-    <string name="configAction_getFix">احصل على الموقع</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">تحرير</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">حفظ</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">احصل على الموقع</string>    <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">تحرير</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">حفظ</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">التوقيت القياسي</string>                   <!-- setting -->
-    <string name="timezoneMode_current">توقيت النظام</string>               <!-- setting -->
-    <string name="timezoneMode_custom">معرفة المستخدم</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">التوقيت القياسي</string>                   <!-- setting -->
+    <string name="settings_timezoneMode_current">توقيت النظام</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">معرفة المستخدم</string>                    <!-- setting -->
 
     <string name="time_lmst">الوقت المحلي الأسترالي</string>                  <!-- timezone label -->
     <string name="time_gmst">الوقت الأسترالي الأخضر</string>              <!-- timezone label -->
@@ -621,22 +621,22 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
-    <string name="configAction_suggestTimeZone">توصية بتوقيت منطقة زمنية</string>
+    <string name="action_suggestTimeZone">توصية بتوقيت منطقة زمنية</string>
 
-    <string name="configLabel_timezone">منطقة زمنية</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">الوضع:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">منطقة الزمن:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">التوقيت القياسي:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">استخدام توقيت التطبيق</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">منطقة زمنية</string>             <!-- group title -->
+    <string name="settings_timezone_mode">الوضع:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">منطقة الزمن:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">التوقيت القياسي:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">استخدام توقيت التطبيق</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">تنسيق النظام</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12 ساعة</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24 ساعة</string>                  <!-- setting -->
-    <string name="timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
+    <string name="settings_timeFormatMode_system">تنسيق النظام</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12 ساعة</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24 ساعة</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">صيغة الوقت</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">صيغة الوقت</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">القبطي</string>
@@ -656,12 +656,12 @@
     <string name="calendarMode_japanese">الياباني</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">اليوم</string>                  <!-- setting -->
-    <string name="dateMode_custom">محدد من قبل المستخدم</string>            <!-- setting -->
+    <string name="settings_dateMode_current">اليوم</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">محدد من قبل المستخدم</string>            <!-- setting -->
 
-    <string name="configLabel_date">إعدادات التاريخ</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">الوضع:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">التاريخ:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">إعدادات التاريخ</string>                      <!-- group title -->
+    <string name="settings_date_mode">الوضع:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">التاريخ:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">الأمس</string>                     <!-- setting -->
@@ -676,16 +676,16 @@
     </string-array>
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">الحدث الأخير</string>                   <!-- setting -->
-    <string name="trackingMode_closest">الحدث الأقرب</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">الحدث القادم</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">تتبع:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">الحدث الأخير</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">الحدث الأقرب</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">الحدث القادم</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">تتبع:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">وضع تجاوز التتبع</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">وضع تجاوز التتبع</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">إظهار الظهر الشمسي</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">إظهار الظهر الشمسي</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">الرقم المعرف:</string>                 <!-- edittext label -->
@@ -1613,10 +1613,10 @@
     <string name="themes_appThemes_lightTheme1">التباين (الفاتح)</string>
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
 
     <!-- App Setting: text size -->
@@ -1637,9 +1637,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -2159,7 +2159,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
-    <string name="configAction_colors">Colors</string>    <!-- TODO -->
+    <string name="action_colors">Colors</string>    <!-- TODO -->
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->    <!-- TODO -->
     <string name="colors_action_addColors">Add</string>    <!-- TODO -->
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->

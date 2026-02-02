@@ -162,7 +162,7 @@
             <TextView android:labelFor="@+id/appwidget_general_trackingMode"
                 android:id="@+id/appwidget_general_trackingMode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_trackingMode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_general_trackingMode" />
 
             <Spinner
                 android:id="@+id/appwidget_general_trackingMode" android:layout_width="0dp"
@@ -181,7 +181,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_timeMode_override"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_timeMode_override" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_timeMode_override" />
 
         </LinearLayout>
 
@@ -263,7 +263,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_showNoon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showNoon" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showNoon" />
 
         </LinearLayout>
 

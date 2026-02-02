@@ -165,7 +165,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             {
                 @Override
                 public String getActivityTitle() {
-                    return activity.getString(R.string.configAction_colors);
+                    return activity.getString(R.string.action_colors);
                 }
                 @Override
                 public boolean supportsPreview() {

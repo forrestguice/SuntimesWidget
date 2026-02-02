@@ -12,10 +12,10 @@
 
         <com.forrestguice.support.preference.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"
-            android:title="@string/configLabel_timeFormatMode"
-            android:dialogTitle="@string/configLabel_timeFormatMode"
+            android:title="@string/settings_timeFormatMode"
+            android:dialogTitle="@string/settings_timeFormatMode"
             android:summary="%s"
-            android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
+            android:entries="@array/settings_timeFormatMode_display" android:entryValues="@array/settings_timeFormatMode_values"
             android:defaultValue="@string/def_appwidget_0_appearance_timeformatmode" />
 
         <com.forrestguice.support.preference.ListPreference

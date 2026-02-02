@@ -626,15 +626,14 @@
     <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->
     <string name="configLabel_location_comment">Comment</string>   <!-- edittext hint -->    <!-- TODO -->
 
-    <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
-    <string name="configAction_avgFix">Average Location</string>    <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
+    <string name="action_getLocation">Get Location</string>    <!-- button (contentDescription) -->
+    <string name="action_avgLocation">Average Location</string>    <!-- button (contentDescription) -->  <!-- TODO -->
+
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->
-    <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
-    <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
+    <string name="settings_timezoneMode_standard">Time Standard</string>                   <!-- setting -->
+    <string name="settings_timezoneMode_current">System Time Zone</string>               <!-- setting -->
+    <string name="settings_timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
     <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->
     <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->
@@ -644,22 +643,22 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
-    <string name="configAction_suggestTimeZone">Recommend Time Zone</string>
+    <string name="action_suggestTimeZone">Recommend Time Zone</string>
 
-    <string name="configLabel_timezone">Time Zone</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
-    <string name="configLabel_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->
+    <string name="settings_timezone">Time Zone</string>             <!-- group title -->
+    <string name="settings_timezone_mode">Mode:</string>                     <!-- spinner label -->
+    <string name="settings_timezone_custom">Time Zone:</string>              <!-- spinner label -->
+    <string name="settings_timezone_standard">Standard:</string>                   <!-- spinner label -->
+    <string name="settings_timezone_fromapp">Use the app time zone</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">System format</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
-    <string name="timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
+    <string name="settings_timeFormatMode_system">System format</string>          <!-- setting -->
+    <string name="settings_timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
+    <string name="settings_timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Time Format</string>             <!-- preference label -->
-    <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode">Time Format</string>             <!-- preference label -->
+    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Coptic</string>
@@ -679,12 +678,12 @@
     <string name="calendarMode_japanese">Japanese</string>
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Today</string>                  <!-- setting -->
-    <string name="dateMode_custom">User Defined</string>            <!-- setting -->
+    <string name="settings_dateMode_current">Today</string>                  <!-- setting -->
+    <string name="settings_dateMode_custom">User Defined</string>            <!-- setting -->
 
-    <string name="configLabel_date">Date Settings</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Mode:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Date:</string>                       <!-- dateSelector label -->
+    <string name="settings_date">Date Settings</string>                      <!-- group title -->
+    <string name="settings_date_mode">Mode:</string>                         <!-- spinner label -->
+    <string name="settings_date_custom">Date:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
     <string name="settings_general_compareMode_yesterday">Yesterday</string>                     <!-- setting -->
@@ -703,16 +702,16 @@
     </string-array>
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->
-    <string name="trackingMode_closest">Nearest Event</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+    <string name="stetings_trackingMode_recent">Recent Event</string>                   <!-- setting -->
+    <string name="settings_trackingMode_closest">Nearest Event</string>                 <!-- setting -->
+    <string name="settings_trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
+    <string name="settings_general_trackingMode">Track:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+    <string name="settings_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+    <string name="settings_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
@@ -1594,6 +1593,8 @@
     </plurals>
 
     <string name="places_action_addPlace">Add</string>              <!-- button (contentDescription) -->
+    <string name="places_action_editPlace">Edit</string>         <!-- button (contentDescription) -->
+    <string name="places_action_savePlace">Save</string>         <!-- button (contentDescription) -->
     <string name="places_action_copyPlace">Copy</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Select</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Search</string>        <!-- button (contentDescription) -->
@@ -1799,12 +1800,12 @@
     <string name="themes_appThemes_lightMonet">Monet (Light)</string>     <!-- TODO -->
 
     <!-- App Setting: time format -->
-    <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
-        <item>@string/timeFormatMode_system</item>
-        <item>@string/timeFormatMode_12hr</item>
-        <item>@string/timeFormatMode_24hr</item>
+    <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
+        <item>@string/settings_timeFormatMode_system</item>
+        <item>@string/settings_timeFormatMode_12hr</item>
+        <item>@string/settings_timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
+    <string-array name="settings_timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
         <item>MODE_SYSTEM</item>
         <item>MODE_12HR</item>
         <item>MODE_24HR</item>
@@ -1833,9 +1834,9 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/trackingMode_recent</item>
-        <item>@string/trackingMode_closest</item>
-        <item>@string/trackingMode_soonest</item>
+        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_closest</item>
+        <item>@string/settings_trackingMode_soonest</item>
     </string-array>
     <string-array name="settings_solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
         <item>RECENT</item>
@@ -2688,7 +2689,7 @@
     <string name="color_dialog_hint_rgba">0–255</string>
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
-    <string name="configAction_colors">Colors</string>
+    <string name="action_colors">Colors</string>
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Add</string>
     <string name="colors_action_editColors">Edit</string>

@@ -59,7 +59,7 @@
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" android:textSize="?attr/text_size_small"
             android:layout_gravity="end" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="@string/configAction_suggestTimeZone" />
+            android:text="@string/action_suggestTimeZone" />
 
     </LinearLayout>
 
