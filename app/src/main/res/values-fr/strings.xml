@@ -1306,26 +1306,26 @@
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Lieux</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Gérer les lieux</string>             <!-- group title -->
+    <string name="places_label">Lieux</string>                           <!-- group title -->
+    <string name="places_label_manage">Gérer les lieux</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">Ajouter des lieux mondiaux</string>  
-    <string name="configLabel_places_build_summary">Ajoute des villes du monde entier à la base de données.</string>
+    <string name="places_label_build">Ajouter des lieux mondiaux</string>
+    <string name="places_label_build_summary">Ajoute des villes du monde entier à la base de données.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d lieu</item>
         <item quantity="other">%d lieux</item>
     </plurals>
 
-    <string name="configAction_addPlace">Ajouter</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Copier</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Sélectionner</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Rechercher</string>              <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Supprimer</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Tout effacer</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Ajouter</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Copier</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Sélectionner</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Rechercher</string>              <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Supprimer</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Tout effacer</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

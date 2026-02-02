@@ -1322,26 +1322,26 @@
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Tokiak</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="places_label">Tokiak</string>                           <!-- group title -->
+    <string name="places_label_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">Munduko tokiak gehitu</string>
-    <string name="configLabel_places_build_summary">Hizkuntzak eskaneatu eta hiriak datu basera gehitu.</string>
+    <string name="places_label_build">Munduko tokiak gehitu</string>
+    <string name="places_label_build_summary">Hizkuntzak eskaneatu eta hiriak datu basera gehitu.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d place</item>
         <item quantity="other">%d places</item>
     </plurals>  <!-- TODO -->
 
-    <string name="configAction_addPlace">Gehitu</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Kopiatu</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Hautatu</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Gehitu</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Kopiatu</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Hautatu</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="places_action_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

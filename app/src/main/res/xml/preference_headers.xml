@@ -33,7 +33,7 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.PlacesPrefsFragment"
             android:icon="?attr/icActionPlace"
-            android:title="@string/configLabel_places"
+            android:title="@string/places_label"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>

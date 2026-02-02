@@ -1329,26 +1329,26 @@
     </plurals>
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Administri lokojn</string>             <!-- group title -->
+    <string name="places_label">Lokoj</string>                           <!-- group title -->
+    <string name="places_label_manage">Administri lokojn</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
-    <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
+    <string name="places_label_build">Aldoni mondajn lokojn</string>
+    <string name="places_label_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d lokoj</item>
         <item quantity="other">%d lokoj</item>
     </plurals>
 
-    <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Serĉi</string>              <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Serĉi</string>              <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarkto</string>
     <string name="place_label_AF">Afriko</string>

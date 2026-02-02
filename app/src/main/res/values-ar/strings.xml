@@ -1469,11 +1469,11 @@
     </plurals>
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">الأماكن</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">إدارة الأماكن</string>             <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
-    <string name="configLabel_places_build">إضافة الأماكن العالمية</string>
-    <string name="configLabel_places_build_summary">فحص المواقع وإضافة المدن إلى قاعدة البيانات.</string>
+    <string name="places_label">الأماكن</string>                           <!-- group title -->
+    <string name="places_label_manage">إدارة الأماكن</string>             <!-- group title -->
+    <string name="places_label_emptyMsg">@string/places_label</string>  <!-- a label that is displayed in place of an empty listview -->
+    <string name="places_label_build">إضافة الأماكن العالمية</string>
+    <string name="places_label_build_summary">فحص المواقع وإضافة المدن إلى قاعدة البيانات.</string>
 
     <plurals name="placePlural">
         <item quantity="zero">%d مكانٍ</item>
@@ -1484,15 +1484,15 @@
         <item quantity="other">%d مكاناً</item>
     </plurals>
 
-    <string name="configAction_addPlace">إضافة</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">نسخ</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">تحديد</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">البحث</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">حذف</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">مسح</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">إضافة</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">نسخ</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">تحديد</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">البحث</string>        <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">حذف</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">مسح</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

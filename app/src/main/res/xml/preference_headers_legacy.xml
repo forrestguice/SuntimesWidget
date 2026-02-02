@@ -29,7 +29,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_places"
+        android:title="@string/places_label"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"

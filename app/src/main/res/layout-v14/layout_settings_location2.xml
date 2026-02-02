@@ -71,7 +71,7 @@
                     style="@android:style/Widget.ActionButton"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionPlace"
-                    android:contentDescription="@string/configAction_selectPlace"
+                    android:contentDescription="@string/places_action_selectPlace"
                     android:nextFocusUp="@+id/appwidget_location_mode" />
 
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_cancel"
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     style="@android:style/Widget.ActionButton"
                     android:src="?attr/icActionNew"
-                    android:contentDescription="@string/configAction_addPlace" />
+                    android:contentDescription="@string/places_action_addPlace" />
 
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"

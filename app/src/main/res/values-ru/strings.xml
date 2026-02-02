@@ -1403,11 +1403,11 @@
     </plurals>
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Местоположение</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Редактировать места</string>             <!-- group title -->
+    <string name="places_label">Местоположение</string>                           <!-- group title -->
+    <string name="places_label_manage">Редактировать места</string>             <!-- group title -->
     <!-- <string name="configLabel_places_emptyMsg">@string/configLabel_places</string> -->   <!-- a label that is displayed in place of an empty listview (uncomment to override) -->
-    <string name="configLabel_places_build">Добавить местоположения</string>
-    <string name="configLabel_places_build_summary">Просканировать локали и добавить города в базу.</string>
+    <string name="places_label_build">Добавить местоположения</string>
+    <string name="places_label_build_summary">Просканировать локали и добавить города в базу.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d место</item>
@@ -1416,15 +1416,15 @@
         <item quantity="many">%d мест</item>
     </plurals>
 
-    <string name="configAction_addPlace">Добавить</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Копировать</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Выбрать</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Найти</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Добавить</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Копировать</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Выбрать</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Найти</string>        <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

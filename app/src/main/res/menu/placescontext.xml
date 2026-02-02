@@ -5,13 +5,13 @@
 
         <item android:id="@+id/pickPlace"
             android:icon="?attr/icActionAccept"
-            android:title="@string/configAction_selectPlace"
+            android:title="@string/places_action_selectPlace"
             app:showAsAction="always" android:visible="false"
             android:orderInCategory="50" />
 
         <item android:id="@+id/sharePlace"
             android:icon="?attr/icActionShare"
-            android:title="@string/configAction_sharePlace"
+            android:title="@string/places_action_sharePlace"
             app:showAsAction="ifRoom"
             android:orderInCategory="100" />
 
@@ -23,13 +23,13 @@
 
         <item android:id="@+id/copyPlace"
             android:icon="?attr/icActionCopy"
-            android:title="@string/configAction_copyPlace"
+            android:title="@string/places_action_copyPlace"
             app:showAsAction="ifRoom"
             android:orderInCategory="250" />
 
         <item android:id="@+id/deletePlace"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configAction_deletePlace"
+            android:title="@string/places_action_deletePlace"
             app:showAsAction="ifRoom"
             android:orderInCategory="300" />
     </group>

@@ -68,7 +68,7 @@
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_list"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionPlace"
-                    android:contentDescription="@string/configAction_selectPlace" />
+                    android:contentDescription="@string/places_action_selectPlace" />
 
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_cancel"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_add"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionNew"
-                    android:contentDescription="@string/configAction_addPlace" />
+                    android:contentDescription="@string/places_action_addPlace" />
 
                 <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_edit"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"

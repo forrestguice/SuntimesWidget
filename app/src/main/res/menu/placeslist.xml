@@ -6,44 +6,44 @@
         <!--suppress AndroidDomInspection -->
         <item android:id="@+id/searchPlaces"
             android:icon="?attr/icActionSearch"
-            android:title="@string/configAction_searchPlace"
+            android:title="@string/places_action_searchPlace"
             app:actionViewClass="@string/actionViewClass_SearchView"
             app:showAsAction="ifRoom|collapseActionView"
             android:orderInCategory="0" />
 
         <item android:id="@+id/addPlace"
             android:icon="?attr/icActionNew"
-            android:title="@string/configAction_addPlace"
+            android:title="@string/places_action_addPlace"
             app:showAsAction="never"
             android:orderInCategory="100" />
 
         <item android:id="@+id/addWorldPlaces"
             android:icon="?attr/icActionLocale"
-            android:title="@string/configLabel_places_build"
+            android:title="@string/places_label_build"
             app:showAsAction="never"
             android:orderInCategory="200" />
 
         <item android:id="@+id/clearPlaces"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configAction_clearPlaces"
+            android:title="@string/places_action_clearPlaces"
             app:showAsAction="never"
             android:orderInCategory="300" />
 
         <item android:id="@+id/importPlaces"
             android:icon="?attr/icActionCopy"
-            android:title="@string/configAction_importPlaces"
+            android:title="@string/places_action_importPlaces"
             app:showAsAction="never"
             android:orderInCategory="390" />
 
         <item android:id="@+id/exportPlaces"
             android:icon="?attr/icActionSave"
-            android:title="@string/configAction_exportPlaces"
+            android:title="@string/places_action_exportPlaces"
             app:showAsAction="never"
             android:orderInCategory="400" />
 
         <item android:id="@+id/action_sort"
             android:icon="?attr/icActionSort"
-            android:title="@string/configAction_sortPlaces"
+            android:title="@string/places_action_sortPlaces"
             app:showAsAction="ifRoom"
             android:orderInCategory="50">
 
@@ -51,15 +51,15 @@
                 <group android:checkableBehavior="single">
 
                     <item android:id="@+id/sortByLabelAsc"
-                        android:title="@string/configAction_sortPlaces_by_label_ascending"
+                        android:title="@string/places_action_sortPlaces_by_label_ascending"
                         android:icon="?attr/icActionSort" />
 
                     <item android:id="@+id/sortByLabelDesc"
-                        android:title="@string/configAction_sortPlaces_by_label_descending"
+                        android:title="@string/places_action_sortPlaces_by_label_descending"
                         android:icon="?attr/icActionSort" />
 
                     <item android:id="@+id/sortByProximity"
-                        android:title="@string/configAction_sortPlaces_by_proximity"
+                        android:title="@string/places_action_sortPlaces_by_proximity"
                         android:icon="?attr/icActionSort" />
 
                 </group>

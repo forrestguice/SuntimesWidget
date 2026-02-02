@@ -67,7 +67,7 @@
             android:layout_gravity="start|top"
             android:scaleType="fitCenter" android:src="?attr/icActionGPS"
             android:clickable="false"
-            android:contentDescription="@string/configAction_selectPlace" />
+            android:contentDescription="@string/places_action_selectPlace" />
 
     </FrameLayout>
 

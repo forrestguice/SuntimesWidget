@@ -1340,26 +1340,26 @@
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Steder</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
+    <string name="places_label">Steder</string>                           <!-- group title -->
+    <string name="places_label_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">Legg til verdenssteder</string>
-    <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
+    <string name="places_label_build">Legg til verdenssteder</string>
+    <string name="places_label_build_summary">Skann standardsteder og legg til byer i databasen.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d sted</item>
         <item quantity="other">%d steder</item>
     </plurals>
 
-    <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Velg</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Søk</string>              <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Slett</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Legg til</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Velg</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Søk</string>              <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Slett</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarktis</string>
     <string name="place_label_AF">Afrika</string>

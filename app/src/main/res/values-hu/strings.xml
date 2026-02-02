@@ -1308,26 +1308,26 @@
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Helyek</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Helyek kezelése</string>             <!-- group title -->
+    <string name="places_label">Helyek</string>                           <!-- group title -->
+    <string name="places_label_manage">Helyek kezelése</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">Fontos helyek hozzáadása</string>
-    <string name="configLabel_places_build_summary">Régiók keresése és városok hozzáadása az adatbázisba.</string>
+    <string name="places_label_build">Fontos helyek hozzáadása</string>
+    <string name="places_label_build_summary">Régiók keresése és városok hozzáadása az adatbázisba.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d hely</item>
         <item quantity="other">%d hely</item>
     </plurals>
 
-    <string name="configAction_addPlace">Hozzáadás</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Másolás</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Kijelölés</string>        <!-- button (contentDescription) --> 
-    <string name="configAction_searchPlace">Keresés</string>              <!-- button (contentDescription) --> 
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Törlés</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Minden törlése</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Hozzáadás</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Másolás</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Kijelölés</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Keresés</string>              <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Törlés</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Minden törlése</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

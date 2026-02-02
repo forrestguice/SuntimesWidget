@@ -1385,11 +1385,11 @@
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Místa</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Spravovat místa</string>             <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
-    <string name="configLabel_places_build">Přidat místa ve světě</string>
-    <string name="configLabel_places_build_summary">Přidat města do seznamu na základě dostupných jazyků.</string>
+    <string name="places_label">Místa</string>                           <!-- group title -->
+    <string name="places_label_manage">Spravovat místa</string>             <!-- group title -->
+    <string name="places_label_emptyMsg">@string/places_label</string>  <!-- a label that is displayed in place of an empty listview -->
+    <string name="places_label_build">Přidat místa ve světě</string>
+    <string name="places_label_build_summary">Přidat města do seznamu na základě dostupných jazyků.</string>
 
     <plurals name="placePlural">
         <item quantity="one">%d místo</item>
@@ -1397,15 +1397,15 @@
         <item quantity="few">%d místa</item>
     </plurals>
 
-    <string name="configAction_addPlace">Přidat</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Kopírovat</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Vybrat</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Hledat</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Smazat</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Vyčistit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">Přidat</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">Kopírovat</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">Vybrat</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">Hledat</string>        <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">Smazat</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">Vyčistit</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->

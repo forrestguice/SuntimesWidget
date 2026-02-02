@@ -414,7 +414,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot clickSearchButton() {
-            onView(withContentDescription(R.string.configAction_searchPlace)).perform(click());
+            onView(withContentDescription(R.string.places_action_searchPlace)).perform(click());
             return this;
         }
         public PlacesActivityRobot clickSearchClearButton()
@@ -433,32 +433,32 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickOverflowMenu_add(Context context) {
-            onView(withText(R.string.configAction_addPlace)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_addPlace)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_build(Context context) {
-            onView(withText(R.string.configLabel_places_build)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_label_build)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.configAction_importPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_importPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.configAction_exportPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_exportPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public PlacesActivityRobot clickAcceptButton() {
-            onView(allOf(withContentDescription(R.string.configAction_selectPlace), withClassName(endsWith("ActionMenuItemView")))).perform(click());
+            onView(allOf(withContentDescription(R.string.places_action_selectPlace), withClassName(endsWith("ActionMenuItemView")))).perform(click());
             return this;
         }
 
@@ -468,7 +468,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickBuildDialog_addButton() {
-            onView(allOf(withText(R.string.configAction_addPlace), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.places_action_addPlace), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickBuildDialog_allButton() {
@@ -481,7 +481,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickClearDialog_clearButton() {
-            onView(allOf(withText(R.string.configAction_clearPlaces), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.places_action_clearPlaces), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickClearDialog_cancelButton() {
@@ -530,19 +530,19 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         /////////////////////////////////////////////////////////////////////////
 
         public PlacesActivityRobot assertActivityShown(Context context) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.configLabel_places),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.places_label),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             return this;
         }
 
         public PlacesActivityRobot assertActionBarTitleShown(Context context, boolean isShown) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.configLabel_places),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.places_label),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
 
         public PlacesActivityRobot assertSearchButtonShown(Context context, boolean isShown) {
-            onView(withContentDescription(R.string.configAction_searchPlace)).check(isShown ? assertShownCompletely : assertHidden);
+            onView(withContentDescription(R.string.places_action_searchPlace)).check(isShown ? assertShownCompletely : assertHidden);
             return this;
         }
         public PlacesActivityRobot assertSearchFieldShown(Context context, boolean isShown) {
@@ -585,11 +585,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_addPlace)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configLabel_places_build)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_importPlaces)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_addPlace)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_label_build)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_importPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_exportPlaces)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 

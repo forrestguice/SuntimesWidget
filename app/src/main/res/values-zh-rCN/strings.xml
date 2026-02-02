@@ -1328,26 +1328,26 @@
     </plurals>
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">地点</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">管理地点</string>             <!-- group title -->
+    <string name="places_label">地点</string>                           <!-- group title -->
+    <string name="places_label_manage">管理地点</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">新增世界地点</string>
-    <string name="configLabel_places_build_summary">扫描本地并新增城市到数据库。</string>
+    <string name="places_label_build">新增世界地点</string>
+    <string name="places_label_build_summary">扫描本地并新增城市到数据库。</string>
 
     <plurals name="placePlural">
         <item quantity="other">%d 地点</item>
     </plurals>
 
 
-    <string name="configAction_addPlace">新增</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">复制</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">选择</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">搜索</string>              <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">删除</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">清空地点</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_addPlace">新增</string>              <!-- button (contentDescription) -->
+    <string name="places_action_copyPlace">复制</string>            <!-- button (contentDescription) -->
+    <string name="places_action_selectPlace">选择</string>        <!-- button (contentDescription) -->
+    <string name="places_action_searchPlace">搜索</string>              <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_deletePlace">删除</string>        <!-- button (contentDescription) -->
+    <string name="places_action_clearPlaces">清空地点</string>         <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">南极洲</string>
     <string name="place_label_AF">非洲</string>

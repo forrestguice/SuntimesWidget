@@ -463,10 +463,10 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
         };
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.configLabel_places_build))
+                .setTitle(context.getString(R.string.places_label_build))
                 .setIcon(iconResID)
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
-                .setPositiveButton(context.getString(R.string.configAction_addPlace), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.places_action_addPlace), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, groups, checked);
