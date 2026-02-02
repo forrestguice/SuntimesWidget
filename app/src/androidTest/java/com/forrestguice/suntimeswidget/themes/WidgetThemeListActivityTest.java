@@ -127,7 +127,7 @@ public class WidgetThemeListActivityTest extends SuntimesActivityTestBase
         }
 
         public ThemeListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -140,9 +140,9 @@ public class WidgetThemeListActivityTest extends SuntimesActivityTestBase
         }
 
         public ThemeListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_import)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_export)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_import)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_export)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 

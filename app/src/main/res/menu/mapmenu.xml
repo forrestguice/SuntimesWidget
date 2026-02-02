@@ -89,7 +89,7 @@
 
     <item android:id="@+id/addonSubMenu0"
             android:icon="?attr/icActionTimeReset"
-            android:title="@string/configAction_viewDateWith"
+            android:title="@string/action_viewDateWith"
             app:showAsAction="never">
             <menu>         <!-- submenu is also populated at runtime -->
                 <item android:id="@+id/action_date"
@@ -98,17 +98,17 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_sunposition"
-                    android:title="@string/configAction_sunDialog"
+                    android:title="@string/action_sunDialog"
                     android:icon="@drawable/ic_sun"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
-                    android:title="@string/configAction_moon"
+                    android:title="@string/action_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"
-                    android:title="@string/configAction_showCalendar"
+                    android:title="@string/action_showCalendar"
                     android:icon="?attr/icActionCalendar"
                     app:showAsAction="never" />
 

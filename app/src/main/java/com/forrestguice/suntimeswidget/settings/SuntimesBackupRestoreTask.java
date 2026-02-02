@@ -624,7 +624,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
-                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.action_import), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {

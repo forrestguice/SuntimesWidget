@@ -1003,7 +1003,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_appearance_title));
-                    helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                    helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
                     helpDialog.setNeutralButtonListener(helpDialogListener_substitutions, HELPTAG_SUBSTITUTIONS);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
@@ -2666,7 +2666,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
-                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.action_import), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
@@ -2689,7 +2689,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
-                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.action_import), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
@@ -2732,7 +2732,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View view = getWindow().getDecorView();
         if (context != null && view != null)
         {
-            CharSequence message = context.getString(R.string.themesimport_msg_success, context.getString(R.string.configAction_settings));
+            CharSequence message = context.getString(R.string.themesimport_msg_success, context.getString(R.string.action_settings));
             SnackbarUtils.make(context, view, message, SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
             {
@@ -2750,10 +2750,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void confirmResetWidget(final Context context)
     {
-        String title = context.getString(R.string.configAction_restoreDefaults);
+        String title = context.getString(R.string.action_restoreDefaults);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(context.getString(R.string.widgetreset_dialog_message))
-                .setPositiveButton(context.getString(R.string.configAction_restoreDefaults), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.action_restoreDefaults), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         resetWidget();

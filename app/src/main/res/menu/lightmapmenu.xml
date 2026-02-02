@@ -6,42 +6,42 @@
 
         <item android:id="@+id/action_seek"
             android:icon="?attr/icActionSearch"
-            android:title="@string/configAction_seek"
+            android:title="@string/action_seek"
             app:showAsAction="never">
             <menu>
                 <item android:id="@+id/action_seekdate"
                     android:icon="?attr/icActionCalendar"
-                    android:title="@string/configAction_seekDate"
+                    android:title="@string/action_seekDate"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seektime"
                     android:icon="?attr/icActionTime"
-                    android:title="@string/configAction_seekTime"
+                    android:title="@string/action_seekTime"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seekaltitude"
                     android:icon="?attr/icActionSearch"
-                    android:title="@string/configAction_seekAltitude"
+                    android:title="@string/action_seekAltitude"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seekdawn"
                     android:icon="?attr/icActionSearch"
-                    android:title="@string/configAction_seekDawn"
+                    android:title="@string/action_seekDawn"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seekdusk"
                     android:icon="?attr/icActionSearch"
-                    android:title="@string/configAction_seekDusk"
+                    android:title="@string/action_seekDusk"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seeknoon"
                     android:icon="?attr/icActionSearch"
-                    android:title="@string/configAction_seekNoon"
+                    android:title="@string/action_seekNoon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_seek_shadowlength"
                     android:icon="?attr/icActionShadow"
-                    android:title="@string/configAction_seekShadowLength"
+                    android:title="@string/action_seekShadowLength"
                     app:showAsAction="never" />
 
             </menu>
@@ -49,7 +49,7 @@
 
         <item android:id="@+id/addonSubMenu"
             android:icon="?attr/icActionTimeReset"
-            android:title="@string/configAction_viewDateWith"
+            android:title="@string/action_viewDateWith"
             app:showAsAction="never">
             <menu>         <!-- submenu is populated at runtime -->
 
@@ -59,17 +59,17 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
-                    android:title="@string/configAction_moon"
+                    android:title="@string/action_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"
                     android:icon="?attr/icActionWorldMap"
-                    android:title="@string/configAction_worldMap"
+                    android:title="@string/action_worldMap"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"
-                    android:title="@string/configAction_showCalendar"
+                    android:title="@string/action_showCalendar"
                     android:icon="?attr/icActionCalendar"
                     app:showAsAction="never" />
 
@@ -78,7 +78,7 @@
 
         <item android:id="@+id/optionsSubMenu"
             android:icon="?attr/icActionSettings"
-            android:title="@string/configAction_options"
+            android:title="@string/action_options"
             app:showAsAction="never">
             <menu>
 
@@ -116,7 +116,7 @@
 
                 <item android:id="@+id/action_showgraph"
                     android:icon="?attr/icActionGraph"
-                    android:title="@string/configAction_lineGraph"
+                    android:title="@string/action_lineGraph"
                     android:checkable="true"
                     app:showAsAction="never" />
 
@@ -170,7 +170,7 @@
 
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
-            android:title="@string/configAction_help"
+            android:title="@string/action_help"
             app:showAsAction="never" />
 
     </group>

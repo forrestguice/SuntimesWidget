@@ -59,7 +59,7 @@
                 android:id="@+id/dialog_button_neutral"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/configAction_date" />
+                android:text="@string/action_date" />
 
         </LinearLayout>
 

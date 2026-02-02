@@ -6,41 +6,41 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">重新整理</string>
-    <string name="configAction_addLocation">位置</string>
-    <string name="configAction_mapLocation">展示地圖</string>
-    <string name="configAction_mapLocation_chooser">地圖顯示方式</string>
-    <string name="configAction_mapLocation_noapp">未找到地圖應用</string>
-    <string name="configAction_showCalendar">日曆</string>
-    <string name="configAction_setAlarm">設定鬧鐘</string>
-    <string name="configAction_setTimeZone">設定時區</string>
-    <string name="configAction_setDate">設定日期</string>
-    <string name="configAction_viewDate">檢視日期</string>
-    <string name="configAction_viewDateWith">檢視日期</string>
-    <string name="configAction_share">分享</string>
-    <string name="configAction_export">匯出</string>
-    <string name="configAction_import">匯入</string>
-    <string name="configAction_info">更多資訊</string>
-    <string name="configAction_sortBy">按排序</string>
-    <string name="configAction_sunDialog">太陽位置</string>
-    <string name="configAction_equinoxDialog">至點/分點</string>
-    <string name="configAction_worldMap">世界地圖</string>
-    <string name="configAction_openNavDrawer">開啟導航</string>
-    <string name="configAction_closeNavDrawer">關閉導航</string>
-    <string name="configAction_clock">時鐘</string>
-    <string name="configAction_lightGraphDialog">日光</string>
-    <string name="configAction_lineGraph">海拔圖</string>
-    <string name="configAction_seekAltitude">查詢海拔</string>        <!-- checkbox label -->
-    <string name="configAction_search">搜尋</string>        <!-- button (contentDescription) -->
-    <string name="configAction_deselect">清除選擇</string>
-    <string name="configAction_moon">月亮</string>
-    <string name="configAction_help">幫助</string>
-    <string name="configAction_onlineHelp">線上幫助</string>
-    <string name="configAction_appDetails">應用資訊</string>
-    <string name="configAction_overflow">更多</string>
-    <string name="configAction_options">選項</string>
-    <string name="configAction_settings">設定</string>
-    <string name="configAction_aboutWidget">關於</string>
+    <string name="action_refreshLocation">重新整理</string>
+    <string name="action_addLocation">位置</string>
+    <string name="action_mapLocation">展示地圖</string>
+    <string name="action_mapLocation_chooser">地圖顯示方式</string>
+    <string name="action_mapLocation_chooser_noapp">未找到地圖應用</string>
+    <string name="action_showCalendar">日曆</string>
+    <string name="action_setAlarm">設定鬧鐘</string>
+    <string name="action_setTimeZone">設定時區</string>
+    <string name="action_setDate">設定日期</string>
+    <string name="action_viewDate">檢視日期</string>
+    <string name="action_viewDateWith">檢視日期</string>
+    <string name="action_share">分享</string>
+    <string name="action_export">匯出</string>
+    <string name="action_import">匯入</string>
+    <string name="action_info">更多資訊</string>
+    <string name="action_sortBy">按排序</string>
+    <string name="action_sunDialog">太陽位置</string>
+    <string name="action_equinoxDialog">至點/分點</string>
+    <string name="action_worldMap">世界地圖</string>
+    <string name="action_openNavDrawer">開啟導航</string>
+    <string name="action_closeNavDrawer">關閉導航</string>
+    <string name="action_clock">時鐘</string>
+    <string name="action_lightGraphDialog">日光</string>
+    <string name="action_lineGraph">海拔圖</string>
+    <string name="action_seekAltitude">查詢海拔</string>        <!-- checkbox label -->
+    <string name="action_search">搜尋</string>        <!-- button (contentDescription) -->
+    <string name="action_deselect">清除選擇</string>
+    <string name="action_moon">月亮</string>
+    <string name="action_help">幫助</string>
+    <string name="action_onlineHelp">線上幫助</string>
+    <string name="action_appDetails">應用資訊</string>
+    <string name="action_overflow">更多</string>
+    <string name="action_options">選項</string>
+    <string name="action_settings">設定</string>
+    <string name="action_about">關於</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -248,7 +248,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">重置設定</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">重置設定</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[初始值]</string>
     <string name="configLabel_tagPlugin">[外掛]</string>
@@ -462,8 +462,8 @@
     <string name="widgetMode3x1_lightmap_medium">光照圖（中等）</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">光照圖（小）</string>     <!-- setting -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">預設</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球視角</string>     <!-- setting -->
@@ -668,8 +668,8 @@
     <string name="actions_action_load">載入</string>         <!-- button (contentDescription) -->
     <string name="actions_action_delete">刪除</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">清空</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="themes_configLabel_widgetThemeList">小工具主題</string>
@@ -679,8 +679,8 @@
     <string name="themes_configAction_editTheme">編輯</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">刪除</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">複製</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">深色</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">深色（透明）</string>      <!-- default widget theme name -->
@@ -902,8 +902,8 @@
     <string name="events_configAction_addEvent_sunEvent">新增（太陽高度）</string>           <!-- button (contentDescription) -->
     <string name="events_configAction_addEvent_shadowEvent">新增（陰影長度）</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">匯入 <xliff:g id="eventPlural">%s</xliff:g>。</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="other">%d 個事件</item>
@@ -957,7 +957,7 @@
     <string name="alarms_action_editAlarm">編輯</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">刪除</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">清空</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms">排序</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">建立時間</string>                <!-- action button / menu item -->
@@ -1296,8 +1296,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">匯出設定</string>
     <string name="widgetexport_dialog_message">匯出小工具設定到檔案。</string>
     <string name="widgetimport_dialog_title">匯入設定</string>
@@ -1343,11 +1343,11 @@
     <string name="places_action_copyPlace">複製</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">選擇</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">搜尋</string>              <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">刪除</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">清空地點</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">南極洲</string>
     <string name="place_label_AF">非洲</string>
@@ -1458,7 +1458,7 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">字型大小</string>
+    <string name="textSize_pref_title">字型大小</string>
     <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">小</string>
@@ -1563,8 +1563,8 @@
     <string name="calendars_pref_summary">日曆整合</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">被動位置</string>
-    <string name="location_label_passiveMode_summary">使用被動接收到的位置。</string>
+    <string name="location_pref_passiveMode">被動位置</string>
+    <string name="location_pref_passiveMode_summary">使用被動接收到的位置。</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">語言</string>   <!-- group title -->
@@ -1653,7 +1653,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">播放</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_pause">暫停</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_record">錄製</string>   <!-- button (contentDescription) -->
@@ -1665,7 +1665,7 @@
     <string name="worldmap_dialog_option_moonlight">月照</string>
     <string name="worldmap_dialog_option_all">全部</string>
     <string name="worldmap_dialog_option_location">位置</string>
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">位置中心</string>
     <string name="worldmap_dialog_option_center_current">中心: %s</string>
     <string name="worldmap_dialog_option_center_msg">地圖中心設定為當前位置 \n[%s]</string>    <!-- toast message; center set to... -->
@@ -1682,11 +1682,11 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5分</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15分</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1天</string>
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">最早日出</string>       <!-- label / contentDescription -->
     <string name="lightgraph_label_earliest_sunset">最早日落</string>       <!-- label / contentDescription -->
@@ -1694,8 +1694,8 @@
     <string name="lightgraph_label_latest_sunset">最晚日落</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">十字線</string>
     <string name="lightmap_graph_option_grid">網格</string>
@@ -1715,7 +1715,7 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">播放控制</string>
 
     <!-- Dialog: Set Alarm -->
@@ -1950,8 +1950,8 @@
     <string name="colors_action_editColors">編輯</string>
     <string name="colors_action_saveColors">儲存</string>
     <string name="colors_action_deleteColors">刪除</string>
-    <string name="colors_action_importColors">@string/configAction_import</string>
-    <string name="colors_action_exportColors">@string/configAction_export</string>
+    <string name="colors_action_importColors">@string/action_import</string>
+    <string name="colors_action_exportColors">@string/action_export</string>
 
     <string name="colors_suggest_colorid">自定義</string>       <!-- edittext hint -->
     <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->

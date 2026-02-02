@@ -473,7 +473,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
                     }
                 })
                 .setNegativeButton(context.getString(R.string.dialog_cancel), null)
-                .setNeutralButton(context.getString(R.string.configAction_checkAll), new DialogInterface.OnClickListener() {
+                .setNeutralButton(context.getString(R.string.action_checkAll), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
                 });
 

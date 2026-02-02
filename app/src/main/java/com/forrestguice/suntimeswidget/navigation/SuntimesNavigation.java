@@ -73,7 +73,7 @@ public class SuntimesNavigation
         {
             if (AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(activity)))
             {
-                drawerToggle = new ActionBarDrawerToggle(activity, drawer, menuBar, R.string.configAction_openNavDrawer, R.string.configAction_closeNavDrawer);
+                drawerToggle = new ActionBarDrawerToggle(activity, drawer, menuBar, R.string.action_openNavDrawer, R.string.action_closeNavDrawer);
                 drawerToggle.setDrawerIndicatorEnabled(AppSettings.NAVIGATION_SIDEBAR.equals(AppSettings.loadNavModePref(activity)));
                 drawer.addDrawerListener(drawerToggle);
                 drawerToggle.syncState();

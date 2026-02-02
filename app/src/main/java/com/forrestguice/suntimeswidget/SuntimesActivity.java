@@ -1016,7 +1016,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             protected void initWarnings(Context context)
             {
-                addWarning(context, WARNINGID_LOCATION_PERMISSION, getString(R.string.locationPermissionWarning), card_view, getString(R.string.configAction_appDetails), new View.OnClickListener()
+                addWarning(context, WARNINGID_LOCATION_PERMISSION, getString(R.string.locationPermissionWarning), card_view, getString(R.string.action_appDetails), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -1024,7 +1024,7 @@ public class SuntimesActivity extends AppCompatActivity
                     }
                 });
 
-                addWarning(context, WARNINGID_TIMEZONE, getString(R.string.timezoneWarning), txt_timezone, getString(R.string.configAction_setTimeZone), new View.OnClickListener()
+                addWarning(context, WARNINGID_TIMEZONE, getString(R.string.timezoneWarning), txt_timezone, getString(R.string.action_setTimeZone), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -1032,7 +1032,7 @@ public class SuntimesActivity extends AppCompatActivity
                     }
                 });
 
-                addWarning(context, WARNINGID_DATE, getString(R.string.card_dateWarning), card_view, getString(R.string.configAction_setDate), new View.OnClickListener()
+                addWarning(context, WARNINGID_DATE, getString(R.string.card_dateWarning), card_view, getString(R.string.action_setDate), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -1526,7 +1526,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         final DateDialog datePicker = new DateDialog();
         datePicker.loadSettings(this);
-        datePicker.setDialogTitle(getString(R.string.configAction_viewDate));
+        datePicker.setDialogTitle(getString(R.string.action_viewDate));
         datePicker.setMinDate(startDate);
         datePicker.setMaxDate(endDate);
         datePicker.setOnAcceptedListener(onSeekDate(datePicker));
@@ -1752,7 +1752,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }

@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_seek_shadowlength"
-        android:title="@string/configAction_seekShadowLength"
+        android:title="@string/action_seekShadowLength"
         android:icon="?attr/icActionSearch"
         app:showAsAction="never" />
 

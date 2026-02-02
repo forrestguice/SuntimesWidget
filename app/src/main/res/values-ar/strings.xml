@@ -6,51 +6,51 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">تحديث</string>
-    <string name="configAction_addLocation">الموقع</string>
-    <string name="configAction_mapLocation">أظهر الخريطة</string>
-    <string name="configAction_mapLocation_chooser">أظهر الموقع باستعمال</string>
-    <string name="configAction_mapLocation_noapp">تعذر العثور على تطبيق خرائط!</string>
-    <string name="configAction_showCalendar">التقويم</string>
-    <string name="configAction_setAlarm">ضبط منبه</string>
-    <string name="configAction_setTimeZone">ضبط منطقة زمنية</string>
-    <string name="configAction_setDate">ضبط تاريخ</string>
-    <string name="configAction_viewDate">معاينة التاريخ</string>
-    <string name="configAction_viewDateWith">معاينة التاريخ</string>
-    <string name="configAction_share">مشاركة</string>
-    <string name="configAction_export">تصدير</string>
-    <string name="configAction_import">استيراد</string>
-    <string name="configAction_info">مزيد معلومات</string>
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
-    <string name="configAction_sunDialog">موقع الشمس</string>
-    <string name="configAction_equinoxDialog">الانقلاب / الاعتدال الشمسي</string>
-    <string name="configAction_worldMap">خريطة العالم</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
-    <string name="configAction_lineGraph">رسم الارتفاع البياني</string>
-    <string name="configAction_seekAltitude">تفحص الارتفاع</string>        <!-- checkbox label -->
-    <string name="configAction_search">بحث</string>        <!-- button (contentDescription) -->
-    <string name="configAction_deselect">مسح التحديد</string>
-    <string name="configAction_moon">القمر</string>
-    <string name="configAction_help">مساعدة</string>
-    <string name="configAction_onlineHelp">مساعدة على الإنترنت</string>
-    <string name="configAction_appDetails">معلومات التطبيق</string>
-    <string name="configAction_overflow">مزيد</string>
-    <string name="configAction_options">خيارات</string>
-    <string name="configAction_settings">إعدادات</string>
-    <string name="configAction_aboutWidget">حول</string>
+    <string name="action_refreshLocation">تحديث</string>
+    <string name="action_addLocation">الموقع</string>
+    <string name="action_mapLocation">أظهر الخريطة</string>
+    <string name="action_mapLocation_chooser">أظهر الموقع باستعمال</string>
+    <string name="action_mapLocation_chooser_noapp">تعذر العثور على تطبيق خرائط!</string>
+    <string name="action_showCalendar">التقويم</string>
+    <string name="action_setAlarm">ضبط منبه</string>
+    <string name="action_setTimeZone">ضبط منطقة زمنية</string>
+    <string name="action_setDate">ضبط تاريخ</string>
+    <string name="action_viewDate">معاينة التاريخ</string>
+    <string name="action_viewDateWith">معاينة التاريخ</string>
+    <string name="action_share">مشاركة</string>
+    <string name="action_export">تصدير</string>
+    <string name="action_import">استيراد</string>
+    <string name="action_info">مزيد معلومات</string>
+    <string name="action_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="action_sunDialog">موقع الشمس</string>
+    <string name="action_equinoxDialog">الانقلاب / الاعتدال الشمسي</string>
+    <string name="action_worldMap">خريطة العالم</string>
+    <string name="action_openNavDrawer">Open navigation</string>  <!-- TODO -->
+    <string name="action_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="action_clock">Clock</string>    <!-- TODO -->
+    <string name="action_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="action_lineGraph">رسم الارتفاع البياني</string>
+    <string name="action_seekAltitude">تفحص الارتفاع</string>        <!-- checkbox label -->
+    <string name="action_search">بحث</string>        <!-- button (contentDescription) -->
+    <string name="action_deselect">مسح التحديد</string>
+    <string name="action_moon">القمر</string>
+    <string name="action_help">مساعدة</string>
+    <string name="action_onlineHelp">مساعدة على الإنترنت</string>
+    <string name="action_appDetails">معلومات التطبيق</string>
+    <string name="action_overflow">مزيد</string>
+    <string name="action_options">خيارات</string>
+    <string name="action_settings">إعدادات</string>
+    <string name="action_about">حول</string>
 
     <!-- Shortcuts -->
 
-    <string name="shortcut_suninfo_short">@string/configAction_sunDialog</string>
-    <string name="shortcut_suninfo_long">@string/configAction_sunDialog</string>
-    <string name="shortcut_suninfo_disabled">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_short">@string/action_sunDialog</string>
+    <string name="shortcut_suninfo_long">@string/action_sunDialog</string>
+    <string name="shortcut_suninfo_disabled">@string/action_sunDialog</string>
 
-    <string name="shortcut_mooninfo_short">@string/configAction_moon</string>
-    <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
-    <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_short">@string/action_moon</string>
+    <string name="shortcut_mooninfo_long">@string/action_moon</string>
+    <string name="shortcut_mooninfo_disabled">@string/action_moon</string>
 
     <string name="shortcut_widgetlist_short">@string/widgetList_label</string>
     <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
@@ -60,9 +60,9 @@
     <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_disabled">@string/themes_configLabel_widgetThemeList</string>
 
-    <string name="shortcut_worldmap_short">@string/configAction_worldMap</string>
-    <string name="shortcut_worldmap_long">@string/configAction_worldMap</string>
-    <string name="shortcut_worldmap_disabled">@string/configAction_worldMap</string>
+    <string name="shortcut_worldmap_short">@string/action_worldMap</string>
+    <string name="shortcut_worldmap_long">@string/action_worldMap</string>
+    <string name="shortcut_worldmap_disabled">@string/action_worldMap</string>
 
     <string name="shortcut_alarmclock_addalarm_short">@string/alarmMode_alarm</string>
     <string name="shortcut_alarmclock_addalarm_long">@string/alarmMode_alarm</string>
@@ -315,7 +315,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">استعادة القيم الافتراضية</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">استعادة القيم الافتراضية</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[افتراضي]</string>
     <string name="configLabel_tagPlugin">[إضافة]</string>
@@ -530,8 +530,8 @@
     <string name="widgetMode3x1_lightmap_medium">الخريطة الضوئية (وسط)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">الخريطة الضوئية (صغيرة)</string>     <!-- setting -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">خريطة بسيطة</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">القطب [الشمالي]</string>     <!-- setting -->
@@ -747,8 +747,8 @@
     <string name="actions_action_delete">حذف</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">مسح الكل</string>         <!-- button (contentDescription) -->
 
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="themes_configLabel_widgetThemeList">السمات</string>
@@ -758,9 +758,9 @@
     <string name="themes_configAction_editTheme">تحرير</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">حذف</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">نسخ</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>
-    <string name="themes_configAction_shareTheme">@string/configAction_share</string>
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>
+    <string name="themes_configAction_exportThemes">@string/action_export</string>
+    <string name="themes_configAction_shareTheme">@string/action_share</string>
+    <string name="themes_configAction_importThemes">@string/action_import</string>
 
     <string name="themes_widgetThemes_dark">داكن</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">داكن (شفاف)</string>      <!-- default widget theme name -->
@@ -984,8 +984,8 @@
     <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">تم استيراد <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="zero">%d حدثٍ</item>
@@ -1044,9 +1044,9 @@
     <string name="alarms_action_editAlarm">تعديل</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">حذف</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">مسح</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
-    <string name="alarms_action_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
-    <string name="alarms_action_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_exportAlarms">@string/action_export</string>                <!-- action button / menu item -->
+    <string name="alarms_action_importAlarms">@string/action_import</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms">فرز</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_time">وقت المنبه</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">تاريخ الإنشاء</string>                <!-- action button / menu item -->
@@ -1085,7 +1085,7 @@
     <string name="alarmAction_upcomingMsg">منبه قادم</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">فشل تشغيل الصوت</string>         <!-- error toast -->
 
-    <string name="alarms_configLabel_alarmQuick_notification">@string/alarmMode_notification1</string>               <!-- group title -->
+    <string name="alarms_label_alarmQuick_notification">@string/alarmMode_notification1</string>               <!-- group title -->
     <string name="alarmMode_alarm">منبه</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">تنبيه</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification1">تنبيه سريع</string>                <!-- alarm type (setting) -->
@@ -1424,8 +1424,8 @@
     <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
     <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
 
     <string name="widgetexport_dialog_title">تصدير الإعدادات</string>
     <string name="widgetexport_dialog_message">جارٍ تصدير إعدادات الودج إلى ملف.</string>
@@ -1488,11 +1488,11 @@
     <string name="places_action_copyPlace">نسخ</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">تحديد</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">البحث</string>        <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">حذف</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">مسح</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->
@@ -1620,7 +1620,7 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">حجم النص</string>
+    <string name="textSize_pref_title">حجم النص</string>
     <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">صغير</string>
@@ -1690,7 +1690,7 @@
     <string name="actionDesc_swapCards">تبديل البطاقات (اليوم / الغد)</string>
     <string name="actionDesc_nextCard">عرض البطاقة التالية</string>
     <string name="actionDesc_prevCard">عرض البطاقة السابقة</string>
-    <string name="actionDesc_showCard">@string/configAction_viewDate</string>
+    <string name="actionDesc_showCard">@string/action_viewDate</string>
     <string name="actionDesc_setAlarmForNote">ضبط منبه للمذكرة</string>
     <string name="actionDesc_alarmSnooze">@string/alarmAction_snooze</string>
     <string name="actionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
@@ -1701,7 +1701,7 @@
     <string name="actionDesc_nextSunrise">عرض شروق الشمس التالي</string>
     <string name="actionDesc_nextSunset">عرض غروب الشمس التالي</string>
     <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="actionDesc_settings">@string/configAction_settings</string>
+    <string name="actionDesc_settings">@string/action_settings</string>
     <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
     <string name="actionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
     <string name="actionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
@@ -1760,8 +1760,8 @@
     <string name="calendars_pref_summary">تكامل التقويم</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">الموقع السلبي</string>
-    <string name="location_label_passiveMode_summary">استخدام مزود الموقع السلبي.</string>
+    <string name="location_pref_passiveMode">الموقع السلبي</string>
+    <string name="location_pref_passiveMode_summary">استخدام مزود الموقع السلبي.</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">اللغة</string>
@@ -1850,7 +1850,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">تشغيل</string> <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_pause">إيقاف مؤقت</string> <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_record">تسجيل</string> <!-- button (contentDescription) -->
@@ -1862,7 +1862,7 @@
     <string name="worldmap_dialog_option_moonlight">ضوء القمر</string>
     <string name="worldmap_dialog_option_all">الكل</string>
     <string name="worldmap_dialog_option_location">الموقع</string>
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">توسيط على الموقع</string>
     <string name="worldmap_dialog_option_center_current">التوسيط: %s</string>
     <string name="worldmap_dialog_option_center_msg">تم تعيين مركز الخريطة إلى الموقع الحالي \n[%s]</string> <!-- toast message; center set to... -->
@@ -1879,12 +1879,12 @@
        <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="worldmap_action_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
     <string name="lightgraph_label_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
@@ -1892,8 +1892,8 @@
     <string name="lightgraph_label_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">Crosshair</string>  <!-- TODO -->
     <string name="lightmap_graph_option_grid">الشبكة</string>
@@ -1914,14 +1914,14 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Playback Controls</string>
 
     <!-- Dialog: Set Alarm -->
 
     <string name="schedalarm_label_alarm_mode">جدولة تنبيه لـ</string>
     <string name="schedalarm_label_notification_mode">جدولة إشعار لـ</string>
-    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>
+    <string name="schedalarm_dialog_title">@string/action_setAlarm</string>
     <string name="schedalarm_dialog_tab_event">الحدث</string>
     <string name="schedalarm_dialog_tab_time">الوقت</string>
     <string name="schedalarm_dialog_ok">جدولة</string>
@@ -2165,8 +2165,8 @@
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->
     <string name="colors_action_saveColors">Save</string>    <!-- TODO -->
     <string name="colors_action_deleteColors">Delete</string>    <!-- TODO -->
-    <string name="colors_action_importColors">@string/configAction_import</string>    <!-- TODO -->
-    <string name="colors_action_exportColors">@string/configAction_export</string>    <!-- TODO -->
+    <string name="colors_action_importColors">@string/action_import</string>    <!-- TODO -->
+    <string name="colors_action_exportColors">@string/action_export</string>    <!-- TODO -->
 
     <string name="colors_suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
     <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->

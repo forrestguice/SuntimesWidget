@@ -52,7 +52,7 @@
                 android:scaleType="center"
                 app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="0dp"
-                android:contentDescription="@string/configAction_settings" />
+                android:contentDescription="@string/action_settings" />
 
         </FrameLayout>
 

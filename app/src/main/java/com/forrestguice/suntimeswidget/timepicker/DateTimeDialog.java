@@ -38,7 +38,7 @@ public class DateTimeDialog extends DateDialog
 
     @Nullable
     protected CharSequence getNeutralButtonLabel() {
-        return getString(R.string.configAction_time);
+        return getString(R.string.action_time);
     }
 
     @Override

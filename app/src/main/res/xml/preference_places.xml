@@ -4,7 +4,7 @@
     <com.forrestguice.support.preference.Preference
         android:key="places_manage"
         android:persistent="false"
-        android:title="@string/configLabel_places_manage"
+        android:title="@string/places_label_manage"
         android:icon="?attr/icActionPlace" />
 
     <com.forrestguice.support.preference.PreferenceCategory
@@ -12,45 +12,45 @@
 
         <com.forrestguice.support.preference.ListPreference
             android:key="getFix_maxElapsed"
-            android:title="@string/configLabel_getFix_maxElapse"
-            android:dialogTitle="@string/configLabel_getFix_maxElapse"
-            android:summary="@string/configLabel_getFix_maxElapse_summary"
-            android:entries="@array/getFix_maxElapse_display" android:entryValues="@array/getFix_maxElapse_values"
+            android:title="@string/location_pref_maxElapse"
+            android:dialogTitle="@string/location_pref_maxElapse"
+            android:summary="@string/location_pref_maxElapse_summary"
+            android:entries="@array/location_maxElapse_display" android:entryValues="@array/location_maxElapse_values"
             android:defaultValue="@string/def_getFix_maxElapsed" />
 
         <com.forrestguice.support.preference.ListPreference
             android:key="getFix_maxAge"
-            android:title="@string/configLabel_getFix_maxAge"
-            android:dialogTitle="@string/configLabel_getFix_maxAge"
-            android:summary="@string/configLabel_getFix_maxAge_summary"
-            android:entries="@array/getFix_maxAge_display" android:entryValues="@array/getFix_maxAge_values"
+            android:title="@string/location_pref_maxAge"
+            android:dialogTitle="@string/location_pref_maxAge"
+            android:summary="@string/location_pref_maxAge_summary"
+            android:entries="@array/location_maxAge_display" android:entryValues="@array/location_maxAge_values"
             android:defaultValue="@string/def_getFix_maxAge" />
 
         <com.forrestguice.support.preference.CheckBoxPreference
             android:key="getFix_passiveMode"
-            android:title="@string/configLabel_getFix_passiveMode"
-            android:summary="@string/configLabel_getFix_passiveMode_summary"
+            android:title="@string/location_pref_passiveMode"
+            android:summary="@string/location_pref_passiveMode_summary"
             android:defaultValue="@bool/def_getFix_passiveMode" />
 
     </com.forrestguice.support.preference.PreferenceCategory>
 
     <com.forrestguice.support.preference.PreferenceCategory
         android:key="getFix_providers"
-        android:title="@string/configLabel_locationproviders" />   <!-- populated at runtime -->
+        android:title="@string/location_label_locationproviders" />   <!-- populated at runtime -->
 
     <com.forrestguice.support.preference.PreferenceCategory
         android:key="getFix_debug"
-        android:title="@string/configLabel_getFix_lastRequest">
+        android:title="@string/location_label_lastRequest">
 
         <com.forrestguice.support.preference.CheckBoxPreference
             android:key="getFix_last_log_enabled"
-            android:title="@string/configLabel_getFix_lastRequest_flag"
+            android:title="@string/location_label_lastRequest_flag"
             android:defaultValue="false" />
 
         <com.forrestguice.support.preference.Preference
             android:key="places_location_last_info"
             android:persistent="false"
-            android:title="@string/configLabel_getFix_lastRequest" />
+            android:title="@string/location_label_lastRequest" />
 
     </com.forrestguice.support.preference.PreferenceCategory>
 

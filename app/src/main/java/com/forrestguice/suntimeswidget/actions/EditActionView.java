@@ -429,7 +429,7 @@ public class EditActionView extends LinearLayout
             if (fragmentManager != null) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
-                helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
+                helpDialog.setShowNeutralButton(getContext().getString(R.string.action_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
                 if (fragmentManager.getFragmentManager() != null) {
                     helpDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_HELP);

@@ -274,7 +274,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
         }
         public WelcomeActivityRobot assertAboutPageIsShown(Context context)
         {
-            onView(allOf(withText(R.string.configAction_aboutWidget), withClassName(endsWith("Button"))))
+            onView(allOf(withText(R.string.action_about), withClassName(endsWith("Button"))))
                     .check(assertShownCompletely)
                     .check(assertClickable);
             //onView(allOf(withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),

@@ -14,7 +14,7 @@
             android:padding="8dp"
             android:background="?attr/selectableItemBackground"
             android:scaleType="centerInside"
-            android:contentDescription="@string/configAction_settings"
+            android:contentDescription="@string/action_settings"
             android:src="?attr/icActionSettings" />
 
     </LinearLayout>

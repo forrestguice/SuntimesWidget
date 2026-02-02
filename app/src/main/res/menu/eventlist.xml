@@ -57,7 +57,7 @@
             app:showAsAction="never" />
 
         <item android:id="@+id/helpEvents"
-            android:title="@string/configAction_help"
+            android:title="@string/action_help"
             android:icon="?attr/icActionHelp"
             app:showAsAction="never" />
 

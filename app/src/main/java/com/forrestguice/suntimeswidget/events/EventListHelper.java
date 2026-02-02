@@ -870,7 +870,7 @@ public class EventListHelper
 
             HelpDialog helpDialog = new HelpDialog();
             helpDialog.setContent(helpSpan);
-            helpDialog.setShowNeutralButton(context.getString(R.string.configAction_onlineHelp));
+            helpDialog.setShowNeutralButton(context.getString(R.string.action_onlineHelp));
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
             FragmentManagerCompat fragmentManager = getFragmentManager();
             if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {

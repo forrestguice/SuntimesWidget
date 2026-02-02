@@ -793,7 +793,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         TimeDateDialog dialog = new TimeDateDialog();
         dialog.loadSettings(activity);
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(activity, 0) == TimeFormatMode.MODE_24HR);
-        dialog.setDialogTitle(activity.getString(R.string.configAction_seekTime));
+        dialog.setDialogTitle(activity.getString(R.string.action_seekTime));
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
     }
@@ -1114,7 +1114,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
                             mapBackgroundFilePicker(REQUEST_BACKGROUND);
                         }
                     })
-                    .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                    .setNeutralButton(context.getString(R.string.action_onlineHelp),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

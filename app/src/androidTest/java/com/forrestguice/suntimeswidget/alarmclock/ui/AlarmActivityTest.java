@@ -250,7 +250,7 @@ public class AlarmActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmActivityRobot clickClearSelectionButton(int position) {
-            onView(allOf(withContentDescription(R.string.configAction_deselect), withClassName(endsWith("ActionButton")))).perform(click());
+            onView(allOf(withContentDescription(R.string.action_deselect), withClassName(endsWith("ActionButton")))).perform(click());
             return this;
         }
 

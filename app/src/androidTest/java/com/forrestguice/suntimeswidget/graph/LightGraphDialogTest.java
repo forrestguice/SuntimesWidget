@@ -139,7 +139,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
 
         public LightGraphDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_lightGraphDialog)).perform(click());
+            onView(withText(R.string.action_lightGraphDialog)).perform(click());
             return this;
         }
         @Override
@@ -152,7 +152,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightGraphDialogRobot cancelOverflowMenu_Options(Context context) {
@@ -164,7 +164,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot clickOverflowMenuItem_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightGraphDialogRobot clickOverflowMenuItem_TimeZone(Context context) {
@@ -184,7 +184,7 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot clickOverflowMenuItem_Share(Context context) {
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightGraphDialogRobot clickSunPositionButton(Context context) {
@@ -212,9 +212,9 @@ public class LightGraphDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightGraphDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             return this;
         }
         public LightGraphDialogRobot assertOverflowMenuShown_Options(Context context) {

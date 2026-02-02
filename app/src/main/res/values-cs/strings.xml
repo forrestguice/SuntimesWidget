@@ -6,52 +6,52 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Obnovit</string>
-    <string name="configAction_addLocation">Poloha</string>
-    <string name="configAction_mapLocation">Zobrazit mapu</string>
-    <string name="configAction_mapLocation_chooser">Zobrazit polohu pomocí</string>
-    <string name="configAction_mapLocation_noapp">Nepodařilo se najít žádnou aplikaci pro zobrazení map!</string>
-    <string name="configAction_showCalendar">Kalendář</string>
-    <string name="configAction_setAlarm">Nastavit budík</string>
-    <string name="configAction_setTimeZone">Nastavení časového pásma</string>
-    <string name="configAction_setDate">Nastavit datum</string>
-    <string name="configAction_viewDate">Zobrazit datum</string>
-    <string name="configAction_viewDateWith">Zobrazit datum</string>
-    <string name="configAction_share">Sdílet</string>
-    <string name="configAction_export">Exportovat</string>
-    <string name="configAction_import">Importovat</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
-    <string name="configAction_sunDialog">Poloha slunce</string>
-    <string name="configAction_equinoxDialog">Slunovrat / Rovnodennost</string>
-    <string name="configAction_worldMap">Mapa světa</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
-    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
-    <string name="configAction_moon">Měsíc</string>
-    <string name="configAction_help">Nápověda</string>
-    <string name="configAction_onlineHelp">Nápověda online</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
-    <string name="configAction_overflow">Více</string>
-    <string name="configAction_options">Možnosti</string>
-    <string name="configAction_settings">Nastavení</string>
-    <string name="configAction_aboutWidget">O aplikaci</string>
+    <string name="action_refreshLocation">Obnovit</string>
+    <string name="action_addLocation">Poloha</string>
+    <string name="action_mapLocation">Zobrazit mapu</string>
+    <string name="action_mapLocation_chooser">Zobrazit polohu pomocí</string>
+    <string name="action_mapLocation_chooser_noapp">Nepodařilo se najít žádnou aplikaci pro zobrazení map!</string>
+    <string name="action_showCalendar">Kalendář</string>
+    <string name="action_setAlarm">Nastavit budík</string>
+    <string name="action_setTimeZone">Nastavení časového pásma</string>
+    <string name="action_setDate">Nastavit datum</string>
+    <string name="action_viewDate">Zobrazit datum</string>
+    <string name="action_viewDateWith">Zobrazit datum</string>
+    <string name="action_share">Sdílet</string>
+    <string name="action_export">Exportovat</string>
+    <string name="action_import">Importovat</string>
+    <string name="action_info">More Info</string>   <!-- TODO -->
+    <string name="action_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="action_sunDialog">Poloha slunce</string>
+    <string name="action_equinoxDialog">Slunovrat / Rovnodennost</string>
+    <string name="action_worldMap">Mapa světa</string>
+    <string name="action_openNavDrawer">Open navigation</string>  <!-- TODO -->
+    <string name="action_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="action_clock">Clock</string>    <!-- TODO -->
+    <string name="action_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="action_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
+    <string name="action_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="action_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="action_deselect">Clear Selection</string>                                    <!-- TODO -->
+    <string name="action_moon">Měsíc</string>
+    <string name="action_help">Nápověda</string>
+    <string name="action_onlineHelp">Nápověda online</string>
+    <string name="action_appDetails">App info</string>    <!-- TODO -->
+    <string name="action_overflow">Více</string>
+    <string name="action_options">Možnosti</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="action_about">O aplikaci</string>
 
 
     <!-- Shortcuts -->
 
-    <string name="shortcut_suninfo_short">@string/configAction_sunDialog</string>
-    <string name="shortcut_suninfo_long">@string/configAction_sunDialog</string>
-    <string name="shortcut_suninfo_disabled">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_short">@string/action_sunDialog</string>
+    <string name="shortcut_suninfo_long">@string/action_sunDialog</string>
+    <string name="shortcut_suninfo_disabled">@string/action_sunDialog</string>
 
-    <string name="shortcut_mooninfo_short">@string/configAction_moon</string>
-    <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
-    <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_short">@string/action_moon</string>
+    <string name="shortcut_mooninfo_long">@string/action_moon</string>
+    <string name="shortcut_mooninfo_disabled">@string/action_moon</string>
 
     <string name="shortcut_widgetlist_short">@string/widgetList_label</string>
     <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
@@ -285,7 +285,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Obnovit výchozí</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">Obnovit výchozí</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[default]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
@@ -498,8 +498,8 @@
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Základní</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polární [severní]</string>     <!-- setting -->
@@ -705,8 +705,8 @@
     <string name="actions_action_load">Načíst</string>         <!-- button (contentDescription) -->
     <string name="actions_action_delete">Smazat</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">Vyčistit vše</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="themes_configLabel_widgetThemeList">Témata</string>
@@ -716,9 +716,9 @@
     <string name="themes_configAction_editTheme">Upravit</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">Smazat</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">Kopírovat</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="themes_configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
     <string name="themes_widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
@@ -940,8 +940,8 @@
     <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
     <plurals name="eventPlural">
         <item quantity="one">%d event</item>
@@ -997,7 +997,7 @@
     <string name="alarms_action_editAlarm">Upravit</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">Smazat</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">Vyčistit</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="alarms_action_sortAlarms">Seřadit</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_time">Čas budíku</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">Datum vytvoření</string>                <!-- action button / menu item -->
@@ -1349,8 +1349,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
     <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
     <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
@@ -1401,11 +1401,11 @@
     <string name="places_action_copyPlace">Kopírovat</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Vybrat</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Hledat</string>        <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">Smazat</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">Vyčistit</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->
@@ -1516,7 +1516,7 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">Text Size</string>     <!-- TODO -->
+    <string name="textSize_pref_title">Text Size</string>     <!-- TODO -->
     <string name="textSize_pref_summary">%s</string>     <!-- TODO -->
 
     <string name="textSize_small">Small</string>   <!-- TODO -->
@@ -1585,7 +1585,7 @@
     <string name="actionDesc_swapCards">Prohodit karty (dnes/zítra)</string>
     <string name="actionDesc_nextCard">Zobrazit další kartu</string>
     <string name="actionDesc_prevCard">Zobrazit předchozí kartu</string>
-    <string name="actionDesc_showCard">@string/configAction_viewDate</string>
+    <string name="actionDesc_showCard">@string/action_viewDate</string>
     <string name="actionDesc_setAlarmForNote">Nastavit budík pro poznámku</string>
     <string name="actionDesc_alarmList">Seznam budíků</string>
     <string name="actionDesc_themeList">Seznam témat</string>
@@ -1652,8 +1652,8 @@
     <string name="calendars_pref_summary">Integrace kalendáře</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">Pasivní poloha</string>
-    <string name="location_label_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
+    <string name="location_pref_passiveMode">Pasivní poloha</string>
+    <string name="location_pref_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Nastavení jazyka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
@@ -1742,7 +1742,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">Přehrát</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_pause">Pauza</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_record">Nahrát</string>   <!-- button (contentDescription) -->
@@ -1754,7 +1754,7 @@
     <string name="worldmap_dialog_option_moonlight">Měsíční svit</string>
     <string name="worldmap_dialog_option_all">Obojí</string>
     <string name="worldmap_dialog_option_location">Pozice</string>
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">Vycentrovat na polohu</string>
     <string name="worldmap_dialog_option_center_current">Střed: %s</string>
     <string name="worldmap_dialog_option_center_msg">Střed mapy byl nastaven jako akutuální poloha \n[%s]</string>    <!-- toast message; center set to... -->
@@ -1771,11 +1771,11 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
     <string name="lightgraph_label_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
@@ -1783,8 +1783,8 @@
     <string name="lightgraph_label_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">Crosshair</string>  <!-- TODO -->
     <string name="lightmap_graph_option_grid">Grid</string>              <!-- TODO -->
@@ -1804,13 +1804,13 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="schedalarm_label_alarm_mode">Naplánovat budík pro</string>
     <string name="schedalarm_label_notification_mode">Naplánovat oznámení pro</string>
-    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->
+    <string name="schedalarm_dialog_title">@string/action_setAlarm</string>  <!-- may also be set to configAction_setNotification -->
     <string name="schedalarm_dialog_tab_event">Událost</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Čas</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">Plán</string>                          <!-- button text -->
@@ -2044,8 +2044,8 @@
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->
     <string name="colors_action_saveColors">Save</string>    <!-- TODO -->
     <string name="colors_action_deleteColors">Delete</string>    <!-- TODO -->
-    <string name="colors_action_importColors">@string/configAction_import</string>    <!-- TODO -->
-    <string name="colors_action_exportColors">@string/configAction_export</string>    <!-- TODO -->
+    <string name="colors_action_importColors">@string/action_import</string>    <!-- TODO -->
+    <string name="colors_action_exportColors">@string/action_export</string>    <!-- TODO -->
 
     <string name="colors_suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
     <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->

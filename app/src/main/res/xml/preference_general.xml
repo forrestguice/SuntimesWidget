@@ -70,7 +70,7 @@
             app:helpText="@string/help_datasources"
             app:helpLink="@string/help_url"
             app:helpPath="@string/help_datasources_path"
-            app:moreHelpButtonText="@string/configAction_onlineHelp"
+            app:moreHelpButtonText="@string/action_onlineHelp"
             />
 
     </com.forrestguice.support.preference.PreferenceCategory>

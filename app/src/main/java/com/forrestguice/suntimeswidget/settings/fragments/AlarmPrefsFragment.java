@@ -651,7 +651,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                                 }
                             }
                         })
-                .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                .setNeutralButton(context.getString(R.string.action_onlineHelp),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which)

@@ -202,7 +202,7 @@ public class DialogTest extends SuntimesActivityTestBase
         public HelpDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             sleep(500);
-            onView(withText(R.string.configAction_help)).perform(click());
+            onView(withText(R.string.action_help)).perform(click());
             return this;
         }
         @Override
@@ -222,7 +222,7 @@ public class DialogTest extends SuntimesActivityTestBase
         }
 
         public HelpDialogRobot assertOnlineHelpButtonShown(Context context) {
-            onView(withText(R.string.configAction_onlineHelp)).check(assertShown).check(assertClickable);
+            onView(withText(R.string.action_onlineHelp)).check(assertShown).check(assertClickable);
             return this;
         }
     }
@@ -243,11 +243,11 @@ public class DialogTest extends SuntimesActivityTestBase
             if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
             {
                 onView(navigationButton()).perform(click());
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
 
             } else {
                 openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
             }
             return this;
         }

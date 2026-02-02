@@ -811,7 +811,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public MainActivityRobot clickMapButton() {
-            onView(withContentDescription(R.string.configAction_mapLocation)).perform(click());
+            onView(withContentDescription(R.string.action_mapLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickDataSourceLabel() {
@@ -870,45 +870,45 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
 
         public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
-            onView(withText(R.string.configAction_viewDate)).perform(click());
+            onView(withText(R.string.action_viewDate)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_setTimeZone(Context context) {
-            onView(withText(R.string.configAction_setTimeZone)).perform(click());
+            onView(withText(R.string.action_setTimeZone)).perform(click());
             return this;
         }
         public MainActivityRobot clickActionBar_updateLocation(Context context) {
-            onView(withContentDescription(R.string.configAction_refreshLocation)).perform(click());
+            onView(withContentDescription(R.string.action_refreshLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickActionBar_setLocation(Context context) {
-            onView(withContentDescription(R.string.configAction_addLocation)).perform(click());
+            onView(withContentDescription(R.string.action_addLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_sunPosition(Context context) {
-            onView(withText(R.string.configAction_sunDialog)).perform(click());
+            onView(withText(R.string.action_sunDialog)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_sunLight(Context context) {
-            onView(withText(R.string.configAction_lightGraphDialog)).perform(click());
+            onView(withText(R.string.action_lightGraphDialog)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_moon(Context context) {
-            onView(withText(R.string.configAction_moon)).perform(click());
+            onView(withText(R.string.action_moon)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_worldMap(Context context) {
-            onView(withText(R.string.configAction_worldMap)).perform(click());
+            onView(withText(R.string.action_worldMap)).perform(click());
             return this;
         }
 
         public MainActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_viewDate)).perform(pressBack());
+            onView(withText(R.string.action_viewDate)).perform(pressBack());
             return this;
         }
 
         public MainActivityRobot assertActionBar_mapButtonShown(boolean shown) {
-            onView(withContentDescription(R.string.configAction_mapLocation)).check(shown ? assertShown : doesNotExist());
+            onView(withContentDescription(R.string.action_mapLocation)).check(shown ? assertShown : doesNotExist());
             return this;
         }
 
@@ -920,18 +920,18 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         public MainActivityRobot assertOverflowMenuShown(Context context)
         {
-            onView(withText(R.string.configAction_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setTimeZone)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_lightGraphDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_setTimeZone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_lightGraphDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public MainActivityRobot assertOverflowMenu_mapButtonShown(Activity context, boolean shown) {
-            onView(withText(R.string.configAction_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
+            onView(withText(R.string.action_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
             return this;
         }
 

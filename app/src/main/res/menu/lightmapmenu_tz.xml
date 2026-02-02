@@ -4,7 +4,7 @@
 
     <group>
         <item android:id="@+id/action_seektime"
-            android:title="@string/configAction_seekTime"
+            android:title="@string/action_seekTime"
             android:icon="?attr/icActionSearch"
             app:showAsAction="never" />
     </group>

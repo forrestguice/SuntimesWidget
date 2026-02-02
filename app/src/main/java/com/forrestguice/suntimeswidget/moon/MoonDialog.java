@@ -698,7 +698,7 @@ public class MoonDialog extends BottomSheetDialogBase
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == TimeFormatMode.MODE_24HR);
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.setInitialTime("12", "0");    // TODO: from prefs
-        dialog.setDialogTitle(context.getString(R.string.configAction_seekTime));
+        dialog.setDialogTitle(context.getString(R.string.action_seekTime));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
     }
 
@@ -1248,7 +1248,7 @@ public class MoonDialog extends BottomSheetDialogBase
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpDisplay);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }

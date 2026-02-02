@@ -590,7 +590,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                         //Log.d("DEBUG", "setChecked: " + i+":"+checked[i]);
                     }
                 })
-                .setPositiveButton(context.getString(isImport ? R.string.configAction_import : R.string.configAction_export), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(isImport ? R.string.action_import : R.string.action_export), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, keys, checked);
@@ -612,12 +612,12 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         {
             if (report != null) {
                 SnackbarUtils.make(context, view, message, (result ? 7000 : SnackbarUtils.LENGTH_LONG))
-                        .setAction(context.getString(R.string.configAction_info), onClickShowReport(context, message, report))
+                        .setAction(context.getString(R.string.action_info), onClickShowReport(context, message, report))
                         .show();
 
             } else if (result && shareUri != null) {
                 SnackbarUtils.make(context, view, message, 7000)
-                        .setAction(context.getString(R.string.configAction_share), onClickShareUri(context, shareUri))
+                        .setAction(context.getString(R.string.action_share), onClickShareUri(context, shareUri))
                         .show();
             }
         }
@@ -633,7 +633,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
-                context.startActivity(Intent.createChooser(intent, context.getString(R.string.configAction_share)));
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.action_share)));
             }
         };
     }

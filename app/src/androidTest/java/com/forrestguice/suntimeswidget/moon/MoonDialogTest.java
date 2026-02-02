@@ -164,7 +164,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
 
         public MoonDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_moon)).perform(click());
+            onView(withText(R.string.action_moon)).perform(click());
             return this;
         }
 
@@ -204,7 +204,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
 
         public MoonDialogRobot clickOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot clickOverflowMenu_Options_Colors(Context context) {
@@ -217,7 +217,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
 
         public MoonDialogRobot clickOverflowMenu_Help(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot cancelOverflowMenu_Help(Context context) {
@@ -243,8 +243,8 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
         public MoonDialogRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.moon_dialog_controls)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             return this;
         }
         public MoonDialogRobot assertOverflowMenu_Controls(Context context) {
@@ -263,9 +263,9 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
         public MoonDialogRobot assertOverflowMenu_Help(Context context) {
             onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertClickable);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertEnabled);
             return this;
         }
 

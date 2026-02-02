@@ -685,7 +685,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }

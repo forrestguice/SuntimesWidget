@@ -52,7 +52,7 @@
                 style="?attr/actionOverflowButtonStyle"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/configAction_overflow" />
+                android:contentDescription="@string/action_overflow" />
 
         </com.forrestguice.support.constraint.ConstraintLayout>
 

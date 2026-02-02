@@ -298,7 +298,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_widgetlist));
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(SuntimesWidgetListActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
     }
@@ -531,7 +531,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             @Override
             public void onStarted() {
-                showProgress(context, context.getString(R.string.configAction_import), context.getString(R.string.configAction_import));
+                showProgress(context, context.getString(R.string.action_import), context.getString(R.string.action_import));
             }
 
             @Override

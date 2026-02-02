@@ -28,7 +28,7 @@
         android:id="@+id/action_colors_share"
         android:orderInCategory="300"
         android:icon="?attr/icActionShare"
-        android:title="@string/configAction_share"
+        android:title="@string/action_share"
         app:showAsAction="never" />
 
     <item

@@ -5,44 +5,44 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Aktualigi</string>
-    <string name="configAction_addLocation">Loko</string>
-    <string name="configAction_mapLocation">Montri mapon</string>
-    <string name="configAction_mapLocation_chooser">Montri lokon per</string>
-    <string name="configAction_mapLocation_noapp">Ne povas trovi map‑aplikaĵon!</string>
-    <string name="configAction_showCalendar">Kalendaro</string>
-    <string name="configAction_setAlarm">Agordi averton</string>
-    <string name="configAction_setTimeZone">Elekti horzonon</string>
-    <string name="configAction_setDate">Elekti daton</string>
-    <string name="configAction_viewDate">Montri daton</string>
-    <string name="configAction_viewDateWith">Montri daton</string>
-    <string name="configAction_share">Kunhavigi</string>
-    <string name="configAction_export">Elporti</string>
-    <string name="configAction_import">Enporti</string>
-    <string name="configAction_info">Pliaj informoj</string>
-    <string name="configAction_sortBy">Oridgi laŭ</string>
-    <string name="configAction_sunDialog">Pozicio de Suno</string>
-    <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
-    <string name="configAction_worldMap">Mondmapo</string>
-    <string name="configAction_openNavDrawer">Malfermi flankpanelon</string>
-    <string name="configAction_closeNavDrawer">Fermi flankpanelon</string>
-    <string name="configAction_clock">Horloĝo</string>
-    <string name="configAction_lightGraphDialog">Sunlumo</string>
-    <string name="configAction_lightGraph">Diagramo de lumo</string>
-    <string name="configAction_lineGraph">Diagramo de altitudo</string>
-    <string name="configAction_seekAltitude">Serĉi altitudon</string>        <!-- checkbox label -->
-    <string name="configAction_search">Serĉi</string>        <!-- button (contentDescription) -->
-    <string name="configAction_deselect">Forviŝi elekton</string>
-    <string name="configAction_checkNone">Nenio</string>
-    <string name="configAction_checkAll">Ĉio</string>
-    <string name="configAction_moon">Luno</string>
-    <string name="configAction_help">Helpo</string>
-    <string name="configAction_onlineHelp">Helpo enrete</string>
-    <string name="configAction_appDetails">Aplikaĵ-informoj</string>
-    <string name="configAction_overflow">Pli</string>
-    <string name="configAction_options">Agordi…</string>
-    <string name="configAction_settings">Agordoj</string>
-    <string name="configAction_aboutWidget">Pri</string>
+    <string name="action_refreshLocation">Aktualigi</string>
+    <string name="action_addLocation">Loko</string>
+    <string name="action_mapLocation">Montri mapon</string>
+    <string name="action_mapLocation_chooser">Montri lokon per</string>
+    <string name="action_mapLocation_chooser_noapp">Ne povas trovi map‑aplikaĵon!</string>
+    <string name="action_showCalendar">Kalendaro</string>
+    <string name="action_setAlarm">Agordi averton</string>
+    <string name="action_setTimeZone">Elekti horzonon</string>
+    <string name="action_setDate">Elekti daton</string>
+    <string name="action_viewDate">Montri daton</string>
+    <string name="action_viewDateWith">Montri daton</string>
+    <string name="action_share">Kunhavigi</string>
+    <string name="action_export">Elporti</string>
+    <string name="action_import">Enporti</string>
+    <string name="action_info">Pliaj informoj</string>
+    <string name="action_sortBy">Oridgi laŭ</string>
+    <string name="action_sunDialog">Pozicio de Suno</string>
+    <string name="action_equinoxDialog">Solstico / ekvinokso</string>
+    <string name="action_worldMap">Mondmapo</string>
+    <string name="action_openNavDrawer">Malfermi flankpanelon</string>
+    <string name="action_closeNavDrawer">Fermi flankpanelon</string>
+    <string name="action_clock">Horloĝo</string>
+    <string name="action_lightGraphDialog">Sunlumo</string>
+    <string name="action_lightGraph">Diagramo de lumo</string>
+    <string name="action_lineGraph">Diagramo de altitudo</string>
+    <string name="action_seekAltitude">Serĉi altitudon</string>        <!-- checkbox label -->
+    <string name="action_search">Serĉi</string>        <!-- button (contentDescription) -->
+    <string name="action_deselect">Forviŝi elekton</string>
+    <string name="action_checkNone">Nenio</string>
+    <string name="action_checkAll">Ĉio</string>
+    <string name="action_moon">Luno</string>
+    <string name="action_help">Helpo</string>
+    <string name="action_onlineHelp">Helpo enrete</string>
+    <string name="action_appDetails">Aplikaĵ-informoj</string>
+    <string name="action_overflow">Pli</string>
+    <string name="action_options">Agordi…</string>
+    <string name="action_settings">Agordoj</string>
+    <string name="action_about">Pri</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -230,7 +230,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restarigi normojn</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">Restarigi normojn</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[implicita]</string>
     <string name="configLabel_tagPlugin">[kromprogramo]</string>
@@ -446,8 +446,8 @@
     <string name="widgetMode3x1_lightmap_medium">Lum-mapo (meza)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Lum-mapo (malgranda)</string>     <!-- setting -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
@@ -659,8 +659,8 @@
     <string name="actions_action_load">Lanĉi</string>         <!-- button (contentDescription) -->
     <string name="actions_action_delete">Forigi</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="themes_configLabel_widgetThemeList">Fenestraĵa haŭto</string>
@@ -670,9 +670,9 @@
     <string name="themes_configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
@@ -895,8 +895,8 @@
     <string name="events_configAction_addEvent_sunEvent">Aldoni (altitudo de Suno)</string>           <!-- button (contentDescription) -->
     <string name="events_configAction_addEvent_shadowEvent">Aldoni (longo de ombro)</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Enportis <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d okazaĵon</item>
@@ -951,7 +951,7 @@
     <string name="alarms_action_editAlarm">Redakti</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">Forigi ĉiujn</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms">Ordigi</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_time">tempo de alarmo</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">tempo de kreo</string>                <!-- action button / menu item -->
@@ -990,7 +990,7 @@
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Fiaskis ludi sonon!</string>         <!-- error toast -->
 
-    <string name="alarms_configLabel_alarmQuick_notification">Rapida sciigo</string>               <!-- group title -->-->
+    <string name="alarms_label_alarmQuick_notification">Rapida sciigo</string>               <!-- group title -->-->
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
@@ -1295,8 +1295,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">Elporti agordojn</string>
     <string name="widgetexport_dialog_message">Elportado de agordoj pri fenestraĵoj al dosiero.</string>
     <string name="widgetimport_dialog_title">Enporti agordojn</string>
@@ -1344,11 +1344,11 @@
     <string name="places_action_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Serĉi</string>              <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarkto</string>
     <string name="place_label_AF">Afriko</string>
@@ -1452,7 +1452,7 @@
     <string name="themes_appThemes_lightTheme1">Kontrasta (hela)</string>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">Grando de teksto</string>
+    <string name="textSize_pref_title">Grando de teksto</string>
     <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">malgranda</string>
@@ -1536,15 +1536,15 @@
     <string name="calendars_pref_summary">Interagi kun kalendaro</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">Pasiva pozici-trovado</string>
-    <string name="location_label_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
+    <string name="location_pref_passiveMode">Pasiva pozici-trovado</string>
+    <string name="location_pref_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
 
     <!--
          DIALOGS
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">Ludi</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_pause">Paŭzigi</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_record">Registri</string>   <!-- button (contentDescription) -->
@@ -1556,7 +1556,7 @@
     <string name="worldmap_dialog_option_moonlight">Luno</string>
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
     <string name="worldmap_dialog_option_location">Pozicio</string>
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">Centrigi sur loko</string>
     <string name="worldmap_dialog_option_center_current">Centro: %s</string>
     <string name="worldmap_dialog_option_center_msg">Mapo centrigita al via nuna pozicio:\n[%s]</string>    <!-- toast message; center set to... -->
@@ -1573,13 +1573,13 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5 min</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 t</string>
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
 
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">Plej frua sunleviĝo</string>       <!-- label / contentDescription -->
     <string name="lightgraph_label_earliest_sunset">Plej frua sunsubiro</string>       <!-- label / contentDescription -->
@@ -1587,8 +1587,8 @@
     <string name="lightgraph_label_latest_sunset">Plej malfrua sunsubiro</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">Kruco</string>
     <string name="lightmap_graph_option_grid">Krado (detala)</string>
@@ -1608,7 +1608,7 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Regiloj de simulado</string>
 
     <!-- Dialog: Set Alarm -->
@@ -1926,8 +1926,8 @@
     <string name="colors_action_editColors">Redakti</string>
     <string name="colors_action_saveColors">Konservi</string>
     <string name="colors_action_deleteColors">Forigi</string>
-    <string name="colors_action_importColors">@string/configAction_import</string>
-    <string name="colors_action_exportColors">@string/configAction_export</string>
+    <string name="colors_action_importColors">@string/action_import</string>
+    <string name="colors_action_exportColors">@string/action_export</string>
 
     <string name="colors_suggest_colorid">Propra</string>       <!-- edittext hint -->
     <string name="colors_hint_colorid">Nomo</string>              <!-- edittext hint -->

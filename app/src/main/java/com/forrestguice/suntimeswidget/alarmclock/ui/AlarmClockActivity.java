@@ -1058,7 +1058,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 // restricted bucket warning
                 if (Build.VERSION.SDK_INT >= 28)
                 {
-                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.alarms_warning_restrictedBucket), addButton, getString(R.string.configAction_help), new View.OnClickListener()
+                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.alarms_warning_restrictedBucket), addButton, getString(R.string.action_help), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v) {
@@ -1246,7 +1246,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_restricted_bucket));
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmClockActivity.this, R.string.help_restricted_bucket_path), DIALOG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOG_HELP);
     }

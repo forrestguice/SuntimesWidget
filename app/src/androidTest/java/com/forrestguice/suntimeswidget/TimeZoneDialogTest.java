@@ -129,7 +129,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         public TimeZoneDialogRobot showDialog(Activity activity)
         {
             openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
-            onView(withText(R.string.configAction_setTimeZone)).perform(click());
+            onView(withText(R.string.action_setTimeZone)).perform(click());
             return this;
         }
         @Override

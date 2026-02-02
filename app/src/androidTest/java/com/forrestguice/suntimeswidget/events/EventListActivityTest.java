@@ -332,7 +332,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public EventListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -359,7 +359,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
             onView(withText(R.string.events_configAction_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.events_configAction_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.events_configAction_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 

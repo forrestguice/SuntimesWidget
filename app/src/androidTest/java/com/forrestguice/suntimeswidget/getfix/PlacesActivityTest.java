@@ -472,7 +472,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot clickBuildDialog_allButton() {
-            onView(allOf(withText(R.string.configAction_checkAll), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.action_checkAll), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickBuildDialog_cancelButton() {

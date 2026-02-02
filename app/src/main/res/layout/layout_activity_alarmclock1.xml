@@ -35,7 +35,7 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_gravity="bottom|start" android:layout_margin="8dp"
 			android:src="?attr/icActionDeselect" android:scaleType="center"
-			android:contentDescription="@string/configAction_deselect"
+			android:contentDescription="@string/action_deselect"
 			android:tint="?attr/fab_foregroundColorAlt"
 			app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
 			app:fabSize="mini"

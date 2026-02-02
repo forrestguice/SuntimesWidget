@@ -6,41 +6,41 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Aggiorna</string>
-    <string name="configAction_addLocation">Posizione</string>
-    <string name="configAction_mapLocation">Mappa</string>
-    <string name="configAction_mapLocation_chooser">Visualizza la posizione tramite</string>
-    <string name="configAction_mapLocation_noapp">Impossible trovare un\'applicazione per visualizzare la mappa!</string>
-    <string name="configAction_showCalendar">Calendario</string>
-    <string name="configAction_setAlarm">Imposta sveglia</string>
-    <string name="configAction_setTimeZone">Imposta fuso orario</string>
-    <string name="configAction_setDate">Imposta data</string>
-    <string name="configAction_viewDate">Mostra la data</string>
-    <string name="configAction_viewDateWith">Mostra la data</string>
-    <string name="configAction_share">Condividi</string>
-    <string name="configAction_export">Esporta</string>
-    <string name="configAction_import">Importa</string>
-    <string name="configAction_info">Più informazioni</string>
-    <string name="configAction_sortBy">Ordina per</string>
-    <string name="configAction_sunDialog">Posizione del sole</string>
-    <string name="configAction_equinoxDialog">Solstizio / Equinozio</string>
-    <string name="configAction_worldMap">Mappa mondiale</string>
-    <string name="configAction_openNavDrawer">Apri menu</string>
-    <string name="configAction_closeNavDrawer">Chiudi menu</string>
-    <string name="configAction_clock">Orologio</string>
-    <string name="configAction_lightGraphDialog">Luce solare</string>
-    <string name="configAction_lineGraph">Grafico dell\'altitudine</string>
-    <string name="configAction_seekAltitude">Trova altitudine</string>        <!-- checkbox label -->
-    <string name="configAction_search">Cerca</string>        <!-- button (contentDescription) -->
-    <string name="configAction_deselect">Deseleziona</string>
-    <string name="configAction_moon">Luna</string>
-    <string name="configAction_help">Aiuto</string>
-    <string name="configAction_onlineHelp">Aiuto online</string>
-    <string name="configAction_appDetails">Informazioni app</string>
-    <string name="configAction_overflow">Altro</string>
-    <string name="configAction_options">Opzioni</string>
-    <string name="configAction_settings">Impostazioni</string>
-    <string name="configAction_aboutWidget">A proposito</string>
+    <string name="action_refreshLocation">Aggiorna</string>
+    <string name="action_addLocation">Posizione</string>
+    <string name="action_mapLocation">Mappa</string>
+    <string name="action_mapLocation_chooser">Visualizza la posizione tramite</string>
+    <string name="action_mapLocation_chooser_noapp">Impossible trovare un\'applicazione per visualizzare la mappa!</string>
+    <string name="action_showCalendar">Calendario</string>
+    <string name="action_setAlarm">Imposta sveglia</string>
+    <string name="action_setTimeZone">Imposta fuso orario</string>
+    <string name="action_setDate">Imposta data</string>
+    <string name="action_viewDate">Mostra la data</string>
+    <string name="action_viewDateWith">Mostra la data</string>
+    <string name="action_share">Condividi</string>
+    <string name="action_export">Esporta</string>
+    <string name="action_import">Importa</string>
+    <string name="action_info">Più informazioni</string>
+    <string name="action_sortBy">Ordina per</string>
+    <string name="action_sunDialog">Posizione del sole</string>
+    <string name="action_equinoxDialog">Solstizio / Equinozio</string>
+    <string name="action_worldMap">Mappa mondiale</string>
+    <string name="action_openNavDrawer">Apri menu</string>
+    <string name="action_closeNavDrawer">Chiudi menu</string>
+    <string name="action_clock">Orologio</string>
+    <string name="action_lightGraphDialog">Luce solare</string>
+    <string name="action_lineGraph">Grafico dell\'altitudine</string>
+    <string name="action_seekAltitude">Trova altitudine</string>        <!-- checkbox label -->
+    <string name="action_search">Cerca</string>        <!-- button (contentDescription) -->
+    <string name="action_deselect">Deseleziona</string>
+    <string name="action_moon">Luna</string>
+    <string name="action_help">Aiuto</string>
+    <string name="action_onlineHelp">Aiuto online</string>
+    <string name="action_appDetails">Informazioni app</string>
+    <string name="action_overflow">Altro</string>
+    <string name="action_options">Opzioni</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_about">A proposito</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -248,7 +248,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Ripristina impostazioni di default</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">Ripristina impostazioni di default</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[default]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
@@ -672,8 +672,8 @@
     <string name="actions_action_load">Carica</string>         <!-- button (contentDescription) -->
     <string name="actions_action_delete">Elimina</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">Rimuovi tutto</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="themes_configLabel_widgetThemeList">Temi per i widget</string>
@@ -683,8 +683,8 @@
     <string name="themes_configAction_editTheme">Modifica</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">Elimina</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">Copia</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Scuro</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">Scuro (trasparente)</string>      <!-- default widget theme name -->
@@ -905,8 +905,8 @@
     <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
     <plurals name="eventPlural">
         <item quantity="one">%d event</item>
@@ -1303,8 +1303,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
     <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
     <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
@@ -1352,11 +1352,11 @@
     <string name="places_action_copyPlace">Copia</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Seleziona</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Cerca</string>              <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">Rimuovi tutto</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->
@@ -1467,7 +1467,7 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">Text Size</string>     <!-- TODO -->
+    <string name="textSize_pref_title">Text Size</string>     <!-- TODO -->
     <string name="textSize_pref_summary">%s</string>     <!-- TODO -->
 
     <string name="textSize_small">Small</string>   <!-- TODO -->
@@ -1572,8 +1572,8 @@
     <string name="calendars_pref_summary">Integrazione nel calendario</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">Posizione passiva</string>
-    <string name="location_label_passiveMode_summary">Utilizza il provider di posizione passiva.</string>
+    <string name="location_pref_passiveMode">Posizione passiva</string>
+    <string name="location_pref_passiveMode_summary">Utilizza il provider di posizione passiva.</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Lingua</string>   <!-- group title -->
@@ -1714,7 +1714,7 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Controlli data</string>
 
     <!-- Dialog: Set Alarm -->
@@ -1953,8 +1953,8 @@
     <string name="colors_action_editColors">Modifica</string>
     <string name="colors_action_saveColors">Salva</string>
     <string name="colors_action_deleteColors">Rimuovi</string>
-    <string name="colors_action_importColors">@string/configAction_import</string>
-    <string name="colors_action_exportColors">@string/configAction_export</string>
+    <string name="colors_action_importColors">@string/action_import</string>
+    <string name="colors_action_exportColors">@string/action_export</string>
 
     <string name="colors_suggest_colorid">Personalizzato</string>       <!-- edittext hint -->
     <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->

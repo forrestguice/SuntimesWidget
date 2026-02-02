@@ -6,41 +6,41 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Freskatu</string>
-    <string name="configAction_addLocation">Kokapena</string>
-    <string name="configAction_mapLocation">Mapa erakutsi</string>
-    <string name="configAction_mapLocation_chooser">Kokapena aplikazio honekin ikusi</string>
-    <string name="configAction_mapLocation_noapp">Ezin izan da mapen aplikaziorik aurkitu!</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
-    <string name="configAction_setAlarm">Alarma ezarri</string>
-    <string name="configAction_setTimeZone">Ordu eremua ezarri</string>
-    <string name="configAction_setDate">Data ezarri</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
-    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
-    <string name="configAction_share">Share</string>    <!-- TODO -->
-    <string name="configAction_export">Esportatu</string>
-    <string name="configAction_import">Inportatu</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
-    <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
-    <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
-    <string name="configAction_worldMap">Munduko mapa</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
-    <string name="configAction_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
-    <string name="configAction_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configAction_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
-    <string name="configAction_deselect">Clear Selection</string>                                    <!-- TODO -->
-    <string name="configAction_moon">Ilargia</string>
-    <string name="configAction_help">Laguntza</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
-    <string name="configAction_options">Options</string>   <!-- TODO -->
-    <string name="configAction_settings">Ezarpenak</string>
-    <string name="configAction_aboutWidget">Honi buruz</string>
+    <string name="action_refreshLocation">Freskatu</string>
+    <string name="action_addLocation">Kokapena</string>
+    <string name="action_mapLocation">Mapa erakutsi</string>
+    <string name="action_mapLocation_chooser">Kokapena aplikazio honekin ikusi</string>
+    <string name="action_mapLocation_chooser_noapp">Ezin izan da mapen aplikaziorik aurkitu!</string>
+    <string name="action_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="action_setAlarm">Alarma ezarri</string>
+    <string name="action_setTimeZone">Ordu eremua ezarri</string>
+    <string name="action_setDate">Data ezarri</string>
+    <string name="action_viewDate">View Date</string>    <!-- TODO -->
+    <string name="action_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="action_share">Share</string>    <!-- TODO -->
+    <string name="action_export">Esportatu</string>
+    <string name="action_import">Inportatu</string>
+    <string name="action_info">More Info</string>   <!-- TODO -->
+    <string name="action_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="action_sunDialog">Eguzkiaren kokapena</string>
+    <string name="action_equinoxDialog">Solstizioak / Ekinokzioak</string>
+    <string name="action_worldMap">Munduko mapa</string>
+    <string name="action_openNavDrawer">Open navigation</string>  <!-- TODO -->
+    <string name="action_closeNavDrawer">Close navigation</string>  <!-- TODO -->
+    <string name="action_clock">Clock</string>    <!-- TODO -->
+    <string name="action_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="action_lineGraph">Altitude Graph</string>                                    <!-- TODO -->
+    <string name="action_seekAltitude">Seek Altitude</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="action_search">Search</string>        <!-- button (contentDescription) -->   <!-- TODO -->
+    <string name="action_deselect">Clear Selection</string>                                    <!-- TODO -->
+    <string name="action_moon">Ilargia</string>
+    <string name="action_help">Laguntza</string>
+    <string name="action_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="action_appDetails">App info</string>    <!-- TODO -->
+    <string name="action_overflow">More</string>  <!-- TODO -->
+    <string name="action_options">Options</string>   <!-- TODO -->
+    <string name="action_settings">Ezarpenak</string>
+    <string name="action_about">Honi buruz</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -241,7 +241,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Lehenetsiak berrezarri</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">Lehenetsiak berrezarri</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[lehenetsia]</string>
     <string name="configLabel_tagPlugin">[plugina]</string>
@@ -450,8 +450,8 @@
     <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Oinarrizkoa</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polarra</string>     <!-- setting -->  <!-- TODO (north) -->
@@ -656,8 +656,8 @@
     <string name="actions_action_load">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="actions_action_delete">Ezabatu</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">Garbitu</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="themes_configLabel_widgetThemeList">Widgeten itxurak</string>
@@ -667,8 +667,8 @@
     <string name="themes_configAction_editTheme">Editatu</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">Ezabatu</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">Kopiatu</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Iluna</string>                                <!-- default widget theme name --> <!-- TODO: review -->
     <string name="themes_widgetThemes_dark_transparent">Iluna (gardena)</string>      <!-- default widget theme name --> <!-- TODO: review -->
@@ -890,8 +890,8 @@
     <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
     <plurals name="eventPlural">
         <item quantity="one">%d event</item>
@@ -946,7 +946,7 @@
     <string name="alarms_action_editAlarm">Editatu</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">Ezabatu</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">Garbitu</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="alarms_action_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="alarms_action_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="alarms_action_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
@@ -1288,8 +1288,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
     <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
     <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
@@ -1337,11 +1337,11 @@
     <string name="places_action_copyPlace">Kopiatu</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Hautatu</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="places_action_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
     <string name="place_label_AF">Africa</string>    <!-- TODO -->
@@ -1452,7 +1452,7 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">Text Size</string>     <!-- TODO -->
+    <string name="textSize_pref_title">Text Size</string>     <!-- TODO -->
     <string name="textSize_pref_summary">%s</string>     <!-- TODO -->
 
     <string name="textSize_small">Small</string>   <!-- TODO -->
@@ -1557,8 +1557,8 @@
     <string name="calendars_pref_summary">Egutegiaren integrazioa</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">Kokapen pasiboa</string>
-    <string name="location_label_passiveMode_summary">Kokapen pasiboaren hornitzailea erabili.</string>
+    <string name="location_pref_passiveMode">Kokapen pasiboa</string>
+    <string name="location_pref_passiveMode_summary">Kokapen pasiboaren hornitzailea erabili.</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Hizkuntzaren ezarpenak</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
@@ -1647,7 +1647,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
@@ -1659,7 +1659,7 @@
     <string name="worldmap_dialog_option_moonlight">Ilargiaren argia</string>
     <string name="worldmap_dialog_option_all">Biak</string>
     <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
@@ -1676,11 +1676,11 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
     <string name="lightgraph_label_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
@@ -1688,8 +1688,8 @@
     <string name="lightgraph_label_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">Crosshair</string>  <!-- TODO -->
     <string name="lightmap_graph_option_grid">Grid</string>              <!-- TODO -->
@@ -1709,7 +1709,7 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Playback Controls</string>   <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
@@ -1946,8 +1946,8 @@
     <string name="colors_action_editColors">Edit</string>    <!-- TODO -->
     <string name="colors_action_saveColors">Save</string>    <!-- TODO -->
     <string name="colors_action_deleteColors">Delete</string>    <!-- TODO -->
-    <string name="colors_action_importColors">@string/configAction_import</string>    <!-- TODO -->
-    <string name="colors_action_exportColors">@string/configAction_export</string>    <!-- TODO -->
+    <string name="colors_action_importColors">@string/action_import</string>    <!-- TODO -->
+    <string name="colors_action_exportColors">@string/action_export</string>    <!-- TODO -->
 
     <string name="colors_suggest_colorid">Custom</string>       <!-- edittext hint -->    <!-- TODO -->
     <string name="colors_hint_colorid">ID</string>              <!-- edittext hint -->    <!-- TODO -->

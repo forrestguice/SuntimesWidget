@@ -1497,7 +1497,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         final DateTimeDialog dialog = new DateTimeDialog();
         dialog.loadSettings(activity);
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(activity, 0) == TimeFormatMode.MODE_24HR);
-        dialog.setDialogTitle(getString(R.string.configAction_seekDate));
+        dialog.setDialogTitle(getString(R.string.action_seekDate));
         dialog.setOnAcceptedListener(onSeekDateDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_DATE);
     }
@@ -1524,7 +1524,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         final TimeDateDialog dialog = new TimeDateDialog();
         dialog.loadSettings(activity);
         dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(activity, 0) == TimeFormatMode.MODE_24HR);
-        dialog.setDialogTitle(getString(R.string.configAction_seekTime));
+        dialog.setDialogTitle(getString(R.string.action_seekTime));
         dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
         dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
     }
@@ -2943,7 +2943,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpSpan);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }

@@ -167,7 +167,7 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WidgetListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -185,7 +185,7 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         public WidgetListActivityRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.action_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.action_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }

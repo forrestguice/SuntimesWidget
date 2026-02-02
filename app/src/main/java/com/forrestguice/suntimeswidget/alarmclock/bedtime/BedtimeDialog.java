@@ -569,7 +569,7 @@ public class BedtimeDialog extends DialogBase
         dialog.setValue((int) BedtimeSettings.loadPrefSleepCycleMs(context));
         dialog.setDialogListener(onSleepCycleDialogListener(item));
         dialog.setDialogTitle(getString(R.string.bedtime_label_sleepCycle));
-        dialog.setRestoreDefault(getString(R.string.configAction_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
+        dialog.setRestoreDefault(getString(R.string.action_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLE);
     }
 
@@ -1049,7 +1049,7 @@ public class BedtimeDialog extends DialogBase
         CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
         SnackbarUtils.make(context, getList(), message, 7000)
-                .setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()
+                .setAction(context.getString(R.string.action_setAlarm), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {

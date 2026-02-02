@@ -6,44 +6,44 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Odśwież</string>
-    <string name="configAction_addLocation">Lokalizacja</string>
-    <string name="configAction_mapLocation">Pokaż mapę</string>
-    <string name="configAction_mapLocation_chooser">Pokaż lokalizację używając</string>
-    <string name="configAction_mapLocation_noapp">Nie można odnaleźć programu do mapy!</string>
-    <string name="configAction_showCalendar">Kalendarz</string>
-    <string name="configAction_setAlarm">Ustaw alarm</string>
-    <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
-    <string name="configAction_setDate">Ustaw datę</string>
-    <string name="configAction_viewDate">Wyświetl datę</string>
-    <string name="configAction_viewDateWith">Wyświetl datę</string>
-    <string name="configAction_share">Udostępnij</string>
-    <string name="configAction_export">Eksportuj</string>
-    <string name="configAction_import">Importuj</string>
-    <string name="configAction_info">Więcej informacji</string>
-    <string name="configAction_sortBy">Sortuj</string>
-    <string name="configAction_sunDialog">Pozycja Słońca</string>
-    <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
-    <string name="configAction_worldMap">Mapa świata</string>
-    <string name="configAction_openNavDrawer">Otwórz panel nawigacyjny</string>
-    <string name="configAction_closeNavDrawer">Zamknij panel nawigacyjny</string>
-    <string name="configAction_clock">Zegar</string>
-    <string name="configAction_lightGraphDialog">Światło słoneczne</string>
-    <string name="configAction_lightGraph">Wykres światła słonecznego</string>
-    <string name="configAction_lineGraph">Wykres wysokości</string>
-    <string name="configAction_seekAltitude">Namierz wysokość</string>        <!-- checkbox label -->
-    <string name="configAction_search">Wyszukaj</string>        <!-- button (contentDescription) -->
-    <string name="configAction_deselect">Wyczyść wybór</string>
-    <string name="configAction_checkNone">Nic</string>
-    <string name="configAction_checkAll">Wszystko</string>
-    <string name="configAction_moon">Księżyc</string>
-    <string name="configAction_help">Pomoc</string>
-    <string name="configAction_onlineHelp">Pomoc online</string>
-    <string name="configAction_appDetails">Informacje o aplikacji</string>
-    <string name="configAction_overflow">Więcej</string>
-    <string name="configAction_options">Opcje</string>
-    <string name="configAction_settings">Ustawienia</string>
-    <string name="configAction_aboutWidget">O programie</string>
+    <string name="action_refreshLocation">Odśwież</string>
+    <string name="action_addLocation">Lokalizacja</string>
+    <string name="action_mapLocation">Pokaż mapę</string>
+    <string name="action_mapLocation_chooser">Pokaż lokalizację używając</string>
+    <string name="action_mapLocation_chooser_noapp">Nie można odnaleźć programu do mapy!</string>
+    <string name="action_showCalendar">Kalendarz</string>
+    <string name="action_setAlarm">Ustaw alarm</string>
+    <string name="action_setTimeZone">Ustaw strefę czasową</string>
+    <string name="action_setDate">Ustaw datę</string>
+    <string name="action_viewDate">Wyświetl datę</string>
+    <string name="action_viewDateWith">Wyświetl datę</string>
+    <string name="action_share">Udostępnij</string>
+    <string name="action_export">Eksportuj</string>
+    <string name="action_import">Importuj</string>
+    <string name="action_info">Więcej informacji</string>
+    <string name="action_sortBy">Sortuj</string>
+    <string name="action_sunDialog">Pozycja Słońca</string>
+    <string name="action_equinoxDialog">Przesilenie / równonoc</string>
+    <string name="action_worldMap">Mapa świata</string>
+    <string name="action_openNavDrawer">Otwórz panel nawigacyjny</string>
+    <string name="action_closeNavDrawer">Zamknij panel nawigacyjny</string>
+    <string name="action_clock">Zegar</string>
+    <string name="action_lightGraphDialog">Światło słoneczne</string>
+    <string name="action_lightGraph">Wykres światła słonecznego</string>
+    <string name="action_lineGraph">Wykres wysokości</string>
+    <string name="action_seekAltitude">Namierz wysokość</string>        <!-- checkbox label -->
+    <string name="action_search">Wyszukaj</string>        <!-- button (contentDescription) -->
+    <string name="action_deselect">Wyczyść wybór</string>
+    <string name="action_checkNone">Nic</string>
+    <string name="action_checkAll">Wszystko</string>
+    <string name="action_moon">Księżyc</string>
+    <string name="action_help">Pomoc</string>
+    <string name="action_onlineHelp">Pomoc online</string>
+    <string name="action_appDetails">Informacje o aplikacji</string>
+    <string name="action_overflow">Więcej</string>
+    <string name="action_options">Opcje</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_about">O programie</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
@@ -245,7 +245,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
+    <string name="action_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[domyślne]</string>
     <string name="configLabel_tagPlugin">[wtyczka]</string>
@@ -461,8 +461,8 @@
     <string name="widgetMode3x1_lightmap_medium">Mapa światła (średnia)</string>     <!-- setting -->
     <string name="widgetMode3x1_lightmap_small">Mapa światła (mała)</string>     <!-- setting -->
 
-    <string name="widgetMode3x2_linegraph">@string/configAction_lineGraph</string>     <!-- setting -->
-    <string name="widgetMode3x2_worldmap">@string/configAction_worldMap</string>     <!-- setting -->
+    <string name="widgetMode3x2_linegraph">@string/action_lineGraph</string>     <!-- setting -->
+    <string name="widgetMode3x2_worldmap">@string/action_worldMap</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa (północ)</string>     <!-- setting -->
@@ -666,8 +666,8 @@
     <string name="actions_action_load">Wywołaj</string>         <!-- button (contentDescription) -->
     <string name="actions_action_delete">Usuń</string>         <!-- button (contentDescription) -->
     <string name="actions_action_clear">Wyczyść wszystkie</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_export">@string/configAction_export</string>         <!-- button (contentDescription) -->
-    <string name="actions_action_import">@string/configAction_import</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_export">@string/action_export</string>         <!-- button (contentDescription) -->
+    <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="themes_configLabel_widgetThemeList">Skórki widżetu</string>
@@ -677,9 +677,9 @@
     <string name="themes_configAction_editTheme">Edytuj</string>         <!-- button (contentDescription) -->
     <string name="themes_configAction_deleteTheme">Usuń</string>     <!-- button (contentDescription) -->
     <string name="themes_configAction_copyTheme">Kopiuj</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Ciemna</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">Ciemna (przezroczysta)</string>      <!-- default widget theme name -->
@@ -902,8 +902,8 @@
     <string name="events_configAction_addEvent_sunEvent">Dodaj (wysokość Słońca)</string>           <!-- button (contentDescription) -->
     <string name="events_configAction_addEvent_shadowEvent">Dodaj (długość cienia)</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Zaimportowano <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d zdarzenie</item>
@@ -960,7 +960,7 @@
     <string name="alarms_action_editAlarm">Edytuj</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
-    <string name="alarms_action_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->
+    <string name="alarms_action_shareAlarms">@string/action_share</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms">Sortuj</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
@@ -999,7 +999,7 @@
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
     <string name="alarmAction_alertFailedMsg">Nie udało się odtworzyć dźwięku!</string>         <!-- error toast -->
 
-    <string name="alarms_configLabel_alarmQuick_notification">Szybkie powiadomienie</string>               <!-- group title -->-->-->
+    <string name="alarms_label_alarmQuick_notification">Szybkie powiadomienie</string>               <!-- group title -->-->-->
 
     <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
@@ -1315,8 +1315,8 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
     <string name="widgetexport_dialog_title">Eksport ustawień</string>
     <string name="widgetexport_dialog_message">Eksportowanie ustawień widżetów do pliku.</string>
     <string name="widgetimport_dialog_title">Import ustawień</string>
@@ -1370,11 +1370,11 @@
     <string name="places_action_copyPlace">Kopiuj</string>            <!-- button (contentDescription) -->
     <string name="places_action_selectPlace">Wybierz</string>        <!-- button (contentDescription) -->
     <string name="places_action_searchPlace">Wyszukaj</string>              <!-- button (contentDescription) -->
-    <string name="places_action_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
+    <string name="places_action_sharePlace">@string/action_share</string>          <!-- button (contentDescription) -->
     <string name="places_action_deletePlace">Usuń</string>        <!-- button (contentDescription) -->
     <string name="places_action_clearPlaces">Czyść</string>         <!-- button (contentDescription) -->
-    <string name="places_action_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
-    <string name="places_action_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
+    <string name="places_action_exportPlaces">@string/action_export</string>       <!-- button (contentDescription) -->
+    <string name="places_action_importPlaces">@string/action_import</string>       <!-- button (contentDescription) -->
 
     <string name="place_label_AN">Antarktyda</string>
     <string name="place_label_AF">Afryka</string>
@@ -1478,7 +1478,7 @@
     <string name="themes_appThemes_lightTheme1">Kontrastowy (jasny)</string>
 
     <!-- App Setting: text size -->
-    <string name="textSize_pref_label">Rozmiar liter</string>
+    <string name="textSize_pref_title">Rozmiar liter</string>
     <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">mały</string>
@@ -1569,8 +1569,8 @@
     <string name="calendars_pref_summary">Integracja z kalendarzem</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="location_label_passiveMode">Pasywna lokalizacja</string>
-    <string name="location_label_passiveMode_summary">Użyj pasywnej usługi określania lokalizacji.</string>
+    <string name="location_pref_passiveMode">Pasywna lokalizacja</string>
+    <string name="location_pref_passiveMode_summary">Użyj pasywnej usługi określania lokalizacji.</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Język</string>   <!-- group title -->
@@ -1659,7 +1659,7 @@
     -->
 
     <!-- Dialog: World Map -->
-    <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_title">@string/action_worldMap</string>
     <string name="worldmap_dialog_action_play">Odtwórz</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_pause">Wstrzymaj</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_record">Nagraj</string>   <!-- button (contentDescription) -->
@@ -1671,7 +1671,7 @@
     <string name="worldmap_dialog_option_moonlight">Księżyc</string>
     <string name="worldmap_dialog_option_all">Oba</string>
     <string name="worldmap_dialog_option_location">Położenie</string>
-    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_options_menu">@string/action_options</string>
     <string name="worldmap_dialog_option_center">Wyśrodkuj na lokalizacji</string>
     <string name="worldmap_dialog_option_center_current">Środek: %s</string>
     <string name="worldmap_dialog_option_center_msg">Wyśrodkowano mapę na obecną lokalizację:\n[%s]</string>    <!-- toast message; center set to... -->
@@ -1688,11 +1688,11 @@
     <string name="worldmap_dialog_speed_5m">&#215; 5 min</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 d</string>
-    <string name="worldmap_action_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
-    <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
-    <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
+    <string name="lightgraph_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightgraph_label_earliest_sunrise">Najwcześniejszy wschód Słońca</string>       <!-- label / contentDescription -->
     <string name="lightgraph_label_earliest_sunset">Najwcześniejszy zachód Słońca</string>       <!-- label / contentDescription -->
@@ -1700,8 +1700,8 @@
     <string name="lightgraph_label_latest_sunset">Najpóźniejszy zachód Słońca</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
-    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
-    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
+    <string name="lightmap_dialog_title">@string/action_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/action_options</string>       <!-- button (contentDescription) -->
 
     <string name="lightmap_graph_option_crosshair">Krzyżyk</string>
     <string name="lightmap_graph_option_grid">Siatka</string>
@@ -1721,7 +1721,7 @@
     <string name="lightmap_seekAltitude_setting_contentDescription">@string/table_header_sunset</string>
 
     <!-- Dialog: Moon -->
-    <string name="moon_dialog_title">@string/configAction_moon</string>
+    <string name="moon_dialog_title">@string/action_moon</string>
     <string name="moon_dialog_controls">Kontrolki symulacji</string>
 
     <!-- Dialog: Set Alarm -->
@@ -1961,8 +1961,8 @@
     <string name="colors_action_editColors">Edytuj</string>
     <string name="colors_action_saveColors">Zapisz</string>
     <string name="colors_action_deleteColors">Usuń</string>
-    <string name="colors_action_importColors">@string/configAction_import</string>
-    <string name="colors_action_exportColors">@string/configAction_export</string>
+    <string name="colors_action_importColors">@string/action_import</string>
+    <string name="colors_action_exportColors">@string/action_export</string>
 
     <string name="colors_suggest_colorid">Własny</string>       <!-- edittext hint -->
     <string name="colors_hint_colorid">Nazwa</string>              <!-- edittext hint -->

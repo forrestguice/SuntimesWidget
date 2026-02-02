@@ -407,7 +407,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }

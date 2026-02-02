@@ -42,7 +42,7 @@
         <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
             style="@style/Widget.AppCompat.ActionButton.Overflow"
             android:layout_width="48dp" android:layout_height="48dp"
-            android:contentDescription="@string/configAction_overflow" />
+            android:contentDescription="@string/action_overflow" />
 
     </LinearLayout>
 

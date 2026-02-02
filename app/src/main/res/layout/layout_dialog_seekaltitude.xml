@@ -36,11 +36,11 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textSize="?attr/text_size_small" android:textStyle="bold"
-        android:text="@string/configAction_seekAltitude" />
+        android:text="@string/action_seekAltitude" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
         android:layout_width="48dp" android:layout_height="48dp"
-        android:contentDescription="@string/configAction_overflow" android:textColor="?attr/text_accentColor" />
+        android:contentDescription="@string/action_overflow" android:textColor="?attr/text_accentColor" />
 
 </LinearLayout>

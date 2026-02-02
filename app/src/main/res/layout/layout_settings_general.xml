@@ -63,13 +63,13 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_general_timeMode_moreButton"
                 style="?attr/actionOverflowButtonStyle"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:contentDescription="@string/configAction_overflow" />
+                android:contentDescription="@string/action_overflow" />
 
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="gone"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
+                android:contentDescription="@string/action_help" />
 
         </LinearLayout>
 
@@ -108,7 +108,7 @@
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
+                android:contentDescription="@string/action_help" />
 
         </LinearLayout>
 
@@ -146,7 +146,7 @@
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
+                android:contentDescription="@string/action_help" />
 
         </LinearLayout>
 
@@ -212,7 +212,7 @@
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
+                android:contentDescription="@string/action_help" />
 
         </LinearLayout>
 

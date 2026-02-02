@@ -183,7 +183,7 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmEditActivityRobot clickOverflowMenu_options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmEditActivityRobot cancelOptionsMenu(Context context) {
@@ -191,7 +191,7 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmEditActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -238,8 +238,8 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         }
         public AlarmEditActivityRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.alarms_action_deleteAlarm)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public AlarmEditActivityRobot assertOptionsMenuShown(Context context) {

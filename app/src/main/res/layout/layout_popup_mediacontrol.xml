@@ -67,7 +67,7 @@
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
         android:paddingTop="8dp" android:paddingBottom="8dp"
-        android:contentDescription="@string/configAction_seekTime"
+        android:contentDescription="@string/action_seekTime"
         android:src="?attr/icActionSearch" />
 
 </LinearLayout>

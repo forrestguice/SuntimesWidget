@@ -2,21 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_locale">
+        android:title="@string/locale_pref_title">
 
         <com.forrestguice.support.preference.ListPreference
             android:key="app_locale_mode"
-            android:title="@string/configLabel_localeMode"
-            android:dialogTitle="@string/configLabel_localeMode"
-            android:summary="@string/configLabel_localeMode_summary"
+            android:title="@string/locale_pref_localeMode"
+            android:dialogTitle="@string/locale_pref_localeMode"
+            android:summary="@string/locale_pref_localeMode_summary"
             android:entries="@array/localeMode_display" android:entryValues="@array/localeMode_values"
             android:defaultValue="@string/def_app_locale_mode" />
 
         <com.forrestguice.support.preference.ListPreference
             android:key="app_locale"
-            android:title="@string/configLabel_localeSelect"
-            android:dialogTitle="@string/configLabel_localeSelect"
-            android:summary="@string/configLabel_localeSelect_summary"
+            android:title="@string/locale_pref_localeSelect"
+            android:dialogTitle="@string/locale_pref_localeSelect"
+            android:summary="@string/locale_pref_localeSelect_summary"
             android:entries="@array/locale_display" android:entryValues="@array/locale_values"
             android:defaultValue="@string/def_app_locale" />
 

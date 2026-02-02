@@ -351,7 +351,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
 
         public WorldMapDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_worldMap)).perform(click());
+            onView(withText(R.string.action_worldMap)).perform(click());
             return this;
         }
         @Override
@@ -404,12 +404,12 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public WorldMapDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public WorldMapDialogRobot clickOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_Options_Colors(Context context) {
@@ -422,15 +422,15 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
 
         public WorldMapDialogRobot clickOverflowMenu_View(Context context) {
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_View_Sun(Context context) {
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_View_Moon(Context context) {
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_View_Suntimes(Context context) {
@@ -438,7 +438,7 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public WorldMapDialogRobot clickOverflowMenu_View_Calendar(Context context) {
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_showCalendar)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WorldMapDialogRobot cancelOverflowMenu_View(Context context) {
@@ -489,10 +489,10 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_Options(Context context) {
@@ -502,9 +502,9 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
         }
         public WorldMapDialogRobot assertOverflowMenu_View(Context context) {
             onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public WorldMapDialogRobot assertOverflowMenu_TimeZone(Context context) {

@@ -137,7 +137,7 @@ public abstract class SuntimesTileBase
         ImageButton settingsButton = view.findViewById(R.id.button_settings);
         final Intent configIntent = getConfigIntent(context);
         if (configIntent != null && settingsButton == null) {
-            dialog.setNeutralButton(context.getString(R.string.configAction_settings), null);
+            dialog.setNeutralButton(context.getString(R.string.action_settings), null);
         }
 
         final Intent launchIntent = getLaunchIntent(context);

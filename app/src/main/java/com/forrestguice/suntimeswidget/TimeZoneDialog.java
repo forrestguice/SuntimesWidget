@@ -392,7 +392,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_general_solartime));
-                    helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+                    helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
                     helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
                     if (isAdded()) {
                         helpDialog.show(getParentFragmentManager(), DIALOGTAG_HELP);

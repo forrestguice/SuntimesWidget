@@ -69,13 +69,13 @@
                 android:layout_gravity="center_vertical|end"
                 android:src="?attr/icActionSun"
                 style="?attr/actionOverflowButtonStyle"
-                android:contentDescription="@string/configAction_sunDialog" />
+                android:contentDescription="@string/action_sunDialog" />
 
             <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
                 android:layout_width="48dp" android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 style="?attr/actionOverflowButtonStyle"
-                android:contentDescription="@string/configAction_overflow" />
+                android:contentDescription="@string/action_overflow" />
 
         </LinearLayout>
 

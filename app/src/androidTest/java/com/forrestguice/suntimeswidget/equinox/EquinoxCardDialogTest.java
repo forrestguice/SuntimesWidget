@@ -44,12 +44,6 @@ import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.SystemTimeFormat;
 
 import androidx.annotation.Nullable;
-import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.action.GeneralLocation;
-import androidx.test.espresso.action.GeneralSwipeAction;
-import androidx.test.espresso.action.Press;
-import androidx.test.espresso.action.Swipe;
-import androidx.test.espresso.action.ViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -555,7 +549,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
 
         public EquinoxDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_equinoxDialog)).perform(click());
+            onView(withText(R.string.action_equinoxDialog)).perform(click());
             return this;
         }
 
@@ -597,20 +591,20 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot cancelCardItem_menu(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_share(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_setAlarm(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_setAlarm)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_setAlarm)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
         public EquinoxDialogRobot clickCardItem_menu_viewWith(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_viewWith_Suntimes(Context context, SolsticeEquinoxMode mode) {
@@ -618,15 +612,15 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_viewWith_Sun(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_viewWith_Moon(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickCardItem_menu_viewWith_WorldMap(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot cancelCardItem_menu_viewWith(Context context, SolsticeEquinoxMode mode) {
@@ -666,7 +660,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
 
         public EquinoxDialogRobot clickOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Options_CrossQuarterDays(Context context) {
@@ -674,12 +668,12 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Help(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
         public EquinoxDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EquinoxDialogRobot cancelOverflowMenu_Options(Context context) {
@@ -706,8 +700,8 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
         public EquinoxDialogRobot assertOverflowMenuShown(Context context) {
             onView(isMenuDropDownListView()).inRoot(isPlatformPopup()).check(matches(hasMinimumChildCount(3)));
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         @Override
@@ -903,17 +897,17 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
 
         public EquinoxDialogRobot assertCard_isMenuShown(Context context, SolsticeEquinoxMode mode) {
-            onView(withText(R.string.configAction_setAlarm)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_share)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_setAlarm)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_share)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public EquinoxDialogRobot assertCard_isMenuShown_viewWith(Context context, SolsticeEquinoxMode mode) {
             onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }

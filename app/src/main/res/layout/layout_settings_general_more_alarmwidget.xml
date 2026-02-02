@@ -70,7 +70,7 @@
             android:id="@+id/spin_sortOrder_label" android:labelFor="@+id/spin_sortOrder"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="?attr/text_size_small"
-            android:text="@string/configAction_sortBy" />
+            android:text="@string/action_sortBy" />
 
         <Spinner
             android:id="@+id/spin_sortOrder"

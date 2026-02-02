@@ -619,7 +619,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     {
         if (txt_title != null)
         {
-            String titleString = (dialogTitle != null) ? dialogTitle : context.getString(R.string.configAction_setAlarm);
+            String titleString = (dialogTitle != null) ? dialogTitle : context.getString(R.string.action_setAlarm);
             txt_title.setText(titleString);
         }
 

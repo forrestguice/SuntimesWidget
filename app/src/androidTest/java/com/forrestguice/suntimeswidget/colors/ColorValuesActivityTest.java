@@ -280,8 +280,8 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             if (config.supportsPreview()) {
                 onView(withText(R.string.colors_action_previewColors)).check(assertShown);
             }
-            onView(withText(R.string.configAction_import)).check(assertShown);
-            onView(withText(R.string.configAction_share)).check(assertShown);
+            onView(withText(R.string.action_import)).check(assertShown);
+            onView(withText(R.string.action_share)).check(assertShown);
             onView(withText(R.string.colors_action_deleteColors)).check(assertShown);
             return this;
         }

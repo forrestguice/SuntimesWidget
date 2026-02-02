@@ -50,7 +50,7 @@
                 android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"
-                android:contentDescription="@string/configAction_overflow" />
+                android:contentDescription="@string/action_overflow" />
         </LinearLayout>
 
     </LinearLayout>

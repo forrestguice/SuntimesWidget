@@ -38,7 +38,7 @@ public class TimeDateDialog extends TimeDialog
 
     @Nullable
     protected CharSequence getNeutralButtonLabel() {
-        return getString(R.string.configAction_date);
+        return getString(R.string.action_date);
     }
 
     @Override

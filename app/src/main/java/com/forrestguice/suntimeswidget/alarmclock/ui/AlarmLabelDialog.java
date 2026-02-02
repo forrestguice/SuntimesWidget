@@ -154,7 +154,7 @@ public class AlarmLabelDialog extends DialogBase
 
         if (showHelp())
         {
-            AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener)null);
+            AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.action_help), (DialogInterface.OnClickListener)null);
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
                 @Override
                 public void onShow(DialogInterface dialog) {
@@ -196,7 +196,7 @@ public class AlarmLabelDialog extends DialogBase
         CharSequence helpContent = helpContent();
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent != null ? helpContent : "");
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }

@@ -150,12 +150,12 @@ public class AboutActivityTest extends SuntimesActivityTestBase
             if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
             {
                 onView(navigationButton()).perform(click());
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
 
             } else {
                 openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
                 sleep(500);
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
             }
             return this;
         }
@@ -177,7 +177,7 @@ public class AboutActivityTest extends SuntimesActivityTestBase
 
         public AboutActivityRobot assertActivityShown(Context context)
         {
-            onView(allOf(withText(R.string.configAction_aboutWidget), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
+            onView(allOf(withText(R.string.action_about), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(allOf(withId(R.id.container), withClassName(endsWith("ViewPager")))).check(assertShown);
             return this;
         }

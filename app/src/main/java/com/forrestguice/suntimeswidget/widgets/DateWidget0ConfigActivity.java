@@ -166,7 +166,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             HelpDialog helpDialog = new HelpDialog();
             helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
             helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
-            helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
+            helpDialog.setShowNeutralButton(getString(R.string.action_restoreDefaults));
             helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
         }
     };

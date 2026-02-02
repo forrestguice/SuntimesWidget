@@ -292,7 +292,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         public AlarmDialogRobot showDialog(Activity context)
         {
             openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
-            onView(ViewMatchers.withText(R.string.configAction_setAlarm)).perform(click());
+            onView(ViewMatchers.withText(R.string.action_setAlarm)).perform(click());
             return this;
         }
 

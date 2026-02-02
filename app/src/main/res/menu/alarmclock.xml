@@ -11,7 +11,7 @@
 
         <item android:id="@+id/action_settings"
             android:icon="?attr/icActionSettings"
-            android:title="@string/configAction_settings"
+            android:title="@string/action_settings"
             app:showAsAction="never"
             android:visible="false"
             android:orderInCategory="997" />
@@ -24,7 +24,7 @@
 
         <item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"
-            android:title="@string/configAction_aboutWidget"
+            android:title="@string/action_about"
             app:showAsAction="never"
             android:visible="false"
             android:orderInCategory="999" />

@@ -15,24 +15,24 @@
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_appearance_theme_light"
-            android:title="@string/appThemes_lightTheme"
-            android:dialogTitle="@string/appThemes_lightTheme"
+            android:title="@string/themes_appThemes_lightTheme"
+            android:dialogTitle="@string/themes_appThemes_lightTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s"
-            app:actionButtonContentDescription="@string/configActionDesc_themeList" />
+            app:actionButtonContentDescription="@string/actionDesc_themeList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_appearance_theme_dark"
-            android:title="@string/appThemes_darkTheme"
-            android:dialogTitle="@string/appThemes_darkTheme"
+            android:title="@string/themes_appThemes_darkTheme"
+            android:dialogTitle="@string/themes_appThemes_darkTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s"
-            app:actionButtonContentDescription="@string/configActionDesc_themeList" />
+            app:actionButtonContentDescription="@string/actionDesc_themeList" />
 
         <com.forrestguice.suntimeswidget.settings.TextSizePreference
             android:key="app_appearance_textsize"
-            android:title="@string/configLabel_ui_textsize"
-            android:summary="@string/configLabel_ui_textsize_summary"
+            android:title="@string/textSize_pref_title"
+            android:summary="@string/textSize_pref_summary"
             android:entries="@array/textSize_display" android:entryValues="@array/textSize_values"
             android:defaultValue="@string/def_app_appearance_textsize" />
 
@@ -65,9 +65,9 @@
 
         <com.forrestguice.support.preference.Preference
             android:key="manage_events"
-            android:title="@string/configLabel_manageEvents"
+            android:title="@string/events_configLabel_manageEvents"
             android:icon="?attr/icActionEvents"
-            android:summary="@string/configLabel_manageEvents_summary"
+            android:summary="@string/events_configLabel_manageEvents_summary"
             android:persistent="false" />
 
     </com.forrestguice.support.preference.PreferenceCategory>
@@ -264,36 +264,36 @@
             android:title="@string/configLabel_action_onClockTap"
             android:dialogTitle="@string/configLabel_action_onClockTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
-            android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
+            android:entries="@array/actions_clockTapActions_display" android:entryValues="@array/actions_clockTapActions_values"
             android:defaultValue="@string/def_app_ui_clocktapaction"
-            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
+            app:actionButtonContentDescription="@string/actionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction"
             android:title="@string/configLabel_action_onDateTap"
             android:dialogTitle="@string/configLabel_action_onDateTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
-            android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
+            android:entries="@array/actions_dateTapActions_display" android:entryValues="@array/actions_dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction"
-            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
+            app:actionButtonContentDescription="@string/actionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction1"
             android:title="@string/configLabel_action_onDateTap1"
             android:dialogTitle="@string/configLabel_action_onDateTap1"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
-            android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
+            android:entries="@array/actions_dateTapActions_display" android:entryValues="@array/actions_dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction1"
-            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
+            app:actionButtonContentDescription="@string/actionDesc_actionList" />
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_notetapaction"
             android:title="@string/configLabel_action_onNoteTap"
             android:dialogTitle="@string/configLabel_action_onNoteTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
-            android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
+            android:entries="@array/actions_noteTapActions_display" android:entryValues="@array/actions_noteTapActions_values"
             android:defaultValue="@string/def_app_ui_notetapaction"
-            app:actionButtonContentDescription="@string/configActionDesc_actionList" />
+            app:actionButtonContentDescription="@string/actionDesc_actionList" />
 
     </com.forrestguice.support.preference.PreferenceCategory>
 

@@ -526,7 +526,7 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickSidebarMenu_clock(Context context) {
-            onView(allOf(withText(R.string.configAction_clock),
+            onView(allOf(withText(R.string.action_clock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
@@ -536,17 +536,17 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickSidebarMenu_settings(Context context) {
-            onView(allOf(withText(R.string.configAction_settings),
+            onView(allOf(withText(R.string.action_settings),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T clickSidebarMenu_about(Context context) {
-            onView(allOf(withText(R.string.configAction_aboutWidget),
+            onView(allOf(withText(R.string.action_about),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T cancelSidebarMenu(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).perform(pressBack());
+            onView(withText(R.string.action_about)).perform(pressBack());
             return robot;
         }
 
@@ -555,22 +555,22 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickOverflowMenu_help() {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
         public T clickOverflowMenu_settings() {
-            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
         public T clickOverflowMenu_about() {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
 
         public T assertOverflowMenu_hasSimpleNavigation(boolean isSimple)
         {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
-            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
             return robot;
         }
 
@@ -584,13 +584,13 @@ public abstract class SuntimesActivityTestBase
         }
 
         public T assertSideBarMenuShown(Activity context) {
-            onView(allOf(withText(R.string.configAction_clock),
+            onView(allOf(withText(R.string.action_clock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
             onView(allOf(withText(R.string.alarms_label_alarmClock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configAction_settings),
+            onView(allOf(withText(R.string.action_settings),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configAction_aboutWidget),
+            onView(allOf(withText(R.string.action_about),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
             return robot;
         }

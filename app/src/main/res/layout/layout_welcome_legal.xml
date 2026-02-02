@@ -36,7 +36,7 @@
                 <Button android:id="@+id/button_about"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:text="@string/configAction_aboutWidget"
+                    android:text="@string/action_about"
                     android:layout_gravity="start|bottom" />
 
             </LinearLayout>

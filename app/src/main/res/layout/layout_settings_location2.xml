@@ -253,7 +253,7 @@
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:src="?attr/icActionWorldMap"
                                 android:layout_gravity="center"
-                                android:contentDescription="@string/configAction_mapLocation" />
+                                android:contentDescription="@string/action_mapLocation" />
 
                         </LinearLayout>
 

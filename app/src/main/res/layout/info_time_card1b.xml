@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lightmap_height"
                     android:layout_gravity="top"
-                    android:contentDescription="@string/configAction_sunDialog" />
+                    android:contentDescription="@string/action_sunDialog" />
 
             </LinearLayout>
 

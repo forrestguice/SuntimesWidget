@@ -122,7 +122,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
         public TimeDateDialogRobot showDialog(Activity context)
         {
-            String actionDateText = context.getString(R.string.configAction_viewDate);
+            String actionDateText = context.getString(R.string.action_viewDate);
             openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             onView(withText(actionDateText)).perform(click());
             return this;

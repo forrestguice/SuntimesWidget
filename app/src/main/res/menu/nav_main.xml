@@ -6,7 +6,7 @@
 
         <item android:id="@+id/action_suntimes"
             android:icon="@drawable/ic_action_suntimes"
-            android:title="@string/configAction_clock" />
+            android:title="@string/action_clock" />
 
         <!--<item android:id="@+id/action_worldclock"
             android:icon="@drawable/ic_action_time"
@@ -40,12 +40,12 @@
         <item
             android:id="@+id/action_settings"
             android:icon="@drawable/ic_action_settings"
-            android:title="@string/configAction_settings" />
+            android:title="@string/action_settings" />
 
         <item
             android:id="@+id/action_about"
             android:icon="@drawable/ic_action_about"
-            android:title="@string/configAction_aboutWidget" />
+            android:title="@string/action_about" />
     </group>
 
 </menu>
