@@ -178,8 +178,8 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
 
         public WidgetConfigActivityRobot assertOverflowMenuShown(Context context)
         {
-            onView(withText(R.string.configAction_importWidget)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetlist_action_importWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetlist_action_exportWidget)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_restoreDefaults)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(assertShown);
             return this;

@@ -102,7 +102,7 @@ public class GnssStatusBarView extends GnssStatusView
     {
         if (label != null) {
             label.setText((adapter != null && context != null)
-                    ? context.getString(R.string.configLabel_getFix_num_satellites, adapter.getUsedItemCount() + "", adapter.getItemCount() + "")
+                    ? context.getString(R.string.location_label_num_satellites, adapter.getUsedItemCount() + "", adapter.getItemCount() + "")
                     : "");
             label.setVisibility(adapter.getOptions().showLabels ? View.VISIBLE : View.INVISIBLE);
         }

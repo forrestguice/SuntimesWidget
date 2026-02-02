@@ -30,7 +30,7 @@
 
 			<com.forrestguice.support.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-				app:title="@string/configLabel_widgetList" />
+				app:title="@string/widgetList_label" />
 
 		</com.forrestguice.support.widget.AppBarLayout>
 

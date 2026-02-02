@@ -859,8 +859,8 @@ public class WidgetActions
         public static void initDisplayStrings( Context context )
         {
             SuntimesAction[] actions = SuntimesAction.values();  // TODO
-            String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
-            String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
+            String[] titles = context.getResources().getStringArray(R.array.actions_tapActions_titles);
+            String[] desc = context.getResources().getStringArray(R.array.actions_tapActions_display);
             for (int i=0; i < desc.length; i++)
             {
                 if (i < actions.length)

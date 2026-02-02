@@ -215,7 +215,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         assertTrue("default must be positive", defaultValue > 0);
 
         boolean found = false;
-        String[] values = context.getResources().getStringArray(R.array.getFix_maxAge_values);
+        String[] values = context.getResources().getStringArray(R.array.location_maxAge_values);
         for (String value : values)
         {
             found = value.equals(defaultValue0);
@@ -233,7 +233,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         assertTrue("default must be positive", defaultValue > 0);
 
         boolean found = false;
-        String[] values = context.getResources().getStringArray(R.array.getFix_maxElapse_values);
+        String[] values = context.getResources().getStringArray(R.array.location_maxElapse_values);
         for (String value : values)
         {
             found = value.equals(defaultValue0);

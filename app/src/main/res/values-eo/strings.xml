@@ -117,9 +117,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">ĝis la</string>
-    <string name="until">ĝis la</string>
-    <string name="until_end">ĝis la</string>
+    <string name="delta_since">ĝis la</string>
+    <string name="delta_until">ĝis la</string>
+    <string name="delta_until_end">ĝis la</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">je</item>
@@ -191,8 +191,8 @@
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">metraj</string>
@@ -1272,15 +1272,15 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Aktivaj fenestraĵoj</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label">Aktivaj fenestraĵoj</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
-    <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Montri helpon pri fenestraĵoj</string>
-    <string name="configLabel_widgetList_emptyMsg">Neniu fenestraĵo</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label_help_title">Helpo</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Montri helpon pri fenestraĵoj</string>
+    <string name="widgetList_label_empty">Neniu fenestraĵo</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Fari sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
-    <string name="configAction_restoreBackup">Restarigi sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="action_createBackup">Fari sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="action_restoreBackup">Restarigi sekurkopion</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarmoj</string>
     <string name="restorebackup_dialog_item_appsettings">Agordoj pri aplikaĵo</string>
     <string name="restorebackup_dialog_item_colors">Koloroj</string>
@@ -1295,29 +1295,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Elporti agordojn</string>
-    <string name="exportwidget_dialog_message">Elportado de agordoj pri fenestraĵoj al dosiero.</string>
-    <string name="importwidget_dialog_title">Enporti agordojn</string>
-    <string name="importwidget_dialog_message">Enportado de agordoj pri fenestraĵoj el dosiero.</string>
-    <string name="importwidget_dialog_title1">Trovis agordojn,\nsed por aliaj fenestraĵoj…</string>
-    <string name="importwidget_dialog_title2">Trovis plurajn agordojn…</string>
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(nekonata)</string>   <!-- shown as item when type cannot be determined -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restarigi sekurkopion</b>. Enportotaj agordoj estos konservitaj nun kaj restarigitaj poste – se petitaj de la aplikaĵlanĉilo.<br/>]]></string>
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Elporti agordojn</string>
+    <string name="widgetexport_dialog_message">Elportado de agordoj pri fenestraĵoj al dosiero.</string>
+    <string name="widgetimport_dialog_title">Enporti agordojn</string>
+    <string name="widgetimport_dialog_message">Enportado de agordoj pri fenestraĵoj el dosiero.</string>
+    <string name="widgetimport_dialog_title1">Trovis agordojn,\nsed por aliaj fenestraĵoj…</string>
+    <string name="widgetimport_dialog_title2">Trovis plurajn agordojn…</string>
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(nekonata)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restarigi sekurkopion</b>. Enportotaj agordoj estos konservitaj nun kaj restarigitaj poste – se petitaj de la aplikaĵlanĉilo.<br/>]]></string>
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Konjekti</b>. Enportotaj agordoj estos aplikitaj al la ekzistantaj fenestraĵoj laŭ speco.<br/>]]></string>
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Senpere enporti</b>. Enportotaj agordoj estos senpere aplikitaj. Funkcias ĝuste nur se identigiloj de fenestraĵoj ne ŝanĝiĝis.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Ĉu vi certe volas restarigi implicitajn valorojn?</string>
+    <string name="widgetreset_dialog_message">Ĉu vi certe volas restarigi implicitajn valorojn?</string>
     
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Alarmoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. La ekzistantaj alarmoj teniĝos (povas kaŭzi duobligitajn alarmojn).<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Lokoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. Ekzistantaj lokoj teniĝos (povas kaŭzi duobligitajn lokojn).<br/>]]></string>
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignori ekzistantajn</b>. Nur neekzistantaj lokoj estos aldonitaj (ignori ekzistantajn).<br/>]]></string>
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Superskribi ekzistantajn</b>. Nur ekzistantaj lokoj estos ĝisdatigitaj.<br/>]]></string>
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Forviŝi</b>. Lokoj estos forigitaj antaŭ enporti ilin el sekurkopio.<br/>]]></string>
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Teni ekzistantajn</b>. Ekzistantaj lokoj teniĝos (povas kaŭzi duobligitajn lokojn).<br/>]]></string>
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignori ekzistantajn</b>. Nur neekzistantaj lokoj estos aldonitaj (ignori ekzistantajn).<br/>]]></string>
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Superskribi ekzistantajn</b>. Nur ekzistantaj lokoj estos ĝisdatigitaj.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d objekto</item>
@@ -1443,17 +1443,17 @@
     <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Hela haŭto</string>
-    <string name="appThemes_darkTheme">Malhela haŭto</string>
-    <string name="appThemes_nightMode">Hela / Malhela (dum nokta reĝimo)</string>
-    <string name="appThemes_systemDefault">Laŭ operaciumo</string>
-    <string name="appThemes_systemDefault1">Kontrasta (laŭ operaciumo)</string>
-    <string name="appThemes_darkTheme1">Kontrasta (malhela)</string>
-    <string name="appThemes_lightTheme1">Kontrasta (hela)</string>
+    <string name="themes_appThemes_lightTheme">Hela haŭto</string>
+    <string name="themes_appThemes_darkTheme">Malhela haŭto</string>
+    <string name="themes_appThemes_nightMode">Hela / Malhela (dum nokta reĝimo)</string>
+    <string name="themes_appThemes_systemDefault">Laŭ operaciumo</string>
+    <string name="themes_appThemes_systemDefault1">Kontrasta (laŭ operaciumo)</string>
+    <string name="themes_appThemes_darkTheme1">Kontrasta (malhela)</string>
+    <string name="themes_appThemes_lightTheme1">Kontrasta (hela)</string>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Grando de teksto</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">Grando de teksto</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">malgranda</string>
     <string name="textSize_normal">meza</string>
@@ -1466,46 +1466,46 @@
         <item>@string/textSize_xlarge</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Fari nenion</string>
-    <string name="configActionDesc_nextNote">Montri sekvan noton</string>
-    <string name="configActionDesc_prevNote">Montri antaŭan noton</string>
-    <string name="configActionDesc_resetNote">Restarigi noton</string>
-    <string name="configActionDesc_showCalendar">Montri aplikaĵon de kalendaro</string>
-    <string name="configActionDesc_mapLocation">Montri lokon sur mapo</string>
-    <string name="configActionDesc_setAlarm">Agordi alarmon</string>
-    <string name="configActionDesc_worldMap">Montri mondmapon</string>
-    <string name="configActionDesc_equinoxDialog">Fenestro “Solstico/ekvinokso”</string>
-    <string name="configActionDesc_moon">Fenestro “Luno”</string>
-    <string name="configActionDesc_sunDialog">Fenestro “Pozicio de Suno”</string>
-    <string name="configActionDesc_sunlightDialog">Fenestro “Sunlumo”</string>
-    <string name="configActionDesc_setDate">Agordi daton</string>
-    <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
-    <string name="configActionDesc_setLocation">Agordi pozicion</string>
-    <string name="configActionDesc_swapCards">Baskuligi langetojn (hodiaŭ/morgaŭ)</string>
-    <string name="configActionDesc_nextCard">Montri sekvan langeton</string>
-    <string name="configActionDesc_prevCard">Montri antaŭan langeton</string>
-    <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
-    <string name="configActionDesc_alarmList">Listo de alarmoj</string>
-    <string name="configActionDesc_themeList">Listo de haŭtoj</string>
-    <string name="configActionDesc_actionList">Listo de agoj</string>
-    <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
-    <string name="configActionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
-    <string name="configActionDesc_nextSunset">Montri sekvan sunsubiron</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Listo de alarmoj</string>
-    <string name="configActionDesc_dateSettings">Agordoj: dato</string>
-    <string name="configActionDesc_displaySettings">Agordoj: vidigo</string>
-    <string name="configActionDesc_localeSettings">Agordoj: lingvo</string>
-    <string name="configActionDesc_locationSettings">Agordoj: pozicio</string>
-    <string name="configActionDesc_createCalendarRisingEvent">Krei okazaĵon en kalendaro (leviĝo)</string>
-    <string name="configActionDesc_createCalendarSettingEvent">Krei okazaĵon en kalendaro (subiro)</string>
-    <string name="configLabel_android">Android</string>
-    <string name="configLabel_calendarEvent">Kalendaro: okazaĵo</string>
+    <string name="actionDesc_doNothing">Fari nenion</string>
+    <string name="actionDesc_nextNote">Montri sekvan noton</string>
+    <string name="actionDesc_prevNote">Montri antaŭan noton</string>
+    <string name="actionDesc_resetNote">Restarigi noton</string>
+    <string name="actionDesc_showCalendar">Montri aplikaĵon de kalendaro</string>
+    <string name="actionDesc_mapLocation">Montri lokon sur mapo</string>
+    <string name="actionDesc_setAlarm">Agordi alarmon</string>
+    <string name="actionDesc_worldMap">Montri mondmapon</string>
+    <string name="actionDesc_equinoxDialog">Fenestro “Solstico/ekvinokso”</string>
+    <string name="actionDesc_moon">Fenestro “Luno”</string>
+    <string name="actionDesc_sunDialog">Fenestro “Pozicio de Suno”</string>
+    <string name="actionDesc_sunlightDialog">Fenestro “Sunlumo”</string>
+    <string name="actionDesc_setDate">Agordi daton</string>
+    <string name="actionDesc_setTimeZone">Agordi horzonon</string>
+    <string name="actionDesc_setLocation">Agordi pozicion</string>
+    <string name="actionDesc_swapCards">Baskuligi langetojn (hodiaŭ/morgaŭ)</string>
+    <string name="actionDesc_nextCard">Montri sekvan langeton</string>
+    <string name="actionDesc_prevCard">Montri antaŭan langeton</string>
+    <string name="actionDesc_setAlarmForNote">Agordi averton pri noto</string>
+    <string name="actionDesc_alarmList">Listo de alarmoj</string>
+    <string name="actionDesc_themeList">Listo de haŭtoj</string>
+    <string name="actionDesc_actionList">Listo de agoj</string>
+    <string name="actionDesc_widgetList">Listo de fenestraĵoj</string>
+    <string name="actionDesc_nextSunrise">Montri sekvan sunleviĝon</string>
+    <string name="actionDesc_nextSunset">Montri sekvan sunsubiron</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">Listo de alarmoj</string>
+    <string name="actionDesc_dateSettings">Agordoj: dato</string>
+    <string name="actionDesc_displaySettings">Agordoj: vidigo</string>
+    <string name="actionDesc_localeSettings">Agordoj: lingvo</string>
+    <string name="actionDesc_locationSettings">Agordoj: pozicio</string>
+    <string name="actionDesc_createCalendarRisingEvent">Krei okazaĵon en kalendaro (leviĝo)</string>
+    <string name="actionDesc_createCalendarSettingEvent">Krei okazaĵon en kalendaro (subiro)</string>
+    <string name="actionDesc_android">Android</string>
+    <string name="actionDesc_calendarEvent">Kalendaro: okazaĵo</string>
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Tempolimo de pozici-determinado</string>
-    <string name="configLabel_getFix_maxElapse_summary">Rezigni post <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">Tempolimo de pozici-determinado</string>
+    <string name="location_pref_maxElapse_summary">Rezigni post <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundoj</item>
         <item>30 sekundoj</item>
         <item>1 minuto</item>
@@ -1514,9 +1514,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Valido de determinita pozicio</string>
-    <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Valido de determinita pozicio</string>
+    <string name="location_pref_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>neniam</item>
         <item>1 minuto</item>
         <item>5 minutoj</item>
@@ -1532,12 +1532,12 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Kalendaro</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Interagi kun kalendaro</string>
+    <string name="calendars_pref_title">Kalendaro</string>   <!-- group title -->
+    <string name="calendars_pref_summary">Interagi kun kalendaro</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Pasiva pozici-trovado</string>
-    <string name="configLabel_getFix_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
+    <string name="location_label_passiveMode">Pasiva pozici-trovado</string>
+    <string name="location_label_passiveMode_summary">Uzi la pasivan servon por determini pozicion.</string>
 
     <!--
          DIALOGS
@@ -1728,18 +1728,18 @@
     </string-array>
     
   <!-- App Setting: locale mode -->
-  <string name="configLabel_locale">Lingvo</string>   <!-- group title -->
+  <string name="locale_pref_title">Lingvo</string>   <!-- group title -->
   
-  <string name="configLabel_localeMode">Reĝimo</string>
-  <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+  <string name="locale_pref_localeMode">Reĝimo</string>
+  <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
       <item>laŭ operaciumo</item>
       <item>propra</item>
   </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Lingvo</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Lingvo</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Angla</item>
         <item>Esperanto</item>

@@ -1015,7 +1015,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     for (int i=0; i<types.length; i++)
                     {
                         final int j = ((i < types.length) ? i : 0);
-                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.notificationChannelWarning), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
+                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.alarms_warning_notificationChannel), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
                         {
                             @Override
                             public void onClick(View view) {

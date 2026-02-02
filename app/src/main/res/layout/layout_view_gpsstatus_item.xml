@@ -28,7 +28,7 @@
         android:textSize="?attr/text_size_small"
         android:buttonTint="@color/gnss_signal"
         android:textColor="@color/gnss_signal"
-        android:text="@string/configLabel_getFix_gnss_signal"
+        android:text="@string/location_label_gnss_signal"
         tools:ignore="UnusedAttribute" />
 
     <CheckBox android:id="@+id/check_satellite_almanac"
@@ -36,7 +36,7 @@
         android:textSize="?attr/text_size_small"
         android:buttonTint="@color/gnss_signal_almanac"
         android:textColor="@color/gnss_signal_almanac"
-        android:text="@string/configLabel_getFix_gnss_almanac"
+        android:text="@string/location_label_gnss_almanac"
         tools:ignore="UnusedAttribute" />
 
     <CheckBox android:id="@+id/check_satellite_ephemeris"
@@ -44,7 +44,7 @@
         android:textSize="?attr/text_size_small"
         android:buttonTint="@color/gnss_signal_ephemeris"
         android:textColor="@color/gnss_signal_ephemeris"
-        android:text="@string/configLabel_getFix_gnss_ephemeris"
+        android:text="@string/location_label_gnss_ephemeris"
         tools:ignore="UnusedAttribute" />
 
     <CheckBox android:id="@+id/check_satellite_usedInFix"
@@ -52,7 +52,7 @@
         android:textSize="?attr/text_size_small"
         android:buttonTint="@color/gnss_used"
         android:textColor="@color/gnss_used"
-        android:text="@string/configLabel_getFix_gnss_used"
+        android:text="@string/location_label_gnss_used"
         tools:ignore="UnusedAttribute" />
 
 </LinearLayout>

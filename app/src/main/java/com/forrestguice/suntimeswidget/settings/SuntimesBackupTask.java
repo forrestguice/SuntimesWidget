@@ -580,7 +580,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         }
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(isImport ? R.string.configAction_restoreBackup : R.string.configAction_createBackup))
+                .setTitle(context.getString(isImport ? R.string.action_restoreBackup : R.string.action_createBackup))
                 .setIcon(isImport ? R.drawable.ic_action_copy : R.drawable.ic_action_save)
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

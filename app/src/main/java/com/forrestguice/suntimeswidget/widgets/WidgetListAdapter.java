@@ -249,7 +249,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
             SuntimesData data;
             String widgetTitle;
-            int widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern;
+            int widgetSummaryResID = R.string.widgetList_label_itemSummaryPattern;
             String widgetType = getWidgetName(context, widgetClass);
             String widgetClass0 = simpleClassName(widgetClass);
             String configClass = info.configure.getClassName();
@@ -271,7 +271,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
                     || widgetClass0.equals("AlarmWidget0") || widgetClass0.equals("AlarmWidget0_2x2") || widgetClass0.equals("AlarmWidget0_3x2")) {
                 SuntimesClockData data0 = new SuntimesClockData(context, id);
                 widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
-                widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
+                widgetSummaryResID = R.string.widgetList_label_itemSummaryPattern1;
                 data = data0;
 
             } else {
@@ -280,7 +280,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
                 data = data0;
             }
 
-            String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+            String title = context.getString(R.string.widgetList_label_itemTitle, widgetTitle);
             String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
             String summary = context.getString(widgetSummaryResID, widgetType, source);
             items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
@@ -358,18 +358,18 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         switch (simpleClassName(widgetClass))
         {
             case "DateWidget0":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
+                return context.getString(R.string.widgetList_label_itemTitlePattern2);
 
             case "AlarmWidget0": case "AlarmWidget0_2x2": case "AlarmWidget0_3x2":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern3);
+                return context.getString(R.string.widgetList_label_itemTitlePattern3);
 
             case "ClockWidget0": case "ClockWidget0_3x1":
             case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
             case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
+                return context.getString(R.string.widgetList_label_itemTitlePattern1);
 
             case "SuntimesWidget0": case "SuntimesWidget0_2x1": case "SuntimesWidget1": case "SolsticeWidget0":
-            default: return context.getString(R.string.configLabel_widgetList_itemTitlePattern);
+            default: return context.getString(R.string.widgetList_label_itemTitlePattern);
         }
     }
 

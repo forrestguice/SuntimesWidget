@@ -123,9 +123,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">siden</string>
-    <string name="until">til</string>
-    <string name="until_end">til slutten av</string>
+    <string name="delta_since">siden</string>
+    <string name="delta_until">til</string>
+    <string name="delta_until_end">til slutten av</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">kl.</item>
@@ -207,8 +207,8 @@
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metrisk</string>
@@ -1281,17 +1281,17 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Moduler</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">Hjelp</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Vis modulhjelp</string>
-    <string name="configLabel_widgetList_emptyMsg">Ingen moduler</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">Moduler</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_help_title">Hjelp</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Vis modulhjelp</string>
+    <string name="widgetList_label_empty">Ingen moduler</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Opprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
-    <string name="configAction_restoreBackup">Gjenopprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="action_createBackup">Opprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="action_restoreBackup">Gjenopprett sikkerhetskopi</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarmer</string>
     <string name="restorebackup_dialog_item_appsettings">App-innstillinger</string>
     <string name="restorebackup_dialog_item_colors">Farger</string>
@@ -1306,29 +1306,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="widgetimport_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Er du sikker på at du vil tilbakestille til standardverdier?</string>    <!-- TODO: verify -->
+    <string name="widgetreset_dialog_message">Er du sikker på at du vil tilbakestille til standardverdier?</string>    <!-- TODO: verify -->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
 
     <plurals name="itemsPlural">
         <item quantity="one">%d item</item>
@@ -1462,17 +1462,17 @@
     <string name="configLabel_ui_showbluehour">Blåtimen</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Lyst tema</string>
-    <string name="appThemes_darkTheme">Mørkt tema</string>
-    <string name="appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
-    <string name="appThemes_systemDefault">Systemstandard</string>
-    <string name="appThemes_systemDefault1">Kontrast (systemstandard)</string>
-    <string name="appThemes_darkTheme1">Kontrast (mørk)</string>
-    <string name="appThemes_lightTheme1">Kontrast (lys)</string>
+    <string name="themes_appThemes_lightTheme">Lyst tema</string>
+    <string name="themes_appThemes_darkTheme">Mørkt tema</string>
+    <string name="themes_appThemes_nightMode">Lyst tema / Mørkt tema (nattmodus)</string>
+    <string name="themes_appThemes_systemDefault">Systemstandard</string>
+    <string name="themes_appThemes_systemDefault1">Kontrast (systemstandard)</string>
+    <string name="themes_appThemes_darkTheme1">Kontrast (mørk)</string>
+    <string name="themes_appThemes_lightTheme1">Kontrast (lys)</string>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Tekststørrelse</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">Tekststørrelse</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">Liten</string>
     <string name="textSize_normal">Normal</string>
@@ -1485,39 +1485,39 @@
         <item>@string/textSize_xlarge</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Ikke gjør noe</string>
-    <string name="configActionDesc_nextNote">Vis neste notis</string>
-    <string name="configActionDesc_prevNote">Vis forrige notis</string>
-    <string name="configActionDesc_resetNote">Tilbakestill notis</string>
-    <string name="configActionDesc_showCalendar">Vis kalender-app</string>
-    <string name="configActionDesc_mapLocation">Vis sted på kart</string>
-    <string name="configActionDesc_setAlarm">Still inn en alarm</string>
-    <string name="configActionDesc_worldMap">Verdenskartdialog</string>
-    <string name="configActionDesc_equinoxDialog">Solvervdialog</string>
-    <string name="configActionDesc_moon">Månedialog</string>
-    <string name="configActionDesc_sunDialog">Soldialog</string>
-    <string name="configActionDesc_sunlightDialog">Sollysdialog</string>
-    <string name="configActionDesc_setDate">Still inn dato</string>
-    <string name="configActionDesc_setTimeZone">Still inn tidssone</string>
-    <string name="configActionDesc_setLocation">Still inn sted</string>
-    <string name="configActionDesc_swapCards">Bytt visning (i dag / i morgen)</string>
-    <string name="configActionDesc_setAlarmForNote">Still inn alarm for notis</string>
-    <string name="configActionDesc_alarmList">Alarmliste</string>
-    <string name="configActionDesc_themeList">Temaliste</string>
-    <string name="configActionDesc_actionList">Handlingsliste</string>
-    <string name="configActionDesc_widgetList">Modulliste</string>
-    <string name="configActionDesc_nextSunrise">Vis neste soloppgang</string>
-    <string name="configActionDesc_nextSunset">Vis neste solnedgang</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="actionDesc_doNothing">Ikke gjør noe</string>
+    <string name="actionDesc_nextNote">Vis neste notis</string>
+    <string name="actionDesc_prevNote">Vis forrige notis</string>
+    <string name="actionDesc_resetNote">Tilbakestill notis</string>
+    <string name="actionDesc_showCalendar">Vis kalender-app</string>
+    <string name="actionDesc_mapLocation">Vis sted på kart</string>
+    <string name="actionDesc_setAlarm">Still inn en alarm</string>
+    <string name="actionDesc_worldMap">Verdenskartdialog</string>
+    <string name="actionDesc_equinoxDialog">Solvervdialog</string>
+    <string name="actionDesc_moon">Månedialog</string>
+    <string name="actionDesc_sunDialog">Soldialog</string>
+    <string name="actionDesc_sunlightDialog">Sollysdialog</string>
+    <string name="actionDesc_setDate">Still inn dato</string>
+    <string name="actionDesc_setTimeZone">Still inn tidssone</string>
+    <string name="actionDesc_setLocation">Still inn sted</string>
+    <string name="actionDesc_swapCards">Bytt visning (i dag / i morgen)</string>
+    <string name="actionDesc_setAlarmForNote">Still inn alarm for notis</string>
+    <string name="actionDesc_alarmList">Alarmliste</string>
+    <string name="actionDesc_themeList">Temaliste</string>
+    <string name="actionDesc_actionList">Handlingsliste</string>
+    <string name="actionDesc_widgetList">Modulliste</string>
+    <string name="actionDesc_nextSunrise">Vis neste soloppgang</string>
+    <string name="actionDesc_nextSunset">Vis neste solnedgang</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="actionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
+    <string name="actionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
+    <string name="actionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
+    <string name="actionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
+    <string name="actionDesc_android">Android</string>   <!-- TODO -->
+    <string name="actionDesc_calendarEvent">Calendar Event</string>   <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">etter forskyvning</string>
@@ -1534,9 +1534,9 @@
     <string name="timezone_sort_msg">Tidssoner sortert (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Posisjonsbestemmelse - tidsbegrensning</string>
-    <string name="configLabel_getFix_maxElapse_summary">Gi opp etter <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">Posisjonsbestemmelse - tidsbegrensning</string>
+    <string name="location_pref_maxElapse_summary">Gi opp etter <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekunder</item>
         <item>30 sekunder</item>
         <item>1 minutt</item>
@@ -1545,9 +1545,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Maks tid for siste posisjonsbestemmelse</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Maks tid for siste posisjonsbestemmelse</string>
+    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>ingen</item>
         <item>1 minutt</item>
         <item>5 minutter</item>
@@ -1563,26 +1563,26 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Kalendere</string>   <!-- group title for "calendars" app setting -->
-    <string name="configLabel_calendars_enabled">Kalenderintegrasjon</string>
+    <string name="calendars_pref_title">Kalendere</string>   <!-- group title for "calendars" app setting -->
+    <string name="calendars_pref_summary">Kalenderintegrasjon</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passiv posisjon</string>
-    <string name="configLabel_getFix_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
+    <string name="location_label_passiveMode">Passiv posisjon</string>
+    <string name="location_label_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Språk</string>   <!-- group title -->
+    <string name="locale_pref_title">Språk</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Modus</string>
-    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">Modus</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>System</item>
         <item>Brukerdefinert</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Språk</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Språk</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Engelsk</item>
         <item>Esperanto</item>

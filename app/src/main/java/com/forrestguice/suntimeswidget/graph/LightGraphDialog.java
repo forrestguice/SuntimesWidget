@@ -955,7 +955,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
                 boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
                 TimeDateDisplay utils = new TimeDateDisplay();
-                String itemDisplay = context.getString(R.string.share_format, label, utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
+                String itemDisplay = context.getString(R.string.format_share, label, utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 {

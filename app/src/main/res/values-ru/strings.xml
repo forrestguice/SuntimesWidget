@@ -53,9 +53,9 @@
     <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
     <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
 
-    <string name="shortcut_widgetlist_short">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_long">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_disabled">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_short">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_disabled">@string/widgetList_label</string>
 
     <string name="shortcut_themelist_short">@string/themes_configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
@@ -148,9 +148,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">прошло после</string>
-    <string name="until">до</string>
-    <string name="until_end">до конца</string>
+    <string name="delta_since">прошло после</string>
+    <string name="delta_until">до</string>
+    <string name="delta_until_end">до конца</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one" xliff:ignore="ImpliedQuantity">в</item>
@@ -241,8 +241,8 @@
     <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g>&#160;<xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
@@ -1340,17 +1340,17 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Виджеты</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">Помощь</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Открыть помощь по разделу виджетов</string>
-    <string name="configLabel_widgetList_emptyMsg">Виджетов нет</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">Виджеты</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_help_title">Помощь</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Открыть помощь по разделу виджетов</string>
+    <string name="widgetList_label_empty">Виджетов нет</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Создать резервную копию</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
-    <string name="configAction_restoreBackup">Восстановить резервную копию</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="action_createBackup">Создать резервную копию</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="action_restoreBackup">Восстановить резервную копию</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Будильники</string>
     <string name="restorebackup_dialog_item_appsettings">Настройки приложения</string>
     <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
@@ -1365,29 +1365,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Экспорт настроек</string>
-    <string name="exportwidget_dialog_message">Экспорт настроек виджета в файл.</string>
-    <string name="importwidget_dialog_title">Импорт настроек</string>
-    <string name="importwidget_dialog_message">Импорт настроек виджета из файла.</string>
-    <string name="importwidget_dialog_title1">Настроейки найдены,\nно они для других виджетов…</string>
-    <string name="importwidget_dialog_title2">Найдено несколько настроек…</string>
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(неизвестно)</string>   <!-- shown as item when type cannot be determined -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Восстановить резервную копию</b>. Импортированные настройки будут сохранены в кэше и восстановленны по запросу лаунчера позже.<br/>]]></string>
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Лучшее предположение</b>. Импортированные настройки будут применены к существующим виджетам по типу.<br/>]]></string>
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Прямой импорт</b>. Импортированные настройки будут применены непосредственно. Это работает корректно только если идентификаторы виджетов не изменены.<br/>]]></string>
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Экспорт настроек</string>
+    <string name="widgetexport_dialog_message">Экспорт настроек виджета в файл.</string>
+    <string name="widgetimport_dialog_title">Импорт настроек</string>
+    <string name="widgetimport_dialog_message">Импорт настроек виджета из файла.</string>
+    <string name="widgetimport_dialog_title1">Настроейки найдены,\nно они для других виджетов…</string>
+    <string name="widgetimport_dialog_title2">Найдено несколько настроек…</string>
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(неизвестно)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Восстановить резервную копию</b>. Импортированные настройки будут сохранены в кэше и восстановленны по запросу лаунчера позже.<br/>]]></string>
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Лучшее предположение</b>. Импортированные настройки будут применены к существующим виджетам по типу.<br/>]]></string>
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Прямой импорт</b>. Импортированные настройки будут применены непосредственно. Это работает корректно только если идентификаторы виджетов не изменены.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Вы уверены, что хотите восстановить настройки по умолчанию?</string>    <!-- TODO: verify -->
+    <string name="widgetreset_dialog_message">Вы уверены, что хотите восстановить настройки по умолчанию?</string>    <!-- TODO: verify -->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Очистить</b>. Будильники будут очищены перед импортом из резервной копии.<br/>]]></string>
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Сохранить существующие</b>. Существующие будильники будут сохранены (может привести к дублированию).<br/>]]></string>
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Очистить</b>. Будильники будут очищены перед импортом из резервной копии.<br/>]]></string>
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Сохранить существующие</b>. Существующие будильники будут сохранены (может привести к дублированию).<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Очистить</b>. Места будут очищены перед импортом из резервной копии.<br/>]]></string>
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Сохранить существующие</b>. Существующие места будут сохранены (может привести к дублированию).<br/>]]></string>
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Игнорировать существующие</b>. Места будут добавлены, если они еще не существуют (игнорировать существующие).<br/>]]></string>
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Перезаписать существующие</b>. Места будут обновлены, если они уже существуют.<br/>]]></string>
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Очистить</b>. Места будут очищены перед импортом из резервной копии.<br/>]]></string>
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Сохранить существующие</b>. Существующие места будут сохранены (может привести к дублированию).<br/>]]></string>
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Игнорировать существующие</b>. Места будут добавлены, если они еще не существуют (игнорировать существующие).<br/>]]></string>
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Перезаписать существующие</b>. Места будут обновлены, если они уже существуют.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d элемент</item>
@@ -1519,13 +1519,13 @@
     <string name="configLabel_ui_showbluehour">Режимное время</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Светлая тема</string>
-    <string name="appThemes_darkTheme">Темная тема</string>
-    <string name="appThemes_nightMode">Выбирать по времени (темная - ночью)</string>
-    <string name="appThemes_systemDefault">Системное значение по умолчанию</string>
-    <string name="appThemes_systemDefault1">Контраст (Системное значение по умолчанию)</string>
-    <string name="appThemes_darkTheme1">Контраст (Темный)</string>
-    <string name="appThemes_lightTheme1">Контраст (Светлый)</string>
+    <string name="themes_appThemes_lightTheme">Светлая тема</string>
+    <string name="themes_appThemes_darkTheme">Темная тема</string>
+    <string name="themes_appThemes_nightMode">Выбирать по времени (темная - ночью)</string>
+    <string name="themes_appThemes_systemDefault">Системное значение по умолчанию</string>
+    <string name="themes_appThemes_systemDefault1">Контраст (Системное значение по умолчанию)</string>
+    <string name="themes_appThemes_darkTheme1">Контраст (Темный)</string>
+    <string name="themes_appThemes_lightTheme1">Контраст (Светлый)</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1535,8 +1535,8 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Размер текста</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">Размер текста</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">Маленький</string>
     <string name="textSize_normal">Средний</string>
@@ -1557,70 +1557,70 @@
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setDate</item>
+        <item>@string/actionDesc_swapCards</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setTimeZone</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarmForNote</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_setAlarmForNote</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Ничего не делать</string>
-    <string name="configActionDesc_nextNote">Показать следующую заметку</string>
-    <string name="configActionDesc_prevNote">Показать предыдущую заметку</string>
-    <string name="configActionDesc_resetNote">Переключить на предстоящее событие</string>
-    <string name="configActionDesc_showCalendar">Открыть календарь</string>
-    <string name="configActionDesc_mapLocation">Показать местоположение на карте</string>
-    <string name="configActionDesc_setAlarm">Установить будильник</string>
-    <string name="configActionDesc_worldMap">Открыть карту мира</string>
-    <string name="configActionDesc_equinoxDialog">Параметры солнцестояния</string>
-    <string name="configActionDesc_moon">Параметры луны</string>
-    <string name="configActionDesc_sunDialog">Параметры солнца</string>
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
-    <string name="configActionDesc_setDate">Выбрать дату</string>
-    <string name="configActionDesc_setTimeZone">Выбрать часовой пояс</string>
-    <string name="configActionDesc_setLocation">Установить местоположение</string>
-    <string name="configActionDesc_swapCards">Перевернуть календарь (сегодня/завтра)</string>
-    <string name="configActionDesc_nextCard">Показать следующий день</string>
-    <string name="configActionDesc_prevCard">Показать предыдущий день</string>
-    <string name="configActionDesc_setAlarmForNote">Установить будильник для заметки</string>
-    <string name="configActionDesc_alarmList">Список будильников</string>
-    <string name="configActionDesc_themeList">Список тем</string>
-    <string name="configActionDesc_actionList">Список действий</string>
-    <string name="configActionDesc_widgetList">Список виджетов</string>
-    <string name="configActionDesc_nextSunrise">Показать следующий восход</string>
-    <string name="configActionDesc_nextSunset">Показать следующий закат</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="actionDesc_doNothing">Ничего не делать</string>
+    <string name="actionDesc_nextNote">Показать следующую заметку</string>
+    <string name="actionDesc_prevNote">Показать предыдущую заметку</string>
+    <string name="actionDesc_resetNote">Переключить на предстоящее событие</string>
+    <string name="actionDesc_showCalendar">Открыть календарь</string>
+    <string name="actionDesc_mapLocation">Показать местоположение на карте</string>
+    <string name="actionDesc_setAlarm">Установить будильник</string>
+    <string name="actionDesc_worldMap">Открыть карту мира</string>
+    <string name="actionDesc_equinoxDialog">Параметры солнцестояния</string>
+    <string name="actionDesc_moon">Параметры луны</string>
+    <string name="actionDesc_sunDialog">Параметры солнца</string>
+    <string name="actionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
+    <string name="actionDesc_setDate">Выбрать дату</string>
+    <string name="actionDesc_setTimeZone">Выбрать часовой пояс</string>
+    <string name="actionDesc_setLocation">Установить местоположение</string>
+    <string name="actionDesc_swapCards">Перевернуть календарь (сегодня/завтра)</string>
+    <string name="actionDesc_nextCard">Показать следующий день</string>
+    <string name="actionDesc_prevCard">Показать предыдущий день</string>
+    <string name="actionDesc_setAlarmForNote">Установить будильник для заметки</string>
+    <string name="actionDesc_alarmList">Список будильников</string>
+    <string name="actionDesc_themeList">Список тем</string>
+    <string name="actionDesc_actionList">Список действий</string>
+    <string name="actionDesc_widgetList">Список виджетов</string>
+    <string name="actionDesc_nextSunrise">Показать следующий восход</string>
+    <string name="actionDesc_nextSunset">Показать следующий закат</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="actionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
+    <string name="actionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
+    <string name="actionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
+    <string name="actionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
+    <string name="actionDesc_android">Android</string>   <!-- TODO -->
+    <string name="actionDesc_calendarEvent">Calendar Event</string>   <!-- TODO -->
 
     <!-- must be in same order as enum TapActions -->
     <!-- uncomment to override:
@@ -1703,9 +1703,9 @@
     <string name="timezone_sort_msg">Часовые пояса отсортированы (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Время поиска по GPS</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="configLabel_getFix_maxElapse_summary">Остановить поиск местоположения спустя <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">Время поиска по GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="location_pref_maxElapse_summary">Остановить поиск местоположения спустя <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 секунд</item>
         <item>30 секунд</item>
         <item>1 минуту</item>
@@ -1714,9 +1714,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Сохранять GPS-координаты</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Сохранять GPS-координаты</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>нет (всегда искать)</item>
         <item>1 минуту</item>
         <item>5 минут</item>
@@ -1732,26 +1732,26 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Календари</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Интеграция с календарями</string>
+    <string name="calendars_pref_title">Календари</string>   <!-- group title -->
+    <string name="calendars_pref_summary">Интеграция с календарями</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Пассивные источники</string>
-    <string name="configLabel_getFix_passiveMode_summary">Использовать данные местоположения от сотовой сети и WiFi.</string>
+    <string name="location_label_passiveMode">Пассивные источники</string>
+    <string name="location_label_passiveMode_summary">Использовать данные местоположения от сотовой сети и WiFi.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Настройки языка</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
+    <string name="locale_pref_title">Настройки языка</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
-    <string name="configLabel_localeMode">Язык приложения</string>
-    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">Язык приложения</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Системный</item>
         <item>Другой</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Установить</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Установить</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>Английский</item>
         <item>Эсперанто</item>

@@ -1215,7 +1215,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_systemDefault);
+            return context.getString(R.string.themes_appThemes_systemDefault);
         }
     }
 
@@ -1243,7 +1243,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_lightTheme);
+            return context.getString(R.string.themes_appThemes_lightTheme);
         }
     }
 
@@ -1271,7 +1271,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_darkTheme);
+            return context.getString(R.string.themes_appThemes_darkTheme);
         }
     }
 
@@ -1309,7 +1309,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_nightMode);
+            return context.getString(R.string.themes_appThemes_nightMode);
         }
     }
 
@@ -1337,7 +1337,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_lightTheme1);
+            return context.getString(R.string.themes_appThemes_lightTheme1);
         }
     }
 
@@ -1365,7 +1365,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_darkTheme1);
+            return context.getString(R.string.themes_appThemes_darkTheme1);
         }
     }
 
@@ -1393,7 +1393,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_systemDefault1);
+            return context.getString(R.string.themes_appThemes_systemDefault1);
         }
     }
 
@@ -1421,7 +1421,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_systemMonet);
+            return context.getString(R.string.themes_appThemes_systemMonet);
         }
         @Override
         public int requiredTargetSdkVersion() {
@@ -1453,7 +1453,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_darkMonet);
+            return context.getString(R.string.themes_appThemes_darkMonet);
         }
         @Override
         public int requiredTargetSdkVersion() {
@@ -1485,7 +1485,7 @@ public class AppSettings
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.appThemes_lightMonet);
+            return context.getString(R.string.themes_appThemes_lightMonet);
         }
         @Override
         public int requiredTargetSdkVersion() {

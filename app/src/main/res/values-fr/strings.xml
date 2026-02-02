@@ -114,9 +114,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">depuis</string>
-    <string name="until">jusqu\'au</string>
-    <string name="until_end">jusqu\'à la fin</string>
+    <string name="delta_since">depuis</string>
+    <string name="delta_until">jusqu\'au</string>
+    <string name="delta_until_end">jusqu\'à la fin</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
         <item quantity="one" xliff:ignore="ImpliedQuantity">à</item>
@@ -190,8 +190,8 @@
     <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Métriques</string>
@@ -1248,16 +1248,16 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">Aide</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Voir l\'aide du widget</string>
-    <string name="configLabel_widgetList_emptyMsg">Aucun widget</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">Widgets</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string> <!-- the pattern used when generating widget titles for display in the list -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_help_title">Aide</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Voir l\'aide du widget</string>
+    <string name="widgetList_label_empty">Aucun widget</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="action_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="action_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
@@ -1272,29 +1272,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="widgetimport_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>    <!-- TODO: verify -->
+    <string name="widgetreset_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>    <!-- TODO: verify -->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
 
     <plurals name="itemsPlural">
         <item quantity="one">%d item</item>
@@ -1420,17 +1420,17 @@
     <string name="configLabel_ui_showbluehour">Heure bleue</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Thème clair</string>
-    <string name="appThemes_darkTheme">Thème sombre</string>
-    <string name="appThemes_nightMode">Automatique (jour/nuit)</string>
-    <string name="appThemes_systemDefault">Système</string>
-    <string name="appThemes_systemDefault1">Contraste (système)</string>
-    <string name="appThemes_darkTheme1">Contraste (sombre)</string>
-    <string name="appThemes_lightTheme1">Contraste (clair)</string>
+    <string name="themes_appThemes_lightTheme">Thème clair</string>
+    <string name="themes_appThemes_darkTheme">Thème sombre</string>
+    <string name="themes_appThemes_nightMode">Automatique (jour/nuit)</string>
+    <string name="themes_appThemes_systemDefault">Système</string>
+    <string name="themes_appThemes_systemDefault1">Contraste (système)</string>
+    <string name="themes_appThemes_darkTheme1">Contraste (sombre)</string>
+    <string name="themes_appThemes_lightTheme1">Contraste (clair)</string>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Taille du texte</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">Taille du texte</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">Petit</string>
     <string name="textSize_normal">Normal</string>
@@ -1443,41 +1443,41 @@
         <item>@string/textSize_xlarge</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Ne rien faire</string>
-    <string name="configActionDesc_nextNote">Affichage suivant</string>
-    <string name="configActionDesc_prevNote">Affichage précédent</string>
-    <string name="configActionDesc_resetNote">Note de réinitialisation</string>
-    <string name="configActionDesc_showCalendar">Afficher le calendrier</string>
-    <string name="configActionDesc_mapLocation">Afficher l\'emplacement sur la carte</string>
-    <string name="configActionDesc_setAlarm">Définir une alarme</string>
-    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
-    <string name="configActionDesc_setDate">Définir la date</string>
-    <string name="configActionDesc_setTimeZone">Définir le fuseau horaire</string>
-    <string name="configActionDesc_setLocation">Définir l\'emplacement</string>
-    <string name="configActionDesc_swapCards">Inverser (aujourd\'hui/demain)</string>
-    <string name="configActionDesc_setAlarmForNote">Régler l\'alarme</string>
-    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
-    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
-    <string name="configActionDesc_alarmList">Liste d\'alarmes</string>
-    <string name="configActionDesc_themeList">Liste de thèmes</string>
-    <string name="configActionDesc_actionList">Liste d\'actions</string>
-    <string name="configActionDesc_widgetList">Liste de widgets</string>
-    <string name="configActionDesc_nextSunrise">Afficher le prochain lever de soleil</string>
-    <string name="configActionDesc_nextSunset">Afficher le prochain coucher de soleil</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="actionDesc_doNothing">Ne rien faire</string>
+    <string name="actionDesc_nextNote">Affichage suivant</string>
+    <string name="actionDesc_prevNote">Affichage précédent</string>
+    <string name="actionDesc_resetNote">Note de réinitialisation</string>
+    <string name="actionDesc_showCalendar">Afficher le calendrier</string>
+    <string name="actionDesc_mapLocation">Afficher l\'emplacement sur la carte</string>
+    <string name="actionDesc_setAlarm">Définir une alarme</string>
+    <string name="actionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
+    <string name="actionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
+    <string name="actionDesc_moon">Moon Dialog</string>  <!-- TODO -->
+    <string name="actionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
+    <string name="actionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
+    <string name="actionDesc_setDate">Définir la date</string>
+    <string name="actionDesc_setTimeZone">Définir le fuseau horaire</string>
+    <string name="actionDesc_setLocation">Définir l\'emplacement</string>
+    <string name="actionDesc_swapCards">Inverser (aujourd\'hui/demain)</string>
+    <string name="actionDesc_setAlarmForNote">Régler l\'alarme</string>
+    <string name="actionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="actionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="actionDesc_alarmList">Liste d\'alarmes</string>
+    <string name="actionDesc_themeList">Liste de thèmes</string>
+    <string name="actionDesc_actionList">Liste d\'actions</string>
+    <string name="actionDesc_widgetList">Liste de widgets</string>
+    <string name="actionDesc_nextSunrise">Afficher le prochain lever de soleil</string>
+    <string name="actionDesc_nextSunset">Afficher le prochain coucher de soleil</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="actionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
+    <string name="actionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
+    <string name="actionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
+    <string name="actionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
+    <string name="actionDesc_android">Android</string>   <!-- TODO -->
+    <string name="actionDesc_calendarEvent">Calendar Event</string>   <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">par décalage</string>
@@ -1494,9 +1494,9 @@
     <string name="timezone_sort_msg">Trié par fuseaux horaires (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">En attente des signaux GPS</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="configLabel_getFix_maxElapse_summary">Abandonner après <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">En attente des signaux GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="location_pref_maxElapse_summary">Abandonner après <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 secondes</item>
         <item>30 secondes</item>
         <item>1 minute</item>
@@ -1505,9 +1505,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté de l\'emplacement</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Tolérance d\'ancienneté de l\'emplacement</string>
+    <string name="location_pref_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>aucun</item>
         <item>1 minute</item>
         <item>5 minutes</item>
@@ -1523,26 +1523,26 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendriers</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Intégration au calendrier</string>
+    <string name="calendars_pref_title">Calendriers</string>   <!-- group title -->
+    <string name="calendars_pref_summary">Intégration au calendrier</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Localisation passive</string>  
-    <string name="configLabel_getFix_passiveMode_summary">Utilise le fournisseur de localisation passif.</string> 
+    <string name="location_label_passiveMode">Localisation passive</string>
+    <string name="location_label_passiveMode_summary">Utilise le fournisseur de localisation passif.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Langue</string>   <!-- group title -->
+    <string name="locale_pref_title">Langue</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Mode</string>
-    <string name="configLabel_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">Mode</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Système</item>
         <item>Défini par l\'utilisateur</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Langue</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Langue</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Anglais</item>
         <item>Espéranto</item>

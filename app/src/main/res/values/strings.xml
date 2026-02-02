@@ -65,9 +65,9 @@
     <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
     <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
 
-    <string name="shortcut_widgetlist_short">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_long">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_disabled">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_short">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_disabled">@string/widgetList_label</string>
 
     <string name="shortcut_themelist_short">@string/themes_configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
@@ -165,9 +165,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">since</string>
-    <string name="until">until</string>
-    <string name="until_end">until end</string>
+    <string name="delta_since">since</string>
+    <string name="delta_until">until</string>
+    <string name="delta_until_end">until end</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
         <item quantity="one">at</item>
@@ -254,8 +254,8 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
     <!--<string name="date_any">Any Date</string>-->   <!-- no particular date; unset date -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
@@ -1278,7 +1278,6 @@
     <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="alarms_label_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>
 
-    <string name="notificationChannelWarning">@string/alarms_warning_notifications</string>  <!-- snackbar message -->
     <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>  <!-- notification channel title -->
     <string name="notificationChannel_alarms_desc">@string/alarmMode_alarm</string>  <!-- notification channel title -->
     <string name="notificationChannel_notifications0_title">@string/alarmMode_notification</string>  <!-- notification channel title -->
@@ -1291,6 +1290,7 @@
     <string name="notificationChannel_bedtime_desc">@string/bedtime_label</string>  <!-- notification channel title -->
 
     <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
+    <string name="alarms_warning_notificationChannel">@string/alarms_warning_notifications</string>  <!-- snackbar message -->
     <string name="alarms_warning_notifications"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->
     <string name="alarms_warning_restrictedBucket"><xliff:g id="warningTag">[w]</xliff:g> Application is restricted!\nAlarms may fail to work reliably.</string>  <!-- snackbar message -->
@@ -1514,20 +1514,20 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern2" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern3" formatted="false">@string/app_name</string> <!-- the pattern used when generating alarm widget titles -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetList_itemSummaryPattern1"><xliff:g id="widgetType">%1$s</xliff:g></string>
-    <string name="configLabel_widgetListHelp_title">Help</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Show widget help</string>
-    <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">Widgets</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern2" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
+    <string name="widgetList_label_itemTitlePattern3" formatted="false">@string/app_name</string> <!-- the pattern used when generating alarm widget titles -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_itemSummaryPattern1"><xliff:g id="widgetType">%1$s</xliff:g></string>
+    <string name="widgetList_label_help_title">Help</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Show widget help</string>
+    <string name="widgetList_label_empty">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="action_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="action_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>
     <string name="restorebackup_dialog_item_colors">Colors</string>
@@ -1542,29 +1542,29 @@
     <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
     <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>
-    <string name="importwidget_dialog_title">Import Settings</string>
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string>
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
-    <string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
-    <string name="resetwidget_dialog_message">Are you sure you want to reset to defaults?</string>
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Export Settings</string>
+    <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>
+    <string name="widgetimport_dialog_title">Import Settings</string>
+    <string name="widgetimport_dialog_message">Importing widget settings from file.</string>
+    <string name="widgetimport_dialog_title1">Settings found,\nbut they are for other widgets…</string>
+    <string name="widgetimport_dialog_title2">Found multiple settings…</string>
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string>
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
+    <string name="widgetimport_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+    <string name="widgetreset_dialog_message">Are you sure you want to reset to defaults?</string>
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string>
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string>
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string>
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string>
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string>
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string>
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string>
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string>
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d item</item>
@@ -1787,16 +1787,16 @@
     <string name="configLabel_ui_showbluehour">Blue Hour</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Light Theme</string>
-    <string name="appThemes_darkTheme">Dark Theme</string>
-    <string name="appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
-    <string name="appThemes_systemDefault">System default</string>
-    <string name="appThemes_systemDefault1">Contrast (System Default)</string>
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>
-    <string name="appThemes_systemMonet">Monet (System Default)</string>     <!-- TODO -->
-    <string name="appThemes_darkMonet">Monet (Dark)</string>    <!-- TODO -->
-    <string name="appThemes_lightMonet">Monet (Light)</string>     <!-- TODO -->
+    <string name="themes_appThemes_lightTheme">Light Theme</string>
+    <string name="themes_appThemes_darkTheme">Dark Theme</string>
+    <string name="themes_appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
+    <string name="themes_appThemes_systemDefault">System default</string>
+    <string name="themes_appThemes_systemDefault1">Contrast (System Default)</string>
+    <string name="themes_appThemes_darkTheme1">Contrast (Dark)</string>
+    <string name="themes_appThemes_lightTheme1">Contrast (Light)</string>
+    <string name="themes_appThemes_systemMonet">Monet (System Default)</string>     <!-- TODO -->
+    <string name="themes_appThemes_darkMonet">Monet (Dark)</string>    <!-- TODO -->
+    <string name="themes_appThemes_lightMonet">Monet (Light)</string>     <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1811,8 +1811,8 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Text Size</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">Text Size</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">Small</string>
     <string name="textSize_normal">Normal</string>
@@ -1844,15 +1844,15 @@
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setDate</item>
+        <item>@string/actionDesc_swapCards</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
+    <string-array name="actions_dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
         <item>NOTHING</item>
         <item>SHOW_CALENDAR</item>
         <item>ALARM</item>
@@ -1862,16 +1862,16 @@
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setTimeZone</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
+    <string-array name="actions_clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
         <item>SHOW_CALENDAR</item>
         <item>ALARM</item>
@@ -1882,14 +1882,14 @@
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarmForNote</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_setAlarmForNote</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
+    <string-array name="actions_noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
         <item>ALARM</item>
         <item>NEXT_NOTE</item>
@@ -1897,48 +1897,48 @@
         <item>RESET_NOTE</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Do nothing</string>
-    <string name="configActionDesc_nextNote">Show next note</string>
-    <string name="configActionDesc_prevNote">Show previous note</string>
-    <string name="configActionDesc_resetNote">Show upcoming event</string>
-    <string name="configActionDesc_showCalendar">Open calendar</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>
-    <string name="configActionDesc_setAlarm">Set an alarm</string>
-    <string name="configActionDesc_worldMap">World Map Dialog</string>
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>
-    <string name="configActionDesc_moon">Moon Dialog</string>
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>
-    <string name="configActionDesc_setDate">Set date</string>
-    <string name="configActionDesc_setTimeZone">Set time zone</string>
-    <string name="configActionDesc_setLocation">Set location</string>
-    <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>
-    <string name="configActionDesc_nextCard">Show next card</string>
-    <string name="configActionDesc_prevCard">Show previous card</string>
-    <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
-    <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
-    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
-    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
-    <string name="configActionDesc_alarmList">Alarm List</string>
-    <string name="configActionDesc_themeList">Theme List</string>
-    <string name="configActionDesc_actionList">Action List</string>
-    <string name="configActionDesc_widgetList">Widget List</string>
-    <string name="configActionDesc_nextSunrise">Show next sunrise</string>
-    <string name="configActionDesc_nextSunset">Show next sunset</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_settings">@string/configAction_settings</string>
-    <string name="configActionDesc_timerList">Timer List</string>
-    <string name="configActionDesc_dateSettings">Date Settings</string>
-    <string name="configActionDesc_displaySettings">Display Settings</string>
-    <string name="configActionDesc_localeSettings">Locale Settings</string>
-    <string name="configActionDesc_locationSettings">Location Settings</string>
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>
-    <string name="configLabel_android">Android</string>
-    <string name="configLabel_calendarEvent">Calendar Event</string>
+    <string name="actionDesc_doNothing">Do nothing</string>
+    <string name="actionDesc_nextNote">Show next note</string>
+    <string name="actionDesc_prevNote">Show previous note</string>
+    <string name="actionDesc_resetNote">Show upcoming event</string>
+    <string name="actionDesc_showCalendar">Open calendar</string>
+    <string name="actionDesc_mapLocation">Show location on map</string>
+    <string name="actionDesc_setAlarm">Set an alarm</string>
+    <string name="actionDesc_worldMap">World Map Dialog</string>
+    <string name="actionDesc_equinoxDialog">Solstices Dialog</string>
+    <string name="actionDesc_moon">Moon Dialog</string>
+    <string name="actionDesc_sunDialog">Sun Dialog</string>
+    <string name="actionDesc_sunlightDialog">Sunlight Dialog</string>
+    <string name="actionDesc_setDate">Set date</string>
+    <string name="actionDesc_setTimeZone">Set time zone</string>
+    <string name="actionDesc_setLocation">Set location</string>
+    <string name="actionDesc_swapCards">Swap cards (today/tomorrow)</string>
+    <string name="actionDesc_nextCard">Show next card</string>
+    <string name="actionDesc_prevCard">Show previous card</string>
+    <string name="actionDesc_showCard">@string/configAction_viewDate</string>
+    <string name="actionDesc_setAlarmForNote">Set alarm for note</string>
+    <string name="actionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="actionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="actionDesc_alarmList">Alarm List</string>
+    <string name="actionDesc_themeList">Theme List</string>
+    <string name="actionDesc_actionList">Action List</string>
+    <string name="actionDesc_widgetList">Widget List</string>
+    <string name="actionDesc_nextSunrise">Show next sunrise</string>
+    <string name="actionDesc_nextSunset">Show next sunset</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_settings">@string/configAction_settings</string>
+    <string name="actionDesc_timerList">Timer List</string>
+    <string name="actionDesc_dateSettings">Date Settings</string>
+    <string name="actionDesc_displaySettings">Display Settings</string>
+    <string name="actionDesc_localeSettings">Locale Settings</string>
+    <string name="actionDesc_locationSettings">Location Settings</string>
+    <string name="actionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>
+    <string name="actionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>
+    <string name="actionDesc_android">Android</string>
+    <string name="actionDesc_calendarEvent">Calendar Event</string>
 
-    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
+    <string-array name="actions_tapActions_titles">    <!-- must be in same order as enum TapActions -->
+        <item>@string/actionDesc_doNothing</item>
         <item>@string/app_name</item>
 
         <item>@string/app_name</item>
@@ -1977,68 +1977,68 @@
         <item>@string/bedtime_label</item>
         <item>@string/bedtime_label</item>
 
-        <item>@string/configLabel_calendarEvent</item>
-        <item>@string/configLabel_calendarEvent</item>
+        <item>@string/actionDesc_calendarEvent</item>
+        <item>@string/actionDesc_calendarEvent</item>
 
         <item>@string/app_name_alarmclock</item>
         <item>@string/alarms_label_alarmClock</item>
 
-        <item>@string/configLabel_android</item>
-        <item>@string/configLabel_android</item>
-        <item>@string/configLabel_android</item>
-        <item>@string/configLabel_android</item>
+        <item>@string/actionDesc_android</item>
+        <item>@string/actionDesc_android</item>
+        <item>@string/actionDesc_android</item>
+        <item>@string/actionDesc_android</item>
 
     </string-array>
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarm</item>
+    <string-array name="actions_tapActions_display">    <!-- must be in same order as enum TapActions -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_setAlarm</item>
 
-        <item>@string/configActionDesc_nextCard</item>
-        <item>@string/configActionDesc_prevCard</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_showCard</item>
+        <item>@string/actionDesc_nextCard</item>
+        <item>@string/actionDesc_prevCard</item>
+        <item>@string/actionDesc_swapCards</item>
+        <item>@string/actionDesc_showCard</item>
 
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
-        <item>@string/configActionDesc_nextSunrise</item>
-        <item>@string/configActionDesc_nextSunset</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
+        <item>@string/actionDesc_nextSunrise</item>
+        <item>@string/actionDesc_nextSunset</item>
 
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_setLocation</item>
-        <item>@string/configActionDesc_setTimeZone</item>
+        <item>@string/actionDesc_setDate</item>
+        <item>@string/actionDesc_setLocation</item>
+        <item>@string/actionDesc_setTimeZone</item>
 
-        <item>@string/configActionDesc_worldMap</item>
-        <item>@string/configActionDesc_equinoxDialog</item>
-        <item>@string/configActionDesc_moon</item>
-        <item>@string/configActionDesc_sunDialog</item>
-        <item>@string/configActionDesc_sunlightDialog</item>
+        <item>@string/actionDesc_worldMap</item>
+        <item>@string/actionDesc_equinoxDialog</item>
+        <item>@string/actionDesc_moon</item>
+        <item>@string/actionDesc_sunDialog</item>
+        <item>@string/actionDesc_sunlightDialog</item>
 
-        <item>@string/configActionDesc_alarmList</item>
-        <item>@string/configActionDesc_themeList</item>
-        <item>@string/configActionDesc_actionList</item>
-        <item>@string/configActionDesc_widgetList</item>
-        <item>@string/configActionDesc_settings</item>
+        <item>@string/actionDesc_alarmList</item>
+        <item>@string/actionDesc_themeList</item>
+        <item>@string/actionDesc_actionList</item>
+        <item>@string/actionDesc_widgetList</item>
+        <item>@string/actionDesc_settings</item>
 
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_mapLocation</item>
-        <item>@string/configActionDesc_alarmSnooze</item>
-        <item>@string/configActionDesc_alarmDismiss</item>
-        <item>@string/configActionDesc_updateWidgets</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_mapLocation</item>
+        <item>@string/actionDesc_alarmSnooze</item>
+        <item>@string/actionDesc_alarmDismiss</item>
+        <item>@string/actionDesc_updateWidgets</item>
 
         <item>@string/bedtime_actionDesc_triggerBedtime</item>
         <item>@string/bedtime_actionDesc_dismissBedtime</item>
 
-        <item>@string/configActionDesc_createCalendarRisingEvent</item>
-        <item>@string/configActionDesc_createCalendarSettingEvent</item>
+        <item>@string/actionDesc_createCalendarRisingEvent</item>
+        <item>@string/actionDesc_createCalendarSettingEvent</item>
 
-        <item>@string/configActionDesc_alarmList</item>
-        <item>@string/configActionDesc_timerList</item>
+        <item>@string/actionDesc_alarmList</item>
+        <item>@string/actionDesc_timerList</item>
 
-        <item>@string/configActionDesc_dateSettings</item>
-        <item>@string/configActionDesc_displaySettings</item>
-        <item>@string/configActionDesc_localeSettings</item>
-        <item>@string/configActionDesc_locationSettings</item>
+        <item>@string/actionDesc_dateSettings</item>
+        <item>@string/actionDesc_displaySettings</item>
+        <item>@string/actionDesc_localeSettings</item>
+        <item>@string/actionDesc_locationSettings</item>
 
     </string-array>
 
@@ -2062,16 +2062,16 @@
     <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: location fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Location time limit</string>
-    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">Location time limit</string>
+    <string name="location_pref_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 seconds</item>
         <item>30 seconds</item>
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
     </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
+    <string-array name="location_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
         <item>15000</item>
         <item>30000></item>
         <item>60000</item>
@@ -2080,9 +2080,9 @@
     </string-array>
 
     <!-- App Setting: location fix max age -->
-    <string name="configLabel_getFix_maxAge">Location recent max age</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Location recent max age</string>
+    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>none</item>
         <item>1 minute</item>
         <item>5 minutes</item>
@@ -2096,7 +2096,7 @@
         <item>one month (672 hours)</item>
         <item>any age</item>
     </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+    <string-array name="location_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
         <item>0</item>
         <item>60000</item>
         <item>300000</item>
@@ -2111,53 +2111,53 @@
         <item>-1</item>
     </string-array>
 
-    <string name="configLabel_getFix_lastRequest_flag">@string/configLabel_getFix_gnss_log</string>  <!-- pref title --> <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest">Last Update</string>  <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest_noreport">Nothing to report.</string>  <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
+    <string name="location_label_lastRequest_flag">@string/location_label_gnss_log</string>  <!-- pref title --> <!-- TODO -->
+    <string name="location_label_lastRequest">Last Update</string>  <!-- TODO -->
+    <string name="location_label_lastRequest_noreport">Nothing to report.</string>  <!-- TODO -->
+    <string name="location_label_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
+    <string name="location_label_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
         \n\n<xliff:g id="provider">%3$s</xliff:g> ±<xliff:g id="accuracy">%4$s</xliff:g>m
         \nElapsed: <xliff:g id="elapsedTime">%5$s</xliff:g>
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
-    <string name="configLabel_getFix_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
+    <string name="location_label_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago (not found)
         \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
-    <string name="configLabel_getFix_num_satellites">%1$s/%2$s</string>    <!-- TODO -->
+    <string name="location_label_num_satellites">%1$s/%2$s</string>    <!-- TODO -->
 
-    <string name="configLabel_getFix_gnss">GNSS</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_log">GNSS Log</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_almanac">Almanac</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_ephemeris">Ephemeris</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_used">Used</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_signal">Signal</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_cnrFormat">%s db</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss">GNSS</string>    <!-- TODO -->
+    <string name="location_label_gnss_log">GNSS Log</string>    <!-- TODO -->
+    <string name="location_label_gnss_almanac">Almanac</string>    <!-- TODO -->
+    <string name="location_label_gnss_ephemeris">Ephemeris</string>    <!-- TODO -->
+    <string name="location_label_gnss_used">Used</string>    <!-- TODO -->
+    <string name="location_label_gnss_signal">Signal</string>    <!-- TODO -->
+    <string name="location_label_gnss_cnrFormat">%s db</string>    <!-- TODO -->
+    <string name="location_label_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
 
-    <string name="configLabel_getFix_gnss_agps">AGPS</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_agps_reload_warning">Reloading AGPS data requires network connectivity.\n\nVerify your connection before proceeding…</string>    <!-- TODO -->
-    <string name="configLabel_getFix_gnss_agps_delete">Delete AGPS data</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps">AGPS</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_reload_warning">Reloading AGPS data requires network connectivity.\n\nVerify your connection before proceeding…</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_delete">Delete AGPS data</string>    <!-- TODO -->
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title for "calendars" app setting -->
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>
+    <string name="calendars_pref_title">Calendars</string>   <!-- group title for "calendars" app setting -->
+    <string name="calendars_pref_summary">Calendar Integration</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
+    <string name="location_label_passiveMode">Passive Location</string>
+    <string name="location_label_passiveMode_summary">Use the passive location provider.</string>
 
-    <string name="configLabel_locationproviders">Location Providers</string>        <!-- TODO -->
+    <string name="location_label_locationproviders">Location Providers</string>        <!-- TODO -->
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language</string>   <!-- group title -->
+    <string name="locale_pref_title">Language</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Mode</string>
-    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">Mode</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>System</item>
         <item>User Defined</item>
@@ -2168,8 +2168,8 @@
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Language</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Language</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>English</item>
         <item>Esperanto</item>

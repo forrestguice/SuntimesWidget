@@ -20,7 +20,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_locale"
+        android:title="@string/locale_pref_title"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -47,7 +47,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_widgetList"
+        android:title="@string/widgetList_label"
         android:summary="" >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"

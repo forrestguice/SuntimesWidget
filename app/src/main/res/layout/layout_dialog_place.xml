@@ -151,7 +151,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:textSize="?attr/text_size_tiny" android:textStyle="bold"
-            android:text="@string/configLabel_getFix_gnss" />
+            android:text="@string/location_label_gnss" />
 
         <com.forrestguice.support.widget.NestedScrollView android:id="@+id/scroll_debug_log"
             android:layout_width="match_parent" android:layout_height="100dp"

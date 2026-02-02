@@ -521,7 +521,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
                 Long id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
                 WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
                 WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);
-                report.append(context.getString(R.string.importwidget_dialog_report_format, id + "", metadata.getWidgetClassName()));
+                report.append(context.getString(R.string.widgetimport_dialog_report_format, id + "", metadata.getWidgetClassName()));
                 report.append("\n");
                 c++;
             }
@@ -584,7 +584,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
                 WidgetSettingsImportTask.importValues(prefs, values, appWidgetId);
 
                 String widgetClassName = WidgetSettingsMetadata.loadMetaData(context, appWidgetId).getWidgetClassName();
-                report.append(context.getString(R.string.importwidget_dialog_report_format, appWidgetId + "", widgetClassName));
+                report.append(context.getString(R.string.widgetimport_dialog_report_format, appWidgetId + "", widgetClassName));
                 report.append("\n");
             }
             return numMatches;
@@ -654,17 +654,17 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
     {
         switch (method)
         {
-            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_restorebackup));
 
-            case IMPORT_ALARMS_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_addall));
-            case IMPORT_ALARMS_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.importalarms_dialog_item_clear));
+            case IMPORT_ALARMS_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.alarmsimport_dialog_item_addall));
+            case IMPORT_ALARMS_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.alarmsimport_dialog_item_clear));
 
-            case IMPORT_PLACES_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_addall));
-            case IMPORT_PLACES_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_clear));
-            case IMPORT_PLACES_METHOD_IGNORE: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_ignore));
-            case IMPORT_PLACES_METHOD_OVERWRITE: return SpanUtils.fromHtml(context.getString(R.string.importplaces_dialog_item_overwrite));
+            case IMPORT_PLACES_METHOD_ADDALL: return SpanUtils.fromHtml(context.getString(R.string.placesimport_dialog_item_addall));
+            case IMPORT_PLACES_METHOD_CLEAR: return SpanUtils.fromHtml(context.getString(R.string.placesimport_dialog_item_clear));
+            case IMPORT_PLACES_METHOD_IGNORE: return SpanUtils.fromHtml(context.getString(R.string.placesimport_dialog_item_ignore));
+            case IMPORT_PLACES_METHOD_OVERWRITE: return SpanUtils.fromHtml(context.getString(R.string.placesimport_dialog_item_overwrite));
 
             default: return method + "";
         }

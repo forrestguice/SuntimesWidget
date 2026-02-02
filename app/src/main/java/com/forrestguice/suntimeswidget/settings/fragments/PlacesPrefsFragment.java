@@ -145,13 +145,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     CharSequence lastRequestDisplay;
                     if (LocationHelperSettings.lastLocationResult(context))
                     {
-                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_success,
+                        lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_success,
                                 utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
                                 delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
                                 provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
                                 (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
-                        lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report_failed,
+                        lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_failed,
                                 utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
                                 delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
                                 (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
@@ -161,7 +161,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 } else {
                     long time0 = LocationHelperSettings.lastAutoLocationRequest(context);
                     long timeAgo0 = System.currentTimeMillis() - time0;
-                    CharSequence lastRequestDisplay = context.getString(R.string.configLabel_getFix_lastRequest_report0,
+                    CharSequence lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report0,
                             utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time0).getValue(),
                             delta_utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
                     lastRequestPref.setSummary(lastRequestDisplay);
@@ -178,7 +178,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
             if (context != null && !LocationHelperSettings.lastLocationLog(context).isEmpty()) {
                 showLocationLastRequestReport(context, LocationHelperSettings.lastLocationLog(context));
             } else if (context != null) {
-                Toast.makeText(context, context.getString(R.string.configLabel_getFix_lastRequest_noreport), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.location_label_lastRequest_noreport), Toast.LENGTH_SHORT).show();
             }
             return false;
         }
@@ -202,7 +202,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         hScroll.addView(vScroll);
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle(context.getString(R.string.configLabel_getFix_lastRequest));
+        dialog.setTitle(context.getString(R.string.location_label_lastRequest));
         dialog.setView(hScroll);
         dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
         dialog.setNeutralButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener() {
@@ -217,7 +217,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         if (context != null && message != null) {
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             if (clipboard != null) {
-                clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.configLabel_getFix_lastRequest), message));
+                clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.location_label_lastRequest), message));
                 Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard), Toast.LENGTH_SHORT).show();
             }
         }

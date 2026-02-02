@@ -125,14 +125,14 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("compareMode_values", R.array.compareMode_values, "compareMode_display", R.array.compareMode_display);
             verify_stringArrayValuesOfEnum("compareMode_values", R.array.compareMode_values, CompareMode.class);
 
-            verify_stringArrayLength("tapActions_titles", R.array.tapActions_titles, "tapActions_display", R.array.tapActions_display);
-            verify_stringArrayLength("tapActions_display", R.array.tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
+            verify_stringArrayLength("tapActions_titles", R.array.actions_tapActions_titles, "tapActions_display", R.array.actions_tapActions_display);
+            verify_stringArrayLength("tapActions_display", R.array.actions_tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
 
-            verify_stringArrayLength("clockTapActions_values", R.array.clockTapActions_values, "clockTapActions_display", R.array.clockTapActions_display);
-            verify_enumTapActions("clockTapActions_values", R.array.clockTapActions_values);
+            verify_stringArrayLength("clockTapActions_values", R.array.actions_clockTapActions_values, "clockTapActions_display", R.array.actions_clockTapActions_display);
+            verify_enumTapActions("clockTapActions_values", R.array.actions_clockTapActions_values);
 
-            verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
-            verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
+            verify_stringArrayLength("dateTapActions_values", R.array.actions_dateTapActions_values, "dateTapActions_display", R.array.actions_dateTapActions_display);
+            verify_enumTapActions("dateTapActions_values", R.array.actions_dateTapActions_values);
 
             verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, TimeFormatMode.class);
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
@@ -141,9 +141,9 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("lengthUnits_values", R.array.lengthUnits_values, "lengthUnits_display", R.array.lengthUnits_display);
 
             verify_stringArrayLength("alarm_hardwarebutton_actions_values", R.array.alarm_hardwarebutton_actions_values, "alarm_hardwarebutton_actions_display", R.array.alarm_hardwarebutton_actions_display);
-            verify_stringArrayLength("getFix_maxAge_values", R.array.getFix_maxAge_values, "getFix_maxAge_display", R.array.getFix_maxAge_display);
-            verify_stringArrayLength("getFix_maxElapse_values", R.array.getFix_maxElapse_values, "getFix_maxElapse_display", R.array.getFix_maxElapse_display);
-            verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
+            verify_stringArrayLength("getFix_maxAge_values", R.array.location_maxAge_values, "getFix_maxAge_display", R.array.location_maxAge_display);
+            verify_stringArrayLength("getFix_maxElapse_values", R.array.location_maxElapse_values, "getFix_maxElapse_display", R.array.location_maxElapse_display);
+            verify_stringArrayLength("noteTapActions_values", R.array.actions_noteTapActions_values, "noteTapActions_display", R.array.actions_noteTapActions_display);
 
             verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, TrackingMode.class);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);

@@ -588,7 +588,7 @@ public class SuntimesNotes
         String prefix;
         if (useSince)
         {
-            prefix = context.getString(R.string.since);
+            prefix = context.getString(R.string.delta_since);
 
         } else if (SolarEvents.hasValue(eventID)) {
             SolarEvents event = SolarEvents.valueOf(eventID);
@@ -598,18 +598,18 @@ public class SuntimesNotes
                 case MOONRISE: case MOONSET: case MOONNOON: case MOONNIGHT:
                 case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case EVENING_BLUE4: case MORNING_CIVIL:
                 case SUNRISE: case NOON: case MIDNIGHT: case EVENING_GOLDEN: case SUNSET:
-                    prefix = context.getString(R.string.until);
+                    prefix = context.getString(R.string.delta_until);
                     break;
 
                 // until_end
                 case MORNING_GOLDEN: case EVENING_CIVIL: case EVENING_BLUE8: case MORNING_BLUE4: case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL:
                 default:
-                    prefix = context.getString(R.string.until_end);
+                    prefix = context.getString(R.string.delta_until_end);
                     break;
             }
 
         } else {
-            prefix = context.getString(R.string.until);  // TODO
+            prefix = context.getString(R.string.delta_until);  // TODO
         }
         return prefix;
     }

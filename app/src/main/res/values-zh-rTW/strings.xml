@@ -119,9 +119,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">從</string>
-    <string name="until">到</string>
-    <string name="until_end">為止</string>
+    <string name="delta_since">從</string>
+    <string name="delta_until">到</string>
+    <string name="delta_until_end">為止</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <!--<item quantity="one">at</item>-->
@@ -203,8 +203,8 @@
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
@@ -1271,17 +1271,17 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">小工具</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">幫助</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">顯示小工具幫助</string>
-    <string name="configLabel_widgetList_emptyMsg">無小工具</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">小工具</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_help_title">幫助</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">顯示小工具幫助</string>
+    <string name="widgetList_label_empty">無小工具</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">建立備份</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
-    <string name="configAction_restoreBackup">恢復備份</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="action_createBackup">建立備份</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="action_restoreBackup">恢復備份</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
     <string name="restorebackup_dialog_item_alarmitems">鬧鐘</string>
     <string name="restorebackup_dialog_item_appsettings">應用設定</string>
     <string name="restorebackup_dialog_item_colors">顏色</string>
@@ -1296,29 +1296,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">匯出設定</string>
-    <string name="exportwidget_dialog_message">匯出小工具設定到檔案。</string>
-    <string name="importwidget_dialog_title">匯入設定</string>
-    <string name="importwidget_dialog_message">從檔案匯入小工具設定。</string>
-    <string name="importwidget_dialog_title1">找到設定\n但屬於其它小工具…</string>
-    <string name="importwidget_dialog_title2">找到多個設定…</string>
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">（未知）</string>   <!-- shown as item when type cannot be determined -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>恢復備份</b>。匯入的設定會被快取，當啟動器請求時會被恢復。<br/>]]></string>
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>最佳猜測</b>。匯入的設定會根據型別被應用於現有的小工具。<br/>]]></string>
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>直接匯入</b>。匯入的設定會被直接應用。只有小工具 ID 未發生變化時可用。<br/>]]></string>
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">匯出設定</string>
+    <string name="widgetexport_dialog_message">匯出小工具設定到檔案。</string>
+    <string name="widgetimport_dialog_title">匯入設定</string>
+    <string name="widgetimport_dialog_message">從檔案匯入小工具設定。</string>
+    <string name="widgetimport_dialog_title1">找到設定\n但屬於其它小工具…</string>
+    <string name="widgetimport_dialog_title2">找到多個設定…</string>
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">（未知）</string>   <!-- shown as item when type cannot be determined -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>恢復備份</b>。匯入的設定會被快取，當啟動器請求時會被恢復。<br/>]]></string>
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>最佳猜測</b>。匯入的設定會根據型別被應用於現有的小工具。<br/>]]></string>
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>直接匯入</b>。匯入的設定會被直接應用。只有小工具 ID 未發生變化時可用。<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">您確認要重置為預設值嗎？</string>
+    <string name="widgetreset_dialog_message">您確認要重置為預設值嗎？</string>
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>清除</b>。鬧鐘會在從備份中匯入前被清除。<br/>]]></string>
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的鬧鐘會被保留（可能會重複）。<br/>]]></string>
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>清除</b>。鬧鐘會在從備份中匯入前被清除。<br/>]]></string>
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的鬧鐘會被保留（可能會重複）。<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>清除</b>。地點會在從備份中匯入前被清除。<br/>]]></string>
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的地點會被保留（可能會重複）。<br/>]]></string>
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>忽略現有</b>。如果地點不存在則會被新增（忽略現有）。<br/>]]></string>
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>覆蓋現有</b>。如果地點存在則會被更新。<br/>]]></string>
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>清除</b>。地點會在從備份中匯入前被清除。<br/>]]></string>
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>保持現有</b>。現有的地點會被保留（可能會重複）。<br/>]]></string>
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>忽略現有</b>。如果地點不存在則會被新增（忽略現有）。<br/>]]></string>
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>覆蓋現有</b>。如果地點存在則會被更新。<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="other">%d 項</item>
@@ -1442,13 +1442,13 @@
     <string name="configLabel_ui_showbluehour">顯示藍色時刻</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">淺色主題</string>
-    <string name="appThemes_darkTheme">深色主題</string>
-    <string name="appThemes_nightMode">淺色主題/深色主題（夜間模式）</string>
-    <string name="appThemes_systemDefault">系統預設</string>
-    <string name="appThemes_systemDefault1">高對比度（系統預設）</string>
-    <string name="appThemes_darkTheme1">高對比度（深色）</string>
-    <string name="appThemes_lightTheme1">高對比度（淺色）</string>
+    <string name="themes_appThemes_lightTheme">淺色主題</string>
+    <string name="themes_appThemes_darkTheme">深色主題</string>
+    <string name="themes_appThemes_nightMode">淺色主題/深色主題（夜間模式）</string>
+    <string name="themes_appThemes_systemDefault">系統預設</string>
+    <string name="themes_appThemes_systemDefault1">高對比度（系統預設）</string>
+    <string name="themes_appThemes_darkTheme1">高對比度（深色）</string>
+    <string name="themes_appThemes_lightTheme1">高對比度（淺色）</string>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1458,8 +1458,8 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">字型大小</string>
-    <string name="configLabel_ui_textsize_summary">%s</string>
+    <string name="textSize_pref_label">字型大小</string>
+    <string name="textSize_pref_summary">%s</string>
 
     <string name="textSize_small">小</string>
     <string name="textSize_normal">正常</string>
@@ -1479,41 +1479,41 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">什麼也不做</string>
-    <string name="configActionDesc_nextNote">顯示下一個便籤</string>
-    <string name="configActionDesc_prevNote">顯示上一個便籤</string>
-    <string name="configActionDesc_resetNote">重置便籤</string>
-    <string name="configActionDesc_showCalendar">顯示日曆應用</string>
-    <string name="configActionDesc_mapLocation">在地圖上展示位置</string>
-    <string name="configActionDesc_setAlarm">設定鬧鐘</string>
-    <string name="configActionDesc_worldMap">世界地圖對話窗</string>
-    <string name="configActionDesc_equinoxDialog">至點對話窗</string>
-    <string name="configActionDesc_moon">月亮對話窗</string>
-    <string name="configActionDesc_sunDialog">太陽對話窗</string>
-    <string name="configActionDesc_sunlightDialog">陽光對話窗</string>
-    <string name="configActionDesc_setDate">設定日期</string>
-    <string name="configActionDesc_setTimeZone">設定時區</string>
-    <string name="configActionDesc_setLocation">設定位置</string>
-    <string name="configActionDesc_swapCards">切換卡片（今天/明天）</string>
-    <string name="configActionDesc_setAlarmForNote">為便籤設定鬧鐘</string>
-    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
-    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
-    <string name="configActionDesc_alarmList">鬧鐘列表</string>
-    <string name="configActionDesc_themeList">主題列表</string>
-    <string name="configActionDesc_actionList">操作列表</string>
-    <string name="configActionDesc_widgetList">小工具列表</string>
-    <string name="configActionDesc_nextSunrise">顯示下一個日出</string>
-    <string name="configActionDesc_nextSunset">顯示下一個日落</string>
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">計時器列表</string>
-    <string name="configActionDesc_dateSettings">日期設定</string>
-    <string name="configActionDesc_displaySettings">顯示設定</string>
-    <string name="configActionDesc_localeSettings">語言設定</string>
-    <string name="configActionDesc_locationSettings">位置設定</string>
-    <string name="configActionDesc_createCalendarRisingEvent">建立日曆事件（日出時間）</string>
-    <string name="configActionDesc_createCalendarSettingEvent">建立日曆事件（日落時間）</string>
-    <string name="configLabel_android">Android</string>
-    <string name="configLabel_calendarEvent">日曆事件</string>
+    <string name="actionDesc_doNothing">什麼也不做</string>
+    <string name="actionDesc_nextNote">顯示下一個便籤</string>
+    <string name="actionDesc_prevNote">顯示上一個便籤</string>
+    <string name="actionDesc_resetNote">重置便籤</string>
+    <string name="actionDesc_showCalendar">顯示日曆應用</string>
+    <string name="actionDesc_mapLocation">在地圖上展示位置</string>
+    <string name="actionDesc_setAlarm">設定鬧鐘</string>
+    <string name="actionDesc_worldMap">世界地圖對話窗</string>
+    <string name="actionDesc_equinoxDialog">至點對話窗</string>
+    <string name="actionDesc_moon">月亮對話窗</string>
+    <string name="actionDesc_sunDialog">太陽對話窗</string>
+    <string name="actionDesc_sunlightDialog">陽光對話窗</string>
+    <string name="actionDesc_setDate">設定日期</string>
+    <string name="actionDesc_setTimeZone">設定時區</string>
+    <string name="actionDesc_setLocation">設定位置</string>
+    <string name="actionDesc_swapCards">切換卡片（今天/明天）</string>
+    <string name="actionDesc_setAlarmForNote">為便籤設定鬧鐘</string>
+    <string name="actionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="actionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
+    <string name="actionDesc_alarmList">鬧鐘列表</string>
+    <string name="actionDesc_themeList">主題列表</string>
+    <string name="actionDesc_actionList">操作列表</string>
+    <string name="actionDesc_widgetList">小工具列表</string>
+    <string name="actionDesc_nextSunrise">顯示下一個日出</string>
+    <string name="actionDesc_nextSunset">顯示下一個日落</string>
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">計時器列表</string>
+    <string name="actionDesc_dateSettings">日期設定</string>
+    <string name="actionDesc_displaySettings">顯示設定</string>
+    <string name="actionDesc_localeSettings">語言設定</string>
+    <string name="actionDesc_locationSettings">位置設定</string>
+    <string name="actionDesc_createCalendarRisingEvent">建立日曆事件（日出時間）</string>
+    <string name="actionDesc_createCalendarSettingEvent">建立日曆事件（日落時間）</string>
+    <string name="actionDesc_android">Android</string>
+    <string name="actionDesc_calendarEvent">日曆事件</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">根據偏移</string>
@@ -1530,9 +1530,9 @@
     <string name="timezone_sort_msg">（%1$s）時區排序完成。</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">位置時間限制</string>
-    <string name="configLabel_getFix_maxElapse_summary">最多等待 <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">位置時間限制</string>
+    <string name="location_pref_maxElapse_summary">最多等待 <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 秒</item>
         <item>30 秒</item>
         <item>1 分</item>
@@ -1541,9 +1541,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">最近位置有效期</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">最近位置有效期</string>
+    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>無</item>
         <item>1 分</item>
         <item>5 分</item>
@@ -1559,26 +1559,26 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">日曆</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">日曆整合</string>
+    <string name="calendars_pref_title">日曆</string>   <!-- group title -->
+    <string name="calendars_pref_summary">日曆整合</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">被動位置</string>
-    <string name="configLabel_getFix_passiveMode_summary">使用被動接收到的位置。</string>
+    <string name="location_label_passiveMode">被動位置</string>
+    <string name="location_label_passiveMode_summary">使用被動接收到的位置。</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">語言</string>   <!-- group title -->
+    <string name="locale_pref_title">語言</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">模式</string>
-    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">模式</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>系統</item>
         <item>使用者自定</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">語言</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">語言</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>英語</item>
         <item>世界語</item>

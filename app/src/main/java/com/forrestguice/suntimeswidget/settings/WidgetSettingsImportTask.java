@@ -701,9 +701,9 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
     protected static CharSequence displayStringForImportMethod(Context context, int method)
     {
         switch (method) {
-            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_restorebackup));
             default: return method + "";
         }
     }

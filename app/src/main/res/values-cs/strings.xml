@@ -53,9 +53,9 @@
     <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
     <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
 
-    <string name="shortcut_widgetlist_short">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_long">@string/configLabel_widgetList</string>
-    <string name="shortcut_widgetlist_disabled">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_short">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
+    <string name="shortcut_widgetlist_disabled">@string/widgetList_label</string>
 
     <string name="shortcut_themelist_short">@string/themes_configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
@@ -148,9 +148,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">ode</string>
-    <string name="until">do</string>
-    <string name="until_end">do konce</string>
+    <string name="delta_since">ode</string>
+    <string name="delta_until">do</string>
+    <string name="delta_until_end">do konce</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">v</item>
@@ -236,8 +236,8 @@
     <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
-    <string name="share_format"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="share_format_equinox">@string/share_format</string>   <!-- Summer solstice on June 20.. -->
+    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
@@ -1324,17 +1324,17 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Widgety</string>               <!-- group title -->
-    <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">Nápověda</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Zobrazit nápovědu widgetu</string>
-    <string name="configLabel_widgetList_emptyMsg">Žádné widgety</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="widgetList_label">Widgety</string>               <!-- group title -->
+    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_help_title">Nápověda</string>               <!-- always the first item in the widgetList -->
+    <string name="widgetlist_label_help_summary">Zobrazit nápovědu widgetu</string>
+    <string name="widgetList_label_empty">Žádné widgety</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
+    <string name="action_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
+    <string name="action_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
     <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
     <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
     <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
@@ -1349,29 +1349,29 @@
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
-    <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
-    <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="widgetlist_action_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
+    <string name="widgetlist_action_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
+    <string name="widgetexport_dialog_title">Export Settings</string>    <!-- TODO -->
+    <string name="widgetexport_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title">Import Settings</string>    <!-- TODO -->
+    <string name="widgetimport_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Opravdu se chcete vrátit do výchozího nastavení?</string>    <!-- TODO: verify -->
+    <string name="widgetreset_dialog_message">Opravdu se chcete vrátit do výchozího nastavení?</string>    <!-- TODO: verify -->
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
 
     <plurals name="itemsPlural">
         <item quantity="one">%d item</item>
@@ -1500,13 +1500,13 @@
     <string name="configLabel_ui_showbluehour">Modrá hodina</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Světlé téma</string>
-    <string name="appThemes_darkTheme">Tmavé téma</string>
-    <string name="appThemes_nightMode">Světlé téma / Tmavé téma (Noční&#160;režim)</string>
-    <string name="appThemes_systemDefault">Výchozí systémové</string>
-    <string name="appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
-    <string name="appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
-    <string name="appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
+    <string name="themes_appThemes_lightTheme">Světlé téma</string>
+    <string name="themes_appThemes_darkTheme">Tmavé téma</string>
+    <string name="themes_appThemes_nightMode">Světlé téma / Tmavé téma (Noční&#160;režim)</string>
+    <string name="themes_appThemes_systemDefault">Výchozí systémové</string>
+    <string name="themes_appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
+    <string name="themes_appThemes_darkTheme1">Contrast (Dark)</string>   <!-- TODO -->
+    <string name="themes_appThemes_lightTheme1">Contrast (Light)</string>   <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -1516,8 +1516,8 @@
     </string-array>
 
     <!-- App Setting: text size -->
-    <string name="configLabel_ui_textsize">Text Size</string>     <!-- TODO -->
-    <string name="configLabel_ui_textsize_summary">%s</string>     <!-- TODO -->
+    <string name="textSize_pref_label">Text Size</string>     <!-- TODO -->
+    <string name="textSize_pref_summary">%s</string>     <!-- TODO -->
 
     <string name="textSize_small">Small</string>   <!-- TODO -->
     <string name="textSize_normal">Normal</string>   <!-- TODO -->
@@ -1538,71 +1538,71 @@
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setDate</item>
+        <item>@string/actionDesc_swapCards</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_setAlarm</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_showCalendar</item>
+        <item>@string/actionDesc_setAlarm</item>
+        <item>@string/actionDesc_setTimeZone</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarmForNote</item>
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
+    <string-array name="actions_noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
+        <item>@string/actionDesc_doNothing</item>
+        <item>@string/actionDesc_setAlarmForNote</item>
+        <item>@string/actionDesc_nextNote</item>
+        <item>@string/actionDesc_prevNote</item>
+        <item>@string/actionDesc_resetNote</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Nedělat nic</string>
-    <string name="configActionDesc_nextNote">Zobrazit další poznámku</string>
-    <string name="configActionDesc_prevNote">Zobrazit předchozí poznámku</string>
-    <string name="configActionDesc_resetNote">Zobrazit nadcházející událost</string>
-    <string name="configActionDesc_showCalendar">Otevřít kalendář</string>
-    <string name="configActionDesc_mapLocation">Zobrazit pozici na mapě</string>
-    <string name="configActionDesc_setAlarm">Nastavit budík</string>
-    <string name="configActionDesc_worldMap">Dialog mapy světa</string>
-    <string name="configActionDesc_equinoxDialog">Dialog slunovratu</string>
-    <string name="configActionDesc_moon">Dialog Měsíce</string>
-    <string name="configActionDesc_sunDialog">Dialog Slunce</string>
-    <string name="configActionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
-    <string name="configActionDesc_setDate">Nastavit datum</string>
-    <string name="configActionDesc_setTimeZone">Nastavit časové pásmo</string>
-    <string name="configActionDesc_setLocation">Nastavit pozici</string>
-    <string name="configActionDesc_swapCards">Prohodit karty (dnes/zítra)</string>
-    <string name="configActionDesc_nextCard">Zobrazit další kartu</string>
-    <string name="configActionDesc_prevCard">Zobrazit předchozí kartu</string>
-    <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
-    <string name="configActionDesc_setAlarmForNote">Nastavit budík pro poznámku</string>
-    <string name="configActionDesc_alarmList">Seznam budíků</string>
-    <string name="configActionDesc_themeList">Seznam témat</string>
-    <string name="configActionDesc_actionList">Seznam akcí</string>
-    <string name="configActionDesc_widgetList">Seznam widgetů</string>
-    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
-    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
-    <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="actionDesc_doNothing">Nedělat nic</string>
+    <string name="actionDesc_nextNote">Zobrazit další poznámku</string>
+    <string name="actionDesc_prevNote">Zobrazit předchozí poznámku</string>
+    <string name="actionDesc_resetNote">Zobrazit nadcházející událost</string>
+    <string name="actionDesc_showCalendar">Otevřít kalendář</string>
+    <string name="actionDesc_mapLocation">Zobrazit pozici na mapě</string>
+    <string name="actionDesc_setAlarm">Nastavit budík</string>
+    <string name="actionDesc_worldMap">Dialog mapy světa</string>
+    <string name="actionDesc_equinoxDialog">Dialog slunovratu</string>
+    <string name="actionDesc_moon">Dialog Měsíce</string>
+    <string name="actionDesc_sunDialog">Dialog Slunce</string>
+    <string name="actionDesc_sunlightDialog">Sunlight Dialog</string>   <!-- TODO -->
+    <string name="actionDesc_setDate">Nastavit datum</string>
+    <string name="actionDesc_setTimeZone">Nastavit časové pásmo</string>
+    <string name="actionDesc_setLocation">Nastavit pozici</string>
+    <string name="actionDesc_swapCards">Prohodit karty (dnes/zítra)</string>
+    <string name="actionDesc_nextCard">Zobrazit další kartu</string>
+    <string name="actionDesc_prevCard">Zobrazit předchozí kartu</string>
+    <string name="actionDesc_showCard">@string/configAction_viewDate</string>
+    <string name="actionDesc_setAlarmForNote">Nastavit budík pro poznámku</string>
+    <string name="actionDesc_alarmList">Seznam budíků</string>
+    <string name="actionDesc_themeList">Seznam témat</string>
+    <string name="actionDesc_actionList">Seznam akcí</string>
+    <string name="actionDesc_widgetList">Seznam widgetů</string>
+    <string name="actionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="actionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
+    <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
+    <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="actionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
+    <string name="actionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
+    <string name="actionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
+    <string name="actionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
+    <string name="actionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
+    <string name="actionDesc_android">Android</string>   <!-- TODO -->
+    <string name="actionDesc_calendarEvent">Calendar Event</string>   <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>
@@ -1619,9 +1619,9 @@
     <string name="timezone_sort_msg">Časová pásma seřazena (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Časový limit pro určení polohy</string>
-    <string name="configLabel_getFix_maxElapse_summary">Vzdát to po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
-    <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
+    <string name="location_pref_maxElapse">Časový limit pro určení polohy</string>
+    <string name="location_pref_maxElapse_summary">Vzdát to po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 sekundách</item>
         <item>30 sekundách</item>
         <item>1 minutě</item>
@@ -1630,9 +1630,9 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Maximální stáří polohy</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> považováno za nedávné</string>
-    <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+    <string name="location_pref_maxAge">Maximální stáří polohy</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> považováno za nedávné</string>
+    <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>žádné</item>
         <item>1 minuta</item>
         <item>5 minut</item>
@@ -1648,26 +1648,26 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Kalendáře</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Integrace kalendáře</string>
+    <string name="calendars_pref_title">Kalendáře</string>   <!-- group title -->
+    <string name="calendars_pref_summary">Integrace kalendáře</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Pasivní poloha</string>
-    <string name="configLabel_getFix_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
+    <string name="location_label_passiveMode">Pasivní poloha</string>
+    <string name="location_label_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Nastavení jazyka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
+    <string name="locale_pref_title">Nastavení jazyka</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
-    <string name="configLabel_localeMode">Režim</string>
-    <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode">Režim</string>
+    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Systém</item>
         <item>Uživatelem definováno</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Jazyk</string>
-    <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect">Jazyk</string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>Angličtina</item>
         <item>Esperanto</item>

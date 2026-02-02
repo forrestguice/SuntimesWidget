@@ -25,7 +25,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="start|top"
         android:textSize="?attr/text_size_tiny" android:textStyle="bold"
-        tools:text="@string/configLabel_getFix_gnss" />
+        tools:text="@string/location_label_gnss" />
 
     <TextView
         android:id="@+id/text_satellite_count"

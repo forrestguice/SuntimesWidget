@@ -29,22 +29,22 @@
         <LinearLayout android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content">
             <ToggleButton android:id="@+id/button_theme_system" android:theme="@style/ThemeButton"
-                android:textOn="@string/appThemes_systemDefault" android:textOff="@string/appThemes_systemDefault"
+                android:textOn="@string/themes_appThemes_systemDefault" android:textOff="@string/themes_appThemes_systemDefault"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
             <ToggleButton android:id="@+id/button_theme_system1" android:theme="@style/ThemeButton"
-                android:textOn="@string/appThemes_systemDefault1" android:textOff="@string/appThemes_systemDefault1"
+                android:textOn="@string/themes_appThemes_systemDefault1" android:textOff="@string/themes_appThemes_systemDefault1"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
         </LinearLayout>
         <LinearLayout android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content">
             <ToggleButton android:id="@+id/button_theme_dark" android:theme="@style/ThemeButton"
-                android:textOn="@string/appThemes_darkTheme" android:textOff="@string/appThemes_darkTheme"
+                android:textOn="@string/themes_appThemes_darkTheme" android:textOff="@string/themes_appThemes_darkTheme"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
             <ToggleButton android:id="@+id/button_theme_light" android:theme="@style/ThemeButton"
-                android:textOn="@string/appThemes_lightTheme" android:textOff="@string/appThemes_lightTheme"
+                android:textOn="@string/themes_appThemes_lightTheme" android:textOff="@string/themes_appThemes_lightTheme"
                 android:textSize="?attr/text_size_small"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" />
         </LinearLayout>
@@ -63,7 +63,7 @@
             android:gravity="start" android:layout_gravity="start"
             android:textAppearance="?android:attr/textAppearanceMedium" android:textSize="?attr/text_size_medium"
             android:textStyle="bold"
-            android:text="@string/configLabel_ui_textsize" />
+            android:text="@string/textSize_pref_label" />
 
         <include layout="@layout/layout_welcome_appearance_textsize" />
 

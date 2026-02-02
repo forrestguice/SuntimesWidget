@@ -622,7 +622,7 @@ public class GetFixHelper implements LocationHelper
             LayoutInflater layout = LayoutInflater.from(context);
             AppSettings.buildAlertDialog(DIALOG_WARNING_AGPS, layout,
                     R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
-                    context.getString(R.string.configLabel_getFix_gnss_agps_reload_warning), new DialogInterface.OnClickListener() {
+                    context.getString(R.string.location_label_gnss_agps_reload_warning), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             reloadAGPS(context, coldStart);
                             if (listener != null) {

@@ -380,7 +380,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             //setRetainInstance(true);
             Context context = SuntimesWidgetListActivity.this;
-            showProgress(context, context.getString(R.string.configAction_createBackup), context.getString(R.string.configAction_createBackup));
+            showProgress(context, context.getString(R.string.action_createBackup), context.getString(R.string.action_createBackup));
         }
 
         @Override
@@ -439,7 +439,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             @Override
             public void onStarted() {
-                showProgress(context, context.getString(R.string.configAction_restoreBackup), context.getString(R.string.configAction_restoreBackup));
+                showProgress(context, context.getString(R.string.action_restoreBackup), context.getString(R.string.action_restoreBackup));
             }
 
             @Override

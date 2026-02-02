@@ -159,11 +159,11 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot clickOverflowMenu_createBackup() {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_createBackup)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WidgetListActivityRobot clickOverflowMenu_restoreBackup() {
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_restoreBackup)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WidgetListActivityRobot cancelOverflowMenu(Context context) {
@@ -183,8 +183,8 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }

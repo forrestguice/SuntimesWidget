@@ -422,7 +422,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
 
             SuntimesUtils utils = new SuntimesUtils();
             SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+            String itemDisplay = context.getString(R.string.equinox_format_share, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {

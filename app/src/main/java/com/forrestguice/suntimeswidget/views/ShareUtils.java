@@ -48,7 +48,7 @@ public class ShareUtils
             itemTime.setTimeInMillis(itemMillis);
 
             TimeDateDisplay utils = new TimeDateDisplay();
-            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
+            String itemDisplay = context.getString(R.string.format_share, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {

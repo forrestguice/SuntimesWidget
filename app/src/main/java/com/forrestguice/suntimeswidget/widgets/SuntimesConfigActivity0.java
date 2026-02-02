@@ -2546,7 +2546,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             //setRetainInstance(true);
             Context context = SuntimesConfigActivity0.this;
-            showProgress(context, context.getString(R.string.exportwidget_dialog_title), context.getString(R.string.exportwidget_dialog_message));
+            showProgress(context, context.getString(R.string.widgetexport_dialog_title), context.getString(R.string.widgetexport_dialog_message));
         }
 
         @Override
@@ -2609,7 +2609,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             @Override
             public void onStarted() {
-                showProgress(context, context.getString(R.string.importwidget_dialog_title), context.getString(R.string.importwidget_dialog_message));
+                showProgress(context, context.getString(R.string.widgetimport_dialog_title), context.getString(R.string.widgetimport_dialog_message));
             }
 
             @Override
@@ -2626,8 +2626,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                         ContentValues v = result.getItems()[i];
                         WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(v);
                         String values_widgetClassName = ((metadata != null) ? metadata.getWidgetClassName() : null);
-                        labels[i] = context.getString(R.string.importwidget_dialog_item, (values_widgetClassName != null)
-                                ? values_widgetClassName : context.getString(R.string.importwidget_dialog_item_unknown));
+                        labels[i] = context.getString(R.string.widgetimport_dialog_item, (values_widgetClassName != null)
+                                ? values_widgetClassName : context.getString(R.string.widgetimport_dialog_item_unknown));
 
                         if (getWidgetClass().getSimpleName().equals(values_widgetClassName))
                         {
@@ -2661,7 +2661,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         for (int i=0; i<matchingValues.length; i++) {
             labels[i] = (i + 1) + "";
         }
-        String title = context.getString(R.string.importwidget_dialog_title2);
+        String title = context.getString(R.string.widgetimport_dialog_title2);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_info)
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
@@ -2684,7 +2684,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void chooseImportValuesOfDifferentType(final Context context, final ContentValues[] values, final CharSequence[] labels)
     {
-        String title = context.getString(R.string.importwidget_dialog_title1);
+        String title = context.getString(R.string.widgetimport_dialog_title1);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
@@ -2752,7 +2752,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         String title = context.getString(R.string.configAction_restoreDefaults);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert)
-                .setMessage(context.getString(R.string.resetwidget_dialog_message))
+                .setMessage(context.getString(R.string.widgetreset_dialog_message))
                 .setPositiveButton(context.getString(R.string.configAction_restoreDefaults), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {

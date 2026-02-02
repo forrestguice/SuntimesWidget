@@ -242,7 +242,7 @@ public class ActionListHelper
             }
         });
 
-        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
+        ids.add(0, new ActionDisplay("", context.getString(R.string.actionDesc_doNothing), context.getString(R.string.actionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
