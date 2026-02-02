@@ -1176,22 +1176,22 @@
     <string name="alarms_label_reminder_none">Aldri</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> påminnelse</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d time</item>
         <item quantity="other">%d timer</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minutt</item>
         <item quantity="other">%d minutter</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d sekund</item>
         <item quantity="other">%d sekunder</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s døgn</item>
         <item quantity="other">%s døgn</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->

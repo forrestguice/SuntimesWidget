@@ -1271,7 +1271,7 @@
     <string name="alarms_label_reminder_none">أبدًا</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> تذكير</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="zero">%d ساعةٍ</item>
         <item quantity="one">ساعة واحدة</item>
         <item quantity="two">ساعتان</item>
@@ -1280,7 +1280,7 @@
         <item quantity="other">%d ساعة</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="zero">%d دقيقةٍ</item>
         <item quantity="one">دقيقة واحدة</item>
         <item quantity="two">دقيقتان</item>
@@ -1289,7 +1289,7 @@
         <item quantity="other">%d دقيقة</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="zero">%d ثانيةٍ</item>
         <item quantity="one">ثانية واحدة</item>
         <item quantity="two">ثانيتان</item>
@@ -1298,7 +1298,7 @@
         <item quantity="other">%d ثانية</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="zero">%s يومٍ</item>
         <item quantity="one">يوم واحد</item>
         <item quantity="two">يومان</item>

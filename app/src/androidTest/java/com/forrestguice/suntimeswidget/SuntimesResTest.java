@@ -260,10 +260,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
             verify_pluralFormat("units_kilometers_long", R.plurals.units_kilometers_long, values, displayValues);
 
-            verify_pluralFormatI("units_days", R.plurals.units_days, values);
-            verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
-            verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
-            verify_pluralFormatI("units_seconds", R.plurals.units_seconds, values);
+            verify_pluralFormatI("units_days", R.plurals.time_units_days, values);
+            verify_pluralFormatI("units_hours", R.plurals.time_units_hours, values);
+            verify_pluralFormatI("units_minutes", R.plurals.time_units_minutes, values);
+            verify_pluralFormatI("units_seconds", R.plurals.time_units_seconds, values);
 
             verify_pluralFormatI("alarmPlural", R.plurals.alarmPlural, values);
             verify_pluralFormatI("eventPlural", R.plurals.eventPlural, values);

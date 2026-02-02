@@ -1147,22 +1147,22 @@
     <string name="alarms_label_reminder_none">Nunca</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d hora</item>
         <item quantity="other">%d horas</item>
     </plurals>  
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
     </plurals>  
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d segundo</item>
         <item quantity="other">%d segundos</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s day</item>
         <item quantity="other">%s days</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->

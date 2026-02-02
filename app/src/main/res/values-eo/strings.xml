@@ -1167,22 +1167,22 @@
     <string name="alarms_label_reminder_none">neniam</string>
     <string name="alarms_label_reminder">Rememorigo <xliff:g id="hours" example="12h">%s</xliff:g> antaŭ</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d horo</item>
         <item quantity="other">%d horoj</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutoj</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d sekundo</item>
         <item quantity="other">%d sekundoj</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s tago</item>
         <item quantity="other">%s tagoj</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->

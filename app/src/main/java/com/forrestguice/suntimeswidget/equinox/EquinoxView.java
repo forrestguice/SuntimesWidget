@@ -262,7 +262,7 @@ public class EquinoxView extends LinearLayout
         long yearLengthMillis = data.tropicalYearLength();
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
-        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
+        String daysString = context.getResources().getQuantityString(R.plurals.time_units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
         CharSequence yearDisplay = SpanUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
 

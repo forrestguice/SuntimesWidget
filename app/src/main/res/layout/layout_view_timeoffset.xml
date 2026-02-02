@@ -40,12 +40,12 @@
                 android:layout_gravity="center"
                 style="@style/ActionButton"
                 android:src="?attr/icActionNew"
-                android:contentDescription="@string/configAction_addTime_days" />
+                android:contentDescription="@string/timedialog_action_addTime_days" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="@string/configAction_addTime_days" />
+                android:text="@string/timedialog_action_addTime_days" />
 
         </LinearLayout>
 
@@ -81,12 +81,12 @@
                 android:layout_gravity="center"
                 style="@style/ActionButton"
                 android:src="?attr/icActionNew"
-                android:contentDescription="@string/configAction_addTime_hours" />
+                android:contentDescription="@string/timedialog_action_addTime_hours" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="@string/configAction_addTime_hours" />
+                android:text="@string/timedialog_action_addTime_hours" />
 
         </LinearLayout>
 
@@ -122,12 +122,12 @@
                 android:layout_gravity="center"
                 style="@style/ActionButton"
                 android:src="?attr/icActionNew"
-                android:contentDescription="@string/configAction_addTime_minutes" />
+                android:contentDescription="@string/timedialog_action_addTime_minutes" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="@string/configAction_addTime_minutes" />
+                android:text="@string/timedialog_action_addTime_minutes" />
 
         </LinearLayout>
 
@@ -164,12 +164,12 @@
                 android:layout_gravity="center"
                 style="@style/ActionButton"
                 android:src="?attr/icActionNew"
-                android:contentDescription="@string/configAction_addTime_seconds" />
+                android:contentDescription="@string/timedialog_action_addTime_seconds" />
 
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_tiny"
-                android:text="@string/configAction_addTime_seconds" />
+                android:text="@string/timedialog_action_addTime_seconds" />
 
         </LinearLayout>
 

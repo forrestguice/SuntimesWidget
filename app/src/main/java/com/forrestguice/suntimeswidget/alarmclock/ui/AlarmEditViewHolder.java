@@ -333,7 +333,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             long snoozeMillis = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
             int snoozeMinutes = (int)(snoozeMillis / (1000 * 60));
-            String snoozeLength = context.getResources().getQuantityString(R.plurals.units_minutes, snoozeMinutes, snoozeMinutes);
+            String snoozeLength = context.getResources().getQuantityString(R.plurals.time_units_minutes, snoozeMinutes, snoozeMinutes);
             String snoozeLengthLabel = context.getString(R.string.alarms_label_snooze);
             String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
             CharSequence snoozeLengthDisplay = SpanUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);

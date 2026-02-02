@@ -72,7 +72,6 @@ import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.support.widget.GridLayoutManager;
 import com.forrestguice.support.widget.ImageViewCompat;
 import com.forrestguice.support.widget.LinearLayoutManager;
-import com.forrestguice.support.widget.LinearSnapHelper;
 import com.forrestguice.support.widget.PagerSnapHelper;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.widget.RecyclerView;
@@ -377,7 +376,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     {
         double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
         String timeString = delta_utils.timeDeltaLongDisplayString(0, yearLengthMillis, false,false, true, true, false, false).setSuffix("").toString();
-        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
+        String daysString = context.getResources().getQuantityString(R.plurals.time_units_days, (int)yearLengthDays, TimeDeltaDisplay.formatDoubleValue(yearLengthDays, 6));
         String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
         return SpanUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
     }

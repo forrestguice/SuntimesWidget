@@ -1177,28 +1177,28 @@
     <string name="alarms_label_reminder_none">nigdy</string>
     <string name="alarms_label_reminder">Przypomnienie <xliff:g id="hours" example="12h">%s</xliff:g> przed</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d godzina</item>
         <item quantity="few">%d godziny</item>
         <item quantity="many">%d godzin</item>
         <item quantity="other">%d godzin</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minuta</item>
         <item quantity="few">%d minuty</item>
         <item quantity="many">%d minut</item>
         <item quantity="other">%d minut</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d sekunda</item>
         <item quantity="few">%d sekundy</item>
         <item quantity="many">%d sekund</item>
         <item quantity="other">%d sekund</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s dzień</item>
         <item quantity="few">%s dni</item>
         <item quantity="many">%s dni</item>

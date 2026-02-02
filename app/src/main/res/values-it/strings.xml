@@ -1173,22 +1173,22 @@
     <string name="alarms_label_reminder_none">Mai</string>
     <string name="alarms_label_reminder">Promemoria <xliff:g id="hours" example="12h">%s</xliff:g> prima</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d ora</item>
         <item quantity="other">%d ore</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minuti</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d secondo</item>
         <item quantity="other">%d secondi</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s giorno</item>
         <item quantity="other">%s giorni</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->

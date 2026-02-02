@@ -1213,25 +1213,25 @@
     <string name="alarms_label_reminder_none">Nikdy</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d hodina</item>
         <item quantity="other">%d hodin</item>
         <item quantity="few">%d hodiny</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d minuta</item>
         <item quantity="other">%d minut</item>
         <item quantity="few">%d minuty</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d sekunda</item>
         <item quantity="other">%d sekund</item>
         <item quantity="few">%d sekundy</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s den</item>
         <item quantity="other">%s dní</item>
         <item quantity="few">%s dny</item>

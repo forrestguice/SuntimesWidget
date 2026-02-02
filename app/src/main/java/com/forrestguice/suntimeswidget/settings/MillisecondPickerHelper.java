@@ -252,14 +252,14 @@ public class MillisecondPickerHelper
                 if (context != null) {
                     if (valueHours == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_hours, valueHours, valueHours);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_hours, valueHours, valueHours);
                 } else return valueHours + "";
 
             case MODE_SECONDS:
                 if (context != null) {
                     if (valueSeconds == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_seconds, valueSeconds, valueSeconds);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_seconds, valueSeconds, valueSeconds);
                 } else return valueSeconds + "";
 
             case MODE_MINUTES:
@@ -267,7 +267,7 @@ public class MillisecondPickerHelper
                 if (context != null) {
                     if (valueMinutes == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_minutes, valueMinutes, valueMinutes);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_minutes, valueMinutes, valueMinutes);
                 } else return valueMinutes + "";
         }
     }

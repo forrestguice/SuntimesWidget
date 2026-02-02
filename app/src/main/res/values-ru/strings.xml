@@ -1225,28 +1225,28 @@
     <string name="alarms_label_reminder_none">Никогда</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> напоминание</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d час</item>
         <item quantity="other">%d часов</item>
         <item quantity="few">%d часа</item>
         <item quantity="many">%d часов</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d минута</item>
         <item quantity="other">%d минут</item>
         <item quantity="few">%d минуты</item>
         <item quantity="many">%d минут</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d секунда</item>
         <item quantity="other">%d секунд</item>
         <item quantity="few">%d секунды</item>
         <item quantity="many">%d секунд</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s день</item>
         <item quantity="other">%s дней</item>
         <item quantity="few">%s дни</item>

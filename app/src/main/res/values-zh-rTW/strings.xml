@@ -1168,22 +1168,22 @@
     <string name="alarms_label_reminder_none">永不</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <!--<item quantity="one">%d hour</item>-->
         <item quantity="other">%d 小時</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <!--<item quantity="one">%d minute</item>-->
         <item quantity="other">%d 分</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <!--<item quantity="one">%d second</item>-->
         <item quantity="other">%d 秒</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="other">%s 天</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 

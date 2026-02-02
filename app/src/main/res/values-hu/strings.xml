@@ -1145,22 +1145,22 @@
     <string name="alarms_label_reminder_none">Soha</string>
     <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> emlékeztető</string>   <!-- chip label; e.g. "12h reminder" -->
 
-    <plurals name="units_hours">
+    <plurals name="time_units_hours">
         <item quantity="one">%d óra</item>
         <item quantity="other">%d óra</item>
     </plurals>
 
-    <plurals name="units_minutes">
+    <plurals name="time_units_minutes">
         <item quantity="one">%d perc</item>
         <item quantity="other">%d perc</item>
     </plurals>
 
-    <plurals name="units_seconds">
+    <plurals name="time_units_seconds">
         <item quantity="one">%d másodperc</item>
         <item quantity="other">%d másodperc</item>
     </plurals>
 
-    <plurals name="units_days">
+    <plurals name="time_units_days">
         <item quantity="one">%s nap</item>
         <item quantity="other">%s nap</item>
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
