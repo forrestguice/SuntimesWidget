@@ -446,7 +446,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         for (TimeStandardMode value : TimeStandardMode.values()) {
             items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
         }
-        return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
+        return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.settings_timezoneCustom_line1, R.string.settings_timezoneCustom_line2b);
     }
 
     protected ArrayAdapter<TrackingMode> createAdapter_trackingMode()
@@ -2734,7 +2734,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             CharSequence message = context.getString(R.string.themesimport_msg_success, context.getString(R.string.action_settings));
             SnackbarUtils.make(context, view, message, SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v) {

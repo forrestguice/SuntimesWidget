@@ -54,7 +54,7 @@
     <string name="action_prevYear">Año anterior</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">¡Atención!</string>
+    <string name="tag_warning_contentDescription">¡Atención!</string>
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -488,31 +488,31 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Opciones de pulsación</string>    <!-- TODO: shortened "Action Settings" to "Action" -->
-    <string name="configLabel_action_onTap">Al pulsar:</string>
-    <string name="configLabel_action_onClockTap">Al pulsar el reloj</string>
-    <string name="configLabel_action_onNoteTap">Al pulsar una nota</string>
-    <string name="configLabel_action_onDateTap">Al pulsar la fecha</string>
-    <string name="configLabel_action_onDateTap1">Al mantener pulsado en la fecha</string>
+    <string name="settings_action">Opciones de pulsación</string>    <!-- TODO: shortened "Action Settings" to "Action" -->
+    <string name="settings_action_onTap">Al pulsar:</string>
+    <string name="settings_action_onClockTap">Al pulsar el reloj</string>
+    <string name="settings_action_onNoteTap">Al pulsar una nota</string>
+    <string name="settings_action_onDateTap">Al pulsar la fecha</string>
+    <string name="settings_action_onDateTap1">Al mantener pulsado en la fecha</string>
 
     
     <string name="locationMode_current">Actual (última conocida)</string>  
     <string name="locationMode_custom">Definida por usuario</string>
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
-    <string name="configLabel_location">Opciones de ubicación</string>               <!-- TODO: shortened "Location Settings" to "Location" -->
-    <string name="configLabel_location_mode">Modo:</string>                      
-    <string name="configLabel_location_lat">Latitud:</string>                   
-    <string name="configHint_location_lat">Grados decimales</string>
-    <string name="configLabel_location_lon">Longitud:</string>                          
-    <string name="configHint_location_lon">Grados decimales</string>
-    <string name="configLabel_location_alt">Elevación:</string>
-    <string name="configHint_location_alt">0</string> 
-    <string name="configLabel_location_name">Nombre:</string>
-    <string name="configHint_location_name">(opcional)</string>
-    <string name="configHint_location_name0">Nombre del lugar</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="location_label">Opciones de ubicación</string>               <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="location_label_mode">Modo:</string>
+    <string name="location_label_lat">Latitud:</string>
+    <string name="location_hint_lat">Grados decimales</string>
+    <string name="location_label_lon">Longitud:</string>
+    <string name="location_hint_lon">Grados decimales</string>
+    <string name="location_label_alt">Elevación:</string>
+    <string name="location_hint_alt">0</string>
+    <string name="location_label_name">Nombre:</string>
+    <string name="location_hint_name">(opcional)</string>
+    <string name="location_hint_name0">Nombre del lugar</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="action_getLocation">Adquirir ubicación</string>
     <string name="places_action_editPlace">Editar</string>
@@ -528,8 +528,8 @@
     <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Hora solar media</string>
     <string name="time_apparent">Hora solar aparente</string>
-    <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
-    <string name="timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
+    <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>
+    <string name="settings_timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
     <string name="action_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
     <string name="settings_timezone">Opciones de zona horaria</string>      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
@@ -650,16 +650,16 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     
-    <string name="themes_configLabel_widgetThemeList">Temas de widget</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Selecciona un tema</string>
-    <string name="themes_configAction_addTheme">Añadir</string>
-    <string name="themes_configAction_selectTheme">Seleccionar</string>
-    <string name="themes_configAction_editTheme">Editar</string>
-    <string name="themes_configAction_deleteTheme">Borrar</string>
-    <string name="themes_configAction_copyTheme">Copiar</string>
-    <string name="themes_configAction_exportThemes">@string/action_export</string>
-    <string name="themes_configAction_shareTheme">@string/action_share</string>
-    <string name="themes_configAction_importThemes">@string/action_import</string>
+    <string name="themes_label_widgetThemeList">Temas de widget</string>
+    <string name="themes_label_widgetThemeListSelect">Selecciona un tema</string>
+    <string name="themes_action_addTheme">Añadir</string>
+    <string name="themes_action_selectTheme">Seleccionar</string>
+    <string name="themes_action_editTheme">Editar</string>
+    <string name="themes_action_deleteTheme">Borrar</string>
+    <string name="themes_action_copyTheme">Copiar</string>
+    <string name="themes_action_exportThemes">@string/action_export</string>
+    <string name="themes_action_shareTheme">@string/action_share</string>
+    <string name="themes_action_importThemes">@string/action_import</string>
 
     <string name="themes_widgetThemes_dark">Oscuro</string>                                <!-- default widget theme name --> <!-- TODO: review -->
     <string name="themes_widgetThemes_dark_transparent">Oscuro (transparente)</string>      <!-- default widget theme name --> <!-- TODO: review -->
@@ -689,10 +689,10 @@
     <string name="themes_deletetheme_dialog_ok">Eliminar</string>
     <string name="themes_deletetheme_dialog_cancel">Cancelar</string>
 
-    <string name="themes_configLabel_widgetThemeAdd">Añadir tema</string>
-    <string name="themes_configLabel_widgetThemeEdit">Editar tema</string>
-    <string name="themes_configAction_saveTheme">Guardar</string>
-    <string name="themes_configAction_chooseColor">Escoger color</string>
+    <string name="themes_action_widgetThemeAdd">Añadir tema</string>
+    <string name="themes_action_widgetThemeEdit">Editar tema</string>
+    <string name="themes_action_saveTheme">Guardar</string>
+    <string name="themes_action_chooseColor">Escoger color</string>
 
     <string name="themes_configLabel_themeBackgroundId">Base:</string>
     <string name="themes_configLabel_themeBackground_light">Claro</string>
@@ -829,19 +829,19 @@
     <string name="widgetLabel_declination_short">Inc</string>
     <string name="widgetLabel_distance">Distancia</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -849,8 +849,8 @@
     <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
     <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -863,23 +863,23 @@
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
-    <string name="events_configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
-    <string name="events_configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>    <!-- TODO -->
+    <string name="events_pref_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
+    <string name="events_pref_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>    <!-- TODO -->
 
-    <string name="events_configAction_manageEvents">Custom Events</string>   <!-- TODO -->
-    <string name="events_configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_manageEvents">Custom Events</string>   <!-- TODO -->
+    <string name="events_action_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
 
-    <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
     <plurals name="eventPlural">
         <item quantity="one">%d event</item>
@@ -960,7 +960,7 @@
     <string name="alarms_action_saveAlarm">Guardar</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Guardar y activar</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">Guardar y desactivar</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Deshacer</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">Deshacer</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->

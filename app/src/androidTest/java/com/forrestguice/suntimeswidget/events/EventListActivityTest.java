@@ -298,19 +298,19 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickAddButton(Context context) {
-            onView(withContentDescription(R.string.events_configAction_addEvent)).perform(click());
+            onView(withContentDescription(R.string.events_action_addEvent)).perform(click());
             return this;
         }
         public EventListActivityRobot cancelAddMenu(Context context) {
-            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EventListActivityRobot clickAddMenu_elevation(Context context) {
-            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickAddMenu_shadow(Context context) {
-            onView(withText(R.string.events_configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
@@ -320,15 +320,15 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.events_configAction_clearEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_clearEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.events_configAction_exportEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_exportEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.events_configAction_importEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_importEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot cancelOverflowMenu(Context context) {
@@ -337,7 +337,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickConfirmClear() {
-            onView(withText(R.string.events_configAction_clearEvents)).perform(click());
+            onView(withText(R.string.events_action_clearEvents)).perform(click());
             return this;
         }
 
@@ -350,15 +350,15 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot assertAddMenuIsShown(Context context) {
-            onView(withText(R.string.events_configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.events_configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public EventListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.events_configAction_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.events_configAction_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.events_configAction_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }

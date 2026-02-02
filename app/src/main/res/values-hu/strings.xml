@@ -51,7 +51,7 @@
     <string name="action_prevYear">Előző év</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">Figyelmeztetés!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">Figyelmeztetés!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -487,31 +487,31 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Hozzárendelések</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">Érintésre:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Órára kattintva</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Jegyzetre kattintva</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Dátumra kattintva</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Dátumra hosszan kattintva</string>   <!-- spinner label -->
+    <string name="settings_action">Hozzárendelések</string>                  <!-- group title -->
+    <string name="settings_action_onTap">Érintésre:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">Órára kattintva</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">Jegyzetre kattintva</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">Dátumra kattintva</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">Dátumra hosszan kattintva</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Jelenlegi (utolsó ismert)</string>  <!-- setting -->
     <string name="locationMode_custom">Felhasználó által megadott</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
-    <string name="configLabel_location">Hely</string>               <!-- group title -->
-    <string name="configLabel_location_mode">Mód:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Szélesség:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">decimális fok</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Hosszúság:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">decimális fok</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Magasság:</string>                          <!-- edittext label --> 
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
-    <string name="configLabel_location_name">Név:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(opcionális)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Helységnév</string>                  <!-- edittext hint --> 
-    <string name="configLabel_location_fromapp">Használja az alkalmazás tartózkodási helyét</string>                  <!-- checkbox text -->
+    <string name="location_label">Hely</string>               <!-- group title -->
+    <string name="location_label_mode">Mód:</string>                      <!-- spinner label -->
+    <string name="location_label_lat">Szélesség:</string>                   <!-- edittext label -->
+    <string name="location_hint_lat">decimális fok</string>      <!-- edittext hint -->
+    <string name="location_label_lon">Hosszúság:</string>                          <!-- edittext label -->
+    <string name="location_hint_lon">decimális fok</string> <!-- edittext hint -->
+    <string name="location_label_alt">Magasság:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">0</string> <!-- edittext hint -->                                 <!-- TODO -->
+    <string name="location_label_name">Név:</string>                      <!-- edittext label -->
+    <string name="location_hint_name">(opcionális)</string>                  <!-- edittext hint -->
+    <string name="location_hint_name0">Helységnév</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">Használja az alkalmazás tartózkodási helyét</string>                  <!-- checkbox text -->
 
     <string name="action_getLocation">Hely mutatása</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Szerkesztés</string>         <!-- button (contentDescription) -->
@@ -527,8 +527,8 @@
     <string name="time_utc">Egyezményes koordinált világidő</string>            <!-- timezone label --> 
     <string name="time_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Időzóna ajánlása</string>
 
     <string name="settings_timezone">Időzóna:</string>             <!-- group title -->
@@ -650,15 +650,15 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="themes_configLabel_widgetThemeList">Widget témák</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Téma kiválasztása</string>
-    <string name="themes_configAction_addTheme">Hozzáadás</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">Kiválasztás</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">Szerkesztés</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">Törlés</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">Másolás</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_label_widgetThemeList">Widget témák</string>
+    <string name="themes_label_widgetThemeListSelect">Téma kiválasztása</string>
+    <string name="themes_action_addTheme">Hozzáadás</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">Kiválasztás</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">Szerkesztés</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">Törlés</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">Másolás</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_action_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Sötét</string>                                <!-- default widget theme name --> <!-- TODO: review -->
     <string name="themes_widgetThemes_dark_transparent">Sötét (Átlátszó)</string>      <!-- default widget theme name --> <!-- TODO: review -->
@@ -688,10 +688,10 @@
     <string name="themes_deletetheme_dialog_ok">Törlés</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">Mégse</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">Téma hozzáadása</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">Téma szerkesztése</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">Mentés</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">Szín választása</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">Téma hozzáadása</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">Téma szerkesztése</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">Mentés</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Szín választása</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">Alap:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Világos</string>        <!-- light background -->
@@ -828,19 +828,19 @@
     <string name="widgetLabel_declination_short">Dek</string>           <!-- label --> 
     <string name="widgetLabel_distance">Távolság</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -848,8 +848,8 @@
     <string name="eventType_sun_elevation">Nap (magasság)</string>
     <string name="eventlist_dialog_title">Egyéni események</string>
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -862,23 +862,23 @@
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
-    <string name="events_configLabel_manageEvents">Események kezelése</string>  <!-- settings activity / pref -->
-    <string name="events_configLabel_manageEvents_summary">Egyéni események hozzáadása és törlése.</string>
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>    <!-- TODO -->
+    <string name="events_pref_manageEvents">Események kezelése</string>  <!-- settings activity / pref -->
+    <string name="events_pref_manageEvents_summary">Egyéni események hozzáadása és törlése.</string>
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>    <!-- TODO -->
 
-    <string name="events_configAction_manageEvents">Egyéni események</string>
-    <string name="events_configAction_selectEvent">Kiválasztás</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent">Hozzáadás</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_editEvent">Szerkesztés</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_saveEvent">Mentés</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_deleteEvent">Törlés</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_clearEvents">Minden törlése</string>           <!-- button (contentDescription) -->
+    <string name="events_action_manageEvents">Egyéni események</string>
+    <string name="events_action_selectEvent">Kiválasztás</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent">Hozzáadás</string>           <!-- button (contentDescription) -->
+    <string name="events_action_editEvent">Szerkesztés</string>           <!-- button (contentDescription) -->
+    <string name="events_action_saveEvent">Mentés</string>           <!-- button (contentDescription) -->
+    <string name="events_action_deleteEvent">Törlés</string>           <!-- button (contentDescription) -->
+    <string name="events_action_clearEvents">Minden törlése</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success"><xliff:g id="eventPlural">%s</xliff:g> importálva.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d esemény</item>
@@ -958,7 +958,7 @@
     <string name="alarms_action_saveAlarm">Mentés</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Mentés és bekapcsolás</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">Mentés és kikapcsolás</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Visszavonás</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">Visszavonás</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Elvetés</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->

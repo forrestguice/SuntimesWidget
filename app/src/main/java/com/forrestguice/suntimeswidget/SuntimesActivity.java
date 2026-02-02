@@ -1016,7 +1016,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             protected void initWarnings(Context context)
             {
-                addWarning(context, WARNINGID_LOCATION_PERMISSION, getString(R.string.locationPermissionWarning), card_view, getString(R.string.action_appDetails), new View.OnClickListener()
+                addWarning(context, WARNINGID_LOCATION_PERMISSION, getString(R.string.location_warning_permissions), card_view, getString(R.string.action_appDetails), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {

@@ -313,11 +313,11 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.events_action_manageEvents)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public AlarmDialogRobot clickOverflowMenuItem_manageEvents(Context context) {
-            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_manageEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
@@ -347,7 +347,7 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
         }
 
         public AlarmDialogRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.events_configAction_manageEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_manageEvents)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
@@ -476,12 +476,12 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmDialogRobot cancelAlarmLocationMenu(Context context) {
-            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.location_label_fromapp)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public AlarmDialogRobot assertAlarmLocationMenuShown(Context context)
         {
-            onView(withText(R.string.configLabel_location_fromapp)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.location_label_fromapp)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withText(R.string.alarms_action_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }

@@ -865,7 +865,7 @@ public class PlacesListFragment extends DialogBase
         if (context != null && view != null && deletedItems != null)
         {
             SnackbarUtils.make(context, view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -939,7 +939,7 @@ public class PlacesListFragment extends DialogBase
         if (view != null && deletedItems != null)
         {
             SnackbarUtils.make(context, view, context.getString(R.string.locationcleared_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

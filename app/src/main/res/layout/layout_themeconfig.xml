@@ -35,7 +35,7 @@
 
             <com.forrestguice.support.widget.Toolbar
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-                app:title="@string/themes_configLabel_widgetThemeAdd" />
+                app:title="@string/themes_action_widgetThemeAdd" />
 
         </com.forrestguice.support.widget.AppBarLayout>
 

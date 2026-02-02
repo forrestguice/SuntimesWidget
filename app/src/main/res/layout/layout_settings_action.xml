@@ -27,7 +27,7 @@
 
             <TextView style="@style/SunsetTimeSettingsGroupTitle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_action" />
+                android:text="@string/settings_action" />
 
             <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
 
@@ -49,7 +49,7 @@
 
             <TextView android:labelFor="@+id/appwidget_action_onTap"
                 android:layout_width="wrap_content"  android:textSize="?attr/text_size_small"
-                android:layout_height="wrap_content" android:text="@string/configLabel_action_onTap" />
+                android:layout_height="wrap_content" android:text="@string/settings_action_onTap" />
 
             <Spinner android:id="@+id/appwidget_action_onTap" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"

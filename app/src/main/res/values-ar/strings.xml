@@ -56,9 +56,9 @@
     <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
     <string name="shortcut_widgetlist_disabled">@string/widgetList_label</string>
 
-    <string name="shortcut_themelist_short">@string/themes_configLabel_widgetThemeList</string>
-    <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
-    <string name="shortcut_themelist_disabled">@string/themes_configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_short">@string/themes_label_widgetThemeList</string>
+    <string name="shortcut_themelist_long">@string/themes_label_widgetThemeList</string>
+    <string name="shortcut_themelist_disabled">@string/themes_label_widgetThemeList</string>
 
     <string name="shortcut_worldmap_short">@string/action_worldMap</string>
     <string name="shortcut_worldmap_long">@string/action_worldMap</string>
@@ -85,7 +85,7 @@
     <string name="action_prevYear">السنة الماضية</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">‏تحذير!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">‏تحذير!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -577,31 +577,31 @@
     <string name="action_increment">@string/action_expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="action_decrement">@string/action_expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">الإجراء</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">عند الضغط:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">عند الضغط على الساعة</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">عند الضغط على المذكرة</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">عند الضغط على التاريخ</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">عند الضغط المطول على التاريخ</string>   <!-- spinner label -->
+    <string name="settings_action">الإجراء</string>                  <!-- group title -->
+    <string name="settings_action_onTap">عند الضغط:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">عند الضغط على الساعة</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">عند الضغط على المذكرة</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">عند الضغط على التاريخ</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">عند الضغط المطول على التاريخ</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">الحالي (آخر معروف)</string>  <!-- setting -->
     <string name="locationMode_custom">محدد من قبل المستخدم</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> الصلاحيات المطلوبة للموقع مطلوبة لتحديث الموقع الحالي.</string>           <!-- snackbar text -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> الصلاحيات المطلوبة للموقع مطلوبة لتحديث الموقع الحالي.</string>           <!-- snackbar text -->
 
-    <string name="configLabel_location">الموقع</string>               <!-- group title -->
-    <string name="configLabel_location_mode">الوضع:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">خط العرض:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">الدرجات العشرية</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">خط الطول:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">الدرجات العشرية</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">الارتفاع:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
-    <string name="configLabel_location_name">الاسم:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(اختياري)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">اسم المكان</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">استخدم موقع التطبيق</string>                  <!-- checkbox text -->
+    <string name="location_label">الموقع</string>               <!-- group title -->
+    <string name="location_label_mode">الوضع:</string>                      <!-- spinner label -->
+    <string name="location_label_lat">خط العرض:</string>                   <!-- edittext label -->
+    <string name="location_hint_lat">الدرجات العشرية</string>      <!-- edittext hint -->
+    <string name="location_label_lon">خط الطول:</string>                          <!-- edittext label -->
+    <string name="location_hint_lon">الدرجات العشرية</string> <!-- edittext hint -->
+    <string name="location_label_alt">الارتفاع:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">0</string>                                    <!-- edittext hint -->
+    <string name="location_label_name">الاسم:</string>                      <!-- edittext label -->
+    <string name="location_hint_name">(اختياري)</string>                  <!-- edittext hint -->
+    <string name="location_hint_name0">اسم المكان</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">استخدم موقع التطبيق</string>                  <!-- checkbox text -->
 
     <string name="action_getLocation">احصل على الموقع</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">تحرير</string>         <!-- button (contentDescription) -->
@@ -618,9 +618,9 @@
     <string name="time_localMean">الوقت المحلي المتوسط</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">الوقت الشمسي الظاهر</string>              <!-- setting / custom timezone id -->
 
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
     <string name="action_suggestTimeZone">توصية بتوقيت منطقة زمنية</string>
 
     <string name="settings_timezone">منطقة زمنية</string>             <!-- group title -->
@@ -751,16 +751,16 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="themes_configLabel_widgetThemeList">السمات</string>
-    <string name="themes_configLabel_widgetThemeListSelect">حدد سمة</string>
-    <string name="themes_configAction_addTheme">إضافة</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">تحديد</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">تحرير</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">حذف</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">نسخ</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>
-    <string name="themes_configAction_shareTheme">@string/action_share</string>
-    <string name="themes_configAction_importThemes">@string/action_import</string>
+    <string name="themes_label_widgetThemeList">السمات</string>
+    <string name="themes_label_widgetThemeListSelect">حدد سمة</string>
+    <string name="themes_action_addTheme">إضافة</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">تحديد</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">تحرير</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">حذف</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">نسخ</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>
+    <string name="themes_action_shareTheme">@string/action_share</string>
+    <string name="themes_action_importThemes">@string/action_import</string>
 
     <string name="themes_widgetThemes_dark">داكن</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">داكن (شفاف)</string>      <!-- default widget theme name -->
@@ -790,10 +790,10 @@
     <string name="themes_deletetheme_dialog_ok">حذف</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">إلغاء</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">إضافة سمة</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">تحرير السمة</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">حفظ</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">اختيار اللون</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">إضافة سمة</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">تحرير السمة</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">حفظ</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">اختيار اللون</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">القاعدة:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">فاتح</string>        <!-- light background -->
@@ -933,19 +933,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">المسافة</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -953,8 +953,8 @@
     <string name="eventType_sun_elevation">الشمس (ارتفاع)</string>
     <string name="eventlist_dialog_title">أحداث مخصصة</string>
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -969,23 +969,23 @@
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
-    <string name="events_configLabel_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
-    <string name="events_configLabel_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>
+    <string name="events_pref_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
+    <string name="events_pref_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
 
-    <string name="events_configAction_manageEvents">الأحداث المخصصة</string>
-    <string name="events_configAction_selectEvent">تحديد</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent">إضافة</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_editEvent">تعديل</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_saveEvent">حفظ</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_deleteEvent">حذف</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_clearEvents">مسح</string>           <!-- button (contentDescription) -->
+    <string name="events_action_manageEvents">الأحداث المخصصة</string>
+    <string name="events_action_selectEvent">تحديد</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent">إضافة</string>           <!-- button (contentDescription) -->
+    <string name="events_action_editEvent">تعديل</string>           <!-- button (contentDescription) -->
+    <string name="events_action_saveEvent">حفظ</string>           <!-- button (contentDescription) -->
+    <string name="events_action_deleteEvent">حذف</string>           <!-- button (contentDescription) -->
+    <string name="events_action_clearEvents">مسح</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">تم استيراد <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="zero">%d حدثٍ</item>
@@ -1071,7 +1071,7 @@
     <string name="alarms_action_saveAlarm">حفظ</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">حفظ وتمكين</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">حفظ وتعطيل</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">تراجع</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">تراجع</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">تجاهل</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">تجاهل المنبه</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->

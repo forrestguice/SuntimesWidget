@@ -290,7 +290,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WelcomeActivityRobot assertLocationPageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_location))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_title), withText(R.string.location_label))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertTimeZonePageIsShown(Context context) {

@@ -57,9 +57,9 @@
     <string name="shortcut_widgetlist_long">@string/widgetList_label</string>
     <string name="shortcut_widgetlist_disabled">@string/widgetList_label</string>
 
-    <string name="shortcut_themelist_short">@string/themes_configLabel_widgetThemeList</string>
-    <string name="shortcut_themelist_long">@string/themes_configLabel_widgetThemeList</string>
-    <string name="shortcut_themelist_disabled">@string/themes_configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_short">@string/themes_label_widgetThemeList</string>
+    <string name="shortcut_themelist_long">@string/themes_label_widgetThemeList</string>
+    <string name="shortcut_themelist_disabled">@string/themes_label_widgetThemeList</string>
 
     <string name="shortcut_alarmclock_addalarm_short">@string/alarms_action_addAlarm</string>
     <string name="shortcut_alarmclock_addalarm_long">@string/alarms_action_addAlarm</string>
@@ -78,7 +78,7 @@
     <string name="action_prevYear">Предыдущий год</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">Внимание!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">Внимание!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -557,31 +557,31 @@
     <string name="action_expandMore">Больше</string>  <!-- contentDescription -->
     <string name="action_expandLess">Меньше</string>  <!-- contentDescription -->
 
-    <string name="configLabel_action">Настройки действий</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
-    <string name="configLabel_action_onTap">При нажатии:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">При нажатии на часы</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">При нажатии на заметку</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">При нажатии на дату</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">При долгом нажатии на дату</string>   <!-- spinner label -->
+    <string name="settings_action">Настройки действий</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
+    <string name="settings_action_onTap">При нажатии:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">При нажатии на часы</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">При нажатии на заметку</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">При нажатии на дату</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">При долгом нажатии на дату</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Текущее (последнее известное)</string>  <!-- setting -->
     <string name="locationMode_custom">Пользовательское</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
-    <string name="configLabel_location">Настройки местоположения</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
-    <string name="configLabel_location_mode">Режим:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Широта:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">градусы (десятичн.)</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Долгота:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">градусы (десятичн.)</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Высота НУМ:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
-    <string name="configLabel_location_name">Название:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(опционально)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Название места</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Использовать местоположение приложения</string>                  <!-- checkbox text -->
+    <string name="location_label">Настройки местоположения</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="location_label_mode">Режим:</string>                      <!-- spinner label -->
+    <string name="location_label_lat">Широта:</string>                   <!-- edittext label -->
+    <string name="location_hint_lat">градусы (десятичн.)</string>      <!-- edittext hint -->
+    <string name="location_label_lon">Долгота:</string>                          <!-- edittext label -->
+    <string name="location_hint_lon">градусы (десятичн.)</string> <!-- edittext hint -->
+    <string name="location_label_alt">Высота НУМ:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">0</string>                                    <!-- edittext hint -->
+    <string name="location_label_name">Название:</string>                      <!-- edittext label -->
+    <string name="location_hint_name">(опционально)</string>                  <!-- edittext hint -->
+    <string name="location_hint_name0">Название места</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">Использовать местоположение приложения</string>                  <!-- checkbox text -->
 
     <string name="action_getLocation">Определить местоположение</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Изменить</string>         <!-- button (contentDescription) -->
@@ -597,8 +597,8 @@
     <string name="time_utc">Всемирное координированное время</string>            <!-- timezone label -->
     <string name="time_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Рекомендуемый часовой пояс</string>
 
     <string name="settings_timezone">Настройки часового пояса</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
@@ -720,16 +720,16 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="themes_configLabel_widgetThemeList">Темы</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Выбрать тему</string>
-    <string name="themes_configAction_addTheme">Добавить</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">Выбрать</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">Изменить</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">Удалить</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">Копировать</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_label_widgetThemeList">Темы</string>
+    <string name="themes_label_widgetThemeListSelect">Выбрать тему</string>
+    <string name="themes_action_addTheme">Добавить</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">Выбрать</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">Изменить</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">Удалить</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">Копировать</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="themes_action_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_action_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Темный</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">Темный (прозрачный)</string>      <!-- default widget theme name -->
@@ -759,10 +759,10 @@
     <string name="themes_deletetheme_dialog_ok">Удалить</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">Отмена</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">Добавить тему</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">Изменить тему</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">Сохранить</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">Выбрать цвет</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">Добавить тему</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">Изменить тему</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">Сохранить</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Выбрать цвет</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">Фон:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Светлый</string>        <!-- light background -->
@@ -902,19 +902,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Расстояние</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -922,8 +922,8 @@
     <string name="eventType_sun_elevation">Солнце (высота)</string>
     <string name="eventlist_dialog_title">Пользовательские события</string>
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -936,23 +936,23 @@
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
-    <string name="events_configLabel_manageEvents">Настроить события</string>  <!-- settings activity / pref -->
-    <string name="events_configLabel_manageEvents_summary">Добавить или удалить пользовательские события.</string>
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>
+    <string name="events_pref_manageEvents">Настроить события</string>  <!-- settings activity / pref -->
+    <string name="events_pref_manageEvents_summary">Добавить или удалить пользовательские события.</string>
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
 
-    <string name="events_configAction_manageEvents">Пользовательские события</string>
-    <string name="events_configAction_selectEvent">Выбрать</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent">Добавить</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_editEvent">Изменить</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_saveEvent">Сохранить</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_deleteEvent">Удалить</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_clearEvents">Очистить</string>           <!-- button (contentDescription) -->
+    <string name="events_action_manageEvents">Пользовательские события</string>
+    <string name="events_action_selectEvent">Выбрать</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent">Добавить</string>           <!-- button (contentDescription) -->
+    <string name="events_action_editEvent">Изменить</string>           <!-- button (contentDescription) -->
+    <string name="events_action_saveEvent">Сохранить</string>           <!-- button (contentDescription) -->
+    <string name="events_action_deleteEvent">Удалить</string>           <!-- button (contentDescription) -->
+    <string name="events_action_clearEvents">Очистить</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d событие</item>
@@ -1033,7 +1033,7 @@
     <string name="alarms_action_saveAlarm">Сохранить</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Сохранить и активировать</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">Сохранить и выключить</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Отменить</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">Отменить</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Отключить</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->

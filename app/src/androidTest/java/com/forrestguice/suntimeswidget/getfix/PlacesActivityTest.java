@@ -489,7 +489,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot clickSnackbar_undo() {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
 
@@ -602,11 +602,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot assertUndoClearSnackbarShown(Context context) {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).check(assertShown);
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).check(assertShown);
             return this;
         }
         public PlacesActivityRobot assertUndoClearSnackbarNotShown(Context context) {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).check(doesNotExist());
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).check(doesNotExist());
             return this;
         }
 

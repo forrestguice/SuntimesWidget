@@ -751,7 +751,7 @@ public class EventListHelper
         {
             String plural = context.getResources().getQuantityString(R.plurals.eventPlural, items.size(), items.size());
             SnackbarUtils.make(context, view, context.getString(R.string.events_importevents_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

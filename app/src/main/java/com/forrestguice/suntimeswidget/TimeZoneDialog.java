@@ -376,7 +376,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         for (TimeStandardMode value : TimeStandardMode.values()) {
             items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
         }
-        WidgetTimezones.TimeZoneItemAdapter spinner_solartimeAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
+        WidgetTimezones.TimeZoneItemAdapter spinner_solartimeAdapter = new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_timezone, items, R.string.settings_timezoneCustom_line1, R.string.settings_timezoneCustom_line2b);
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);

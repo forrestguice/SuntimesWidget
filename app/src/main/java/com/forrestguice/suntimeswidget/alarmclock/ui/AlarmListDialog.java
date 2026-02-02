@@ -439,7 +439,7 @@ public class AlarmListDialog extends DialogBase
         if (context != null && view != null)
         {
             SnackbarUtils.make(context, view, context.getString(R.string.alarmsclear_toast_success), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -461,7 +461,7 @@ public class AlarmListDialog extends DialogBase
         {
             String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
             SnackbarUtils.make(context, view, context.getString(R.string.alarmdelete_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -786,7 +786,7 @@ public class AlarmListDialog extends DialogBase
         {
             String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
             SnackbarUtils.make(context, view, context.getString(R.string.alarmsimport_toast_success, plural), SnackbarUtils.LENGTH_INDEFINITE)
-                    .setAction(context.getString(R.string.configAction_undo), new View.OnClickListener()
+                    .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

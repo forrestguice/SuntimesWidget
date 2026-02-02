@@ -549,7 +549,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             case EDIT_THEME:
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(getString(R.string.themes_configLabel_widgetThemeEdit));
+                    getSupportActionBar().setTitle(getString(R.string.themes_action_widgetThemeEdit));
                 }
                 labelName.setEnabled(false);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -560,7 +560,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             case ADD_THEME:
             default:
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(getString(R.string.themes_configLabel_widgetThemeAdd));
+                    getSupportActionBar().setTitle(getString(R.string.themes_action_widgetThemeAdd));
                 }
                 labelName.setEnabled(true);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));

@@ -4,7 +4,7 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/addEvent"
-            android:title="@string/events_configAction_addEvent"
+            android:title="@string/events_action_addEvent"
             android:icon="?attr/icActionNew"
             app:showAsAction="ifRoom">
 
@@ -12,27 +12,27 @@
                 <group>
 
                     <item android:id="@+id/addEvent_sunEvent"
-                        android:title="@string/events_configAction_addEvent_sunEvent"
+                        android:title="@string/events_action_addEvent_sunEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
                     <item android:id="@+id/addEvent_shadowEvent"
-                        android:title="@string/events_configAction_addEvent_shadowEvent"
+                        android:title="@string/events_action_addEvent_shadowEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
                     <item android:id="@+id/addEvent_dayPercentEvent"
-                        android:title="@string/events_configAction_addEvent_dayPercentEvent"
+                        android:title="@string/events_action_addEvent_dayPercentEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
                     <item android:id="@+id/addEvent_moonEvent"
-                        android:title="@string/events_configAction_addEvent_moonEvent"
+                        android:title="@string/events_action_addEvent_moonEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
                     <item android:id="@+id/addEvent_moonIllumEvent"
-                        android:title="@string/events_configAction_addEvent_moonIllumEvent"
+                        android:title="@string/events_action_addEvent_moonIllumEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
@@ -42,17 +42,17 @@
         </item>
 
         <item android:id="@+id/clearEvents"
-            android:title="@string/events_configAction_clearEvents"
+            android:title="@string/events_action_clearEvents"
             android:icon="?attr/icActionDelete"
             app:showAsAction="never" />
 
         <item android:id="@+id/exportEvents"
-            android:title="@string/events_configAction_exportEvents"
+            android:title="@string/events_action_exportEvents"
             android:icon="?attr/icActionSave"
             app:showAsAction="never" />
 
         <item android:id="@+id/importEvents"
-            android:title="@string/events_configAction_importEvents"
+            android:title="@string/events_action_importEvents"
             android:icon="?attr/icActionCopy"
             app:showAsAction="never" />
 

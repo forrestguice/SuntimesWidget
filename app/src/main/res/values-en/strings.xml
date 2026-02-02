@@ -8,7 +8,7 @@
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>
 
     <!-- App Setting: WidgetThemes -->
-    <string name="themes_configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
     <string name="themes_configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
     <string name="themes_configLabel_themeColorBackground">Colour</string>      <!-- color label -->
 

@@ -81,13 +81,13 @@ public class AlarmColorValues extends ResourceColorValues implements Serializabl
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.themes_configLabel_alarms_bg_endColor, R.string.themes_configLabel_alarms_bg_startColor,
-                R.string.themes_configLabel_alarms_soundingPulse_startColor, R.string.themes_configLabel_alarms_soundingPulse_endColor,
-                R.string.themes_configLabel_alarms_snoozingPulse_startColor, R.string.themes_configLabel_alarms_snoozingPulse_endColor,
-                R.string.themes_configLabel_alarms_text_primaryColor, R.string.themes_configLabel_alarms_text_primaryColorInverse,
-                R.string.themes_configLabel_alarms_text_secondaryColor, R.string.themes_configLabel_alarms_text_secondaryColorInverse,
-                R.string.themes_configLabel_alarms_text_timeColor, R.string.themes_configLabel_alarms_text_timeColorInverse,
-                R.string.themes_configLabel_themeColorAccent, R.string.themes_configLabel_alarms_text_disabledColor, R.string.themes_configLabel_themeColorAction,
+                R.string.themes_label_alarms_bg_endColor, R.string.themes_label_alarms_bg_startColor,
+                R.string.themes_label_alarms_soundingPulse_startColor, R.string.themes_label_alarms_soundingPulse_endColor,
+                R.string.themes_label_alarms_snoozingPulse_startColor, R.string.themes_label_alarms_snoozingPulse_endColor,
+                R.string.themes_label_alarms_text_primaryColor, R.string.themes_label_alarms_text_primaryColorInverse,
+                R.string.themes_label_alarms_text_secondaryColor, R.string.themes_label_alarms_text_secondaryColorInverse,
+                R.string.themes_label_alarms_text_timeColor, R.string.themes_label_alarms_text_timeColorInverse,
+                R.string.themes_configLabel_themeColorAccent, R.string.themes_label_alarms_text_disabledColor, R.string.themes_configLabel_themeColorAction,
         };
     }
     public int[] getColorRoles() {

@@ -254,14 +254,14 @@ public class WidgetTimezones
         {
             super(context, R.layout.layout_listitem_timezone);
             this.resID = R.layout.layout_listitem_timezone;
-            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
+            init(context, R.string.settings_timezoneCustom_line1, R.string.settings_timezoneCustom_line2);
         }
 
         public TimeZoneItemAdapter(Context context, int resource)
         {
             super(context, resource);
             this.resID = resource;
-            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
+            init(context, R.string.settings_timezoneCustom_line1, R.string.settings_timezoneCustom_line2);
         }
 
         public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, int resource_line1, int resource_line2)
@@ -278,7 +278,7 @@ public class WidgetTimezones
             this.resID = resource;
             this.items = items;
             this.sortBy = sortBy;
-            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
+            init(context, R.string.settings_timezoneCustom_line1, R.string.settings_timezoneCustom_line2);
             sort();
         }
 

@@ -5,7 +5,7 @@
 
         <item android:id="@+id/action_themes"
             android:icon="?attr/icActionAppearance"
-            android:title="@string/themes_configLabel_widgetThemeList"
+            android:title="@string/themes_label_widgetThemeList"
             app:showAsAction="ifRoom" />
 
         <item android:id="@+id/action_actionlist"

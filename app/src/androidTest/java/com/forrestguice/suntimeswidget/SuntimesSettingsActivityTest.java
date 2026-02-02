@@ -328,7 +328,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public SettingsActivityRobot clickPref_manageEvents() {
-            onView(withText(R.string.events_configLabel_manageEvents)).perform(scrollTo(), click());
+            onView(withText(R.string.events_pref_manageEvents)).perform(scrollTo(), click());
             return this;
         }
         public SettingsActivityRobot clickPref_welcomeWizard() {

@@ -7,7 +7,7 @@
         android:id="@+id/action_colors_select"
         android:orderInCategory="10"
         android:icon="?attr/icActionAccept"
-        android:title="@string/themes_configAction_chooseColor"
+        android:title="@string/themes_action_chooseColor"
         app:showAsAction="always" />
 
     <item

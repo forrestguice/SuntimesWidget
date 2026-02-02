@@ -63,7 +63,7 @@
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_palette"  android:tint="?attr/colorAccent"
-                android:contentDescription="@string/themes_configAction_editTheme" />
+                android:contentDescription="@string/themes_action_editTheme" />
 
         </LinearLayout>
 

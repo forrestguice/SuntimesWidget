@@ -65,9 +65,9 @@
 
         <com.forrestguice.support.preference.Preference
             android:key="manage_events"
-            android:title="@string/events_configLabel_manageEvents"
+            android:title="@string/events_pref_manageEvents"
             android:icon="?attr/icActionEvents"
-            android:summary="@string/events_configLabel_manageEvents_summary"
+            android:summary="@string/events_pref_manageEvents_summary"
             android:persistent="false" />
 
     </com.forrestguice.support.preference.PreferenceCategory>
@@ -257,12 +257,12 @@
     </com.forrestguice.support.preference.PreferenceCategory>
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_action">
+        android:title="@string/settings_action">
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_clocktapaction"
-            android:title="@string/configLabel_action_onClockTap"
-            android:dialogTitle="@string/configLabel_action_onClockTap"
+            android:title="@string/settings_action_onClockTap"
+            android:dialogTitle="@string/settings_action_onClockTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/actions_clockTapActions_display" android:entryValues="@array/actions_clockTapActions_values"
             android:defaultValue="@string/def_app_ui_clocktapaction"
@@ -270,8 +270,8 @@
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction"
-            android:title="@string/configLabel_action_onDateTap"
-            android:dialogTitle="@string/configLabel_action_onDateTap"
+            android:title="@string/settings_action_onDateTap"
+            android:dialogTitle="@string/settings_action_onDateTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/actions_dateTapActions_display" android:entryValues="@array/actions_dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction"
@@ -279,8 +279,8 @@
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction1"
-            android:title="@string/configLabel_action_onDateTap1"
-            android:dialogTitle="@string/configLabel_action_onDateTap1"
+            android:title="@string/settings_action_onDateTap1"
+            android:dialogTitle="@string/settings_action_onDateTap1"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/actions_dateTapActions_display" android:entryValues="@array/actions_dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction1"
@@ -288,8 +288,8 @@
 
         <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_notetapaction"
-            android:title="@string/configLabel_action_onNoteTap"
-            android:dialogTitle="@string/configLabel_action_onNoteTap"
+            android:title="@string/settings_action_onNoteTap"
+            android:dialogTitle="@string/settings_action_onNoteTap"
             android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/actions_noteTapActions_display" android:entryValues="@array/actions_noteTapActions_values"
             android:defaultValue="@string/def_app_ui_notetapaction"

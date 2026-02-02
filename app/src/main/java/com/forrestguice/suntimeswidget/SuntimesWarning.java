@@ -111,7 +111,7 @@ public class SuntimesWarning
     {
         ImageSpan warningIcon = SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
         message = SpanUtils.createSpan(context, msg, SpanUtils.SPANTAG_WARNING, warningIcon);
-        contentDescription = msg.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), context.getString(R.string.contentDescription_warning));
+        contentDescription = msg.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), context.getString(R.string.tag_warning_contentDescription));
     }
 
     @Nullable

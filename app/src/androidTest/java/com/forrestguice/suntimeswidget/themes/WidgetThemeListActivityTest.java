@@ -134,7 +134,7 @@ public class WidgetThemeListActivityTest extends SuntimesActivityTestBase
         /////////////////////////////////////////////////////////////////////////
 
         public ThemeListActivityRobot assertActivityShown(Context context) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.themes_configLabel_widgetThemeListSelect),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.themes_label_widgetThemeListSelect),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             return this;
         }

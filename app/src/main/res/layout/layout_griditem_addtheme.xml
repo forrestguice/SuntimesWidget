@@ -28,7 +28,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:background="?attr/icActionNew"
         android:cropToPadding="true"
-        android:contentDescription="@string/themes_configAction_addTheme" />
+        android:contentDescription="@string/themes_action_addTheme" />
 
 
 </LinearLayout>

@@ -51,7 +51,7 @@
     <string name="action_prevYear">Aurreko urtea</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">Kontuz!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">Kontuz!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -497,31 +497,31 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Ekintzen ezarpenak</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
-    <string name="configLabel_action_onTap">Ukitzerakoan:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Data ukitzerakoan</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Data luze ukitzerakoan</string>   <!-- spinner label -->
+    <string name="settings_action">Ekintzen ezarpenak</string>                  <!-- group title -->    <!-- TODO: shortened "Action Settings" to "Action" -->
+    <string name="settings_action_onTap">Ukitzerakoan:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">Erlojua ukitzerakoan</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">Oharra ukitzerakoan</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">Data ukitzerakoan</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">Data luze ukitzerakoan</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
     <string name="locationMode_custom">Erabiltzaileak ezarritakoa</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Location permissions are required to update the current location.</string>           <!-- snackbar text -->    <!-- TODO -->
 
-    <string name="configLabel_location">Kokapenaren ezarpenak</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
-    <string name="configLabel_location_mode">Modua:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Latitudea:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">gradu hamartarrak</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Longitudea:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">gradu hamartarrak</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Altitudea:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->
-    <string name="configLabel_location_name">Izena:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(hautazkoa)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="location_label">Kokapenaren ezarpenak</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="location_label_mode">Modua:</string>                      <!-- spinner label -->
+    <string name="location_label_lat">Latitudea:</string>                   <!-- edittext label -->
+    <string name="location_hint_lat">gradu hamartarrak</string>      <!-- edittext hint -->
+    <string name="location_label_lon">Longitudea:</string>                          <!-- edittext label -->
+    <string name="location_hint_lon">gradu hamartarrak</string> <!-- edittext hint -->
+    <string name="location_label_alt">Altitudea:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">0</string> <!-- edittext hint -->
+    <string name="location_label_name">Izena:</string>                      <!-- edittext label -->
+    <string name="location_hint_name">(hautazkoa)</string>                  <!-- edittext hint -->
+    <string name="location_hint_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="location_label_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="action_getLocation">Kokapena lortu</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Editatu</string>         <!-- button (contentDescription) -->
@@ -537,8 +537,8 @@
     <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Batez besteko tokiko ordua</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Itxurako eguzkiaren ordua</string>              <!-- setting / custom timezone id -->
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
     <string name="settings_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
@@ -660,15 +660,15 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="themes_configLabel_widgetThemeList">Widgeten itxurak</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Itxura bat hautatu</string>
-    <string name="themes_configAction_addTheme">Gehitu</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">Hautatu</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">Editatu</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">Ezabatu</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">Kopiatu</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_label_widgetThemeList">Widgeten itxurak</string>
+    <string name="themes_label_widgetThemeListSelect">Itxura bat hautatu</string>
+    <string name="themes_action_addTheme">Gehitu</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">Hautatu</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">Editatu</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">Ezabatu</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">Kopiatu</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_action_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Iluna</string>                                <!-- default widget theme name --> <!-- TODO: review -->
     <string name="themes_widgetThemes_dark_transparent">Iluna (gardena)</string>      <!-- default widget theme name --> <!-- TODO: review -->
@@ -698,10 +698,10 @@
     <string name="themes_deletetheme_dialog_ok">Ezabatu</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">Utzi</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">Itxura gehitu</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">Itxura editatu</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">Gorde</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">Kolorea hautatu</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">Itxura gehitu</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">Itxura editatu</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">Gorde</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Kolorea hautatu</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">Oinarria:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Argia</string>        <!-- light background -->
@@ -841,19 +841,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -861,8 +861,8 @@
     <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
     <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -875,23 +875,23 @@
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
-    <string name="events_configLabel_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
-    <string name="events_configLabel_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>    <!-- TODO -->
+    <string name="events_pref_manageEvents">Manage Events</string>  <!-- settings activity / pref -->  <!-- TODO -->
+    <string name="events_pref_manageEvents_summary">Add or remove custom events.</string>    <!-- TODO -->
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>    <!-- TODO -->
 
-    <string name="events_configAction_manageEvents">Custom Events</string>   <!-- TODO -->
-    <string name="events_configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="events_configAction_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_manageEvents">Custom Events</string>   <!-- TODO -->
+    <string name="events_action_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_editEvent">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_saveEvent">Save</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_deleteEvent">Delete</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="events_action_clearEvents">Clear</string>           <!-- button (contentDescription) -->  <!-- TODO -->
 
-    <string name="events_configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="events_configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Imported <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->  <!-- TODO -->
     <plurals name="eventPlural">
         <item quantity="one">%d event</item>
@@ -971,7 +971,7 @@
     <string name="alarms_action_saveAlarm">Gorde</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="alarms_action_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="action_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_dismiss_early">@string/alarmAction_dismiss</string>                <!-- notification action button -->  <!-- TODO: "Dismiss Early" -->

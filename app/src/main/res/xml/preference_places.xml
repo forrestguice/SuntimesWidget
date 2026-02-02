@@ -8,7 +8,7 @@
         android:icon="?attr/icActionPlace" />
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_location">
+        android:title="@string/location_label">
 
         <com.forrestguice.support.preference.ListPreference
             android:key="getFix_maxElapsed"

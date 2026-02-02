@@ -160,7 +160,7 @@
 
         <item android:id="@+id/action_manage_events"
             android:icon="?attr/icActionSettings"
-            android:title="@string/events_configAction_manageEvents"
+            android:title="@string/events_action_manageEvents"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_timezone"

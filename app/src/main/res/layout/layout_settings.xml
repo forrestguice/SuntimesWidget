@@ -144,7 +144,7 @@
                         <TextView style="@style/SunsetTimeSettingsGroupTitle"
                             android:id="@+id/appwidget_location_grouptitle"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/configLabel_location" />
+                            android:text="@string/location_label" />
 
                         <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
 
@@ -173,7 +173,7 @@
                             <CheckBox
                                 android:id="@+id/appwidget_location_fromapp"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_fromapp" />
+                                android:textSize="?attr/text_size_small" android:text="@string/location_label_fromapp" />
 
                         </LinearLayout>
 

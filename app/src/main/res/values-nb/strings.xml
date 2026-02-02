@@ -54,7 +54,7 @@
     <string name="action_prevYear">Forrige år</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">Advarsel!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">Advarsel!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -511,31 +511,31 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Handling</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">Ved trykk:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Ved trykk på klokke</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Ved trykk på notis</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Ved trykk på dato</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Ved lang-trykk på dato</string>   <!-- spinner label -->
+    <string name="settings_action">Handling</string>                  <!-- group title -->
+    <string name="settings_action_onTap">Ved trykk:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">Ved trykk på klokke</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">Ved trykk på notis</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">Ved trykk på dato</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">Ved lang-trykk på dato</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
     <string name="locationMode_custom">Brukerdefinert</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Posisjonstillatelser kreves for å oppdatere gjeldende posisjon.</string>           <!-- snackbar text -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Posisjonstillatelser kreves for å oppdatere gjeldende posisjon.</string>           <!-- snackbar text -->
 
-    <string name="configLabel_location">Sted</string>               <!-- group title -->
-    <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Breddegrad:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">desimalgrader</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Lengdegrad:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">desimalgrader</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Høyde:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">0</string> <!-- edittext hint -->
-    <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Stedsnavn</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Bruk sted fra app</string>                  <!-- checkbox text -->
+    <string name="location_label">Sted</string>               <!-- group title -->
+    <string name="location_label_mode">Modus:</string>                      <!-- spinner label -->
+    <string name="location_label_lat">Breddegrad:</string>                   <!-- edittext label -->
+    <string name="location_hint_lat">desimalgrader</string>      <!-- edittext hint -->
+    <string name="location_label_lon">Lengdegrad:</string>                          <!-- edittext label -->
+    <string name="location_hint_lon">desimalgrader</string> <!-- edittext hint -->
+    <string name="location_label_alt">Høyde:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">0</string> <!-- edittext hint -->
+    <string name="location_label_name">Navn:</string>                      <!-- edittext label -->
+    <string name="location_hint_name">(valgfri)</string>                  <!-- edittext hint -->
+    <string name="location_hint_name0">Stedsnavn</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">Bruk sted fra app</string>                  <!-- checkbox text -->
 
     <string name="action_getLocation">Hent posisjon</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Rediger</string>         <!-- button (contentDescription) -->
@@ -551,8 +551,8 @@
     <string name="time_utc">Koordinert universaltid</string>            <!-- timezone label -->
     <string name="time_localMean">Lokal middeltid</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Tilsynelatende soltid</string>              <!-- setting / custom timezone id -->
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Anbefalt tidssone</string>
 
     <string name="settings_timezone">Tidssone</string>             <!-- group title -->
@@ -674,16 +674,16 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="themes_configLabel_widgetThemeList">Modultemaer</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Velg et tema</string>
-    <string name="themes_configAction_addTheme">Legg til</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">Velg</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">Rediger</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_label_widgetThemeList">Modultemaer</string>
+    <string name="themes_label_widgetThemeListSelect">Velg et tema</string>
+    <string name="themes_action_addTheme">Legg til</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">Velg</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">Rediger</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="themes_action_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_action_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Dark</string>                                <!-- default widget theme name --> <!-- TODO -->
     <string name="themes_widgetThemes_dark_transparent">Dark (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
@@ -713,10 +713,10 @@
     <string name="themes_deletetheme_dialog_ok">Slett</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">Avbryt</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">Legg til tema</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">Rediger tema</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">Lagre</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">Velg farge</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">Legg til tema</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">Rediger tema</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">Lagre</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Velg farge</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">Basis:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Lys</string>        <!-- light background -->
@@ -856,19 +856,19 @@
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
     <string name="widgetLabel_distance">Avstand</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_startColor">Background (Start)</string>               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_bg_endColor">Background (Finish)</string>                <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulse (Sounding)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulse (Sounding)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulse (Snoozing)</string>      <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulse (Snoozing)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColor">Primary Text</string>                         <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Primary Text (Inverse)</string>        <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColor">Secondary Text</string>                     <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Secondary Text (Inverse)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColor">Time Text</string>                               <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_timeColorInverse">Time Text (inverse)</string>              <!-- color label -->    <!-- TODO -->
+    <string name="themes_label_alarms_text_disabledColor">Disabled</string>                            <!-- color label -->    <!-- TODO -->
 
     <!--
          CUSTOM EVENTS
@@ -876,8 +876,8 @@
     <string name="eventType_sun_elevation">Solen (høyde)</string>
     <string name="eventlist_dialog_title">Egendefinerte hendelser</string>
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -890,23 +890,23 @@
 
     <string name="event_shadowevent_title">Skygge</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
-    <string name="events_configLabel_manageEvents">Håndter hendelser</string>  <!-- settings activity / pref -->
-    <string name="events_configLabel_manageEvents_summary">Legg til eller fjern egendefinerte hendelser.</string>
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>    <!-- TODO -->
+    <string name="events_pref_manageEvents">Håndter hendelser</string>  <!-- settings activity / pref -->
+    <string name="events_pref_manageEvents_summary">Legg til eller fjern egendefinerte hendelser.</string>
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>    <!-- TODO -->
 
-    <string name="events_configAction_manageEvents">Egendefinerte hendelser</string>
-    <string name="events_configAction_selectEvent">Velg</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent">Legg til</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_editEvent">Rediger</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_saveEvent">Lagre</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_deleteEvent">Slett</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_clearEvents">Tøm</string>           <!-- button (contentDescription) -->
+    <string name="events_action_manageEvents">Egendefinerte hendelser</string>
+    <string name="events_action_selectEvent">Velg</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent">Legg til</string>           <!-- button (contentDescription) -->
+    <string name="events_action_editEvent">Rediger</string>           <!-- button (contentDescription) -->
+    <string name="events_action_saveEvent">Lagre</string>           <!-- button (contentDescription) -->
+    <string name="events_action_deleteEvent">Slett</string>           <!-- button (contentDescription) -->
+    <string name="events_action_clearEvents">Tøm</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_addEvent_sunEvent">Legg til (solhøyde)</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent_shadowEvent">Legg til (skyggelengde)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_sunEvent">Legg til (solhøyde)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_shadowEvent">Legg til (skyggelengde)</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Importert <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d hendelse</item>
@@ -986,7 +986,7 @@
     <string name="alarms_action_saveAlarm">Lagre</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Lagre &amp; Aktiver</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">Lagre &amp; Deaktiver</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Angre</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">Angre</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Slå av</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">Slå av alarm</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->

@@ -150,7 +150,7 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot clickManageThemesButton(Context context) {
-            onView(withContentDescription(R.string.themes_configLabel_widgetThemeList)).perform(click());
+            onView(withContentDescription(R.string.themes_label_widgetThemeList)).perform(click());
             return this;
         }
         public WidgetListActivityRobot clickManageActionsButton(Context context) {

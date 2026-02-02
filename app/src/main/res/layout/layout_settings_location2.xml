@@ -28,7 +28,7 @@
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:id="@+id/appwidget_location_grouptitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configLabel_location" />
+            android:text="@string/location_label" />
 
         <LinearLayout  android:id="@+id/appwidget_location_mode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 
             <TextView android:labelFor="@+id/appwidget_location_mode"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_location_mode" android:textSize="?attr/text_size_small"
+                android:layout_height="wrap_content" android:text="@string/location_label_mode" android:textSize="?attr/text_size_small"
                 android:layout_gravity="center_vertical" />
 
             <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                           android:id="@+id/appwidget_location_name_label"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_gravity="end|center_vertical"
-                          android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_name" android:enabled="false" />
+                          android:textSize="?attr/text_size_small" android:text="@string/location_label_name" android:enabled="false" />
 
                 <ViewFlipper android:id="@+id/view_flip"
                              android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     <EditText android:id="@+id/appwidget_location_name"
                               android:layout_width="fill_parent" android:layout_height="wrap_content"
                               android:textAppearance="?android:attr/textAppearanceSmall"
-                              android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text"
+                              android:hint="@string/location_hint_name" android:enabled="false" android:inputType="text"
                               android:paddingLeft="5dp" android:paddingRight="5dp"
                         android:layout_gravity="center_vertical" />
 
@@ -169,13 +169,13 @@
                                   android:id="@+id/appwidget_location_lat_label"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                                   android:layout_gravity="end|center_vertical"
-                                  android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_lat" android:enabled="false" />
+                                  android:textSize="?attr/text_size_small" android:text="@string/location_label_lat" android:enabled="false" />
 
                         <EditText android:id="@+id/appwidget_location_lat"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                                   android:inputType="numberDecimal|numberSigned"
                                   android:textAppearance="?android:attr/textAppearanceSmall"
-                                  android:hint="@string/configHint_location_lat" android:enabled="false" />
+                                  android:hint="@string/location_hint_lat" android:enabled="false" />
                     </LinearLayout>
 
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -185,13 +185,13 @@
                                   android:id="@+id/appwidget_location_lon_label"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                                   android:layout_gravity="end|center_vertical"
-                                  android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_lon" android:enabled="false" />
+                                  android:textSize="?attr/text_size_small" android:text="@string/location_label_lon" android:enabled="false" />
 
                         <EditText android:id="@+id/appwidget_location_lon"
                                   android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                                   android:inputType="numberDecimal|numberSigned"
                                   android:textAppearance="?android:attr/textAppearanceSmall"
-                                  android:hint="@string/configHint_location_lon" android:enabled="false" />
+                                  android:hint="@string/location_hint_lon" android:enabled="false" />
                     </LinearLayout>
 
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -201,13 +201,13 @@
                             android:id="@+id/appwidget_location_alt_label"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_gravity="end|center_vertical"
-                            android:textSize="?attr/text_size_small" android:text="@string/configLabel_location_alt" android:enabled="false" />
+                            android:textSize="?attr/text_size_small" android:text="@string/location_label_alt" android:enabled="false" />
 
                         <EditText android:id="@+id/appwidget_location_alt"
                             android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                             android:inputType="numberDecimal|numberSigned" android:minEms="2"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:hint="@string/configHint_location_alt" android:enabled="false" />
+                            android:hint="@string/location_hint_alt" android:enabled="false" />
 
                         <TextView android:id="@+id/appwidget_location_alt_units"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"

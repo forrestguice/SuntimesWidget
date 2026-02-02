@@ -53,7 +53,7 @@
     <string name="action_prevYear">Antaŭa jaro</string>
 
     <!-- Warnings -->
-    <string name="contentDescription_warning">Atentu!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="tag_warning_contentDescription">Atentu!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -493,12 +493,12 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Agoj</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Je frapeto sur noto</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Je frapeto sur dato</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Je frapetado sur dato</string>   <!-- spinner label -->
+    <string name="settings_action">Agoj</string>                  <!-- group title -->
+    <string name="settings_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
+    <string name="settings_action_onClockTap">Je frapeto sur horloĝo</string>         <!-- spinner label -->
+    <string name="settings_action_onNoteTap">Je frapeto sur noto</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap">Je frapeto sur dato</string>           <!-- spinner label -->
+    <string name="settings_action_onDateTap1">Je frapetado sur dato</string>   <!-- spinner label -->
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">laŭ deŝovo</string>
@@ -511,20 +511,20 @@
     <string name="locationMode_current">Aktuala (laste konata)</string>  <!-- setting -->
     <string name="locationMode_custom">Propra</string>           <!-- setting -->
 
-    <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Permeso por determini pozicion estas necesa por aktualigi vian nunan lokon.</string>           <!-- snackbar text -->
+    <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Permeso por determini pozicion estas necesa por aktualigi vian nunan lokon.</string>           <!-- snackbar text -->
 
-    <string name="configLabel_location">Lokoj</string>              <!-- group title -->
-    <string name="configLabel_location_mode">Reĝimo:</string>                     <!-- spinner label -->
-    <string name="configLabel_location_lat">Latitudo:</string>                  <!-- edittext label -->
-    <string name="configHint_location_lat">53.1324</string>                       <!-- edittext hint -->
-    <string name="configLabel_location_lon">Longitudo:</string>                 <!-- edittext label -->
-    <string name="configHint_location_lon">23.1592</string>                <!-- edittext hint -->
-    <string name="configLabel_location_alt">Altitudo:</string>                          <!-- edittext label -->
-    <string name="configHint_location_alt">139</string> <!-- edittext hint -->
-    <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
-    <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
-    <string name="configHint_location_name0">Nomo de loko</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Pozicio determinita de aplikaĵo</string>                  <!-- checkbox text -->
+    <string name="location_label">Lokoj</string>              <!-- group title -->
+    <string name="location_label_mode">Reĝimo:</string>                     <!-- spinner label -->
+    <string name="location_label_lat">Latitudo:</string>                  <!-- edittext label -->
+    <string name="location_hint_lat">53.1324</string>                       <!-- edittext hint -->
+    <string name="location_label_lon">Longitudo:</string>                 <!-- edittext label -->
+    <string name="location_hint_lon">23.1592</string>                <!-- edittext hint -->
+    <string name="location_label_alt">Altitudo:</string>                          <!-- edittext label -->
+    <string name="location_hint_alt">139</string> <!-- edittext hint -->
+    <string name="location_label_name">Nomo:</string>                     <!-- edittext label -->
+    <string name="location_hint_name">(malnepra)</string>                 <!-- edittext hint -->
+    <string name="location_hint_name0">Nomo de loko</string>                  <!-- edittext hint -->
+    <string name="location_label_fromapp">Pozicio determinita de aplikaĵo</string>                  <!-- checkbox text -->
 
     <string name="action_getLocation">Determini pozicion</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Redakti</string>         <!-- button (contentDescription) -->
@@ -540,8 +540,8 @@
     <string name="time_utc">universala tempo kunordigita</string>            <!-- timezone label -->
     <string name="time_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
-    <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Sugesti horzonon</string>
 
     <string name="settings_timezone">Horzono</string>             <!-- group title -->
@@ -663,16 +663,16 @@
     <string name="actions_action_import">@string/action_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
-    <string name="themes_configLabel_widgetThemeList">Fenestraĵa haŭto</string>
-    <string name="themes_configLabel_widgetThemeListSelect">Elekti haŭton</string>
-    <string name="themes_configAction_addTheme">Aldoni</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_selectTheme">Elekti</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
-    <string name="themes_configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="themes_configAction_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
-    <string name="themes_configAction_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="themes_configAction_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
+    <string name="themes_label_widgetThemeList">Fenestraĵa haŭto</string>
+    <string name="themes_label_widgetThemeListSelect">Elekti haŭton</string>
+    <string name="themes_action_addTheme">Aldoni</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_selectTheme">Elekti</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_editTheme">Redakti</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
+    <string name="themes_action_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
+    <string name="themes_action_exportThemes">@string/action_export</string>    <!-- button (contentDescription) -->
+    <string name="themes_action_shareTheme">@string/action_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="themes_action_importThemes">@string/action_import</string>    <!-- button (contentDescription) -->
 
     <string name="themes_widgetThemes_dark">Malhela</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_transparent">Malhela (travidebla)</string>      <!-- default widget theme name -->
@@ -702,10 +702,10 @@
     <string name="themes_deletetheme_dialog_ok">Forigi</string>        <!-- button -->
     <string name="themes_deletetheme_dialog_cancel">Nuligi</string>    <!-- button -->
 
-    <string name="themes_configLabel_widgetThemeAdd">Aldoni haŭton</string>     <!-- title text -->
-    <string name="themes_configLabel_widgetThemeEdit">Redakti haŭton</string>   <!-- title text -->
-    <string name="themes_configAction_saveTheme">Konservi</string>           <!-- button (contentDescription) -->
-    <string name="themes_configAction_chooseColor">Elekti koloron</string> <!-- button (contentDescription) -->
+    <string name="themes_action_widgetThemeAdd">Aldoni haŭton</string>     <!-- title text -->
+    <string name="themes_action_widgetThemeEdit">Redakti haŭton</string>   <!-- title text -->
+    <string name="themes_action_saveTheme">Konservi</string>           <!-- button (contentDescription) -->
+    <string name="themes_action_chooseColor">Elekti koloron</string> <!-- button (contentDescription) -->
 
     <string name="themes_configLabel_themeBackgroundId">Fono:</string>    <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Hela</string>        <!-- light background -->
@@ -846,19 +846,19 @@
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
     <string name="widgetLabel_distance">Distanco</string>           <!-- label -->
 
-    <string name="themes_configLabel_alarms_bg_startColor">Fono (komenca)</string>               <!-- color label -->
-    <string name="themes_configLabel_alarms_bg_endColor">Fono (fina)</string>                <!-- color label -->
-    <string name="themes_configLabel_alarms_soundingPulse_startColor">Pulsado (alarme)</string>      <!-- color label -->
-    <string name="themes_configLabel_alarms_soundingPulse_endColor">Pulsado (alarme)</string>        <!-- color label -->
-    <string name="themes_configLabel_alarms_snoozingPulse_startColor">Pulsado (dormete)</string>      <!-- color label -->
-    <string name="themes_configLabel_alarms_snoozingPulse_endColor">Pulsado (dormete)</string>        <!-- color label -->
-    <string name="themes_configLabel_alarms_text_primaryColor">Ĉefa teksto</string>                         <!-- color label -->
-    <string name="themes_configLabel_alarms_text_primaryColorInverse">Ĉefa teksto (inverse)</string>        <!-- color label -->
-    <string name="themes_configLabel_alarms_text_secondaryColor">Malĉefa teksto</string>                     <!-- color label -->
-    <string name="themes_configLabel_alarms_text_secondaryColorInverse">Malĉefa teksto (inverse)</string>    <!-- color label -->
-    <string name="themes_configLabel_alarms_text_timeColor">Teksto de tempo</string>                               <!-- color label -->
-    <string name="themes_configLabel_alarms_text_timeColorInverse">Teksto de tempo (inverse)</string>              <!-- color label -->
-    <string name="themes_configLabel_alarms_text_disabledColor">Malaktiva</string>                            <!-- color label -->
+    <string name="themes_label_alarms_bg_startColor">Fono (komenca)</string>               <!-- color label -->
+    <string name="themes_label_alarms_bg_endColor">Fono (fina)</string>                <!-- color label -->
+    <string name="themes_label_alarms_soundingPulse_startColor">Pulsado (alarme)</string>      <!-- color label -->
+    <string name="themes_label_alarms_soundingPulse_endColor">Pulsado (alarme)</string>        <!-- color label -->
+    <string name="themes_label_alarms_snoozingPulse_startColor">Pulsado (dormete)</string>      <!-- color label -->
+    <string name="themes_label_alarms_snoozingPulse_endColor">Pulsado (dormete)</string>        <!-- color label -->
+    <string name="themes_label_alarms_text_primaryColor">Ĉefa teksto</string>                         <!-- color label -->
+    <string name="themes_label_alarms_text_primaryColorInverse">Ĉefa teksto (inverse)</string>        <!-- color label -->
+    <string name="themes_label_alarms_text_secondaryColor">Malĉefa teksto</string>                     <!-- color label -->
+    <string name="themes_label_alarms_text_secondaryColorInverse">Malĉefa teksto (inverse)</string>    <!-- color label -->
+    <string name="themes_label_alarms_text_timeColor">Teksto de tempo</string>                               <!-- color label -->
+    <string name="themes_label_alarms_text_timeColorInverse">Teksto de tempo (inverse)</string>              <!-- color label -->
+    <string name="themes_label_alarms_text_disabledColor">Malaktiva</string>                            <!-- color label -->
 
     <!--
          CUSTOM EVENTS
@@ -866,8 +866,8 @@
     <string name="eventType_sun_elevation">Suno (altitudo)</string>
     <string name="eventlist_dialog_title">Propra okazaĵo</string>
 
-    <string name="event_configLabel_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_configLabel_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising" >↑</string>
@@ -880,23 +880,23 @@
 
     <string name="event_shadowevent_title">Ombro</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
-    <string name="events_configLabel_manageEvents">Administri okazaĵojn</string>  <!-- settings activity / pref -->
-    <string name="events_configLabel_manageEvents_summary">Aldoni aŭ forigi proprajn okazaĵojn.</string>
-    <string name="events_configLabel_manageEvents_emptyMsg">@string/events_configAction_manageEvents</string>
+    <string name="events_pref_manageEvents">Administri okazaĵojn</string>  <!-- settings activity / pref -->
+    <string name="events_pref_manageEvents_summary">Aldoni aŭ forigi proprajn okazaĵojn.</string>
+    <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
 
-    <string name="events_configAction_manageEvents">Propraj okazaĵoj</string>
-    <string name="events_configAction_selectEvent">Elekti</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent">Aldoni</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_editEvent">Redakti</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_saveEvent">Konservi</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_deleteEvent">Forigi</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_clearEvents">Forigi ĉiujn</string>           <!-- button (contentDescription) -->
+    <string name="events_action_manageEvents">Propraj okazaĵoj</string>
+    <string name="events_action_selectEvent">Elekti</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent">Aldoni</string>           <!-- button (contentDescription) -->
+    <string name="events_action_editEvent">Redakti</string>           <!-- button (contentDescription) -->
+    <string name="events_action_saveEvent">Konservi</string>           <!-- button (contentDescription) -->
+    <string name="events_action_deleteEvent">Forigi</string>           <!-- button (contentDescription) -->
+    <string name="events_action_clearEvents">Forigi ĉiujn</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_addEvent_sunEvent">Aldoni (altitudo de Suno)</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_addEvent_shadowEvent">Aldoni (longo de ombro)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_sunEvent">Aldoni (altitudo de Suno)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_shadowEvent">Aldoni (longo de ombro)</string>           <!-- button (contentDescription) -->
 
-    <string name="events_configAction_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
-    <string name="events_configAction_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
+    <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
+    <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
     <string name="events_importevents_toast_success">Enportis <xliff:g id="eventPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="eventPlural">
         <item quantity="one">%d okazaĵon</item>
@@ -976,7 +976,7 @@
     <string name="alarms_action_saveAlarm">Konservi</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_enableAlarm">Konservi kaj aktivigi</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_disableAlarm">Konservi kaj malaktivigi</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Malfari</string>               <!-- button (contentDescription) -->
+    <string name="action_undo">Malfari</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">Preterpasi</string>                <!-- notification action button -->

@@ -28,7 +28,7 @@
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:id="@+id/appwidget_location_grouptitle"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="@string/configLabel_location" />
+            android:text="@string/location_label" />
 
         <LinearLayout android:id="@+id/appwidget_location_mode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 
             <TextView android:labelFor="@+id/appwidget_location_mode" android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_location_mode"
+                android:layout_height="wrap_content" android:text="@string/location_label_mode"
                 android:layout_gravity="center_vertical" android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_location_mode" android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:id="@+id/appwidget_location_name_label"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
-                    android:text="@string/configLabel_location_name" android:enabled="false" />
+                    android:text="@string/location_label_name" android:enabled="false" />
 
                 <ViewFlipper android:id="@+id/view_flip"
                     android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                     <EditText android:id="@+id/appwidget_location_name"
                         android:layout_width="fill_parent" android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                        android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text"
+                        android:hint="@string/location_hint_name" android:enabled="false" android:inputType="text"
                         android:layout_gravity="center_vertical" />
 
                     <Spinner android:id="@+id/appwidget_location_nameSelect"
@@ -171,7 +171,7 @@
                               android:id="@+id/appwidget_location_lat_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:layout_gravity="end" android:textSize="?attr/text_size_small"
-                              android:text="@string/configLabel_location_lat" android:enabled="false"
+                              android:text="@string/location_label_lat" android:enabled="false"
                               android:layout_row="0"
                               android:layout_column="0" />
 
@@ -180,7 +180,7 @@
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:inputType="numberDecimal|numberSigned"
                               android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                              android:hint="@string/configHint_location_lat" android:enabled="false"
+                              android:hint="@string/location_hint_lat" android:enabled="false"
                               android:layout_row="0"
                               android:layout_column="1"
                               android:layout_columnSpan="4"/>
@@ -190,7 +190,7 @@
                               android:id="@+id/appwidget_location_lon_label"
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:layout_gravity="end" android:textSize="?attr/text_size_small"
-                              android:text="@string/configLabel_location_lon" android:enabled="false"
+                              android:text="@string/location_label_lon" android:enabled="false"
                               android:layout_row="1"
                               android:layout_column="0" />
 
@@ -198,7 +198,7 @@
                               android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:inputType="numberDecimal|numberSigned"
                               android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                              android:hint="@string/configHint_location_lon" android:enabled="false"
+                              android:hint="@string/location_hint_lon" android:enabled="false"
                               android:layout_row="1"
                               android:layout_column="1"
                               android:layout_columnSpan="4" />
@@ -208,7 +208,7 @@
                         android:id="@+id/appwidget_location_alt_label"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end" android:textSize="?attr/text_size_small"
-                        android:text="@string/configLabel_location_alt" android:enabled="false"
+                        android:text="@string/location_label_alt" android:enabled="false"
                         android:layout_row="2"
                         android:layout_column="0" />
 
@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:inputType="numberDecimal|numberSigned" android:minEms="2"
                         android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                        android:hint="@string/configHint_location_alt" android:enabled="false"
+                        android:hint="@string/location_hint_alt" android:enabled="false"
                         android:layout_row="2"
                         android:layout_column="1"
                         android:layout_columnSpan="3" />
