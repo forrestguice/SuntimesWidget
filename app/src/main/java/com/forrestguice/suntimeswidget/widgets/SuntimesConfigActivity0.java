@@ -649,7 +649,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         if (reconfigure)
         {
-            setActionButtonText(getString(R.string.configAction_reconfigWidget_short));
+            setActionButtonText(getString(R.string.widgetConfig_action_reconfigWidget_short));
             //setConfigActivityTitle(getString(R.string.configAction_reconfigWidget));
         }
 
@@ -1238,7 +1238,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
+            getSupportActionBar().setTitle(getString(reconfigure ? R.string.widgetConfig_action_reconfigWidget_short : R.string.widgetConfig_action_addWidget));
         }
     }
 

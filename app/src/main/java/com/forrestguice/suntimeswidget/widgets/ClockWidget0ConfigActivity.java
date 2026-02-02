@@ -53,7 +53,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_clockwidget0));
+        setConfigActivityTitle(getString(R.string.widgetConfig_clockwidget0));
 
         showOptionShowDate(true);
         // TODO: date pattern config

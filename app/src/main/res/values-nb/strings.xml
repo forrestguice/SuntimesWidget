@@ -248,23 +248,23 @@
 
     <string name="action_restoreDefaults">Gjenopprett standardverdier</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[standard]</string>
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="tag_tagDefault">[standard]</string>
+    <string name="tag_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Legg til modul</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Ominnstill</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Still inn modul på nytt</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
-    <string name="configLabel_title1">Vendbar modul</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_action_addWidget">Legg til modul</string>                   <!-- Button: Add -->
+    <string name="widgetConfig_action_reconfigWidget_short">Ominnstill</string>       <!-- Button: Reconfigure -->
+    <string name="widgetConfig_action_reconfigWidget">Still inn modul på nytt</string>      <!-- used as title when reconfiguring -->
+    <string name="widgetConfig_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
+    <string name="widgetConfig_title1">Vendbar modul</string>                 <!-- used as title when adding -->
+    <string name="widgetConfig_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="app_name_datewidget0">Datomodul</string>
     <string name="app_name_clocktile">Klokkeflis</string>
     <string name="app_name_eventtile">Neste hendelse-flis</string>
-    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+    <string name="widgetConfig_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="settings_general">Generelt</string>                <!-- group title -->
@@ -326,30 +326,30 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Utseende</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Bytt layouter for å fylle ledig plass</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Skaler tekst og ikoner</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleBase">Fyll hele cellen</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_gravity">Juster base:</string>  <!-- spinner label -->
-    <string name="configLabel_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Vis ikoner</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showEnabledOnly">Vis kun aktiverte elementer</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Tittel:</string>              <!-- edittext label -->
-    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+    <string name="settings_appearance">Utseende</string>           <!-- group title -->
+    <string name="settings_appearance_mode">Utseende</string>                  <!-- spinner label -->
+    <string name="settings_appearance_theme">Tema:</string>                  <!-- spinner label -->
+    <string name="settings_appearance_allowResize">Bytt layouter for å fylle ledig plass</string>  <!-- checkbox label -->
+    <string name="settings_appearance_scaleText">Skaler tekst og ikoner</string>  <!-- checkbox label -->
+    <string name="settings_appearance_scaleBase">Fyll hele cellen</string>  <!-- checkbox label -->
+    <string name="settings_appearance_gravity">Juster base:</string>  <!-- spinner label -->
+    <string name="settings_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showIcons">Vis ikoner</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showEnabledOnly">Vis kun aktiverte elementer</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
+    <string name="settings_appearance_titleText">Tittel:</string>              <!-- edittext label -->
+    <string name="settings_appearance_titleText_hint">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Navigasjon</string>           <!-- group title -->
-    <string name="configLabel_navigation_mode">Navigasjonsstil</string>      <!-- spinner label -->
-    <string name="configLabel_navigation_mode_simple">Enkel (gammel)</string>
-    <string name="configLabel_navigation_mode_sidebar">Sidefelt</string>
+    <string name="settings_navigation">Navigasjon</string>           <!-- group title -->
+    <string name="settings_navigation_mode">Navigasjonsstil</string>      <!-- spinner label -->
+    <string name="settings_navigation_mode_simple">Enkel (gammel)</string>
+    <string name="settings_navigation_mode_sidebar">Sidefelt</string>
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="settings_general_riseSetOrder">Rekkefølge:</string>     <!-- label -->
     <string name="settings_general_risesetorder_today">I dag</string>                    <!-- setting -->
-    <string name="settomgs_general_risesetorder_lastnext">Siste / Neste</string>           <!-- setting -->
+    <string name="settings_general_risesetorder_lastnext">Siste / Neste</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
@@ -426,8 +426,8 @@
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogeum</string>
-    <string name="label_perigee">Perigeum</string>
+    <string name="moon_label_apogee">Apogeum</string>
+    <string name="moon_label_perigee">Perigeum</string>
 
     <string name="settings_general_timeMode">Modus:</string>          <!-- spinner label -->
 
@@ -487,12 +487,12 @@
     <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
@@ -502,12 +502,12 @@
     <string name="actionMode_launchActivity">Utfør handling</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Vend visninger</string>      <!-- setting -->
 
-    <string name="launchType_activity">Aktivitet</string>           <!-- setting -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+    <string name="actions_launchType_activity">Aktivitet</string>           <!-- setting -->
+    <string name="actions_launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="actions_launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
 
-    <string name="expandMore">Mer</string>  <!-- contentDescription -->
-    <string name="expandLess">Mindre</string>  <!-- contentDescription -->
+    <string name="action_expandMore">Mer</string>  <!-- contentDescription -->
+    <string name="action_expandLess">Mindre</string>  <!-- contentDescription -->
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -1146,7 +1146,7 @@
     <string name="alarms_label_brightMode_colors">Farge for lyse alarmer</string>
     <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_default">@string/tag_tagDefault</string>
     <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
     <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->

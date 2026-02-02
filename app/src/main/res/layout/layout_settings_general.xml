@@ -189,7 +189,7 @@
         <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
             android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp"
-            android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_showTitle" />
+            android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_appearance_showTitle" />
 
         <LinearLayout android:id="@+id/appwidget_appearance_titleText_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -200,11 +200,11 @@
             <TextView android:labelFor="@+id/appwidget_appearance_titleText"
                 android:id="@+id/appwidget_appearance_titleText_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_titleText" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_appearance_titleText" />
 
             <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:hint="@string/configHint_appearance_titleText" android:text=""
+                android:hint="@string/settings_appearance_titleText_hint" android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:inputType="textVisiblePassword" />
 
@@ -252,7 +252,7 @@
         <CheckBox android:id="@+id/appwidget_appearance_showLabels" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
             android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp" android:visibility="visible"
-            android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_showLabels" />
+            android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_appearance_showLabels" />
 
         <LinearLayout android:id="@+id/appwidget_general_showNoon_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"

@@ -231,19 +231,19 @@
 
     <string name="action_restoreDefaults">Restaurer la configuration par défaut</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
-    <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="tag_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="tag_tagPlugin">[plugin]</string>                <!-- TODO -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Ajouter un widget</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Reconfigurer</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reconfigurer le widget</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->        <!-- TODO -->
-    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
-    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding --> <!-- TODO -->
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
+    <string name="widgetConfig_action_addWidget">Ajouter un widget</string>                   <!-- Button: Add -->
+    <string name="widgetConfig_action_reconfigWidget_short">Reconfigurer</string>       <!-- Button: Reconfigure -->
+    <string name="widgetConfig_action_reconfigWidget">Reconfigurer le widget</string>      <!-- used as title when reconfiguring -->
+    <string name="widgetConfig_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->      <!-- TODO -->
+    <string name="widgetConfig_title1">Flippable Widget</string>                 <!-- used as title when adding -->        <!-- TODO -->
+    <string name="widgetConfig_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->  <!-- TODO -->
+    <string name="widgetConfig_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding --> <!-- TODO -->
+    <string name="widgetConfig_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
     <string name="settings_general">Général</string>                <!-- group title -->
@@ -305,30 +305,30 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_theme">Thème</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Titre :</string>              <!-- edittext label -->
+    <string name="settings_appearance">Apparence</string>           <!-- group title -->
+    <string name="settings_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_theme">Thème</string>                  <!-- spinner label -->
+    <string name="settings_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="settings_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
+    <string name="settings_appearance_titleText">Titre :</string>              <!-- edittext label -->
     <!-- line commented to use default: <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> --><!-- edittext hint -->
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
-    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+    <string name="settings_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
+    <string name="settings_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
+    <string name="settings_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
+    <string name="settings_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="settings_general_riseSetOrder">Ordre :</string>     <!-- label -->  <!-- TODO -->
     <string name="settings_general_risesetorder_today">Aujourd\'hui</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="settomgs_general_risesetorder_lastnext">Précédent / Suivant</string>           <!-- setting -->  <!-- TODO -->
+    <string name="settings_general_risesetorder_lastnext">Précédent / Suivant</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Midi</string>                    <!-- setting -->
@@ -400,8 +400,8 @@
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogée</string>    
-    <string name="label_perigee">Périgée</string>
+    <string name="moon_label_apogee">Apogée</string>
+    <string name="moon_label_perigee">Périgée</string>
 
     <string name="settings_general_timeMode">Mode :</string>          <!-- spinner label -->
 
@@ -461,12 +461,12 @@
     <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
@@ -476,12 +476,12 @@
     <string name="actionMode_launchActivity">Lancer l\'application</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Basculer l\'affichage</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activité</string>           <!-- setting -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->
+    <string name="actions_launchType_activity">Activité</string>           <!-- setting -->
+    <string name="actions_launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="actions_launchType_service">Service</string>           <!-- setting -->
 
-    <string name="expandMore">Plus</string>  <!-- contentDescription -->
-    <string name="expandLess">Moins</string>  <!-- contentDescription -->
+    <string name="action_expandMore">Plus</string>  <!-- contentDescription -->
+    <string name="action_expandLess">Moins</string>  <!-- contentDescription -->
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -1113,7 +1113,7 @@
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_default">@string/tag_tagDefault</string>
     <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
     <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->

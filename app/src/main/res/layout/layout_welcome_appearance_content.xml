@@ -20,7 +20,7 @@
             android:gravity="start" android:layout_gravity="start"
             android:textAppearance="?android:attr/textAppearanceMedium" android:textSize="?attr/text_size_medium"
             android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
-            android:text="@string/configLabel_appearance" />
+            android:text="@string/settings_appearance" />
 
         <Spinner android:id="@+id/spin_theme"
             android:layout_width="match_parent" android:layout_height="wrap_content"

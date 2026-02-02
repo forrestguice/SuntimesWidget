@@ -239,18 +239,18 @@
 
     <string name="action_restoreDefaults">Restituye configuración predeterminada</string>
 
-    <string name="configLabel_tagDefault">[predeterminado]</string>
-    <string name="configLabel_tagPlugin">[complemento]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>
+    <string name="tag_tagDefault">[predeterminado]</string>
+    <string name="tag_tagPlugin">[complemento]</string>
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Añadir widget</string>                   
-    <string name="configAction_reconfigWidget_short">Reconfigurar</string>       
-    <string name="configAction_reconfigWidget">Reconfigurar widget</string>
-    <string name="configLabel_title0">Widget de tiempo solar</string>                  
-    <string name="configLabel_title1">Widget reversible</string>                 
-    <string name="configLabel_title2">@string/app_name_widget2</string>
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>
+    <string name="widgetConfig_action_addWidget">Añadir widget</string>
+    <string name="widgetConfig_action_reconfigWidget_short">Reconfigurar</string>
+    <string name="widgetConfig_action_reconfigWidget">Reconfigurar widget</string>
+    <string name="widgetConfig_title0">Widget de tiempo solar</string>
+    <string name="widgetConfig_title1">Widget reversible</string>
+    <string name="widgetConfig_title2">@string/app_name_widget2</string>
+    <string name="widgetConfig_moonwidget0">@string/app_name_moonwidget0</string>
 
     <!-- Widget Setting: general -->
     <string name="settings_general">Opciones generales</string>                  <!-- TODO: shortened "General Settings" to "General" -->
@@ -310,30 +310,30 @@
         <item>Bottom-Right</item>
     </string-array>  <!-- TODO -->
     
-    <string name="configLabel_appearance">Opciones de apariencia</string>    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
-    <string name="configLabel_appearance_mode">Apariencia</string>                  <!-- spinner label -->  
-    <string name="configLabel_appearance_theme">Tema:</string>                  
-    <string name="configLabel_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_showLabels">Mostrar etiquetas</string>
-    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showTitle">Mostrar título</string>
-    <string name="configLabel_appearance_titleText">Título:</string>
-    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string>
+    <string name="settings_appearance">Opciones de apariencia</string>    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
+    <string name="settings_appearance_mode">Apariencia</string>                  <!-- spinner label -->
+    <string name="settings_appearance_theme">Tema:</string>
+    <string name="settings_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="settings_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_showLabels">Mostrar etiquetas</string>
+    <string name="settings_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_appearance_showTitle">Mostrar título</string>
+    <string name="settings_appearance_titleText">Título:</string>
+    <string name="settings_appearance_titleText_hint">(%t %m %M %lat %lon)</string>
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
-    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+    <string name="settings_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
+    <string name="settings_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
+    <string name="settings_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
+    <string name="settings_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="settings_general_riseSetOrder">Orden:</string>     <!-- label -->
     <string name="settings_general_risesetorder_today">Hoy</string>                    <!-- setting -->
-    <string name="settomgs_general_risesetorder_lastnext">Anterior / Siguiente</string>           <!-- setting -->
+    <string name="settings_general_risesetorder_lastnext">Anterior / Siguiente</string>           <!-- setting -->
     
     <string name="timeMode_noon_short">Mediodía</string>
     <string name="timeMode_noon">Mediodía</string>
@@ -404,8 +404,8 @@
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogeo</string>      
-    <string name="label_perigee">Perigeo</string>    
+    <string name="moon_label_apogee">Apogeo</string>
+    <string name="moon_label_perigee">Perigeo</string>
 
     <string name="settings_general_timeMode">Modo:</string>
 
@@ -464,12 +464,12 @@
     <string name="widgetMode2x2_alarmlist">Alarm List</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode3x2_alarmlist">Alarm List (details)</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     
     <string name="actionMode_doNothing">No hacer nada</string>
@@ -479,12 +479,12 @@
     <string name="actionMode_launchActivity">Iniciar app</string>
     <string name="actionMode_flipToNextItem">Intercambiar vista</string>
 
-    <string name="launchType_activity">Actividad</string>           <!-- setting -->  
-    <string name="launchType_broadcast">Emisión</string>           <!-- setting -->  
-    <string name="launchType_service">Servicio</string>           <!-- setting -->  
+    <string name="actions_launchType_activity">Actividad</string>           <!-- setting -->
+    <string name="actions_launchType_broadcast">Emisión</string>           <!-- setting -->
+    <string name="actions_launchType_service">Servicio</string>           <!-- setting -->
 
-    <string name="expandMore">Más</string>  <!-- contentDescription -->  
-    <string name="expandLess">Menos</string>  <!-- contentDescription -->  
+    <string name="action_expandMore">Más</string>  <!-- contentDescription -->
+    <string name="action_expandLess">Menos</string>  <!-- contentDescription -->
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -1117,7 +1117,7 @@
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_default">@string/tag_tagDefault</string>
     <string name="alarms_brightMode_colors_label_sunrise">@string/table_header_sunrise_short</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="alarms_brightMode_colors_label_foliage">Foliage</string>  <!-- TODO -->
     <string name="alarms_brightMode_colors_label_bluesky">Blue Sky</string>  <!-- TODO -->

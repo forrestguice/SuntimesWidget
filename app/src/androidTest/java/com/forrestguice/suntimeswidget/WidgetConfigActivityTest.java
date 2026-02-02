@@ -167,10 +167,10 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
         public WidgetConfigActivityRobot assertReconfigureMode(Context context, boolean isReconfigureMode)
         {
             if (isReconfigureMode) {
-                onView(allOf( withText(R.string.configAction_reconfigWidget_short),
+                onView(allOf( withText(R.string.widgetConfig_action_reconfigWidget_short),
                         isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             } else {
-                onView(allOf( withText(R.string.configAction_addWidget),
+                onView(allOf( withText(R.string.widgetConfig_action_addWidget),
                         isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             }
             return this;

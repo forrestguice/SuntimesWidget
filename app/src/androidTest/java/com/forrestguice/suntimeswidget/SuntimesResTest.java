@@ -120,7 +120,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
 
             verify_stringArrayLength("widgetgravity", R.array.settings_widgetgravity, "WidgetGravity (ENUM)", WidgetSettings.WidgetGravity.values());
 
-            verify_stringArrayLength("navMode_values", R.array.navMode_values, "navMode_display", R.array.navMode_display);
+            verify_stringArrayLength("navMode_values", R.array.settings_navMode_values, "navMode_display", R.array.settings_navMode_display);
 
             verify_stringArrayLength("compareMode_values", R.array.settings_compareMode_values, "compareMode_display", R.array.settings_compareMode_display);
             verify_stringArrayValuesOfEnum("compareMode_values", R.array.settings_compareMode_values, CompareMode.class);

@@ -619,7 +619,7 @@ public class MoonApsisView extends LinearLayout
         {
             if (apsis != null)
             {
-                labelView.setText(context.getString(isRising ? R.string.label_apogee : R.string.label_perigee));
+                labelView.setText(context.getString(isRising ? R.string.moon_label_apogee : R.string.moon_label_perigee));
                 timeView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), apsis.first, showTime, showSeconds).getValue());
                 noteView.setText(createApsisNote(context, apsis.first, showWeeks, showHours, timeColor));
                 AndroidResources r = AndroidResources.wrap(context);

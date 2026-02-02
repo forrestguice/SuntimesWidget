@@ -6,7 +6,7 @@
 
         <item android:id="@+id/action_save"
             android:icon="?attr/icActionAccept"
-            android:title="@string/configAction_addWidget"
+            android:title="@string/widgetConfig_action_addWidget"
             app:showAsAction="always" tools:ignore="AlwaysShowAction" />
 
         <item android:id="@+id/action_share_preview"

@@ -187,8 +187,8 @@ public class GeneralPrefsFragment extends PreferenceFragment
     }
     public static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures, String defaultCalculator)
     {
-        String tagDefault = context.getString(R.string.configLabel_tagDefault);
-        String tagPlugin = context.getString(R.string.configLabel_tagPlugin);
+        String tagDefault = context.getString(R.string.tag_tagDefault);
+        String tagPlugin = context.getString(R.string.tag_tagPlugin);
 
         int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -213,11 +213,11 @@ public class GeneralPrefsFragment extends PreferenceFragment
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
 
             String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))
-                    ? context.getString(R.string.configLabel_prefSummaryTagged, calculator.getDisplayString(), tagDefault)
+                    ? context.getString(R.string.tag_prefSummaryTagged, calculator.getDisplayString(), tagDefault)
                     : calculator.getDisplayString();
 
             if (calculator.isPlugin()) {
-                displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, tagPlugin);
+                displayString = context.getString(R.string.tag_prefSummaryTagged, displayString, tagPlugin);
             }
 
             SpannableString styledSummary = SpanUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);

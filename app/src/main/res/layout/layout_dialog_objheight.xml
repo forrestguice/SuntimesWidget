@@ -13,7 +13,7 @@
         <com.forrestguice.support.widget.ImageButton android:id="@+id/btn_less"
             style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionPrevious"
             android:layout_width="48dp" android:layout_height="48dp"
-            android:contentDescription="@string/decrement" />
+            android:contentDescription="@string/action_decrement" />
 
         <EditText android:id="@+id/edit_height"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         <com.forrestguice.support.widget.ImageButton android:id="@+id/btn_more"
             style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionNext"
             android:layout_width="48dp" android:layout_height="48dp"
-            android:contentDescription="@string/increment" />
+            android:contentDescription="@string/action_increment" />
 
         <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"
             android:background="@color/transparent" />

@@ -14,7 +14,7 @@
     </string-array>
 
     <string-array name="appThemes_light_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
+        <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_lightTheme1</item>
     </string-array>
@@ -25,7 +25,7 @@
     </string-array>
 
     <string-array name="appThemes_dark_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
-        <item>@string/configLabel_tagDefault</item>
+        <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_darkTheme1</item>
     </string-array>

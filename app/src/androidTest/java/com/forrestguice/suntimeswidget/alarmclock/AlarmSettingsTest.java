@@ -78,9 +78,9 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
 
         // test getDefaultRingtoneUri( resolveDefaults : false )
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmType.ALARM, false).toString());
-        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM));
+        assertEquals(context.getString(R.string.tag_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM));
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmType.NOTIFICATION, false).toString());
-        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION));
+        assertEquals(context.getString(R.string.tag_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION));
 
         // test setDefaultRingtone (ALARM)
         new AlarmSettings().setDefaultRingtone(context, AlarmType.ALARM);
@@ -122,13 +122,13 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_ALARM, "UNSET"));
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmType.ALARM, false).toString());
         assertNull(prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_ALARM, null));
-        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM));
+        assertEquals(context.getString(R.string.tag_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.ALARM));
 
         settings.setDefaultRingtone(context, AlarmType.NOTIFICATION);
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, "UNSET"));
         assertEquals(AlarmSettings.VALUE_RINGTONE_DEFAULT, AlarmSettings.getDefaultRingtoneUri(context, AlarmType.NOTIFICATION, false).toString());
         assertNull(prefs.getString(AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, null));
-        assertEquals(context.getString(R.string.configLabel_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION));
+        assertEquals(context.getString(R.string.tag_tagDefault), AlarmSettings.getDefaultRingtoneName(context, AlarmType.NOTIFICATION));
     }
 
     private void clearDefaultRingtone()

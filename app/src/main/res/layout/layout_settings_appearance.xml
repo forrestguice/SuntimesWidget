@@ -30,7 +30,7 @@
 
             <TextView style="@style/SunsetTimeSettingsGroupTitle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_appearance" />
+                android:text="@string/settings_appearance" />
 
             <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
 
@@ -52,7 +52,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_theme"
                 android:id="@+id/appwidget_appearance_theme_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_appearance_theme" android:layout_gravity="center_vertical"
+                android:text="@string/settings_appearance_theme" android:layout_gravity="center_vertical"
                 android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_appearance_theme" android:dropDownVerticalOffset="16sp"
@@ -70,7 +70,7 @@
         <CheckBox android:id="@+id/appwidget_appearance_scaleText" android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp"
             android:layout_marginStart="@dimen/widget_settings_check_padding_left" android:layout_marginEnd="8dp"
-            android:layout_height="wrap_content"  android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_scaleText" />
+            android:layout_height="wrap_content"  android:textSize="?attr/text_size_small" android:text="@string/settings_appearance_scaleText" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -81,7 +81,7 @@
             <TextView android:labelFor="@+id/appwidget_appearance_gravity"
                 android:id="@+id/appwidget_appearance_gravity_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_appearance_gravity" android:layout_gravity="center_vertical" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_appearance_gravity" android:layout_gravity="center_vertical" />
 
             <Spinner android:id="@+id/appwidget_appearance_gravity"
                 android:dropDownVerticalOffset="16sp"
@@ -93,7 +93,7 @@
             android:layout_marginLeft="@dimen/widget_settings_check_padding_left" android:layout_marginRight="8dp"
             android:layout_marginStart="@dimen/widget_settings_check_padding_left" android:layout_marginEnd="8dp"
             android:textSize="?attr/text_size_small"
-            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_scaleBase" />
+            android:layout_height="wrap_content" android:text="@string/settings_appearance_scaleBase" />
 
         </LinearLayout>
     </LinearLayout>

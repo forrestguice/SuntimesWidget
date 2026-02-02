@@ -207,9 +207,9 @@ public class WidgetActions
         }
         public static void initDisplayStrings(Context context)
         {
-            ACTIVITY.setDisplayString(context.getString(R.string.launchType_activity));
-            BROADCAST.setDisplayString(context.getString(R.string.launchType_broadcast));
-            SERVICE.setDisplayString(context.getString(R.string.launchType_service));
+            ACTIVITY.setDisplayString(context.getString(R.string.actions_launchType_activity));
+            BROADCAST.setDisplayString(context.getString(R.string.actions_launchType_broadcast));
+            SERVICE.setDisplayString(context.getString(R.string.actions_launchType_service));
         }
         @NonNull
         public String toString() {

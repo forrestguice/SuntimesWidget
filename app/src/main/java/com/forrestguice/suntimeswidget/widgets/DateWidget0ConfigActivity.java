@@ -66,7 +66,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_datewidget0));
+        setConfigActivityTitle(getString(R.string.widgetConfig_datewidget0));
 
         showCalendarMode(true);
         showCalendarFormat(true);

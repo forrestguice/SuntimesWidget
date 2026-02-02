@@ -46,7 +46,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_moonwidget0));
+        setConfigActivityTitle(getString(R.string.widgetConfig_moonwidget0));
         showTimeMode(false);
         showOptionShowNoon(false);
         showOptionLabels(true);

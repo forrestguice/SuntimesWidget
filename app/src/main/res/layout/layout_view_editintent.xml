@@ -35,7 +35,7 @@
             style="@style/Widget.AppCompat.ActionButton" android:checked="false"
             android:layout_height="32dp" android:layout_width="32dp" android:layout_gravity="center" android:gravity="center"
             android:background="?attr/icActionExpand" android:textOn="" android:textOff="" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:contentDescription="@string/expandMore"/>
+            android:contentDescription="@string/action_expandMore"/>
 
         <LinearLayout android:id="@+id/appwidget_action_label_layout" android:clickable="true" android:focusable="true"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"

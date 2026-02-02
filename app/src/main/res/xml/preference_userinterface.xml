@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_appearance">
+        android:title="@string/settings_appearance">
 
         <com.forrestguice.support.preference.ListPreference
             android:key="app_appearance_theme"
-            android:title="@string/configLabel_appearance_mode"
-            android:dialogTitle="@string/configLabel_appearance_mode"
+            android:title="@string/settings_appearance_mode"
+            android:dialogTitle="@string/settings_appearance_mode"
             android:summary="%s"
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
             android:defaultValue="@string/def_app_appearance_theme"/>
@@ -39,14 +39,14 @@
     </com.forrestguice.support.preference.PreferenceCategory>
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_navigation">
+        android:title="@string/settings_navigation">
 
         <com.forrestguice.support.preference.ListPreference
             android:key="app_navigation_mode"
-            android:title="@string/configLabel_navigation_mode"
-            android:dialogTitle="@string/configLabel_navigation_mode"
+            android:title="@string/settings_navigation_mode"
+            android:dialogTitle="@string/settings_navigation_mode"
             android:summary="%s"
-            android:entries="@array/navMode_display" android:entryValues="@array/navMode_values"
+            android:entries="@array/settings_navMode_display" android:entryValues="@array/settings_navMode_values"
             android:defaultValue="@string/def_app_navigation_mode"/>
 
         <com.forrestguice.support.preference.ListPreference

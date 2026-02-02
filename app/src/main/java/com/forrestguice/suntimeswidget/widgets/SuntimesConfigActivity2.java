@@ -54,7 +54,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_title2));
+        setConfigActivityTitle(getString(R.string.widgetConfig_title2));
         hideOptionShowSeconds();
         showOptionRiseSetOrder(false);
         hideOptionCompareAgainst();

@@ -247,19 +247,19 @@
 
     <string name="action_restoreDefaults">Przywróć domyślne</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[domyślne]</string>
-    <string name="configLabel_tagPlugin">[wtyczka]</string>
-    <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[domyślne]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="tag_tagDefault">[domyślne]</string>
+    <string name="tag_tagPlugin">[wtyczka]</string>
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[domyślne]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Edytuj</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">@string/app_name_widget0</string>                  <!-- used as title when adding -->
-    <string name="configLabel_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
-    <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
-    <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
+    <string name="widgetConfig_action_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
+    <string name="widgetConfig_action_reconfigWidget_short">Edytuj</string>       <!-- Button: Reconfigure -->
+    <string name="widgetConfig_action_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
+    <string name="widgetConfig_title0">@string/app_name_widget0</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
+    <string name="widgetConfig_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
+    <string name="widgetConfig_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
     <string name="settings_general">Ogólne</string>                <!-- group title -->
@@ -321,30 +321,30 @@
     </string-array>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Wygląd</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Motyw:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Skaluj tekst i ikony</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
-    <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Wyświetl ikony</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showEnabledOnly">Wyświetl ikony tylko aktywnych</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
-    <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+    <string name="settings_appearance">Wygląd</string>           <!-- group title -->
+    <string name="settings_appearance_mode">Wygląd</string>                  <!-- spinner label -->
+    <string name="settings_appearance_theme">Motyw:</string>                  <!-- spinner label -->
+    <string name="settings_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
+    <string name="settings_appearance_scaleText">Skaluj tekst i ikony</string>  <!-- checkbox label -->
+    <string name="settings_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
+    <string name="settings_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
+    <string name="settings_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showIcons">Wyświetl ikony</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showEnabledOnly">Wyświetl ikony tylko aktywnych</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
+    <string name="settings_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
+    <string name="settings_appearance_titleText_hint">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Setting: navigation -->
-    <string name="configLabel_navigation">Nawigacja</string>           <!-- group title -->
-    <string name="configLabel_navigation_mode">Styl nawigacji</string>      <!-- spinner label -->
-    <string name="configLabel_navigation_mode_simple">Prosty (starszy)</string>
-    <string name="configLabel_navigation_mode_sidebar">Panel boczny</string>
+    <string name="settings_navigation">Nawigacja</string>           <!-- group title -->
+    <string name="settings_navigation_mode">Styl nawigacji</string>      <!-- spinner label -->
+    <string name="settings_navigation_mode_simple">Prosty (starszy)</string>
+    <string name="settings_navigation_mode_sidebar">Panel boczny</string>
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="settings_general_riseSetOrder">Który:</string>     <!-- label -->
     <string name="settings_general_risesetorder_today">dzisiejszy</string>                    <!-- setting -->
-    <string name="settomgs_general_risesetorder_lastnext">poprzedni / następny</string>           <!-- setting -->
+    <string name="settings_general_risesetorder_lastnext">poprzedni / następny</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Kulminacja</string>                    <!-- setting -->
@@ -423,8 +423,8 @@
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogeum</string>
-    <string name="label_perigee">Perygeum</string>
+    <string name="moon_label_apogee">Apogeum</string>
+    <string name="moon_label_perigee">Perygeum</string>
 
     <string name="settings_general_timeMode">Tryb:</string>          <!-- spinner label -->
 
@@ -484,12 +484,12 @@
     <string name="widgetMode2x2_alarmlist">Lista alarmów</string>     <!-- setting -->
     <string name="widgetMode3x2_alarmlist">Lista alarmów (szczegóły)</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_2x2mode">2×2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
+    <string name="settings_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
+    <string name="settings_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
+    <string name="settings_appearance_2x2mode">2×2:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
     
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
@@ -499,12 +499,12 @@
     <string name="actionMode_launchActivity">Wykonaj akcję</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
-    <string name="launchType_service">Service</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
+    <string name="actions_launchType_activity">Activity</string>           <!-- setting -->  <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
+    <string name="actions_launchType_broadcast">Broadcast</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
+    <string name="actions_launchType_service">Service</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
 
-    <string name="expandMore">Więcej</string>  <!-- contentDescription -->
-    <string name="expandLess">Mniej</string>  <!-- contentDescription -->
+    <string name="action_expandMore">Więcej</string>  <!-- contentDescription -->
+    <string name="action_expandLess">Mniej</string>  <!-- contentDescription -->
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -1147,7 +1147,7 @@
     <string name="alarms_label_brightMode_colors">Kolory jasnych alarmów</string>
     <string name="alarms_label_brightMode_colors_summary">%s</string>
 
-    <string name="alarms_brightMode_colors_label_default">@string/configLabel_tagDefault</string>
+    <string name="alarms_brightMode_colors_label_default">@string/tag_tagDefault</string>
     <string name="alarms_brightMode_colors_label_sunrise">słoneczny</string>    <!-- color collection labels; e.g. "Yellow Theme", "Green Theme", "Blue Theme" -->
     <string name="alarms_brightMode_colors_label_foliage">zielony</string>
     <string name="alarms_brightMode_colors_label_bluesky">błękitny</string>

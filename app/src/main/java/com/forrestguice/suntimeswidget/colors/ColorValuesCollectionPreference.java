@@ -149,9 +149,9 @@ public class ColorValuesCollectionPreference extends Preference
         //String selectedColorsID = getSelectedColorsID(context);
         String selectedColorsLabel = getSelectedColorsLabel(context);
         if (summaryStringResID != 0) {
-            setSummary(context.getString(summaryStringResID, (selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault))));
+            setSummary(context.getString(summaryStringResID, (selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.tag_tagDefault))));
         } else {
-            setSummary((selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault)));
+            setSummary((selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.tag_tagDefault)));
         }
     }
     protected int summaryStringResID = 0;

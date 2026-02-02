@@ -1195,7 +1195,7 @@ public class WidgetSettings
     public static void initDisplayStrings_RiseSetOrder( Context context )
     {
         RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.settings_general_risesetorder_today) );
-        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.settomgs_general_risesetorder_lastnext) );
+        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.settings_general_risesetorder_lastnext) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

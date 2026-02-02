@@ -85,11 +85,11 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
                 if (context != null)
                 {
                     String displayString = (descriptor.getName().equalsIgnoreCase(defaultValue))
-                                         ? context.getString(R.string.configLabel_prefSummaryTagged, descriptor.getDisplayString(), defaultTag)
+                                         ? context.getString(R.string.tag_prefSummaryTagged, descriptor.getDisplayString(), defaultTag)
                                          : descriptor.getDisplayString();
 
                     if (descriptor.isPlugin()) {
-                        displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, pluginTag);
+                        displayString = context.getString(R.string.tag_prefSummaryTagged, displayString, pluginTag);
                     }
 
                     SpannableString styledSummary = SpanUtils.createBoldColorSpan(null, displayString, defaultTag, defaultColor);
@@ -140,8 +140,8 @@ public class SuntimesCalculatorDescriptorListAdapter extends ArrayAdapter<Suntim
             }
         }
 
-        defaultTag = context.getString(R.string.configLabel_tagDefault);
-        pluginTag = context.getString(R.string.configLabel_tagPlugin);
+        defaultTag = context.getString(R.string.tag_tagDefault);
+        pluginTag = context.getString(R.string.tag_tagPlugin);
 
         int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
