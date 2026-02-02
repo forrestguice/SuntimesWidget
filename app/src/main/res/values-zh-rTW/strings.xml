@@ -69,7 +69,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設定為除今天外的另一天。</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> 日期已設定為除今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">過去</string>
@@ -213,8 +213,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">公制</string>
-    <string name="lengthUnits_imperial">英制</string>
+    <string name="settings_lengthUnits_metric">公制</string>
+    <string name="settings_lengthUnits_imperial">英制</string>
 
     <string name="units_feet">英尺</string>
     <string name="units_feet_short">ft</string>
@@ -265,52 +265,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">一般</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">日期來源:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">日光資料來源</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">月光資料來源</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">資料來源</string>    <!-- preference title / help button text -->
+    <string name="settings_general">一般</string>                <!-- group title -->
+    <string name="settings_general_calculator">日期來源:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">日光資料來源</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">月光資料來源</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">資料來源</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">時間格式:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">時間格式:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">應用海拔</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">應用海拔以提高精度。</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">應用海拔</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">應用海拔以提高精度。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">半球本地化</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">應用基於半球的本地化（季節標籤、月相圖示）。</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">半球本地化</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">應用基於半球的本地化（季節標籤、月相圖示）。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">長度單位</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">長度單位</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">顯示秒</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">顯示時間時包含秒。</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">顯示秒</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">顯示時間時包含秒。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">顯示時間（和日期）</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">顯示日期的同時顯示時間。</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">顯示時間（和日期）</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">顯示日期的同時顯示時間。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">月份縮寫</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">顯示日期的時候使用縮寫的月份名稱。</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">月份縮寫</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">顯示日期的時候使用縮寫的月份名稱。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">顯示星期</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">超過7天的時候用星期來記（如: 15天為2星期1天）。</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">顯示星期</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">超過7天的時候用星期來記（如: 15天為2星期1天）。</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">顯示小時</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">大於一天的時候包含小時和分鐘。</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">顯示小時</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">大於一天的時候包含小時和分鐘。</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">物體陰影</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">顯示高度為 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物體投射的陰影長度。</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">物體陰影</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">顯示高度為 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物體投射的陰影長度。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">日偏移</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">日偏移</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">高階</string>                        <!-- group title -->
-    <string name="configLabel_experimental">實驗性</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">資料來源外掛</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">掃描並載入第三方外掛。</string>   <!-- pref summary -->
+    <string name="settings_advanced">高階</string>                        <!-- group title -->
+    <string name="settings_experimental">實驗性</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">資料來源外掛</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">掃描並載入第三方外掛。</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">佈局</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">佈局</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>填充</item>-->
         <item>左上</item>
         <item>上</item>
@@ -345,9 +345,9 @@
     <string name="configLabel_navigation_mode_sidebar">側邊欄</string>
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">順序:</string>     <!-- label -->
-    <string name="risesetorder_today">今天</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">前/後</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">順序:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">今天</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">前/後</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">正午</string>                    <!-- setting -->
@@ -427,23 +427,23 @@
     <string name="label_apogee">遠地點</string>
     <string name="label_perigee">近地點</string>
 
-    <string name="configLabel_general_timeMode">模式:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">模式:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">顯示日期</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">日曆</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">日曆:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">日期格式:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">日期模式:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">自定義 (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [年]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [月]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [星期中日]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [月]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [月中日]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [年中日]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">編輯</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">顯示日期</string>   <!-- group title -->
+    <string name="settings_general_calendar">日曆</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">日曆:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">日期格式:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">日期模式:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">自定義 (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [年]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [月]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [星期中日]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [月]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [月中日]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [年中日]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">編輯</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">僅日出</string>             <!-- setting -->
@@ -593,11 +593,11 @@
     <string name="configLabel_date_custom">日期:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">昨天</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">明天</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">對比:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">顯示對比</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">將今天的日照量與昨天或明天進行比較。</string>  <!-- checkbox label -->
+    <string name="settings_general_compareMode_yesterday">昨天</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">明天</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">對比:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">顯示對比</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">將今天的日照量與昨天或明天進行比較。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
@@ -1370,76 +1370,76 @@
     <string name="place_label_other">其他</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">啟動器活動</string>
+    <string name="settings_ui_launcherMode">啟動器活動</string>
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">使用者介面</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">顯示</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">自定義事件</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">雜項</string>
+    <string name="settings_ui">使用者介面</string>                       <!-- group title -->
+    <string name="settings_ui_fields">顯示</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">自定義事件</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">雜項</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">詳細的螢幕閱讀器</string>
-    <string name="configLabel_accessibility_verbose_summary">使用者介面發生變化時自動通知。</string>
+    <string name="settings_accessibility_verbose">詳細的螢幕閱讀器</string>
+    <string name="settings_accessibility_verbose_summary">使用者介面發生變化時自動通知。</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">顯示警告</string>
-    <string name="configLabel_ui_showWarnings_summary">顯示配置的警告資訊。</string>
+    <string name="settings_ui_showWarnings">顯示警告</string>
+    <string name="settings_ui_showWarnings_summary">顯示配置的警告資訊。</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">顯示光照圖</string>
-    <string name="configLabel_ui_showLightmap_summary">顯示一個含有白天，夜晚和曙暮光的柱狀圖。</string>
+    <string name="settings_ui_showLightmap">顯示光照圖</string>
+    <string name="settings_ui_showLightmap_summary">顯示一個含有白天，夜晚和曙暮光的柱狀圖。</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">顯示月亮資訊</string>
-    <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>
+    <string name="settings_ui_showmoon">顯示月亮資訊</string>
+    <string name="settings_ui_showmoon_summary">顯示月出月落的時間，月相和月光飽滿度。</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">顯示月亮正午</string>
-    <string name="configLabel_ui_showmoon_noon_summary">在月亮對話方塊中顯示月亮正午和月亮午夜。</string>
+    <string name="settings_ui_showmoon_noon">顯示月亮正午</string>
+    <string name="settings_ui_showmoon_noon_summary">在月亮對話方塊中顯示月亮正午和月亮午夜。</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">列（相）</string>
+    <string name="settings_ui_showmoon_phase_columns">列（相）</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">跨季節日</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">包含至點和分點之間的中點。</string>
+    <string name="settings_ui_showCrossQuarter">跨季節日</string>
+    <string name="settings_ui_showCrossQuarter_summary">包含至點和分點之間的中點。</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">顯示至點/分點</string>
-    <string name="configLabel_ui_showEquinox_summary">顯示到下一次至點/分點的時間。</string>
+    <string name="settings_ui_showEquinox">顯示至點/分點</string>
+    <string name="settings_ui_showEquinox_summary">顯示到下一次至點/分點的時間。</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">至點追蹤</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">至點追蹤</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">顯示資料來源</string>
-    <string name="configLabel_ui_showdatasource_summary">為當前配置顯示一個標籤。</string>
+    <string name="settings_ui_showdatasource">顯示資料來源</string>
+    <string name="settings_ui_showdatasource_summary">為當前配置顯示一個標籤。</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">顯示地圖按鈕</string>
-    <string name="configLabel_ui_showmapbutton_summary">顯示一個開啟預設地圖應用的操作欄按鈕。</string>
+    <string name="settings_ui_showmapbutton">顯示地圖按鈕</string>
+    <string name="settings_ui_showmapbutton_summary">顯示一個開啟預設地圖應用的操作欄按鈕。</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">強調欄位</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">強調欄位</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">列標題</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">顯示列標題圖示</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">顯示列標題文字</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">列標題</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">顯示列標題圖示</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">顯示列標題文字</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>無</item>
         <item>標籤</item>
         <item>方位角</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">顯示黃金時刻</string>
+    <string name="settings_ui_showgoldhour">顯示黃金時刻</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">顯示藍色時刻</string>
+    <string name="settings_ui_showbluehour">顯示藍色時刻</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">淺色主題</string>
@@ -1473,7 +1473,7 @@
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
-    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+    <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>

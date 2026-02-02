@@ -302,7 +302,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
         int drawableID = a.getResourceId(0, R.drawable.baseline_terrain_black_18);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_altitude_enabled) + " [i]";
+        String title = context.getString(R.string.settings_general_altitude_enabled) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
         ImageSpan altitudeIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
         SpannableStringBuilder altitudeSpan = SpanUtils.createSpan(context, title, "[i]", altitudeIcon);

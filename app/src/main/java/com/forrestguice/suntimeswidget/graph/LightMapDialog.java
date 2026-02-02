@@ -2930,7 +2930,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double meters = WidgetSettings.loadObserverHeightPref(context, 0);
         String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), meters, units, 2, false).toString();
-        String shadowSummary = getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+        String shadowSummary = getString(R.string.settings_general_observerheight_summary, observerHeightDisplay);
         String shadowHelp = getString(R.string.help_shadowlength, shadowSummary);
         SpannableStringBuilder shadowHelpSpan = SpanUtils.createSpan(context, shadowHelp, helpTags);
 

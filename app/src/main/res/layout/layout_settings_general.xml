@@ -27,7 +27,7 @@
 
             <TextView style="@style/SunsetTimeSettingsGroupTitle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general" />
+                android:text="@string/settings_general" />
 
             <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
 
@@ -53,7 +53,7 @@
                 android:id="@+id/appwidget_general_timeMode_label"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_timeMode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_general_timeMode" />
 
             <Spinner android:id="@+id/appwidget_general_timeMode" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
@@ -82,7 +82,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_showDate"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_showDate" android:textSize="?attr/text_size_small" />
+                android:text="@string/settings_general_showDate" android:textSize="?attr/text_size_small" />
 
         </LinearLayout>
 
@@ -97,7 +97,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_calendarMode" android:textSize="?attr/text_size_small" />
+                android:text="@string/settings_general_calendarMode" android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_general_calendarMode" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
@@ -135,7 +135,7 @@
                 android:id="@+id/appwidget_general_riseSetOrder_label"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_riseSetOrder" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_general_riseSetOrder" />
 
             <Spinner android:id="@+id/appwidget_general_riseSetOrder" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
@@ -226,7 +226,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_showCompare"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showComparison" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showComparison" />
 
         </LinearLayout>
 
@@ -240,7 +240,7 @@
             <TextView android:labelFor="@+id/appwidget_general_compareMode"
                 android:id="@+id/appwidget_general_compareMode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"  android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_compareMode" />
+                android:layout_height="wrap_content"  android:textSize="?attr/text_size_small" android:text="@string/settings_general_compareMode" />
 
             <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -276,7 +276,7 @@
             <CheckBox
                 android:id="@+id/appwidget_general_localize_hemisphere"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_localize_hemisphere" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_localize_hemisphere" />
 
         </LinearLayout>
 
@@ -288,7 +288,7 @@
 
             <CheckBox android:id="@+id/appwidget_general_showWeeks"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showWeeks" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showWeeks" />
 
         </LinearLayout>
 
@@ -300,7 +300,7 @@
 
             <CheckBox android:id="@+id/appwidget_general_showHours"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showHours" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showHours" />
 
         </LinearLayout>
 
@@ -314,7 +314,7 @@
                 android:id="@+id/appwidget_general_showTimeDate"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="@string/configLabel_general_showTimeDate"
+                android:text="@string/settings_general_showTimeDate"
                 android:textSize="?attr/text_size_small" />
 
         </LinearLayout>
@@ -327,7 +327,7 @@
 
             <CheckBox android:id="@+id/appwidget_general_showAbbrMonth"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showAbbrMonth" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showAbbrMonth" />
 
         </LinearLayout>
 
@@ -341,7 +341,7 @@
             <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
                 android:id="@+id/appwidget_general_timeformatmode_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_timeFormatMode" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_general_timeFormatMode" />
 
             <Spinner android:id="@+id/appwidget_general_timeformatmode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -364,7 +364,7 @@
             <TextView android:labelFor="@+id/appwidget_general_calculator"
                 android:id="@+id/appwidget_general_calculator_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_calculator" />
+                android:layout_height="wrap_content" android:textSize="?attr/text_size_small" android:text="@string/settings_general_calculator" />
 
             <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
@@ -380,7 +380,7 @@
 
             <CheckBox android:id="@+id/appwidget_general_useAltitude"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_altitude_enabled" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_altitude_enabled" />
 
         </LinearLayout>
 
@@ -392,7 +392,7 @@
 
             <CheckBox android:id="@+id/appwidget_general_showSeconds"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_showSeconds" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_showSeconds" />
 
         </LinearLayout>
 
@@ -405,11 +405,11 @@
 
             <TextView android:id="@+id/appwidget_general_dayOffset_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_general_dayOffset" />
+                android:textSize="?attr/text_size_small" android:text="@string/settings_general_dayOffset" />
 
             <EditText android:id="@+id/appwidget_general_dayOffset" android:inputType="numberSigned"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
-                android:textSize="?attr/text_size_small" android:hint="@string/configLabel_general_dayOffset_hint"
+                android:textSize="?attr/text_size_small" android:hint="@string/settings_general_dayOffset_hint"
                 android:singleLine="true" android:maxLines="1" android:textAlignment="center"
                 tools:ignore="TextFields" tools:text="5" />
 

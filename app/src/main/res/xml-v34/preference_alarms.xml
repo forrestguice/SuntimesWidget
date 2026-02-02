@@ -241,7 +241,7 @@
     </com.forrestguice.support.preference.PreferenceCategory>
 
     <com.forrestguice.support.preference.PreferenceCategory
-        android:title="@string/configLabel_experimental" >
+        android:title="@string/settings_experimental" >
 
         <com.forrestguice.support.preference.CheckBoxPreference
             android:key="app_alarms_poweroffalarms"

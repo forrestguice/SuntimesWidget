@@ -1032,7 +1032,7 @@ public class SuntimesActivity extends AppCompatActivity
                     }
                 });
 
-                addWarning(context, WARNINGID_DATE, getString(R.string.card_dateWarning), card_view, getString(R.string.action_setDate), new View.OnClickListener()
+                addWarning(context, WARNINGID_DATE, getString(R.string.card_warning_date), card_view, getString(R.string.action_setDate), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -2030,7 +2030,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
         if (txt_altitude != null)
         {
-            txt_altitude.setText(altitudeString.isEmpty() ? context.getString(R.string.configLabel_general_altitude_enabled) : altitudeString);
+            txt_altitude.setText(altitudeString.isEmpty() ? context.getString(R.string.settings_general_altitude_enabled) : altitudeString);
         }
         if (check_altitude != null)
         {

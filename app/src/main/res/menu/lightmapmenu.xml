@@ -155,7 +155,7 @@
 
         <item android:id="@+id/action_shadow"
             android:icon="?attr/icActionShadow"
-            android:title="@string/configLabel_general_observerheight" android:visible="false"
+            android:title="@string/settings_general_observerheight" android:visible="false"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_manage_events"

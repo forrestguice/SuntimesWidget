@@ -664,7 +664,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Options_CrossQuarterDays(Context context) {
-            onView(withText(R.string.configLabel_ui_showCrossQuarter)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_ui_showCrossQuarter)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EquinoxDialogRobot clickOverflowMenu_Help(Context context) {
@@ -746,7 +746,7 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
             onView(isMenuDropDownListView()).inRoot(isPlatformPopup()).check(matches(hasMinimumChildCount(2)));
             onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
 
-            onView(withText(R.string.configLabel_ui_showCrossQuarter)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.settings_ui_showCrossQuarter)).inRoot(isPlatformPopup()).check(assertShown);
             if (AppSettings.loadShowCrossQuarterPref(context)) {
                 assertOverflowMenu_Options_crossQuarterDaysEnabled(context);
             } else {
@@ -756,12 +756,12 @@ public class EquinoxCardDialogTest extends SuntimesActivityTestBase
         }
 
         public EquinoxDialogRobot assertOverflowMenu_Options_crossQuarterDaysEnabled(Context context) {
-            onView(isCheckBoxWithTextInDropDownMenu(R.string.configLabel_ui_showCrossQuarter)).inRoot(isPlatformPopup())
+            onView(isCheckBoxWithTextInDropDownMenu(R.string.settings_ui_showCrossQuarter)).inRoot(isPlatformPopup())
                     .check(ViewAssertionHelper.assertChecked);
             return this;
         }
         public EquinoxDialogRobot assertOverflowMenu_Options_crossQuarterDaysDisabled(Context context) {
-            onView(isCheckBoxWithTextInDropDownMenu(R.string.configLabel_ui_showCrossQuarter)).inRoot(isPlatformPopup())
+            onView(isCheckBoxWithTextInDropDownMenu(R.string.settings_ui_showCrossQuarter)).inRoot(isPlatformPopup())
                     .check(ViewAssertionHelper.assertNotChecked);
             return this;
         }

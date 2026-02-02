@@ -118,7 +118,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
 
     <string name="cardlabel_past_today">Past</string>
     <string name="cardlabel_past_n">Past (%1$s)</string>    <!-- DateDesc: some day in the past (appears in dateField) -->
@@ -264,15 +264,15 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>
-    <string name="lengthUnits_imperial">Imperial</string>
-    <string-array name="lengthUnits_values" translatable="false">
+    <string name="settings_lengthUnits_metric">Metric</string>
+    <string name="settings_lengthUnits_imperial">Imperial</string>
+    <string-array name="settings_lengthUnits_values" translatable="false">
         <item>METRIC</item>
         <item>IMPERIAL</item>
     </string-array>
-    <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
-        <item>@string/lengthUnits_metric</item>
-        <item>@string/lengthUnits_imperial</item>
+    <string-array name="settings_lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
+        <item>@string/settings_lengthUnits_metric</item>
+        <item>@string/settings_lengthUnits_imperial</item>
     </string-array>
 
     <string name="units_format_short">%1$s %2$s</string>   <!-- e.g. 6 ft -->
@@ -328,52 +328,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">General</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text -->
+    <string name="settings_general">General</string>                <!-- group title -->
+    <string name="settings_general_calculator">Data Source:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Data Sources</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Units of length</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Show Hours</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">Day Offset</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimental</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Advanced</string>                        <!-- group title -->
+    <string name="settings_experimental">Experimental</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Layout</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Top-Left</item>
         <item>Top</item>
@@ -418,9 +418,9 @@
     </string-array>
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Order:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">Today</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Last / Next</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
@@ -509,23 +509,23 @@
     <string name="label_apogee">Apogee</string>
     <string name="label_perigee">Perigee</string>
 
-    <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">Show Date</string>   <!-- group title -->
+    <string name="settings_general_calendar">Calendar</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Calendar:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Date Format:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
@@ -687,17 +687,17 @@
     <string name="configLabel_date_custom">Date:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Yesterday</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Compare Against</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->
+    <string name="settings_general_compareMode_yesterday">Yesterday</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Compare Against</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->
 
-    <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
-        <item>@string/compareMode_yesterday</item>
-        <item>@string/compareMode_tomorrow</item>
+    <string-array name="settings_compareMode_display">                      <!-- one-to-one with compareMode_values -->
+        <item>@string/settings_general_compareMode_yesterday</item>
+        <item>@string/settings_general_compareMode_tomorrow</item>
     </string-array>
-    <string-array name="compareMode_values" translatable="false">  <!-- one-to-one with compareMode_display -->
+    <string-array name="settings_compareMode_values" translatable="false">  <!-- one-to-one with compareMode_display -->
         <item>YESTERDAY</item>
         <item>TOMORROW</item>
     </string-array>
@@ -1662,84 +1662,84 @@
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>
-    <string-array name="launcherMode_display">                      <!-- one-to-one with launcherMode_values -->
+    <string name="settings_ui_launcherMode">Launcher Activity</string>
+    <string-array name="settings_launcherMode_display">                      <!-- one-to-one with launcherMode_values -->
         <item>@string/app_name</item>
         <item>@string/app_name_alarmclock</item>
     </string-array>
-    <string-array name="launcherMode_values" translatable="false">  <!-- one-to-one with launcherMode_display -->
+    <string-array name="settings_launcherMode_values" translatable="false">  <!-- one-to-one with launcherMode_display -->
         <item>SuntimesActivity</item>
         <item>AlarmClockActivity</item>
     </string-array>
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>
+    <string name="settings_ui">User Interface</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Miscellaneous</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
+    <string name="settings_accessibility_verbose">Verbose TalkBack</string>
+    <string name="settings_accessibility_verbose_summary">Announce automated changes to the UI.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Show Warnings</string>
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
+    <string name="settings_ui_showWarnings">Show Warnings</string>
+    <string name="settings_ui_showWarnings_summary">Show configuration warning messages.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Show Light Map</string>
-    <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+    <string name="settings_ui_showLightmap">Show Light Map</string>
+    <string name="settings_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Show Moon</string>
-    <string name="configLabel_ui_showmoon_summary">Show moon rise and set times, phase, and illumination.</string>
+    <string name="settings_ui_showmoon">Show Moon</string>
+    <string name="settings_ui_showmoon_summary">Show moon rise and set times, phase, and illumination.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
+    <string name="settings_ui_showmoon_noon">Show Lunar Noon</string>
+    <string name="settings_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>
-    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
-    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
-    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
+    <string name="settings_ui_showmoon_phase_columns">Columns (phases)</string>
+    <string name="settings_ui_showmoon_phase_columns_2">2</string>
+    <string name="settings_ui_showmoon_phase_columns_3">3</string>
+    <string name="settings_ui_showmoon_phase_columns_4">4</string>
 
     <!-- App Setting: Moon Phase Date -->
-    <string name="configLabel_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
-    <string name="configLabel_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
+    <string name="settings_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="settings_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>   <!-- TODO -->
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
+    <string name="settings_ui_showCrossQuarter">Cross-Quarter Days</string>
+    <string name="settings_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
-    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+    <string name="settings_ui_showEquinox">Show Solstice / Equinox</string>
+    <string name="settings_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
 
     <!-- App Setting: Show Equinox / Solstice (date) -->
-    <string name="configLabel_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
-    <string name="configLabel_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
+    <string name="settings_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="settings_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>   <!-- TODO -->
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Solstice Tracking</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Show Data Source</string>
-    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
+    <string name="settings_ui_showdatasource">Show Data Source</string>
+    <string name="settings_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Show Map Button</string>
-    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
+    <string name="settings_ui_showmapbutton">Show Map Button</string>
+    <string name="settings_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>
 
     <!-- App Setting: show location coordinates -->
-    <string name="configLabel_ui_showcoordinates">Show Coordinates</string>    <!-- TODO -->
-    <string name="configLabel_ui_showcoordinates_summary">Show location coordinates in the action bar.</string>    <!-- TODO -->
+    <string name="settings_ui_showcoordinates">Show Coordinates</string>    <!-- TODO -->
+    <string name="settings_ui_showcoordinates_summary">Show location coordinates in the action bar.</string>    <!-- TODO -->
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
-    <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string-array name="settings_emphasizefield_display">                      <!-- one-to-one with headerText_values -->
         <item>@string/timeMode_none</item>
         <item>@string/timeMode_golden</item>
         <item>@string/timeMode_noon</item>
@@ -1750,7 +1750,7 @@
         <item>@string/timeMode_blue8</item>
         <item>@string/timeMode_blue4</item>
     </string-array>
-    <string-array name="emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
+    <string-array name="settings_emphasizefield_values" translatable="false">  <!-- one-to-one with headerText_display -->
         <item>NONE</item>
         <item>GOLD</item>
         <item>NOON</item>
@@ -1763,17 +1763,17 @@
     </string-array>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Headers</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Show Header Text</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>None</item>
         <item>Labels</item>
         <!--<item>Labels</item>-->  <!-- TODO -->
         <item>Azimuth</item>
     </string-array>
-    <string-array name="headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
+    <string-array name="settings_headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
         <item>0</item>   <!-- 0: none -->
         <item>1</item>   <!-- 1: labels -->
         <!--<item>10</item>-->  <!-- 10: labels (alt) -->
@@ -1781,10 +1781,10 @@
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Golden Hour</string>
+    <string name="settings_ui_showgoldhour">Golden Hour</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blue Hour</string>
+    <string name="settings_ui_showbluehour">Blue Hour</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Light Theme</string>
@@ -1832,12 +1832,12 @@
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
-    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+    <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
-    <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
+    <string-array name="settings_solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
         <item>RECENT</item>
         <item>CLOSEST</item>
         <item>SOONEST</item>

@@ -28,8 +28,8 @@ public class AndroidResID_LengthUnitDisplay implements LengthUnitDisplay.ResID_L
     {
         if (unit != null) {
             switch (unit) {
-                case IMPERIAL: return R.string.lengthUnits_imperial;
-                case METRIC: default: return R.string.lengthUnits_metric;
+                case IMPERIAL: return R.string.settings_lengthUnits_imperial;
+                case METRIC: default: return R.string.settings_lengthUnits_metric;
             }
         }
         return 0;

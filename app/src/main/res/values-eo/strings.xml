@@ -71,7 +71,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <!-- line commented to use default: <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string> -->
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">Pasinteco</string>
@@ -195,8 +195,8 @@
     <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">metraj</string>
-    <string name="lengthUnits_imperial">imperiaj</string>
+    <string name="settings_lengthUnits_metric">metraj</string>
+    <string name="settings_lengthUnits_imperial">imperiaj</string>
 
     <string name="units_feet">futoj</string>
     <string name="units_feet_short">ft</string>
@@ -247,52 +247,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Ĝeneralaj</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Fontoj de datumoj</string>    <!-- preference title / help button text -->
+    <string name="settings_general">Ĝeneralaj</string>                <!-- group title -->
+    <string name="settings_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Fontoj de datumoj</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apliki korektojn surbaze de altitudo.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Apliki korektojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Alĝustigi al duonsfero</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Konsideri hemisferon dum vidigi etikedojn de sezonoj kaj bildsimbolojn de Luno.</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Alĝustigi al duonsfero</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Konsideri hemisferon dum vidigi etikedojn de sezonoj kaj bildsimbolojn de Luno.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Montri sekundojn</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Ampleksi sekundojn dum montrado de horoj.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Montri horojn (ĉe datoj)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Montri horojn (ĉe datoj)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Kurtigi nomojn de monatoj</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Montri mallongigitajn nomojn de monatojn dum vidigi datojn.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Kurtigi nomojn de monatoj</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">Montri mallongigitajn nomojn de monatojn dum vidigi datojn.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Montri horojn</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Ombro de objekto</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Ombro de objekto</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Deŝovo en tagoj</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">Deŝovo en tagoj</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Altnivelaj</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Eksperimentaj</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Altnivelaj</string>                        <!-- group title -->
+    <string name="settings_experimental">Eksperimentaj</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Aranĝo</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Aranĝo</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>maldekstra supro</item>
         <item>supro</item>
@@ -327,9 +327,9 @@
     <string name="configLabel_navigation_mode_sidebar">dekstra flankpanelo</string>
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Kiu:</string>     <!-- label -->
-    <string name="risesetorder_today">hodiaŭa</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">antaŭa/sekva</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Kiu:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">hodiaŭa</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">antaŭa/sekva</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Tagmezo</string>                    <!-- setting -->
@@ -411,23 +411,23 @@
     <string name="label_apogee">Apogeo</string>
     <string name="label_perigee">Perigeo</string>
 
-    <string name="configLabel_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Reĝimo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Montri daton</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Kalendaro</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Kalendaro:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">Formo de dato:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Aranĝo de dato:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">yyyy-MM-dd</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">Propra (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [jaro]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [monato]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [semajntago]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [monato]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [tago de monato]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [tago de jaro]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">Redakti</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">Montri daton</string>   <!-- group title -->
+    <string name="settings_general_calendar">Kalendaro</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Kalendaro:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Formo de dato:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Aranĝo de dato:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">yyyy-MM-dd</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Propra (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [jaro]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [monato]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [semajntago]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [monato]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [tago de monato]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [tago de jaro]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Redakti</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Nur sunleviĝo</string>             <!-- setting -->
@@ -585,11 +585,11 @@
     <string name="configLabel_date_custom">Dato:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Hieraŭ</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ morgaŭ.</string>  <!-- checkbox label -->
+    <string name="settings_general_compareMode_yesterday">Hieraŭ</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">Morgaŭ</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Kompari kun:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ morgaŭ.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">antaŭan</string>                   <!-- setting -->
@@ -1371,76 +1371,76 @@
     <string name="place_label_other">Aliaj</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Aktiveco de aplikaĵlanĉilo</string>
+    <string name="settings_ui_launcherMode">Aktiveco de aplikaĵlanĉilo</string>
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Vidigo</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Propraj okazaĵoj</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Diversaj</string>
+    <string name="settings_ui">Fasado</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Vidigo</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Propraj okazaĵoj</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Diversaj</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Interagi kun TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Anonci aŭtomatajn ŝanĝojn al uzant-interfaco.</string>
+    <string name="settings_accessibility_verbose">Interagi kun TalkBack</string>
+    <string name="settings_accessibility_verbose_summary">Anonci aŭtomatajn ŝanĝojn al uzant-interfaco.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Aktivigi avertojn</string>
-    <string name="configLabel_ui_showWarnings_summary">Montri agordojn de avertaj mesaĝoj</string>
+    <string name="settings_ui_showWarnings">Aktivigi avertojn</string>
+    <string name="settings_ui_showWarnings_summary">Montri agordojn de avertaj mesaĝoj</string>
     
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Montri lum-mapon</string>
-    <string name="configLabel_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
+    <string name="settings_ui_showLightmap">Montri lum-mapon</string>
+    <string name="settings_ui_showLightmap_summary">Montri bastonan diagramon de periodoj de tago, nokto kaj krepusko.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
-    <string name="configLabel_ui_showmoon_summary">Luno: montri tempojn de leviĝo, subiro, fazon kaj prilumecon.</string>
+    <string name="settings_ui_showmoon">Montri lunajn informojn</string>
+    <string name="settings_ui_showmoon_summary">Luno: montri tempojn de leviĝo, subiro, fazon kaj prilumecon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Montri plej(mal)supron de Luno</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la fenestro “Luno”.</string>
+    <string name="settings_ui_showmoon_noon">Montri plej(mal)supron de Luno</string>
+    <string name="settings_ui_showmoon_noon_summary">Montri plejsupron kaj plejmalsupron de Luno en la fenestro “Luno”.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Kolumnoj (fazoj)</string>
+    <string name="settings_ui_showmoon_phase_columns">Kolumnoj (fazoj)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Jarsezon-mezoj</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">Inkluzivi mezpunktojn inter sunekstremoj kaj tagnoktegalecoj.</string>
+    <string name="settings_ui_showCrossQuarter">Jarsezon-mezoj</string>
+    <string name="settings_ui_showCrossQuarter_summary">Inkluzivi mezpunktojn inter sunekstremoj kaj tagnoktegalecoj.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
-    <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekva sunekstremo aŭ tagnoktegaleco.</string>
+    <string name="settings_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
+    <string name="settings_ui_showEquinox_summary">Montri tempon ĝis la sekva sunekstremo aŭ tagnoktegaleco.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekva okazaĵo">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekva okazaĵo">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
-    <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
+    <string name="settings_ui_showdatasource">Montri fonton de datumoj</string>
+    <string name="settings_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Montri butonon de mapo</string>
-    <string name="configLabel_ui_showmapbutton_summary">Sur la ag-strio montri butonon, kiu malfermas implicitan aplikaĵon de mapo.</string>
+    <string name="settings_ui_showmapbutton">Montri butonon de mapo</string>
+    <string name="settings_ui_showmapbutton_summary">Sur la ag-strio montri butonon, kiu malfermas implicitan aplikaĵon de mapo.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emfazita kampo</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Emfazita kampo</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kolumn-titolo</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Montri tekston en kolumn-titolo</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Montri bildsimbolon en kolumn-titolo</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Montri tekston en kolumn-titolo</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Neniu</item>
         <item>Etikedo</item>
         <item>Azimuto</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Ora horo</string>
+    <string name="settings_ui_showgoldhour">Ora horo</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blua horo</string>
+    <string name="settings_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Hela haŭto</string>

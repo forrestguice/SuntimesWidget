@@ -1066,7 +1066,7 @@ public class WidgetSettings
     public static void initDisplayStrings_WidgetGravity( Context context )
     {
         WidgetGravity[] values = WidgetGravity.values();
-        String[] display = context.getResources().getStringArray(R.array.widgetgravity);
+        String[] display = context.getResources().getStringArray(R.array.settings_widgetgravity);
         for (int i=0; i<values.length; i++) {
             if (i < display.length) {
                 values[i].setDisplayString(display[i]);
@@ -1113,8 +1113,8 @@ public class WidgetSettings
 
     public static void initDisplayStrings_CompareMode( Context context )
     {
-        CompareMode.YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
-        CompareMode.TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
+        CompareMode.YESTERDAY.setDisplayString( context.getString(R.string.settings_general_compareMode_yesterday) );
+        CompareMode.TOMORROW.setDisplayString(context.getString(R.string.settings_general_compareMode_tomorrow));
     }
 
     public static void initDisplayStrings_TrackingMode( Context context )
@@ -1194,8 +1194,8 @@ public class WidgetSettings
 
     public static void initDisplayStrings_RiseSetOrder( Context context )
     {
-        RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
-        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
+        RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.settings_general_risesetorder_today) );
+        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.settomgs_general_risesetorder_lastnext) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

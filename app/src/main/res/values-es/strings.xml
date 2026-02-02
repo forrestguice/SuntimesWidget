@@ -72,7 +72,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La fecha no se corresponde con la de hoy.</string>
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> La fecha no se corresponde con la de hoy.</string>
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">Pasado</string>
@@ -202,8 +202,8 @@
     <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
-    <string name="lengthUnits_metric">Métrico</string>    
-    <string name="lengthUnits_imperial">Imperial</string>
+    <string name="settings_lengthUnits_metric">Métrico</string>
+    <string name="settings_lengthUnits_imperial">Imperial</string>
 
     <string name="units_feet">pies</string>
     <string name="units_feet_short">ft</string>
@@ -253,51 +253,51 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Opciones generales</string>                  <!-- TODO: shortened "General Settings" to "General" -->
-    <string name="configLabel_general_calculator">Fuente de datos:</string>         
-    <string name="configLabel_general_calculator_sun">Fuente de datos del Sol</string>         
-    <string name="configLabel_general_calculator_moon">Fuente de datos de la Luna</string>
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="settings_general">Opciones generales</string>                  <!-- TODO: shortened "General Settings" to "General" -->
+    <string name="settings_general_calculator">Fuente de datos:</string>
+    <string name="settings_general_calculator_sun">Fuente de datos del Sol</string>
+    <string name="settings_general_calculator_moon">Fuente de datos de la Luna</string>
+    <string name="settings_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  
+    <string name="settings_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Usar elevación</string>        
-    <string name="configLabel_general_altitude_enabled_summary">Aplicar refinamientos basados en altitud.</string>
+    <string name="settings_general_altitude_enabled">Usar elevación</string>
+    <string name="settings_general_altitude_enabled_summary">Aplicar refinamientos basados en altitud.</string>
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
-    <string name="configLabel_general_lengthUnits">Unidades de distancia</string>        <!-- spinner label -->  
+    <string name="settings_general_lengthUnits">Unidades de distancia</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Mostrar segundos</string>
-    <string name="configLabel_general_showSeconds_summary">Incluir segundos cuando se muestra la hora.</string>        
+    <string name="settings_general_showSeconds">Mostrar segundos</string>
+    <string name="settings_general_showSeconds_summary">Incluir segundos cuando se muestra la hora.</string>
 
-    <string name="configLabel_general_showTimeDate">Muestra la hora (con fechas)</string>        
-    <string name="configLabel_general_showTimeDate_summary">Incluir la hora cuando se muestran las fechas.</string>
+    <string name="settings_general_showTimeDate">Muestra la hora (con fechas)</string>
+    <string name="settings_general_showTimeDate_summary">Incluir la hora cuando se muestran las fechas.</string>
 
-    <string name="configLabel_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
-    <string name="configLabel_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="settings_general_showAbbrMonth">Abbreviated month names</string>        <!-- checkbox label -->   <!-- TODO -->
+    <string name="settings_general_showAbbrMonth_summary">Show abbreviated month names when displaying dates.</string>        <!-- checkbox label -->   <!-- TODO -->
 
-    <string name="configLabel_general_showWeeks">Mostrar semanas</string>
-    <string name="configLabel_general_showWeeks_summary">Divide intervalos de tiempo mayores a 7 días en semanas (p. Ej. 15d se transforma en 2se 1d).</string>
+    <string name="settings_general_showWeeks">Mostrar semanas</string>
+    <string name="settings_general_showWeeks_summary">Divide intervalos de tiempo mayores a 7 días en semanas (p. Ej. 15d se transforma en 2se 1d).</string>
 
-    <string name="configLabel_general_showHours">Mostrar horas</string>
-    <string name="configLabel_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>
+    <string name="settings_general_showHours">Mostrar horas</string>
+    <string name="settings_general_showHours_summary">Incluye horas y minutos en intervalos de tiempo mayores a un día.</string>
 
-    <string name="configLabel_general_observerheight">Sombra de objeto</string>        <!-- checkbox label -->  
-    <string name="configLabel_general_observerheight_summary">Muestra la longitud de las sombras proyectadas por un objeto con una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Sombra de objeto</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Muestra la longitud de las sombras proyectadas por un objeto con una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
+    <string name="settings_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
 
-    <string name="configLabel_advanced">Configuración avanzada</string>    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
-    <string name="configLabel_experimental">Configuración experimental</string>    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
-    <string name="configLabel_general_scanPlugins">Complementos de fuentes de datos</string>                                
-    <string name="configLabel_general_scanPlugins_summary">Busca y carga complementos de terceros.</string>
+    <string name="settings_advanced">Configuración avanzada</string>    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="settings_experimental">Configuración experimental</string>    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
+    <string name="settings_general_scanPlugins">Complementos de fuentes de datos</string>
+    <string name="settings_general_scanPlugins_summary">Busca y carga complementos de terceros.</string>
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Top-Left</item>
         <item>Top</item>
@@ -331,9 +331,9 @@
     <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Orden:</string>     <!-- label -->  
-    <string name="risesetorder_today">Hoy</string>                    <!-- setting -->  
-    <string name="risesetorder_lastnext">Anterior / Siguiente</string>           <!-- setting -->  
+    <string name="settings_general_riseSetOrder">Orden:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">Hoy</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Anterior / Siguiente</string>           <!-- setting -->
     
     <string name="timeMode_noon_short">Mediodía</string>
     <string name="timeMode_noon">Mediodía</string>
@@ -407,23 +407,23 @@
     <string name="label_apogee">Apogeo</string>      
     <string name="label_perigee">Perigeo</string>    
 
-    <string name="configLabel_general_timeMode">Modo:</string>
+    <string name="settings_general_timeMode">Modo:</string>
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
-    <string name="configAction_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="settings_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
+    <string name="settings_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
+    <string name="settings_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="settings_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="settings_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="action_editCalendarFormat">Edit</string>                        <!-- button (contentDescription) -->    <!-- TODO -->
     
     <string name="widgetMode1x1_sunrise">Sólo amanecer</string>
     <string name="widgetMode1x1_sunset">Sólo atardecer</string>
@@ -571,11 +571,11 @@
     <string name="configLabel_date_custom">Fecha:</string>
 
     
-    <string name="compareMode_yesterday">Ayer</string>                     
-    <string name="compareMode_tomorrow">Mañana</string>                       
-    <string name="configLabel_general_compareMode">Comparar con:</string>
-    <string name="configLabel_general_showComparison">Mostrar comparación</string>
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_general_compareMode_yesterday">Ayer</string>
+    <string name="settings_general_compareMode_tomorrow">Mañana</string>
+    <string name="settings_general_compareMode">Comparar con:</string>
+    <string name="settings_general_showComparison">Mostrar comparación</string>
+    <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
@@ -1350,68 +1350,68 @@
     <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
     <string name="place_label_other">Other</string>    <!-- TODO -->
 
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="settings_ui_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
-    <string name="configLabel_ui">Interfaz de usuario</string>
-    <string name="configLabel_ui_fields">Mostrar</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
-    <string name="configLabel_ui_misc">Misceláneo</string>   
-
-    
-    <string name="configLabel_accessibility_verbose">Retroalimentación detallada</string>
-    <string name="configLabel_accessibility_verbose_summary">Anuncia cambios automatizados en la IU.</string>
+    <string name="settings_ui">Interfaz de usuario</string>
+    <string name="settings_ui_fields">Mostrar</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Custom Events</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->  <!-- TODO -->
+    <string name="settings_ui_misc">Misceláneo</string>
 
     
-    <string name="configLabel_ui_showWarnings">Mostrar avisos</string>
-    <string name="configLabel_ui_showWarnings_summary">Mostrar configuración de mensajes de aviso.</string>
+    <string name="settings_accessibility_verbose">Retroalimentación detallada</string>
+    <string name="settings_accessibility_verbose_summary">Anuncia cambios automatizados en la IU.</string>
 
     
-    <string name="configLabel_ui_showLightmap">Mostrar mapa de luz</string>
-    <string name="configLabel_ui_showLightmap_summary">Mostrar barra apilada de los periodos de día, noche y luz crepuscular.</string>
+    <string name="settings_ui_showWarnings">Mostrar avisos</string>
+    <string name="settings_ui_showWarnings_summary">Mostrar configuración de mensajes de aviso.</string>
 
     
-    <string name="configLabel_ui_showmoon">Mostrar la Luna</string>
-    <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta de la luna, fase e iluminación.</string>    <!-- TODO: update/review -->
-
-
-    <string name="configLabel_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
-    <string name="configLabel_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
-
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
-
-    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
-    
-    <string name="configLabel_ui_showEquinox">Mostrar solsticio / equinoccio</string>
-    <string name="configLabel_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinoccio.</string>
+    <string name="settings_ui_showLightmap">Mostrar mapa de luz</string>
+    <string name="settings_ui_showLightmap_summary">Mostrar barra apilada de los periodos de día, noche y luz crepuscular.</string>
 
     
-    <string name="configLabel_ui_solsticeTrackingMode">Seguimiento de solsticio</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
+    <string name="settings_ui_showmoon">Mostrar la Luna</string>
+    <string name="settings_ui_showmoon_summary">Muestra los momentos de salida y puesta de la luna, fase e iluminación.</string>    <!-- TODO: update/review -->
+
+
+    <string name="settings_ui_showmoon_noon">Show Lunar Noon</string>    <!-- TODO -->
+    <string name="settings_ui_showmoon_noon_summary">Show lunar noon and lunar midnight as part of the moon dialog.</string>    <!-- TODO -->
+
+    <string name="settings_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+
+    <string name="settings_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="settings_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+    
+    <string name="settings_ui_showEquinox">Mostrar solsticio / equinoccio</string>
+    <string name="settings_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinoccio.</string>
 
     
-    <string name="configLabel_ui_showdatasource">Mostrar fuente de datos</string>
-    <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
+    <string name="settings_ui_solsticeTrackingMode">Seguimiento de solsticio</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
+
+    
+    <string name="settings_ui_showdatasource">Mostrar fuente de datos</string>
+    <string name="settings_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
 
-    <string name="configLabel_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
-    <string name="configLabel_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
+    <string name="settings_ui_showmapbutton">Show Map Button</string>   <!-- TODO -->
+    <string name="settings_ui_showmapbutton_summary">Show an action bar button that opens the default map app.</string>     <!-- TODO -->
 
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
-    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="settings_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="settings_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>None</item>
         <item>Labels</item>
         <item>Azimuth</item>
     </string-array>    <!-- TODO -->
     
-    <string name="configLabel_ui_showgoldhour">Hora dorada</string>
+    <string name="settings_ui_showgoldhour">Hora dorada</string>
 
-    <string name="configLabel_ui_showbluehour">Hora azul</string>
+    <string name="settings_ui_showbluehour">Hora azul</string>
 
     <string name="themes_appThemes_lightTheme">Tema claro</string>
     <string name="themes_appThemes_darkTheme">Tema oscuro</string>
@@ -1442,7 +1442,7 @@
         <item>@string/textSize_xlarge</item>
     </string-array>
     
-    <string-array name="solsticeTrackingMode_display">
+    <string-array name="settings_solsticeTrackingMode_display">
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>

@@ -542,7 +542,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ObjectShadow(Context context) {
-            onView(withText(R.string.configLabel_general_observerheight)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_general_observerheight)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_ObjectShadow(Context context) {

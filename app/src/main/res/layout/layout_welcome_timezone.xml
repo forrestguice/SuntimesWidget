@@ -94,7 +94,7 @@
             <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
                 android:id="@+id/appwidget_general_timeformatmode_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_timeFormatMode" android:textSize="?attr/text_size_small" />
+                android:text="@string/settings_general_timeFormatMode" android:textSize="?attr/text_size_small" />
 
             <Spinner android:id="@+id/appwidget_general_timeformatmode" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"

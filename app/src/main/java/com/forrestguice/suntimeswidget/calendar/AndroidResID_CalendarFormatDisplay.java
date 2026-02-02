@@ -23,15 +23,15 @@ import com.forrestguice.suntimeswidget.R;
 public class AndroidResID_CalendarFormatDisplay implements CalendarFormatDisplay.ResID_CalendarFormatDisplay
 {
     @Override
-    public int string_configLabel_general_calendarFormat_custom() { return R.string.configLabel_general_calendarFormat_custom; }
+    public int string_configLabel_general_calendarFormat_custom() { return R.string.settings_general_calendarFormat_custom; }
     @Override
-    public int string_configLabel_general_calendarFormat_yyyy() { return R.string.configLabel_general_calendarFormat_yyyy; }
+    public int string_configLabel_general_calendarFormat_yyyy() { return R.string.settings_general_calendarFormat_yyyy; }
     @Override
-    public int string_configLabel_general_calendarFormat_EEEE() { return R.string.configLabel_general_calendarFormat_EEEE; }
+    public int string_configLabel_general_calendarFormat_EEEE() { return R.string.settings_general_calendarFormat_EEEE; }
     @Override
-    public int string_configLabel_general_calendarFormat_MMMM() { return R.string.configLabel_general_calendarFormat_MMMM; }
+    public int string_configLabel_general_calendarFormat_MMMM() { return R.string.settings_general_calendarFormat_MMMM; }
     @Override
-    public int string_configLabel_general_calendarFormat_dd() { return R.string.configLabel_general_calendarFormat_dd; }
+    public int string_configLabel_general_calendarFormat_dd() { return R.string.settings_general_calendarFormat_dd; }
     @Override
-    public int string_configLabel_general_calendarFormat_DD() { return R.string.configLabel_general_calendarFormat_DD; }
+    public int string_configLabel_general_calendarFormat_DD() { return R.string.settings_general_calendarFormat_DD; }
 }

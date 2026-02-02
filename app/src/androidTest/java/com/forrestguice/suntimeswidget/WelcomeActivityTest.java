@@ -286,7 +286,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WelcomeActivityRobot assertUIPageIsShown(Context context) {
-            onView(allOf(withId(R.id.text_title), withText(R.string.configLabel_ui))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.text_title), withText(R.string.settings_ui))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertLocationPageIsShown(Context context) {

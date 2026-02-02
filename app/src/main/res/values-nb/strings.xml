@@ -72,7 +72,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">Fortid</string>
@@ -211,8 +211,8 @@
     <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metrisk</string>
-    <string name="lengthUnits_imperial">Britisk</string>
+    <string name="settings_lengthUnits_metric">Metrisk</string>
+    <string name="settings_lengthUnits_imperial">Britisk</string>
 
     <string name="units_feet">fot</string>
     <string name="units_feet_short">ft</string>
@@ -267,52 +267,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Generelt</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Datakilde:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Datakilder</string>    <!-- preference title / help button text -->
+    <string name="settings_general">Generelt</string>                <!-- group title -->
+    <string name="settings_general_calculator">Datakilde:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Datakilder</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Tidsformat:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Tidsformat:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Lokaliser til halvkule</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Bruk halvkulebasert lokalisering (sesongpåskrifter, månefaseikoner).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Lokaliser til halvkule</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Bruk halvkulebasert lokalisering (sesongpåskrifter, månefaseikoner).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Lengdeenhet</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Lengdeenhet</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Vis sekunder</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Inkluder sekunder ved visning av tid.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Vis tid (med datoer)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Inkluder tiden ved visning av datoer.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Vis tid (med datoer)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">Inkluder tiden ved visning av datoer.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Forkortede månedsnavn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Vis forkortede månedsnavn ved visning av datoer.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Forkortede månedsnavn</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">Vis forkortede månedsnavn ved visning av datoer.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Vis uker</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Del opp lengre tidsrom enn 7 dager i uker (f.eks. 15d blir 2u 1d).</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Vis uker</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">Del opp lengre tidsrom enn 7 dager i uker (f.eks. 15d blir 2u 1d).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Vis timer</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Inkluder timer og minutter ved lengre tidsrom enn en dag.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Vis timer</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Inkluder timer og minutter ved lengre tidsrom enn en dag.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Objektskygge</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Vis skyggelengde fra et objekt med en høyde på <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Objektskygge</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Vis skyggelengde fra et objekt med en høyde på <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Dagforskyvning</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">Dagforskyvning</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Avansert</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Eksperimentelt</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Datakildetillegg</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Skann for og last tredjeparts programtillegg.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Avansert</string>                        <!-- group title -->
+    <string name="settings_experimental">Eksperimentelt</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">Datakildetillegg</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Skann for og last tredjeparts programtillegg.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Layout</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Topp venstre</item>
         <item>Topp</item>
@@ -347,9 +347,9 @@
     <string name="configLabel_navigation_mode_sidebar">Sidefelt</string>
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Rekkefølge:</string>     <!-- label -->
-    <string name="risesetorder_today">I dag</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Siste / Neste</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Rekkefølge:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">I dag</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Siste / Neste</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
@@ -429,23 +429,23 @@
     <string name="label_apogee">Apogeum</string>
     <string name="label_perigee">Perigeum</string>
 
-    <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Modus:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Vis dato</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Kalender</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Kalender:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">Datoformat:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Datomønster:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, åååå</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">Tilpasset (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [år]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [måned]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [ukedag]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [måned]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [dag i måned]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [dag i året]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">Rediger</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">Vis dato</string>   <!-- group title -->
+    <string name="settings_general_calendar">Kalender</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Kalender:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Datoformat:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Datomønster:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, åååå</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Tilpasset (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [år]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [måned]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [ukedag]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [måned]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [dag i måned]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [dag i året]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Rediger</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Bare soloppgang</string>             <!-- setting -->
@@ -595,11 +595,11 @@
     <string name="configLabel_date_custom">Dato:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">I går</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">I morgen</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Sammenlign med:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Sammenlign mengden dagslys i dag med i går eller i morgen.</string>  <!-- checkbox label -->
+    <string name="settings_general_compareMode_yesterday">I går</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">I morgen</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Sammenlign med:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Sammenlign mengden dagslys i dag med i går eller i morgen.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
@@ -1382,84 +1382,84 @@
     <string name="place_label_other">Andre</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Oppstartingsaktivitet</string>
+    <string name="settings_ui_launcherMode">Oppstartingsaktivitet</string>
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Vis</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Egendefinerte hendelser</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Diverse</string>
+    <string name="settings_ui">Brukerflate</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Vis</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Egendefinerte hendelser</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Diverse</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Annonser automatiserte endringer i brukerflaten.</string>
+    <string name="settings_accessibility_verbose">Verbose TalkBack</string>
+    <string name="settings_accessibility_verbose_summary">Annonser automatiserte endringer i brukerflaten.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Vis advarsler</string>
-    <string name="configLabel_ui_showWarnings_summary">Vis innstillingsadvarsler.</string>
+    <string name="settings_ui_showWarnings">Vis advarsler</string>
+    <string name="settings_ui_showWarnings_summary">Vis innstillingsadvarsler.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Vis lysgraf</string>
-    <string name="configLabel_ui_showLightmap_summary">Vis et stabeldiagram med dag, natt og tussmørkeperioder.</string>
+    <string name="settings_ui_showLightmap">Vis lysgraf</string>
+    <string name="settings_ui_showLightmap_summary">Vis et stabeldiagram med dag, natt og tussmørkeperioder.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Vis månen</string>
-    <string name="configLabel_ui_showmoon_summary">Vis måneoppgang- og månenedgangstider, fase og illuminasjon.</string>
+    <string name="settings_ui_showmoon">Vis månen</string>
+    <string name="settings_ui_showmoon_summary">Vis måneoppgang- og månenedgangstider, fase og illuminasjon.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Vis månens kulminasjon</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Vis månens kulminasjon og månens nedre kulminasjon som del av månedialogen.</string>
+    <string name="settings_ui_showmoon_noon">Vis månens kulminasjon</string>
+    <string name="settings_ui_showmoon_noon_summary">Vis månens kulminasjon og månens nedre kulminasjon som del av månedialogen.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Kolonner (faser)</string>
+    <string name="settings_ui_showmoon_phase_columns">Kolonner (faser)</string>
 
     <!-- App Setting: Moon Phase Date -->
-    <string name="configLabel_ui_showMoonPhaseDate">Vis fasedatoer</string>
-    <string name="configLabel_ui_showMoonPhaseDate_summary">Inkluder datoen ved visning av månefaser.</string>
+    <string name="settings_ui_showMoonPhaseDate">Vis fasedatoer</string>
+    <string name="settings_ui_showMoonPhaseDate_summary">Inkluder datoen ved visning av månefaser.</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Inkluder midtpunkter mellom solverv og jevndøgn.</string>
+    <string name="settings_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="settings_ui_showCrossQuarter_summary">Inkluder midtpunkter mellom solverv og jevndøgn.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Vis Solverv / Jevndøgn</string>
-    <string name="configLabel_ui_showEquinox_summary">Vis tid til neste solverv eller jevndøgn.</string>
+    <string name="settings_ui_showEquinox">Vis Solverv / Jevndøgn</string>
+    <string name="settings_ui_showEquinox_summary">Vis tid til neste solverv eller jevndøgn.</string>
 
     <!-- App Setting: Show Equinox / Solstice (date) -->
-    <string name="configLabel_ui_showEquinoxDate">Solvervsdato</string>
-    <string name="configLabel_ui_showEquinoxDate_summary">Inkluder datoen ved visning av tid til neste solverv eller jevndøgn.</string>
+    <string name="settings_ui_showEquinoxDate">Solvervsdato</string>
+    <string name="settings_ui_showEquinoxDate_summary">Inkluder datoen ved visning av tid til neste solverv eller jevndøgn.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Solvervsporing</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Solvervsporing</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Vis datakilde</string>
-    <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
+    <string name="settings_ui_showdatasource">Vis datakilde</string>
+    <string name="settings_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Vis kartknapp</string>
-    <string name="configLabel_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
+    <string name="settings_ui_showmapbutton">Vis kartknapp</string>
+    <string name="settings_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Framhevet felt</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Framhevet felt</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Overskrifter</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Vis overskriftsikon</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Vis overskriftstekst</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Overskrifter</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Vis overskriftsikon</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Vis overskriftstekst</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Ingen</item>
         <item>Påskrifter</item>
         <item>Asimut</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Gylne time</string>
+    <string name="settings_ui_showgoldhour">Gylne time</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blåtimen</string>
+    <string name="settings_ui_showbluehour">Blåtimen</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Lyst tema</string>

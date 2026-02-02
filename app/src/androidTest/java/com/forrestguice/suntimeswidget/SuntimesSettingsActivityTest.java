@@ -299,7 +299,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         }
 
         public SettingsActivityRobot clickHeader_generalSettings() {
-            onView(withText(R.string.configLabel_general)).perform(click());
+            onView(withText(R.string.settings_general)).perform(click());
             return this;
         }
         public SettingsActivityRobot clickHeader_alarmSettings() {
@@ -307,7 +307,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public SettingsActivityRobot clickHeader_userInterfaceSettings() {
-            onView(withText(R.string.configLabel_ui)).perform(click());
+            onView(withText(R.string.settings_ui)).perform(click());
             return this;
         }
         public SettingsActivityRobot clickHeader_localeSettings() {
@@ -382,10 +382,10 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
         public SettingsActivityRobot assertActivityShown(Activity activity)
         {
-            onView(withIndex(withText(R.string.configLabel_general),0)).check(assertShown);
+            onView(withIndex(withText(R.string.settings_general),0)).check(assertShown);
             onView(withIndex(withText(R.string.locale_pref_title),0)).check(assertShown);
             onView(withIndex(withText(R.string.places_label),0)).check(assertShown);
-            onView(withIndex(withText(R.string.configLabel_ui),0)).check(assertShown);
+            onView(withIndex(withText(R.string.settings_ui),0)).check(assertShown);
             onView(withIndex(withText(R.string.widgetList_label),0)).check(assertShown);
             return this;
         }

@@ -105,7 +105,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> التاريخ مضبوط ليوم غير تاريخ اليوم.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> التاريخ مضبوط ليوم غير تاريخ اليوم.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">الماضي</string>
@@ -264,8 +264,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">متري</string>
-    <string name="lengthUnits_imperial">إنگليزي</string>
+    <string name="settings_lengthUnits_metric">متري</string>
+    <string name="settings_lengthUnits_imperial">إنگليزي</string>
 
     <string name="units_feet">قدم</string>
     <string name="units_feet_short">قدم</string>
@@ -334,51 +334,51 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">عام</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">مصدر البيانات:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">مصدر بيانات الشمس:</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">مصدر بيانات الشمس</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">مصادر البيانات</string>    <!-- preference title / help button text -->
+    <string name="settings_general">عام</string>                <!-- group title -->
+    <string name="settings_general_calculator">مصدر البيانات:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">مصدر بيانات الشمس:</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">مصدر بيانات الشمس</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">مصادر البيانات</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">صيغة التوقيت:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">صيغة التوقيت:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">استعمل الارتفاع</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">طبّق التدقيقات المبنية على الارتفاع.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">استعمل الارتفاع</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">طبّق التدقيقات المبنية على الارتفاع.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">وطّن بالنسبة لنصف الكرة الأرضية</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">طبّق التوطين بالنسبة لنصف الكرة الأرضية (علامات المواسم, أيقونات طور القمر).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">وطّن بالنسبة لنصف الكرة الأرضية</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">طبّق التوطين بالنسبة لنصف الكرة الأرضية (علامات المواسم, أيقونات طور القمر).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">وحدات الطول</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">وحدات الطول</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">أظهر الثواني</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">أدرج الثواني عند إظهار الوقت.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">أظهر الثواني</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">أدرج الثواني عند إظهار الوقت.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">أظهر الوقت (مع التواريخ)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">أدرج الوقت عند إظهار التواريخ.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">أظهر الوقت (مع التواريخ)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">أدرج الوقت عند إظهار التواريخ.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">أسماء الأشهر المختصرة</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">أظهر أسماء الأشهر مختصرة عند عرض التاريخ.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">أسماء الأشهر المختصرة</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">أظهر أسماء الأشهر مختصرة عند عرض التاريخ.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">أظهر الأسابيع</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">قسم الفترات الزمنية الأطول من 7 أيام إلى أسابيع (مثلاً: 15يوم تصبح 2أسبوع 1يوم).</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">أظهر الأسابيع</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">قسم الفترات الزمنية الأطول من 7 أيام إلى أسابيع (مثلاً: 15يوم تصبح 2أسبوع 1يوم).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">أظهر الساعات</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">أظهر الساعات والدقائق في الفترات الزمنية الأطول من يوم.</string>    <!-- checkbox label -->
-    <string name="configLabel_general_observerheight">ظل الأجسام</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">أظهر طول ظل الأجسام ذو الارتفاع <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours">أظهر الساعات</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">أظهر الساعات والدقائق في الفترات الزمنية الأطول من يوم.</string>    <!-- checkbox label -->
+    <string name="settings_general_observerheight">ظل الأجسام</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">أظهر طول ظل الأجسام ذو الارتفاع <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">تعويض اليوم</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">تعويض اليوم</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">متقدم</string>                        <!-- group title -->
-    <string name="configLabel_experimental">تجريبي</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">إضافات مصادر البيانات</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">ابحث وحمّل الإضافات.</string>   <!-- pref summary -->
+    <string name="settings_advanced">متقدم</string>                        <!-- group title -->
+    <string name="settings_experimental">تجريبي</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">إضافات مصادر البيانات</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">ابحث وحمّل الإضافات.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">النسق</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">النسق</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>أعلى اليسار</item>
         <item>الأعلى</item>
@@ -413,9 +413,9 @@
     <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">الترتيب:</string>     <!-- label -->
-    <string name="risesetorder_today">اليوم</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">الأخيرة / القادمة</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">الترتيب:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">اليوم</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">الأخيرة / القادمة</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">زوال</string>                    <!-- setting -->
@@ -495,23 +495,23 @@
     <string name="label_apogee">ذروة</string>
     <string name="label_perigee">حضيض</string>
 
-    <string name="configLabel_general_timeMode">الوضع:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">الوضع:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">أظهر التاريخ</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">التقويم</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">التقويم:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">صيغة التاريخ:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">نمط التاريخ:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">تعديل</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">أظهر التاريخ</string>   <!-- group title -->
+    <string name="settings_general_calendar">التقويم</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">التقويم:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">صيغة التاريخ:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">نمط التاريخ:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">تعديل</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">شروق فقط</string>             <!-- setting -->
@@ -664,15 +664,15 @@
     <string name="configLabel_date_custom">التاريخ:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">الأمس</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">الغد</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">المقارنة مع</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">إظهار المقارنة</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">قارن كمية الضوء لهذا اليوم مع اليوم الحالي أو الغد.</string>  <!-- checkbox label -->  <!-- TODO: verify/fix (the original `en` value contained a typo) ; this should read "Compare the amount of daylight today against yesterday or tomorrow." -->
+    <string name="settings_general_compareMode_yesterday">الأمس</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">الغد</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">المقارنة مع</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">إظهار المقارنة</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">قارن كمية الضوء لهذا اليوم مع اليوم الحالي أو الغد.</string>  <!-- checkbox label -->  <!-- TODO: verify/fix (the original `en` value contained a typo) ; this should read "Compare the amount of daylight today against yesterday or tomorrow." -->
 
-    <string-array name="compareMode_display">                      <!-- one-to-one with compareMode_values -->
-        <item>@string/compareMode_yesterday</item>
-        <item>@string/compareMode_tomorrow</item>
+    <string-array name="settings_compareMode_display">                      <!-- one-to-one with compareMode_values -->
+        <item>@string/settings_general_compareMode_yesterday</item>
+        <item>@string/settings_general_compareMode_tomorrow</item>
     </string-array>
 
     <!-- Widget Setting: tracking mode -->
@@ -1515,66 +1515,66 @@
     <string name="place_label_other">Other</string>    <!-- TODO -->
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="settings_ui_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
 
-    <string name="configLabel_ui">واجهة المستخدم</string>
-    <string name="configLabel_ui_fields">عرض</string>
-    <string name="configLabel_ui_fields1">أحداث مخصصة</string>
-    <string name="configLabel_ui_misc">متفرقات</string>
+    <string name="settings_ui">واجهة المستخدم</string>
+    <string name="settings_ui_fields">عرض</string>
+    <string name="settings_ui_fields1">أحداث مخصصة</string>
+    <string name="settings_ui_misc">متفرقات</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">تفاصيل مفصلة للوصول</string>
-    <string name="configLabel_accessibility_verbose_summary">الإعلان عن التغييرات التلقائية في واجهة المستخدم.</string>
+    <string name="settings_accessibility_verbose">تفاصيل مفصلة للوصول</string>
+    <string name="settings_accessibility_verbose_summary">الإعلان عن التغييرات التلقائية في واجهة المستخدم.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">عرض التحذيرات</string>
-    <string name="configLabel_ui_showWarnings_summary">عرض رسائل تحذير التهيئة.</string>
+    <string name="settings_ui_showWarnings">عرض التحذيرات</string>
+    <string name="settings_ui_showWarnings_summary">عرض رسائل تحذير التهيئة.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">عرض الخريطة الضوئية</string>
-    <string name="configLabel_ui_showLightmap_summary">عرض رسم بياني مكدس لفترات النهار والليل والفجر.</string>
+    <string name="settings_ui_showLightmap">عرض الخريطة الضوئية</string>
+    <string name="settings_ui_showLightmap_summary">عرض رسم بياني مكدس لفترات النهار والليل والفجر.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">عرض القمر</string>
-    <string name="configLabel_ui_showmoon_summary">عرض أوقات بزوغ وأفول القمر ومراحله ونوره.</string>
+    <string name="settings_ui_showmoon">عرض القمر</string>
+    <string name="settings_ui_showmoon_summary">عرض أوقات بزوغ وأفول القمر ومراحله ونوره.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">عرض زوال القمر</string>
-    <string name="configLabel_ui_showmoon_noon_summary">عرض زوال القمر ومنتصف الليل القمري كجزء من أطوار القمر.</string>
+    <string name="settings_ui_showmoon_noon">عرض زوال القمر</string>
+    <string name="settings_ui_showmoon_noon_summary">عرض زوال القمر ومنتصف الليل القمري كجزء من أطوار القمر.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">الأعمدة (المراحل)</string>
-    <string name="configLabel_ui_showmoon_phase_columns_2">2</string>
-    <string name="configLabel_ui_showmoon_phase_columns_3">3</string>
-    <string name="configLabel_ui_showmoon_phase_columns_4">4</string>
+    <string name="settings_ui_showmoon_phase_columns">الأعمدة (المراحل)</string>
+    <string name="settings_ui_showmoon_phase_columns_2">2</string>
+    <string name="settings_ui_showmoon_phase_columns_3">3</string>
+    <string name="settings_ui_showmoon_phase_columns_4">4</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">الأيام المابين ربعية</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">تضمين النقاط الوسيطة بين الانقلابات والاعتدالات.</string>
+    <string name="settings_ui_showCrossQuarter">الأيام المابين ربعية</string>
+    <string name="settings_ui_showCrossQuarter_summary">تضمين النقاط الوسيطة بين الانقلابات والاعتدالات.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">عرض الانقلاب / الاعتدال</string>
-    <string name="configLabel_ui_showEquinox_summary">عرض الوقت حتى الانقلاب أو الاعتدال التالي.</string>
+    <string name="settings_ui_showEquinox">عرض الانقلاب / الاعتدال</string>
+    <string name="settings_ui_showEquinox_summary">عرض الوقت حتى الانقلاب أو الاعتدال التالي.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">تتبع الانقلاب</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="حدث قادم">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">تتبع الانقلاب</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="حدث قادم">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">عرض مصدر البيانات</string>
-    <string name="configLabel_ui_showdatasource_summary">عرض تسمية تشير إلى الإعدادات الحالية.</string>
+    <string name="settings_ui_showdatasource">عرض مصدر البيانات</string>
+    <string name="settings_ui_showdatasource_summary">عرض تسمية تشير إلى الإعدادات الحالية.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">عرض زر الخريطة</string>
-    <string name="configLabel_ui_showmapbutton_summary">عرض زر شريط الأدوات الذي يفتح تطبيق الخرائط الافتراضي.</string>
+    <string name="settings_ui_showmapbutton">عرض زر الخريطة</string>
+    <string name="settings_ui_showmapbutton_summary">عرض زر شريط الأدوات الذي يفتح تطبيق الخرائط الافتراضي.</string>
 
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">إبراز الحقول</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
-    <string-array name="emphasizefield_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_emphasizefield_text">إبراز الحقول</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string-array name="settings_emphasizefield_display">                      <!-- one-to-one with headerText_values -->
         <item>@string/timeMode_none</item>
         <item>@string/timeMode_golden</item>
         <item>@string/timeMode_noon</item>
@@ -1587,21 +1587,21 @@
     </string-array>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">الترويسات</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">أظهر أيقونة الترويسة</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">أظهر نص الترويسة</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">الترويسات</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">أظهر أيقونة الترويسة</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">أظهر نص الترويسة</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>بدون</item>     <!-- 0: none -->
         <item>علامات</item>    <!-- 1: labels -->
         <item>السمت</item>    <!-- 2: azimuth -->
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">الساعة الذهبية</string>
+    <string name="settings_ui_showgoldhour">الساعة الذهبية</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">الساعة الزرقاء</string>
+    <string name="settings_ui_showbluehour">الساعة الزرقاء</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">السمة الفاتحة</string>
@@ -1636,7 +1636,7 @@
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
-    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+    <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>

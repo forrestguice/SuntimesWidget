@@ -97,7 +97,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A data está definida para dia diferente de hoje.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> A data está definida para dia diferente de hoje.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">Passado</string>
@@ -241,8 +241,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Métrico</string>
-    <string name="lengthUnits_imperial">Imperial</string>
+    <string name="settings_lengthUnits_metric">Métrico</string>
+    <string name="settings_lengthUnits_imperial">Imperial</string>
 
     <string name="units_feet">pés</string>
     <string name="units_feet_short">pés</string>
@@ -297,52 +297,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Geral</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Fonte de Dados:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Fonte sobre o Sol</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Fonte sobre a Lua</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Fontes de Dados</string>    <!-- preference title / help button text -->
+    <string name="settings_general">Geral</string>                <!-- group title -->
+    <string name="settings_general_calculator">Fonte de Dados:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Fonte sobre o Sol</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Fonte sobre a Lua</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Fontes de Dados</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Formato da Hora:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Formato da Hora:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Usar Elevação</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Aplicar refinamentos baseados na altitude.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Usar Elevação</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Aplicar refinamentos baseados na altitude.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localizar para o hemisfério</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Aplicar localização baseada no hemisfério (rótulos da estação, ícones da fase da lua).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Localizar para o hemisfério</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Aplicar localização baseada no hemisfério (rótulos da estação, ícones da fase da lua).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Unidade de Tempo</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Unidade de Tempo</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Mostrar Segundos</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Incluir segundos ao exibir as horas.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Mostrar Segundos</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Incluir segundos ao exibir as horas.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Exibir Tempo (com datas)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Incluir a hora ao exibir datas.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Exibir Tempo (com datas)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">Incluir a hora ao exibir datas.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Nomes abreviados dos meses</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Mostrar nomes abreviados dos meses ao exibir datas.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Nomes abreviados dos meses</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">Mostrar nomes abreviados dos meses ao exibir datas.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Mostrar Semanas</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Dividir os períodos de tempo superiores a 7 dias (15 dias vira 2s e 1d).</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Mostrar Semanas</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">Dividir os períodos de tempo superiores a 7 dias (15 dias vira 2s e 1d).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Mostrar Horas</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Incluir horas e minutos em intervalos de tempo maiores que um dia.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Mostrar Horas</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Incluir horas e minutos em intervalos de tempo maiores que um dia.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Sombra de Objeto</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Exibe a duração da sombra projetadas por um objeto com uma altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Sombra de Objeto</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Exibe a duração da sombra projetadas por um objeto com uma altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Deslocamento de Dia</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">Deslocamento de Dia</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Avançado</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimental</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Plugins de Fonte de Dados</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Procurar e carregar plugins de terceiros.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Avançado</string>                        <!-- group title -->
+    <string name="settings_experimental">Experimental</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">Plugins de Fonte de Dados</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Procurar e carregar plugins de terceiros.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Layout</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Esquerda-Superior</item>
         <item>Superior</item>
@@ -377,9 +377,9 @@
     <string name="configLabel_navigation_mode_sidebar">Barra lateral</string>
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Ordem:</string>     <!-- label -->
-    <string name="risesetorder_today">Hoje</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Anterior / Próximo</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Ordem:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">Hoje</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Anterior / Próximo</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Sol Cent.</string>                    <!-- setting -->
@@ -459,23 +459,23 @@
     <string name="label_apogee">Apogeu</string>
     <string name="label_perigee">Perigeu</string>
 
-    <string name="configLabel_general_timeMode">Modo:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Modo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Mostrar Data</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Calendário</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Calendário:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">Formato da Data:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Padrão da Data:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
-    <string name="configLabel_general_calendarFormat_custom">Personalizado (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [ano]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [mês]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [dia da semana]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [mês]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [dia do mês]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [dia do ano]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">Editar</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">Mostrar Data</string>   <!-- group title -->
+    <string name="settings_general_calendar">Calendário</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Calendário:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Formato da Data:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Padrão da Data:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Personalizado (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [ano]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [mês]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [dia da semana]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [mês]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [dia do mês]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [dia do ano]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Editar</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Apenas nascer do Sol</string>             <!-- setting -->
@@ -625,11 +625,11 @@
     <string name="configLabel_date_custom">Data:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Ontem</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Amanhã</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Comparar com:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Mostrar Comparação</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Comparar a quantidade de luz do dia de hoje com a de ontem ou amanhã.</string>  <!-- checkbox label -->
+    <string name="settings_general_compareMode_yesterday">Ontem</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">Amanhã</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Comparar com:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Mostrar Comparação</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Comparar a quantidade de luz do dia de hoje com a de ontem ou amanhã.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Evento recente</string>                   <!-- setting -->
@@ -1409,76 +1409,76 @@
     <string name="place_label_other">Outros</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Atividade do Iniciador</string>
+    <string name="settings_ui_launcherMode">Atividade do Iniciador</string>
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Exibir</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Eventos Personalizados</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Diversos</string>
+    <string name="settings_ui">Interface do Usuário</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Exibir</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Eventos Personalizados</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Diversos</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">TalkBack Detalhado</string>
-    <string name="configLabel_accessibility_verbose_summary">Anunciar alterações de interface.</string>
+    <string name="settings_accessibility_verbose">TalkBack Detalhado</string>
+    <string name="settings_accessibility_verbose_summary">Anunciar alterações de interface.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Exibir Avisos</string>
-    <string name="configLabel_ui_showWarnings_summary">Exibir configurações de mensagens de aviso.</string>
+    <string name="settings_ui_showWarnings">Exibir Avisos</string>
+    <string name="settings_ui_showWarnings_summary">Exibir configurações de mensagens de aviso.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Exibir Mapa de Luz</string>
-    <string name="configLabel_ui_showLightmap_summary">Exibe um gráfico de barras dos períodos diurno, noturno e crepuscular.</string>
+    <string name="settings_ui_showLightmap">Exibir Mapa de Luz</string>
+    <string name="settings_ui_showLightmap_summary">Exibe um gráfico de barras dos períodos diurno, noturno e crepuscular.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Exibir Lua</string>
-    <string name="configLabel_ui_showmoon_summary">Mostra nascer, pôr, fases e iluminação da Lua.</string>
+    <string name="settings_ui_showmoon">Exibir Lua</string>
+    <string name="settings_ui_showmoon_summary">Mostra nascer, pôr, fases e iluminação da Lua.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Exibir Meio-Dia Lunar</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Exibir meio-dia lunar e meia-noite lunar como parte do diálogo da lua.</string>
+    <string name="settings_ui_showmoon_noon">Exibir Meio-Dia Lunar</string>
+    <string name="settings_ui_showmoon_noon_summary">Exibir meio-dia lunar e meia-noite lunar como parte do diálogo da lua.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Colunas (fases)</string>
+    <string name="settings_ui_showmoon_phase_columns">Colunas (fases)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Dias Entre Trimestres</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">Incluir pontos intermediários entre solstícios e equinócios.</string>
+    <string name="settings_ui_showCrossQuarter">Dias Entre Trimestres</string>
+    <string name="settings_ui_showCrossQuarter_summary">Incluir pontos intermediários entre solstícios e equinócios.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Exibir Solstício / Equinócio</string>
-    <string name="configLabel_ui_showEquinox_summary">Exibe tempo até o próximo solstício ou equinócio.</string>
+    <string name="settings_ui_showEquinox">Exibir Solstício / Equinócio</string>
+    <string name="settings_ui_showEquinox_summary">Exibe tempo até o próximo solstício ou equinócio.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Acompanhamento de Solstício</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Acompanhamento de Solstício</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Exibir Fontes de Dados</string>
-    <string name="configLabel_ui_showdatasource_summary">Exibe um rótulo indicando a atual configuração.</string>
+    <string name="settings_ui_showdatasource">Exibir Fontes de Dados</string>
+    <string name="settings_ui_showdatasource_summary">Exibe um rótulo indicando a atual configuração.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Exibir Botão de Mapa</string>
-    <string name="configLabel_ui_showmapbutton_summary">Exibir um botão na barra de ações que abre o aplicativo de mapas padrão.</string>
+    <string name="settings_ui_showmapbutton">Exibir Botão de Mapa</string>
+    <string name="settings_ui_showmapbutton_summary">Exibir um botão na barra de ações que abre o aplicativo de mapas padrão.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Destacar Campo</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Destacar Campo</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Cabeçalhos</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Exibir Ícone de Cabeçalho</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Exibir Texto de Cabeçalho</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Cabeçalhos</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Exibir Ícone de Cabeçalho</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Exibir Texto de Cabeçalho</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Nenhum</item>
         <item>Rótulos</item>
         <item>Azimute</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Hora Dourada</string>
+    <string name="settings_ui_showgoldhour">Hora Dourada</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Hora Azul</string>
+    <string name="settings_ui_showbluehour">Hora Azul</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Tema Claro</string>
@@ -1512,7 +1512,7 @@
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
-    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+    <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>

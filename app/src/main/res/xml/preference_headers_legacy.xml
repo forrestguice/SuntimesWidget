@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:title="@string/configLabel_general"
+        android:title="@string/settings_general"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -38,7 +38,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_ui"
+        android:title="@string/settings_ui"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"

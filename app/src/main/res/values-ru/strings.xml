@@ -98,7 +98,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g>  Дата установлена на день, отличный от сегодняшнего.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g>  Дата установлена на день, отличный от сегодняшнего.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">В прошлом</string>
@@ -251,8 +251,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Метрическая система мер (СИ)</string>
-    <string name="lengthUnits_imperial">Английская система мер</string>
+    <string name="settings_lengthUnits_metric">Метрическая система мер (СИ)</string>
+    <string name="settings_lengthUnits_imperial">Английская система мер</string>
 
     <string name="units_feet">футы</string>
     <string name="units_feet_short">ф.</string>
@@ -315,52 +315,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Общие настройки</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
-    <string name="configLabel_general_calculator">Источник данных:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Источники данных</string>    <!-- preference title / help button text -->
+    <string name="settings_general">Общие настройки</string>                <!-- group title -->  <!-- TODO: shortened "General Settings" to "General" -->
+    <string name="settings_general_calculator">Источник данных:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Источники данных</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Формат времени:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Формат времени:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Использовать высоту НУМ</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Применять уточнения на основе высоты над уровнем моря.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Использовать высоту НУМ</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Применять уточнения на основе высоты над уровнем моря.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Локализация в полушарии</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="settings_general_localize_hemisphere">Локализация в полушарии</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
-    <string name="configLabel_general_lengthUnits">Единицы длины</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Единицы длины</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Показывать секунды</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Включить секунды в отображение времени.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Показывать секунды</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Включить секунды в отображение времени.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Показывать время рядом с датой</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Включить время в отображение дат.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Показывать время рядом с датой</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">Включить время в отображение дат.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Сокращенные названия месяцев</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Показывать сокращенные названия месяцев при отображении дат.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Сокращенные названия месяцев</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">Показывать сокращенные названия месяцев при отображении дат.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Использовать недели</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Промежутки времени длиной более 7 дней показывать как недели (15 дн. -> 2 нед. 1 д.).</string>    <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Использовать недели</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">Промежутки времени длиной более 7 дней показывать как недели (15 дн. -> 2 нед. 1 д.).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Показывать часы</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Отображать часы и минуты в промежутках времени больше суток.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Показывать часы</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Отображать часы и минуты в промежутках времени больше суток.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Высота объекта для тени</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Показывать длину тени, отбрасываемой объектом высотой <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Высота объекта для тени</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Показывать длину тени, отбрасываемой объектом высотой <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Смещение суток</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
+    <string name="settings_general_dayOffset">Смещение суток</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Расширенные настройки</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
-    <string name="configLabel_experimental">Экспериментальные настройки</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
-    <string name="configLabel_general_scanPlugins">Плагины источников данных</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Сканировать и загрузить сторонние плагины.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Расширенные настройки</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
+    <string name="settings_experimental">Экспериментальные настройки</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
+    <string name="settings_general_scanPlugins">Плагины источников данных</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Сканировать и загрузить сторонние плагины.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Расположение</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Расположение</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Top-Left</item>
         <item>Top</item>
@@ -395,9 +395,9 @@
     <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Порядок:</string>     <!-- label -->
-    <string name="risesetorder_today">Сегодня</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Прош./след. событие</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Порядок:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">Сегодня</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Прош./след. событие</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Солн. полд.</string>                    <!-- setting -->
@@ -477,23 +477,23 @@
     <string name="label_apogee">Апогей</string>
     <string name="label_perigee">Перигей</string>
 
-    <string name="configLabel_general_timeMode">Режим:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Режим:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Показать дату</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Календарь</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Календарь:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormat">Формат даты:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Шаблон даты:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint; suggests pattern symbols -->
-    <string name="configLabel_general_calendarFormat_custom">Пользовательский (%s)</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
-    <string name="configAction_editCalendarFormat">Изменить</string>                        <!-- button (contentDescription) -->
+    <string name="settings_general_showDate">Показать дату</string>   <!-- group title -->
+    <string name="settings_general_calendar">Календарь</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Календарь:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Формат даты:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Шаблон даты:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint; suggests pattern symbols -->
+    <string name="settings_general_calendarFormat_custom">Пользовательский (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Изменить</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Только восход солнца</string>             <!-- setting -->
@@ -641,11 +641,11 @@
     <string name="configLabel_date_custom">Дата:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Вчерашним днем</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Завтрашним днем</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Сравнивать с:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Показывать сравнение</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_general_compareMode_yesterday">Вчерашним днем</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">Завтрашним днем</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Сравнивать с:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Показывать сравнение</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Последнее событие</string>                   <!-- setting -->
@@ -1447,76 +1447,76 @@
     <string name="place_label_other">Other</string>    <!-- TODO -->
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="settings_ui_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Настройки отображения</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Главный экран</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Пользовательские события</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Прочее</string>
+    <string name="settings_ui">Настройки отображения</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Главный экран</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Пользовательские события</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Прочее</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Озвучивать изменения в интерфейсе</string>
-    <string name="configLabel_accessibility_verbose_summary">Подробно озвучивать автоматические изменения интерфейса с помощью TalkBack.</string>
+    <string name="settings_accessibility_verbose">Озвучивать изменения в интерфейсе</string>
+    <string name="settings_accessibility_verbose_summary">Подробно озвучивать автоматические изменения интерфейса с помощью TalkBack.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Показывать предупреждения</string>
-    <string name="configLabel_ui_showWarnings_summary">Предупреждать о расхождении выбранной вручную конфигурации с рассчитанной автоматически (время, дата, местоположение).</string>
+    <string name="settings_ui_showWarnings">Показывать предупреждения</string>
+    <string name="settings_ui_showWarnings_summary">Предупреждать о расхождении выбранной вручную конфигурации с рассчитанной автоматически (время, дата, местоположение).</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Карта освещенности (линия)</string>
-    <string name="configLabel_ui_showLightmap_summary">Показывать график дня, ночи и сумерек с положением солнца.</string>
+    <string name="settings_ui_showLightmap">Карта освещенности (линия)</string>
+    <string name="settings_ui_showLightmap_summary">Показывать график дня, ночи и сумерек с положением солнца.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Луна</string>
-    <string name="configLabel_ui_showmoon_summary">Показывать время восхода и захода луны, ее фазы и освещенность.</string>
+    <string name="settings_ui_showmoon">Луна</string>
+    <string name="settings_ui_showmoon_summary">Показывать время восхода и захода луны, ее фазы и освещенность.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Показать лунный полдень</string>
-    <string name="configLabel_ui_showmoon_noon_summary">Показать лунный полдень и лунную полночь в рамках диалога о луне.</string>
+    <string name="settings_ui_showmoon_noon">Показать лунный полдень</string>
+    <string name="settings_ui_showmoon_noon_summary">Показать лунный полдень и лунную полночь в рамках диалога о луне.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Столбцы (фазы)</string>
+    <string name="settings_ui_showmoon_phase_columns">Столбцы (фазы)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Перекрестные дни</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">Включить промежуточные точки между солнцестояниями и равноденствиями.</string>
+    <string name="settings_ui_showCrossQuarter">Перекрестные дни</string>
+    <string name="settings_ui_showCrossQuarter_summary">Включить промежуточные точки между солнцестояниями и равноденствиями.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Солнцестояние и равноденствие</string>
-    <string name="configLabel_ui_showEquinox_summary">Показывать время до солнцестояния или равноденствия.</string>
+    <string name="settings_ui_showEquinox">Солнцестояние и равноденствие</string>
+    <string name="settings_ui_showEquinox_summary">Показывать время до солнцестояния или равноденствия.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Выбор солнцест. / равнод.</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Выбор солнцест. / равнод.</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Источник расчетов</string>
-    <string name="configLabel_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
+    <string name="settings_ui_showdatasource">Источник расчетов</string>
+    <string name="settings_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Показать кнопку карты</string>
-    <string name="configLabel_ui_showmapbutton_summary">Показать кнопку панели действий, которая открывает приложение карт по умолчанию.</string>
+    <string name="settings_ui_showmapbutton">Показать кнопку карты</string>
+    <string name="settings_ui_showmapbutton_summary">Показать кнопку панели действий, которая открывает приложение карт по умолчанию.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Выделить поле</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Выделить поле</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Заголовки</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Показать иконку заголовка</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Показать текст заголовка</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Заголовки</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Показать иконку заголовка</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Показать текст заголовка</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Не выбрано</item>
         <item>Заголовки</item>
         <item>Азимут</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Золотой час</string>
+    <string name="settings_ui_showgoldhour">Золотой час</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Режимное время</string>
+    <string name="settings_ui_showbluehour">Режимное время</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Светлая тема</string>
@@ -1550,7 +1550,7 @@
     </string-array>
 
     <!-- App Setting: solstice tracking mode -->
-    <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+    <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>

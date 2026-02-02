@@ -10,7 +10,7 @@
         <CheckBox
             android:id="@+id/check_show_crossquarter"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configLabel_ui_showCrossQuarter" android:textSize="?attr/text_size_small" />
+            android:text="@string/settings_ui_showCrossQuarter" android:textSize="?attr/text_size_small" />
 
     </LinearLayout>
 

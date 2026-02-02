@@ -4,7 +4,7 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment"
         android:icon="?attr/icActionSettings"
-        android:title="@string/configLabel_general"
+        android:title="@string/settings_general"
         android:summary=""
         tools:ignore="UnusedAttribute">
 
@@ -40,7 +40,7 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.UIPrefsFragment"
         android:icon="?attr/icActionAppearance"
-        android:title="@string/configLabel_ui"
+        android:title="@string/settings_ui"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>

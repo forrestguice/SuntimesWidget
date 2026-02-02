@@ -39,7 +39,7 @@
                 app:showAsAction="never" />
 
             <item android:id="@+id/action_crossquarterdays"
-                android:title="@string/configLabel_ui_showCrossQuarter"
+                android:title="@string/settings_ui_showCrossQuarter"
                 android:icon="?attr/icActionAbout"
                 android:checkable="true"
                 app:showAsAction="never" />

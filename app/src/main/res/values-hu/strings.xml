@@ -69,7 +69,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="card_dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A dátum a mai naptól eltérő napra van beállítva.</string>  <!-- snackbar message -->
+    <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> A dátum a mai naptól eltérő napra van beállítva.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="cardlabel_past_today">Múlt</string>
@@ -191,8 +191,8 @@
     <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metrikus</string>
-    <string name="lengthUnits_imperial">Angolszász</string>
+    <string name="settings_lengthUnits_metric">Metrikus</string>
+    <string name="settings_lengthUnits_imperial">Angolszász</string>
 
     <string name="units_feet">láb</string>
     <string name="units_feet_short">ft</string>
@@ -243,52 +243,52 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding --> <!-- TODO -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Általános</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Nap adatforrás</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Hold adatforrás</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Adatforrások</string>    <!-- preference title / help button text -->
+    <string name="settings_general">Általános</string>                <!-- group title -->
+    <string name="settings_general_calculator">Adatok forrása:</string>         <!-- spinner label -->
+    <string name="settings_general_calculator_sun">Nap adatforrás</string>         <!-- preference label -->
+    <string name="settings_general_calculator_moon">Hold adatforrás</string>         <!-- preference label -->
+    <string name="settings_general_calculator_help">Adatforrások</string>    <!-- preference title / help button text -->
 
-    <string name="configLabel_general_timeFormatMode">Időformátum:</string>         <!-- spinner label -->
+    <string name="settings_general_timeFormatMode">Időformátum:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Magasság használata</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Alkalmazzon magasság alapú finomításokat.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled">Magasság használata</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Alkalmazzon magasság alapú finomításokat.</string>        <!-- checkbox label -->
     
-    <string name="configLabel_general_localize_hemisphere">Félgömb alapú lokalizáció</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Félgömb alapú lokalizáció alkalmazása (évszakcímkék, holdfázis ikonok).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Félgömb alapú lokalizáció</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Félgömb alapú lokalizáció alkalmazása (évszakcímkék, holdfázis ikonok).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Mértékegységek</string>        <!-- spinner label -->
+    <string name="settings_general_lengthUnits">Mértékegységek</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Mutassa a másodperceket</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Mutassa minden időnél a másodperceket is.</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds">Mutassa a másodperceket</string>        <!-- checkbox label -->
+    <string name="settings_general_showSeconds_summary">Mutassa minden időnél a másodperceket is.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Mutassa az időt (dátummal együtt)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">A dátumok megjelenítésekor mutassa az időt is.</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate">Mutassa az időt (dátummal együtt)</string>        <!-- checkbox label -->
+    <string name="settings_general_showTimeDate_summary">A dátumok megjelenítésekor mutassa az időt is.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showAbbrMonth">Rövidített hónapoknevek</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">A hónapok rövidített neveinek megjelenítése a dátumok megjelenítésekor.</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth">Rövidített hónapoknevek</string>        <!-- checkbox label -->
+    <string name="settings_general_showAbbrMonth_summary">A hónapok rövidített neveinek megjelenítése a dátumok megjelenítésekor.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Hetek mutatása</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">A 7 napnál hosszabb időintervallumok hetekre osztása (pl. 15 nap lesz 2 hét 1 nap).</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks">Hetek mutatása</string>        <!-- checkbox label -->
+    <string name="settings_general_showWeeks_summary">A 7 napnál hosszabb időintervallumok hetekre osztása (pl. 15 nap lesz 2 hét 1 nap).</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Órák mutatása</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Mutassa az órákat és a perceket egy napnál hosszabb időintervallumoknál.</string>    <!-- checkbox label -->
+    <string name="settings_general_showHours">Órák mutatása</string>        <!-- checkbox label -->
+    <string name="settings_general_showHours_summary">Mutassa az órákat és a perceket egy napnál hosszabb időintervallumoknál.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Objektum árnyékok</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Egy objektum által vetett árnyékok hosszának megjelenítése <xliff:g id="value" example="1 meter">%1$s</xliff:g> magassággal.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight">Objektum árnyékok</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Egy objektum által vetett árnyékok hosszának megjelenítése <xliff:g id="value" example="1 meter">%1$s</xliff:g> magassággal.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_dayOffset">Nap eltolás</string>        <!-- edittext label -->
-    <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
+    <string name="settings_general_dayOffset">Nap eltolás</string>        <!-- edittext label -->
+    <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Haladó</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Kísérleti</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Adatforrás bővítmények</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Harmadik féltől származó bővítmények keresése és letöltése.</string>   <!-- pref summary -->
+    <string name="settings_advanced">Haladó</string>                        <!-- group title -->
+    <string name="settings_experimental">Kísérleti</string>                <!-- group title -->
+    <string name="settings_general_scanPlugins">Adatforrás bővítmények</string>                                <!-- checkbox label -->
+    <string name="settings_general_scanPlugins_summary">Harmadik féltől származó bővítmények keresése és letöltése.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Elrendezés</string>           <!-- group title -->
-    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+    <string name="settings_widgetlayout">Elrendezés</string>           <!-- group title -->
+    <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Balra fent</item>
         <item>Fent</item>
@@ -323,9 +323,9 @@
     <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Sorrend:</string>     <!-- label -->
-    <string name="risesetorder_today">Ma</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Utolsó / Következő</string>           <!-- setting -->
+    <string name="settings_general_riseSetOrder">Sorrend:</string>     <!-- label -->
+    <string name="settings_general_risesetorder_today">Ma</string>                    <!-- setting -->
+    <string name="settomgs_general_risesetorder_lastnext">Utolsó / Következő</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Dél</string>                    <!-- setting -->
@@ -405,23 +405,23 @@
     <string name="label_apogee">Földtávol</string>   
     <string name="label_perigee">Földközel</string> 
 
-    <string name="configLabel_general_timeMode">Mód:</string>          <!-- spinner label -->
+    <string name="settings_general_timeMode">Mód:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_showDate">Dátum mutatása</string>   <!-- group title -->
-    <string name="configLabel_general_calendar">Naptár</string>   <!-- group title -->  
-    <string name="configLabel_general_calendarMode">Naptár:</string>          <!-- spinner label -->  
-    <string name="configLabel_general_calendarFormat">Dátumformátum:</string>          <!-- spinner label -->
-    <string name="configLabel_general_calendarFormatPattern">Egyéni formátum:</string>          <!-- edittext label -->
-    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint --> 
-    <string name="configLabel_general_calendarFormat_custom">Egyéni (%s)</string>       <!-- spinner value -->  
-    <string name="configLabel_general_calendarFormat_yyyy">%s [év]</string>       <!-- spinner value -->   
-    <string name="configLabel_general_calendarFormat_MMMM">%s [hónap]</string>       <!-- spinner value -->   
-    <string name="configLabel_general_calendarFormat_EEEE">%s [hét napja]</string>       <!-- spinner value -->  
-    <string name="configLabel_general_calendarFormat_MM">%s [hónap]</string>       <!-- spinner value --> 
-    <string name="configLabel_general_calendarFormat_dd">%s [hónap napja]</string>       <!-- spinner value --> 
-    <string name="configLabel_general_calendarFormat_DD">%s [év napja]</string>       <!-- spinner value -->  
-    <string name="configAction_editCalendarFormat">Szerkesztés</string>                        <!-- button (contentDescription) -->  
+    <string name="settings_general_showDate">Dátum mutatása</string>   <!-- group title -->
+    <string name="settings_general_calendar">Naptár</string>   <!-- group title -->
+    <string name="settings_general_calendarMode">Naptár:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormat">Dátumformátum:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarFormatPattern">Egyéni formátum:</string>          <!-- edittext label -->
+    <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
+    <string name="settings_general_calendarFormat_custom">Egyéni (%s)</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_yyyy">%s [év]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MMMM">%s [hónap]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_EEEE">%s [hét napja]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_MM">%s [hónap]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_dd">%s [hónap napja]</string>       <!-- spinner value -->
+    <string name="settings_general_calendarFormat_DD">%s [év napja]</string>       <!-- spinner value -->
+    <string name="action_editCalendarFormat">Szerkesztés</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Csak napkelte</string>             <!-- setting -->
@@ -571,11 +571,11 @@
     <string name="configLabel_date_custom">Dátum:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Tegnap</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Holnap</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Összehasonlítás mutatása</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_general_compareMode_yesterday">Tegnap</string>                     <!-- setting -->
+    <string name="settings_general_compareMode_tomorrow">Holnap</string>                       <!-- setting -->
+    <string name="settings_general_compareMode">Hasonlítsa össze:</string>    <!-- spinner label -->
+    <string name="settings_general_showComparison">Összehasonlítás mutatása</string>  <!-- checkbox label -->
+    <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->   
@@ -1350,76 +1350,76 @@
     <string name="place_label_other">Other</string>    <!-- TODO -->
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="settings_ui_launcherMode">Launcher Activity</string>    <!-- TODO -->
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Felhasználói felület</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Megjelenítés</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_fields1">Egyéni események</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
-    <string name="configLabel_ui_misc">Egyéb</string>
+    <string name="settings_ui">Felhasználói felület</string>                       <!-- group title -->
+    <string name="settings_ui_fields">Megjelenítés</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="settings_ui_fields1">Egyéni események</string>                <!-- group title, followed by a list of "[X] <Custom Event>" fields -->
+    <string name="settings_ui_misc">Egyéb</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Bejelenti a felhasználói felület automatikus módosításait.</string>
+    <string name="settings_accessibility_verbose">TalkBack</string>
+    <string name="settings_accessibility_verbose_summary">Bejelenti a felhasználói felület automatikus módosításait.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Figyelmeztetések megjelenítése</string>
-    <string name="configLabel_ui_showWarnings_summary">A konfigurációval kapcsolatos figyelmeztetések mutatása.</string>
+    <string name="settings_ui_showWarnings">Figyelmeztetések megjelenítése</string>
+    <string name="settings_ui_showWarnings_summary">A konfigurációval kapcsolatos figyelmeztetések mutatása.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Éjszakai fénytérkép megjelenítése</string>
-    <string name="configLabel_ui_showLightmap_summary">Egy ábrán lévő napközbeni, éjjeli és szürkeleti időszakok mutatása.</string>
+    <string name="settings_ui_showLightmap">Éjszakai fénytérkép megjelenítése</string>
+    <string name="settings_ui_showLightmap_summary">Egy ábrán lévő napközbeni, éjjeli és szürkeleti időszakok mutatása.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Hold megjelenítése</string>
-    <string name="configLabel_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>
+    <string name="settings_ui_showmoon">Hold megjelenítése</string>
+    <string name="settings_ui_showmoon_summary">A holdkelte és holdnyugta idők valamint a fázis és a megvilágítás mutatása.</string>
 
     <!-- App Setting: Show Lunar Noon -->
-    <string name="configLabel_ui_showmoon_noon">Holdi dél megjelenítése</string>
-    <string name="configLabel_ui_showmoon_noon_summary">A holdi dél és éjfél megjelenítése a hold panelén.</string>
+    <string name="settings_ui_showmoon_noon">Holdi dél megjelenítése</string>
+    <string name="settings_ui_showmoon_noon_summary">A holdi dél és éjfél megjelenítése a hold panelén.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="settings_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="configLabel_ui_showCrossQuarter">Negyednapok megjelenítése</string>
-    <string name="configLabel_ui_showCrossQuarter_summary">A napfordulók és a napéjegyenlőségek közötti napok mutatása.</string>
+    <string name="settings_ui_showCrossQuarter">Negyednapok megjelenítése</string>
+    <string name="settings_ui_showCrossQuarter_summary">A napfordulók és a napéjegyenlőségek közötti napok mutatása.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Napforduló / N-É egyenlőség megjelenítése</string>
-    <string name="configLabel_ui_showEquinox_summary">A következő napfordulóig vagy napéjegyenlőségig hátralévő idő mutatása.</string>
+    <string name="settings_ui_showEquinox">Napforduló / N-É egyenlőség megjelenítése</string>
+    <string name="settings_ui_showEquinox_summary">A következő napfordulóig vagy napéjegyenlőségig hátralévő idő mutatása.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Napforduló követése</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode">Napforduló követése</string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Adatforrás megjelenítése</string> 
-    <string name="configLabel_ui_showdatasource_summary">Az aktuális konfigurációt jelző címke megjelenítése.</string>
+    <string name="settings_ui_showdatasource">Adatforrás megjelenítése</string>
+    <string name="settings_ui_showdatasource_summary">Az aktuális konfigurációt jelző címke megjelenítése.</string>
 
     <!-- App Setting: show map button -->
-    <string name="configLabel_ui_showmapbutton">Térkép gomb megjelenítése</string>
-    <string name="configLabel_ui_showmapbutton_summary">Egy gomb megjelenítése a műveletsoron, amely megnyitja az alapértelmezett térképalkalmazást.</string>
+    <string name="settings_ui_showmapbutton">Térkép gomb megjelenítése</string>
+    <string name="settings_ui_showmapbutton_summary">Egy gomb megjelenítése a műveletsoron, amely megnyitja az alapértelmezett térképalkalmazást.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Kiemelt mező</string>              <!-- checkbox label -->
-    <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_text">Kiemelt mező</string>              <!-- checkbox label -->
+    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Fejlécek</string>              <!-- group title -->
-    <string name="configLabel_ui_showheader_icon">Fejléc ikon megjelenítése</string> <!-- checkbox label -->
-    <string name="configLabel_ui_showheader_text">Fejléc szöveg</string> <!-- checkbox label -->
-    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+    <string name="settings_ui_showheaders">Fejlécek</string>              <!-- group title -->
+    <string name="settings_ui_showheader_icon">Fejléc ikon megjelenítése</string> <!-- checkbox label -->
+    <string name="settings_ui_showheader_text">Fejléc szöveg</string> <!-- checkbox label -->
+    <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>Nincs</item>
         <item>Szöveg</item>
         <item>Tetőpont</item>
     </string-array>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Arany óra</string>
+    <string name="settings_ui_showgoldhour">Arany óra</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Kék óra</string>
+    <string name="settings_ui_showbluehour">Kék óra</string>
 
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Világos színtéma</string>

@@ -27,7 +27,7 @@
 
             <TextView style="@style/SunsetTimeSettingsGroupTitle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_widgetlayout" />
+                android:text="@string/settings_widgetlayout" />
 
             <View android:layout_width="0dp" android:layout_weight="1" android:layout_height="1dp" android:background="@null" />
 

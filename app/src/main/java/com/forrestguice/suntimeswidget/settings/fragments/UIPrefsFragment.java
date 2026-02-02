@@ -569,7 +569,7 @@ public class UIPrefsFragment extends PreferenceFragment
         int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_observerheight) + " [i]";
+        String title = context.getString(R.string.settings_general_observerheight) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
         ImageSpan shadowIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
         SpannableStringBuilder titleSpan = SpanUtils.createSpan(context, title, "[i]", shadowIcon);
@@ -589,7 +589,7 @@ public class UIPrefsFragment extends PreferenceFragment
                         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
                         String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), doubleValue, units, 2, false).toString();
-                        preference.setSummary(context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay));
+                        preference.setSummary(context.getString(R.string.settings_general_observerheight_summary, observerHeightDisplay));
                         return true;
 
                     } else return false;
@@ -606,7 +606,7 @@ public class UIPrefsFragment extends PreferenceFragment
         pref.setText((pref.isMetric() ? observerHeight : LengthUnit.metersToFeet(observerHeight)) + "");
 
         String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), observerHeight, units, 2, false).toString();
-        pref.setSummary(context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay));
+        pref.setSummary(context.getString(R.string.settings_general_observerheight_summary, observerHeightDisplay));
     }
 
 }
