@@ -957,6 +957,7 @@
          CUSTOM EVENTS
     -->
     <string name="eventType_sun_elevation">الشمس (ارتفاع)</string>
+    <string name="eventType_shadowratio">نسبة الظل</string>
     <string name="eventlist_dialog_title">أحداث مخصصة</string>
 
     <string name="configLabel_event_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
@@ -975,6 +976,11 @@
 
     <string name="shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
 
+    <string name="shadowratioevent_title">نسبة الظل</string>
+    <string name="shadowratioevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (x<xliff:g id="factor">%2$d</xliff:g>)</string>
+    <string name="shadowratioevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (x<xliff:g id="factor">%3$d</xliff:g>)</string>
+    <string name="shadowratioevent_phrase_gender">other</string>
+
     <string name="configLabel_manageEvents">إدارة الأحداث</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">إضافة أو إزالة الأحداث المخصصة.</string>
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>
@@ -989,6 +995,7 @@
 
     <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_shadowratio">إضافة (نسبة الظل)</string>
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -1016,6 +1023,7 @@
     <string name="editevent_dialog_label_hint">تسمية الحدث</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">زاوية مخصصة</string>
+    <string name="editevent_dialog_label_suggested_shadowratio">نسبة الظل</string>
 
     <string name="editevent_dialog_angle">الزاوية</string>
     <string name="editevent_dialog_angle_hint">-6</string>
@@ -1025,6 +1033,10 @@
     <string name="editevent_dialog_length">Shadow Length</string>    <!-- TODO -->
     <string name="editevent_dialog_length_hint">6</string>    <!-- TODO -->
     <string name="editevent_dialog_length_error">Shadow length is required!</string>    <!-- TODO -->
+
+    <string name="editevent_dialog_factor">العامل</string>
+    <string name="editevent_dialog_factor_hint">1 أو 2</string>
+    <string name="editevent_dialog_factor_error">أدخل 1 أو 2</string>
     <string name="editevent_dialog_label_suggested1">Shadow Length</string>    <!-- TODO -->
 
     <string name="editevent_dialog_height">Object Height</string>    <!-- TODO -->

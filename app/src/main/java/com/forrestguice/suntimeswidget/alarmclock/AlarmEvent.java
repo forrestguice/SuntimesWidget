@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
+import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.SolarEventsAdapter;
@@ -399,8 +400,13 @@ public class AlarmEvent
         for (String eventID : customEvents)
         {
             EventAlias alias = EventSettings.loadEvent(eventSettings, eventID);
-            items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
-            items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+            if (alias.getType() == EventType.SHADOWRATIO)
+            {
+                items.add(new AlarmEventItem(alias.getAliasUri(), context.getContentResolver()));
+            } else {
+                items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+                items.add(new AlarmEventItem(alias.getAliasUri() + ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+            }
         }
 
         SolarEventsAdapter solarEventsAdapter = SolarEventsAdapter.createAdapter(context, northward);

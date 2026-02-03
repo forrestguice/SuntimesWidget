@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 
 import org.junit.Test;
@@ -172,6 +173,68 @@ public class AlarmEventProviderTest0
         assertNull( SunElevationEvent.valueOf("SHADOW_1.0:X|5r") );     // bad length (not a number)
         assertNull( SunElevationEvent.valueOf("SHADOW_X:1.0|5r") );     // bad height (not a number)
         assertNull( SunElevationEvent.valueOf("SHADOW_-6|Xr") );    // bad offset (not a number)
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_ShadowRatioEvent()
+    {
+        int[] factor = new int[] { 1, 2, 1, 2 };
+        int[] offset = new int[] { 300000, 300000, 0, 0 };    // offset millis
+
+        for (int i=0; i<factor.length; i++)
+        {
+            ShadowRatioEvent event = new ShadowRatioEvent(factor[i], offset[i]);
+            assertEquals(factor[i], event.getFactor());
+            assertEquals(offset[i], event.getOffset());
+        }
+    }
+
+    @Test
+    public void test_ShadowRatioEvent_isShadowRatioEvent()
+    {
+        String[] events = new String[] { "SHADOWRATIO_1", "SHADOWRATIO_2|5", "SHADOWRATIO_1|0", "OTHER_10", "SUN_-6.0|5r", null, "" };
+        boolean[] expected = new boolean[] {true, true, true, false, false, false, false};
+        for (int i=0; i<events.length; i++) {
+            assertEquals(expected[i], ShadowRatioEvent.isShadowRatioEvent(events[i]));
+        }
+    }
+
+    @Test
+    public void test_ShadowRatioEvent_getEventName()
+    {
+        int[] factor = new int[] { 1, 2, 1, 2 };
+        int[] offset = new int[] { 300000, 300000, 0, 0 };    // offset millis
+        String[] expected = new String[] { "SHADOWRATIO_1|5", "SHADOWRATIO_2|5", "SHADOWRATIO_1", "SHADOWRATIO_2" };
+
+        for (int i=0; i<factor.length; i++) {
+            assertEquals(expected[i], ShadowRatioEvent.getEventName(factor[i], offset[i]));
+        }
+    }
+
+    @Test
+    public void test_ShadowRatioEvent_valueOf()
+    {
+        String[] events = new String[] { "SHADOWRATIO_1|5", "SHADOWRATIO_2|5", "SHADOWRATIO_1", "SHADOWRATIO_2" };
+        int[] factor = new int[] { 1, 2, 1, 2 };
+        int[] offset = new int[] { 300000, 300000, 0, 0 };    // offset millis
+
+        for (int i=0; i<factor.length; i++)
+        {
+            ShadowRatioEvent event = ShadowRatioEvent.valueOf(events[i]);
+            assertNotNull(event);
+            assertEquals(factor[i], event.getFactor());
+            assertEquals(offset[i], event.getOffset());
+        }
+        assertEquals(1, ShadowRatioEvent.valueOf("SHADOWRATIO_1").getFactor());      // no offset
+
+        assertNull( ShadowRatioEvent.valueOf("") );             // empty
+        assertNull( ShadowRatioEvent.valueOf(null) );           // null
+        assertNull( ShadowRatioEvent.valueOf("OTHER_") );       // non ShadowRatioEvents
+        assertNull( ShadowRatioEvent.valueOf("SHADOWRATIO_X|5") );     // bad factor (not a number)
+        assertNull( ShadowRatioEvent.valueOf("SHADOWRATIO_1|X") );     // bad offset (not a number)
     }
 
     @Test

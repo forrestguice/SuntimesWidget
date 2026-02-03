@@ -27,7 +27,7 @@ import java.util.Set;
 public class EventTypeResolver
 {
     public static EventType[] visibleTypes() {
-        return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT };
+        return new EventType[] { EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.SHADOWRATIO, EventType.DAYPERCENT };
     }
 
     @Nullable
@@ -41,6 +41,9 @@ public class EventTypeResolver
         }
         if (ShadowLengthEvent.isShadowLengthEvent(eventID)) {
             return EventType.SHADOWLENGTH;
+        }
+        if (ShadowRatioEvent.isShadowRatioEvent(eventID)) {
+            return EventType.SHADOWRATIO;
         }
         if (DayPercentEvent.isDayPercentEvent(eventID)) {
             return EventType.DAYPERCENT;

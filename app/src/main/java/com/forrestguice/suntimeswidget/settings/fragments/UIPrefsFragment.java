@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -218,6 +219,11 @@ public class UIPrefsFragment extends PreferenceFragment
                 case SHADOWLENGTH:
                     ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
+                    break;
+
+                case SHADOWRATIO:
+                    ShadowRatioEvent shadowRatioEvent = ShadowRatioEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((shadowRatioEvent != null ? 2000 + shadowRatioEvent.getFactor() : 2000));
                     break;
             }
 

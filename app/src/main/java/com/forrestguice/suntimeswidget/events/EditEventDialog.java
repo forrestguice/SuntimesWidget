@@ -314,11 +314,27 @@ public class EditEventDialog extends EditBottomSheetDialog
         return null;
     }
 
+    /**
+     * setShadowRatioFactor
+     */
+    protected void setShadowRatioFactor(int value)
+    {
+        shadow_ratio_factor = value;
+
+        if (edit_shadow_ratio_factor != null) {
+            edit_shadow_ratio_factor.setText(Integer.toString(shadow_ratio_factor));
+        }
+    }
+
     private double shadowLength = 0;
     private double objHeight = 0;
     protected EditText edit_shadowLength = null, edit_objHeight = null;
     protected View layout_shadowLength = null, layout_objHeight = null;
     protected TextView text_units_shadowLength = null, text_units_objHeight = null;
+
+    private int shadow_ratio_factor = 1;
+    protected EditText edit_shadow_ratio_factor = null;
+    protected View layout_shadow_ratio_factor = null;
 
     /**
      * onCreateDialog
@@ -423,6 +439,9 @@ public class EditEventDialog extends EditBottomSheetDialog
         radio_percentDay = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_day);
         radio_percentNight = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_night);
 
+        layout_shadow_ratio_factor = dialogContent.findViewById(R.id.layout_event_factor);
+        edit_shadow_ratio_factor = (EditText) dialogContent.findViewById(R.id.edit_event_factor);
+
         switch (type)
         {
             case MOONILLUM:
@@ -453,6 +472,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_percentValue, false);
                 setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_shadow_ratio_factor, false);
                 if (edit_shadowLength != null) {
                     edit_shadowLength.addTextChangedListener(lengthWatcher);
                 }
@@ -462,7 +482,19 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
-            case MOON_ELEVATION:
+            case SHADOWRATIO:
+                setViewVisibility(layout_objHeight, false);
+                setViewVisibility(layout_shadowLength, false);
+                setViewVisibility(layout_angle, false);
+                setViewVisibility(layout_percentValue, false);
+                setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_shadow_ratio_factor, true);
+                if (edit_shadow_ratio_factor != null) {
+                    edit_shadow_ratio_factor.addTextChangedListener(factorWatcher);
+                    setShadowRatioFactor(shadow_ratio_factor);
+                }
+                break;
+
             case SUN_ELEVATION:
             default:
                 setViewVisibility(layout_angle, true);
@@ -470,6 +502,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_shadowLength, false);
                 setViewVisibility(layout_percentValue, false);
                 setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_shadow_ratio_factor, false);
                 if (edit_angle != null) {
                     if (type == EventType.MOON_ELEVATION) {
                         edit_angle.addTextChangedListener(moonAngleWatcher);
@@ -623,7 +656,25 @@ public class EditEventDialog extends EditBottomSheetDialog
                             : getResources().getQuantityString(R.plurals.offset_at_plural, (int) illum));
                 }
                 break;
-
+            case SHADOWRATIO:
+                int factor = shadow_ratio_factor;
+                ShadowRatioEvent shadowRatioEvent = null;
+                if (uri != null) {
+                    shadowRatioEvent = ShadowRatioEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_shadow_ratio_factor != null && shadowRatioEvent != null) {
+                    setShadowRatioFactor(factor = shadowRatioEvent.getFactor());
+                }
+                int shadowRatioOffset = ((shadowRatioEvent != null) ? shadowRatioEvent.getOffset() : 0);
+                setOffset(shadowRatioOffset);
+                if (text_offset != null)
+                {
+                    String offsetText = utils.timeDeltaLongDisplayString(0, shadowRatioOffset).getValue();
+                    text_offset.setText((shadowRatioOffset != 0)
+                            ? context.getResources().getQuantityString((shadowRatioOffset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), factor, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, factor));
+                }
+                break;
             case DATE:
             case SOLAREVENT:
             default:
@@ -689,6 +740,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                         eventID = MoonElevationEvent.getEventName(angle, offset, null);
                         break;
 
+                    case SHADOWRATIO:
+                        eventID = ShadowRatioEvent.getEventName(shadow_ratio_factor, offset);
+                        break;
+
                     case SUN_ELEVATION:
                     default:
                         eventID = SunElevationEvent.getEventName(angle, offset, null);
@@ -719,6 +774,10 @@ public class EditEventDialog extends EditBottomSheetDialog
             case SHADOWLENGTH:
                 isValid = validateInput_objHeight() && isValid;
                 isValid = validateInput_shadowLength() && isValid;
+                break;
+
+            case SHADOWRATIO:
+                isValid = validateInput_shadowRatio() && isValid;
                 break;
 
             case MOON_ELEVATION:
@@ -819,6 +878,27 @@ public class EditEventDialog extends EditBottomSheetDialog
     public static final double MIN_HEIGHT = .01;    // TODO
     public static final double MAX_HEIGHT = 100;    // TODO
 
+    protected boolean validateInput_shadowRatio()
+    {
+        if (edit_shadow_ratio_factor == null) {
+            return true;
+        }
+        try {
+            int factor = Integer.parseInt(edit_shadow_ratio_factor.getText().toString());
+            if (factor < MIN_FACTOR || factor > MAX_FACTOR) {
+                edit_shadow_ratio_factor.setError(getContext().getString(R.string.editevent_dialog_factor_error));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            edit_shadow_ratio_factor.setError(getContext().getString(R.string.editevent_dialog_factor_error));
+            return false;
+        }
+        edit_shadow_ratio_factor.setError(null);
+        return true;
+    }
+    public static final int MIN_FACTOR = 1;
+    public static final int MAX_FACTOR = 2;
+
     private final TextWatcher labelWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -883,6 +963,25 @@ public class EditEventDialog extends EditBottomSheetDialog
 
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not an angle: " + e);
+            }
+        }
+    };
+
+    private final TextWatcher factorWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                int factor = Integer.parseInt(s.toString());
+                shadow_ratio_factor = factor;
+                String eventID = ShadowRatioEvent.getEventName(factor, getOffset());
+                setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
+                setIsModified(true);
+
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not a factor: " + e);
             }
         }
     };

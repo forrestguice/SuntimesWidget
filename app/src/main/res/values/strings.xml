@@ -993,6 +993,7 @@
     -->
     <string name="eventType_sun_elevation">Sun (elevation)</string>           <!-- TODO -->
     <string name="eventType_sun_shadowlength">Sun (shadow length)</string>    <!-- TODO -->
+    <string name="eventType_shadowratio">Shadow Ratio</string>               <!-- TODO -->
     <string name="eventType_date">Date</string>                               <!-- TODO -->
     <string name="eventType_alias">Alias</string>                             <!-- TODO -->
     <string name="eventType_default">Default</string>                         <!-- TODO -->
@@ -1021,6 +1022,11 @@
     <string name="shadowevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="objHeight">%2$s</xliff:g> : <xliff:g id="length">%3$s</xliff:g>)</string>    <!-- (custom) shadow event summary -->
     <string name="shadowevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="objHeight">%3$s</xliff:g> : <xliff:g id="length">%4$s</xliff:g>)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow 6m" -->
     <string name="shadowevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+
+    <string name="shadowratioevent_title">Shadow Ratio</string>                   <!-- (custom) shadow ratio event title -->
+    <string name="shadowratioevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (x<xliff:g id="factor">%2$d</xliff:g>)</string>    <!-- (custom) shadow ratio event summary -->
+    <string name="shadowratioevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (x<xliff:g id="factor">%3$d</xliff:g>)</string>    <!-- (custom) shadow ratio event summary -->
+    <string name="shadowratioevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
     <string name="daypercentevent_title_day">Day Percent</string>                   <!-- (custom) day percent event title; e.g. "Day 25%" -->    <!-- TODO -->
     <string name="daypercentevent_title_night">Night Percent</string>               <!-- (custom) night percent event title; e.g. "Night 25%" -->      <!-- TODO -->
@@ -1056,6 +1062,7 @@
 
     <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_shadowratio">Add (Shadow Ratio)</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent_dayPercentEvent">Add (Day/Night Percent)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="configAction_addEvent_moonIllumEvent">Add (Moon Illumination)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="configAction_addEvent_moonEvent">Add (Moon Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
@@ -1081,6 +1088,7 @@
     <string name="editevent_dialog_label_hint">Event Label</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Custom Angle</string>
+    <string name="editevent_dialog_label_suggested_shadowratio">Shadow Ratio</string>
 
     <string name="editevent_dialog_angle">Angle</string>
     <string name="editevent_dialog_angle_hint">-6</string>
@@ -1092,6 +1100,10 @@
     <string name="editevent_dialog_length_suffix">m</string>
     <string name="editevent_dialog_length_error">Shadow length is required!</string>
     <string name="editevent_dialog_label_suggested1">Shadow Length</string>
+
+    <string name="editevent_dialog_factor">Factor</string>
+    <string name="editevent_dialog_factor_hint">1 or 2</string>
+    <string name="editevent_dialog_factor_error">Enter 1 or 2</string>
 
     <string name="editevent_dialog_height">Object Height</string>
     <string name="editevent_dialog_height_hint">1</string>

@@ -21,6 +21,11 @@
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
 
+                    <item android:id="@+id/addEvent_shadowRatioEvent"
+                        android:title="@string/configAction_addEvent_shadowratio"
+                        android:icon="?attr/icActionNew"
+                        app:showAsAction="never" />
+
                     <item android:id="@+id/addEvent_dayPercentEvent"
                         android:title="@string/configAction_addEvent_dayPercentEvent"
                         android:icon="?attr/icActionNew"
@@ -35,7 +40,6 @@
                         android:title="@string/configAction_addEvent_moonIllumEvent"
                         android:icon="?attr/icActionNew"
                         app:showAsAction="never" />
-
                 </group>
             </menu>
 

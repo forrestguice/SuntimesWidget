@@ -193,6 +193,10 @@ public class EventListFragment extends DialogBase
             helper.addEvent(EventType.MOONILLUM);
             return true;
 
+        } else if (itemId == R.id.addEvent_shadowRatioEvent) {
+            helper.addEvent(EventType.SHADOWRATIO);
+            return true;
+
         } else if (itemId == R.id.addEvent_moonEvent) {
             helper.addEvent(EventType.MOON_ELEVATION);
             return true;
