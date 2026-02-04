@@ -426,7 +426,7 @@
     <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
     <string name="timeMode_moon_microfull">Microluna piena</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
-    <string name="timeMode_moon_micronew">Microluna nuova </string>                             <!-- setting -->
+    <string name="timeMode_moon_micronew">Microluna nuova</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
