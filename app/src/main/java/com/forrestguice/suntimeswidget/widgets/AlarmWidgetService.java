@@ -197,6 +197,9 @@ public class AlarmWidgetService extends RemoteViewsService
             boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetID, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
             Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
+            if (Build.VERSION.SDK_INT >= 15) {
+                view.setContentDescription(android.R.id.icon1, item.getType().getDisplayString());
+            }
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
             view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
 
