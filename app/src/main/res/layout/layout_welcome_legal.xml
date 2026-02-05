@@ -31,7 +31,7 @@
                     android:layout_width="@dimen/welcomeIcon_size" android:layout_height="@dimen/welcomeIcon_size" android:layout_marginTop="8dp"
                     android:scaleType="fitCenter" android:layout_gravity="center"
                     android:src="@drawable/ic_action_suntimes_huge"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/app_name" />
 
                 <Button android:id="@+id/button_about"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"

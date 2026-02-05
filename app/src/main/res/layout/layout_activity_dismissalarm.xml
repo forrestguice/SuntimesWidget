@@ -79,21 +79,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_huge"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/alarmMode_alarm" />
 
             <ImageView
 				android:id="@+id/icon_alarm_snooze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_snooze_huge"
-                tools:ignore="ContentDescription" />
+				android:contentDescription="@string/alarmAction_snooze" />
 
 			<ImageView
 				android:id="@+id/icon_alarm_timeout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:src="@drawable/ic_alarm_timeout_huge"
-				tools:ignore="ContentDescription" />
+				android:contentDescription="@string/alarmAction_timeout" />
 
         </ViewFlipper>
 
