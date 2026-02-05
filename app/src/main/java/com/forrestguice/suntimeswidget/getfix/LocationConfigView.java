@@ -63,6 +63,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.FragmentCompat;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
@@ -118,16 +120,17 @@ public class LocationConfigView extends LinearLayout
 
     public boolean isInitialized() { return isInitialized; }
 
-    protected WeakReference<FragmentCompat> fragmentRef = null;
-    public void setFragment(FragmentCompat f) {
+    protected WeakReference<FragmentManagerProvider> fragmentRef = null;
+    public void setFragmentManager(FragmentManagerProvider f) {
         fragmentRef = new WeakReference<>(f);
         //if (getFixHelper != null) {
         //    getFixHelper.setFragment(f);
         //} else Log.w("LocationConfigView", "setFragment: getFixHelper is null!");
     }
     @Nullable
-    public FragmentCompat getFragment() {
-        return fragmentRef != null ? fragmentRef.get() : null;
+    public FragmentManagerCompat getFragmentManager() {
+        FragmentManagerProvider f = fragmentRef.get();
+        return f != null ? f.getFragmentManagerCompat() : null;
     }
 
     public com.forrestguice.suntimeswidget.calculator.core.Location getLocation(@NonNull Context context)
@@ -705,9 +708,9 @@ public class LocationConfigView extends LinearLayout
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
 
-        if (getFragment() != null) {
-            dialog.show(getFragment().getFragment().getChildFragmentManager(), DIALOGTAG_MAP);
-        }
+        if (getFragmentManager() != null) {
+            dialog.show(getFragmentManager().getFragmentManager(), DIALOGTAG_MAP);
+        } else Log.e("LocationConfig", "showMapCoordinateDialog: Fragment is null!");
     }
 
     private DialogInterface.OnClickListener onMapCoordinateDialogAccepted(final MapCoordinateDialog dialog)

@@ -275,6 +275,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         super.onResume();
         if (dialogContent != null)
         {
+            dialogContent.setFragmentManager(this);
             dialogContent.onResume();
         }
         expandSheet(getDialog());
@@ -293,7 +294,7 @@ public class LocationConfigDialog extends BottomSheetDialogBase
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
         dialogContent.init((AppCompatActivity) requireActivity(), false);
-        dialogContent.setFragment(FragmentCompat.from(this));
+        dialogContent.setFragmentManager(this);
 
         dialogContent.setOnListButtonClicked(new View.OnClickListener()
         {
