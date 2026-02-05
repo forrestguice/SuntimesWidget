@@ -2725,9 +2725,7 @@ public class SuntimesActivity extends AppCompatActivity
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
             ic_time2_note.setContentDescription(note.iconDescription);
-            //if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
-            //}
+            SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             SuntimesNotes.adjustNoteIconSize(this, note, ic_time2_note);
             ic_time2_note.setVisibility(View.VISIBLE);
             txt_time2_note1.setText(note.timeText.toString());
@@ -2743,9 +2741,7 @@ public class SuntimesActivity extends AppCompatActivity
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
             ic_time1_note.setContentDescription(note.iconDescription);
-            //if (appThemeOverride != null) {
-                SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
-            //}
+            SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             SuntimesNotes.adjustNoteIconSize(this, note, ic_time1_note);
             ic_time1_note.setVisibility(View.VISIBLE);
             txt_time1_note1.setText(note.timeText.toString());

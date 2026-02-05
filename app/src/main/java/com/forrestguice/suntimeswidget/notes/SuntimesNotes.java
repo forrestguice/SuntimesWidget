@@ -494,6 +494,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_MIDNIGHT_STROKE);
                     textColor = colors.getColor(CardColorValues.COLOR_MIDNIGHT_TEXT);
                     noteString = iconDesc = context.getString(R.string.until_midnight);
+                    noteIcon = R.drawable.ic_noon_large;
                     iconIsSquare = true;
                     break;
 
@@ -503,6 +504,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = iconDesc = context.getString(R.string.until_noon);
+                    noteIcon = R.drawable.ic_noon_large;
                     iconIsSquare = true;
                     break;
 
