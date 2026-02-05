@@ -33,7 +33,7 @@ import com.forrestguice.annotation.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
+public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat, FragmentManagerProvider
 {
     public DialogBase() {
         setArguments(new Bundle());
@@ -188,4 +188,9 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
     }
     protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
     protected Map<Integer, OnPermissionResultCompat> permissionResults = new HashMap<>();
+
+    @Override
+    public FragmentManagerCompat getFragmentManagerCompat() {
+        return FragmentManagerCompat.from(this, true);
+    }
 }

@@ -46,7 +46,7 @@ import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
+public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat, OnPermissionResultCompat, FragmentManagerProvider
 {
     public static int getBottomSheetResourceID() {
         return android.support.design.R.id.design_bottom_sheet;    // support libraries
@@ -328,4 +328,8 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
     protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
     protected Map<Integer, OnPermissionResultCompat> permissionResults = new HashMap<>();
 
+    @Override
+    public FragmentManagerCompat getFragmentManagerCompat() {
+        return FragmentManagerCompat.from(this, true);
+    }
 }

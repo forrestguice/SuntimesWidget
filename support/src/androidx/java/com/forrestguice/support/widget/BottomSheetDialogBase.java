@@ -29,6 +29,8 @@ import android.widget.FrameLayout;
 import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.ActivityResultLaunchHelper;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.app.OnActivityResultCompat;
 import com.forrestguice.support.app.OnPermissionResultCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
@@ -43,7 +45,7 @@ import java.util.Map;
 
 import androidx.annotation.CallSuper;
 
-public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
+public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment implements OnActivityResultCompat, OnPermissionResultCompat, FragmentManagerProvider
 {
     public static int getBottomSheetResourceID() {
         //return android.support.design.R.id.design_bottom_sheet;    // support libraries
@@ -279,4 +281,8 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return launchers.registerForPermissionResult(this, requestCode, onResult);
     }
 
+    @Override
+    public FragmentManagerCompat getFragmentManagerCompat() {
+        return FragmentManagerCompat.from(this, true);
+    }
 }

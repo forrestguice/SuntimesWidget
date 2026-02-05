@@ -1,6 +1,7 @@
 package com.forrestguice.support.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.CallSuper;
 import android.support.v4.app.ActivityCompat;
@@ -14,7 +15,7 @@ import com.forrestguice.support.view.ActionModeCompat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppCompatActivity extends android.support.v7.app.AppCompatActivity implements OnActivityResultCompat, OnPermissionResultCompat
+public class AppCompatActivity extends android.support.v7.app.AppCompatActivity implements OnActivityResultCompat, OnPermissionResultCompat, FragmentManagerProvider
 {
     @Nullable
     public static ActionModeCompat startSupportActionMode(Activity activity, @NonNull final ActionModeCompat.Callback callback)
@@ -123,4 +124,13 @@ public class AppCompatActivity extends android.support.v7.app.AppCompatActivity 
     protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
     protected Map<Integer, OnPermissionResultCompat> permissionResults = new HashMap<>();
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public FragmentManagerCompat getFragmentManagerCompat() {
+        return FragmentManagerCompat.from(this);
+    }
 }

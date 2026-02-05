@@ -32,7 +32,7 @@ import com.forrestguice.annotation.NonNull;
 
 import java.util.Map;
 
-public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat
+public abstract class DialogBase extends DialogFragment implements OnActivityResultCompat, OnPermissionResultCompat, FragmentManagerProvider
 {
     public DialogBase() {
         setArguments(new Bundle());
@@ -151,4 +151,8 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         return launchers.registerForPermissionResult(this, requestCode, onResult);
     }
 
+    @Override
+    public FragmentManagerCompat getFragmentManagerCompat() {
+        return FragmentManagerCompat.from(this, true);
+    }
 }
