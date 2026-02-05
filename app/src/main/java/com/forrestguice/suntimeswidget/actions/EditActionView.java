@@ -50,6 +50,7 @@ import android.widget.ToggleButton;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.Color;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
@@ -731,13 +732,17 @@ public class EditActionView extends LinearLayout
     /**
      * setFragmentManager
      */
-    protected WeakReference<FragmentManagerCompat> fragmentManager = null;
-    public void setFragmentManager( FragmentManagerCompat fragmentManager ) {
+    protected WeakReference<FragmentManagerProvider> fragmentManager = null;
+    public void setFragmentManager( FragmentManagerProvider fragmentManager ) {
         this.fragmentManager = new WeakReference<>(fragmentManager);
+    }
+    public FragmentManagerProvider getFragmentManagerProvider() {
+        return fragmentManager.get();
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        return (fragmentManager != null ? fragmentManager.get() : null);
+        FragmentManagerProvider fragments = fragmentManager.get();
+        return (fragments != null ? fragments.getFragmentManagerCompat() : null);
     }
 
     /**
@@ -866,9 +871,9 @@ public class EditActionView extends LinearLayout
     /**
      * initFromOther
      */
-    public void initFromOther(EditActionView other )
+    public void initFromOther(EditActionView other)
     {
-        setFragmentManager(other.getFragmentManager());
+        setFragmentManager(other.getFragmentManagerProvider());
         setIntentTitle(other.getIntentTitle());
         setIntentDesc(other.getIntentDesc());
         setIntentType(other.getIntentType().name());
@@ -885,7 +890,7 @@ public class EditActionView extends LinearLayout
     /**
      * onResume()
      */
-    public void onResume(FragmentManagerCompat fragments, @Nullable SuntimesData data )
+    public void onResume(FragmentManagerProvider fragments, @Nullable SuntimesData data )
     {
         setFragmentManager(fragments);
         setData(data);

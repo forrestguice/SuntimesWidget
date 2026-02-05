@@ -82,7 +82,7 @@ public class ActionListActivity extends AppCompatActivity
 
         initData(this);
 
-        helper = new ActionListHelper(this, FragmentManagerCompat.from(this));
+        helper = new ActionListHelper(this);
         helper.setData(data);
         helper.initViews(this, findViewById(android.R.id.content), icicle);
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
@@ -117,7 +117,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(FragmentManagerCompat.from(this));
+        helper.setFragmentManager(this);
         helper.setData(data);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.onResume();

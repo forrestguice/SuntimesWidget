@@ -141,7 +141,7 @@ public class SaveActionDialog extends EditActionDialog
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, intentIDs.toArray(new String[0]));
 
         edit = (EditActionView) dialogContent.findViewById(R.id.edit_intent);
-        edit.setFragmentManager(FragmentManagerCompat.from(this));
+        edit.setFragmentManager(this);
         edit.edit_label.addTextChangedListener(titleWatcher);
 
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);

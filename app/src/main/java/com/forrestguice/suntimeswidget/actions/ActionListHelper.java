@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -68,8 +69,7 @@ public class ActionListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
 
-    private final WeakReference<Context> contextRef;
-    private WeakReference<FragmentManagerCompat> fragmentManager;
+    private WeakReference<FragmentManagerProvider> contextRef;
 
     private ActionDisplay selectedItem;
     private ListView list;
@@ -83,10 +83,8 @@ public class ActionListHelper
         return adapterModified;
     }
 
-    public ActionListHelper(@NonNull Context context, @NonNull FragmentManagerCompat fragments)
-    {
-        contextRef = new WeakReference<>(context);
-        setFragmentManager(fragments);
+    public ActionListHelper(@NonNull FragmentManagerProvider context) {
+        setFragmentManager(context);
     }
 
     private View.OnClickListener onItemSelected = null;
@@ -99,12 +97,18 @@ public class ActionListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(FragmentManagerCompat fragments) {
-        fragmentManager = new WeakReference<>(fragments);
+    public void setFragmentManager(FragmentManagerProvider fragments) {
+        contextRef = new WeakReference<>(fragments);
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        return (fragmentManager != null ? fragmentManager.get() : null);
+        FragmentManagerProvider fragments = contextRef.get();
+        return (fragments != null ? fragments.getFragmentManagerCompat() : null);
+    }
+
+    protected Context getContext() {
+        FragmentManagerProvider fragments = contextRef.get();
+        return (fragments != null ? fragments.getContext() : null);
     }
 
     private boolean disallowSelect = false;
@@ -148,14 +152,14 @@ public class ActionListHelper
         {
             SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
             if (addDialog != null) {
-                addDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), addDialog));
-                addDialog.getEdit().setFragmentManager(fragmentManager);
+                addDialog.setOnAcceptedListener(onActionSaved(getContext(), addDialog));
+                addDialog.getEdit().setFragmentManager(contextRef.get());
             }
 
             SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
             if (editDialog != null) {
-                editDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), editDialog));
-                editDialog.getEdit().setFragmentManager(fragmentManager);
+                editDialog.setOnAcceptedListener(onActionSaved(getContext(), editDialog));
+                editDialog.getEdit().setFragmentManager(contextRef.get());
             }
         }
     }
@@ -200,7 +204,7 @@ public class ActionListHelper
             {
                 list.setSelection(position);
                 adapter.setSelected(selectedItem = (ActionDisplay) list.getItemAtPosition(position));
-                updateViews(contextRef.get());
+                updateViews(getContext());
                 triggerActionMode(view, selectedItem);
             }
         });
@@ -252,7 +256,7 @@ public class ActionListHelper
 
         @Override
         public void onClick(View v) {
-            showOverflowMenu(contextRef.get(), v);
+            showOverflowMenu(getContext(), v);
         }
     };
 
@@ -312,7 +316,7 @@ public class ActionListHelper
 
     public void addAction()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -330,7 +334,7 @@ public class ActionListHelper
 
     protected void editAction()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final String actionID = getIntentID();
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
@@ -382,7 +386,7 @@ public class ActionListHelper
 
     public void clearActions()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         if (context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -408,7 +412,7 @@ public class ActionListHelper
 
     protected void deleteAction()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final String actionID = getIntentID();
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
@@ -433,7 +437,7 @@ public class ActionListHelper
                                         @Override
                                         public void run()
                                         {
-                                            Context context = contextRef.get();
+                                            Context context = getContext();
                                             if (context != null)
                                             {
                                                 if (isDefault) {
@@ -651,7 +655,7 @@ public class ActionListHelper
             }
 
         } else {
-            Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
+            Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
             return false;
         }
     }

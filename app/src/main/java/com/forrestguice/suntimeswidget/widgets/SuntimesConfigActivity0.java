@@ -345,7 +345,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
-        edit_launchIntent.onResume(FragmentManagerCompat.from(this), getData(this, appWidgetId));
+        edit_launchIntent.onResume(this, getData(this, appWidgetId));
 
         initPreviewArea(this);
         CheckBox check_showPreview = (CheckBox) findViewById(R.id.check_showPreview);
@@ -669,7 +669,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: onTap launchActivity
         //
         edit_launchIntent = (EditActionView) findViewById(R.id.appwidget_action_launch_edit);
-        edit_launchIntent.setFragmentManager(FragmentManagerCompat.from(this));
+        edit_launchIntent.setFragmentManager(this);
         edit_launchIntent.setData(getData(this, appWidgetId));
 
         //
