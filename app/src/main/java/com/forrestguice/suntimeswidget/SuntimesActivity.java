@@ -2656,6 +2656,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             // currently using view1, ready view2
             ic_time2_note.setBackgroundResource(note.noteIconResource);
+            ic_time2_note.setContentDescription(note.iconDescription);
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time2_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
@@ -2673,6 +2674,7 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             // currently using view2, ready view1
             ic_time1_note.setBackgroundResource(note.noteIconResource);
+            ic_time1_note.setContentDescription(note.iconDescription);
             //if (appThemeOverride != null) {
                 SuntimesUtils.tintDrawable(ic_time1_note.getBackground(), note.iconColor, note.iconColor2, note.noteIconStroke);
             //}
