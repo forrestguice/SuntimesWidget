@@ -77,7 +77,7 @@ public class EventListFragment extends DialogBase
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(v.getContext(), FragmentManagerCompat.from(this, true));
+        helper = new EventListHelper(this);
         helper.setLocation(getLocation());
         helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
         helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
@@ -120,7 +120,7 @@ public class EventListFragment extends DialogBase
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(FragmentManagerCompat.from(this, true));
+        helper.setFragmentManager(this);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
         helper.setImportTaskListener(importListener);

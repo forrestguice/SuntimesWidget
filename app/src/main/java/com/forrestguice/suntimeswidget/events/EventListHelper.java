@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.ContextInterface;
@@ -99,8 +100,7 @@ public class EventListHelper
     public static final String DIALOGTAG_HELP = "help";
     private static final int HELP_PATH_ID = R.string.help_eventlist_path;
 
-    private final WeakReference<Context> contextRef;
-    private WeakReference<FragmentManagerCompat> fragmentManager;
+    private WeakReference<FragmentManagerProvider> contextRef;
 
     private int selectedChild = -1;
     private EventAlias selectedItem;
@@ -119,10 +119,8 @@ public class EventListHelper
         return adapterModified;
     }
 
-    public EventListHelper(@NonNull Context context, @NonNull FragmentManagerCompat fragments)
-    {
-        contextRef = new WeakReference<>(context);
-        setFragmentManager(fragments);
+    public EventListHelper(@NonNull FragmentManagerProvider context) {
+        setFragmentManager(context);
     }
 
     private View.OnClickListener onItemSelected = null;
@@ -135,12 +133,19 @@ public class EventListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(FragmentManagerCompat fragments) {
-        fragmentManager = new WeakReference<>(fragments);
+    public void setFragmentManager(FragmentManagerProvider context) {
+        contextRef = new WeakReference<>(context);
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        return (fragmentManager != null ? fragmentManager.get() : null);
+        FragmentManagerProvider dialog = contextRef.get();
+        return dialog.getFragmentManagerCompat();
+    }
+
+    @Nullable
+    public Context getContext() {
+        FragmentManagerProvider dialog = contextRef.get();
+        return (dialog != null ? dialog.getContext() : null);
     }
 
     private boolean disallowSelect = false;
@@ -216,17 +221,17 @@ public class EventListHelper
         {
             EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
             if (addDialog != null) {
-                addDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), addDialog));
+                addDialog.setOnAcceptedListener(onEventSaved(getContext(), addDialog));
             }
 
             EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
             if (editDialog != null) {
-                editDialog.setOnAcceptedListener(onEventSaved(contextRef.get(), editDialog));
+                editDialog.setOnAcceptedListener(onEventSaved(getContext(), editDialog));
             }
 
             HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
             if (helpDialog != null) {
-                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(contextRef.get(), HELP_PATH_ID), DIALOGTAG_HELP);
+                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getContext(), HELP_PATH_ID), DIALOGTAG_HELP);
             }
         }
     }
@@ -305,7 +310,7 @@ public class EventListHelper
                     }
                     adapter.setSelected(selectedItem = (EventAlias) expandedList.getAdapter().getItem(groupPosition));
                     adapter.setSelected(selectedChild = 0);
-                    updateViews(contextRef.get());
+                    updateViews(getContext());
                     triggerActionMode(expandedList.getSelectedView(), selectedItem, selectedChild);
                 }
             });
@@ -316,7 +321,7 @@ public class EventListHelper
                 {
                     adapter.setSelected(selectedItem = (EventAlias) expandedList.getAdapter().getItem(groupPosition));
                     adapter.setSelected(selectedChild = childPosition);
-                    updateViews(contextRef.get());
+                    updateViews(getContext());
                     triggerActionMode(view, selectedItem, childPosition);
                     return true;
                 }
@@ -329,7 +334,7 @@ public class EventListHelper
                 {
                     list.setSelection(position);
                     adapter.setSelected(selectedItem = (EventAlias) list.getItemAtPosition(position));
-                    updateViews(contextRef.get());
+                    updateViews(getContext());
                     triggerActionMode(view, selectedItem);
                 }
             });
@@ -400,7 +405,7 @@ public class EventListHelper
 
         @Override
         public void onClick(View v) {
-            showOverflowMenu(contextRef.get(), v);
+            showOverflowMenu(getContext(), v);
         }
     };
 
@@ -469,7 +474,7 @@ public class EventListHelper
     }
     public EditEventDialog addEvent(EventType type, final Double angle, final Double shadowLength, final Double objHeight)
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final EditEventDialog saveDialog = new EditEventDialog();
         saveDialog.setType(type);
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
@@ -514,7 +519,7 @@ public class EventListHelper
 
     protected void editEvent(final String eventID)
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             final EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
@@ -572,7 +577,7 @@ public class EventListHelper
         }
 
         String exportTarget = "SuntimesEvents";
-        Context context = contextRef.get();
+        Context context = getContext();
         if (context != null && adapter != null)
         {
             EventAlias[] items = getItemsForExport();
@@ -721,7 +726,7 @@ public class EventListHelper
 
             if (result.getResult())
             {
-                Context context = contextRef.get();
+                Context context = getContext();
                 EventAlias[] items = result.getItems();
 
                 if (context != null)
@@ -756,7 +761,7 @@ public class EventListHelper
                 @Override
                 public void onClick(View v)
                 {
-                    Context context = contextRef.get();
+                    Context context = getContext();
                     if (context != null)
                     {
                         EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
@@ -781,7 +786,7 @@ public class EventListHelper
 
     public void clearEvents()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         if (context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -807,7 +812,7 @@ public class EventListHelper
 
     protected void deleteEvent(final String eventID)
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -828,7 +833,7 @@ public class EventListHelper
                                     {
                                         @Override
                                         public void run() {
-                                            Context context = contextRef.get();
+                                            Context context = getContext();
                                             if (context != null) {
                                                 initAdapter(context);
                                                 updateViews(context);
@@ -844,7 +849,7 @@ public class EventListHelper
     @SuppressLint("ResourceType")
     public void showHelp()
     {
-        Context context = contextRef.get();
+        Context context = getContext();
         if (context != null)
         {
             int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
@@ -1238,7 +1243,7 @@ public class EventListHelper
     }
     protected boolean triggerActionMode(View view, EventAlias item, int i)
     {
-        Context context = contextRef.get();
+        Context context = getContext();
         if (context == null) {
              return false;
         }
@@ -1270,7 +1275,7 @@ public class EventListHelper
             }
 
         } else {
-            Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
+            Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
             return false;
         }
     }
