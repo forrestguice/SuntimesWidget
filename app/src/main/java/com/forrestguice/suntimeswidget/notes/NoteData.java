@@ -30,6 +30,7 @@ public class NoteData
     public TimeDisplayText timeText;
     public String prefixText;
     public String noteText;
+    public String iconDescription;
     public int noteIconResource;
     public int noteIconStroke;
     public int textColor, iconColor, iconColor2;
@@ -38,13 +39,14 @@ public class NoteData
     public boolean tomorrow = false;
     public boolean squareIcon = false;
 
-    public NoteData(String noteMode, TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
+    public NoteData(String noteMode, TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, String iconDescription, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
         this.prefixText = prefixText;
         this.noteText = noteText;
         this.noteIconResource = noteIconResource;
+        this.iconDescription = iconDescription;
         this.textColor = textColor;
         this.iconColor = iconColor;
         this.iconColor2 = iconColor2;

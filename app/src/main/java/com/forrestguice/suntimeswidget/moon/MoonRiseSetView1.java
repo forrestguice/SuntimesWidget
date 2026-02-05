@@ -711,6 +711,19 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }
 
+        protected CharSequence getContentDescriptionForEvent(Context context, @Nullable MoonRiseSetEvent event)
+        {
+            if (event == null) {
+                return null;
+            }
+            switch (event) {
+                case MOONNOON: return context.getString(R.string.timeMode_moon_noon);
+                case MOONNIGHT: return context.getString(R.string.timeMode_moon_midnight);
+                case MOONSET: return context.getString(R.string.table_header_moonset);
+                case MOONRISE: default: return context.getString(R.string.table_header_moonrise);
+            }
+        }
+
         protected Drawable getIconForEvent(@Nullable MoonRiseSetEvent event)
         {
             if (event == null) {
@@ -746,6 +759,7 @@ public class MoonRiseSetView1 extends LinearLayout
             } else {
                 iconView.setBackgroundDrawable(getIconForEvent(eventID));
             }
+            iconView.setContentDescription(getContentDescriptionForEvent(context, eventID));
             updateField(context, event, WidgetSettings.loadShowSecondsPref(context, 0));
             if (positionView.getVisibility() == VISIBLE && data != null)
             {

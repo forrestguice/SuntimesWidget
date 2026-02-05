@@ -386,6 +386,7 @@ public class SuntimesNotes
         int textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
         int iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
         int iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);  // _STROKE
+        String iconDesc = "";  // context.getString(R.string.table_header_dawn);
         boolean iconIsSquare = false;
         String untilString = prefixString(eventID, false);
         String noteString = "";
@@ -405,21 +406,21 @@ public class SuntimesNotes
                     iconStroke = strokeWidthRising;
                     iconColor = iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_MOON);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_MOON_TEXT);
-                    noteString = context.getString(R.string.until_moonrise);
+                    noteString = iconDesc = context.getString(R.string.until_moonrise);
                     break;
 
                 case MOONSET:
                     iconStroke = strokeWidthSetting;
                     iconColor = iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_MOON);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_MOON_TEXT);
-                    noteString = context.getString(R.string.until_moonset);
+                    noteString = iconDesc = context.getString(R.string.until_moonset);
                     break;
 
                 case MOONNOON:
                     iconStroke = strokeWidthNoon;
                     iconColor = iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_MOON);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_MOON_TEXT);
-                    noteString = context.getString(R.string.until_moonnoon);
+                    noteString = iconDesc = context.getString(R.string.until_moonnoon);
                     break;
 
                 case MOONNIGHT:
@@ -427,7 +428,7 @@ public class SuntimesNotes
                     iconColor = colors.getColor(CardColorValues.COLOR_SETTING_MOON);
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_MOON);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_MOON_TEXT);
-                    noteString = context.getString(R.string.until_moonnight);
+                    noteString = iconDesc = context.getString(R.string.until_moonnight);
                     break;
 
                 case MORNING_ASTRONOMICAL:
@@ -436,6 +437,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.until_astroTwilight);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case MORNING_NAUTICAL:
                     iconStroke = strokeWidthRising;
@@ -443,6 +445,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.until_nauticalTwilight);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case MORNING_BLUE8:
                     iconStroke = strokeWidthRising;
@@ -450,6 +453,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.until_bluehour);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case MORNING_CIVIL:
                     iconStroke = strokeWidthRising;
@@ -457,6 +461,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.until_civilTwilight);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case MORNING_BLUE4:
                     iconStroke = strokeWidthRising;
@@ -464,6 +469,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_bluehour);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case SUNRISE:
                     iconStroke = strokeWidthRising;
@@ -471,6 +477,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.until_sunrise);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
                 case MORNING_GOLDEN:
                     iconStroke = strokeWidthRising;
@@ -478,6 +485,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_RISING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_goldhour);
+                    iconDesc = context.getString(R.string.table_header_dawn);
                     break;
 
                 case MIDNIGHT:    // TODO: icon
@@ -485,7 +493,7 @@ public class SuntimesNotes
                     iconColor = colors.getColor(CardColorValues.COLOR_MIDNIGHT_FILL);
                     iconColor2 = colors.getColor(CardColorValues.COLOR_MIDNIGHT_STROKE);
                     textColor = colors.getColor(CardColorValues.COLOR_MIDNIGHT_TEXT);
-                    noteString = context.getString(R.string.until_midnight);
+                    noteString = iconDesc = context.getString(R.string.until_midnight);
                     iconIsSquare = true;
                     break;
 
@@ -494,7 +502,7 @@ public class SuntimesNotes
                     iconColor = colors.getColor(CardColorValues.COLOR_RISING_SUN);
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
-                    noteString = context.getString(R.string.until_noon);
+                    noteString = iconDesc = context.getString(R.string.until_noon);
                     iconIsSquare = true;
                     break;
 
@@ -504,6 +512,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.until_goldhour);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case SUNSET:
                     iconStroke = strokeWidthSetting;
@@ -511,6 +520,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.until_sunset);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case EVENING_BLUE4:
                     iconStroke = strokeWidthSetting;
@@ -518,6 +528,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.until_bluehour);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case EVENING_CIVIL:
                     iconStroke = strokeWidthSetting;
@@ -525,6 +536,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_civilTwilight);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case EVENING_BLUE8:
                     iconStroke = strokeWidthSetting;
@@ -532,6 +544,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_bluehour);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case EVENING_NAUTICAL:
                     iconStroke = strokeWidthSetting;
@@ -539,6 +552,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_nauticalTwilight);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
                 case EVENING_ASTRONOMICAL:
                 default:
@@ -547,6 +561,7 @@ public class SuntimesNotes
                     iconColor2 = colors.getColor(CardColorValues.COLOR_SETTING_SUN);
                     textColor = colors.getColor(CardColorValues.COLOR_SETTING_SUN_TEXT);
                     noteString = context.getString(R.string.untilEnd_astroTwilight);
+                    iconDesc = context.getString(R.string.table_header_dusk);
                     break;
             }
 
@@ -570,6 +585,7 @@ public class SuntimesNotes
                     typedArray.recycle();
 
                     iconStroke = strokeWidthSetting;
+                    iconDesc = context.getString(isRising ? R.string.table_header_dawn : R.string.table_header_dusk);
                     noteString = event.getLabel();
                     iconColor = iconColor2 = textColor = colors.getColor(isRising
                             ? CardColorValues.COLOR_RISING_SUN_TEXT
@@ -580,7 +596,7 @@ public class SuntimesNotes
         }
 
         TimeDisplayText timeString = new TimeDisplayText();
-        return new NoteData(eventID, timeString, untilString, noteString, noteIcon, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
+        return new NoteData(eventID, timeString, untilString, noteString, noteIcon, iconDesc, textColor, iconColor, iconColor2, iconStroke, iconIsSquare);
     }
 
     private String prefixString(String eventID, boolean useSince)

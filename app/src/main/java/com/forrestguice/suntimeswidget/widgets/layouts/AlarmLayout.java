@@ -100,6 +100,9 @@ public abstract class AlarmLayout extends SuntimesLayout
         boolean showIcon = AlarmWidgetSettings.loadAlarmWidgetBool(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
         Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
         views.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)timeSizeSp, (int)timeSizeSp, false));
+        if (Build.VERSION.SDK_INT >= 15) {
+            views.setContentDescription(android.R.id.icon1, item.getType().getDisplayString());
+        }
         views.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
         views.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
     }
