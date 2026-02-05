@@ -999,7 +999,7 @@ public class LightMapDialog extends BottomSheetDialogBase
 
     protected boolean showSeekNoonMenu(final Context context, View view)
     {
-        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_seek_noon, onSeekEventMenuClick(null));
+        PopupMenuCompat.createMenu(context, view, R.menu.lightmapmenu_seek_noon, onSeekEventMenuClick(null)).show();
         return true;
     }
 
