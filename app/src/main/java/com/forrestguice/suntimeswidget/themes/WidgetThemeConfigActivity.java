@@ -721,7 +721,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         for (ColorChooser chooser : colorChoosers)
         {
-            chooser.setFragmentManager(FragmentManagerCompat.from(this));
+            chooser.setFragmentManager(this);
             chooser.setCollapsed(true);
         }
     }

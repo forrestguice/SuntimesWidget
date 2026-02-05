@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -417,13 +418,14 @@ public class ColorChooser implements View.OnFocusChangeListener
         onColorChanged(getColor());
     }
 
-    private WeakReference<FragmentManagerCompat> fragmentManager = null;
-    public void setFragmentManager( FragmentManagerCompat manager ) {
+    private WeakReference<FragmentManagerProvider> fragmentManager = null;
+    public void setFragmentManager( FragmentManagerProvider manager ) {
         fragmentManager = new WeakReference<>(manager);
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        return (fragmentManager != null ? fragmentManager.get() : null);
+        FragmentManagerProvider fragments = fragmentManager.get();
+        return (fragments != null ? fragments.getFragmentManagerCompat() : null);
     }
 
     private void showColorPicker(Context context)
