@@ -41,7 +41,7 @@ public interface EventSettingsInterface extends ContextInterface
 
     String PREF_KEY_EVENT_LABEL = "label"; // SuntimesEventContract.COLUMN_EVENT_LABEL;  // TODO: contract class
     String PREF_KEY_EVENT_COLOR = "color"; // SuntimesEventContract.COLUMN_EVENT_COLOR;  // TODO: contract class
-    int PREF_DEF_EVENT_COLOR = 0;
+    int PREF_DEF_EVENT_COLOR = -1;
 
     String PREF_KEY_EVENT_SHOWN = "shown"; // SuntimesEventContract.COLUMN_EVENT_SHOWN;  // TODO: contract class
     boolean PREF_DEF_EVENT_SHOWN = false;
