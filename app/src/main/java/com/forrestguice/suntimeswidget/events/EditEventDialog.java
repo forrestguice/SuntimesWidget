@@ -35,6 +35,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
@@ -419,7 +420,7 @@ public class EditEventDialog extends EditBottomSheetDialog
 
         layout_percentValue = dialogContent.findViewById(R.id.layout_event_percent);
         edit_percentValue = (EditText) dialogContent.findViewById(R.id.edit_event_percent);
-        layout_percentDayNight = dialogContent.findViewById(R.id.radiogroup_event_percent);
+        layout_percentDayNight = (RadioGroup) dialogContent.findViewById(R.id.radiogroup_event_percent);
         radio_percentDay = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_day);
         radio_percentNight = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_night);
 
@@ -444,6 +445,9 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_shadowLength, false);
                 if (edit_percentValue != null) {
                     edit_percentValue.addTextChangedListener(percentWatcher);
+                }
+                if (layout_percentDayNight != null) {
+                    layout_percentDayNight.setOnCheckedChangeListener(onRadioChanged_percentDayNight);
                 }
                 break;
 
@@ -1021,7 +1025,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected EditText edit_percentValue = null;
     protected RadioButton radio_percentDay = null;
     protected RadioButton radio_percentNight = null;
-    protected View layout_percentDayNight = null;
+    protected RadioGroup layout_percentDayNight = null;
 
     protected boolean validateInput_percentValue()
     {
@@ -1061,6 +1065,19 @@ public class EditEventDialog extends EditBottomSheetDialog
 
             } catch (NumberFormatException e) {
                 Log.e("EditEventDialog", "not a percentage: " + e);
+            }
+        }
+    };
+
+    private final RadioGroup.OnCheckedChangeListener onRadioChanged_percentDayNight = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int checkedID)
+        {
+            Double percent = getPercentValue();
+            if (percent != null) {
+                String eventID = DayPercentEvent.getEventName(percent, getOffset(), null);
+                setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
+                setIsModified(true);
             }
         }
     };
