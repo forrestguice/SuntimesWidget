@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class DayPercentEvent extends ElevationEvent
+public class DayPercentEvent extends ElevationEvent
 {
     public static final String NAME_PREFIX = "DAYPERCENT_";
 

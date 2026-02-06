@@ -25,7 +25,7 @@ import com.forrestguice.util.Log;
 
 import java.util.concurrent.Callable;
 
-public final class EventAlias
+public class EventAlias
 {
     public EventAlias(@NonNull EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri, boolean shown)
     {

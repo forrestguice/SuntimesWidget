@@ -27,7 +27,7 @@ import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.util.text.TimeDisplayText;
 
-public final class ShadowLengthEvent extends ElevationEvent
+public class ShadowLengthEvent extends ElevationEvent
 {
     public static final String NAME_PREFIX = "SHADOW_";
 

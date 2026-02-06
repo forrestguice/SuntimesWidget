@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class MoonIllumEvent extends BaseEvent
+public class MoonIllumEvent extends BaseEvent
 {
     public static final String NAME_PREFIX = "MOONILLUM_";
 

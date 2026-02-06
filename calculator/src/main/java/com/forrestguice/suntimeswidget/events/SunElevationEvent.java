@@ -24,7 +24,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.util.Log;
 
-public final class SunElevationEvent extends ElevationEvent
+public class SunElevationEvent extends ElevationEvent
 {
     public static final String NAME_PREFIX = "SUN_";
 

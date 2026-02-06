@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class MoonElevationEvent extends ElevationEvent
+public class MoonElevationEvent extends ElevationEvent
 {
     public static final String NAME_PREFIX = "MOON_";
 
