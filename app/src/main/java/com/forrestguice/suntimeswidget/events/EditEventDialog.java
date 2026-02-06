@@ -55,7 +55,6 @@ import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Locale;
@@ -424,6 +423,12 @@ public class EditEventDialog extends EditBottomSheetDialog
         radio_percentDay = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_day);
         radio_percentNight = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_percent_night);
 
+        layout_factorValue = dialogContent.findViewById(R.id.layout_event_factor);
+        edit_factorValue = (EditText) dialogContent.findViewById(R.id.edit_event_factor);
+        layout_factorType = (RadioGroup) dialogContent.findViewById(R.id.radiogroup_event_factor);
+        radio_factorAbsolute = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_factor_absolute);
+        radio_factorRelative = (RadioButton) dialogContent.findViewById(R.id.radiobutton_event_factor_relative);
+
         switch (type)
         {
             case MOONILLUM:
@@ -432,6 +437,8 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_objHeight, false);
                 setViewVisibility(layout_shadowLength, false);
+                setViewVisibility(layout_factorValue, false);
+                setViewVisibility(layout_factorType, false);
                 if (edit_percentValue != null) {
                     edit_percentValue.addTextChangedListener(illumWatcher);
                 }
@@ -443,6 +450,8 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_objHeight, false);
                 setViewVisibility(layout_shadowLength, false);
+                setViewVisibility(layout_factorValue, false);
+                setViewVisibility(layout_factorType, false);
                 if (edit_percentValue != null) {
                     edit_percentValue.addTextChangedListener(percentWatcher);
                 }
@@ -457,12 +466,30 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_angle, false);
                 setViewVisibility(layout_percentValue, false);
                 setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_factorValue, false);
+                setViewVisibility(layout_factorType, false);
                 if (edit_shadowLength != null) {
                     edit_shadowLength.addTextChangedListener(lengthWatcher);
                 }
                 if (edit_objHeight != null) {
                     setObjHeightMeters(WidgetSettings.loadObserverHeightPref(context, 0));    // initial value from app configuration
                     edit_objHeight.addTextChangedListener(heightWatcher);
+                }
+                break;
+
+            case SHADOWRATIO:
+                setViewVisibility(layout_objHeight, false);
+                setViewVisibility(layout_shadowLength, false);
+                setViewVisibility(layout_angle, false);
+                setViewVisibility(layout_percentValue, false);
+                setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_factorValue, true);
+                setViewVisibility(layout_factorType, true);
+                if (edit_factorValue != null) {
+                    edit_factorValue.addTextChangedListener(factorWatcher);
+                }
+                if (layout_factorType != null) {
+                    layout_factorType.setOnCheckedChangeListener(onRadioChanged_factorType);
                 }
                 break;
 
@@ -474,6 +501,8 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setViewVisibility(layout_shadowLength, false);
                 setViewVisibility(layout_percentValue, false);
                 setViewVisibility(layout_percentDayNight, false);
+                setViewVisibility(layout_factorValue, false);
+                setViewVisibility(layout_factorType, false);
                 if (edit_angle != null) {
                     if (type == EventType.MOON_ELEVATION) {
                         edit_angle.addTextChangedListener(moonAngleWatcher);
@@ -586,6 +615,27 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
                 break;
 
+            case SHADOWRATIO:
+                double factor = 0;
+                ShadowRatioEvent shadowRatioEvent = null;
+                if (uri != null) {
+                    shadowRatioEvent = ShadowRatioEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                }
+                if (edit_factorValue != null && shadowRatioEvent != null) {
+                    setFactorValue(factor = shadowRatioEvent.getRatio(), shadowRatioEvent.isRelativeToNoon());
+                }
+
+                int shadowRatioOffset = ((shadowRatioEvent != null) ? shadowRatioEvent.getOffset() : 0);
+                setOffset(shadowRatioOffset);
+                if (text_offset != null)
+                {
+                    String offsetText = utils.timeDeltaLongDisplayString(0, shadowRatioOffset).getValue();
+                    text_offset.setText((shadowRatioOffset != 0)
+                            ? context.getResources().getQuantityString((shadowRatioOffset < 0 ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), (int)factor, offsetText)
+                            : getResources().getQuantityString(R.plurals.offset_at_plural, (int)factor));
+                }
+                break;
+
             case DAYPERCENT:
                 double percent = 50;
                 DayPercentEvent percentEvent = null;
@@ -689,6 +739,10 @@ public class EditEventDialog extends EditBottomSheetDialog
                         eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
                         break;
 
+                    case SHADOWRATIO:
+                        eventID = ShadowRatioEvent.getEventName(factorValue, getFactorIsRelative(), offset, null);
+                        break;
+
                     case MOON_ELEVATION:
                         eventID = MoonElevationEvent.getEventName(angle, offset, null);
                         break;
@@ -723,6 +777,10 @@ public class EditEventDialog extends EditBottomSheetDialog
             case SHADOWLENGTH:
                 isValid = validateInput_objHeight() && isValid;
                 isValid = validateInput_shadowLength() && isValid;
+                break;
+
+            case SHADOWRATIO:
+                isValid = validateInput_factorValue() && isValid;
                 break;
 
             case MOON_ELEVATION:
@@ -982,6 +1040,106 @@ public class EditEventDialog extends EditBottomSheetDialog
             }
         }
     }
+
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+
+    /**
+     * setFactorValue
+     */
+    protected void setFactorValue(double value, boolean isRelative)
+    {
+        Log.d("DEBUG", "setFactorValue: " + value + ", isRelative: " + isRelative);
+        factorValue = value;
+        Context context = getContext();
+        if (edit_factorValue != null && context != null) {
+            edit_factorValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(factorValue)));
+        }
+        if (radio_factorRelative != null && radio_factorAbsolute != null) {
+            if (isRelative) {
+                radio_factorRelative.setChecked(true);
+            } else radio_factorAbsolute.setChecked(true);
+        }
+    }
+
+    public Double getFactorValue()
+    {
+        Context context = getContext();
+        if (edit_factorValue != null && context != null) {
+            try {
+                return Double.parseDouble(edit_factorValue.getText().toString());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public boolean getFactorIsRelative() {
+        return (radio_factorRelative == null || radio_factorRelative.isChecked());
+    }
+
+    private double factorValue = 0;
+    private View layout_factorValue = null;
+    protected EditText edit_factorValue = null;
+    protected RadioButton radio_factorAbsolute = null;
+    protected RadioButton radio_factorRelative = null;
+    protected RadioGroup layout_factorType = null;
+
+    protected boolean validateInput_factorValue()
+    {
+        if (edit_factorValue == null) {
+            return true;
+        }
+        try {
+            double factor = Double.parseDouble(edit_factorValue.getText().toString());
+            if (factor < MIN_FACTOR || factor > MAX_FACTOR) {
+                edit_factorValue.setError(getString(R.string.events_editevent_dialog_factor_error));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            edit_factorValue.setError(getString(R.string.events_editevent_dialog_factor_error));
+            return false;
+        }
+        edit_factorValue.setError(null);
+        return true;
+    }
+    public static final double MIN_FACTOR = 0;
+    public static final double MAX_FACTOR = 50;
+
+    private final TextWatcher factorWatcher = new TextWatcher()
+    {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                double factorInput = Double.parseDouble(s.toString());
+                Double factorValue = getFactorValue();
+                if (factorValue != null)
+                {
+                    String eventID = ShadowRatioEvent.getEventName(factorInput, getFactorIsRelative(), getOffset(), null);
+                    setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
+                    setIsModified(true);
+                }
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not a double: " + e);
+            }
+        }
+    };
+
+    private final RadioGroup.OnCheckedChangeListener onRadioChanged_factorType = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int checkedID)
+        {
+            Double factor = getFactorValue();
+            if (factor != null) {
+                String eventID = ShadowRatioEvent.getEventName(factor, getFactorIsRelative(), getOffset(), null);
+                setEventUri(EventUri.getEventCalcUri(EventUri.AUTHORITY(), eventID));
+                setIsModified(true);
+            }
+        }
+    };
 
     /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////

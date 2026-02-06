@@ -31,6 +31,7 @@ public class AndroidResID_EventSettings implements EventSettings.ResID_EventSett
             switch (eventType) {
                 case SUN_ELEVATION: return R.string.events_editevent_dialog_label_suggested;
                 case SHADOWLENGTH: return R.string.events_editevent_dialog_label_suggested1;
+                case SHADOWRATIO: return R.string.event_shadowratio_label_suggested;
                 case MOONILLUM: return R.string.event_moonillumevent_label_suggested;
                 case MOON_ELEVATION: return R.string.event_moonevent_label_suggested;
                 case DAYPERCENT: default: return R.string.events_editevent_dialog_label_suggested2;

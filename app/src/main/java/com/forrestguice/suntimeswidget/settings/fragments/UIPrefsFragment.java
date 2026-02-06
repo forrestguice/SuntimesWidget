@@ -52,6 +52,7 @@ import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventType;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -219,6 +220,11 @@ public class UIPrefsFragment extends PreferenceFragment
                     ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
                     break;
+
+                case SHADOWRATIO:
+                    ShadowRatioEvent shadowRatioEvent = ShadowRatioEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((shadowRatioEvent != null ? 2000 + (int)shadowRatioEvent.getRatio() : 2000));
+                    break;
             }
 
             pref.setOnPreferenceChangeListener(customEventListener(context, eventID, category, pref));
@@ -309,7 +315,7 @@ public class UIPrefsFragment extends PreferenceFragment
             @Override
             public boolean onPreferenceClick(Preference preference)
             {
-                String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SOLAREVENT.name() };
+                String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SHADOWRATIO.name(), EventType.SOLAREVENT.name() };
                 Intent intent = new Intent(activity, EventListActivity.class);
                 intent.putExtra(EventListActivity.EXTRA_SELECTFILTER, selectableTypes);
 

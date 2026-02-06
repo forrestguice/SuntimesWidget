@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidEventAliasResolver;
 import com.forrestguice.suntimeswidget.events.EventAlias;
@@ -60,6 +61,7 @@ import com.forrestguice.suntimeswidget.events.android.AndroidResID_EventSettings
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_MoonIllumEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.android.AndroidResID_ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_SunElevationEvent;
 import com.forrestguice.util.SystemTimeFormat;
 import com.forrestguice.util.android.AndroidResources;
@@ -120,6 +122,7 @@ public class AndroidSuntimesCalculator
         MoonIllumEvent.setResIDs(new AndroidResID_MoonIllumEvent());
         SunElevationEvent.setResIDs(new AndroidResID_SunElevationEvent());
         ShadowLengthEvent.setResIDs(new AndroidResID_ShadowLengthEvent());
+        ShadowRatioEvent.setResIDs(new AndroidResID_ShadowRatioEvent());
     }
 
     public static class MoonDataFallbackInfo implements SuntimesMoonData0.FallbackCalculatorInfo

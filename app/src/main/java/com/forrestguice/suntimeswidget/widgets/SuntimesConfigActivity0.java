@@ -1819,7 +1819,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Intent intent = new Intent(context, EventListActivity.class);
 
-        String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SOLAREVENT.name() };
+        String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SHADOWRATIO.name(), EventType.SOLAREVENT.name() };
         intent.putExtra(EventListActivity.EXTRA_SELECTFILTER, selectableTypes);
 
         RiseSetDataMode item = (RiseSetDataMode) spinner_timeMode.getSelectedItem();
@@ -1852,6 +1852,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 EventAlias event = EventSettings.loadEvent(AndroidEventSettings.wrap(SuntimesConfigActivity0.this), eventID);
                 if (event.getType() == EventType.SUN_ELEVATION
                         || event.getType() == EventType.SHADOWLENGTH
+                        || event.getType() == EventType.SHADOWRATIO
                         || event.getType() == EventType.DAYPERCENT)
                 {
                     EventAliasTimeMode item = new EventAliasTimeMode(event);

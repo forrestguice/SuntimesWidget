@@ -1000,6 +1000,12 @@
     <string name="event_shadowevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="objHeight">%3$s</xliff:g> : <xliff:g id="length">%4$s</xliff:g>)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow 6m" -->
     <string name="event_shadowevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
+    <string name="event_shadowratio_title">Shadow Ratio</string>                   <!-- (custom) shadow ratio event title; e.g. "Shadow Ratio x2" -->
+    <string name="event_shadowratio_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="factor">%2$s</xliff:g>)</string>    <!-- (custom) shadow event summary -->
+    <string name="event_shadowratio_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="factor">%3$s</xliff:g>)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow Ratio x1" -->
+    <string name="event_shadowratio_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_shadowratio_label_suggested">Shadow Ratio</string>    <!-- TODO -->
+
     <string name="event_daypercentevent_title_day">Day Percent</string>                   <!-- (custom) day percent event title; e.g. "Day 25%" -->    <!-- TODO -->
     <string name="event_daypercentevent_title_night">Night Percent</string>               <!-- (custom) night percent event title; e.g. "Night 25%" -->      <!-- TODO -->
     <string name="event_daypercentevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) day percent event summary -->
@@ -1033,6 +1039,7 @@
 
     <string name="events_action_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->
     <string name="events_action_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_shadowRatio">Add (Shadow Ratio)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_action_addEvent_dayPercentEvent">Add (Day/Night Percent)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_action_addEvent_moonIllumEvent">Add (Moon Illumination)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="events_action_addEvent_moonEvent">Add (Moon Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
@@ -1069,6 +1076,13 @@
     <string name="events_editevent_dialog_length_suffix">m</string>
     <string name="events_editevent_dialog_length_error">Shadow length is required!</string>
     <string name="events_editevent_dialog_label_suggested1">Shadow Length</string>
+
+    <string name="events_editevent_dialog_factor">Shadow Factor</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_hint">1</string>
+    <string name="events_editevent_dialog_factor_suffix">x</string>  <!-- TODO -->
+    <string name="events_editevent_dialog_factor_absolute">absolute</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_relative">relative (noon)</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_error">Shadow factor is required!</string>    <!-- TODO -->
 
     <string name="events_editevent_dialog_height">Object Height</string>
     <string name="events_editevent_dialog_height_hint">1</string>

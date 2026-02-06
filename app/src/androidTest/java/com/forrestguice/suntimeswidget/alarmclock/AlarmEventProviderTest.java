@@ -172,9 +172,9 @@ public class AlarmEventProviderTest
     @Test
     public void test_EventType_resolveEventType()
     {
-        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "DAYPERCENT_25.5|5r", "MOON_-10|5r", "MOONILLUM_25|5r", "123456789", "SUNSET" };
+        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "SHADOWRATIO_X:2.0|5r", "DAYPERCENT_25.5|5r", "MOON_-10|5r", "MOONILLUM_25|5r", "123456789", "SUNSET" };
         EventType[] expected = new EventType[] {
-                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.SHADOWRATIO, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
             assertEquals(expected[i], EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), events[i]));

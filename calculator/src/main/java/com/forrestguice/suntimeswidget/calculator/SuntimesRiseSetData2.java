@@ -149,6 +149,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.relativeShadowRatio = other.relativeShadowRatio;
         this.fraction = other.fraction;
         this.offset = other.offset;
 
@@ -243,14 +244,16 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             {
                 sunrise[i] = calculator.getSunriseCalendarForDate(calendar[i], angle);
                 sunset[i] = calculator.getSunsetCalendarForDate(calendar[i], angle);
-                if (offset != 0) {
-                    if (sunrise[i] != null) {
-                        sunrise[i].add(Calendar.MILLISECOND, offset);
-                    }
-                    if (sunset[i] != null) {
-                        sunset[i].add(Calendar.MILLISECOND, offset);
-                    }
-                }
+                addOffset(i, offset);
+                continue;
+            }
+
+            if (relativeShadowRatio != null)
+            {
+                double noonShadow = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(calendar[i]));
+                sunrise[i] = calculator.getTimeOfShadowBeforeNoon(calendar[i], 1, relativeShadowRatio + noonShadow);
+                sunset[i] = calculator.getTimeOfShadowAfterNoon(calendar[i], 1, relativeShadowRatio + noonShadow);
+                addOffset(i, offset);
                 continue;
             }
 
@@ -303,14 +306,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
             if (fraction != null && sunrise[i] != null && sunset[i] != null) {
                 applyFraction(sunrise[i], sunset[i], fraction);
             }
-            if (offset != 0) {
-                if (sunrise[i] != null) {
-                    sunrise[i].add(Calendar.MILLISECOND, offset);
-                }
-                if (sunset[i] != null) {
-                    sunset[i].add(Calendar.MILLISECOND, offset);
-                }
-            }
+            addOffset(i, offset);
         }
 
         int i = indexOfOther();
@@ -318,6 +314,18 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         dayLengthOther = determineDayLength(sunrise[i], sunset[i]);
 
         super.calculate(context);
+    }
+
+    protected void addOffset(int i, int offset)
+    {
+        if (offset != 0) {
+            if (sunrise[i] != null) {
+                sunrise[i].add(Calendar.MILLISECOND, offset);
+            }
+            if (sunset[i] != null) {
+                sunset[i].add(Calendar.MILLISECOND, offset);
+            }
+        }
     }
 
 }

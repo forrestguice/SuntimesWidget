@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.ElevationEvent;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.util.Log;
 
@@ -98,6 +99,16 @@ public class SuntimesRiseSetData extends SuntimesData
                     this.angle = (event == null ? null : event.getAngle());
                     break;
 
+                case SHADOWRATIO:
+                    ShadowRatioEvent ratioEvent = ShadowRatioEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    event = ratioEvent;
+                    if (ratioEvent.isRelativeToNoon()) {
+                        this.relativeShadowRatio = (event == null ? null : ratioEvent.getRatio());
+                    } else {
+                        this.angle = (event == null ? null : event.getAngle());
+                    }
+                    break;
+
                 case DAYPERCENT:
                     DayPercentEvent dayPercentEvent = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
                     this.fraction = (dayPercentEvent != null ? dayPercentEvent.getPercentValue() / 100d : null);
@@ -112,6 +123,18 @@ public class SuntimesRiseSetData extends SuntimesData
     }
     public RiseSetDataMode dataMode() {
         return dataMode;
+    }
+
+    /**
+     * Property: relative shadow ratio (of noon) (overrides time mode)
+     */
+    @Nullable
+    protected Double relativeShadowRatio = null;
+    public Double relativeShadowRatio() {
+        return relativeShadowRatio;
+    }
+    public void setRelativeShadowRatio(double value) {
+        relativeShadowRatio = value;
     }
 
     /**
@@ -298,6 +321,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.dataMode = other.dataMode();
         this.timeMode = other.timeMode();
         this.angle = other.angle;
+        this.relativeShadowRatio = other.relativeShadowRatio;
         this.fraction = other.fraction;
         this.offset = other.offset;
 
@@ -392,6 +416,14 @@ public class SuntimesRiseSetData extends SuntimesData
             sunsetCalendarToday = calculator.getSunsetCalendarForDate(todaysCalendar, angle);
             sunriseCalendarOther = calculator.getSunriseCalendarForDate(otherCalendar, angle);
             sunsetCalendarOther = calculator.getSunsetCalendarForDate(otherCalendar, angle);
+
+        } else if (relativeShadowRatio != null) {
+            double noonShadowToday = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(todaysCalendar));
+            double noonShadowOther = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(otherCalendar));
+            sunriseCalendarToday = calculator.getTimeOfShadowBeforeNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
+            sunsetCalendarToday = calculator.getTimeOfShadowAfterNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
+            sunriseCalendarOther = calculator.getTimeOfShadowBeforeNoon(otherCalendar, 1, relativeShadowRatio + noonShadowOther);
+            sunsetCalendarOther = calculator.getTimeOfShadowAfterNoon(otherCalendar, 1, relativeShadowRatio + noonShadowOther);
 
         } else {
             switch (timeMode)

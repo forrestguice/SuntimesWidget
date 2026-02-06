@@ -185,6 +185,10 @@ public class EventListFragment extends DialogBase
             helper.addEvent(EventType.SHADOWLENGTH);
             return true;
 
+        } else if (itemId == R.id.addEvent_shadowRatioEvent) {
+            helper.addEvent(EventType.SHADOWRATIO);
+            return true;
+
         } else if (itemId == R.id.addEvent_dayPercentEvent) {
             helper.addEvent(EventType.DAYPERCENT);
             return true;

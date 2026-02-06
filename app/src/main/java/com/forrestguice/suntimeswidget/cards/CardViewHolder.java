@@ -30,6 +30,7 @@ import android.os.Build;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -947,7 +948,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             int color_setting = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.sunIcon_color_setting_dark));
             typedArray.recycle();
 
-            if (event.getType() == EventType.SHADOWLENGTH || event.getType() == EventType.SUN_ELEVATION || event.getType() == EventType.DAYPERCENT)
+            if (event.getType() == EventType.SHADOWLENGTH || event.getType() == EventType.SHADOWRATIO || event.getType() == EventType.SUN_ELEVATION || event.getType() == EventType.DAYPERCENT)
             {
                 double angle = 0;
                 switch (event.getType())
@@ -960,6 +961,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
                     case SHADOWLENGTH:
                         ShadowLengthEvent event1 = ShadowLengthEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
                         angle = (event1 != null ? event1.getAngle() : 0);
+                        break;
+
+                    case SHADOWRATIO:
+                        ShadowRatioEvent ratioEvent = ShadowRatioEvent.valueOf(Uri.parse(event.getUri()).getLastPathSegment());
+                        angle = (ratioEvent != null ? ratioEvent.getAngle() : 0);
                         break;
 
                     case SUN_ELEVATION:

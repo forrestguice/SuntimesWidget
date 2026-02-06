@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.events.EventTypeResolver;
 import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
 import com.forrestguice.suntimeswidget.events.MoonIllumEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -229,6 +230,9 @@ public class AlarmEventProvider extends ContentProvider
                 if (ofType == null || EventType.SHADOWLENGTH.name().equals(ofType)) {
                     events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWLENGTH));
                 }
+                if (ofType == null || EventType.SHADOWRATIO.name().equals(ofType)) {
+                    events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.SHADOWRATIO));
+                }
                 if (ofType == null || EventType.DAYPERCENT.name().equals(ofType)) {
                     events1.addAll(EventSettings.loadEvents(AndroidEventSettings.wrap(context), EventType.DAYPERCENT));
                 }
@@ -343,6 +347,13 @@ public class AlarmEventProvider extends ContentProvider
                 ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(eventID);
                 if (shadowEvent != null) {
                     retValue.addRow(createRow(context, shadowEvent, columns, selectionMap));
+                }
+                break;
+
+            case SHADOWRATIO:
+                ShadowRatioEvent shadowRatioEvent = ShadowRatioEvent.valueOf(eventID);
+                if (shadowRatioEvent != null) {
+                    retValue.addRow(createRow(context, shadowRatioEvent, columns, selectionMap));
                 }
                 break;
 
@@ -683,6 +694,72 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_TYPE_LABEL:
                     row[i] = EventType.SHADOWLENGTH.getDisplayString();
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE:
+                    row[i] = event.getEventPhrase(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = event.getEventGender(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = 1;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = REPEAT_SUPPORT_DAILY;
+                    break;
+                case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
+                    row[i] = Boolean.toString(false);
+                    break;
+                case COLUMN_EVENT_REQUIRES_LOCATION:
+                    row[i] = Boolean.toString(true);
+                    break;
+                case COLUMN_EVENT_SUMMARY:
+                default:
+                    row[i] = event.getEventSummary(AndroidSuntimesDataSettings.wrap(context));
+                    break;
+            }
+        }
+        return row;
+    }
+
+    /**
+     * createRow( shadowRatio )
+     */
+    private Object[] createRow(@NonNull Context context, ShadowRatioEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TIMEMILLIS:
+                    Location location = (selectionMap != null) ? CalculatorProvider.processSelection_location(selectionMap) : null;
+                    if (location == null) {
+                        location = WidgetSettings.loadLocationPref(context, 0);
+                    }
+                    String offsetString = selectionMap != null ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0";
+                    long offset = offsetString != null ? Long.parseLong(offsetString) : 0L;
+                    boolean repeating = selectionMap != null && Boolean.parseBoolean(selectionMap.get(EXTRA_ALARM_REPEAT));
+                    Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
+                    ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
+
+                    Calendar calendar = ShadowRatioEvent.updateAlarmTime(context, event, getClockData(context, location), offset, repeating, repeatingDays, now);
+                    if (calendar != null) {
+                        row[i] = calendar.getTimeInMillis();
+                    }
+                    break;
+
+                case COLUMN_EVENT_NAME:
+                    row[i] = event.getEventName();
+                    break;
+                case COLUMN_EVENT_TYPE:
+                    row[i] = EventType.SHADOWRATIO.name();
+                    break;
+                case COLUMN_EVENT_TYPE_LABEL:
+                    row[i] = EventType.SHADOWRATIO.getDisplayString();
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getEventTitle(AndroidSuntimesDataSettings.wrap(context));
