@@ -35,9 +35,7 @@ import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -59,9 +57,7 @@ import com.forrestguice.util.android.AndroidResources;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE;
@@ -813,50 +809,6 @@ public class AlarmEventProvider extends ContentProvider
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Calendar updateAlarmTime_shadowLengthEvent(Context context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
-    {
-        SuntimesClockData data = getClockData(context, location);
-        data.initCalculator();
-        SuntimesCalculator calculator = data.calculator();
-
-        Calendar alarmTime = Calendar.getInstance();
-        Calendar eventTime = null;
-
-        Calendar day = Calendar.getInstance();
-        data.setTodayIs(day);
-        data.calculate(context);
-
-        eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                                      : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-        if (eventTime != null) {
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-        }
-
-        int c = 0;
-        Set<Long> timestamps = new HashSet<>();
-        while (now.after(alarmTime)
-                || eventTime == null
-                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
-        {
-            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
-                Log.e(AlarmNotifications.TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
-                return null;
-            }
-
-            Log.w(AlarmNotifications.TAG, "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
-            day.add(Calendar.DAY_OF_YEAR, 1);
-            data.setTodayIs(day);
-            data.calculate(context);
-            eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                                          : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
-            if (eventTime != null) {
-                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-            }
-            c++;
-        }
-        return eventTime;
-    }
-
     private static SuntimesClockData getClockData(Context context, @NonNull Location location)
     {
         SuntimesClockData data = new SuntimesClockData(context, 0);
@@ -864,9 +816,6 @@ public class AlarmEventProvider extends ContentProvider
         data.setTodayIs(Calendar.getInstance());
         return data;
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     private Object[] createRow(@NonNull Context context, DayPercentEvent event, String[] columns, @Nullable HashMap<String,String> selectionMap)
     {
