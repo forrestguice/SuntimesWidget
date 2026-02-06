@@ -20,9 +20,16 @@ package com.forrestguice.suntimeswidget.events;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
 import com.forrestguice.util.Log;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SunElevationEvent extends ElevationEvent
 {
@@ -108,6 +115,58 @@ public class SunElevationEvent extends ElevationEvent
             boolean rising = eventName.endsWith(SUFFIX_RISING);
             return new SunElevationEvent(angle, (offsetMinutes * 60 * 1000), rising);
         } else return null;
+    }
+
+    @Nullable
+    public static Calendar updateAlarmTime_sunElevationEvent(Object context, @NonNull SunElevationEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), event.getOffset(), location);
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime;
+
+        Calendar day = Calendar.getInstance();
+        day.setTimeInMillis(now.getTimeInMillis());
+
+        sunData.setTodayIs(day);
+        sunData.calculate(context);
+        eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+        if (eventTime != null) {
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        while (now.after(alarmTime)
+                || eventTime == null
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            Log.w("AlarmReceiver", "updateAlarmTime: sunElevationEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            sunData.setTodayIs(day);
+            sunData.calculate(context);
+            eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+            if (eventTime != null) {
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
+        }
+        return eventTime;
+    }
+
+    private static SuntimesRiseSetData getData_sunElevationEvent(Object context, double angle, int offset, @NonNull Location location)
+    {
+        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
+        sunData.setLocation(location);
+        sunData.setAngle(angle);
+        sunData.setOffset(offset);
+        sunData.setTodayIs(Calendar.getInstance());
+        return sunData;
     }
 
     @Nullable

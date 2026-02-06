@@ -607,7 +607,7 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    Calendar calendar = updateAlarmTime_sunElevationEvent(context, event, location, offset, repeating, repeatingDays, now);
+                    Calendar calendar = SunElevationEvent.updateAlarmTime_sunElevationEvent(context, event, location, offset, repeating, repeatingDays, now);
                     if (calendar != null) {
                         row[i] = calendar.getTimeInMillis();
                     }
@@ -673,7 +673,7 @@ public class AlarmEventProvider extends ContentProvider
                     Calendar now = getNowCalendar(selectionMap != null ? selectionMap.get(EXTRA_ALARM_NOW) : null);
                     ArrayList<Integer> repeatingDays = (selectionMap != null ? getRepeatDays(selectionMap.get(EXTRA_ALARM_REPEAT_DAYS)) : new ArrayList<Integer>());
 
-                    Calendar calendar = updateAlarmTime_shadowLengthEvent(context, event, location, offset, repeating, repeatingDays, now);
+                    Calendar calendar = ShadowLengthEvent.updateAlarmTime_shadowLengthEvent(context, event, location, offset, repeating, repeatingDays, now);
                     if (calendar != null) {
                         row[i] = calendar.getTimeInMillis();
                     }
@@ -809,59 +809,6 @@ public class AlarmEventProvider extends ContentProvider
         }
         return result;
     }
-
-    @Nullable
-    public static Calendar updateAlarmTime_sunElevationEvent(Context context, @NonNull SunElevationEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
-    {
-        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), event.getOffset(), location);
-
-        Calendar alarmTime = Calendar.getInstance();
-        Calendar eventTime;
-
-        Calendar day = Calendar.getInstance();
-        day.setTimeInMillis(now.getTimeInMillis());
-
-        sunData.setTodayIs(day);
-        sunData.calculate(context);
-        eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-        if (eventTime != null) {
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-        }
-
-        int c = 0;
-        Set<Long> timestamps = new HashSet<>();
-        while (now.after(alarmTime)
-                || eventTime == null
-                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
-        {
-            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
-                Log.e(AlarmNotifications.TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
-                return null;
-            }
-
-            Log.w(AlarmNotifications.TAG, "updateAlarmTime: sunElevationEvent advancing by 1 day..");
-            day.add(Calendar.DAY_OF_YEAR, 1);
-            sunData.setTodayIs(day);
-            sunData.calculate(context);
-            eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-            if (eventTime != null) {
-                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-            }
-            c++;
-        }
-        return eventTime;
-    }
-
-    private static SuntimesRiseSetData getData_sunElevationEvent(Context context, double angle, int offset, @NonNull Location location)
-    {
-        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
-        sunData.setLocation(location);
-        sunData.setAngle(angle);
-        sunData.setOffset(offset);
-        sunData.setTodayIs(Calendar.getInstance());
-        return sunData;
-    }
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
