@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.views.ExecutorUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -3074,7 +3075,7 @@ public class AlarmNotifications extends BroadcastReceiver
             return null;
         }
     }
-
+    
     @Nullable
     protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
@@ -3085,18 +3086,12 @@ public class AlarmNotifications extends BroadcastReceiver
         }
 
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
+        boolean timezone_isLTST = WidgetTimezones.ApparentSolarTime.TIMEZONEID.equals(timezone.getID());
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
         eventTime.setTimeInMillis(now.getTimeInMillis());
-
-        eventTime.set(Calendar.SECOND, 0);
-        if (hour >= 0 && hour < 24) {
-            eventTime.set(Calendar.HOUR_OF_DAY, hour);
-        }
-        if (minute >= 0 && minute < 60) {
-            eventTime.set(Calendar.MINUTE, minute);
-        }
+        setTime(eventTime, hour, minute, 0);
 
         Set<Long> timestamps = new HashSet<>();
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
@@ -3112,10 +3107,34 @@ public class AlarmNotifications extends BroadcastReceiver
 
             Log.w(TAG, "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
+            if (timezone_isLTST) {
+                setTime(eventTime, hour, minute, 0);
+            }
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
         t_updateAlarmTime_runningLoop = false;
         return eventTime;
+    }
+
+    protected static void setTime(Calendar calendar, int hour, int minute, int second) {
+        setHour(calendar, hour);
+        setMinute(calendar, minute);
+        setSecond(calendar, second);
+    }
+    protected static void setHour(Calendar calendar, int hour) {
+        if (hour >= 0 && hour < 24) {
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+        }
+    }
+    protected static void setMinute(Calendar calendar, int minute) {
+        if (minute >= 0 && minute < 60) {
+            calendar.set(Calendar.MINUTE, minute);
+        }
+    }
+    protected static void setSecond(Calendar calendar, int second) {
+        if (second >= 0 && second < 60) {
+            calendar.set(Calendar.SECOND, second);
+        }
     }
 
     public static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)

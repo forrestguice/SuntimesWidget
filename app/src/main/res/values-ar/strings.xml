@@ -453,7 +453,7 @@
     <string name="timeMode_solstice_winter">انقلاب الشتاء</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">الانقلاب</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">إمبولك (نصف الربيع)</string>      <!-- setting -->  <!-- TODO: neutral labels -->
+    <string name="timeMode_cross_midwinter">إمبولك (نصف الشتاء)</string>      <!-- setting -->  <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midwinter_short">نصف الربيع</string>       <!-- setting -->
     <string name="timeMode_cross_midsummer">لوغناساد (نصف الصيف)</string>  <!-- setting -->    <!-- TODO: neutral labels -->
     <string name="timeMode_cross_midsummer_short">نصف الصيف</string>     <!-- setting -->
@@ -1081,7 +1081,7 @@
 
     <string name="alarmAction_dismiss">تجاهل</string>                <!-- notification action button -->
     <string name="alarmAction_dismiss_early">تجاهل المنبه</string>                <!-- notification action button; context specific "Dismiss Early", same as "Dismiss Alarm Early", or "Dismiss Alarm" -->
-    <string name="alarmAction_snooze">إرجاء</string>                  <!-- notification action button -->
+    <string name="alarmAction_snooze">غفوة</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">انتهاء الوقت</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
@@ -1089,7 +1089,7 @@
     <string name="alarmAction_snoozeMsg">غفوة لمدة <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">انتهى وقت المنبه.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">منبه قادم</string>     <!-- notification msg -->
-    <string name="alarmAction_alertFailedMsg">فشل تشغيل الصوت!</string>         <!-- error toast -->
+    <string name="alarmAction_alertFailedMsg">فشل تشغيل الصوت</string>         <!-- error toast -->
 
     <string name="configLabel_alarmQuick_notification">@string/alarmMode_notification1</string>               <!-- group title -->
     <string name="alarmMode_alarm">منبه</string>                <!-- alarm type (setting) -->
@@ -1225,11 +1225,11 @@
     <string name="configLabel_alarms_autoDismissAfter">التجاوب التلقائي بعد</string>
     <string name="configLabel_alarms_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 ثانية">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snoozeLimit">حد الإرجاع</string>
+    <string name="configLabel_alarms_snoozeLimit">حد الغفوة</string>
     <string name="configLabel_alarms_snoozeLimit_summary"><xliff:g id="limit" example="بلا حدود">%s</xliff:g></string>
     <string name="configLabel_alarms_snoozeLimit_none">بلا حدود</string>
 
-    <string name="configLabel_alarms_snooze">إرجاع لمدة</string>
+    <string name="configLabel_alarms_snooze">غفوة لمدة</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">تذكير خلال</string>
