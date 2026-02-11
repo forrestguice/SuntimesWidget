@@ -94,7 +94,7 @@
                     android:background="?attr/sunriseIconSmall"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
-                    android:contentDescription="@string/sunrise" />
+                    android:contentDescription="@string/table_header_dawn" />
 
                 <TextView android:id="@+id/label_time_sunrise" style="@style/TableHeadTextView"
                     android:text="@string/table_header_sunrise_short" android:textColor="?attr/table_risingColor"
@@ -133,7 +133,7 @@
                     android:background="?attr/sunsetIconSmall"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
-                    android:contentDescription="@string/sunset" />
+                    android:contentDescription="table_header_dusk" />
 
                 <TextView
                     android:id="@+id/label_time_sunset"

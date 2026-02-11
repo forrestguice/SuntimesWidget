@@ -147,7 +147,7 @@ public class AlarmWidgetService extends RemoteViewsService
                         AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     }
 
-                    if (item.type != null && filterTypes.contains(item.type.name())) {
+                    if (item.type != null && filterTypes.contains(item.getType().name())) {
                         items.add(item);
                     }
                     cursor.moveToNext();
