@@ -1,5 +1,11 @@
 ### ~
 
+### v0.16.13 (2025-02-14)
+* fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
+* fixes missing `contentDescriptions` on event icons (accessibility) (#915).
+* updates translation to Arabic (ar) (#910 by islam2hamy).
+* updates translation to Russian (ru) (#916 by Ruslan Chintsov).
+
 ### v0.16.12 (2025-12-28)
 * fixes bug where US English strings are displayed for other English locales. (#902)
 * improves language resolution for Portuguese locales (#147).

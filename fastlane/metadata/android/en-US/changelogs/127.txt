@@ -1,0 +1,3 @@
+- fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
+- updates translation to Arabic.
+- updates translation to Russian.
