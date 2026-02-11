@@ -689,10 +689,10 @@ public class MoonRiseSetView1 extends LinearLayout
                 return null;
             }
             switch (event) {
-                case MOONNOON: return context.getString(R.string.timeMode_moon_noon);
-                case MOONNIGHT: return context.getString(R.string.timeMode_moon_midnight);
-                case MOONSET: return context.getString(R.string.table_header_moonset);
-                case MOONRISE: default: return context.getString(R.string.table_header_moonrise);
+                case MOONNOON: return context.getString(R.string.until_moonnoon);
+                case MOONNIGHT: return context.getString(R.string.until_moonnight);
+                case MOONSET: return context.getString(R.string.moonset);
+                case MOONRISE: default: return context.getString(R.string.moonrise);
             }
         }
 

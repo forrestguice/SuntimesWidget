@@ -97,7 +97,7 @@ public abstract class AlarmLayout extends SuntimesLayout
         Drawable icon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
         views.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)timeSizeSp, (int)timeSizeSp, false));
         if (Build.VERSION.SDK_INT >= 15) {
-            views.setContentDescription(android.R.id.icon1, item.getType().getDisplayString());
+            views.setContentDescription(android.R.id.icon1, item.type.getDisplayString());
         }
         views.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
         views.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));
