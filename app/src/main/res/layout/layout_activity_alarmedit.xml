@@ -16,25 +16,25 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent" android:layout_height="match_parent">
 
-	<android.support.constraint.ConstraintLayout
+	<com.forrestguice.support.constraint.ConstraintLayout
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<android.support.design.widget.AppBarLayout
+		<com.forrestguice.support.widget.AppBarLayout
 			android:id="@+id/layout_app_menubar"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent">
 
-			<android.support.v7.widget.Toolbar
+			<com.forrestguice.support.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-				app:title="@string/configLabel_alarmClock" />
+				app:title="@string/alarms_label_alarmClock" />
 
-		</android.support.design.widget.AppBarLayout>
+		</com.forrestguice.support.widget.AppBarLayout>
 
         <LinearLayout android:id="@+id/fragmentContainer"
             android:layout_width="0dp" android:layout_height="0dp"
@@ -45,11 +45,12 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_app_menubar"
 			android:paddingTop="4dp">
 
-			<fragment android:name="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog"
+			<!-- AlarmEditActivity supplies this fragment via transaction from onCreate -->
+			<!--<fragment android:name="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog"
 				android:id="@+id/editFragment"
-				android:layout_width="match_parent" android:layout_height="match_parent" />
+				android:layout_width="match_parent" android:layout_height="match_parent" />-->
 
         </LinearLayout>
 
-	</android.support.constraint.ConstraintLayout>
-</android.support.design.widget.CoordinatorLayout>
+	</com.forrestguice.support.constraint.ConstraintLayout>
+</com.forrestguice.support.widget.CoordinatorLayout>

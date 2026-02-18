@@ -23,13 +23,14 @@ import android.graphics.Color;
 import android.util.Log;
 import android.util.Xml;
 
+import com.forrestguice.annotation.Nullable;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -86,9 +87,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     /**
      * Property: progress listener
      */
+    @Nullable
     protected ProgressListener listener = null;
     @Override
-    public void setProgressListener( ProgressListener listener )
+    public void setProgressListener( @Nullable ProgressListener listener )
     {
         this.listener = listener;
     }
@@ -405,7 +407,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
     public SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException
     {
         signalImportStarted();
-        SuntimesTheme themes[] = new SuntimesTheme[0];
+        SuntimesTheme[] themes = new SuntimesTheme[0];
         boolean noErrors = true;
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -480,7 +482,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             }
             parseEvent = parser.next();
         }
-        SuntimesTheme themesArray[] = new SuntimesTheme[themes.size()];
+        SuntimesTheme[] themesArray = new SuntimesTheme[themes.size()];
         return themes.toArray(themesArray);
     }
 

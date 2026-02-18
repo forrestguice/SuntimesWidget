@@ -5,18 +5,18 @@
     <TextView style="@style/ChipTrayLabel"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-        android:text="@string/configLabel_alarmEdit_beforeAlertTray" />
+        android:text="@string/alarmEdit_label_beforeAlertTray" />
 
     <LinearLayout
         android:id="@+id/layout_options2" style="@style/ChipTray"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingLeft="4dp" android:paddingRight="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             tools:ignore="MissingConstraints">
 
-            <android.support.constraint.helper.Flow
+            <com.forrestguice.support.constraint.helper.Flow
                 android:id="@+id/flow1"
                 app:constraint_referenced_ids="chip_reminder,chip_action2"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     android:minHeight="@dimen/chip_minHeight">
 
-                    <android.support.v7.widget.AppCompatCheckBox
+                    <CheckBox
                         android:id="@+id/check_reminder" style="@style/ChipTextBase"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -54,7 +54,7 @@
                 android:id="@+id/chip_action2"
                 android:visibility="visible"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:contentDescription="@string/configAction_setAlarmAction">
+                android:contentDescription="@string/alarms_action_setAlarmAction">
 
                 <TextView
                     android:id="@+id/text_action2" style="@style/ChipText1"
@@ -67,6 +67,6 @@
 
             </FrameLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
     </LinearLayout>
 </merge>

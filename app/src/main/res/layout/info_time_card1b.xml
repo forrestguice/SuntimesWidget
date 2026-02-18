@@ -6,7 +6,8 @@
     android:layout_height="wrap_content">
 
     <!-- card scroller -->
-    <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
+    <com.forrestguice.suntimeswidget.cards.CardScroll
+        android:id="@+id/cardContent"
                                                         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout
@@ -55,23 +56,23 @@
                     android:orientation="horizontal" android:layout_gravity="end|bottom"
                     android:padding="3dp">
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_prevbtn"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:src="?attr/icActionPrevious"
                         android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                         android:padding="4dp"
-                        android:contentDescription="@string/prevDay" />
+                        android:contentDescription="@string/action_prevDay" />
 
-                    <ImageButton
+                    <com.forrestguice.support.widget.ImageButton
                         android:id="@+id/info_time_nextbtn"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:src="?attr/icActionNext"
                         android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
                         android:padding="4dp"
-                        android:contentDescription="@string/nextDay" />
+                        android:contentDescription="@string/action_nextDay" />
 
                 </LinearLayout>
 
@@ -92,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lightmap_height"
                     android:layout_gravity="top"
-                    android:contentDescription="@string/configAction_sunDialog" />
+                    android:contentDescription="@string/action_sunDialog" />
 
             </LinearLayout>
 
@@ -102,6 +103,6 @@
 
         </LinearLayout>
 
-    </com.forrestguice.suntimeswidget.SuntimesCardScroll>
+    </com.forrestguice.suntimeswidget.cards.CardScroll>
 
 </FrameLayout>

@@ -25,15 +25,17 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 
 /**
  * A 1x1 layout that displays both the sunrise and sunset time.
@@ -64,7 +66,7 @@ public class SunLayout_1x1_0 extends SunLayout
         this.layoutID = R.layout.layout_widget_1x1_0;
     }
 
-    private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
+    private RiseSetOrder order = RiseSetOrder.TODAY;
 
     @Override
     public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
@@ -100,7 +102,7 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -130,10 +132,10 @@ public class SunLayout_1x1_0 extends SunLayout
                     views.setViewPadding(R.id.text_time_rise_suffix, 0, 0, (int)scaledPadding, 0);
                     views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding), 0, (int)scaledPadding/2, 0);
 
-                    Drawable sunriseIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseIconColor);
+                    Drawable sunriseIcon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, sunriseIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable sunsetIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetIconColor);
+                    Drawable sunsetIcon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, sunsetIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
                 }
             }

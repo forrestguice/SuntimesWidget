@@ -20,10 +20,10 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightGraphDialogTest;
@@ -32,6 +32,8 @@ import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
 import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +45,7 @@ import java.io.IOException;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class IssuesTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -55,13 +57,13 @@ public class IssuesTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /**
@@ -81,7 +83,7 @@ public class IssuesTest extends SuntimesActivityTestBase
         // open the location dialog, and set test location
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(context)
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .clickLocationEditButton()
                 .inputLocationEditValues("TestAppCrash74", latitude, longitude)
                 .assertLocationEditCoordinates(latitude, longitude)
@@ -107,8 +109,8 @@ public class IssuesTest extends SuntimesActivityTestBase
     @Test
     public void test_issue408_refreshLocation()
     {
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
+        WidgetSettings.saveLocationModePref(InstrumentationUtils.getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         SuntimesActivity activity = activityRule.getActivity();
 
@@ -118,8 +120,8 @@ public class IssuesTest extends SuntimesActivityTestBase
                 .assertActivityShown(activity);
         activity.finish();
 
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false).commit();
+        WidgetSettings.saveLocationModePref(InstrumentationUtils.getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
 
         new SuntimesActivityTest.MainActivityAutomator()
@@ -131,7 +133,7 @@ public class IssuesTest extends SuntimesActivityTestBase
     public void test_issue408_updateReceiver()
     {
         // test "show moon" enabled
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true).commit();
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         SuntimesActivity activity = (SuntimesActivity) activityRule.getActivity();
         SuntimesActivityTest.test_mainActivity_fullUpdateReciever(activity);    // calls activity.finish()
@@ -162,8 +164,8 @@ public class IssuesTest extends SuntimesActivityTestBase
 
     protected void init_issue862()
     {
-        config(getContext()).edit().putString(AppSettings.PREF_KEY_GETFIX_MAXAGE, "0");
-        WidgetSettings.saveLocationModePref(getContext(), 0, WidgetSettings.LocationMode.CURRENT_LOCATION);
+        config(InstrumentationUtils.getContext()).edit().putString(AppSettings.PREF_KEY_GETFIX_MAXAGE, "0");
+        WidgetSettings.saveLocationModePref(InstrumentationUtils.getContext(), 0, LocationMode.CURRENT_LOCATION);
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         SuntimesActivity activity = activityRule.getActivity();
         new SuntimesActivityTest.MainActivityRobot()

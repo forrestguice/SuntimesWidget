@@ -30,10 +30,11 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,17 +44,17 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class MoonDialogTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -65,13 +66,13 @@ public class MoonDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test @QuickTest
@@ -163,7 +164,7 @@ public class MoonDialogTest extends SuntimesActivityTestBase
 
         public MoonDialogRobot showDialog(Activity context) {
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_moon)).perform(click());
+            onView(withText(R.string.action_moon)).perform(click());
             return this;
         }
 
@@ -203,20 +204,20 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
 
         public MoonDialogRobot clickOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot clickOverflowMenu_Options_Colors(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public MoonDialogRobot clickOverflowMenu_Help(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public MoonDialogRobot cancelOverflowMenu_Help(Context context) {
@@ -242,8 +243,8 @@ public class MoonDialogTest extends SuntimesActivityTestBase
         }
         public MoonDialogRobot assertOverflowMenuShown(Context context) {
             onView(withText(R.string.moon_dialog_controls)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             return this;
         }
         public MoonDialogRobot assertOverflowMenu_Controls(Context context) {
@@ -256,15 +257,15 @@ public class MoonDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public MoonDialogRobot assertOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertShown);
             // TODO: other options
             return this;
         }
         public MoonDialogRobot assertOverflowMenu_Help(Context context) {
             onView(withId(R.id.txt_help_content)).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertShown);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertClickable);
-            onView(withText(R.string.configAction_onlineHelp)).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertShown);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.action_onlineHelp)).check(ViewAssertionHelper.assertEnabled);
             return this;
         }
 

@@ -5,12 +5,12 @@
 
         <item android:id="@+id/action_manage_events"
             android:icon="?attr/icActionEvents"
-            android:title="@string/configAction_manageEvents"
+            android:title="@string/events_action_manageEvents"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
-            android:title="@string/configAction_help"
+            android:title="@string/action_help"
             app:showAsAction="never" />
 
     </group>

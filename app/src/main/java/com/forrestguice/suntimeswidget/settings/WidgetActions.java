@@ -29,31 +29,29 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeBroadcastReceiver;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
-import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
-import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.SuntimesActionsContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -90,7 +88,7 @@ public class WidgetActions
     public static String PREF_DEF_ACTION_LAUNCH_DESC = "";
 
     public static final String PREF_KEY_ACTION_LAUNCH_COLOR = SuntimesActionsContract.COLUMN_ACTION_COLOR;
-    public static int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
+    public static final int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
 
     public static final String PREF_KEY_ACTION_LAUNCH_TAGS = SuntimesActionsContract.COLUMN_ACTION_TAGS;
 
@@ -165,8 +163,8 @@ public class WidgetActions
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -195,28 +193,26 @@ public class WidgetActions
         BROADCAST("Broadcast"),
         SERVICE("Service");
 
-        private LaunchType(String displayString)
-        {
+        private LaunchType(@NonNull String displayString) {
             this.displayString = displayString;
         }
 
         private String displayString;
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString(String value)
-        {
+        public void setDisplayString(@NonNull String value) {
             displayString = value;
         }
         public static void initDisplayStrings(Context context)
         {
-            ACTIVITY.setDisplayString(context.getString(R.string.launchType_activity));
-            BROADCAST.setDisplayString(context.getString(R.string.launchType_broadcast));
-            SERVICE.setDisplayString(context.getString(R.string.launchType_service));
+            ACTIVITY.setDisplayString(context.getString(R.string.actions_launchType_activity));
+            BROADCAST.setDisplayString(context.getString(R.string.actions_launchType_broadcast));
+            SERVICE.setDisplayString(context.getString(R.string.actions_launchType_service));
         }
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
     }
@@ -343,9 +339,11 @@ public class WidgetActions
         return values;
     }
 
+    @Nullable
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key) {
         return loadActionLaunchPref(context, appWidgetId, id, key, defaultLaunchPrefValue(key));
     }
+    @Nullable
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key, String defaultValue)
     {
         if (id == null) {
@@ -499,7 +497,7 @@ public class WidgetActions
     /**
      * startIntent
      */
-    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class fallbackLaunchClass, @Nullable Integer flags)
+    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class<?> fallbackLaunchClass, @Nullable Integer flags)
     {
         Intent launchIntent = WidgetActions.createIntent(context, appWidgetId, id, data, fallbackLaunchClass);
         if (launchIntent != null)
@@ -514,7 +512,7 @@ public class WidgetActions
 
             } catch (Exception e) {
                 Log.e(TAG, "startIntent: unable to start + " + launchType + " :: " + e);
-                Toast.makeText(context, context.getString(R.string.startaction_failed_toast), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.actions_startaction_failed_toast), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -549,7 +547,7 @@ public class WidgetActions
      * createIntent
      */
     @Nullable
-    public static Intent createIntent(Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class fallbackLaunchClass)
+    public static Intent createIntent(Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class<?> fallbackLaunchClass)
     {
         Intent launchIntent;
         String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
@@ -621,7 +619,7 @@ public class WidgetActions
         //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
-            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(context, dataString, data)));
+            Uri dataUri = Uri.parse(Uri.decode(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -703,7 +701,7 @@ public class WidgetActions
                 } else {
                     if (value.contains("%"))
                     {
-                        String v = DataSubstitutions.displayStringForTitlePattern0(context, value, data);
+                        String v = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), value, data);
                         if (!v.contains("%")) {
                             applyExtra(context, intent, key + "=" + v, data);    // recursive call
 
@@ -818,10 +816,10 @@ public class WidgetActions
         ;
 
         private String title, desc;
-        private String[] tags;
-        private boolean listed;
+        private final String[] tags;
+        private final boolean listed;
 
-        private SuntimesAction(String title, String desc, String[] tags, boolean listed)
+        private SuntimesAction(@NonNull String title, @NonNull String desc, String[] tags, boolean listed)
         {
             this.title = title;
             this.desc = desc;
@@ -829,21 +827,24 @@ public class WidgetActions
             this.listed = listed;
         }
 
+        @NonNull
         public String toString() {
             return (desc != null && !desc.trim().isEmpty()) ? desc : title;
         }
 
+        @NonNull
         public String desc() {
             return desc;
         }
-        public void setDesc( String desc ) {
+        public void setDesc( @NonNull String desc ) {
             this.desc = desc;
         }
 
+        @NonNull
         public String title() {
             return title;
         }
-        public void setTitle( String title ) {
+        public void setTitle( @NonNull String title ) {
             this.title = title;
         }
 
@@ -858,8 +859,8 @@ public class WidgetActions
         public static void initDisplayStrings( Context context )
         {
             SuntimesAction[] actions = SuntimesAction.values();  // TODO
-            String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
-            String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
+            String[] titles = context.getResources().getStringArray(R.array.actions_tapActions_titles);
+            String[] desc = context.getResources().getStringArray(R.array.actions_tapActions_display);
             for (int i=0; i < desc.length; i++)
             {
                 if (i < actions.length)
@@ -1032,7 +1033,7 @@ public class WidgetActions
         }
     }
 
-    public static String[] ANDROID_ACTION_SUGGESTIONS = new String[] {
+    public static final String[] ANDROID_ACTION_SUGGESTIONS = new String[] {
             Intent.ACTION_VIEW, Intent.ACTION_SEARCH, Intent.ACTION_PICK, Intent.ACTION_GET_CONTENT,
             Intent.ACTION_SEND,  Intent.ACTION_SENDTO, Intent.ACTION_SEND_MULTIPLE, "android.intent.action.PASTE",
             Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_INSERT_OR_EDIT, Intent.ACTION_DELETE,

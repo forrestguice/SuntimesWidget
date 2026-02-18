@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView style="@style/WidgetTitleTextView"
+              android:id="@+id/text_title" android:visibility="gone"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:gravity="start"
+              tools:text="title" />
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" android:gravity="center" android:layout_gravity="center"
+        android:layout_marginBottom="4dp">
+
+        <ImageView android:id="@+id/image_time"
+            android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/app_name_clockwidget0"
+            android:src="@drawable/ic_action_time" />
+
+        <RelativeLayout android:visibility="gone"
+            android:id="@+id/text_time_layout"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center" android:layout_gravity="center">
+
+            <TextView style="@style/WidgetTimeTextView" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_time"
+                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
+                android:paddingTop="0dp" android:paddingBottom="0dp"
+                android:layout_gravity="end"
+                android:gravity="end|right"
+                android:text=""
+                tools:text="12:00" />
+
+            <TextView android:id="@+id/text_time_suffix" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                style="@style/WidgetSuffixTextView"
+                android:layout_gravity="center_vertical|bottom|end"
+                android:layout_toEndOf="@+id/text_time" android:layout_toRightOf="@+id/text_time"
+                android:layout_alignBottom="@+id/text_time" android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+                android:text="" android:maxEms="@integer/clock_amppm_maxems"
+                tools:text="p.m." />
+
+            <TextView android:id="@+id/text_time_extras" android:visibility="visible"
+                style="@style/WidgetSuffixTextView"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_below="@+id/text_time_suffix" android:layout_alignRight="@+id/text_time_suffix" android:layout_alignEnd="@+id/text_time_suffix"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+                android:paddingTop="0dp" android:paddingBottom="0dp"
+                android:maxLines="1"
+                android:layout_gravity="center" android:gravity="top|end"
+                tools:text="-12m 36s eot" />
+
+        </RelativeLayout>
+
+        <TextView android:id="@+id/text_date" android:visibility="visible"
+            style="@style/WidgetTimeTextView2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
+            android:paddingTop="0dp" android:paddingBottom="0dp"
+            android:maxLines="2"
+            android:layout_gravity="center"
+            tools:text="April 16, 2022" />
+
+    </LinearLayout>
+
+</merge>

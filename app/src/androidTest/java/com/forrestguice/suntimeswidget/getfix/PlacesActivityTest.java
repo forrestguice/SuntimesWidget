@@ -30,9 +30,11 @@ import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,22 +44,22 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShownCompletely;
@@ -67,12 +69,11 @@ import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatch
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class PlacesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -84,13 +85,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_PlacesActivit_menu()
+    public void test_PlacesActivity_menu()
     {
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -131,9 +132,9 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -229,8 +230,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_build()
     {
-        clearPlaces(getContext());
-        assertEquals(0, numPlaces(getContext()));
+        clearPlaces(InstrumentationUtils.getContext());
+        assertEquals(0, numPlaces(InstrumentationUtils.getContext()));
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -247,7 +248,8 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(activity)
                 .clickOverflowMenu_build(activity)
                 .assertBuildDialogShown(activity)
-                .clickBuildDialog_addButton().sleep(500);
+                .clickBuildDialog_allButton()
+                .clickBuildDialog_addButton().sleep(3000);
         assertTrue(numPlaces(activity) > 0);
         robot.assertListHasAtLeast(activity, 1);
     }
@@ -260,10 +262,10 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         Location location2 = new Location(locationName + "2", "33.5773682", "-112.55131");
         Location location3 = new Location("Test2", "33.5773682", "-112.55131");
 
-        addLocationToDatabaseIfMissing(getContext(), location1);
-        addLocationToDatabaseIfMissing(getContext(), location2);
-        addLocationToDatabaseIfMissing(getContext(), location3);
-        int n = numPlaces(getContext());
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location1);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location2);
+        addLocationToDatabaseIfMissing(InstrumentationUtils.getContext(), location3);
+        int n = numPlaces(InstrumentationUtils.getContext());
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
@@ -280,13 +282,13 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         robot.showOverflowMenu(activity)
                 .clickOverflowMenu_clear(activity)
                 .assertClearDialogShown(activity)
-                .clickClearDialog_clearButton().sleep(1000)
+                .clickClearDialog_clearButton().sleep(3000)
                 .assertEmptyPlaces(activity)
                 .assertUndoClearSnackbarShown(activity);
         assertEquals(0, numPlaces(activity));
 
         robot.clickSnackbar_undo()
-                .assertUndoClearSnackbarNotShown(activity)
+                .assertUndoClearSnackbarNotShown(activity).sleep(3000)
                 .assertListHasAtLeast(activity, 3);
         assertEquals(n, numPlaces(activity));
     }
@@ -294,7 +296,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_PlacesActivity_add()
     {
-        clearPlaces(getContext());
+        clearPlaces(InstrumentationUtils.getContext());
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
 
@@ -412,7 +414,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot clickSearchButton() {
-            onView(withContentDescription(R.string.configAction_searchPlace)).perform(click());
+            onView(withContentDescription(R.string.places_action_searchPlace)).perform(click());
             return this;
         }
         public PlacesActivityRobot clickSearchClearButton()
@@ -431,32 +433,32 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickOverflowMenu_add(Context context) {
-            onView(withText(R.string.configAction_addPlace)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_addPlace)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_build(Context context) {
-            onView(withText(R.string.configLabel_places_build)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_label_build)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.configAction_importPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_importPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.configAction_exportPlaces)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.places_action_exportPlaces)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public PlacesActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public PlacesActivityRobot clickAcceptButton() {
-            onView(allOf(withContentDescription(R.string.configAction_selectPlace), withClassName(endsWith("ActionMenuItemView")))).perform(click());
+            onView(allOf(withContentDescription(R.string.places_action_selectPlace), withClassName(endsWith("ActionMenuItemView")))).perform(click());
             return this;
         }
 
@@ -466,7 +468,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickBuildDialog_addButton() {
-            onView(allOf(withText(R.string.configLabel_places_build), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.places_action_addPlace), withClassName(endsWith("Button")))).perform(click());
+            return this;
+        }
+        public PlacesActivityRobot clickBuildDialog_allButton() {
+            onView(allOf(withText(R.string.action_checkAll), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickBuildDialog_cancelButton() {
@@ -475,7 +481,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot clickClearDialog_clearButton() {
-            onView(allOf(withText(R.string.configAction_clearPlaces), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.places_action_clearPlaces), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
         public PlacesActivityRobot clickClearDialog_cancelButton() {
@@ -483,12 +489,12 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot clickSnackbar_undo() {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).perform(click());
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).perform(click());
             return this;
         }
 
         public PlacesActivityRobot clickAddDialog_saveButton() {
-            onView(withContentDescription(R.string.configAction_savePlace)).perform(click());
+            onView(withContentDescription(R.string.places_action_savePlace)).perform(click());
             return this;
         }
         public PlacesActivityRobot clickAddDialog_cancelButton() {
@@ -524,19 +530,19 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         /////////////////////////////////////////////////////////////////////////
 
         public PlacesActivityRobot assertActivityShown(Context context) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.configLabel_places),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.places_label),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             return this;
         }
 
         public PlacesActivityRobot assertActionBarTitleShown(Context context, boolean isShown) {
-            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.configLabel_places),
+            onView(allOf(withClassName(endsWith("TextView")), withText(R.string.places_label),
                     isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
 
         public PlacesActivityRobot assertSearchButtonShown(Context context, boolean isShown) {
-            onView(withContentDescription(R.string.configAction_searchPlace)).check(isShown ? assertShownCompletely : assertHidden);
+            onView(withContentDescription(R.string.places_action_searchPlace)).check(isShown ? assertShownCompletely : assertHidden);
             return this;
         }
         public PlacesActivityRobot assertSearchFieldShown(Context context, boolean isShown) {
@@ -573,17 +579,17 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         }
 
         public PlacesActivityRobot assertEmptyPlaces(Context context) {
-            onView(withId(android.R.id.empty)).check(assertShown);
+            onView(withId(R.id.emptyView_text)).check(assertShown);
             onView(withId(R.id.placesList)).check(assertHidden);
             return this;
         }
 
         public PlacesActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_addPlace)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configLabel_places_build)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_clearPlaces)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_importPlaces)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_addPlace)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_label_build)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_clearPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_importPlaces)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.places_action_exportPlaces)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
@@ -596,11 +602,11 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public PlacesActivityRobot assertUndoClearSnackbarShown(Context context) {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).check(assertShown);
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).check(assertShown);
             return this;
         }
         public PlacesActivityRobot assertUndoClearSnackbarNotShown(Context context) {
-            onView(allOf(withText(R.string.configAction_undo), withClassName(endsWith("Button")))).check(doesNotExist());
+            onView(allOf(withText(R.string.action_undo), withClassName(endsWith("Button")))).check(doesNotExist());
             return this;
         }
 

@@ -24,42 +24,48 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
-import android.util.Pair;
+
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
+import com.forrestguice.colors.ColorValues;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
@@ -67,20 +73,27 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.moon.colors.MoonApsisColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.ShareUtils;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.ImageViewCompat;
+
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
+import com.forrestguice.util.Pair;
 
 import java.util.Calendar;
 import java.util.List;
@@ -88,20 +101,22 @@ import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class MoonDialog extends BottomSheetDialogFragment
+public class MoonDialog extends BottomSheetDialogBase
 {
     public static final String ARG_DATETIME = "datetime";
     public static final String ARG_PLAYING = "playing";
     public static final String ARG_PLAY_OFFSET = "offsetMinutes";
 
     public static final String DIALOGTAG_COLORS = "moon_colors";
+    public static final String DIALOGTAG_TIME = "moon_time";
 
     public static final String DIALOGTAG_HELP = "moon_help";
     public static final int HELP_PATH_ID = R.string.help_moon_path;
 
     public static final String MAPTAG_MOON = "_moon";
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public MoonDialog()
     {
@@ -112,11 +127,13 @@ public class MoonDialog extends BottomSheetDialogFragment
         setArguments(args);
     }
 
+    @Nullable
     private SuntimesMoonData data;
-    public void setData( SuntimesMoonData data )
+    public void setData( @Nullable SuntimesMoonData data )
     {
-        if (data != null && !data.isCalculated() && data.isImplemented()) {
-            data.calculate(getActivity());
+        Context context = getContext();
+        if (context != null && data != null && !data.isCalculated() && data.isImplemented()) {
+            data.calculate(context);
         }
         this.data = data;
     }
@@ -126,13 +143,13 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
     public void showPositionAt(@Nullable Long datetime, boolean updateViews)
     {
-        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        getArgs().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded() && updateViews) {
             updateViews();
         }
     }
     protected long arg_dateTime() {
-        return getArguments().getLong(ARG_DATETIME, -1);
+        return getArgs().getLong(ARG_DATETIME, -1);
     }
 
     private TextView text_dialogTitle;
@@ -159,18 +176,21 @@ public class MoonDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        initLocale(getContext());
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        initLocale(context);
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_moon, parent, false);
-        initViews(getContext(), dialogContent);
-        themeViews(getContext());
+        initViews(context, dialogContent);
+        themeViews(context);
         return dialogContent;
     }
 
     public void initLocale(Context context)
     {
+        AndroidResources res = AndroidResources.wrap(context);
+        TimeDeltaDisplay.initDisplayStrings(res, new AndroidResID_TimeDeltaDisplay());
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(res, new AndroidResID_SolarEvents());
     }
 
     @Override
@@ -179,98 +199,36 @@ public class MoonDialog extends BottomSheetDialogFragment
         super.onResume();
         expandSheet(getDialog());
 
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        Context context = requireContext();
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
-            boolean isNightMode = getActivity().getResources().getBoolean(R.bool.is_nightmode);
+            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(AppColorValues.TAG_APPCOLORS);
-            colorDialog.setColorCollection(new AppColorValuesCollection<>(getActivity()));
+            colorDialog.setColorCollection(new AppColorValuesCollection<>(context));
             colorDialog.setDialogListener(colorDialogListener);
         }
 
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        TimeDialog timeDialog = (TimeDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null) {
+            timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
+        }
+
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
-            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+            helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         }
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
-            if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        }
-    }
-    private void collapseSheet(Dialog dialog)
-    {
-        if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
-            if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        }
-    }
-    public boolean isCollapsed()
-    {
-        BottomSheetBehavior bottomSheet = initSheet(getDialog());
-        if (bottomSheet != null) {
-            return (bottomSheet.getState() == BottomSheetBehavior.STATE_COLLAPSED);
-        }
-        return false;
+    protected int getPeekViewId() {
+        return R.id.divider1;
     }
 
-    @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
-    {
-        if (dialog != null)
-        {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                return behavior;
-            }
-        }
-        return null;
-    }
-
-    private void initPeekHeight(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            ViewGroup dialogLayout = (LinearLayout) bottomSheet.findViewById(R.id.moondialog_layout);
-            View divider1 = bottomSheet.findViewById(R.id.divider1);
-            if (dialogLayout != null && divider1 != null)
-            {
-                Rect headerBounds = new Rect();
-                divider1.getDrawingRect(headerBounds);
-                dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                behavior.setPeekHeight(headerBounds.top);
-
-            } else {
-                behavior.setPeekHeight(-1);
-            }
-        }
-    }
-
-    private Runnable initPeekHeight = new Runnable() {
+    private final Runnable initPeekHeight = new Runnable() {
         @Override
         public void run() {
-            initPeekHeight(getDialog());
+            BottomSheetDialogBase.initPeekHeight(getDialog(), getPeekViewId());
         }
     };
 
@@ -285,7 +243,7 @@ public class MoonDialog extends BottomSheetDialogFragment
                 updateViews();
                 text_dialogTitle.post(initPeekHeight);
 
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(context)) {
                     menuButton.requestFocus();
                 }
             }
@@ -343,7 +301,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(onMenuClicked);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(context)) {
                 menuButton.setFocusableInTouchMode(true);
             }
         }
@@ -376,12 +334,12 @@ public class MoonDialog extends BottomSheetDialogFragment
     @SuppressLint("ResourceType")
     public void themeViews(Context context)
     {
-        AppColorValues values = AppColorValuesCollection.initSelectedColors(getActivity());
+        AppColorValues values = AppColorValuesCollection.initSelectedColors(context);
         if (values != null) {
-            currentphase.setColors(getActivity(), values);
-            moonriseset.setColors(getActivity(), values);
-            moonapsis.setColors(getActivity(), values);
-            moonphases.setColors(getActivity(), values);
+            currentphase.setColors(context, values);
+            moonriseset.setColors(context, values);
+            moonapsis.setColors(context, values);
+            moonphases.setColors(context, values);
         }
 
         if (themeOverride != null)
@@ -406,9 +364,13 @@ public class MoonDialog extends BottomSheetDialogFragment
             text_dialogTimeOffset.setTextColor(textColor);
             text_dialogTimeOffset.setTextSize(textSizeSp);
 
+            //noinspection deprecation
             moonriseset.themeViews(context, themeOverride);
+            //noinspection deprecation
             currentphase.themeViews(context, themeOverride);
+            //noinspection deprecation
             moonphases.themeViews(context, themeOverride);
+            //noinspection deprecation
             moonapsis.themeViews(context, themeOverride);
 
             moondistance_label.setTextColor(titleColor);
@@ -437,6 +399,7 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     private SuntimesTheme themeOverride = null;
+    @SuppressWarnings("deprecation")
     @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
@@ -460,14 +423,18 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void updateViews(boolean scrollViews)
     {
         stopUpdateTask();
-        Context context = getContext();
         Calendar dateTime = getDialogCalendar();
         updateTimeText();
-        moonriseset.updateViews(context);
-        currentphase.updateViews(context, data, dateTime);
-        moonphases.updateViews(context);
-        moonapsis.updateViews(context);
-        updateMoonApsis(dateTime);
+
+        Context context = getContext();
+        if (context != null)
+        {
+            moonriseset.updateViews(context);
+            currentphase.updateViews(context, data, dateTime);
+            moonphases.updateViews(context);
+            moonapsis.updateViews(context);
+            updateMoonApsis(context, dateTime);
+        }
 
         if (resetButton != null) {
             boolean resetIsPossible = isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow());
@@ -504,26 +471,27 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         long dialogTimeMillis = getDialogTime();
 
-        Calendar dialogTime = Calendar.getInstance(data.timezone());
+        TimeZone tz = (data != null ? data.timezone() : TimeZone.getDefault());
+        Calendar dialogTime = Calendar.getInstance(tz);
         dialogTime.setTimeInMillis(dialogTimeMillis);
         boolean nowIsAfter = now.after(dialogTime);
 
         String suffix = "";
         if (isOffset(nowMillis, dialogTimeMillis)) {
-            suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+            suffix = ((nowIsAfter) ? context.getString(R.string.cardlabel_past_today) : context.getString(R.string.cardlabel_future_today));
         }
 
-        String timeText = utils.calendarDateTimeDisplayString(context, dialogTime).toString();
+        String timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dialogTime).toString();
         if (text_dialogTime != null)
         {
-            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
+            CharSequence timeDisplay = (suffix.isEmpty()) ? timeText : SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong, timeText, suffix), suffix, warningColor);
             if (inDST(dialogTime.getTimeZone(), dialogTime))
             {
                 int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
-                SuntimesUtils.ImageSpanTag[] spanTags = {
-                        new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_DST, SuntimesUtils.createDstSpan(context, iconSize))
+                SpanUtils.ImageSpanTag[] spanTags = {
+                        new SpanUtils.ImageSpanTag(SpanUtils.SPANTAG_DST, SpanUtils.createDstSpan(context, iconSize))
                 };
-                CharSequence dstIcon = SuntimesUtils.createSpan(context, " " + SuntimesUtils.SPANTAG_DST, spanTags);
+                CharSequence dstIcon = SpanUtils.createSpan(context, " " + SpanUtils.SPANTAG_DST, spanTags);
                 timeDisplay = TextUtils.concat(timeDisplay, dstIcon);
             }
             text_dialogTime.setText(timeDisplay);
@@ -532,10 +500,10 @@ public class MoonDialog extends BottomSheetDialogFragment
         if (text_dialogTimeOffset != null) {
             if (!suffix.isEmpty())
             {
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
+                TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, dialogTimeMillis, false, true, false);
                 offsetText.setSuffix("");
-                String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString());
-                text_dialogTimeOffset.setText(SuntimesUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
+                String displayString = context.getString((nowIsAfter ? R.string.delta_ago : R.string.delta_hence), offsetText.toString());
+                text_dialogTimeOffset.setText(SpanUtils.createBoldColorSpan(null, displayString, offsetText.toString(), warningColor));
             } else text_dialogTimeOffset.setText(" ");
         }
     }
@@ -568,12 +536,11 @@ public class MoonDialog extends BottomSheetDialogFragment
         return Math.abs(nowMillis - eventMillis) > 60 * 1000;
     }
 
-    private void updateMoonApsis(Calendar dateTime)
+    private void updateMoonApsis(@Nullable Context context, Calendar dateTime)
     {
-        Context context = getContext();
         if (context != null && data != null && data.isCalculated())
         {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(dateTime);
@@ -582,8 +549,8 @@ public class MoonDialog extends BottomSheetDialogFragment
                 ColorValues colors = moonapsis.getColors();
                 int risingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_APOGEE_TEXT);
                 int settingColor = colors.getColor(MoonApsisColorValues.COLOR_MOON_PERIGEE_TEXT);
-                SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
+                TimeDisplayText distance = LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), position.distance, units, 2, true);
+                moondistance.setText(SpanUtils.createColorSpan(null, LengthUnitDisplay.formatAsDistance(AndroidResources.wrap(context), distance), distance.getValue(), (moonapsis.isRising() ? risingColor : settingColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
@@ -639,29 +606,38 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         @Override
         public void onClick(View v, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID) {
-            showContextMenu(getActivity(), v, adapter, position, eventID);
+            if (getContext() != null) {
+                showContextMenu(getContext(), v, adapter, position, eventID);
+            }
         }
     };
 
     private final MoonPhasesView1.MoonPhasesViewListener moonphases_listener = new MoonPhasesView1.MoonPhasesViewListener() {
         @Override
         public void onClick(View v, MoonPhasesView1.PhaseAdapter adapter, int position, SuntimesCalculator.MoonPhase phase) {
-            showContextMenu(getActivity(), v, adapter, position, phase);
+            if (getContext() != null) {
+                showContextMenu(getContext(), v, adapter, position, phase);
+            }
         }
     };
 
     private final MoonApsisView.MoonApsisViewListener moonapsis_listener = new MoonApsisView.MoonApsisViewListener() {
         @Override
         public void onClick(View v, MoonApsisView.MoonApsisAdapter adapter, int position, boolean isRising) {
-            showContextMenu(getActivity(), v, adapter, position, isRising);
+            if (getContext() != null) {
+                showContextMenu(getContext(), v, adapter, position, isRising);
+            }
         }
     };
 
     private final View.OnClickListener currentphase_onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //showMediaMenu(getActivity(), v);
-            showMediaPopup(getActivity(), text_dialogTimeOffset);
+            //showMediaMenu(getContext(), v);
+            Context context = getContext();
+            if (context != null) {
+                showMediaPopup(context, text_dialogTimeOffset);
+            }
         }
     };
     private final View.OnLongClickListener currentphase_onLongClickListener = new View.OnLongClickListener() {
@@ -690,14 +666,14 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            setOffsetMinutes(getOffsetMinutes() + WorldMapDialog.SEEK_STEPSIZE_5m);
+            setOffsetMinutes(getOffsetMinutes() + MapSpeed.FIVE_MINUTES.getStepMinutes());
         }
     };
     private final View.OnClickListener onPrevClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
-            setOffsetMinutes(getOffsetMinutes() - WorldMapDialog.SEEK_STEPSIZE_5m);
+            setOffsetMinutes(getOffsetMinutes() - MapSpeed.FIVE_MINUTES.getStepMinutes());
         }
     };
     private final View.OnClickListener onResetClicked = new View.OnClickListener() {
@@ -706,6 +682,52 @@ public class MoonDialog extends BottomSheetDialogFragment
             stopMap(true);
         }
     };
+    private final View.OnClickListener onSearchClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            if (getContext() != null) {
+                showSeekTimeDialog(getContext());
+            }
+        }
+    };
+
+    protected void showSeekTimeDialog(Context context)
+    {
+        TimeDialog dialog = new TimeDialog();
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(context, 0) == TimeFormatMode.MODE_24HR);
+        dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
+        dialog.setInitialTime("12", "0");    // TODO: from prefs
+        dialog.setDialogTitle(context.getString(R.string.action_seekTime));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+    }
+
+    private DialogInterface.OnClickListener onSeekTimeDialogAccepted(final TimeDialog dialog) {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                if (getContext() != null) {
+                    int hour = dialog.getSelectedHour();
+                    int minute = dialog.getSelectedMinute();    // TODO: to prefs
+                    //seekDateTime(getContext(), hour, minute, getDialogCalendar());
+                    seekDateTime(getContext(), hour, minute, Calendar.getInstance());
+                }
+            }
+        };
+    }
+
+    protected void seekDateTime(@Nullable Context context, int hour, int minute, Calendar now)
+    {
+        Calendar c = Calendar.getInstance(now.getTimeZone());
+        c.setTimeInMillis(now.getTimeInMillis());
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
+
+        long offsetMinutes = (c.getTimeInMillis() - now.getTimeInMillis()) / (60 * 1000);
+        setOffsetMinutes((int) offsetMinutes);
+        //showPositionAt(calendar.getTimeInMillis(), true);
+    }
 
     public void centerDialog()
     {
@@ -733,7 +755,9 @@ public class MoonDialog extends BottomSheetDialogFragment
     private final View.OnClickListener onMenuClicked = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showOverflowMenu(getActivity(), v);
+            if (getContext() != null) {
+                showOverflowMenu(getContext(), v);
+            }
         }
     });
 
@@ -742,14 +766,11 @@ public class MoonDialog extends BottomSheetDialogFragment
      */
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick, null);
-        updateOverflowMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu, onOverflowMenuClick).show();
         return true;
     }
-    private void updateOverflowMenu(Context context, PopupMenu popup)
+    private void updateOverflowMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem lunarNoonItem = menu.findItem(R.id.action_lunarnoon_show);
         if (lunarNoonItem != null) {
             lunarNoonItem.setChecked(AppSettings.loadShowLunarNoonPref(context));
@@ -771,54 +792,62 @@ public class MoonDialog extends BottomSheetDialogFragment
             columnItem.setChecked(true);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_colors:
-                    showColorDialog(getActivity());
-                    return true;
-
-                case R.id.action_phase_showdate:
-                    toggleShowPhaseDate(getContext());
-                    return true;
-
-                case R.id.action_phase_columns_2:
-                    saveMoonPhaseColumns(2);
-                    return true;
-
-                case R.id.action_phase_columns_3:
-                    saveMoonPhaseColumns(3);
-                    return true;
-
-                case R.id.action_phase_columns_4:
-                    saveMoonPhaseColumns(4);
-                    return true;
-
-                case R.id.action_show_controls:
-                    showMediaPopup(getActivity(), text_dialogTimeOffset);
-                    return true;
-
-                case R.id.action_lunarnoon_show:
-                    toggleLunarNoon(getContext());
-                    return true;
-
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
-
-                default:
-                    return false;
+            Context context = getContext();
+            if (context == null) {
+                Log.w("MoonDialog", "onMenuItemClick: null context!");
+                return false;
             }
+
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors) {
+                showColorDialog(context);
+                return true;
+
+            } else if (itemId == R.id.action_phase_showdate) {
+                toggleShowPhaseDate(context);
+                return true;
+
+            } else if (itemId == R.id.action_phase_columns_2) {
+                saveMoonPhaseColumns(context, 2);
+                return true;
+
+            } else if (itemId == R.id.action_phase_columns_3) {
+                saveMoonPhaseColumns(context, 3);
+                return true;
+
+            } else if (itemId == R.id.action_phase_columns_4) {
+                saveMoonPhaseColumns(context, 4);
+                return true;
+
+            } else if (itemId == R.id.action_show_controls) {
+                showMediaPopup(context, text_dialogTimeOffset);
+                return true;
+
+            } else if (itemId == R.id.action_lunarnoon_show) {
+                toggleLunarNoon(context);
+                return true;
+
+            } else if (itemId == R.id.action_help) {
+                showHelp(context);
+                return true;
+            }
+            return false;
         }
     });
 
-    protected void saveMoonPhaseColumns(int numColumns)
+    protected void saveMoonPhaseColumns(@NonNull Context context, int numColumns)
     {
-        AppSettings.saveMoonPhaseColumnsPref(getActivity(), numColumns);
+        AppSettings.saveMoonPhaseColumnsPref(context, numColumns);
         moonphases.setNumColumns(numColumns);
         moonphases.onSizeChanged(moonphases.getWidth(), moonphases.getHeight(), moonphases.getWidth(), moonphases.getHeight());
     }
@@ -828,14 +857,11 @@ public class MoonDialog extends BottomSheetDialogFragment
      */
     protected boolean showMediaMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick, null);
-        updateMediaMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.moonmenu_media, onMediaMenuClick).show();
         return true;
     }
-    private void updateMediaMenu(Context context, PopupMenu popup)
+    private void updateMediaMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem playItem = menu.findItem(R.id.action_play);
         if (playItem != null) {
             playItem.setVisible( !isPlaying() );
@@ -849,28 +875,30 @@ public class MoonDialog extends BottomSheetDialogFragment
             resetItem.setEnabled(isOffset(arg_dateTime() != -1 ? arg_dateTime() : getNow()));
         }
     }
-    private PopupMenu.OnMenuItemClickListener onMediaMenuClick = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onMediaMenuClick = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateMediaMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_play:
-                    playMap();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_play) {
+                playMap();
+                return true;
 
-                case R.id.action_pause:
-                    stopMap(false);
-                    return true;
+            } else if (itemId == R.id.action_pause) {
+                stopMap(false);
+                return true;
 
-                case R.id.action_reset:
-                    stopMap(true);
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_reset) {
+                stopMap(true);
+                return true;
             }
+            return false;
         }
     };
 
@@ -931,6 +959,13 @@ public class MoonDialog extends BottomSheetDialogFragment
                     TooltipCompat.setTooltipText(prevButton, prevButton.getContentDescription());
                     ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
                 }
+
+                ImageButton searchButton = (ImageButton) popupView.findViewById(R.id.media_search);
+                if (searchButton != null) {
+                    searchButton.setOnClickListener(createMediaPopupListener(popupView, onSearchClicked));
+                    TooltipCompat.setTooltipText(searchButton, searchButton.getContentDescription());
+                    ImageViewCompat.setImageTintList(searchButton, SuntimesUtils.colorStateList(normalColor, disabledColor, pressedColor));
+                }
             }
             updateMediaPopupView(popupView);
             return popupView;
@@ -974,15 +1009,12 @@ public class MoonDialog extends BottomSheetDialogFragment
     protected boolean showContextMenu(final Context context, View view, MoonRiseSetView1.MoonRiseSetAdapter adapter, int position, String eventID)
     {
         SuntimesMoonData data = adapter.initData(context, position);
-        if (data != null && eventID != null)
+        if (eventID != null)
         {
             Calendar date = MoonRiseSetView1.MoonRiseSetEvent.getCalendarForEvent(data, eventID);
             if (date != null)
             {
-                PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick, onMoonRiseSetContextMenuDismissed);
-                updateContextMenu(context, menu, eventID, date.getTimeInMillis());
-                moonriseset.lockScrolling();   // prevent the popupmenu from nudging the view
-                menu.show();
+                PopupMenuCompat.createMenu(context, view, R.menu.moonriseset_context, onContextMenuClick_riseSet(eventID, date)).show();
                 return true;
             }
         }
@@ -997,10 +1029,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             Calendar date = data.moonPhaseCalendar(phase);
             if (date != null)
             {
-                PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonphase_context, onContextMenuClick, onMoonPhaseContextMenuDismissed);
-                updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
-                moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
-                menu.show();
+                PopupMenuCompat.createMenu(context, view, R.menu.moonphase_context, onContextMenuClick_phase(phase, date)).show();
                 return true;
             }
         }
@@ -1014,24 +1043,21 @@ public class MoonDialog extends BottomSheetDialogFragment
 
         if (event.first != null)
         {
-            PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick, onMoonApsisContextMenuDismissed);
-            updateContextMenu(context, menu, event.first.getTimeInMillis());
-            moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
-            menu.show();
+            PopupMenuCompat.createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick_apsis(event)).show();
             return true;
         }
         return false;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, final long datetime) {
+    private void updateContextMenu(Context context, Menu menu, final long datetime) {
         updateContextMenu(context, menu, (String) null, datetime);
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, @Nullable SolarEvents event, final long datetime) {
+    private void updateContextMenu(Context context, Menu menu, @Nullable SolarEvents event, final long datetime) {
         updateContextMenu(context, menu, (event != null ? event.name() : null), datetime);
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, @Nullable String eventID, final long datetime)
+    private void updateContextMenu(Context context, Menu menu, @Nullable String eventID, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
@@ -1041,9 +1067,8 @@ public class MoonDialog extends BottomSheetDialogFragment
         updateContextMenu(context, menu, data);
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, Intent data)
+    private void updateContextMenu(Context context, Menu m, Intent data)
     {
-        Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
         MenuItem alarmItem = m.findItem(R.id.action_alarm);
@@ -1072,8 +1097,47 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private PopupMenuCompat.PopupMenuListener onContextMenuClick_riseSet(final String eventID, final Calendar date)
     {
+        return new ViewUtils.ThrottledPopupMenuListener(new MoonContextMenuListener()
+        {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateContextMenu(context, menu, eventID, date.getTimeInMillis());
+                moonriseset.lockScrolling();   // prevent the popupmenu from nudging the view
+            }
+        });
+    }
+
+    private PopupMenuCompat.PopupMenuListener onContextMenuClick_phase(final SuntimesCalculator.MoonPhase phase, final Calendar date)
+    {
+        return new ViewUtils.ThrottledPopupMenuListener(new MoonContextMenuListener()
+        {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
+                moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
+            }
+        });
+    }
+
+    private PopupMenuCompat.PopupMenuListener onContextMenuClick_apsis(final Pair<Calendar, SuntimesCalculator.MoonPosition> event)
+    {
+        return new ViewUtils.ThrottledPopupMenuListener(new MoonContextMenuListener()
+        {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateContextMenu(context, menu, event.first.getTimeInMillis());
+                moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
+            }
+        });
+    }
+
+    protected abstract class MoonContextMenuListener extends PopupMenuCompat.PopupMenuListener
+    {
+        @Override
+        public abstract void onUpdateMenu(Context context, Menu menu);
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -1085,56 +1149,53 @@ public class MoonDialog extends BottomSheetDialogFragment
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
 
-            switch (item.getItemId())
-            {
-                case R.id.action_alarm:
-                    if (dialogListener != null) {
-                        SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
-                        dialogListener.onSetAlarm(event);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(itemTime);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_moon:
-                    //moonriseset.setViewListener(null);
-                    showPositionAt(itemTime);
-                    //moonriseset.setViewListener(moonriseset_listener);
-                    return true;
-
-                case R.id.action_worldmap:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMap(itemTime);
-                        collapseSheet(getDialog());
-                    }
-                    return true;
-
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(itemTime);
-                    }
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_alarm) {
+                if (dialogListener != null) {
+                    SolarEvents event = (itemData != null && itemData.hasExtra("event") ? SolarEvents.valueOf(itemData.getStringExtra("event")) : null);
+                    dialogListener.onSetAlarm(event);
                     collapseSheet(getDialog());
-                    return true;
+                }
+                return true;
 
-                case R.id.action_calendar:
-                    openCalendar(context, itemTime);
-                    return true;
+            } else if (itemId == R.id.action_sunposition) {
+                if (dialogListener != null) {
+                    dialogListener.onShowPosition(itemTime);
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_share:
-                    shareItem(context, itemData);
-                    return true;
+            } else if (itemId == R.id.action_moon) {
+                //moonriseset.setViewListener(null);
+                showPositionAt(itemTime);
+                //moonriseset.setViewListener(moonriseset_listener);
+                return true;
 
-                default:
-                    return false;
+            } else if (itemId == R.id.action_worldmap) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMap(itemTime);
+                    collapseSheet(getDialog());
+                }
+                return true;
+
+            } else if (itemId == R.id.action_date) {
+                if (dialogListener != null) {
+                    dialogListener.onShowDate(itemTime);
+                }
+                collapseSheet(getDialog());
+                return true;
+
+            } else if (itemId == R.id.action_calendar) {
+                openCalendar(context, itemTime);
+                return true;
+
+            } else if (itemId == R.id.action_share) {
+                shareItem(context, itemData);
+                return true;
             }
+            return false;
         }
-    });
+    }
 
     protected void openCalendar(Context context, long itemMillis)
     {
@@ -1164,31 +1225,31 @@ public class MoonDialog extends BottomSheetDialogFragment
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int moonriseColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.moonIcon_color_rising_dark));
         int moonsetColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.moonIcon_color_setting_dark));
-        ImageSpan risingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunrise, iconSize, iconSize, moonriseColor);
-        ImageSpan settingIcon = SuntimesUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
-        ImageSpan noonIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
-        ImageSpan midnightIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
-        ImageSpan shareIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
+        ImageSpan risingIcon = SpanUtils.createImageSpan(context, R.drawable.svg_sunrise, iconSize, iconSize, moonriseColor);
+        ImageSpan settingIcon = SpanUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
+        ImageSpan noonIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
+        ImageSpan midnightIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
+        ImageSpan shareIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
         int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.dstTag_dark));
-        ImageSpan dstIcon = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
+        ImageSpan dstIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] helpTags = {
-                new SuntimesUtils.ImageSpanTag("[Icon Rising]", risingIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Setting]", settingIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Noon]", noonIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon Share]", shareIcon),
-                new SuntimesUtils.ImageSpanTag("[Icon DST]", dstIcon),
+        SpanUtils.ImageSpanTag[] helpTags = {
+                new SpanUtils.ImageSpanTag("[Icon Rising]", risingIcon),
+                new SpanUtils.ImageSpanTag("[Icon Setting]", settingIcon),
+                new SpanUtils.ImageSpanTag("[Icon Noon]", noonIcon),
+                new SpanUtils.ImageSpanTag("[Icon Midnight]", midnightIcon),
+                new SpanUtils.ImageSpanTag("[Icon Share]", shareIcon),
+                new SpanUtils.ImageSpanTag("[Icon DST]", dstIcon),
         };
-        SpannableStringBuilder helpSpan0 = SuntimesUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
-        SpannableStringBuilder helpSpan1 = SuntimesUtils.createSpan(context, SuntimesUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
+        SpannableStringBuilder helpSpan0 = SpanUtils.createSpan(context, getString(R.string.help_general_moondialog), helpTags);
+        SpannableStringBuilder helpSpan1 = SpanUtils.createSpan(context, SpanUtils.fromHtml(getString(R.string.help_general_dst)), helpTags);
         CharSequence helpDisplay = TextUtils.concat(helpSpan0, "\n\n", helpSpan1);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpDisplay);
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
-        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getActivity(), HELP_PATH_ID), DIALOGTAG_HELP);
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
+        helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 
@@ -1228,7 +1289,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         }
     };
 
-    /**@Override
+    /*@Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
@@ -1247,20 +1308,20 @@ public class MoonDialog extends BottomSheetDialogFragment
     }
 
     public boolean isPlaying() {
-        return getArguments().getBoolean(ARG_PLAYING);
+        return getArgs().getBoolean(ARG_PLAYING);
     }
     public int getOffsetMinutes() {
-        return getArguments().getInt(ARG_PLAY_OFFSET);
+        return getArgs().getInt(ARG_PLAY_OFFSET);
     }
     public void setOffsetMinutes(int value) {
-        getArguments().putInt(ARG_PLAY_OFFSET, value);
+        getArgs().putInt(ARG_PLAY_OFFSET, value);
         updateViews();
     }
 
     public void playMap()
     {
         stopUpdateTask();
-        getArguments().putBoolean(ARG_PLAYING, true);
+        getArgs().putBoolean(ARG_PLAYING, true);
         updateMediaButtons();
         startUpdateTask();    // TODO: 'play' update task
     }
@@ -1277,9 +1338,9 @@ public class MoonDialog extends BottomSheetDialogFragment
     public void stopMap(boolean reset)
     {
         stopUpdateTask();
-        getArguments().putBoolean(ARG_PLAYING, false);
+        getArgs().putBoolean(ARG_PLAYING, false);
         if (reset) {
-            getArguments().putInt(ARG_PLAY_OFFSET, 0);
+            getArgs().putInt(ARG_PLAY_OFFSET, 0);
         }
         updateMediaButtons();
         updateViews(false);
@@ -1335,7 +1396,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         @Override
         public void run()
         {
-            if (data != null && currentphase != null)
+            if (getContext() != null && data != null && currentphase != null)
             {
                 currentphase.updateIllumination(getContext(), getDialogCalendar());
                 if (updateTask1_isRunning) {
@@ -1375,13 +1436,17 @@ public class MoonDialog extends BottomSheetDialogFragment
         @Override
         public void onColorValuesSelected(ColorValues values)
         {
-            currentphase.setColors(getActivity(), values);
-            moonriseset.setColors(getActivity(), values);
-            moonapsis.setColors(getActivity(), values);
-            moonphases.setColors(getActivity(), values);
+            Context context = getContext();
+            if (context != null)
+            {
+                currentphase.setColors(context, values);
+                moonriseset.setColors(context, values);
+                moonapsis.setColors(context, values);
+                moonphases.setColors(context, values);
 
-            if (dialogListener != null) {
-                dialogListener.onColorsModified(values);
+                if (dialogListener != null) {
+                    dialogListener.onColorsModified(values);
+                }
             }
         }
 
@@ -1393,7 +1458,7 @@ public class MoonDialog extends BottomSheetDialogFragment
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new AppColorValues(getActivity(), true);
+            return (getContext() != null ? new AppColorValues(AndroidResources.wrap(getContext()), true) : null);
         }
     };
 

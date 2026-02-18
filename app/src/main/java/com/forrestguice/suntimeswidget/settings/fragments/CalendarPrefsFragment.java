@@ -24,15 +24,17 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.about.AboutDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 /**
  * Calendar Prefs
@@ -40,8 +42,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CalendarPrefsFragment extends PreferenceFragment
 {
-    public static String calendarPackage = "com.forrestguice.suntimescalendars";
-    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
+    public static final String calendarPackage = "com.forrestguice.suntimescalendars";
+    public static final String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -64,10 +66,10 @@ public class CalendarPrefsFragment extends PreferenceFragment
 
         AppSettings.initLocale(getActivity());
         addPreferencesFromResource(R.xml.preference_calendar);
-        Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
+        Preference calendarReadme = (Preference) findPreference("appwidget_0_calendars_readme");
         if (calendarReadme != null)
         {
-            calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));
+            calendarReadme.setSummary(SpanUtils.fromHtml(getString(R.string.help_calendar)));
             calendarReadme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
                 @Override

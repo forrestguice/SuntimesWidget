@@ -21,10 +21,11 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.support.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
 
@@ -40,7 +41,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e)
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e)
     {
         try {
             Log.e("CRASH", e.getClass().getSimpleName(), e);
@@ -48,6 +49,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             if (context != null)
             {
                 NotificationManagerCompat notifications = NotificationManagerCompat.from(context);
+                //noinspection ConstantConditions
                 if (notifications != null && notifications.areNotificationsEnabled()) {
                     showCrashReportNotification(context, e);
                 } else {

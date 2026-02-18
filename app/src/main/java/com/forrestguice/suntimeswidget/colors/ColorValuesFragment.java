@@ -21,28 +21,25 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
 
-public class ColorValuesFragment extends Fragment
+public class ColorValuesFragment extends DialogBase
 {
     public static final String KEY_DIALOGTHEME = "themeResID";
     protected static final int DEF_DIALOGTHEME = R.style.AppTheme_Dark;
 
     public void setTheme(int themeResID)
     {
-        Bundle args = (getArguments() != null) ? getArguments() : new Bundle();
-        args.putInt(KEY_DIALOGTHEME, themeResID);
-        setArguments(args);
+        getArgs().putInt(KEY_DIALOGTHEME, themeResID);
     }
     public int getThemeResID() {
-        return (getArguments() != null) ? getArguments().getInt(KEY_DIALOGTHEME, DEF_DIALOGTHEME) : DEF_DIALOGTHEME;
+        return getArgs().getInt(KEY_DIALOGTHEME, DEF_DIALOGTHEME);
     }
 
     /////////////////////////////////////////////////////////////

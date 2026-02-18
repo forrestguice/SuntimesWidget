@@ -15,7 +15,7 @@
 -dontobfuscate
 
 # keep MenuBuilder .. reflection used in SuntimesActivity.forceActionBarIcons
--keepclassmembers class **.MenuBuilder {
+-keepclassmembers class *.MenuBuilder {
     void setOptionalIconsVisible(boolean);
 }
 
@@ -30,7 +30,7 @@
 }
 
 # keep classes from support library
--keep class android.support.v7.widget.SearchView { *; }
+-keep class com.forrestguice.support.widget.SearchView { *; }
 
 # keep descriptor classes
 -keep,includedescriptorclasses class com.flask.colorpicker.renderer.ColorWheelRenderer
@@ -44,11 +44,11 @@
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.getfix.LocationConfigView$LocationViewMode
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.getfix.LocationConfigView$LocationConfigViewListener
 
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightMapView$LightMapTaskListener
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightGraphView$LightGraphTaskListener
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LineGraphView$LineGraphTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightMapTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LightGraphTaskListener
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.graph.LineGraphTaskListener
 
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapTask$WorldMapOptions
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapOptions
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.map.WorldMapTask$WorldMapTaskListener
 
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.moon.MoonApsisView$MoonApsisViewListener
@@ -57,9 +57,8 @@
 
 -keep,includedescriptorclasses class com.forrestguice.suntimeswidget.notes.NoteViewFlipper$ViewFlipperListener
 
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.settings.WidgetSettings$TrackingMode
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.settings.WidgetSettings$SolsticeEquinoxMode
--keep,includedescriptorclasses class com.forrestguice.suntimeswidget.settings.WidgetSettings$TrackingMode
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.calculator.settings.TrackingMode
+-keep,includedescriptorclasses class com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode
 
 #-keep class **.SPX
 #-keepclassmembers class * implements java.io.Serializable {

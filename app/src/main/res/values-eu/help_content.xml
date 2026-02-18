@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
+
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
+
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_title"><![CDATA[
+        Hurrengo izenburu ordezkoak onartzen dira:<br/>
+        <br/>
+        <b>Widget guztiak:</b> <br />
+                * <b>%d</b> datarako (adib. Otsailak 12) <br/>
+                * <b>%dd</b> egunerako (laburra) (adib. Al) <br/>
+                * <b>%dD</b> egunerako (luzea) (adib. Astelehena) <br/>
+                * <b>%dY</b> urterako (adib. 2018) <br/>
+                * <b>%dt</b> ordurako (azken eguneraketarena) <br/>
+                * <b>%dT</b> ordurako, segunduekin (azken eguneraketarena) <br/>
+                <br/>
+                * <b>%loc</b> etiketarako (adib. Euskal Herriko erdigunea) <br />
+                * <b>%lat</b> latituderako <br />
+                * <b>%lon</b> longituderako <br/>
+                * <b>%lel</b> for elevation (e.g. 1258 meters) <br/>
+                <br/>
+                * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
+                * <b>%t</b> ordu eremurako (id) (adib. CET) <br/>
+                * <b>%id</b> appWidgetIDrako <br/>
+         <br/>
+         <b>Eguzkiaren widgetak:</b> <br/>
+                * <b>%m</b> modurako (laburra) (adib. Zibila) <br/>
+                * <b>%M</b> modurako (luzea) (adib. Krepuskulu zibila) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <br/>
+         <b>Ilargiaren widgetak:</b> <br/>
+                * <b>%i</b> ilargiaren argiztapenerako (adib. 25%) <br/>
+                * <b>%M</b> ilargialdirako (adib. Ilgora) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <br/>
+         <b>Solstizioaren widgetak:</b> <br/>
+                * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
+                * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>      <!-- TODO -->
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Date Format:</b> A date format pattern.<br/>
+          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <br/>
+          <b>E</b> : day of week <br/>
+          <b>d</b> : day of month <br/>
+          <b>D</b> : day of year <br/>
+          <b>F</b> : weekday in month <br/>
+          <b>M</b> : month of year <br/>
+          <b>y</b> : year of era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
+          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
+          \n\nShare [Icon Share] will copy text to the clipboard.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
+          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_actualTime"><![CDATA[
+          <b>Benetako ordua:</b> Eguzkia zeruertzean dago; hau da gutxi gorabehera egunsentiaren eta ilunabarraren ordua.<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          <b>Krepuskulu zibila:</b> Eguzkia 6 gradu zeruertzaren azpitik dago; izar argitsuenak ikusi daitezke. Argi nahikoa dago kanpoko jardueretarako argi bat erabili behar gabe.<br/><br/>
+          <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
+          <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Udaberriko ekinokzioa:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Udako solstizioa:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Udazkeneko ekinokzioa:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Negu solstizioa:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
+    <string name="help_general_daylength"><![CDATA[
+        <b>Egunaren iraupena:</b> Egunsentiaren eta ilunabarraren arteko denbora.<br/><br/>
+        <b>Argi erabilgarria:</b> Goizeko eta arratsaldeko krepuskulu zibilen arteko denbora.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Ilargiaren argiztapena:</b> Ilargiaren widgetak eta orri nagusiak ilargiaren argiztapena gauerdian erakusten dute (ilargiaren irteera eta ilargia ezkutatzearen erdiko puntua), eta ilargiaren dialogoak ilargiaren oraingo argiztapena erakusten du aldiz.<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Urrezko ordua:</b> Eguzkia 6 gradu zeruertzaren gainetik edo azpitik tartean dago. Goizean urrezko ordua krepuskulu zibilarekin hasten da eta egunsentitik gutxira amaitzen da. Arratsaldean urrezko ordua ilunabarra baino zertxobait lehenago hasten da eta krepuskulu zibilarekin amaitzen da.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Ordu urdina:</b> Eguzkia zeruertzaren azpitik 8 eta 4 gradu artean dago. Ordu urdinaren hasiera eta amaiera itsas krepuskuluaren eta krepuskulu zibilaren artean gertatzen dira.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        Abiaraziko den Activityaren klase izen guztiz egokia.<br/>
+    ]]></string>  <!-- TODO: update from strings.xml -->
+    <string name="help_widgetlist"><![CDATA[
+          <b>Widget berri bat</b> gehitzeko etxeko pantailara jo behar duzu.<br/><br/>
+          <b>Existitzen den widget bat birkonfiguratzeko</b> hurrengo zerrendatik hautatu dezakezu.<br/>
+    ]]></string>
+    <string name="help_themelist">
+        [Icon Add] Gai berri bat gehitu edo [Icon Copy] existitzen den bat kopiatu.\n
+        \n
+        [Icon Edit] Gaiak editatu edo [Icon Delete] ezabatu.\n
+        Gai [Icon Default] lehenetsiak ezin dira ezabatu.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
+
+    <string name="help_calendar"><![CDATA[Gertaeraz hornitu egutegiaren aplikazioa (ilargialdiak, solstizioak, eta ekinokzioak).<br />
+        <br />
+        <u><b><font color="#ff9900">Egutegi baimenak kendu dira.</font></b></u><br />
+        <br />
+        Ezaugarri hau <a href="moreInfoLink">beste aplikazio</a> batean eskuragarri dago.
+    ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+</resources>

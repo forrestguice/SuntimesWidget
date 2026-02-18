@@ -21,20 +21,25 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.util.Log;
-import android.util.Pair;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -158,11 +163,13 @@ public class MoonLayout_1x1_8 extends MoonLayout
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+
+        AndroidResources res = AndroidResources.wrap(context);
 
         if (apogee != null)
         {
-            SuntimesUtils.TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText apogeeString = time_utils.calendarDateTimeDisplayString(res, apogee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
             views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours, timeColor, boldTime));
             if (apogee.second != null) {
@@ -174,7 +181,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         if (perigee != null)
         {
-            SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds, abbreviate);
+            TimeDisplayText perigeeString = time_utils.calendarDateTimeDisplayString(res, perigee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());
             views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours, timeColor, boldTime));
             if (perigee.second != null) {
@@ -190,22 +197,23 @@ public class MoonLayout_1x1_8 extends MoonLayout
         views.setViewVisibility(R.id.moonapsis_perigee_label, visibility);
     }
 
-    public static SpannableString distanceSpan(Context context, double distance, WidgetSettings.LengthUnit units, int color, int suffixColor, boolean boldTime)
+    public static SpannableString distanceSpan(Context context, double distance, LengthUnit units, int color, int suffixColor, boolean boldTime)
     {
-        SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, distance, units, PositionLayout.DECIMAL_PLACES, true);
+        AndroidResources r = AndroidResources.wrap(context);
+        TimeDisplayText distanceDisplay = LengthUnitDisplay.formatAsDistance(r, distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();
-        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
-        SpannableString distanceSpan = SuntimesUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);
-        distanceSpan = SuntimesUtils.createBoldColorSpan(distanceSpan, distanceString, unitsSymbol, suffixColor);
-        distanceSpan = SuntimesUtils.createRelativeSpan(distanceSpan, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        String distanceString = LengthUnitDisplay.formatAsDistance(r, distanceDisplay);
+        SpannableString distanceSpan = SpanUtils.createColorSpan(null, distanceString, distanceString, color, boldTime);
+        distanceSpan = SpanUtils.createBoldColorSpan(distanceSpan, distanceString, unitsSymbol, suffixColor);
+        distanceSpan = SpanUtils.createRelativeSpan(distanceSpan, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return distanceSpan;
     }
 
     public static SpannableString noteSpan(Context context, @NonNull Calendar now, @NonNull Calendar event, boolean showWeeks, boolean showHours, int timeColor, boolean boldTime)
     {
-        String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
-        String noteString = context.getString((event.before(now) ? R.string.ago : R.string.hence), noteTime);
-        return (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
+        String noteTime = delta_utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
+        String noteString = context.getString((event.before(now) ? R.string.delta_ago : R.string.delta_hence), noteTime);
+        return (boldTime ? SpanUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SpanUtils.createColorSpan(null, noteString, noteTime, timeColor));
     }
 
     protected int suffixColor = Color.GRAY;
@@ -257,7 +265,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min  // TODO
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 }

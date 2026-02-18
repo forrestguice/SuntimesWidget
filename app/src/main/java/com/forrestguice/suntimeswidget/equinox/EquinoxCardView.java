@@ -20,17 +20,8 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,19 +30,26 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.PagerSnapHelper;
+import com.forrestguice.support.widget.RecyclerView;
 
-@SuppressWarnings("Convert2Diamond")
 public class EquinoxCardView extends LinearLayout
 {
     protected EquinoxViewOptions options = new EquinoxViewOptions();
@@ -140,13 +138,12 @@ public class EquinoxCardView extends LinearLayout
         card_view = (RecyclerView)findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
-        card_view.addItemDecoration(new CardViewDecorator(context));
+        card_view.addItemDecoration(new RecyclerView.MarginDecorator(0));
 
         card_view.setOnScrollListener(onCardScrollListener);
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(card_view);
+        new PagerSnapHelper().attachToRecyclerView(card_view);
 
         initAdapter(context);
     }
@@ -154,8 +151,8 @@ public class EquinoxCardView extends LinearLayout
     public void initAdapter(Context context)
     {
         boolean southernHemisphere = (WidgetSettings.loadLocalizeHemispherePref(context, 0)) && (WidgetSettings.loadLocationPref(context, 0).getLatitudeAsDouble() < 0);
-        WidgetSettings.SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? WidgetSettings.SolsticeEquinoxMode.values(southernHemisphere)
-                                                                                                   : WidgetSettings.SolsticeEquinoxMode.partialValues(southernHemisphere);
+        SolsticeEquinoxMode[] modes = AppSettings.loadShowCrossQuarterPref(context) ? SolsticeEquinoxMode.values(southernHemisphere)
+                                                                                                   : SolsticeEquinoxMode.partialValues(southernHemisphere);
         options.highlightPosition = -1;
 
         card_adapter = new EquinoxDataAdapter(context, modes, options);
@@ -200,6 +197,7 @@ public class EquinoxCardView extends LinearLayout
         ImageViewCompat.setImageTintList(resetBackButton, SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
     }
 
+    @SuppressWarnings("deprecation")
     @Deprecated
     public void themeViews(Context context, SuntimesTheme theme)
     {
@@ -241,7 +239,7 @@ public class EquinoxCardView extends LinearLayout
         return card_layout.findFirstVisibleItemPosition();
     }
 
-    private EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
+    private final EquinoxAdapterListener cardListener = new EquinoxAdapterListener()
     {
         @Override
         public void onClick( int position ) {
@@ -255,7 +253,7 @@ public class EquinoxCardView extends LinearLayout
         @Override public void onTitleClick( int position ) {}
         @Override public void onNextClick( int position ) {}
         @Override public void onPrevClick( int position ) {}
-        @Override public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {}
+        @Override public void onMenuClick(View view, int position, SolsticeEquinoxMode mode, long datetime) {}
     };
 
     private final View.OnClickListener onResetClicked = new View.OnClickListener() {
@@ -286,10 +284,10 @@ public class EquinoxCardView extends LinearLayout
         }
     }
 
-    private final RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onCardScrollListener = new RecyclerView.OnScrollListenerCompat()
     {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             int current = currentCardPosition();
             if (current >= 0) {
@@ -299,7 +297,7 @@ public class EquinoxCardView extends LinearLayout
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -321,21 +319,8 @@ public class EquinoxCardView extends LinearLayout
     }
 
     /**
-     * CardViewDecorator
-     */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
-    {
-        public CardViewDecorator( Context context ) {
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.left = outRect.right = outRect.top = outRect.bottom = 0;
-        }
-    }
-
-    /**
      * setShowDate
-     * @param value 
+     * @param value true shown, false hidden
      */
     public void setShowDate(boolean value) {
         options.showDate = value;
@@ -346,12 +331,12 @@ public class EquinoxCardView extends LinearLayout
 
     /**
      * setTrackingMode
-     * @param mode
+     * @param mode mode
      */
-    public void setTrackingMode(WidgetSettings.TrackingMode mode) {
+    public void setTrackingMode(TrackingMode mode) {
         options.trackingMode = mode;
     }
-    public WidgetSettings.TrackingMode getTrackingMode() {
+    public TrackingMode getTrackingMode() {
         return options.trackingMode;
     }
 
@@ -369,7 +354,7 @@ public class EquinoxCardView extends LinearLayout
 
     /**
      * setMinimized
-     * @param value
+     * @param value true minimized
      */
     public void setMinimized( boolean value ) {
         options.minimized = value;

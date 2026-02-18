@@ -23,8 +23,9 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.widget.RemoteViews;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.text.TimeDisplayText;
 
 public abstract class PositionLayout extends SuntimesLayout
 {
@@ -45,25 +46,25 @@ public abstract class PositionLayout extends SuntimesLayout
         suffixColor = theme.getTimeSuffixColor();
     }
 
-    public static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
+    public static SpannableString styleAzimuthText(TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
     {
         String azimuthSymbol = azimuthDisplay.getSuffix();
         String azimuthString = azimuthDisplay.getValue() + azimuthSymbol;
-        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), valueColor, boldTime);
-        azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
-        azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
+        SpannableString azimuth = SpanUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), valueColor, boldTime);
+        azimuth = SpanUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
+        azimuth = SpanUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
         //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
         return azimuth;
     }
 
     public static SpannableString styleElevationText(double value, int valueColor, int suffixColor, boolean boldValue)
     {
-        SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
+        TimeDisplayText elevationDisplay = angle_utils.formatAsElevation(value, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
-        String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, valueColor, boldValue);
-        elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
-        elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
+        String elevationString = angle_utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
+        SpannableString elevation = SpanUtils.createColorSpan(null, elevationString, elevationString, valueColor, boldValue);
+        elevation = SpanUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
+        elevation = SpanUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
         return elevation;
     }
 

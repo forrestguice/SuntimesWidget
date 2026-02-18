@@ -22,21 +22,22 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.filters.LargeTest;
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.filters.LargeTest;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject2;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 import android.util.Log;
 import android.view.View;
 
@@ -47,6 +48,10 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.hamcrest.Matcher;
 
@@ -62,24 +67,22 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeRight;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
@@ -91,7 +94,7 @@ import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -103,13 +106,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /**
@@ -148,6 +151,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         String themeName = AppSettings.loadThemePref(activity);
         int themeId = AppSettings.themePrefToStyleId(activity, themeName, activity.dataset.dataActual);
+        //noinspection deprecation
         int loadedStyleId = activity.getThemeId();
         Log.d("TEST", "themeId = " + themeId + " (" + themeName + "), loaded = " + loadedStyleId );
         assertTrue(loadedStyleId == themeId);
@@ -169,8 +173,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         onView(withId(R.id.action_location_add)).check(assertShown);
 
-        WidgetSettings.LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
-        if (mode == WidgetSettings.LocationMode.CURRENT_LOCATION)
+        LocationMode mode = WidgetSettings.loadLocationModePref(activity, 0);
+        if (mode == LocationMode.CURRENT_LOCATION)
         {
             onView(withId(R.id.action_location_refresh)).check(assertShown);
 
@@ -182,13 +186,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyClock(SuntimesActivity activity)
     {
         SuntimesRiseSetDataset dataset = activity.dataset;
-        SuntimesUtils.TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(activity, dataset.now());
+        TimeDisplayText timeText = SuntimesActivity.utils.calendarTimeShortDisplayString(AndroidResources.wrap(activity), dataset.now());
         String timezoneID = dataset.timezone().getID();
 
         onView(withId(R.id.text_time)).check(assertShown);
         onView(withId(R.id.text_time)).check(matches(withText(timeText.getValue())));
 
-        if (!SuntimesUtils.is24()) {
+        if (!TimeDateDisplay.is24()) {
             onView(withId(R.id.text_time_suffix)).check(assertShown);
             onView(withId(R.id.text_time_suffix)).check(matches(withText(timeText.getSuffix())));
         }
@@ -265,7 +269,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_mainActivity_navigation_mapButton()
     {
         Activity context = activityRule.getActivity();
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         config(context).edit().putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true).apply();
         MainActivityRobot robot = new MainActivityRobot();
 
@@ -305,7 +309,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         {
             robot.showDialog(activityRule.getActivity())
                     .assertDialogShown(activityRule.getActivity())
-                    .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                    .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                     .clickLocationEditButton()
                     .inputLocationEditValues(name[i], lat[i], lon[i])
                     .assertLocationEditCoordinates(lat[i], lon[i])
@@ -324,7 +328,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
                 .assertDialogShown(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CURRENT_LOCATION)
+                .selectLocationMode(LocationMode.CURRENT_LOCATION)
                 .assertDialogMode_isCurrent()
                 .applyDialog(activityRule.getActivity());
         // TODO: verify action
@@ -599,9 +603,9 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             robot.clickCardDate()
                     .sleep(500);
 
-            if (viewIsDisplayed(R.id.text_date, context.getString(R.string.today)))
+            if (viewIsDisplayed(R.id.text_date, context.getString(R.string.cardlabel_today)))
                 verifyTimeCard_today();
-            else if (viewIsDisplayed(R.id.text_date, context.getString(R.string.tomorrow)))
+            else if (viewIsDisplayed(R.id.text_date, context.getString(R.string.cardlabel_tomorrow)))
                 verifyTimeCard_tomorrow();
             else fail("swapped card does not display 'today' or 'tomorrow'!");
         }
@@ -612,7 +616,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         new LocationDialogTest.LocationDialogRobot()
                 .showDialog(activityRule.getActivity())
-                .selectLocationMode(WidgetSettings.LocationMode.CUSTOM_LOCATION)
+                .selectLocationMode(LocationMode.CUSTOM_LOCATION)
                 .clickLocationEditButton()
                 .inputLocationEditValues(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON)
                 .applyDialog(activityRule.getActivity());
@@ -625,7 +629,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
         onView(cardFlipper).check(assertShown);   // flipper should be visible
 
-        boolean cardSetToToday = viewIsDisplayed(R.id.text_date, activityRule.getActivity().getString(R.string.today));
+        boolean cardSetToToday = viewIsDisplayed(R.id.text_date, activityRule.getActivity().getString(R.string.cardlabel_today));
 
         // pre-click checks
         if (cardSetToToday)
@@ -807,7 +811,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public MainActivityRobot clickMapButton() {
-            onView(withContentDescription(R.string.configAction_mapLocation)).perform(click());
+            onView(withContentDescription(R.string.action_mapLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickDataSourceLabel() {
@@ -836,7 +840,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
 
         public MainActivityRobot swapCard(Context context) {
-            if (viewIsDisplayed(R.id.info_time_all_today, context, R.string.today))
+            if (viewIsDisplayed(R.id.info_time_all_today, context, R.string.cardlabel_today))
                 swapCardNext();
             else swapCardPrev();
             return this;
@@ -866,45 +870,45 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         }
 
         public MainActivityRobot clickOverflowMenu_viewDate(Context context) {
-            onView(withText(R.string.configAction_viewDate)).perform(click());
+            onView(withText(R.string.action_viewDate)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_setTimeZone(Context context) {
-            onView(withText(R.string.configAction_setTimeZone)).perform(click());
+            onView(withText(R.string.action_setTimeZone)).perform(click());
             return this;
         }
         public MainActivityRobot clickActionBar_updateLocation(Context context) {
-            onView(withContentDescription(R.string.configAction_refreshLocation)).perform(click());
+            onView(withContentDescription(R.string.action_refreshLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickActionBar_setLocation(Context context) {
-            onView(withContentDescription(R.string.configAction_addLocation)).perform(click());
+            onView(withContentDescription(R.string.action_addLocation)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_sunPosition(Context context) {
-            onView(withText(R.string.configAction_sunDialog)).perform(click());
+            onView(withText(R.string.action_sunDialog)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_sunLight(Context context) {
-            onView(withText(R.string.configAction_lightGraphDialog)).perform(click());
+            onView(withText(R.string.action_lightGraphDialog)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_moon(Context context) {
-            onView(withText(R.string.configAction_moon)).perform(click());
+            onView(withText(R.string.action_moon)).perform(click());
             return this;
         }
         public MainActivityRobot clickOverflowMenu_worldMap(Context context) {
-            onView(withText(R.string.configAction_worldMap)).perform(click());
+            onView(withText(R.string.action_worldMap)).perform(click());
             return this;
         }
 
         public MainActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_viewDate)).perform(pressBack());
+            onView(withText(R.string.action_viewDate)).perform(pressBack());
             return this;
         }
 
         public MainActivityRobot assertActionBar_mapButtonShown(boolean shown) {
-            onView(withContentDescription(R.string.configAction_mapLocation)).check(shown ? assertShown : doesNotExist());
+            onView(withContentDescription(R.string.action_mapLocation)).check(shown ? assertShown : doesNotExist());
             return this;
         }
 
@@ -916,18 +920,18 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         public MainActivityRobot assertOverflowMenuShown(Context context)
         {
-            onView(withText(R.string.configAction_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setTimeZone)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_lightGraphDialog)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_viewDate)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_setTimeZone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_sunDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_lightGraphDialog)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public MainActivityRobot assertOverflowMenu_mapButtonShown(Activity context, boolean shown) {
-            onView(withText(R.string.configAction_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
+            onView(withText(R.string.action_mapLocation)).inRoot(isPlatformPopup()).check(shown ? assertShown : doesNotExist());
             return this;
         }
 

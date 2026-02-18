@@ -23,9 +23,11 @@ import android.content.Intent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +39,7 @@ import java.io.IOException;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class LaunchActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -49,13 +51,13 @@ public class LaunchActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -64,8 +66,8 @@ public class LaunchActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_LaunchActivity_firstLaunch_skipWelcome()
     {
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, true).apply();
-        config(getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AppSettings.PREF_DEF_LAUNCHER_MODE).apply();
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, true).apply();
+        config(InstrumentationUtils.getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AppSettings.PREF_DEF_LAUNCHER_MODE).apply();
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         WelcomeActivityTest.WelcomeActivityRobot robot = new WelcomeActivityTest.WelcomeActivityRobot()
@@ -79,8 +81,8 @@ public class LaunchActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_LaunchActivity_firstLaunch_finishWelcome()
     {
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, true).apply();
-        config(getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AppSettings.PREF_DEF_LAUNCHER_MODE).apply();
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, true).apply();
+        config(InstrumentationUtils.getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AppSettings.PREF_DEF_LAUNCHER_MODE).apply();
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         WelcomeActivityTest.WelcomeActivityRobot robot = new WelcomeActivityTest.WelcomeActivityRobot()
@@ -96,8 +98,8 @@ public class LaunchActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_LaunchActivity_alarms()
     {
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
-        config(getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AlarmClockActivity.class.getSimpleName()).apply();
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
+        config(InstrumentationUtils.getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, AlarmClockActivity.class.getSimpleName()).apply();
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         new AlarmActivityTest.AlarmActivityRobot()
@@ -107,8 +109,8 @@ public class LaunchActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_LaunchActivity_clock()
     {
-        config(getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
-        config(getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, SuntimesActivity.class.getSimpleName()).apply();
+        config(InstrumentationUtils.getContext()).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
+        config(InstrumentationUtils.getContext()).edit().putString(AppSettings.PREF_KEY_LAUNCHER_MODE, SuntimesActivity.class.getSimpleName()).apply();
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         new SuntimesActivityTest.MainActivityRobot()

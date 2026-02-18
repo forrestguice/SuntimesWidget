@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_gravity="end"
-                android:text="@string/configLabel_places_build" />
+                android:text="@string/places_label_build" />
 
             <ProgressBar android:id="@+id/progress_build_places" android:visibility="invisible"
                 android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="center" />
@@ -33,12 +33,12 @@
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_gravity="end"
-            android:text="@string/configAction_getFix" />
+            android:text="@string/action_getLocation" />
 
         <Button android:id="@+id/button_import_places" android:visibility="visible"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_gravity="end" android:text="@string/configAction_importAlarms" />
+            android:layout_gravity="end" android:text="@string/alarms_action_importAlarms" />
 
 
     </LinearLayout>
@@ -46,12 +46,18 @@
     <View android:layout_width="match_parent" style="@style/SunsetTimeHorizontalRule"
         android:layout_marginLeft="16dp" android:layout_marginRight="16dp" />
 
-    <fragment
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
-        app:collapse="true" app:showAddButton="true"
-        android:name="com.forrestguice.suntimeswidget.getfix.LocationConfigDialog"
-        android:tag="LocationConfigDialog" />
+    <FrameLayout android:id="@+id/locationFragmentContainer"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <!-- WelcomeLocationView supplies this fragment via transaction -->
+        <!--<fragment
+            android:layout_height="wrap_content" android:layout_width="match_parent"
+            app:hideHeader="true" app:hideFooter="true" app:hideTitle="true" app:hideMode="true"
+            app:collapse="true" app:showAddButton="true"
+            android:name="com.forrestguice.suntimeswidget.getfix.LocationConfigDialog"
+            android:tag="LocationConfigDialogFragment" />-->
+
+    </FrameLayout>
 
     <LinearLayout android:id="@+id/layout_permissions"
         android:orientation="vertical"

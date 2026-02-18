@@ -22,17 +22,19 @@ package com.forrestguice.suntimeswidget.colors;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
 {
@@ -88,12 +90,12 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
             {
                 //float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);  // TODO: fix.. looks nice, but it fails to render if the text becomes ellipsized
                 //colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
-                colorLabel = SuntimesUtils.createColorSpan(colorLabel, " " + labelText + " ", labelText, textColor);
-                colorLabel = SuntimesUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
+                colorLabel = SpanUtils.createColorSpan(colorLabel, " " + labelText + " ", labelText, textColor);
+                colorLabel = SpanUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
 
             } else if (textColor != null) {
-                colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(colorLabel, labelText, labelText, textColor)
-                        : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
+                colorLabel = (bold ? SpanUtils.createBoldColorSpan(null, labelText, labelText, textColor)
+                        : SpanUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
 
             } else {
                 colorLabel = new SpannableString(" ");

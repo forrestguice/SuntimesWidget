@@ -23,32 +23,28 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
-@SuppressWarnings("Convert2Diamond")
-public class TimeDateDialog extends BottomSheetDialogFragment
+public class TimeDateDialog extends BottomSheetDialogBase
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
     public static final String KEY_DIALOG_TITLE = "dialog_title";
@@ -71,7 +67,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     {
         init(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
     }
-    public void init(WidgetSettings.DateInfo info)
+    public void init(DateInfo info)
     {
         init(info.getYear(), info.getMonth(), info.getDay());
     }
@@ -92,18 +88,18 @@ public class TimeDateDialog extends BottomSheetDialogFragment
 
         if (Build.VERSION.SDK_INT >= 11)
         {
-            if (getArguments().containsKey(KEY_MIN_DATETIME)) {
-                picker.setMinDate(getArguments().getLong(KEY_MIN_DATETIME));
+            if (getArgs().containsKey(KEY_MIN_DATETIME)) {
+                picker.setMinDate(getArgs().getLong(KEY_MIN_DATETIME));
             }
-            if (getArguments().containsKey(KEY_MAX_DATETIME)) {
-                picker.setMaxDate(getArguments().getLong(KEY_MAX_DATETIME));
+            if (getArgs().containsKey(KEY_MAX_DATETIME)) {
+                picker.setMaxDate(getArgs().getLong(KEY_MAX_DATETIME));
             }
         }
 
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(onDialogCancelClick);
-        if (AppSettings.isTelevision(getActivity())) {
+        if (AppSettings.isTelevision(context)) {
             btn_cancel.setFocusableInTouchMode(true);
         }
 
@@ -124,14 +120,14 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_date1, parent, false);
 
-        initViews(getContext(), dialogContent);
+        initViews(requireContext(), dialogContent);
         if (savedState != null) {
             loadSettings(savedState);
         } else {
-            loadSettings(getActivity());
+            loadSettings(requireContext());
         }
 
         return dialogContent;
@@ -142,7 +138,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a bundle containing previously saved dialog state
      * @return a dialog instance ready to be shown
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -152,7 +148,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "TimeDateDialog onSaveInstanceState");
         saveSettings(outState);
@@ -164,8 +160,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @param bundle state loaded from this Bundle
      */
     protected void loadSettings(Bundle bundle) {
-        //getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
-        //getArguments().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
+        //getArgs().putInt(KEY_TIMEDATE_APPWIDGETID, bundle.getInt(KEY_TIMEDATE_APPWIDGETID, getAppWidgetId()));
+        //getArgs().putString(KEY_DIALOG_TITLE, bundle.getString(KEY_DIALOG_TITLE, null));
     }
 
     /**
@@ -175,13 +171,13 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected void loadSettings(Context context)
     {
         int appWidgetId = getAppWidgetId();
-        WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
-        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
+        DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
+        if (mode == DateMode.CURRENT_DATE)
         {
             init(getInitialDateTime());
 
         } else {
-            WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
+            DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
             init(dateInfo);
         }
     }
@@ -193,8 +189,8 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         /* EMPTY */
     }
 
-    public WidgetSettings.DateInfo getDateInfo() {
-        return new WidgetSettings.DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+    public DateInfo getDateInfo() {
+        return new DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
     }
 
     /**
@@ -208,18 +204,18 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @return the appWidgetID used by this dialog when saving/loading prefs (use 0 for main app)
      */
     public int getAppWidgetId() {
-        return getArguments().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        return getArgs().getInt(KEY_TIMEDATE_APPWIDGETID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }
     public void setAppWidgetId(int value) {
-        getArguments().putInt(KEY_TIMEDATE_APPWIDGETID, value);
+        getArgs().putInt(KEY_TIMEDATE_APPWIDGETID, value);
     }
 
     @Nullable
     public String getDialogTitle() {
-        return getArguments().getString(KEY_DIALOG_TITLE);
+        return getArgs().getString(KEY_DIALOG_TITLE);
     }
     public void setDialogTitle(@Nullable String title) {
-        getArguments().putString(KEY_DIALOG_TITLE, title);
+        getArgs().putString(KEY_DIALOG_TITLE, title);
     }
 
     /**
@@ -268,12 +264,12 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            BottomSheetDialogBase.initPeekHeight(dialog, R.id.dialog_footer);
             if (onShowListener != null) {
                 onShowListener.onShow(dialog);
             }
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();
             }
         }
@@ -295,12 +291,14 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     protected View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     };
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);
@@ -312,49 +310,34 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            dismiss();
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
+            if (getContext() != null) {
+                saveSettings(getContext());
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
             }
         }
     };
 
-    protected void expandSheet(DialogInterface dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
     public static final String KEY_MIN_DATETIME = "min_datetime";
     public void setMinDate(long datetime) {
-        getArguments().putLong(KEY_MIN_DATETIME, datetime);
+        getArgs().putLong(KEY_MIN_DATETIME, datetime);
     }
 
     public static final String KEY_MAX_DATETIME = "max_datetime";
     public void setMaxDate(long datetime) {
-        getArguments().putLong(KEY_MAX_DATETIME, datetime);
+        getArgs().putLong(KEY_MAX_DATETIME, datetime);
     }
 
     public static final String KEY_INITIAL_DATETIME = "initial_datetime";
     public void setInitialDateTime(long datetime) {
-        getArguments().putLong(KEY_INITIAL_DATETIME, datetime);
+        getArgs().putLong(KEY_INITIAL_DATETIME, datetime);
     }
     public Calendar getInitialDateTime()
     {
         Calendar calendar = Calendar.getInstance(timezone);
-        long datetime = getArguments().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
+        long datetime = getArgs().getLong(KEY_INITIAL_DATETIME, calendar.getTimeInMillis());
         calendar.setTimeInMillis(datetime);
         return calendar;
     }

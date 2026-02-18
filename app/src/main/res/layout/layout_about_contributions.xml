@@ -20,7 +20,7 @@
             android:id="@+id/txt_about_legal1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal1"
+            android:text="@string/about_app_sourcecode_field"
             android:autoLink="web" />
 
         <TextView
@@ -38,26 +38,13 @@
             android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
 
         <TextView
-            android:id="@+id/txt_about_legal2"
-            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal2" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
-
-        <TextView
             android:id="@+id/txt_about_legal3"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_legal3"
+            android:text="@string/about_libraries_field"
             android:autoLink="web" />
 
         <View
@@ -67,9 +54,22 @@
         <TextView
             android:id="@+id/txt_about_media"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
-            android:layout_marginTop="2dp" android:layout_marginBottom="125dp"
+            android:layout_marginTop="2dp" android:layout_marginBottom="2dp"
             android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:textSize="?attr/text_size_small" android:text="@string/app_about_media" android:autoLink="web" />
+            android:textSize="?attr/text_size_small" android:text="@string/about_media_field" android:autoLink="web" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txt_about_legal2"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="125dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
+            android:text="@string/about_translations_field" />
 
     </LinearLayout>
 

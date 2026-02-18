@@ -29,9 +29,11 @@ import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivityTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,16 +43,15 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static org.hamcrest.Matchers.allOf;
@@ -58,7 +59,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class ColorValuesActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -70,13 +71,13 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -164,7 +165,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             {
                 @Override
                 public String getActivityTitle() {
-                    return activity.getString(R.string.configAction_colors);
+                    return activity.getString(R.string.action_colors);
                 }
                 @Override
                 public boolean supportsPreview() {
@@ -202,7 +203,7 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
                 {
                     @Override
                     public String getActivityTitle() {
-                        return activity.getString(R.string.configLabel_alarms_brightMode_colors);
+                        return activity.getString(R.string.alarms_label_brightMode_colors);
                     }
                     @Override
                     public boolean supportsPreview() {
@@ -249,20 +250,20 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public ColorValuesActivityRobot clickAddButton() {
-            onView(withContentDescription(R.string.configAction_addColors)).perform(click());
+            onView(withContentDescription(R.string.colors_action_addColors)).perform(click());
             return this;
         }
         public ColorValuesActivityRobot clickEditButton() {
-            onView(withContentDescription(R.string.configAction_editColors)).perform(click());
+            onView(withContentDescription(R.string.colors_action_editColors)).perform(click());
             return this;
         }
 
         public ColorValuesActivityRobot clickOverflowMenu_preview() {
-            onView(withText(R.string.configAction_previewColors)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.colors_action_previewColors)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public ColorValuesActivityRobot cancelOverflowMenu() {
-            onView(withText(R.string.configAction_importColors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.colors_action_importColors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -271,17 +272,17 @@ public class ColorValuesActivityTest extends SuntimesActivityTestBase
         public ColorValuesActivityRobot assertActivityShown(Context context) {
             onView(allOf(withText(config.getActivityTitle()), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(navigationButton()).check(assertShown);
-            onView(withContentDescription(R.string.configAction_chooseColor)).check(assertShown);
+            onView(withContentDescription(R.string.themes_action_chooseColor)).check(assertShown);
             return this;
         }
 
         public ColorValuesActivityRobot assertOverflowMenuShown() {
             if (config.supportsPreview()) {
-                onView(withText(R.string.configAction_previewColors)).check(assertShown);
+                onView(withText(R.string.colors_action_previewColors)).check(assertShown);
             }
-            onView(withText(R.string.configAction_import)).check(assertShown);
-            onView(withText(R.string.configAction_share)).check(assertShown);
-            onView(withText(R.string.configAction_deleteColors)).check(assertShown);
+            onView(withText(R.string.action_import)).check(assertShown);
+            onView(withText(R.string.action_share)).check(assertShown);
+            onView(withText(R.string.colors_action_deleteColors)).check(assertShown);
             return this;
         }
     }

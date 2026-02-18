@@ -20,7 +20,7 @@
                 android:drawableLeft="?attr/icActionBedtime" android:drawableStart="?attr/icActionBedtime" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/msg_bedtime_set" />
+                android:text="@string/bedtime_msg_set" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -53,7 +53,7 @@
                 <CheckBox android:id="@+id/check_dnd"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:textSize="?attr/text_size_small"
-                    android:text="@string/configLabel_dnd"
+                    android:text="@string/bedtime_label_dnd"
                     android:paddingLeft="8dp" android:paddingStart="8dp" android:button="?attr/checkDnd" />
 
             </LinearLayout>
@@ -74,7 +74,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:textSize="?attr/text_size_small"
                     android:gravity="center_vertical" android:layout_gravity="end"
-                    android:text="@string/configAction_dnd_allow" />
+                    android:text="@string/bedtime_action_dnd_allow" />
 
             </LinearLayout>
 
@@ -89,29 +89,31 @@
             android:paddingTop="8dp" android:paddingBottom="8dp"
             android:clipToPadding="false">
 
-            <Switch android:id="@+id/switch_enabled"
+            <com.forrestguice.support.widget.SwitchCompat android:id="@+id/switch_enabled"
 
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="@string/configAction_setBedtime" />
+                android:contentDescription="@string/bedtime_action_setBedtime" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="@string/configAction_editAlarm" />
+                android:contentDescription="@string/alarms_action_editAlarm" />
 
         </FrameLayout>
 

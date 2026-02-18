@@ -27,9 +27,15 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesUtils.TimeDisplayText;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -41,7 +47,7 @@ import java.util.Calendar;
  */
 public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
-    protected WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+    protected SolsticeEquinoxMode timeMode = SolsticeEquinoxMode.EQUINOX_SPRING;
     protected int timeColor = Color.WHITE;
 
     public SolsticeLayout_1x1_0()
@@ -94,10 +100,10 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
-        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
+        boolean showDate = CalendarSettings.loadCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, PREF_DEF_CALENDAR_SHOWDATE);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean abbreviate = WidgetSettings.loadShowAbbrMonthPref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         Calendar event = null;
         if (data != null && data.isCalculated()) {
@@ -135,23 +141,23 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
             views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
             views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds, abbreviate, timeFormat);
+            TimeDisplayText eventString = time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, showTimeDate, showSeconds, abbreviate, timeFormat);
             views.setTextViewText(R.id.text_time_event, eventString.getValue());
             views.setViewVisibility(R.id.text_time_event, showDate ? View.VISIBLE : View.GONE);
 
-            int noteStringId = R.string.hence;
+            int noteStringId = R.string.delta_hence;
             if (event.before(now)) {
-                noteStringId = R.string.ago;
+                noteStringId = R.string.delta_ago;
             }
 
-            String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
+            String noteTime = delta_utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
             String noteString = context.getString(noteStringId, noteTime);
-            SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
+            SpannableString noteSpan = (boldTime ? SpanUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SpanUtils.createColorSpan(null, noteString, noteTime, timeColor));
             views.setTextViewText(R.id.text_time_event_note, noteSpan);
 
         } else {
             views.setTextViewText(R.id.text_time_event, "");
-            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
+            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.app_feature_not_supported_by_source));
             views.setTextViewText(R.id.text_time_event_label, "");
             views.setViewVisibility(R.id.text_time_event_label, View.GONE);
         }
@@ -178,7 +184,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)
+    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, TrackingMode trackingMode)
     {
         switch (trackingMode) {
             case RECENT: return data.eventCalendarRecent(now);

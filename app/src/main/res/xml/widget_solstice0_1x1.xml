@@ -12,6 +12,6 @@
     android:updatePeriodMillis="@integer/widget_updateInterval_daily"
     android:initialLayout="@layout/layout_widget_solstice_1x1_0"
     android:widgetFeatures="reconfigurable"
-    android:configure="com.forrestguice.suntimeswidget.SolsticeWidget0ConfigActivity">
+    android:configure="com.forrestguice.suntimeswidget.widgets.SolsticeWidget0ConfigActivity">
 
 </appwidget-provider>

@@ -21,18 +21,19 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -156,12 +157,12 @@ public class MoonLayout_1x1_5 extends MoonLayout
     {
         if (moonPosition != null)
         {
-            SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+            TimeDisplayText azimuthDisplay = angle_utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
             views.setTextViewText(R.id.info_moon_azimuth_current, PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
 
             if (Build.VERSION.SDK_INT >= 15) {
-                SuntimesUtils.TimeDisplayText azimuthDescription = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, true);
-                views.setContentDescription(R.id.info_moon_azimuth_current, utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
+                TimeDisplayText azimuthDescription = angle_utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, true);
+                views.setContentDescription(R.id.info_moon_azimuth_current, angle_utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
             }
             views.setTextViewText(R.id.info_moon_elevation_current, PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
 
@@ -180,7 +181,7 @@ public class MoonLayout_1x1_5 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 

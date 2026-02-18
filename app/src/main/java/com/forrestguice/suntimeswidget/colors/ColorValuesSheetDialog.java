@@ -19,18 +19,9 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,61 +29,66 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ColorValuesSheetDialog extends BottomSheetDialogFragment
+public class ColorValuesSheetDialog extends BottomSheetDialogBase
 {
     public static final String DIALOG_SHEET = "ColorValuesSheet";
+    public static final String ARG_COLLECTION = "colorCollection";
 
     public ColorValuesSheetDialog() {
         setArguments(new Bundle());
     }
 
     public void setAppWidgetID(int id) {
-        getArguments().putInt("appWidgetID", id);
+        getArgs().putInt("appWidgetID", id);
         if (colorSheet != null) {
             colorSheet.setAppWidgetID(id);
         }
     }
     public int getAppWidgetID() {
-        return getArguments().getInt("appWidgetID", 0);
+        return getArgs().getInt("appWidgetID", 0);
     }
 
     public void setColorTag(String tag) {
-        getArguments().putString("colorTag", tag);
+        getArgs().putString("colorTag", tag);
         if (colorSheet != null) {
             colorSheet.setColorTag(tag);
         }
     }
     @Nullable
     public String getColorTag() {
-        return getArguments().getString("colorTag", null);
+        return getArgs().getString("colorTag", null);
     }
 
     public void setShowAlpha(boolean value) {
-        getArguments().putBoolean("showAlpha", value);
+        getArgs().putBoolean("showAlpha", value);
     }
     public boolean getShowAlpha() {
-        return getArguments().getBoolean("showAlpha", true);
+        return getArgs().getBoolean("showAlpha", true);
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (colorSheet != null) {
             colorSheet.setApplyFilter(value);
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (getFilter() != null && getFilter().length > 0);
@@ -108,16 +104,16 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         }
 
         String[] filter = filterSet.toArray(new String[0]);
-        getArguments().putStringArray("filterValues", filter);
+        getArgs().putStringArray("filterValues", filter);
         if (colorSheet != null) {
             colorSheet.setFilter(filter);
         }
     }
     public String[] getFilter() {
-        return getArguments().getStringArray("filterValues");
+        return getArgs().getStringArray("filterValues");
     }
     public void clearFilter() {
-        getArguments().remove("filterValues");
+        getArgs().remove("filterValues");
         if (colorSheet != null) {
             colorSheet.clearFilter();
         }
@@ -125,14 +121,14 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
 
     public void setDialogTitle(String title)
     {
-        getArguments().putString("dialogTitle", title);
+        getArgs().putString("dialogTitle", title);
         if (isAdded()) {
             updateViews();
         }
     }
     @Nullable
     public String getDialogTitle() {
-        return getArguments().getString("dialogTitle", null);
+        return getArgs().getString("dialogTitle", null);
     }
 
     protected ColorValuesCollection<ColorValues> colorCollection = null;
@@ -143,7 +139,8 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         return colorCollection;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -165,7 +162,8 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        Window w = getDialog().getWindow();
+        Dialog d = getDialog();
+        Window w = (d != null ? d.getWindow() : null);
         if (w != null) {
             w.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         }
@@ -197,29 +195,28 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(false);
-                behavior.setPeekHeight(200);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return false;
+    }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return false;
+    }
+    @Override
+    protected int getPeekHeight() {
+        return 200;
     }
 
     private TextView titleText;
     private CheckBox check_filter;
+    @Nullable
     private ColorValuesSheetFragment colorSheet;
 
     public void updateFilterVisibility(Context context)
     {
         if (check_filter != null) {
-            check_filter.setVisibility((colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT && hasFilter())
+            check_filter.setVisibility((colorSheet != null && colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT && hasFilter())
                     ? View.VISIBLE : View.GONE);
         }
     }
@@ -232,8 +229,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel.class);
         editViewModel.setShowAlpha(getShowAlpha());
 
-        FragmentManager fragments = getChildFragmentManager();
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        colorSheet = (ColorValuesSheetFragment) getChildFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
@@ -244,10 +240,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
-            FragmentTransaction transaction = fragments.beginTransaction();
-            transaction.replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET);
-            transaction.commit();
-            fragments.executePendingTransactions();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET)
+                    .commit();
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 
@@ -258,25 +254,30 @@ public class ColorValuesSheetDialog extends BottomSheetDialogFragment
             titleText.setText(title);
         }
 
-        colorSheet.updateViews();
+        if (colorSheet != null) {
+            colorSheet.updateViews();
+        }
     }
 
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
-        outState.putParcelable("colorCollection", colorCollection);
-        colorSheet.onSaveInstanceState(outState);
+        outState.putSerializable(ARG_COLLECTION, colorCollection);
+        if (colorSheet != null) {
+            colorSheet.onSaveInstanceState(outState);
+        }
         super.onSaveInstanceState(outState);
     }
     protected void onRestoreInstanceState( Bundle savedState ) {
-        colorCollection = savedState.getParcelable("colorCollection");
+        //noinspection unchecked
+        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onActivityCreatedCompat(Bundle savedInstanceState)
     {
-        super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
+        super.onActivityCreatedCompat(savedInstanceState);
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     /**

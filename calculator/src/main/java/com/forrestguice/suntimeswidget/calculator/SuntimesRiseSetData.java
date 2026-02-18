@@ -1,0 +1,585 @@
+/**
+    Copyright (C) 2014-2023 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/ 
+
+package com.forrestguice.suntimeswidget.calculator;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
+import com.forrestguice.util.Log;
+
+import com.forrestguice.util.UriUtils;
+
+import java.util.Calendar;
+
+public class SuntimesRiseSetData extends SuntimesData
+{
+    public SuntimesRiseSetData(Object context, int appWidgetId) {
+        initFromSettings(context, appWidgetId);
+    }
+    public SuntimesRiseSetData(Object context, int appWidgetId, String calculatorName) {
+        initFromSettings(context, appWidgetId, calculatorName);
+    }
+    public SuntimesRiseSetData(SuntimesRiseSetData other) {
+        initFromOther(other, other.layoutID);
+    }
+    public SuntimesRiseSetData(SuntimesRiseSetData other, int layoutID) {
+        initFromOther(other, layoutID);
+    }
+
+    /**
+     * Property: layoutID
+     */
+    protected int layoutID = (r != null ? r.layout_widget_1x1_0_content() : 0);
+    public int layoutID()
+    {
+        return layoutID;
+    }
+    public void setLayoutID( int id )
+    {
+        layoutID = id;
+    }
+
+    /**
+     * Property: time mode
+     */
+    protected TimeMode timeMode;
+    public TimeMode timeMode()
+    {
+        return timeMode;
+    }
+    public void setTimeMode( TimeMode mode )
+    {
+        timeMode = mode;
+        angle = null;
+    }
+
+    protected RiseSetDataMode dataMode;
+    public void setDataMode(RiseSetDataMode value)
+    {
+        dataMode = value;
+        if (dataMode instanceof EventAliasTimeMode)
+        {
+            EventAlias alias = ((EventAliasTimeMode) dataMode).getEvent();
+            ElevationEvent event;
+            switch (alias.getType())
+            {
+                case SUN_ELEVATION:
+                    event = SunElevationEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case SHADOWLENGTH:
+                    event = ShadowLengthEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.angle = (event == null ? null : event.getAngle());
+                    break;
+
+                case SHADOWRATIO:
+                    ShadowRatioEvent ratioEvent = ShadowRatioEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    event = ratioEvent;
+                    if (ratioEvent.isRelativeToNoon()) {
+                        this.relativeShadowRatio = (event == null ? null : ratioEvent.getRatio());
+                    } else {
+                        this.angle = (event == null ? null : event.getAngle());
+                    }
+                    break;
+
+                case DAYPERCENT:
+                    DayPercentEvent dayPercentEvent = DayPercentEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
+                    this.fraction = (dayPercentEvent != null ? dayPercentEvent.getPercentValue() / 100d : null);
+                    event = dayPercentEvent;
+                    break;
+                default: event = null; break;
+            }
+            this.offset = (event == null ? 0 : event.getOffset());
+        }
+        TimeMode mode = dataMode.getTimeMode();
+        this.timeMode = ((mode != null) ? mode : TimeMode.OFFICIAL);
+    }
+    public RiseSetDataMode dataMode() {
+        return dataMode;
+    }
+
+    /**
+     * Property: relative shadow ratio (of noon) (overrides time mode)
+     */
+    @Nullable
+    protected Double relativeShadowRatio = null;
+    public Double relativeShadowRatio() {
+        return relativeShadowRatio;
+    }
+    public void setRelativeShadowRatio(double value) {
+        relativeShadowRatio = value;
+    }
+
+    /**
+     * Property: sun angle (overrides time mode)
+     */
+    @Nullable
+    protected Double angle = null;
+    public Double angle() {
+        return angle;
+    }
+    public void setAngle( double value ) {
+        angle = value;
+    }
+
+    /**
+     * Property: fraction (used with time mode)
+     */
+    @Nullable
+    protected Double fraction = null;
+    public Double fraction() {
+        return fraction;
+    }
+    public void setFraction( double value ) {
+        fraction = value;
+    }
+
+    /**
+     * property: offset
+     */
+    protected int offset = 0;
+    public void setOffset(int millis) {
+        offset = millis;
+    }
+    public int getOffset() {
+        return offset;
+    }
+
+    /**
+     * Property: compare mode
+     */
+    protected CompareMode compareMode;
+    public CompareMode compareMode()
+    {
+        return compareMode;
+    }
+    public void setCompareMode( CompareMode mode )
+    {
+        compareMode = mode;
+    }
+
+    /**
+     * result: sunrise today
+     */
+    protected Calendar sunriseCalendarToday;
+    public boolean hasSunriseTimeToday()
+    {
+        return (sunriseCalendarToday != null);
+    }
+    public Calendar sunriseCalendarToday()
+    {
+        return sunriseCalendarToday;
+    }
+
+    /**
+     * result: sunset today
+     */
+    protected Calendar sunsetCalendarToday;
+    public boolean hasSunsetTimeToday()
+    {
+        return (sunsetCalendarToday != null);
+    }
+    public Calendar sunsetCalendarToday()
+    {
+        return sunsetCalendarToday;
+    }
+
+    /**
+     * result: sunrise other
+     */
+    protected Calendar sunriseCalendarOther;
+    public boolean hasSunriseTimeOther()
+    {
+        return (sunriseCalendarOther != null);
+    }
+    public Calendar sunriseCalendarOther()
+    {
+        return sunriseCalendarOther;
+    }
+
+    /**
+     * result: sunset other
+     */
+    protected Calendar sunsetCalendarOther;
+    public boolean hasSunsetTimeOther()
+    {
+        return (sunsetCalendarOther != null);
+    }
+    public Calendar sunsetCalendarOther()
+    {
+        return sunsetCalendarOther;
+    }
+
+    public Calendar sunriseCalendar(int i)
+    {
+        if (i == 1)
+            return sunriseCalendarToday;
+        else return sunriseCalendarOther;
+    }
+
+    public Calendar sunsetCalendar(int i)
+    {
+        if (i == 1)
+            return sunsetCalendarToday;
+        else return sunsetCalendarOther;
+    }
+
+    public Calendar[] getEvents()
+    {
+        Calendar midnight = midnight();
+        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
+    }
+
+    public Calendar[] getEvents(boolean isRising)
+    {
+        if (isRising)
+            return new Calendar[] { sunriseCalendarToday, sunriseCalendarOther };
+        else return new Calendar[] { sunsetCalendarToday, sunsetCalendarOther };
+    }
+
+    /**
+     * Property: day delta prefix
+     */
+    protected int dayDeltaPrefix;
+    public int dayDeltaPrefix()
+    {
+        return dayDeltaPrefix;
+    }
+
+    /**
+     * Property: day length ("today")
+     */
+    protected long dayLengthToday = 0L;
+    public long dayLengthToday()
+    {
+        return dayLengthToday;
+    }
+
+    /**
+     * Property: day length ("other")
+     */
+    protected long dayLengthOther = 0L;
+    public long dayLengthOther()
+    {
+        return dayLengthOther;
+    }
+
+    /**
+     * Property: linked data
+     */
+    @Nullable
+    protected SuntimesRiseSetData linked = null;
+    @Nullable
+    public SuntimesRiseSetData getLinked()
+    {
+        return linked;
+    }
+    public void linkData(@Nullable SuntimesRiseSetData data)
+    {
+        linked = data;
+    }
+
+    /**
+     * @param other another instance of SuntimesRiseSetData
+     * @param layoutID an R.layout.someLayoutID to be associated w/ this data
+     */
+    protected void initFromOther( SuntimesRiseSetData other, int layoutID )
+    {
+        initFromOther(other);
+        this.linked = null;
+
+        this.layoutID = layoutID;
+        this.compareMode = other.compareMode();
+        this.dataMode = other.dataMode();
+        this.timeMode = other.timeMode();
+        this.angle = other.angle;
+        this.relativeShadowRatio = other.relativeShadowRatio;
+        this.fraction = other.fraction;
+        this.offset = other.offset;
+
+        this.sunriseCalendarToday = other.sunriseCalendarToday();
+        this.sunsetCalendarToday = other.sunsetCalendarToday();
+        this.sunriseCalendarOther = other.sunriseCalendarOther();
+        this.sunsetCalendarOther = other.sunsetCalendarOther();
+        this.dayLengthToday = other.dayLengthToday();
+        this.dayLengthOther = other.dayLengthOther();
+        this.dayDeltaPrefix = other.dayDeltaPrefix();
+    }
+
+    /**
+     * @param context a context used to access shared prefs
+     * @param appWidgetId the widgetID to load settings from (0 for app)
+     */
+    @Override
+    protected void initFromSettings(Object context, int appWidgetId, String calculatorName)
+    {
+        super.initFromSettings(context, appWidgetId, calculatorName);
+        SuntimesDataSettings settings = getDataSettings(context);
+        setDataMode(settings.loadTimeModePref(appWidgetId));
+        this.compareMode = settings.loadCompareModePref(appWidgetId);
+    }
+
+    public boolean isDay()
+    {
+        return isDay(Calendar.getInstance(timezone()));
+    }
+    public boolean isDay(Calendar now)
+    {
+        if (calculator != null)
+        {
+            return calculator.isDay(now);
+        } else {
+            Log.w("isDay", "calculator is null! returning false");
+            return false;
+        }
+    }
+
+    /**
+     * Calculate
+     * @param context context
+     */
+    @Override
+    public void calculate(Object context)
+    {
+        //Log.v("SuntimesWidgetData", "time mode: " + timeMode);
+        //Log.v("SuntimesWidgetData", "location_mode: " + locationMode.name());
+        //Log.v("SuntimesWidgetData", "latitude: " + location.getLatitude());
+        //Log.v("SuntimesWidgetData", "longitude: " + location.getLongitude());
+        //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
+        //Log.v("SuntimesWidgetData", "timezone: " + timezone);
+        //Log.v("SuntimesWidgetData", "compare mode: " + compareMode.name());
+
+        initCalculator();
+        if (calculator == null) {
+            throw new IllegalStateException("calculator is null after initCalculator() was called!");
+        }
+
+        initTimezone(getDataSettings(context));
+
+        todaysCalendar = Calendar.getInstance(timezone);
+        otherCalendar = Calendar.getInstance(timezone);
+
+        if (todayIsNotToday())
+        {
+            //noinspection ConstantConditions
+            todaysCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+            otherCalendar.setTimeInMillis(todayIs.getTimeInMillis());
+        }
+
+        switch (compareMode)
+        {
+            case YESTERDAY:
+                dayDeltaPrefix = (r != null ? r.string_delta_day_yesterday() : 0);
+                otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
+                break;
+
+            case TOMORROW:
+            default:
+                dayDeltaPrefix = (r != null ? r.string_delta_day_tomorrow() : 0);
+                otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
+                break;
+        }
+
+        date = todaysCalendar.getTime();
+        dateOther = otherCalendar.getTime();
+
+        if (angle != null) {
+            sunriseCalendarToday = calculator.getSunriseCalendarForDate(todaysCalendar, angle);
+            sunsetCalendarToday = calculator.getSunsetCalendarForDate(todaysCalendar, angle);
+            sunriseCalendarOther = calculator.getSunriseCalendarForDate(otherCalendar, angle);
+            sunsetCalendarOther = calculator.getSunsetCalendarForDate(otherCalendar, angle);
+
+        } else if (relativeShadowRatio != null) {
+            double noonShadowToday = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(todaysCalendar));
+            double noonShadowOther = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(otherCalendar));
+            sunriseCalendarToday = calculator.getTimeOfShadowBeforeNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
+            sunsetCalendarToday = calculator.getTimeOfShadowAfterNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
+            sunriseCalendarOther = calculator.getTimeOfShadowBeforeNoon(otherCalendar, 1, relativeShadowRatio + noonShadowOther);
+            sunsetCalendarOther = calculator.getTimeOfShadowAfterNoon(otherCalendar, 1, relativeShadowRatio + noonShadowOther);
+
+        } else {
+            switch (timeMode)
+            {
+                case GOLD:
+                    sunriseCalendarToday = calculator.getMorningGoldenHourForDate(todaysCalendar);
+                    sunsetCalendarToday = calculator.getEveningGoldenHourForDate(todaysCalendar);
+                    sunriseCalendarOther = calculator.getMorningGoldenHourForDate(otherCalendar);
+                    sunsetCalendarOther = calculator.getEveningGoldenHourForDate(otherCalendar);
+                    break;
+
+                case BLUE8:
+                    sunriseCalendarToday = calculator.getMorningBlueHourForDate(todaysCalendar)[0];
+                    sunsetCalendarToday = calculator.getEveningBlueHourForDate(todaysCalendar)[1];
+                    sunriseCalendarOther = calculator.getMorningBlueHourForDate(otherCalendar)[0];
+                    sunsetCalendarOther = calculator.getEveningBlueHourForDate(otherCalendar)[1];
+                    break;
+
+                case BLUE4:
+                    sunriseCalendarToday = calculator.getMorningBlueHourForDate(todaysCalendar)[1];
+                    sunsetCalendarToday = calculator.getEveningBlueHourForDate(todaysCalendar)[0];
+                    sunriseCalendarOther = calculator.getMorningBlueHourForDate(otherCalendar)[1];
+                    sunsetCalendarOther = calculator.getEveningBlueHourForDate(otherCalendar)[0];
+                    break;
+
+                case NOON:
+                    sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarNoonCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
+                    break;
+
+                case MIDNIGHT:
+                    sunriseCalendarToday = sunsetCalendarToday = calculator.getSolarMidnightCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = sunsetCalendarOther = calculator.getSolarMidnightCalendarForDate(otherCalendar);
+                    break;
+
+                case CIVIL:
+                    sunriseCalendarToday = calculator.getCivilSunriseCalendarForDate(todaysCalendar);
+                    sunsetCalendarToday = calculator.getCivilSunsetCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = calculator.getCivilSunriseCalendarForDate(otherCalendar);
+                    sunsetCalendarOther = calculator.getCivilSunsetCalendarForDate(otherCalendar);
+                    break;
+
+                case NAUTICAL:
+                    sunriseCalendarToday = calculator.getNauticalSunriseCalendarForDate(todaysCalendar);
+                    sunsetCalendarToday = calculator.getNauticalSunsetCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = calculator.getNauticalSunriseCalendarForDate(otherCalendar);
+                    sunsetCalendarOther = calculator.getNauticalSunsetCalendarForDate(otherCalendar);
+                    break;
+
+                case ASTRONOMICAL:
+                    sunriseCalendarToday = calculator.getAstronomicalSunriseCalendarForDate(todaysCalendar);
+                    sunsetCalendarToday = calculator.getAstronomicalSunsetCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = calculator.getAstronomicalSunriseCalendarForDate(otherCalendar);
+                    sunsetCalendarOther = calculator.getAstronomicalSunsetCalendarForDate(otherCalendar);
+                    break;
+
+                case OFFICIAL:
+                default:
+                    sunriseCalendarToday = calculator.getOfficialSunriseCalendarForDate(todaysCalendar);
+                    sunsetCalendarToday = calculator.getOfficialSunsetCalendarForDate(todaysCalendar);
+                    sunriseCalendarOther = calculator.getOfficialSunriseCalendarForDate(otherCalendar);
+                    sunsetCalendarOther = calculator.getOfficialSunsetCalendarForDate(otherCalendar);
+                    break;
+            }
+        }
+
+        if (fraction != null) {
+            if (sunriseCalendarToday != null && sunsetCalendarToday != null) {
+                applyFraction(sunriseCalendarToday, sunsetCalendarToday, fraction);
+            }
+            if (sunriseCalendarOther != null && sunsetCalendarOther != null) {
+                applyFraction(sunriseCalendarOther, sunsetCalendarOther, fraction);
+            }
+        }
+
+        if (offset != 0) {
+            if (sunriseCalendarToday != null) {
+                sunriseCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarToday != null) {
+                sunsetCalendarToday.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunriseCalendarOther != null) {
+                sunriseCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+            if (sunsetCalendarOther != null) {
+                sunsetCalendarOther.add(Calendar.MILLISECOND, offset);
+            }
+        }
+
+        dayLengthToday = determineDayLength(sunriseCalendarToday, sunsetCalendarToday);
+        dayLengthOther = determineDayLength(sunriseCalendarOther, sunsetCalendarOther);
+
+        super.calculate(context);
+    }
+
+    protected void applyFraction(Calendar rising, Calendar setting, double fraction)
+    {
+        if (rising != null && setting != null)
+        {
+            if (fraction >= 0) {
+                long duration = (setting.getTimeInMillis() - rising.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() + (fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() - (fraction * duration)));
+
+            } else {
+                if (rising.getTimeInMillis() < setting.getTimeInMillis()) {
+                    rising.add(Calendar.MILLISECOND, 24 * 60 * 60 * 1000);
+                }
+                long duration = (rising.getTimeInMillis() - setting.getTimeInMillis());
+                rising.setTimeInMillis((long) (rising.getTimeInMillis() - (-fraction * duration)));
+                setting.setTimeInMillis((long) (setting.getTimeInMillis() + (-fraction * duration)));
+            }
+        }
+    }
+
+    /**
+     * @param sunrise sunrise
+     * @param sunset sunset
+     * @return day length millis
+     */
+    protected long determineDayLength(Calendar sunrise, Calendar sunset)
+    {
+        if (sunrise != null && sunset != null) {
+            // average case: rises and sets
+            return sunset.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else if (sunrise == null && sunset == null) {
+            // edge case: no rise or set
+            return 0;
+
+        } else if (sunrise != null) {
+            // edge case.. rises but doesn't set
+            Calendar midnight1 = midnight();
+            midnight1.add(Calendar.DAY_OF_YEAR, 1);
+            return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
+
+        } else {
+            // edge case.. sets but doesn't rise
+            Calendar midnight0 = midnight();
+            return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
+        }
+    }
+
+    @Nullable
+    protected static ResID_SuntimesRiseSetData r = null;
+    public static void setResIDs( @NonNull ResID_SuntimesRiseSetData value ) {
+        r = value;
+    }
+
+    public interface ResID_SuntimesRiseSetData
+    {
+        int string_delta_day_yesterday();
+        int string_delta_day_tomorrow();
+        int layout_widget_1x1_0_content();
+    }
+}
+
+

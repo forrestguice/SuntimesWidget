@@ -4,7 +4,7 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.GeneralPrefsFragment"
             android:icon="?attr/icActionSettings"
-            android:title="@string/configLabel_general"
+            android:title="@string/settings_general"
             android:summary=""
             tools:ignore="UnusedAttribute">
 
@@ -12,46 +12,46 @@
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment"
         android:icon="?attr/icActionAlarm"
-        android:title="@string/configLabel_alarmClock"
+        android:title="@string/alarms_label_alarmClock"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.CalendarPrefsFragment"
         android:icon="?attr/icActionCalendar"
-        android:title="@string/configLabel_calendars"
+        android:title="@string/calendars_pref_title"
         android:summary=""
         tools:ignore="UnusedAttribute">
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.LocalePrefsFragment"
             android:icon="?attr/icActionLocale"
-            android:title="@string/configLabel_locale"
+            android:title="@string/locale_pref_title"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.PlacesPrefsFragment"
             android:icon="?attr/icActionPlace"
-            android:title="@string/configLabel_places"
+            android:title="@string/places_label"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>
 
     <header android:fragment="com.forrestguice.suntimeswidget.settings.fragments.UIPrefsFragment"
             android:icon="?attr/icActionAppearance"
-            android:title="@string/configLabel_ui"
+            android:title="@string/settings_ui"
             android:summary=""
             tools:ignore="UnusedAttribute">
     </header>
 
     <header android:id="@+id/prefHeaderWidgets"
             android:icon="?attr/icActionWidgets"
-            android:title="@string/configLabel_widgetList"
+            android:title="@string/widgetList_label"
             android:summary="">
 
-        <intent android:targetPackage="com.forrestguice.suntimeswidget"
-                android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+        <intent android:targetPackage="@string/packageName"
+                android:targetClass="com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity" />
 
     </header>
 

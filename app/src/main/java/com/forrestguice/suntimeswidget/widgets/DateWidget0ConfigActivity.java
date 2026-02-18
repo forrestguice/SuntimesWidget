@@ -21,24 +21,27 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
+import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDialog;
+import com.forrestguice.suntimeswidget.calendar.CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout;
+import com.forrestguice.suntimeswidget.widgets.layouts.DateLayout_1x1_0;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -55,7 +58,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return DateWidget0.class;
     }
 
@@ -63,7 +66,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     protected void initViews( Context context )
     {
         super.initViews(context);
-        setConfigActivityTitle(getString(R.string.configLabel_datewidget0));
+        setConfigActivityTitle(getString(R.string.widgetConfig_datewidget0));
 
         showCalendarMode(true);
         showCalendarFormat(true);
@@ -106,9 +109,9 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators() {
-        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] {};
+    private static final int[] requiredFeatures = new int[] {};
 
     @Override
     protected boolean getDefaultScaleText() {
@@ -126,21 +129,18 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initCalendarMode(final Context context)
     {
-        CalendarMode mode = CalendarSettings.loadCalendarModePref(DateWidget0ConfigActivity.this, appWidgetId);
-        String pattern = CalendarSettings.loadCalendarFormatPatternPref(DateWidget0ConfigActivity.this, appWidgetId, mode.name());
+        CalendarMode mode = CalendarSettings.loadCalendarModePref(AndroidCalendarSettings.wrap(DateWidget0ConfigActivity.this), appWidgetId);
+        String pattern = CalendarSettings.loadCalendarFormatPatternPref(AndroidCalendarSettings.wrap(DateWidget0ConfigActivity.this), appWidgetId, mode.name());
 
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
-        {
-            FragmentTransaction transaction = fragments.beginTransaction();
-            CalendarFormatDialog fragment = new CalendarFormatDialog();
-            fragment.setCalendarMode(mode);
-            fragment.setFormatPattern(pattern);
-            fragment.updateCustomCalendarFormat(pattern);
-            fragment.setDialogListener(calendarFormatDialogListener);
-            transaction.replace(R.id.appwidget_general_calendarFormat_fragmentContainer, fragment, "CalendarFormatDialog");
-            transaction.commit();
-        }
+        CalendarFormatDialog fragment = new CalendarFormatDialog();
+        fragment.setCalendarMode(mode);
+        fragment.setFormatPattern(pattern);
+        fragment.updateCustomCalendarFormat(pattern);
+        fragment.setDialogListener(calendarFormatDialogListener);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.appwidget_general_calendarFormat_fragmentContainer, fragment, "CalendarFormatDialog")
+                .commit();
 
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
         if (spinner_calendarMode != null)
@@ -148,7 +148,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             final ArrayAdapter<CalendarMode> adapter = new ArrayAdapter<CalendarMode>(this, R.layout.layout_listitem_oneline, CalendarMode.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarMode.setAdapter(adapter);
-            spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
+            addOnItemSelectedListener("CalendarMode", spinner_calendarMode, onCalendarModeSelected);
         }
     }
 
@@ -166,7 +166,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
             HelpDialog helpDialog = new HelpDialog();
             helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
             helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
-            helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
+            helpDialog.setShowNeutralButton(getString(R.string.action_restoreDefaults));
             helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
         }
     };
@@ -177,19 +177,15 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
-            String pattern = CalendarSettings.loadCalendarFormatPatternPref(DateWidget0ConfigActivity.this, appWidgetId, mode.name());
+            String pattern = CalendarSettings.loadCalendarFormatPatternPref(AndroidCalendarSettings.wrap(DateWidget0ConfigActivity.this), appWidgetId, mode.name());
 
-            FragmentManager fragments = getSupportFragmentManager();
-            if (fragments != null)
+            CalendarFormatDialog calendarFormat = (CalendarFormatDialog) getSupportFragmentManager().findFragmentByTag("CalendarFormatDialog");
+            if (calendarFormat != null)
             {
-                CalendarFormatDialog calendarFormat = (CalendarFormatDialog) fragments.findFragmentByTag("CalendarFormatDialog");
-                if (calendarFormat != null)
-                {
-                    CalendarFormat.initDisplayStrings(DateWidget0ConfigActivity.this, mode, Calendar.getInstance());
-                    calendarFormat.setCalendarMode(mode);
-                    calendarFormat.setFormatPattern(pattern);
-                    calendarFormat.updateCustomCalendarFormat(pattern);
-                }
+                CalendarFormatDisplay.initDisplayStrings(AndroidResources.wrap(DateWidget0ConfigActivity.this), new AndroidResID_CalendarFormatDisplay(), mode, Calendar.getInstance(), AndroidCalendarDisplayFactory.create());
+                calendarFormat.setCalendarMode(mode);
+                calendarFormat.setFormatPattern(pattern);
+                calendarFormat.updateCustomCalendarFormat(pattern);
             }
         }
         @Override
@@ -222,32 +218,26 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
     protected void setCalendarFormat(@NonNull String pattern)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            CalendarFormatDialog calendarFormat = (CalendarFormatDialog) fragments.findFragmentByTag("CalendarFormatDialog");
-            if (calendarFormat != null) {
-                calendarFormat.setFormatPattern(pattern);
-            }
+        CalendarFormatDialog calendarFormat = (CalendarFormatDialog) getSupportFragmentManager().findFragmentByTag("CalendarFormatDialog");
+        if (calendarFormat != null) {
+            calendarFormat.setFormatPattern(pattern);
         }
     }
 
     @Override
-    protected void saveCalendarSettings(Context context)
+    protected void saveCalendarSettings(Context context, int appWidgetId)
     {
-        super.saveCalendarSettings(context);
+        super.saveCalendarSettings(context, appWidgetId);
 
         // save: calendar mode
         CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
-        CalendarSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
+        CalendarSettings.saveCalendarModePref(AndroidCalendarSettings.wrap(context), appWidgetId, calendarMode);
 
         // save: calendar format pattern
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            CalendarFormatDialog calendarFormatDialog = (CalendarFormatDialog) fragments.findFragmentByTag("CalendarFormatDialog");
-            if (calendarFormatDialog != null) {
-                calendarFormatDialog.applyFocusedPattern();
-                CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarFormatDialog.getFormatPattern());
-            }
+        CalendarFormatDialog calendarFormatDialog = (CalendarFormatDialog) getSupportFragmentManager().findFragmentByTag("CalendarFormatDialog");
+        if (calendarFormatDialog != null) {
+            calendarFormatDialog.applyFocusedPattern();
+            CalendarSettings.saveCalendarFormatPatternPref(AndroidCalendarSettings.wrap(context), appWidgetId, calendarMode.name(), calendarFormatDialog.getFormatPattern());
         }
     }
 
@@ -256,8 +246,25 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         super.loadCalendarSettings(context);
 
-        CalendarMode calendarMode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        CalendarMode calendarMode = CalendarSettings.loadCalendarModePref(AndroidCalendarSettings.wrap(context), appWidgetId);
         setCalendarMode(calendarMode);
-        setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, calendarMode.name()));
+        setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(AndroidCalendarSettings.wrap(context), appWidgetId, calendarMode.name()));
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    @Override
+    protected View createPreview(final Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        DateWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, defaultSizePx);
+        return appWidgetManager.getView();
+    }
+
+    protected DateLayout defaultDateLayout(Context context, int appWidgetId) {
+        return new DateLayout_1x1_0();
     }
 }

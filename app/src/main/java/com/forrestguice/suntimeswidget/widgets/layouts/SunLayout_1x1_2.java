@@ -23,15 +23,17 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.util.Calendar;
 
@@ -89,8 +91,8 @@ public class SunLayout_1x1_2 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -113,14 +115,14 @@ public class SunLayout_1x1_2 extends SunLayout
                     views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
 
-                    Drawable d = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset2, null), sunsetIconColor);
+                    Drawable d = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), R.drawable.svg_sunset2, null), sunsetIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 4, false));
                 }
             }
         }
 
         Calendar event = data.sunsetCalendar(1);
-        if (order != WidgetSettings.RiseSetOrder.TODAY)
+        if (order != RiseSetOrder.TODAY)
         {
             Calendar now = Calendar.getInstance();
             if (now.after(event)) {

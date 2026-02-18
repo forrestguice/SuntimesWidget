@@ -5,11 +5,11 @@
     android:gravity="center"
     android:background="?attr/selectableItemBackground">
 
-    <ImageView
+    <com.forrestguice.support.widget.ImageView
         android:id="@+id/actionButton0"
         style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="64dp" android:layout_height="match_parent"
         android:paddingLeft="?android:attr/scrollbarSize" android:paddingRight="?android:attr/scrollbarSize"
-        android:src="?attr/icActionExtension" android:contentDescription="@string/configAction_editAction" />
+        android:src="?attr/icActionExtension" android:contentDescription="@string/actions_action_edit" />
 
 </LinearLayout>

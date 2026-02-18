@@ -21,15 +21,16 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 //import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
+import androidx.test.rule.ActivityTestRule;
+
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,7 +38,7 @@ import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesThemeTest extends SuntimesActivityTestBase
 {
     @Rule

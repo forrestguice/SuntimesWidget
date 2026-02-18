@@ -27,32 +27,33 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
+
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.colors.AppColorValues;
 import com.forrestguice.suntimeswidget.colors.AppColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
-import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
+import com.forrestguice.suntimeswidget.events.DayPercentEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.MoonElevationEvent;
+import com.forrestguice.suntimeswidget.events.ShadowLengthEvent;
+import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
+import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
@@ -61,13 +62,25 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.AppCompatDelegateHelper;
+
+import com.forrestguice.support.preference.EditTextPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
+import com.forrestguice.support.preference.PreferenceFragment;
+
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
@@ -148,13 +161,13 @@ public class UIPrefsFragment extends PreferenceFragment
             loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
         }
 
-        Preference manage_events = fragment.findPreference("manage_events");
+        Preference manage_events = (Preference) fragment.findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
             manage_events.setOrder(-91);
         }
 
-        Preference navigation = fragment.findPreference("app_navigation_mode");
+        ListPreference navigation = (ListPreference) fragment.findPreference("app_navigation_mode");
         if (navigation != null) {
             navigation.setOnPreferenceChangeListener(onNavigationChanged(fragment.getActivity(), navigation));
         }
@@ -167,12 +180,12 @@ public class UIPrefsFragment extends PreferenceFragment
 
     public static void initPref_ui_customevents(final SuntimesSettingsActivity context, final PreferenceCategory category)
     {
-        ArrayList<Preference> eventPrefs = new ArrayList<>();
+        ArrayList<CheckBoxPreference> eventPrefs = new ArrayList<>();
 
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(AndroidEventSettings.wrap(context));
         for (final String eventID : eventIDs)
         {
-            EventSettings.EventAlias alias = EventSettings.loadEvent(context, eventID);
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), eventID);
 
             final CheckBoxPreference pref = new CheckBoxPreference(context);
             pref.setKey(AppSettings.PREF_KEY_UI_SHOWFIELDS + "_" + eventID);
@@ -183,14 +196,34 @@ public class UIPrefsFragment extends PreferenceFragment
 
             switch (alias.getType())
             {
+                case MOONILLUM:
+                    //MoonIllumEvent illumEvent = MoonIllumEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder(0);
+                    break;
+
+                case DAYPERCENT:
+                    DayPercentEvent percentEvent = DayPercentEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((percentEvent != null ? (int)percentEvent.getAngle() : 0));
+                    break;
+
+                case MOON_ELEVATION:
+                    MoonElevationEvent moonEvent = MoonElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((moonEvent != null ? (int) moonEvent.getAngle() : 0));
+                    break;
+
                 case SUN_ELEVATION:
-                    AlarmEventProvider.SunElevationEvent elevationEvent = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    SunElevationEvent elevationEvent = SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((elevationEvent != null ? (int)elevationEvent.getAngle() : 0));
                     break;
 
                 case SHADOWLENGTH:
-                    AlarmEventProvider.ShadowLengthEvent shadowEvent = AlarmEventProvider.ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    ShadowLengthEvent shadowEvent = ShadowLengthEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
                     pref.setOrder((shadowEvent != null ? 1000 + (int)shadowEvent.getLength() : 1000));
+                    break;
+
+                case SHADOWRATIO:
+                    ShadowRatioEvent shadowRatioEvent = ShadowRatioEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+                    pref.setOrder((shadowRatioEvent != null ? 2000 + (int)shadowRatioEvent.getRatio() : 2000));
                     break;
             }
 
@@ -199,14 +232,14 @@ public class UIPrefsFragment extends PreferenceFragment
         }
 
         boolean sortByName = false;    // TODO: optional
-        Collections.sort(eventPrefs, new Comparator<Preference>() {
+        Collections.sort(eventPrefs, new Comparator<CheckBoxPreference>() {
             @Override
-            public int compare(Preference o1, Preference o2) {
+            public int compare(CheckBoxPreference o1, CheckBoxPreference o2) {
                 return o1.getTitle().toString().compareTo(o2.getTitle().toString());
             }
         });
         for (int i=0; i<eventPrefs.size(); i++) {
-            Preference p = eventPrefs.get(i);
+            CheckBoxPreference p = eventPrefs.get(i);
             if (sortByName) {
                 p.setOrder(i+1);
             }
@@ -214,24 +247,24 @@ public class UIPrefsFragment extends PreferenceFragment
         }
     }
 
-    protected static Preference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
+    protected static CheckBoxPreference.OnPreferenceChangeListener customEventListener(final SuntimesSettingsActivity context, final String eventID, final PreferenceCategory category, final CheckBoxPreference pref)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new CheckBoxPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue) {
                 Boolean checked = (Boolean) newValue;
                 if (!checked)
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                             .setCancelable(false)
-                            .setMessage(context.getString(R.string.editevent_dialog_showevent_off))
+                            .setMessage(context.getString(R.string.events_editevent_dialog_showevent_off))
                             .setIcon(android.R.drawable.ic_dialog_info)
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    EventSettings.setShown(context, eventID, false);
+                                    EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, false);
                                     category.removePreference(pref);
                                     context.setNeedsRecreateFlag();
                                 }
@@ -249,12 +282,12 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    protected static Preference.OnPreferenceChangeListener onNavigationChanged(final Context context, final Preference pref)
+    protected static ListPreference.OnPreferenceChangeListener onNavigationChanged(final Context context, final ListPreference pref)
     {
-        return new Preference.OnPreferenceChangeListener() {
+        return new ListPreference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
@@ -263,10 +296,10 @@ public class UIPrefsFragment extends PreferenceFragment
     public static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
     {
         field.setChecked(value);
-        field.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        field.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object o)
+            public boolean onPreferenceChange(CheckBoxPreference preference, Object o)
             {
                 if (context != null) {
                     AppSettings.saveShowFieldsPref(context, k, (Boolean) o);
@@ -280,22 +313,27 @@ public class UIPrefsFragment extends PreferenceFragment
     {
         return new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
-                activity.startActivityForResult(new Intent(activity, EventListActivity.class), SettingsActivityInterface.REQUEST_MANAGE_EVENTS);
+            public boolean onPreferenceClick(Preference preference)
+            {
+                String[] selectableTypes = new String[] { EventType.SUN_ELEVATION.name(), EventType.DAYPERCENT.name(), EventType.SHADOWLENGTH.name(), EventType.SHADOWRATIO.name(), EventType.SOLAREVENT.name() };
+                Intent intent = new Intent(activity, EventListActivity.class);
+                intent.putExtra(EventListActivity.EXTRA_SELECTFILTER, selectableTypes);
+
+                activity.startActivityForResult(intent, SettingsActivityInterface.REQUEST_MANAGE_EVENTS);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                 return false;
             }
         };
     }
 
-    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
+    private static ListPreference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 //overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
-                Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, activity.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
@@ -436,8 +474,8 @@ public class UIPrefsFragment extends PreferenceFragment
         AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(mode);
         String themeName = themeInfo.getThemeName();
         int themeNightMode = themeInfo.getDefaultNightMode();
-        darkPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_YES || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
-        lightPref.setEnabled(themeNightMode == AppCompatDelegate.MODE_NIGHT_NO || themeNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        darkPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_YES || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        lightPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_NO || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
     }
 
     /**
@@ -519,12 +557,12 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    private static Preference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
+    private static ListPreference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
     {
-        return new Preference.OnPreferenceChangeListener()
+        return new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
+            public boolean onPreferenceChange(ListPreference preference, Object newValue) {
                 pref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, (String)newValue, requestCode));
                 return true;
             }
@@ -537,25 +575,27 @@ public class UIPrefsFragment extends PreferenceFragment
         int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_observerheight) + " [i]";
+        String title = context.getString(R.string.settings_general_observerheight) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
-        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
-        SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
+        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
+        SpannableStringBuilder titleSpan = SpanUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
-        pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == LengthUnit.METRIC);
+        pref.setOnPreferenceChangeListener(new EditTextPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            public boolean onPreferenceChange(EditTextPreference preference, Object newValue)
             {
                 try {
                     double doubleValue = Double.parseDouble((String)newValue);
                     if (doubleValue > 0)
                     {
-                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
+                        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+
+                        String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), doubleValue, units, 2, false).toString();
+                        preference.setSummary(context.getString(R.string.settings_general_observerheight_summary, observerHeightDisplay));
                         return true;
 
                     } else return false;
@@ -567,15 +607,12 @@ public class UIPrefsFragment extends PreferenceFragment
     }
     public static void loadPref_observerHeight(Context context, final LengthPreference pref)
     {
-        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        final LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
-        pref.setText((pref.isMetric() ? observerHeight : WidgetSettings.LengthUnit.metersToFeet(observerHeight)) + "");
-        pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
-    }
-    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
-    {
-        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
-        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+        pref.setText((pref.isMetric() ? observerHeight : LengthUnit.metersToFeet(observerHeight)) + "");
+
+        String observerHeightDisplay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), observerHeight, units, 2, false).toString();
+        pref.setSummary(context.getString(R.string.settings_general_observerheight_summary, observerHeightDisplay));
     }
 
 }

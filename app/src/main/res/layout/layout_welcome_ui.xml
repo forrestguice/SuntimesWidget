@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll" android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:orientation="vertical" android:gravity="center"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingBottom="48dp" android:background="?attr/dialogBackgroundAlt">
@@ -15,7 +15,7 @@
             app:layout_constraintBottom_toTopOf="@+id/options_layout"
             app:layout_constraintVertical_chainStyle="packed">
 
-            <android.support.v7.widget.AppCompatImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/icon" android:layout_marginTop="8dp"
                 android:layout_width="96dp" android:layout_height="96dp" android:scaleType="fitCenter"
                 android:src="@drawable/ic_settings_128dp" app:tint="?attr/colorControlNormal"
@@ -26,7 +26,7 @@
                 android:gravity="start" android:layout_margin="8dp"
                 android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="?attr/text_size_xlarge"
                 android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
-                android:text="@string/configLabel_ui" />
+                android:text="@string/settings_ui" />
 
         </LinearLayout>
 
@@ -43,7 +43,7 @@
                 android:gravity="start" android:layout_gravity="start" android:layout_marginBottom="8dp"
                 android:textAppearance="?android:attr/textAppearanceMedium" android:textSize="?attr/text_size_medium"
                 android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
-                android:text="@string/configLabel_ui_fields" />
+                android:text="@string/settings_ui_fields" />
 
             <CheckBox android:id="@+id/check_show_astro"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             <CheckBox android:id="@+id/check_show_blue"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/configLabel_ui_showbluehour" />
+                android:text="@string/settings_ui_showbluehour" />
 
             <CheckBox android:id="@+id/check_show_gold"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             <CheckBox android:id="@+id/check_show_moon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/configLabel_ui_showmoon_summary" />
+                android:text="@string/settings_ui_showmoon_summary" />
 
             <View android:layout_width="match_parent" android:layout_height="1dp"
                 android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
@@ -96,21 +96,21 @@
             <CheckBox android:id="@+id/check_show_solstice"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/configLabel_ui_showEquinox_summary" />
+                android:text="@string/settings_ui_showEquinox_summary" />
 
             <CheckBox android:id="@+id/check_show_crossquarter"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/configLabel_ui_showCrossQuarter_summary" />
+                android:text="@string/settings_ui_showCrossQuarter_summary" />
 
 
             <Button android:id="@+id/button_defaults" android:visibility="visible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_gravity="end" android:layout_marginTop="16dp"
-                android:text="@string/configAction_restoreDefaults" />
+                android:text="@string/action_restoreDefaults" />
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 </ScrollView>

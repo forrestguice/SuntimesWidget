@@ -19,16 +19,18 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
 
@@ -45,11 +47,12 @@ import java.util.Map;
  * AsyncTask that reads AlarmClockItem objects from text file (json array).
  * @see AlarmClockItem
  */
-public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, AlarmClockItemImportTask.TaskResult>
+public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, AlarmClockItemImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -62,29 +65,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return isPaused;
     }
 
-    public AlarmClockItemImportTask(Context context)
+    public AlarmClockItemImportTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
+    public TaskResult call() throws Exception
     {
         Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         ArrayList<AlarmClockItem> items = new ArrayList<>();
@@ -115,13 +105,14 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
-        for (AlarmClockItem item : items)
-        {
-            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
-            {
-                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
-                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+        if (items != null) {
+            for (AlarmClockItem item : items) {
+                if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
+                {
+                    // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+                    item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                    item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                }
             }
         }
 
@@ -133,20 +124,6 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 
         Log.d(getClass().getSimpleName(), "doInBackground: finishing");
         return new TaskResult(result, uri, (items != null ? items.toArray(new AlarmClockItem[0]) : null), error);
-    }
-
-    @Override
-    protected void onProgressUpdate(AlarmClockItem... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
     }
 
     /**
@@ -162,19 +139,19 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private AlarmClockItem[] items;
+        private final AlarmClockItem[] items;
         public AlarmClockItem[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -184,7 +161,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;
@@ -194,18 +171,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
     /**
      * TaskListener
      */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<AlarmClockItem, TaskResult> {}
 
     /**
      * AlarmClockItemJson
@@ -271,7 +237,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 try {
                     AlarmClockItem item = new AlarmClockItem();
                     item.fromContentValues(context, ExportTask.toContentValues(map));
-                    AlarmNotifications.updateAlarmTime(context, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     return item;
 
                 } catch (Exception e) {

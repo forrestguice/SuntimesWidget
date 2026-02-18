@@ -2,8 +2,21 @@ apply plugin: 'com.android.application'
 
 android
 {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
+    def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+    if (targetVersion == null) {
+        if (useAndroidX) {
+            targetVersion = 30
+        } else {
+            targetVersion = 28
+        }
+    }
+
+    if (useAndroidX) {
+        compileSdkVersion 31
+    } else {
+        compileSdkVersion 28
+    }
 
     sourceSets
     {
@@ -14,21 +27,60 @@ android
             res.srcDirs = ['src/main/res']
             assets.srcDirs = ['assets']
         }
+        production {
+            java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
+        }
+        nightly {
+            java.srcDirs('src/androidx/java')
+            res.srcDirs('src/androidx/res')
+        }
     }
 
     defaultConfig
     {
         applicationId "com.forrestguice.suntimeswidget"
-        //noinspection MinSdkTooLow
+        resValue "string", "packageName", applicationId
+
         minSdkVersion 14
-        //noinspection ExpiredTargetSdkVersion,OldTargetApi
-        targetSdkVersion 28
+        targetSdkVersion targetVersion
+        missingDimensionStrategy 'support_version', 'androidx'
+
+        if (targetVersion == 28) {
+            missingDimensionStrategy 'api', 'api28'
+        } else if (targetVersion == 29) {
+            missingDimensionStrategy 'api', 'api29'
+        } else if (targetVersion == 30) {
+            missingDimensionStrategy 'api', 'api30'
+        } else if (targetVersion == 31) {
+            missingDimensionStrategy 'api', 'api31'
+        } else if (targetVersion == 32) {
+            missingDimensionStrategy 'api', 'api32'
+        } else if (targetVersion == 33) {
+            missingDimensionStrategy 'api', 'api33'
+        } else if (targetVersion == 34) {
+            missingDimensionStrategy 'api', 'api34'
+        } else {
+            missingDimensionStrategy 'api', 'api28'
+        }
+
         versionCode 127
         versionName "0.16.13"
 
+        manifestPlaceholders = [suntimesAuthorityRoot:"suntimes",
+                                suntimesAuthorityRoot0:"suntimeswidget",
+                                suntimesPermissionRoot:"suntimes"]
+        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes\""                // uses permission.ADDON
+        buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget\""         // legacy; uses permission.READ_CALCULATOR
+        buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        if (useAndroidX) {
+            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        } else {
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        }
+
         resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh"
     }
 
@@ -40,6 +92,68 @@ android
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        production {
+            dimension "version"
+        }
+        legacy {
+            dimension "version"
+            targetSdkVersion 28
+            missingDimensionStrategy 'support_version', 'supportlib'
+            missingDimensionStrategy 'api', 'api28'
+            applicationIdSuffix ".legacy"
+            versionNameSuffix "-legacy"
+            resValue "string", "packageName", "com.forrestguice.suntimeswidget.legacy"   // TODO: cleaner way to set this resValue without duplication
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimes.legacy",
+                                    suntimesAuthorityRoot0:"suntimeswidget.legacy",
+                                    suntimesPermissionRoot:"suntimes.legacy"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes.legacy\""
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget.legacy\""
+            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.legacy\""
+        }
+        nightly {
+            dimension "version"
+            applicationIdSuffix ".nightly"
+            versionNameSuffix "-nightly"
+            resValue "string", "packageName", "com.forrestguice.suntimeswidget.nightly"   // TODO: cleaner way to set this resValue without duplication
+            manifestPlaceholders = [suntimesAuthorityRoot:"suntimes.nightly",
+                                    suntimesAuthorityRoot0:"suntimeswidget.nightly",
+                                    suntimesPermissionRoot:"suntimes.nightly"]
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT", "\"suntimes.nightly\""
+            buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget.nightly\""
+            buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes.nightly\""
+            def nightlyVersionCode = new Date().format('yyyyMMddHH') as int
+            versionCode nightlyVersionCode
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (useAndroidX) {
+            if (names.contains("legacy")) {
+                setIgnore(true)
+
+            } else if (targetVersion != null) {
+                if ((names.contains("api28") && targetVersion != 28)
+                        || (names.contains("api29") && targetVersion != 29) || (names.contains("api30") && targetVersion != 30)
+                        || (names.contains("api31") && targetVersion != 31) || (names.contains("api32") && targetVersion != 32)
+                        || (names.contains("api33") && targetVersion != 33) || (names.contains("api34") && targetVersion != 34)) {
+                    setIgnore(true)
+                }
+            }
+        } else if (!useAndroidX && (names.contains("production") || names.contains("api29") || names.contains("api30") || names.contains("api31") || names.contains("api32") || names.contains("api33") || names.contains("api34"))) {
+            setIgnore(true)
+        } else if (!useAndroidX && (names.contains("nightly") || names.contains("api29") || names.contains("api30") || names.contains("api31") || names.contains("api32") || names.contains("api33") || names.contains("api34"))) {
+            setIgnore(true)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     lintOptions
@@ -54,23 +168,61 @@ android
 
 dependencies
 {
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation project(path: ":util")
+    implementation project(path: ":support")
+    implementation project(path: ":calculator")
 
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.8-2021a'
+    implementation project(path: ":lib-ca-rmen-sunrisesunset")
+    implementation project(path: ":lib-luckycatlabs-sunrisesunset")
     implementation project(path: ":lib-quadflask-colorpicker")    //implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
+
+    productionImplementation 'com.google.android.material:material:1.4.0'
+    productionImplementation 'androidx.appcompat:appcompat:1.3.1'
+    productionImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    productionImplementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    productionImplementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+
+    nightlyImplementation 'com.google.android.material:material:1.4.0'
+    nightlyImplementation 'androidx.appcompat:appcompat:1.3.1'
+    nightlyImplementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    nightlyImplementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    nightlyImplementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+
+    legacyImplementation 'com.android.support:design:28.0.0'
+    legacyImplementation 'com.android.support:appcompat-v7:28.0.0'
+    legacyImplementation 'com.android.support:recyclerview-v7:28.0.0'
+    legacyImplementation 'com.android.support:cardview-v7:28.0.0'
+    legacyImplementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    legacyImplementation 'android.arch.lifecycle:extensions:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:2.2.0'
-    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test:rules:0.5'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
+    if (useAndroidX)
+    {
+        androidTestImplementation 'androidx.test:core:1.1.0'
+        androidTestImplementation 'androidx.test:rules:1.2.0'
+        androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+        androidTestImplementation 'androidx.annotation:annotation:1.0.0'
+
+        def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+        if (targetVersion != null && targetVersion >= 33) {
+            androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+        } else {
+            androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+        }
+
+    } else {
+        androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test:rules:0.5'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+        androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    }
 }
 
 configurations.all {

@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import android.content.ActivityNotFoundException;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -37,18 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,7 +44,14 @@ import android.view.View;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.SuntimesWarningCollection;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
+import com.forrestguice.suntimeswidget.alarmclock.android.AndroidResID_AlarmTimeZone;
+import com.forrestguice.suntimeswidget.alarmclock.android.AndroidResID_AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeActivity;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
 import com.forrestguice.suntimeswidget.settings.fragments.AlarmPrefsFragment;
 
@@ -75,10 +69,26 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.BottomSheetBehaviorCompat;
+import com.forrestguice.support.widget.FloatingActionButton;
+import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,6 +102,8 @@ import java.util.TimeZone;
 public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
+    public static final String TAG_FRAGMENT_ALARMLIST = "AlarmListDialogFragment";
+    public static final String TAG_FRAGMENT_ALARMCREATE = "AlarmCreateDialogFragment";
 
     public static final String ACTION_SHOW_ALARMS = "android.intent.action.SHOW_ALARMS";            // AlarmClock.ACTION_SHOW_ALARMS (api19+)
 
@@ -136,7 +148,10 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final int REQUEST_EDITALARM = 1;
     public static final int REQUEST_ADDALARM = 10;
-    public static final int REQUEST_SETTINGS = 20;
+    public static final int REQUEST_SETTINGS = SuntimesNavigation.REQUEST_SETTINGS;
+    private final ActivityResultLauncherCompat startActivityForResult_editAlarm = registerForActivityResultCompat(REQUEST_EDITALARM);
+    private final ActivityResultLauncherCompat startActivityForResult_addAlarm = registerForActivityResultCompat(REQUEST_ADDALARM);
+    private final ActivityResultLauncherCompat startActivityForResult_settings = registerForActivityResultCompat(REQUEST_SETTINGS);
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
     public static final String WARNINGID_NOTIFICATIONS_CHANNEL = "NotificationsChannelWarning";
@@ -147,11 +162,12 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String DIALOG_HELP = "HelpDialog";
 
+    @Nullable
     private AlarmListDialog list;
 
     private FloatingActionButton addButton;
     private FloatingActionButton deselectButton;
-    private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehaviorCompat sheetBehavior;
     private SuntimesNavigation navigation;
 
     private SuntimesWarningCollection warnings;
@@ -222,9 +238,9 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_ADDALARM:
@@ -340,13 +356,13 @@ public class AlarmClockActivity extends AppCompatActivity
                 handleIntent_setAlarm(context, intent);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
-                showAddDialog(AlarmClockItem.AlarmType.ALARM);
+                showAddDialog(AlarmType.ALARM);
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
-                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+                showAddDialog(AlarmType.NOTIFICATION);
 
             } else if (param_action.equals(ACTION_ADD_QNOTIFICATION)) {
-                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION1);
+                showAddDialog(AlarmType.NOTIFICATION1);
 
             } else if (param_action.equals(ACTION_DISMISS_ALARM)) {
                 handleIntent_dismissAlarms(intent, param_data);
@@ -358,12 +374,16 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (param_data != null)
                 {
                     try {
-                        list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                        if (list != null) {
+                            list.notifyAlarmDeleted(ContentUris.parseId(param_data));
+                        }
                     } catch (NumberFormatException e) {
                         Log.e(TAG, "handleIntent: invalid data! " + e);
                     }
                 } else {
-                    list.notifyAlarmsCleared();
+                    if (list != null) {
+                        list.notifyAlarmsCleared();
+                    }
                     selectItem = false;
                 }
             }
@@ -371,7 +391,9 @@ public class AlarmClockActivity extends AppCompatActivity
             if (param_data != null)
             {
                 try {
-                    list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                    if (list != null) {
+                        list.notifyAlarmUpdated(ContentUris.parseId(param_data));
+                    }
                 } catch (NumberFormatException e) {
                     Log.e(TAG, "handleIntent: invalid data! " + e);
                 }
@@ -382,14 +404,16 @@ public class AlarmClockActivity extends AppCompatActivity
         if (selectItem && selectedID != -1)
         {
             Log.d(TAG, "handleIntent: selected id: " + selectedID);
-            list.setSelectedRowID(selectedID);
+            if (list != null) {
+                list.setSelectedRowID(selectedID);
+            }
         }
     }
 
     protected void handleIntent_setAlarm(Context context, Intent intent)
     {
         Log.i(TAG, "ACTION_SET_ALARM");
-        AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
+        AlarmType param_type = AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmType.ALARM);
         String param_label = intent.getStringExtra(EXTRA_MESSAGE);
         int param_hour = intent.getIntExtra(EXTRA_HOUR, -1);
         int param_minute = intent.getIntExtra(EXTRA_MINUTES, -1);
@@ -429,10 +453,12 @@ public class AlarmClockActivity extends AppCompatActivity
             param_skipUI = intent.getBooleanExtra(EXTRA_SKIP_UI, false);
         }
         if (param_skipUI) {   // TODO: support date
-            list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
+            if (list != null) {
+                list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
+            }
         } else {
             AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
-            AlarmNotifications.updateAlarmTime(context, item);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
             showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
         }
     }
@@ -484,8 +510,10 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAllAlarms()
     {
-        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-            public void onItemsLoaded(Long[] ids) {
+        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new SimpleTaskListener<Long[]>()
+        {
+            @Override
+            public void onFinished(Long[] ids) {
                 for (long id : ids) {
                     sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                 }
@@ -515,14 +543,16 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             AlarmDatabaseAdapter.AlarmListTask findTask = createFindAlarmsByLabelTask(this, search);
             findTask.setParam_enabledOnly(true);
-            findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                public void onItemsLoaded(Long[] ids) {
+            TaskListener<Long[]> taskListener = new SimpleTaskListener<Long[]>()
+            {
+                @Override
+                public void onFinished(Long[] ids) {
                     for (long id : ids) {
                         sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                     }
                 }
-            });
-            findTask.execute();
+            };
+            ExecutorUtils.runTask(TAG, findTask, taskListener);
 
         } else {
             Log.w(TAG, "dismissAlarmByLabel: missing search term.. falling back to dismissNextAlarm.");
@@ -546,17 +576,20 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(this);
         findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING, AlarmState.STATE_SNOOZING);
-        findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        TaskListener<Long[]> taskListener = new SimpleTaskListener<Long[]>()
         {
             @Override
-            public void onItemsLoaded(Long[] ids) {
+            public void onFinished(Long[] ids)
+            {
                 if (ids.length > 0) {
                     for (long id : ids) {    // dismiss all sounding or snoozing alarms
                         sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id)));
                     }
                 } else {
-                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                        public void onItemsLoaded(Long[] ids) {
+                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new SimpleTaskListener<Long[]>()
+                    {
+                        @Override
+                        public void onFinished(Long[] ids) {
                             if (ids.length > 0 && ids[0] != null) {    // dismiss next upcoming alarm
                                 sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, ids[0])));
                             }
@@ -564,8 +597,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     });
                 }
             }
-        });
-        findTask.execute();
+        };
+        ExecutorUtils.runTask(TAG, findTask, taskListener);
     }
 
     protected void handleIntent_snoozeAlarm(final Intent intent)
@@ -573,9 +606,10 @@ public class AlarmClockActivity extends AppCompatActivity
         final int minutes = intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1);
         Log.i(TAG, "ACTION_SNOOZE_ALARM: " + minutes + " minutes");
 
-        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new SimpleTaskListener<Long[]>()
+        {
             @Override
-            public void onItemsLoaded(Long[] ids)
+            public void onFinished(Long[] ids)
             {
                 for (long id : ids) {
                     Uri uri = ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, id);
@@ -590,7 +624,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected static Location locationFromIntentExtras(Context context, Intent intent)
     {
         Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
-        Location location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
+        Location location = ((locationBundle != null) ? (Location) locationBundle.getSerializable(AlarmClockActivity.EXTRA_LOCATION) : null);
         if (location != null) {
             return location;
         }
@@ -614,12 +648,13 @@ public class AlarmClockActivity extends AppCompatActivity
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
+        AndroidResources res = AndroidResources.wrap(context);
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
-        SolarEvents.initDisplayStrings(context);
-        AlarmClockItem.AlarmType.initDisplayStrings(context);
-        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+        SolarEvents.initDisplayStrings(res, new AndroidResID_SolarEvents());
+        AlarmType.initDisplayStrings(res, new AndroidResID_AlarmType());
+        AlarmTimeZone.initDisplayStrings(res, AndroidResID_AlarmTimeZone.get());
 
         int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
         TypedArray a = context.obtainStyledAttributes(attrs);
@@ -634,7 +669,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         warnings.saveWarnings(outState);
@@ -647,12 +682,12 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedState);
         warnings.restoreWarnings(savedState);
 
-        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehavior.STATE_HIDDEN);
+        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehaviorCompat.STATE_HIDDEN);
         sheetBehavior.setState(sheetState);
 
         if (Build.VERSION.SDK_INT >= 14)
         {
-            if (sheetState != BottomSheetBehavior.STATE_HIDDEN)
+            if (sheetState != BottomSheetBehaviorCompat.STATE_HIDDEN)
             {
                 addButton.setScaleX(0);
                 addButton.setScaleY(0);
@@ -670,14 +705,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
             if (!showBack) {
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
             }
         }
 
@@ -701,17 +735,10 @@ public class AlarmClockActivity extends AppCompatActivity
         addButton.setOnClickListener(onFabMenuClick);
         deselectButton.setOnClickListener(onDeselectClick);
 
-        list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
-        if (list != null)
-        {
-            list.setOnEmptyViewClick(onEmptyViewClick);
-            list.setAdapterListener(listAdapter);
-        }
-
         View bottomSheet = findViewById(R.id.app_bottomsheet);
-        sheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
+        sheetBehavior = BottomSheetBehaviorCompat.from(bottomSheet);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
+        sheetBehavior.addBottomSheetCallback(new BottomSheetBehaviorCompat.BottomSheetCallback()
         {
             @Override
             public void onStateChanged(@NonNull View view, int newState)
@@ -732,10 +759,31 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
         });
+
+        AlarmCreateDialog bottomSheetDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
+        if (bottomSheetDialog == null) {
+            bottomSheetDialog = AlarmCreateDialog.newInstance();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.bottomSheetFragmentContainer, bottomSheetDialog, TAG_FRAGMENT_ALARMCREATE)
+                .setReorderingAllowed(true)
+                .commit();
+
+        list = (AlarmListDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMLIST);
+        if (list == null) {
+            list = AlarmListDialog.newInstance();
+        }
+        list.setOnEmptyViewClick(onEmptyViewClick);
+        list.setAdapterListener(listAdapter);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, TAG_FRAGMENT_ALARMLIST)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     private boolean isAddDialogShowing() {
-        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
+        return sheetBehavior.getState() == BottomSheetBehaviorCompat.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehaviorCompat.STATE_COLLAPSED;
     }
 
     private final AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
@@ -756,7 +804,7 @@ public class AlarmClockActivity extends AppCompatActivity
             } else if (list.getSelectedRowID() == item.rowID) {
                 if (item.getState() == AlarmState.STATE_SOUNDING || item.getState() == AlarmState.STATE_SNOOZING || item.getState() == AlarmState.STATE_TIMEOUT)
                 {
-                    if (item.type == AlarmClockItem.AlarmType.ALARM) {
+                    if (item.type == AlarmType.ALARM) {
                         showAlarmFullscreenActivity(item, view.text_datetime);
                     } else {
                         sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_DISMISS, item.getUri()));
@@ -818,15 +866,14 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Context context = AlarmClockActivity.this;
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
             if (dialog != null)
             {
                 AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
                 if (dialog.useAppLocation()) {
                     item.setFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP, true);
                 }
-                AlarmNotifications.updateAlarmTime(context, item);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                 dialog.saveSettings(context);
                 ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
                 showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
@@ -873,13 +920,13 @@ public class AlarmClockActivity extends AppCompatActivity
             if (transitionName != null)
             {
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName);
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResultCompat(intent, requestCode, options);
 
             } else {
-                startActivityForResult(intent, requestCode);
+                startActivityForResultCompat(intent, requestCode);
             }
         } else {
-            startActivityForResult(intent, requestCode);
+            startActivityForResultCompat(intent, requestCode);
         }
         return true;
     }
@@ -888,9 +935,10 @@ public class AlarmClockActivity extends AppCompatActivity
     private final AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
-        public void onFinished(Boolean result, AlarmClockItem item)
+        public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
         {
-            if (result)
+            AlarmClockItem item = result.getItem();
+            if (result.getResult())
             {
                 if (item.enabled) {
                     sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_RESCHEDULE, item.getUri()) );
@@ -905,12 +953,13 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAddDialog(@Nullable AlarmClockItem.AlarmType type)
+    protected void showAddDialog(@Nullable AlarmType type)
     {
-        list.clearSelection();
+        if (list != null) {
+            list.clearSelection();
+        }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog dialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
             if (type != null) {
@@ -920,11 +969,11 @@ public class AlarmClockActivity extends AppCompatActivity
             dialog.setOnCanceledListener(onAddAlarmCanceled);
             dialog.setOnNeutralListener(onAddAlarmNeutral);
         }
-        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_EXPANDED);
     }
 
     protected void dismissAddDialog() {
-        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
     }
 
     protected void updateViews(Context context) {
@@ -932,8 +981,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void restoreDialogs()
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
+        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_ALARMCREATE);
         if (alarmCreateDialog != null) {
             alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
             alarmCreateDialog.setOnCanceledListener(onAddAlarmCanceled);
@@ -952,7 +1000,7 @@ public class AlarmClockActivity extends AppCompatActivity
             protected void initWarnings(Context context)
             {
                 // notification warning
-                addWarning(context, WARNINGID_NOTIFICATIONS, getString(R.string.notificationsWarning), addButton, getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+                addWarning(context, WARNINGID_NOTIFICATIONS, getString(R.string.alarms_warning_notifications), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view) {
@@ -963,11 +1011,11 @@ public class AlarmClockActivity extends AppCompatActivity
                 // notification channel warning
                 if (Build.VERSION.SDK_INT >= 26)
                 {
-                    final AlarmClockItem.AlarmType[] types = AlarmClockItem.AlarmType.values();
+                    final AlarmType[] types = AlarmType.values();
                     for (int i=0; i<types.length; i++)
                     {
                         final int j = ((i < types.length) ? i : 0);
-                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.notificationChannelWarning), addButton, getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+                        addWarning(context, WARNINGID_NOTIFICATIONS_CHANNEL + i, getString(R.string.alarms_warning_notificationChannel), addButton, getString(R.string.alarms_label_notifications), new View.OnClickListener()
                         {
                             @Override
                             public void onClick(View view) {
@@ -980,8 +1028,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 // battery optimization warning
                 if (Build.VERSION.SDK_INT >= 23)
                 {
-                    String message = getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.configLabel_alarms_optWhiteList_unlisted_aggressive : R.string.configLabel_alarms_optWhiteList_unlisted);
-                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION, "[w]" + message, addButton, getString(R.string.configLabel_alarms_optWhiteList), new View.OnClickListener()
+                    String message = getString(AlarmSettings.aggressiveBatteryOptimizations(context) ? R.string.alarms_label_optWhiteList_unlisted_aggressive : R.string.alarms_label_optWhiteList_unlisted);
+                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION, "[w]" + message, addButton, getString(R.string.alarms_label_optWhiteList), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View view) {
@@ -992,13 +1040,13 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 // sony stamina mode warning
                 if (AlarmSettings.isSony()) {
-                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION_SONY, getString(R.string.sonyStaminaModeWarning), addButton, null, null);
+                    addWarning(context, WARNINGID_BATTERY_OPTIMIZATION_SONY, getString(R.string.alarms_warning_sonyStaminaMode), addButton, null, null);
                 }
 
                 // xiamoi autostart warning
                 if (AlarmSettings.isXiomi())
                 {
-                    addWarning(context, WARNINGID_AUTOSTART, getString(R.string.autostartWarning), addButton, getString(R.string.configLabel_alarms_autostart), new View.OnClickListener()
+                    addWarning(context, WARNINGID_AUTOSTART, getString(R.string.alarms_warning_autostart), addButton, getString(R.string.alarms_label_autostart), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View view) {
@@ -1010,7 +1058,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 // restricted bucket warning
                 if (Build.VERSION.SDK_INT >= 28)
                 {
-                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.restrictedBucketWarning), addButton, getString(R.string.configAction_help), new View.OnClickListener()
+                    addWarning(context, WARNINGID_RESTRICTED_BUCKET, getString(R.string.alarms_warning_restrictedBucket), addButton, getString(R.string.action_help), new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v) {
@@ -1029,13 +1077,13 @@ public class AlarmClockActivity extends AppCompatActivity
                         return !NotificationManagerCompat.from(context).areNotificationsEnabled();
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "0":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[0]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[0]);
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "1":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[1]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[1]);
 
                     case WARNINGID_NOTIFICATIONS_CHANNEL + "2":
-                        return AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.values()[2]);
+                        return AlarmSettings.isChannelMuted(context, AlarmType.values()[2]);
 
                     case WARNINGID_BATTERY_OPTIMIZATION:
                         return !AlarmSettings.isIgnoringBatteryOptimizations(context);
@@ -1087,33 +1135,30 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_bedtime:
-                showBedtime();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_bedtime) {
+            showBedtime();
+            return true;
 
-            case R.id.action_settings:
-                showSettings();
-                return true;
+        } else if (itemId == R.id.action_settings) {
+            showSettings();
+            return true;
 
-            case R.id.action_help:
-                showHelp();
-                return true;
+        } else if (itemId == R.id.action_help) {
+            showHelp();
+            return true;
 
-            case R.id.action_about:
-                showAbout();
-                return true;
+        } else if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
-                    onBackPressed();
-                else onHomePressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
+                onBackPressed();
+            else onHomePressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -1123,12 +1168,13 @@ public class AlarmClockActivity extends AppCompatActivity
             navigation.closeNavigationDrawer();
 
         } else if (isAddDialogShowing()) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            sheetBehavior.setState(BottomSheetBehaviorCompat.STATE_HIDDEN);
 
-        } else if (list.getSelectedRowID() != -1) {
+        } else if (list != null && list.getSelectedRowID() != -1) {
             list.clearSelection();
 
         } else if (warnings.dismissWarning()) {
+            //noinspection UnnecessaryReturnStatement
             return;
 
         } else {
@@ -1144,12 +1190,11 @@ public class AlarmClockActivity extends AppCompatActivity
         overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     private final View.OnClickListener onFabMenuClick = new View.OnClickListener() {
@@ -1183,7 +1228,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        startActivityForResultCompat(settingsIntent, REQUEST_SETTINGS);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -1201,7 +1246,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_restricted_bucket));
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmClockActivity.this, R.string.help_restricted_bucket_path), DIALOG_HELP);
         helpDialog.show(getSupportFragmentManager(), DIALOG_HELP);
     }
@@ -1230,9 +1275,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
                 if (item != null && !data.hasExtra(AlarmNotifications.ACTION_DELETE))
                 {
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, isNewAlarm, false);
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, item, isNewAlarm, false);
                     task.setTaskListener(onUpdateItem);
-                    task.execute(item);
+                    ExecutorUtils.runTask("AlarmUpdateTask", task, task.getTaskListener());
                 }
             }
         }
@@ -1269,10 +1314,10 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public static void scheduleAlarm(Activity context, AlarmType type, String label, @NonNull String event, @NonNull Location location)
     {
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
-        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
+        boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
         int hour = 6, minutes = 30;    // fallback to an arbitrary alarm time if event does not occur
 
         if (isSchedulable)
@@ -1285,9 +1330,9 @@ public class AlarmClockActivity extends AppCompatActivity
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, String event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
+    public static void scheduleAlarm(Activity context, AlarmType type, String label, String event, Location location, int hour, int minutes, String timezone)
     {
-        TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
+        TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);
         calendar0.set(Calendar.HOUR_OF_DAY, hour);
         calendar0.set(Calendar.MINUTE, minutes);
@@ -1305,7 +1350,7 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
 
         Bundle locationBundle = new Bundle();
-        locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
+        locationBundle.putSerializable(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
         try {

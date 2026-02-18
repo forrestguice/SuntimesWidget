@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,14 +35,14 @@ import org.junit.runner.RunWith;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmClockItemTest
 {
     private Context context;
 
     @Before
     public void setup() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test
@@ -78,7 +78,7 @@ public class AlarmClockItemTest
     public void test_alarmClockItem_new()
     {
         AlarmClockItem item0 = new AlarmClockItem();
-        item0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item0.type = AlarmType.NOTIFICATION;
         item0.label = "label";
         item0.rowID = 0;
         item0.hour = 4;
@@ -102,7 +102,7 @@ public class AlarmClockItemTest
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
-        item1.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        item1.type = AlarmType.NOTIFICATION;
         //item1.setFlag("TEST1", 1);
         //item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
@@ -138,7 +138,7 @@ public class AlarmClockItemTest
         AlarmClockItem item3 = new AlarmClockItem();
         item3.fromContentValues(context, values);
         test_equals(item2, item3, false, true);
-        assertEquals(item2.type != null ? item2.type : AlarmClockItem.AlarmType.ALARM, item3.type);
+        assertEquals(item2.type != null ? item2.type : AlarmType.ALARM, item3.type);
     }
 
     public static void test_equals(AlarmClockItem item0, AlarmClockItem item) {

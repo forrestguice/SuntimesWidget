@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 
@@ -52,7 +53,7 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
     protected HashMap<SeekBar, SeekBar.OnSeekBarChangeListener> onSeekBarChanged = new HashMap<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_colors_simple, container, false);
@@ -115,12 +116,14 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL)
             {
-                ColorChooser.HexColorTextWatcher hexWatcher = (ColorChooser.HexColorTextWatcher) onTextChanged.get(edit_hex);
                 StringBuilder value = new StringBuilder(edit_hex.getText().toString());
                 while (value.length() < (showAlpha() ? 9 : 7)) {
                     value.append("F");
                 }
-                hexWatcher.onValueChanged(value.toString());
+                ColorChooser.HexColorTextWatcher hexWatcher = (ColorChooser.HexColorTextWatcher) onTextChanged.get(edit_hex);
+                if (hexWatcher != null) {
+                    hexWatcher.onValueChanged(value.toString());
+                }
             }
             return true;
         }
@@ -149,16 +152,19 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
         try {
             value[0] = Integer.parseInt(edit_r.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[0] = 0;
         }
         try {
             value[1] = Integer.parseInt(edit_g.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[1] = 0;
         }
         try {
             value[2] = Integer.parseInt(edit_b.getText().toString());
         } catch (NumberFormatException e) {
+            //noinspection ConstantConditions
             value[2] = 0;
         }
 

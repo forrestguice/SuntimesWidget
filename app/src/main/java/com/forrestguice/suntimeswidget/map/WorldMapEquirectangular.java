@@ -24,24 +24,23 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 
 /**
  * WorldMapEquirectangular
  */
-public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
+public class WorldMapEquirectangular extends WorldMapProjection
 {
     @Override
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
@@ -49,6 +48,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         int[] r = new int[2];
         r[0] = (int) (mid[0] + ((lon / 180d) * mid[0]));
         r[1] = (int) (mid[1] - ((lat / 90d) * mid[1]));
+        return r;
+    }
+
+    @Override
+    public double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h)
+    {
+        double[] r = new double[2];
+        r[0] = 180d * (x - mid[0]) / mid[0];
+        r[1] = 90d * (y - mid[1]) / -mid[1];
         return r;
     }
 
@@ -67,7 +75,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     protected Paint paintGrid = null;
 
     @Override
-    public void initPaint(WorldMapTask.WorldMapOptions options)
+    public void initPaint(WorldMapOptions options)
     {
         paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintBackground.setColor(options.colors.getColor(WorldMapColorValues.COLOR_BACKGROUND));
@@ -126,16 +134,14 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0) {
             return null;
         }
 
-        if (matrix == null) {
-            matrix = initMatrix();
-        }
+        double[] matrix = getMatrix();
 
         double[] mid = new double[2];
         mid[0] = w/2d;
@@ -171,7 +177,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 break drawData;
             }
 
-            long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+            long gmtMillis = now.getTimeInMillis() + (long)(TimeZones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
             double gmtArc = gmtHours * 15d;
 
@@ -302,12 +308,12 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
                 drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
+        }
 
-            ////////////////
-            // draw locations
-            if (options.locations != null) {
-                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
-            }
+        ////////////////
+        // draw locations
+        if (options.locations != null) {
+            drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
         }
 
         if (options.hasTransparentBaseMap) {
@@ -319,6 +325,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return b;
     }
 
+    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b) {
+        return b;
+    }
+
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
@@ -377,7 +388,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public double[] getMatrix() {
+    public double[] getMatrix()
+    {
+        if (matrix == null) {
+            matrix = initMatrix();
+        }
         return matrix;
     }
 
@@ -388,7 +403,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -416,11 +431,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
     }
 
-    private static double r_tropics = (23.439444 / 90d);
-    private static double r_polar = (66.560833 / 90d);
+    private static final double r_tropics = (23.439444 / 90d);
+    private static final double r_polar = (66.560833 / 90d);
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
@@ -453,7 +468,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;

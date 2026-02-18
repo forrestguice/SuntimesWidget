@@ -22,12 +22,16 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
+import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,20 +54,24 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmEventProviderTest
 {
+    public static String AUTHORITY() {
+        return EventUri.AUTHORITY();    // AlarmEventContract.AUTHORITY;
+    }
+
     public Context context;
 
     @Before
     public void init() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationUtils.getContext();
     }
 
     @Test
     public void test_query_eventTypes()
     {
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_EVENT_TYPES);
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_TYPES);
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(uri, QUERY_EVENT_TYPES_PROJECTION, null, null, null);
         assertNotNull(cursor);
@@ -78,11 +86,11 @@ public class AlarmEventProviderTest
         }
         cursor.close();
 
-        for (AlarmEventProvider.EventType type : AlarmEventProvider.EventType.values())
+        for (EventType type : EventType.values())
         {
-            if (type == AlarmEventProvider.EventType.SOLAREVENT) {
+            if (type == EventType.SOLAREVENT) {
                 for (int t : SolarEvents.types()) {
-                    String k = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(t + "");
+                    String k = EventType.SOLAREVENT.getSubtypeID(t + "");
                     assertTrue("eventTypes is missing " + k, types.containsKey(k));
                 }
             } else {
@@ -94,7 +102,7 @@ public class AlarmEventProviderTest
     @Test
     public void test_query_eventInfo()
     {
-        Uri uri = Uri.parse("content://" + AUTHORITY + "/" + QUERY_EVENT_INFO);
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_INFO);
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(uri, QUERY_EVENT_INFO_PROJECTION, null, null, null);
         assertNotNull(cursor);
@@ -121,33 +129,41 @@ public class AlarmEventProviderTest
 
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SUN)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("false", supportsOffsetDays.get(event.name()));
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOON)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("false", supportsOffsetDays.get(event.name()));
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SEASON)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
             assertEquals("true", requiresLocation.get(event.name()));
             assertEquals("true", supportsOffsetDays.get(event.name()));
         }
         for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOONPHASE)) {
             assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
-            String typeID = AlarmEventProvider.EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
             assertEquals("wrong typeID!", typeID, types.get(event.name()));
-            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) supportsRepeating.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
             assertEquals("false", requiresLocation.get(event.name()));
             assertEquals("true", supportsOffsetDays.get(event.name()));
         }
@@ -156,12 +172,12 @@ public class AlarmEventProviderTest
     @Test
     public void test_EventType_resolveEventType()
     {
-        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
-        AlarmEventProvider.EventType[] expected = new AlarmEventProvider.EventType[] {
-                AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH, AlarmEventProvider.EventType.DATE, AlarmEventProvider.EventType.SOLAREVENT };
+        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "SHADOWRATIO_X:2.0|5r", "DAYPERCENT_25.5|5r", "MOON_-10|5r", "MOONILLUM_25|5r", "123456789", "SUNSET" };
+        EventType[] expected = new EventType[] {
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.SHADOWRATIO, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.EventType.resolveEventType(context, events[i]));
+            assertEquals(expected[i], EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), events[i]));
         }
     }
 

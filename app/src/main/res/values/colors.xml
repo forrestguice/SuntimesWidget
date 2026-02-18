@@ -382,6 +382,22 @@
         <item>#ee6362</item>
     </array>
 
+    <!-- gnss colors -->
+    <array name="gnss_constellationsColors">
+        <item />
+        <item>@color/indigo_300</item>
+        <item>@color/deep_purple_300</item>
+        <item>@color/indigo_600</item>
+        <item>@color/deep_purple_600</item>
+        <item>@color/blue_grey_300</item>
+        <item>@color/blue_grey_600</item>
+        <item>@color/grey_700</item>
+    </array>
+    <color name="gnss_used">@color/green_a100</color>
+    <color name="gnss_signal">@color/orange_a400</color>
+    <color name="gnss_signal_almanac">@color/blue_a100</color>
+    <color name="gnss_signal_ephemeris">@color/indigo_a400</color>
+
     <!-- graph colors -->
     <color name="graphColor_bg_dark">@color/material_grey_850</color>
     <color name="graphColor_day_dark">#ffffcc00</color>

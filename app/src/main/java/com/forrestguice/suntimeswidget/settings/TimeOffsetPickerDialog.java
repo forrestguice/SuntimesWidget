@@ -20,21 +20,25 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.util.android.AndroidResources;
 
 @TargetApi(11)
-public class TimeOffsetPickerDialog extends DialogFragment
+public class TimeOffsetPickerDialog extends DialogBase
 {
     protected TextView label;
     protected TimeOffsetPicker pickMillis;
@@ -47,8 +51,9 @@ public class TimeOffsetPickerDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        SuntimesUtils.initDisplayStrings(getContext());
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        Context context = requireContext();
+        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_TimeDeltaDisplay());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
         {
             @Override
@@ -88,8 +93,8 @@ public class TimeOffsetPickerDialog extends DialogFragment
             });
         }
 
-        SuntimesUtils.initDisplayStrings(getContext());
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+        SuntimesUtils.initDisplayStrings(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
 
         label = (TextView) dialogView.findViewById(R.id.text_label);
@@ -100,13 +105,13 @@ public class TimeOffsetPickerDialog extends DialogFragment
 
         pickMillis = (TimeOffsetPicker) dialogView.findViewById(R.id.pick_offset_millis);
         if (pickMillis != null) {
-            pickMillis.setParams(getContext(), getMin(), getMax(), allowSeconds(), allowMinutes(), allowHours(), allowDays(), allowDirection());
-            pickMillis.setSelectedValue(getArguments().getInt("value", getMin()));
+            pickMillis.setParams(context, getMin(), getMax(), allowSeconds(), allowMinutes(), allowHours(), allowDays(), allowDirection());
+            pickMillis.setSelectedValue(getArgs().getInt("value", getMin()));
             pickMillis.addViewListener(onValueChanged);
         }
 
         dialog.setView(dialogView);
-        AlertDialog d = dialog.create();
+        Dialog d = dialog.create();
         d.setCancelable(false);
         d.setCanceledOnTouchOutside(false);
         return d;
@@ -123,70 +128,70 @@ public class TimeOffsetPickerDialog extends DialogFragment
     };
 
     public void setRange(int minValue, int maxValue) {
-        getArguments().putInt("min", minValue);
-        getArguments().putInt("max", maxValue);
+        getArgs().putInt("min", minValue);
+        getArgs().putInt("max", maxValue);
     }
     public int getMin() {
-        return getArguments().getInt("min");
+        return getArgs().getInt("min");
     }
     public int getMax() {
-        return getArguments().getInt("max");
+        return getArgs().getInt("max");
     }
 
     public void setFlags(boolean allowSeconds, boolean allowMinutes, boolean allowHours, boolean allowDays, boolean allowDirection) {
-        getArguments().putBoolean("allowSeconds", allowSeconds);
-        getArguments().putBoolean("allowMinutes", allowMinutes);
-        getArguments().putBoolean("allowHours", allowHours);
-        getArguments().putBoolean("allowDays", allowDays);
-        getArguments().putBoolean("allowDirection", allowDirection);
+        getArgs().putBoolean("allowSeconds", allowSeconds);
+        getArgs().putBoolean("allowMinutes", allowMinutes);
+        getArgs().putBoolean("allowHours", allowHours);
+        getArgs().putBoolean("allowDays", allowDays);
+        getArgs().putBoolean("allowDirection", allowDirection);
     }
     public boolean allowSeconds() {
-        return getArguments().getBoolean("allowSeconds", true);
+        return getArgs().getBoolean("allowSeconds", true);
     }
     public boolean allowMinutes() {
-        return getArguments().getBoolean("allowMinutes", true);
+        return getArgs().getBoolean("allowMinutes", true);
     }
     public boolean allowHours() {
-        return getArguments().getBoolean("allowHours", true);
+        return getArgs().getBoolean("allowHours", true);
     }
     public boolean allowDays() {
-        return getArguments().getBoolean("allowDays", true);
+        return getArgs().getBoolean("allowDays", true);
     }
     public boolean allowDirection() {
-        return getArguments().getBoolean("allowDirection", true);
+        return getArgs().getBoolean("allowDirection", true);
     }
 
     public void setShowLabel(boolean value) {
-        getArguments().putBoolean("showlabel", value);
+        getArgs().putBoolean("showlabel", value);
         if (label != null) {
             label.setVisibility(value ? View.VISIBLE : View.GONE);
         }
     }
     public boolean getShowLabel() {
-        return getArguments().getBoolean("showlabel", true);
+        return getArgs().getBoolean("showlabel", true);
     }
 
     public void setZeroText(String text) {
-        getArguments().putString("zerotext", text);
+        getArgs().putString("zerotext", text);
     }
     public String getZeroText() {
-        return getArguments().getString("zerotext", null);
+        return getArgs().getString("zerotext", null);
     }
 
     public void setRestoreDefault(String text, int value) {
-        getArguments().putString("defaulttext", text);
-        getArguments().putInt("defaultvalue", value);
+        getArgs().putString("defaulttext", text);
+        getArgs().putInt("defaultvalue", value);
     }
     public String getRestoreDefaultText() {
-        return getArguments().getString("defaulttext", null);
+        return getArgs().getString("defaulttext", null);
     }
     public int getRestoreDefaultValue() {
-        return getArguments().getInt("defaultvalue", getMin());
+        return getArgs().getInt("defaultvalue", getMin());
     }
 
     public void setValue(int value)
     {
-        getArguments().putInt("value", value);
+        getArgs().putInt("value", value);
         if (pickMillis != null) {
             pickMillis.setSelectedValue(value);
         }
@@ -196,19 +201,19 @@ public class TimeOffsetPickerDialog extends DialogFragment
     }
     public int getValue() {
         return (int)(pickMillis != null ? pickMillis.getSelectedValue()
-                : getArguments().getInt("value", getMin()));
+                : getArgs().getInt("value", getMin()));
     }
 
     public void setDialogTitle(String title) {
-        getArguments().putString("title", title);
+        getArgs().putString("title", title);
     }
     public String getDialogTitle() {
-        return getArguments().getString("title", null);
+        return getArgs().getString("title", null);
     }
 
     private String createSummaryString(int value) {
         return (value == 0 && getZeroText() != null) ? getZeroText()
-                : new SuntimesUtils().timeDeltaLongDisplayString(0, value, true).getValue();
+                : new TimeDeltaDisplay().timeDeltaLongDisplayString(0, value, true).getValue();
     }
 
     /**

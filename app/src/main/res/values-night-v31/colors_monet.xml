@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="monet_window_bg">@color/monet_dark_window_bg</color>
+    <color name="monet_primaryColor">@color/monet_dark_primaryColor</color>
+    <color name="monet_dialog_frame">@color/monet_dark_dialog_frame</color>
+    <color name="monet_dialog_bg">@color/monet_dark_dialog_bg</color>
+    <color name="monet_dialog_bg_alt">@color/monet_dark_dialog_bg_alt</color>
+    <color name="monet_card_bg">@color/monet_dark_card_bg</color>
+    <color name="monet_card_bg_trans">@color/monet_dark_card_bg_trans</color>
+    <color name="monet_chip_bg_disabled">@color/monet_dark_chip_bg_disabled</color>
+    <color name="monet_chip_bg_disabled_stroke">@color/monet_dark_chip_bg_disabled_stroke</color>
+    <color name="monet_chip_bg_enabled">@color/monet_dark_chip_bg_enabled</color>
+    <color name="monet_chip_bg_enabled_stroke">@color/monet_dark_chip_bg_enabled_stroke</color>
+    <color name="monet_chip_bg_pressed">@color/monet_dark_chip_bg_pressed</color>
+    <color name="monet_chip_bg_pressed_stroke">@color/monet_dark_chip_bg_pressed_stroke</color>
+    <color name="monet_chip_tray_bg">@color/monet_dark_chip_tray_bg</color>
+    <color name="monet_menu_bg">@color/monet_dark_menu_bg</color>
+
+    <color name="monet_hr">@color/monet_dark_hr</color>
+    <color name="monet_text_primary">@color/monet_dark_text_primary</color>
+    <color name="monet_text_secondary">@color/monet_dark_text_secondary</color>
+    <color name="monet_text_tertiary">@color/monet_dark_text_tertiary</color>
+    <color name="monet_text_disabled">@color/monet_dark_text_disabled</color>
+    <color name="monet_text_accent">@color/monet_dark_text_accent</color>
+    <color name="monet_snackbar_text">@color/monet_dark_snackbar_text</color>
+    <color name="monet_fab_ripple">@color/monet_dark_fab_ripple</color>
+
+    <color name="monet_alarm_enabled">@color/monet_dark_alarm_enabled</color>
+    <color name="monet_alarm_pressed">@color/monet_dark_alarm_pressed</color>
+    <color name="monet_alarm_enabled_bg">@color/monet_dark_alarm_enabled_bg</color>
+    <color name="monet_alarm_disabled_bg">@color/monet_dark_alarm_disabled_bg</color>
+    <color name="monet_alarm_disabled_stroke">@color/monet_dark_alarm_disabled_stroke</color>
+
+    <color name="monet_grid_selected">@color/monet_dark_grid_selected</color>
+    <color name="monet_btn_tint_pressed">@color/monet_dark_btn_tint_pressed</color>
+
+    <color name="monet_graphColor_bg">@color/monet_dark_graphColor_bg</color>
+    <color name="monet_graphColor_day">@color/monet_dark_graphColor_day</color>
+    <color name="monet_graphColor_night">@color/monet_dark_graphColor_night</color>
+    <color name="monet_graphColor_civil">@color/monet_dark_graphColor_civil</color>
+    <color name="monet_graphColor_nautical">@color/monet_dark_graphColor_nautical</color>
+    <color name="monet_graphColor_astronomical">@color/monet_dark_graphColor_astronomical</color>
+    <color name="monet_graphColor_pointFill">@color/monet_dark_graphColor_pointFill</color>
+    <color name="monet_graphColor_pointStroke">@color/monet_dark_graphColor_pointStroke</color>
+
+    <color name="monet_warningTag">@color/monet_dark_warningTag</color>
+    <color name="monet_errorTag">@color/monet_dark_errorTag</color>
+    <color name="monet_dstTag">@color/monet_dark_dstTag</color>
+
+    <color name="monet_sunIcon_color_rising">@color/monet_dark_sunIcon_color_rising</color>
+    <color name="monet_sunIcon_color_setting">@color/monet_dark_sunIcon_color_setting</color>
+
+    <color name="monet_moonIcon_color_rising">@color/monet_dark_moonIcon_color_rising</color>
+    <color name="monet_moonIcon_color_setting">@color/monet_dark_moonIcon_color_setting</color>
+
+    <color name="monet_springColor">@color/monet_dark_springColor</color>
+    <color name="monet_summerColor">@color/monet_dark_summerColor</color>
+    <color name="monet_fallColor">@color/monet_dark_fallColor</color>
+    <color name="monet_winterColor">@color/monet_dark_winterColor</color>
+
+    <color name="monet_tagColor_warning">@color/monet_dark_tagColor_warning</color>
+    <color name="monet_tagColor_error">@color/monet_dark_tagColor_error</color>
+    <color name="monet_tagColor_dst">@color/monet_dark_tagColor_dst</color>
+</resources>

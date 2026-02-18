@@ -23,20 +23,21 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -49,27 +50,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonRiseSetView1 extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
     private boolean isRtl = false;
     private boolean centered = false;
 
@@ -141,6 +148,7 @@ public class MoonRiseSetView1 extends LinearLayout
         dividers = new MoonRiseSetDivider1(context, MoonRiseSetAdapter.CENTER_POSITION, card_adapter.getItemsPerDay());
         card_view.addItemDecoration(dividers);
     }
+    @Nullable
     private MoonRiseSetDivider1 dividers = null;
 
     private void init(Context context, AttributeSet attrs)
@@ -196,6 +204,8 @@ public class MoonRiseSetView1 extends LinearLayout
 
     public void initLocale(Context context)
     {
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_CardinalDirection());
         SuntimesUtils.initDisplayStrings(context);
         isRtl = AppSettings.isLocaleRtl(context);
     }
@@ -308,9 +318,9 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     };
 
-    private final RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListenerCompat onScrollChanged = new RecyclerView.OnScrollListenerCompat() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
             int position = card_layout.findFirstVisibleItemPosition();
@@ -362,10 +372,10 @@ public class MoonRiseSetView1 extends LinearLayout
         card_layout.scrollToPositionWithOffset(card_adapter.getPositionForDate(getContext(), datetime), 0);
     }
     public void lockScrolling() {
-        card_view.setLayoutFrozen(true);
+        card_view.suppressLayout(true);
     }
     public void unlockScrolling() {
-        card_view.setLayoutFrozen(false);
+        card_view.suppressLayout(false);
     }
 
     private MoonRiseSetViewListener viewListener = null;
@@ -418,6 +428,7 @@ public class MoonRiseSetView1 extends LinearLayout
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
         public MoonRiseSetField onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -427,7 +438,7 @@ public class MoonRiseSetView1 extends LinearLayout
         }
 
         @Override
-        public void onBindViewHolder(MoonRiseSetField holder, int position)
+        public void onBindViewHolder(@NonNull MoonRiseSetField holder, int position)
         {
             Context context = contextRef.get();
             if (context == null) {
@@ -457,7 +468,7 @@ public class MoonRiseSetView1 extends LinearLayout
         @SuppressLint("ResourceType")
         private void initTheme(Context context)
         {
-            colors = new MoonRiseSetColorValues(context);
+            colors = new MoonRiseSetColorValues(AndroidResources.wrap(context));
 
             int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -487,7 +498,7 @@ public class MoonRiseSetView1 extends LinearLayout
         }
 
         @Override
-        public void onViewRecycled(MoonRiseSetField holder)
+        public void onViewRecycled(@NonNull MoonRiseSetField holder)
         {
             detachClickListeners(holder);
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
@@ -614,7 +625,9 @@ public class MoonRiseSetView1 extends LinearLayout
         private boolean showPosition = false;
 
         private void attachClickListeners(@NonNull MoonRiseSetField holder, int position) {
-            holder.layout.setOnClickListener(onItemClick(position, holder.eventID.name()));
+            if (holder.eventID != null) {
+                holder.layout.setOnClickListener(onItemClick(position, holder.eventID.name()));
+            }
         }
 
         private void detachClickListeners(@NonNull MoonRiseSetField holder) {
@@ -634,7 +647,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         /**
          * setAdapterListener
-         * @param listener
+         * @param listener listener
          */
         public void setAdapterListener( @NonNull MoonRiseSetAdapterListener listener ) {
             adapterListener = listener;
@@ -648,6 +661,7 @@ public class MoonRiseSetView1 extends LinearLayout
     public static class MoonRiseSetField extends RecyclerView.ViewHolder
     {
         public int position = RecyclerView.NO_POSITION;
+        @Nullable
         public MoonRiseSetEvent eventID = null;
 
         public View layout;
@@ -655,8 +669,9 @@ public class MoonRiseSetView1 extends LinearLayout
         public TextView timeView;
         public TextView positionView;
 
+        @Nullable
         public Drawable icon_rising = null, icon_setting = null, icon_noon = null, icon_midnight = null;
-        private final SuntimesUtils utils = new SuntimesUtils();
+        private static final AngleDisplay angle_utils = new AngleDisplay();
 
         public static int getLayoutID() {
             return R.layout.info_time_moonriseset;
@@ -676,11 +691,24 @@ public class MoonRiseSetView1 extends LinearLayout
         protected void initDrawables(Context context)
         {
             TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.moonriseIcon, R.attr.moonsetIcon, R.attr.moonnoonIcon, R.attr.moonnightIcon });
-            icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise)).mutate();
-            icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set)).mutate();
-            icon_noon = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.ic_moon_noon)).mutate();
-            icon_midnight = ContextCompat.getDrawable(context, a.getResourceId(4, R.drawable.ic_moon_night)).mutate();
+            icon_rising = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_moon_rise));
+            icon_setting = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.ic_moon_set));
+            icon_noon = ContextCompat.getDrawable(context, a.getResourceId(3, R.drawable.ic_moon_noon));
+            icon_midnight = ContextCompat.getDrawable(context, a.getResourceId(4, R.drawable.ic_moon_night));
             a.recycle();
+
+            if (icon_rising != null) {
+                icon_rising = icon_rising.mutate();
+            }
+            if (icon_setting != null) {
+                icon_setting = icon_setting.mutate();
+            }
+            if (icon_noon != null) {
+                icon_noon = icon_noon.mutate();
+            }
+            if (icon_midnight != null) {
+                icon_midnight = icon_midnight.mutate();
+            }
         }
 
         protected CharSequence getContentDescriptionForEvent(Context context, @Nullable MoonRiseSetEvent event)
@@ -689,10 +717,10 @@ public class MoonRiseSetView1 extends LinearLayout
                 return null;
             }
             switch (event) {
-                case MOONNOON: return context.getString(R.string.until_moonnoon);
-                case MOONNIGHT: return context.getString(R.string.until_moonnight);
-                case MOONSET: return context.getString(R.string.moonset);
-                case MOONRISE: default: return context.getString(R.string.moonrise);
+                case MOONNOON: return context.getString(R.string.timeMode_moon_noon);
+                case MOONNIGHT: return context.getString(R.string.timeMode_moon_midnight);
+                case MOONSET: return context.getString(R.string.table_header_moonset);
+                case MOONRISE: default: return context.getString(R.string.table_header_moonrise);
             }
         }
 
@@ -771,7 +799,7 @@ public class MoonRiseSetView1 extends LinearLayout
 
         public void updateField(Context context, Calendar dateTime, boolean showSeconds)
         {
-            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds);
             timeView.setText(text.toString());
         }
 
@@ -783,14 +811,14 @@ public class MoonRiseSetView1 extends LinearLayout
                 positionView.setContentDescription("");
 
             } else {
-                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
-                String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-                SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-                azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+                TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 1, false);
+                String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+                SpannableString azimuthSpan = SpanUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+                azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
-                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
-                positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+                TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 1, true);
+                positionView.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
             }
         }
 
@@ -847,7 +875,7 @@ public class MoonRiseSetView1 extends LinearLayout
                 return getCalendarForEvent(data, MoonRiseSetEvent.valueOf(eventID));
             } catch (IllegalArgumentException e) {
                 Log.w("MoonRiseSetEvent", "Unrecognized eventID: " + eventID + ": " + e);
-                return getCalendarForEvent(data, (MoonRiseSetEvent) null);
+                return null;
             }
         }
         public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable MoonRiseSetEvent event)
@@ -914,7 +942,7 @@ public class MoonRiseSetView1 extends LinearLayout
             if (d != null)
             {
                 Calendar date = d.calendar();
-                String dateText = utils.calendarDateDisplayString(getContext(), date).toString();
+                String dateText = utils.calendarDateDisplayString(AndroidResources.wrap(getContext()), date).toString();
 
                 int textColor = colorDisabled;
                 Calendar now = d.now();
@@ -930,87 +958,4 @@ public class MoonRiseSetView1 extends LinearLayout
         }
     }
 
-    /**
-     * MoonRiseSetDivider
-     */
-    public static class MoonRiseSetDivider extends RecyclerView.ItemDecoration
-    {
-        protected Drawable divider;
-        protected int centerPosition;
-        protected int itemsPerDay;
-        private final Rect bounds = new Rect();
-
-        public MoonRiseSetDivider(Context context, int centerPosition, int itemsPerDay)
-        {
-            this.centerPosition = centerPosition;
-            this.itemsPerDay = itemsPerDay;
-            initDrawables(context);
-        }
-
-        protected void initDrawables(Context context)
-        {
-            TypedArray a = context.obtainStyledAttributes(new int[] { android.R.attr.listDivider });
-            divider = a.getDrawable(0);
-            a.recycle();
-        }
-
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)
-        {
-            if (parent.getLayoutManager() == null) {
-                return;
-            }
-
-            c.save();
-            int top, bottom;
-            if (parent.getClipToPadding())
-            {
-                top = parent.getPaddingTop();
-                bottom = parent.getHeight() - parent.getPaddingBottom();
-                c.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(), bottom);
-            } else {
-                top = 0;
-                bottom = parent.getHeight();
-            }
-
-            int n = parent.getChildCount();
-            for (int i=0; i<n; i++)
-            {
-                View child = parent.getChildAt(i);
-                int position = parent.getChildAdapterPosition(child);
-                parent.getLayoutManager().getDecoratedBoundsWithMargins(child, bounds);
-
-                int offset = (position - centerPosition) % itemsPerDay;
-                if (offset < 0) {
-                    offset += itemsPerDay;
-                }
-
-                if (offset == 0) {
-                    int left = bounds.left + Math.round(ViewCompat.getTranslationX(child));
-                    drawHeader(c, position, left, top);
-                    drawFooter(c, position, left, bottom);
-
-                } else if (offset == (itemsPerDay - 1)) {
-                    int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
-                    int left = right - divider.getIntrinsicWidth();
-                    divider.setBounds(left, top, right, bottom);
-                    divider.draw(c);
-                }
-            }
-            c.restore();
-        }
-
-        protected void drawFooter(Canvas c, int position, float x, float y) {
-            /* EMPTY */
-        }
-
-        protected void drawHeader(Canvas c, int position, float x, float y) {
-            /* EMPTY */
-        }
-
-        @Override
-        public void getItemOffsets(Rect rect, View v, RecyclerView parent, RecyclerView.State state) {
-            rect.set(0, 0, divider.getIntrinsicWidth(), 0);
-        }
-    }
 }

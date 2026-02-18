@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
 
-    <android.support.v7.widget.RecyclerView android:visibility="visible"
+    <com.forrestguice.support.widget.RecyclerView android:visibility="visible"
         android:id="@+id/info_equinoxsolstice_flipper1"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -12,21 +12,21 @@
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="horizontal" android:layout_gravity="end|center_vertical"
         android:padding="3dp">
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_prevbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end" android:padding="4dp"
             android:src="?attr/icActionPrevious"
             android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
-            android:contentDescription="@string/today" />
+            android:contentDescription="@string/cardlabel_today" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_nextbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end" android:padding="4dp"
             android:src="?attr/icActionNext"
             android:background="?attr/fab_backgroundDrawable" android:elevation="2dp"
-            android:contentDescription="@string/today" />
+            android:contentDescription="@string/cardlabel_today" />
     </LinearLayout>
 
     <TextView android:id="@+id/txt_empty" android:visibility="gone"
@@ -34,6 +34,6 @@
         android:gravity="center" android:layout_gravity="center"
         android:layout_margin="16dp"
         android:textSize="12sp"
-        android:text="@string/feature_not_supported_by_source" />
+        android:text="@string/app_feature_not_supported_by_source" />
 
 </FrameLayout>

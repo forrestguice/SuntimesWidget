@@ -5,13 +5,13 @@
 
         <item android:id="@+id/action_location_fromApp"
             android:icon="?attr/icActionHome"
-            android:title="@string/configLabel_location_fromapp"
+            android:title="@string/location_label_fromapp"
             android:checkable="true"
             android:orderInCategory="0" />
 
         <item android:id="@+id/action_location_set"
             android:icon="?attr/icActionPlace"
-            android:title="@string/configAction_setAlarmLocation"
+            android:title="@string/alarms_action_setAlarmLocation"
             android:orderInCategory="200" />
 
     </group>

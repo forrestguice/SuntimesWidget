@@ -28,13 +28,21 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -53,9 +61,9 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data, int[] widgetSize)
     {
-        super.prepareForUpdate(context, appWidgetId, data);
+        super.prepareForUpdate(context, appWidgetId, data, widgetSize);
         int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
         this.layoutID = chooseLayout(position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
     }
@@ -70,6 +78,21 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
+    protected void updateTimeViews(Context context, int appWidgetId, RemoteViews views, Calendar now)
+    {
+        TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        TimeDisplayText nowText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false, timeFormat);
+        String nowString = nowText.getValue();
+
+        CharSequence nowChars = (boldTime ? SpanUtils.createBoldSpan(null, nowString, nowString) : nowString);
+        views.setTextViewText(R.id.text_time, nowChars);
+        views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+    }
+
+    protected float getMaxSp() {
+        return SuntimesLayout.MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
@@ -78,25 +101,21 @@ public class ClockLayout_1x1_0 extends ClockLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_time_extras, showLabels ? View.VISIBLE : View.GONE);
 
-        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        boolean showDate = CalendarSettings.loadCalendarFlag(AndroidCalendarSettings.wrap(context), appWidgetId, CalendarSettingsInterface.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettingsInterface.PREF_DEF_CALENDAR_SHOWDATE);
         views.setViewVisibility(R.id.text_date, showDate ? View.VISIBLE : View.GONE);
 
         Calendar now = data.calendar();
-        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
-        SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
-        String nowString = nowText.getValue();
-        CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
         String dateString = null;
         if (showDate)
         {
             CalendarMode mode = CalendarMode.GREGORIAN;
-            String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
+            String pattern = CalendarSettings.loadCalendarFormatPatternPref(AndroidCalendarSettings.wrap(context), appWidgetId, mode.name());
             if (!CalendarFormat.isValidPattern(pattern)) {
                 Log.w(getClass().getSimpleName(), "updateViews: invalid pattern! " + pattern + ", falling back to default..");
                 pattern = mode.getDefaultPattern();
             }
-            dateString = CalendarMode.formatDate(mode, pattern, now);
+            dateString = AndroidCalendarDisplayFactory.create().formatDate(mode, pattern, now);
             views.setTextViewText(R.id.text_date, dateString);
         }
 
@@ -113,10 +132,10 @@ public class ClockLayout_1x1_0 extends ClockLayout
                 boolean rescale = false;
                 do
                 {
-                    float maxSp = SuntimesLayout.MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
+                    float maxSp = getMaxSp();
                     int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - ((int)adjustedSizeSp1[0] * (showDate ? 1 : 0)))};
 
-                    adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
+                    adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
                     if (adjustedSizeSp0[0] != timeSizeSp) {
                         views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[0]);
                         views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[1]);
@@ -136,17 +155,16 @@ public class ClockLayout_1x1_0 extends ClockLayout
             }
         }
 
-        views.setTextViewText(R.id.text_time, nowChars);
-        views.setTextViewText(R.id.text_time_suffix, nowText.getSuffix());
+        updateTimeViews(context, appWidgetId, views, now);
 
         if (showLabels)
         {
             int stringResID;
             Long offset = null;
-            if (data.timezoneMode() == WidgetSettings.TimezoneMode.SOLAR_TIME)
+            if (data.timezoneMode() == TimezoneMode.TIME_STANDARD)
             {
                 stringResID = R.string.timezoneExtraApparentSolar_short;
-                if (WidgetSettings.loadSolarTimeModePref(context, appWidgetId) == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME) {
+                if (WidgetSettings.loadTimeStandardModePref(context, appWidgetId) == TimeStandardMode.APPARENT_SOLAR_TIME) {
                     offset = (long)data.calculator().equationOfTime(now) * 1000L;  //(long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
                 }
 
@@ -162,10 +180,10 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             if (offset != null)
             {
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+                TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
                 String offsetString = (offsetText.getRawValue() < 0 ? "-" : "+") + offsetText.getValue();
                 String extrasString = context.getString(stringResID, offsetString);
-                SpannableString boldedExtrasSpan = SuntimesUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);
+                SpannableString boldedExtrasSpan = SpanUtils.createBoldColorSpan(SpannableString.valueOf(extrasString), extrasString, offsetString, timeColor);
                 views.setTextViewText(R.id.text_time_extras, boldedExtrasSpan);
                 views.setViewVisibility(R.id.text_time_extras, View.VISIBLE);
 
@@ -178,7 +196,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     protected int timeColor = Color.WHITE;
     protected int textColor = Color.WHITE;
     protected int suffixColor = Color.GRAY;
-    private boolean boldTime = false;
+    protected boolean boldTime = false;
     protected float titleSizeSp = 10;
     protected float timeSizeSp = 12;
     protected float textSizeSp = 12;

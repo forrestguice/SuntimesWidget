@@ -18,21 +18,18 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.widget.SnackbarCompat;
 
 import java.util.regex.Pattern;
 
@@ -65,7 +62,7 @@ public class SuntimesWarning
         setMessage(context, msg);
     }
 
-    protected String id;
+    protected final String id;
     public String getId() {
         return id;
     }
@@ -75,8 +72,8 @@ public class SuntimesWarning
         return parentView;
     }
 
-    private Snackbar snackbar = null;
-    public Snackbar getSnackbar() {
+    private SnackbarCompat snackbar = null;
+    public SnackbarCompat getSnackbar() {
         return snackbar;
     }
 
@@ -93,7 +90,7 @@ public class SuntimesWarning
         return wasDismissed;
     }
 
-    private int duration = Snackbar.LENGTH_INDEFINITE;
+    private int duration = SnackbarUtils.LENGTH_INDEFINITE;
     public int getDuration() {
          return duration;
     }
@@ -112,12 +109,14 @@ public class SuntimesWarning
     }
     public void setMessage( Context context, String msg )
     {
-        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
-        message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
-        contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
+        ImageSpan warningIcon = SpanUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
+        message = SpanUtils.createSpan(context, msg, SpanUtils.SPANTAG_WARNING, warningIcon);
+        contentDescription = msg.replaceAll(Pattern.quote(SpanUtils.SPANTAG_WARNING), context.getString(R.string.tag_warning_contentDescription));
     }
 
+    @Nullable
     protected CharSequence actionLabel = null;
+    @Nullable
     public CharSequence getActionLabel() {
         return actionLabel;
     }
@@ -129,17 +128,17 @@ public class SuntimesWarning
     {
         parentView = view;
         wasDismissed = false;
-        snackbar = Snackbar.make(parentView, message, duration);
+        snackbar = SnackbarCompat.from(SnackbarUtils.make(context, parentView, message, duration));
         snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
-        themeWarning(context, snackbar);
+        //themeWarning(context, snackbar);
 
         if (actionLabel != null && actionListener != null) {
-            snackbar.setAction(actionLabel, actionListener);
+            snackbar.getSnackbar().setAction(actionLabel, actionListener);
         }
     }
 
-    @SuppressLint("ResourceType")
+    /*@SuppressLint("ResourceType")
     private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
     {
         int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
@@ -155,32 +154,32 @@ public class SuntimesWarning
         snackbarView.setBackgroundColor(backgroundColor);
         snackbarWarning.setActionTextColor(accentColor);
 
-        TextView snackbarText = (TextView)snackbarView.findViewById(ViewUtils.getSnackbarTextResourceID());
+        TextView snackbarText = (TextView)snackbarView.findViewById(SnackbarUtils.getSnackbarTextResourceID());
         if (snackbarText != null) {
             snackbarText.setTextColor(textColor);
             snackbarText.setMaxLines(5);
         }
 
-        View snackbarAction = snackbarView.findViewById(ViewUtils.getSnackbarActionResourceID());
+        View snackbarAction = snackbarView.findViewById(SnackbarUtils.getSnackbarActionResourceID());
         if (snackbarAction != null) {
             if (Build.VERSION.SDK_INT >= 16) {
                 snackbarAction.setBackground(buttonDrawable);
                 snackbarAction.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
             }
         }
-    }
+    }*/
 
-    private final Snackbar.Callback snackbarListener = new Snackbar.Callback()
+    private final SnackbarCompat.Callback snackbarListener = new SnackbarCompat.Callback()
     {
         @Override
-        public void onDismissed(Snackbar snackbar, int event)
+        public void onDismissed(SnackbarCompat snackbar, int event)
         {
             super.onDismissed(snackbar, event);
             switch (event)
             {
                 case DISMISS_EVENT_SWIPE:
                     wasDismissed = true;
-                    snackbar.getView().post(new Runnable() {
+                    snackbar.getSnackbar().getView().post(new Runnable() {
                         @Override
                         public void run() {
                             showNextWarning();
@@ -200,17 +199,17 @@ public class SuntimesWarning
 
     public boolean isShown()
     {
-        return (snackbar != null && snackbar.isShown());
+        return (snackbar != null && snackbar.getSnackbar().isShown());
     }
 
     public void show()
     {
         if (snackbar != null) {
-            snackbar.show();
-            snackbar.getView().post(new Runnable() {
+            snackbar.getSnackbar().show();
+            snackbar.getSnackbar().getView().post(new Runnable() {
                 @Override
                 public void run() {
-                    snackbar.getView().requestFocus();
+                    snackbar.getSnackbar().getView().requestFocus();
                 }
             });
         }
@@ -220,7 +219,7 @@ public class SuntimesWarning
     public void dismiss()
     {
         if (isShown()) {
-            snackbar.dismiss();
+            snackbar.getSnackbar().dismiss();
         }
     }
 
@@ -234,7 +233,7 @@ public class SuntimesWarning
     {
         this.contentDescription = value;
         if (snackbar != null) {
-            TextView snackText = (TextView) snackbar.getView().findViewById(ViewUtils.getSnackbarTextResourceID());
+            TextView snackText = (TextView) snackbar.getSnackbar().getView().findViewById(SnackbarUtils.getSnackbarTextResourceID());
             if (snackText != null) {
                 snackText.setContentDescription(contentDescription);
             }

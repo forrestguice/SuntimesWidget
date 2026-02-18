@@ -26,20 +26,20 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceCategory;
+
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+
 import android.util.Log;
 import android.util.TypedValue;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
-import com.forrestguice.suntimeswidget.colors.AppColorValues;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -58,7 +58,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.events.EventListActivity;
-import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
@@ -66,6 +65,9 @@ import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
 
 import java.util.List;
@@ -175,7 +177,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 setResult(RESULT_OK, data);
                 break;
 
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_DARK:
+                //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT:
                 onPickTheme(requestCode, resultCode, data);
                 break;
@@ -203,7 +207,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         switch(requestCode)
         {
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_DARK: return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            //noinspection deprecation
             case SettingsActivityInterface.REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
             case SettingsActivityInterface.REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
             case SettingsActivityInterface.REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
@@ -259,7 +265,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                     pref.apply();
                 }
                 rebuildActivity();
-                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.app_restart_required_message), Toast.LENGTH_LONG).show();
 
             } else if (adapterModified) {
                 rebuildActivity();
@@ -274,11 +280,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             String selection = data.getStringExtra(ColorValuesSheetActivity.EXTRA_SELECTED_COLORS_ID);
             int appWidgetID = data.getIntExtra(ColorValuesSheetActivity.EXTRA_APPWIDGET_ID, 0);
             String colorTag = data.getStringExtra(ColorValuesSheetActivity.EXTRA_COLORTAG);
-            ColorValuesCollection<ColorValues> collection = data.getParcelableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
+            //noinspection unchecked
+            ColorValuesCollection<ColorValues> collection = (ColorValuesCollection<ColorValues>) data.getSerializableExtra(ColorValuesSheetActivity.EXTRA_COLLECTION);
             //Log.d("DEBUG", "onPickColors: " + selection);
 
             if (collection != null) {
                 collection.setSelectedColorsID(context, selection, appWidgetID, colorTag);
+            } else {
+                Log.w("SettingsActivity", "onPickColors: the expected result is missing!");
             }
 
             String key = prefKeyForRequestCode(requestCode);
@@ -296,18 +305,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     private void onManageEvents(int requestCode, int resultCode, @Nullable Intent data)
     {
-        boolean adapterModified = ((data != null) && data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false));
-
-        if (resultCode == RESULT_OK)
-        {
-            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
-            if (eventID != null) {
-                EventSettings.setShown(context, eventID, true);
-                adapterModified = true;
-            }
-        }
-
-        if (adapterModified) {
+        if (EventListActivity.onEventListActivityResult(this, requestCode, resultCode, data)) {
             setNeedsRecreateFlag();
             rebuildActivity();
         }
@@ -326,7 +324,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             //noinspection IfCanBeSwitch
             if (action.equals(ACTION_PREFS_GENERAL))
             {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
 
@@ -335,17 +332,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
                 initPref_alarms();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_locale);
                 initPref_locale();
 
             } else if (action.equals(ACTION_PREFS_UI)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_userinterface);
                 initPref_ui();
 
             } else if (action.equals(ACTION_PREFS_PLACES)) {
-                //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_places);
                 initPref_places();
 
@@ -360,7 +354,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             }
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            //noinspection deprecation
             addPreferencesFromResource(R.xml.preference_headers_legacy);
         }
     }
@@ -537,7 +530,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
     {
         AppSettings.initLocale(this);
 
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS) {
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS) {
             SuntimesWidget0.triggerWidgetUpdate(this, widgetClass);
         }
     }
@@ -576,7 +569,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         GeneralPrefsFragment.initPref_altitude(this, altitudePref);
 
         String key_sunCalc = WidgetSettings.keyCalculatorModePref(0);
-        //noinspection deprecation
         SummaryListPreference sunCalculatorPref = (SummaryListPreference)findPreference(key_sunCalc);
         if (sunCalculatorPref != null)
         {
@@ -585,7 +577,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
 
         String key_moonCalc = WidgetSettings.keyCalculatorModePref(0, "moon");
-        //noinspection deprecation
         SummaryListPreference moonCalculatorPref = (SummaryListPreference)findPreference(key_moonCalc);
         if (moonCalculatorPref != null)
         {
@@ -599,7 +590,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_locale()
     {
-        Preference localeModePref = findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
+        ListPreference localeModePref = (ListPreference) findPreference(AppSettings.PREF_KEY_LOCALE_MODE);
         ListPreference localePref = (ListPreference) findPreference(AppSettings.PREF_KEY_LOCALE);
         LocalePrefsFragment.initPref_locale(this, localeModePref, localePref);
     }
@@ -609,14 +600,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_places()
     {
-        //noinspection deprecation
-        Preference managePlacesPref = findPreference("places_manage");
-        //noinspection deprecation
-        Preference buildPlacesPref = findPreference("places_build");
-        //noinspection deprecation
-        Preference clearPlacesPref = findPreference("places_clear");
-        //noinspection deprecation
-        Preference exportPlacesPref = findPreference("places_export");
+        Preference managePlacesPref = (Preference) findPreference("places_manage");
+        Preference buildPlacesPref = (Preference) findPreference("places_build");
+        Preference clearPlacesPref = (Preference) findPreference("places_clear");
+        Preference exportPlacesPref = (Preference) findPreference("places_export");
         placesPrefBase = new PlacesPrefsFragment.PlacesPrefsBase(this, managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
 
@@ -654,7 +641,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             UIPrefsFragment.loadPref_observerHeight(this, observerHeightPref);
         }
 
-        Preference manage_events = findPreference("manage_events");
+        Preference manage_events = (Preference) findPreference("manage_events");
         if (manage_events != null) {
             manage_events.setOnPreferenceClickListener(UIPrefsFragment.getOnManageEventsClickedListener(SuntimesSettingsActivity.this));
         }
@@ -668,14 +655,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity
      */
     private void initPref_alarms()
     {
-        Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        Preference batteryOptimization = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
         PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
         AlarmPrefsFragment.removePrefFromCategory(batteryOptimization, alarmsCategory);
 
-        Preference autostart = findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        Preference autostart = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
         AlarmPrefsFragment.removePrefFromCategory(autostart, alarmsCategory);
 
-        Preference dndPermission = findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
+        Preference dndPermission = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
         PreferenceCategory bedtimeCategory = (PreferenceCategory)findPreference(BedtimeSettings.PREF_KEY_BEDTIME_CATEGORY);
         AlarmPrefsFragment.removePrefFromCategory(dndPermission, bedtimeCategory);
     }
@@ -699,7 +686,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
 
     @TargetApi(14)
     @Override
-    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, @StringRes int titleRes, @StringRes int shortTitleRes)
+    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, int titleRes, int shortTitleRes)
     {
         Intent intent = onBuildStartFragmentIntent(fragmentName, args, titleRes, shortTitleRes);
         if (resultTo != null) {

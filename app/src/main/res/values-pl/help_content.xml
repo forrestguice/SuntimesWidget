@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="help_battery_optimization">Ustaw aplikację <xliff:g id="appName">%s</xliff:g> jako „nie zoptymalizowaną” dla jej poprawnego działania.</string>
+    <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
+    <string name="help_restricted_bucket">Aplikacja została włączona do zbioru rzadko używanych lub ograniczonych aplikacji. Alarmy mogą nie działać bezawaryjnie.</string>
+
+    <string name="help_datasources">
+        <![CDATA[
+        Aplikacja Czasy Słońca korzysta z zewnętrznych bibliotek do wykonywania obliczeń astronomicznych.<br/>
+        <br/>
+        Ustawienie <b>Źródła danych</b> umożliwia wybór spośród kilku bibliotek (lub algorytmów oferowanych przez te biblioteki). Domyślnym wyborem jest <b>time4a-time4j</b>.<br/>
+        <br/>
+        Ustawienie to wpływa na szybkość i dokładność obliczeń, i może ograniczyć dostępne funkcje. <br/>
+        <br/>
+        Więcej informacji o dostępnych algorytmach/bibliotekach i jak rozszerzyć aplikację o dodatkowe biblioteki znajdziesz w pomocy online (w j. angielskim).
+    ]]>
+    </string>
+
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Pzełączaj układy, aby wypełnić dostępną przestrzeń</big><br/><br/>
+      <i><b>[włączone]</b></i> Widżet zmieni swój układ w zależności od dostępnej przestrzeni.<br/><br/>
+      <i><b>[wyłączone]</b></i> Widżet zachowa swój początkowy układ podczas zmiany rozmiaru. Użyj tego razem z ustawieniem „<i>Skaluj tekst i ikony</i>” dla bardzo dużych widżetów.<br/>
+    ]]></string>
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      Ten widżet został utworzony z <em>układem</em> <b>%1$s</b>.<br/></br/>
+    ]]></string>
+    <string name="help_appearance_title"><![CDATA[
+        Wspierane są następujące skróty:<br/>
+        <br/>
+        <b>Wszystkie widżety:</b> <br />
+                * <b>%d</b> dla daty (np. 12 lutego) <br/>
+                * <b>%dd</b> dla dnia (skrót) (np. pon) <br/>
+                * <b>%dD</b> dla dnia (np. poniedziałek) <br/>
+                * <b>%dY</b> dla roku (np. 2018) <br/>
+                * <b>%dt</b> dla czasu ostatniej aktualizacji <br/>
+                * <b>%dT</b> dla czasu ostatniej aktualizacji (uwzględniając sekundy) <br/>
+                * <b>%dm</b> dla czasu ostatniej aktualizacji (w milisekundach) <br/>
+                <br/>
+                * <b>%loc</b> dla etykiety (np. Warszawa) <br />
+                * <b>%lat</b> dla szerokości geograficznej <br />
+                * <b>%lon</b> dla długości geograficznej <br/>
+                * <b>%lel</b> dla wysokości n.p.m. (np. 143) <br/>
+                <br/>
+                * <b>%s</b> dla źródła danych (np. sunrisesunsetlib) <br/>
+                * <b>%t</b> dla strefy czasowej (id) (np. Europe/Warsaw) <br/>
+                * <b>%id</b> dla ID widżetu <br/>
+         <br/>
+         <b>Widżety dat:</b> <br/>
+                * <b>%M</b> dla kalendarza (np. gregoriański) <br/>
+         <b>Widżety Słońca:</b> <br/>
+                * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
+                * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
+                * <b>%o</b> dla kolejności (np. dzisiejszy, poprzedni / następny) <br/>
+         <br/>
+         <b>Widżety Księżyca:</b> <br/>
+                * <b>%i</b> dla oświetlenia Księżyca (np. 25%) <br/>
+                * <b>%M</b> dla fazy Księżyca (np. Księżyc rosnący (&lt;50%)) <br/>
+                * <b>%o</b> dla kolejności (np. dzisiejszy, poprzedni / następny) <br/>
+         <br/>
+         <b>Widżety przesilenia:</b> <br/>
+                * <b>%m</b> dla trybu (skrót) (np. przesilenie) <br/>
+                * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
+                * <b>%o</b> dla kolejności wydarzenia (np. poprzednie, najbliższe, nadchodzące) <br/>
+    ]]></string>
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Format daty</b> według «Date Format Pattern Syntax».<br/>
+          <br/>Dostępne elementy mogą się różnić w zależności od kalendarza, ale zwykle mogą to być:<br/>
+          <br/>
+          <b>E</b> : dzień tygodnia <br/>
+          <b>d</b> : dzień miesiąca <br/>
+          <b>D</b> : dzień roku <br/>
+          <b>F</b> : tydzień miesiąca <br/>
+          <b>M</b> : miesiąc roku <br/>
+          <b>y</b> : rok ery <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  wschód Księżyca \t\t[Icon Noon]  górowanie księżyca
+          \n[Icon Setting]  zachód Księżyca \t\t[Icon Midnight]  dołowanie Księżyca
+          \n\nPrzycisk „[Icon Share] Udostępnij” kopiuje tekst do schowka.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Półmetek astronomicznej zimy:</b> punkt dokładnie pomiędzy zimowym przesileniem i wiosenną równonocą; ma miejsce w <em>lutym</em> na półkuli północnej i w <em>sierpniu</em> na półkuli południowej. Zbiega się z wiccańskim świętem Imbolc.<br/><br/>
+          <b>Półmetek astronomicznej wiosny:</b> punkt dokładnie pomiędzy wiosenną równonocą i letnim przesileniem; ma miejsce w <em>maju</em> na półkuli północnej i w <em>listopadzie</em> na półkuli południowej. Zbiega się z wiccańskim świętem Beltane.<br/><br/>
+          <b>Półmetek astronomicznego lata:</b> punkt dokładnie pomiędzy letnim przesileniem i jesienną równonocą; ma miejsce w <em>sierpniu</em> na półkuli północnej i w <em>lutym</em> na półkuli południowej. Zbiega się z wiccańskim świętem Lúnasa.<br/><br/>
+          <b>Półmetek astronomicznej jesieni:</b> punkt dokładnie pomiędzy jesienną równonocą i zimowym przesileniem; ma miejsce w <em>listopadzie</em> na półkuli północnej i w <em>maju</em> na półkuli południowej. Zbiega się z wiccańskim świętem Samhain.<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Wybierz własne zdarzenie.\n
+          [Icon Add] Utwórz, [Icon Edit] edytuj lub [Icon Delete] usuń własne zdarzenie.\n
+          \nWłasne zdarzenia można wyświetlać w aplikacji, na widżetach lub używać ich do wywoływania alarmów i powiadomień.\n
+          [Icon View] Zaznaczone zdarzenia są wyświetlane w aplikacji.
+    ]]></string>
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Tryb czasu snu pozwala na zaplanowanie trybu <b>Nie przeszkadzać</b> podczas godzin snu.<br/>
+           <br/>
+           [Icon Reminder] Wyświetla powiadomienie przypominające przed czasem snu.<br/>
+           [Icon Alarm] Zaplanowany alarm następnego ranka.<br/><br/>
+    ]]></string>
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] : anuluj bez wprowadzania zmian.<br/>
+          [Icon Save] : zapisz, [Icon Done] : zapisz i aktywuj.<br/>
+          [Icon Cancel] : zapisz i nie aktywuj.<br/>
+          [Icon Delete] : anuluj i usuń.<br/>
+          <br/>
+          [Icon Offset] : wyświetlany jest gdy alarm jest zaplanowany przed lub po jakimś zdarzeniu.
+    ]]></string>
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Czas letni:</b> ikona [Icon DST] jest wyświetlana, gdy aktualny czas jest zmieniony poprzez dodanie jednej godziny czasu letniego, bądź też przez inną podobną regułę.<br/><br/>
+    ]]></string>
+
+    <string name="help_general_actualTime"><![CDATA[
+          <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          Dla <b>świtów</b> podane czasy wyznaczają początek danego świtu, a dla <b>zmierzchów</b> podane czasy wyznaczją ich koniec.<br/><br/>
+          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się mniej niż 6&nbsp;stopni pod horyzontem. Widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się od 6 do 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się od 12 do 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          <b>Noc astronomiczna:</b> Słońce znajduje się więcej niż 18&nbsp;stopni pod horyzontem. Najmniej jasne gwiazdy są widoczne.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>Biała noc:</b> Słońce nie schodzi niżej niż 6 stopni pod linię horyzontu. Jest wystarczająco jasno dla większości czynności na dworze przez całą noc.<br/><br/>
+          <b>Biała noc astronomiczna:</b> Słońce nie schodzi niżej niż 18 stopni pod linię horyzontu. Przez całą noc jest jasno jak o świcie/zmierzchu, a niebo nie jest w pełni czarne.<br/><br/>
+          <b>Dzień polarny:</b> Słońce nie schodzi pod linię horyzontu (24 godziny światła dziennego).<br/><br/>
+          <b>Noc polarna:</b> Słońce nie wchodzi nad linię horyzontu (24 godziny ciemności).<br/><br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Dzisiejszy:</b> czasy wschodu i zachodu dla dzisiejszej daty.<br/><br/>
+          <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Równonoc wiosenna:</b> początek astronomicznej wiosny. Ma miejsce w <em>marcu</em> na półkuli północnej i we <em>wrześniu</em> na półkuli południowej.<br/><br/>
+          <b>Przesilenie letnie:</b> początek astronomicznego lata. Ma miejsce w <em>czerwcu</em> na półkuli północnej i w <em>grudniu</em> na półkuli południowej.<br/><br/>
+          <b>Równonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
+          <b>Przesilenie zimowe:</b> początek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w <em>czerwcu</em> na półkuli południowej.<br/>
+    ]]></string>
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wszystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
+    ]]></string>
+
+    <string name="help_general_solartime"><![CDATA[
+          <b>Prawdziwy czas słoneczny:</b> czas zegara słonecznego. Czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
+          Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24&nbsp;godziny (maksymalnie do 30&nbsp;s).
+          Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
+          <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
+          Średni ruch Słońca zawiera poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
+          Długość każdego średniego dnia słonecznego wynosi dokładnie 24&nbsp;godziny.<br/><br/>
+          <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
+          Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
+          Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16&nbsp;minut w zależności od pory roku.<br/><br/>
+          <i>Ta aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
+          Twoje położenie jest wykorzystywane do obliczenia średniego czasu słonecznego.</i>
+          <br/><br/>
+    ]]></string>
+
+    <string name="help_general_daylength"><![CDATA[
+        <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
+        <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.<br/><br/>
+    ]]>
+    </string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Oświetlenie Księżyca:</b> widżety księżycowe i ekran główny wyświetlają oświetlenie Księżyca w momencie jego górowania (punkt dokładnie pomiędzy wschodem i zachodem Księżyca), podczas gdy okno informacji o Księżycu wyświetla jego obecne oświetlenie.<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6&nbsp;stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Błękitna godzina:</b> Słońce znajduje się pomiędzy 8&nbsp;i&nbsp;4&nbsp;stopniami pod horyzontem. Początek i koniec błękitnej godziny przypada pomiędzy świtem (bądź zmierzchem) cywilnym i żeglarskim.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+    Wszystkie pola są opcjonalne (pozostaw wartość pustą, aby wywołać <em>domyślną akcję</em>).
+    <br/>
+    <br/>
+    <b>Czynność:</b> ciąg tekstowy czynności.<br/><small>np. <em>android.intent.action.VIEW</em></small>
+    <br/>
+    <br/>
+    <b>Pakiet:</b> nazwa pakietu.<br/><small>np. <em>app.package.name</em></small>
+    <br/>
+    <br/>
+    <b>Klasa:</b> pełna nazwa klasy.<br/><small>np. <em>app.package.name.MainActivity</em></small>
+    <br/>
+    <br/>
+    <b>Dane:</b> URI zawierający lub wskazujący na dołączane dane. Wspiera <em>%p</em>odstawienia. <small>np. <em>geo:%lat,%lon</em></small>
+    <br/>
+    <br/>
+    <b>MIME:</b> typ MIME dołączanych danych.
+    <br/>
+    <br/>
+    <b>Dodatkowe:</b> Ciąg zawierający dodatkowe wartości rozdzielone znakami &amp;</em>. Wspiera <em>%p</em>odstawienia.<br/><br/>Wartości mogą być typu <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> lub String. <small>np. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
+          Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>
+    ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Utwórz nową skórkę lub [Icon Copy] skopiuj istniejącą.\n
+          \n
+          [Icon Edit] Edytuj lub [Icon Delete] usuwaj skórki.\n
+          Nie można modyfikować [Icon Default] domyślnych skórek.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
+
+    <string name="help_calendar"><![CDATA[Dodaje wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).<br />
+        <br />
+        <u><b><font color="#ff9900">Uprawnienia kalendarza zostały usunięte w wersji 0.10.0.</font></b></u><br />
+        <br />
+        Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
+    ]]></string>
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nDla najleepszego rezultatu, wybierz zdjęcie o powyższych parametrach.
+    </string>
+
+</resources>

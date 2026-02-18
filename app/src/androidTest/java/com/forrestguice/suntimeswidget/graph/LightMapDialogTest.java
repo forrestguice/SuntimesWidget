@@ -29,6 +29,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.map.WorldMapDialogTest;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -36,10 +38,13 @@ import com.forrestguice.suntimeswidget.moon.MoonDialogTest;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
-import android.support.annotation.NonNull;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.SystemTimeFormat;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -64,21 +69,21 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withTextAsDate;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withTextAsDoubleApproximateTo;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.MAPTAG_LIGHTMAP;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class LightMapDialogTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -90,13 +95,13 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test
@@ -140,7 +145,8 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         Activity context = activityRule.getActivity();
         LightMapDialogRobot robot = new LightMapDialogRobot();
         robot.showDialog(context).sleep(500)
-                .assertDialogShown(context);
+                .assertDialogShown(context)
+                .clickResetButton(context);
 
         robot.clickTimeZoneLabel(context)
                 .assertOverflowMenu_TimeZone(context)
@@ -415,7 +421,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         public LightMapDialogRobot showDialog(Activity context) {
             //onView(withId(R.id.info_time_lightmap)).perform(click());
             openActionBarOverflowOrOptionsMenu(context);
-            onView(withText(R.string.configAction_sunDialog)).perform(click());
+            onView(withText(R.string.action_sunDialog)).perform(click());
             return this;
         }
         @Override
@@ -468,11 +474,11 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ViewWith(Context context) {
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_ViewWith(Context context) {
@@ -484,27 +490,27 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ViewWith_MoonDialog(Context context) {
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ViewWith_WorldMapDialog(Context context) {
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ViewWith_Calendar(Context context) {
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_showCalendar)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_Options(Context context) {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_TimeZone(Context context) {
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_TimeZone_UTC(Context context) {
@@ -528,15 +534,15 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_SeekAltitude(Context context) {
-            onView(withText(R.string.configAction_seekAltitude)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_seekAltitude)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_SeekAltitude(Context context) {
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public LightMapDialogRobot clickOverflowMenu_ObjectShadow(Context context) {
-            onView(withText(R.string.configLabel_general_observerheight)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.settings_general_observerheight)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot cancelOverflowMenu_ObjectShadow(Context context) {
@@ -552,11 +558,11 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public LightMapDialogRobot click_SeekAltitude_rising(Context context) {
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot click_SeekAltitude_setting(Context context) {
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public LightMapDialogRobot input_SeekAltitude_altitude(Context context, double altitude)
@@ -592,30 +598,30 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         }
         public LightMapDialogRobot assertOverflowMenuShown(Context context)
         {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_seekAltitude)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configLabel_timezone)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_viewDateWith)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_seekAltitude)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.settings_timezone)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_ViewWith(Context context)
         {
             onView(withText(R.string.app_name)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_worldMap)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_showCalendar)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_Options(Context context)
         {
-            onView(withText(R.string.configAction_colors)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_lineGraph)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_axis)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_grid)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_labels)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_moon)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.graph_option_filledpath)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_colors)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_lineGraph)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_axis)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_grid)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_labels)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_moon)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_graph_option_filledpath)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_TimeZone(Context context)
@@ -630,12 +636,12 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         {
             onView(withId(R.id.edit_altitude)).inRoot(isPlatformPopup()).check(assertShown);
             onView(withId(R.id.edit_altitude)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
-            onView(withText(R.string.seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.lightmap_seekAltitude_rising)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertEnabled);
+            onView(withText(R.string.lightmap_seekAltitude_setting)).inRoot(isPlatformPopup()).check(ViewAssertionHelper.assertClickable);
             return this;
         }
         public LightMapDialogRobot assertOverflowMenu_ObjectShadow(Context context)
@@ -705,9 +711,10 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         public LightMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
             return assertShowsDate(date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
-        public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, WidgetSettings.TimeFormatMode withMode, boolean withSeconds)
+        public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
-            SimpleDateFormat[] formats = (withMode == WidgetSettings.TimeFormatMode.MODE_12HR)
+            boolean is24 = (withMode == TimeFormatMode.MODE_24HR) || (withMode == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat());
+            SimpleDateFormat[] formats = (!is24)
                     ? (withSeconds ? timeDateFormats12s : timeDateFormats12)
                     : (withSeconds ? timeDateFormats24s : timeDateFormats24);
             long tolerance = (withSeconds
@@ -723,7 +730,7 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
         @Override
         public Calendar now(Context context)
         {
-            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId)
                     ? appTimeZone(context)
                     : WidgetTimezones.getTimeZone(tzId, appLocation(context).getLongitudeAsDouble(), appCalculator(context));

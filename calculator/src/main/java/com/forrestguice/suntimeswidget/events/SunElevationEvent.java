@@ -1,0 +1,185 @@
+/**
+    Copyright (C) 2021-2023 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.forrestguice.suntimeswidget.events;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.util.Log;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
+public class SunElevationEvent extends ElevationEvent
+{
+    public static final String NAME_PREFIX = "SUN_";
+
+    public SunElevationEvent(double angle, int offset, boolean rising) {
+        super(angle, offset, rising);
+    }
+
+    @Override
+    public String getEventTitle(SuntimesDataSettings context) {
+        String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Sun";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+    }
+    @Override
+    public String getEventPhrase(SuntimesDataSettings context) {
+        String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Sun";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+    }
+    @Override
+    public String getEventGender(SuntimesDataSettings context) {
+        return (r != null) ? context.getString(r.string_phrase_gender()) : "other";
+    }
+
+    @Override
+    public String getEventSummary(SuntimesDataSettings context)
+    {
+        AngleDisplay utils = new AngleDisplay();
+        String angle = utils.formatAsElevation(getAngle(), 1).toString();
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Sun";
+        if (offset == 0) {
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, angle)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " at " + angle;
+        } else {
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, angle)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " at " + angle;
+        }
+    }
+
+    public static boolean isElevationEvent(String eventName) {
+        return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
+    }
+
+    /**
+     * @return e.g. SUN_-10r     (@ -10 degrees (rising)),
+     *              SUN_-10|-300000r  (5m before @ 10 degrees (rising))
+     */
+    @Override
+    public String getEventName() {
+        return getEventName(angle, offset, rising);
+    }
+    public static String getEventName(double angle, int offset, @Nullable Boolean rising) {
+        String name = NAME_PREFIX
+                + angle
+                + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
+        if (rising != null) {
+            name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
+        }
+        return name;
+    }
+
+    @Nullable
+    public static SunElevationEvent valueOf(String eventName)
+    {
+        if (isElevationEvent(eventName))
+        {
+            double angle;
+            int offsetMinutes = 0;
+            boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
+            try {
+                String contentString = eventName.substring(NAME_PREFIX.length(), eventName.length() - (hasSuffix ? 1 : 0));
+                String[] contentParts = contentString.split("\\|");
+
+                angle = Double.parseDouble(contentParts[0]);
+                if (contentParts.length > 1) {
+                    offsetMinutes = Integer.parseInt(contentParts[1]);
+                }
+
+            } catch (Exception e) {
+                Log.e("ElevationEvent", "createEvent: bad angle: " + eventName + ": " + e);
+                return null;
+            }
+            boolean rising = eventName.endsWith(SUFFIX_RISING);
+            return new SunElevationEvent(angle, (offsetMinutes * 60 * 1000), rising);
+        } else return null;
+    }
+
+    @Nullable
+    public static Calendar updateAlarmTime_sunElevationEvent(Object context, @NonNull SunElevationEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        SuntimesRiseSetData sunData = getData_sunElevationEvent(context, event.getAngle(), event.getOffset(), location);
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime;
+
+        Calendar day = Calendar.getInstance();
+        day.setTimeInMillis(now.getTimeInMillis());
+
+        sunData.setTodayIs(day);
+        sunData.calculate(context);
+        eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+        if (eventTime != null) {
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        while (now.after(alarmTime)
+                || eventTime == null
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            Log.w("AlarmReceiver", "updateAlarmTime: sunElevationEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            sunData.setTodayIs(day);
+            sunData.calculate(context);
+            eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+            if (eventTime != null) {
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
+        }
+        return eventTime;
+    }
+
+    private static SuntimesRiseSetData getData_sunElevationEvent(Object context, double angle, int offset, @NonNull Location location)
+    {
+        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
+        sunData.setLocation(location);
+        sunData.setAngle(angle);
+        sunData.setOffset(offset);
+        sunData.setTodayIs(Calendar.getInstance());
+        return sunData;
+    }
+
+    @Nullable
+    protected static ResID_SunElevationEvent r = null;
+    public static void setResIDs(@NonNull ResID_SunElevationEvent values) {
+        r = values;
+    }
+
+    public interface ResID_SunElevationEvent extends BaseEvent.ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
+    }
+}

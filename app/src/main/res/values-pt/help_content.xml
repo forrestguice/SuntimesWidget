@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> deve ser \"não otimizado\" para melhores resultados.</string>
+    <string name="help_battery_optimization_aggressive">Este é um dispositivo <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, que pode exigir configuração adicional para funcionar corretamente.</string>
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
+
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes utiliza bibliotecas de terceiros para realizar cálculos astronômicos.<br/>
+        <br/>
+        A opção <b>fontes de dados</b> permite escolher entre diferentes bibliotecas (ou escolher entre diferentes algoritmos oferecidos por estas bibliotecas). O padrão é <b>time4a-time4j</b>.<br/>
+        <br/>
+        Esta opção afeta a velocidade e acurácia dos cálculos, e pode limitar quais funcionalidades estão disponíveis. <br/>
+        <br/>
+        Para mais informações sobre as opções disponíveis, ou extender o app para suportar outras bibliotecas, veja a ajuda online.
+    ]]>
+    </string>
+
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Trocar layouts para preencher espaço disponível</big><br/><br/>
+      <i><b>[habilitado]</b></i> O widget alternará o layout dependendo do espaço disponível.<br/><br/>
+      <i><b>[desabilitado]</b></i> O widget mantém o seu layout inicial quando redimensionado. Use com a opção \"<i>dimensionar texto e ícones</i>\" para widgets extra-largos.<br/>
+    ]]></string>
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      Este widget foi criado com <em>layout inicial</em> <b>%1$s</b>.<br/></br/>
+    ]]></string>
+    <string name="help_appearance_title"><![CDATA[
+        As seguintes substituições no título são suportadas:<br/>
+        <br/>
+        <b>Todos os Widgets:</b> <br />
+                * <b>%d</b> para data (ex: 12 de Fevereiro) <br/>
+                * <b>%dd</b> para dia (curto) (ex: Seg) <br/>
+                * <b>%dD</b> para dia (longo) (ex: Segunda) <br/>
+                * <b>%dY</b> para ano (ex: 2018) <br/>
+                * <b>%dt</b> para hora (da última atualização) <br/>
+                * <b>%dT</b> para hora com segundos (da última atualização) <br/>
+                <br/>
+                * <b>%loc</b> para nome (ex: São Paulo) <br />
+                * <b>%lat</b> para latitude <br />
+                * <b>%lon</b> para longitude <br/>
+                * <b>%lel</b> para elevação (ex: 815 metros) <br/>
+                <br/>
+                * <b>%s</b> para fonte de dados (ex: sunrisesunsetlib) <br/>
+                * <b>%t</b> para fuso horário (id) (ex: America/Sao_Paulo) <br/>
+                * <b>%id</b> para appWidgetID <br/>
+         <br/>
+         <b>Widgets de Sol:</b> <br/>
+                * <b>%m</b> para modo (curto) (ex: Civil) <br/>
+                * <b>%M</b> para modo (longo) (ex: Crepúsculo Civil) <br/>
+                * <b>%o</b> para ordem (ex: Último/Próximo, Hoje) <br/>
+         <br/>
+         <b>Widgets de Lua:</b> <br/>
+                * <b>%i</b> para iluminação da lua (ex: 25%) <br/>
+                * <b>%M</b> para fase da lua (ex: Lua Crescente) <br/>
+                * <b>%o</b> para ordem (ex: Último/Próximo, Hoje) <br/>
+         <br/>
+         <b>Widgets de Solstício:</b> <br/>
+                * <b>%m</b> para modo (curto) (ex: Solstício) <br/>
+                * <b>%M</b> para modo (longo) (ex: Solstício de Inverno) <br/>
+                * <b>%o</b> para ordem (ex: Evento mais próximo, Próximo evento) <br/>
+    ]]></string>
+
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Formato da data:</b> Um padrão de formato de data.<br/>
+          <br/>Os elementos disponíveis podem variar entre os calendários, mas geralmente incluem<br/>
+          <br/>
+          <b>E</b> : dia da semana <br/>
+          <b>d</b> : dia do mês <br/>
+          <b>D</b> : dia do ano <br/>
+          <b>F</b> : dia da semana no mês <br/>
+          <b>M</b> : mês do ano <br/>
+          <b>y</b> : ano da era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  nascer da lua \t\t[Icon Noon]  meio-dia lunar
+          \n[Icon Setting]  pôr da lua \t\t[Icon Midnight]  meia-noite lunar
+          \n\nCompartilhar [Icon Share] irá copiar o texto para a área de transferência.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Meio da Primavera:</b> O ponto médio entre o Solstício de Inverno e o Equinócio da Primavera; <em>Fevereiro</em> [hemisfério norte], ou <em>Agosto</em> [hemisfério sul].<br/><br/>
+          <b>Meio do Verão:</b> O ponto médio entre o Equinócio da Primavera e o Solstício de Verão; <em>Maio</em> [hemisfério norte], ou <em>Novembro</em> [hemisfério sul].<br/><br/>
+          <b>Meio do Outono:</b> O ponto médio entre o Solstício de Verão e o Equinócio de Outono; <em>Agosto</em> [hemisfério norte], ou <em>Fevereiro</em> [hemisfério sul].<br/><br/>
+          <b>Meio do Inverno:</b> O ponto médio entre o Equinócio de Outono e o Solstício de Inverno; <em>Novembro</em> [hemisfério norte], ou <em>Maio</em> [hemisfério sul].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Escolha um evento personalizado.\n
+          [Icon Add] Adicionar, [Icon Edit] editar, ou [Icon Delete] excluir eventos personalizados.\n
+          \nEventos personalizados podem ser exibidos pelo aplicativo, pelos widgets da tela inicial ou usados para agendar alarmes e notificações.\n
+          [Icon View] Eventos marcados são exibidos pelo aplicativo..
+    ]]></string>
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] O modo de horário de dormir pode ser usado para agendar <b>Não Perturbe</b> durante as horas de sono.<br/>
+           <br/>
+           [Icon Reminder] Mostrar uma notificação de lembrete antes da hora de dormir.<br/>
+           [Icon Alarm] Agendar um alarme para acordar na manhã seguinte.<br/><br/>
+    ]]></string>
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] para cancelar sem fazer alterações.<br/>
+          [Icon Save] para salver, e [Icon Done] para salvar e habilitar.<br/>
+          [Icon Cancel] para salvar e desabilitar.<br/>
+          [Icon Delete] para cancelar e excluir.<br/>
+          <br/>
+          [Icon Offset] é mostrado quando o horário agendado é compensado antes ou depois do horário do evento.
+    ]]></string>
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Horário de Verão:</b> [Icon DST] é mostrado quando o horário atual aplica <b>HV</b>, ou foi ajustado por uma regra similar.<br/><br/>
+    ]]></string>
+
+    <string name="help_general_actualTime"><![CDATA[
+          <b>Tempo Atual:</b> O sol está no horizonte, esse é basicamente o período aproximado entre o nascer e pôr do sol.<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          <b>Crepúsculo Civil:</b> O sol está 6 graus abaixo do horizonte; as estrelas mais brilhantes estão visíveis. Há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra.<br/><br/>
+          <b>Crepúsculo Náutico:</b> O sol está 12 graus abaixo do horizonte. Não há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra.<br/><br/>
+          <b>Crepúsculo Astronômico:</b> O sol está 18 graus abaixo do horizonte. Totalmente sem condições de qualquer atividade externa sem o auxílio de luz extra.<br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Hoje:</b> Configurar eventos para hoje.<br/><br/>
+          <b>Anterior / Próximo:</b> O tempo do último e do próximo evento.<br/>
+    ]]></string>
+
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Equinócio de Primavera:</b> o início da primavera astronômica; <em>Março</em> [hemisfério norte], ou <em>Setembro</em> [hemisfério sul]. O equinócio de Março também é chamado de <em>equinócio do norte</em>.<br/><br/>
+          <b>Solstício de Verão:</b> o início do verão astronômico; <em>Junho</em> [hemisfério norte], ou <em>Dezembro</em> [hemisfério sul]. O solstício de Junho também é chamado de <em>solstício do norte</em>.<br/><br/>
+          <b>Equinócio de Outono:</b> o início do outono astronômico; <em>Setembro</em> [hemisfério norte], ou <em>Maarço</em> [hemisfério sul]. O equinócio de Setembro também é chamado de <em>equinócio do sul</em>.<br/><br/>
+          <b>Solstício de Inverno:</b> o início do inverno astronômico; <em>Dezembro</em> [hemisfério norte], ou <em>Junho</em> [hemisfério sul]. O solstício de Dezembro também é chamado de <em>solstício do sul</em>.<br/>
+    ]]></string>
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Ano Tropical:</b> Um ciclo completo das estações. A duração do <em>ano tropical</em> é medida de um <em>equinócio de Março</em> até o próximo. É de <em>~365.24 dias</em> em média, com uma duração exata que varia a cada ano (em até 30 minutos).<br/>
+    ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+          <b>Horário Solar Aparente:</b> Horário solar. O horário determinado pelo movimento do sol em relação à longitude e latitude configuradas.
+          <br/><br/>
+          O movimento do sol não é constante. Varia de acordo com as estações, devido a obliquidade do ecliptico e da excentricidade da órbita da Terra.
+          A duração de cada dia solar, medido de uma tarde para outra, pode ser maior ou menor do que 24 horas (em até 30s).
+          Essas pequenas variações acumulam com o passar dos dias (e se uniformizam, de forma média, durante o curso do ano).
+          <br/><br/>
+
+          <b>Horário Médio Local:</b> Horário do relógio. O horário determinado da posição do sol médio em relação à longitude dada.
+          <br/><br/>
+          O movimento do sol médio corrige a obliquidade e a excentricidade e é uniforme.
+          A duração de cada dia solar médio é exatamente 24 horas.<br/><br/>
+
+          <b>Equação do Tempo (EOT):</b> A diferença entre o horário médio local e o horário solar aparente.
+          É a variação acumulada do dia solar aparente.
+          <br/><br/>
+          O horário solar aparente pode diferir do horário médio local por até 16 minutos, dependendo da estação do ano.
+          <br/><br/>
+
+          <i>Este app usa um algoritmo para calcular a equação do tempo (e deriva o horário solar aparente).
+          A sua localização é utilizada para calcular o horário médio local.</i>
+          <br/><br/>
+
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Duração do dia:</b> O tempo entre o nascer e pôr do sol.<br/><br/>
+        <b>Luz útil:</b> O tempo entre o crepúsculo civil da manhã e da noite.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Iluminação da Lua:</b> O widget da lua e a página principal mostram a "meia noite lunar" (o centro entre o nascer e pôr da lua) enquanto mostra a atual iluminação da lua.<br/><br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Hora Dourada:</b> O sol está mais ou menos 6 graus no horizonte. Na manhã, a hora dourada começa com crepúsculo civil e termina pouco tempo antes do nascer do sol e finaliza com crepúsculo civil.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Hora Azul:</b> O sol está entre 8 e 4 graus abaixo do horizonte. O início e fim da hora azul ocorre entre o crepúsculo náutico e crepúsculo civil.<br/>
+    ]]></string>
+    <string name="help_action_launch"><![CDATA[
+        Todos os campos são opcionais (os valores podem ser deixados em branco para um "intent implícito").
+        <br/>
+        <br/>
+        <b>Ação:</b> Uma string de ação.<br/><small>exemplo: <em>android.intent.action.VIEW</em></small>
+        <br/>
+        <br/>
+        <b>Pacote:</b> Um nome de pacote.<br/><small>exemplo: <em>app.package.name</em></small>
+        <br/>
+        <br/>
+        <b>Classe:</b> Um nome de classe totalmente qualificado.<br/><small>exemplo: <em>app.package.name.MainActivity</em></small>
+        <br/>
+        <br/>
+        <b>Dados:</b> Um Uri que contém ou aponta para dados anexados. Suporta substituições de <em>%s</em>. <small>exemplo: <em>geo:%lat,%lon</em></small>
+        <br/>
+        <br/>
+        <b>Mime:</b> O tipo MIME dos dados anexados.
+        <br/>
+        <br/>
+        <b>Extras:</b> Uma string delimitada por <em>&amp;</em> que contém valores extras. Suporta substituições de <em>%s</em>.<br/><br/>Os valores podem ser <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> ou String.<small>exemplo: <em>chave1=valor1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=dm</em></small>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+          Pra <b>adicionar</b> ou <b>apagar</b> um widget, você deve fazer isso na tela inicial do sistema.<br/><br/>
+          Pra <b>reconfigurar</b> um widget existente, você pode fazer isso selecionando da seguinte lista.<br/>
+    ]]></string>
+    <string name="help_themelist">
+          [Icon Add] Adicionar um tema ou [Icon Copy] copiar a partir de um tema existente.\n
+          \n
+          [Icon Edit] Editar ou [Icon Delete] apagar temas.\n
+          Os [Icon Default] temas nativos não podem ser modificados.
+    </string>
+
+    <string name="help_calendar"><![CDATA[Calendário (fases da lua, solstícios e equinócios).<br />
+        <br />
+        <u><b><font color="#ff9900">Integração com calendário foi removida na v0.10.0.</font></b></u><br />
+        <br />
+        Agora é uma função disponível como <a href="moreInfoLink">aplicativo separado</a>.
+    ]]></string>
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nPara melhores resultados, selecione uma imagem que corresponda a estas características.
+    </string>
+
+</resources>

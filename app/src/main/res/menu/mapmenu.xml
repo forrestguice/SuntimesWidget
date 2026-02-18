@@ -42,7 +42,7 @@
         <menu>
 
             <item android:id="@+id/mapOption_colors"
-                android:title="@string/configAction_colors"
+                android:title="@string/action_colors"
                 android:icon="?attr/icActionAppearance"
                 app:showAsAction="never" />
 
@@ -89,7 +89,7 @@
 
     <item android:id="@+id/addonSubMenu0"
             android:icon="?attr/icActionTimeReset"
-            android:title="@string/configAction_viewDateWith"
+            android:title="@string/action_viewDateWith"
             app:showAsAction="never">
             <menu>         <!-- submenu is also populated at runtime -->
                 <item android:id="@+id/action_date"
@@ -98,17 +98,17 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_sunposition"
-                    android:title="@string/configAction_sunDialog"
+                    android:title="@string/action_sunDialog"
                     android:icon="@drawable/ic_sun"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
-                    android:title="@string/configAction_moon"
+                    android:title="@string/action_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"
-                    android:title="@string/configAction_showCalendar"
+                    android:title="@string/action_showCalendar"
                     android:icon="?attr/icActionCalendar"
                     app:showAsAction="never" />
 
@@ -117,18 +117,18 @@
 
     <item android:id="@+id/action_timezone"
         android:icon="?attr/icActionTime"
-        android:title="@string/configLabel_timezone"
+        android:title="@string/settings_timezone"
         app:showAsAction="never" />
 
     <group android:id="@+id/mapOption_group_share">
 
         <item android:id="@+id/recordMap"
-            android:title="@string/configAction_recordMap"
+            android:title="@string/worldmap_action_recordMap"
             android:icon="?attr/icActionRecord"
             app:showAsAction="never" android:visible="false" />
 
         <item android:id="@+id/shareMap"
-            android:title="@string/configAction_shareMap"
+            android:title="@string/worldmap_action_shareMap"
             android:icon="?attr/icActionShare"
             app:showAsAction="never" />
 

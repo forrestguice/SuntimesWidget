@@ -28,7 +28,7 @@ import java.io.IOException;
 
 /**
  * AsyncTask that writes EventAlias objects to text file (json array).
- * @see EventSettings.EventAlias
+ * @see EventAlias
  */
 public class EventExportTask extends ExportTask
 {
@@ -57,11 +57,11 @@ public class EventExportTask extends ExportTask
         mimeType = MIMETYPE;
     }
 
-    private EventSettings.EventAlias[] items = null;
-    public void setItems( EventSettings.EventAlias[] values) {
+    private EventAlias[] items = null;
+    public void setItems( EventAlias[] values) {
         items = values;
     }
-    public EventSettings.EventAlias[] getItems() {
+    public EventAlias[] getItems() {
         return items;
     }
 
@@ -77,7 +77,7 @@ public class EventExportTask extends ExportTask
         return false;
     }
 
-    public static void writeEventItemsJSONArray(Context context, EventSettings.EventAlias[] items, BufferedOutputStream out) throws IOException
+    public static void writeEventItemsJSONArray(Context context, EventAlias[] items, BufferedOutputStream out) throws IOException
     {
         out.write("[".getBytes());
         for (int i=0; i<items.length; i++)

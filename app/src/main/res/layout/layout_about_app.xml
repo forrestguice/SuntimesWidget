@@ -17,7 +17,7 @@
             android:gravity="center" android:orientation="vertical"
             android:layout_marginBottom="12dp">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@+id/txt_about_icon"
                 android:layout_width="@dimen/aboutIcon_size" android:layout_height="@dimen/aboutIcon_size" android:layout_margin="8dp"
                 android:scaleType="fitCenter"
@@ -53,7 +53,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_gravity="start"
-            android:text="@string/app_version" android:textSize="?attr/text_size_small"
+            android:text="@string/about_app_version_field" android:textSize="?attr/text_size_small"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
@@ -63,7 +63,7 @@
             android:id="@+id/txt_about_support"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" android:textSize="?attr/text_size_small"
-            android:text="@string/app_support_url" />
+            android:text="@string/about_app_support_field" />
 
         <TextView
             android:id="@+id/txt_help_url"
@@ -100,7 +100,7 @@
             android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
             android:animateLayoutChanges="true">
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/check_donate"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
@@ -111,7 +111,7 @@
             <TextView android:id="@+id/txt_donate_url" android:visibility="invisible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/app_donate_url" />
+                android:text="@string/about_app_donate_field" />
 
         </LinearLayout>
 

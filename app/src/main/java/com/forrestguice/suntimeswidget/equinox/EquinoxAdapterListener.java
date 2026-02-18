@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.view.View;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 public class EquinoxAdapterListener
 {
@@ -29,7 +29,7 @@ public class EquinoxAdapterListener
     public void onTitleClick( int position ) {}
     public void onNextClick( int position ) {}
     public void onPrevClick( int position ) {}
-    public void onSelected( int position, WidgetSettings.SolsticeEquinoxMode mode ) {}
+    public void onSelected( int position, SolsticeEquinoxMode mode ) {}
     public void onMenuClick( View v, int position ) {}
-    public void onMenuClick( View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime ) {}
+    public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime ) {}
 }

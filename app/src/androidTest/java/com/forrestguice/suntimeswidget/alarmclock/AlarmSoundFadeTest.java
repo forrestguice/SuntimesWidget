@@ -26,23 +26,24 @@ import android.media.RingtoneManager;
 import android.media.VolumeShaper;
 import android.net.Uri;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmSoundFadeTest
 {
     public Context mockContext;
 
     @Before
     public void init() {
-        mockContext = InstrumentationRegistry.getTargetContext();
+        mockContext = InstrumentationUtils.getContext();
     }
 
     @Test
@@ -120,9 +121,11 @@ public class AlarmSoundFadeTest
             Log.i("TEST", "startAlert: playing " + uri);
 
             long t0 = System.currentTimeMillis();
+            //noinspection StatementWithEmptyBody
             while (System.currentTimeMillis() - t0 <= volumeShaperConfig.getDuration()) {
                 //Log.i("TEST", "startAlert: still playing " + uri);
             }
+            player.stop();
 
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);

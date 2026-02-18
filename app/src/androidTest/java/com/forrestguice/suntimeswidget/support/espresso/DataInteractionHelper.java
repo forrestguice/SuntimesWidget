@@ -1,6 +1,6 @@
 package com.forrestguice.suntimeswidget.support.espresso;
 
-import android.support.test.espresso.DataInteraction;
+import androidx.test.espresso.DataInteraction;
 
 public class DataInteractionHelper
 {

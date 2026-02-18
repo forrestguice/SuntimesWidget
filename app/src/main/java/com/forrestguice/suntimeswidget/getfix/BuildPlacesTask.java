@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,22 +27,23 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
+
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -55,13 +57,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
-public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
+public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Object, Void, Integer>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private GetFixDatabaseAdapter db;
-    private WeakReference<Context> contextRef;
+    private final GetFixDatabaseAdapter db;
+    private final WeakReference<Context> contextRef;
+    private final Object[] params;
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -79,10 +83,11 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return isPaused;
     }
 
-    public BuildPlacesTask(Context context)
+    public BuildPlacesTask(Context context, Object[] params)
     {
         this.contextRef = new WeakReference<Context>(context);
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
+        this.params = params;
     }
 
     private int clearPlaces()
@@ -301,7 +306,15 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             {
                 @Override
                 public int compare(PlaceItem o1, PlaceItem o2) {
-                    return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
+                    if (o1.location == null && o2.location == null) {
+                        return 0;
+                    } else if (o1.location != null && o2.location == null) {
+                        return 1;
+                    } else if (o1.location == null) {
+                        return -1;
+                    } else {
+                        return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
+                    }
                 }
             });
 
@@ -338,7 +351,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Override
-    protected Integer doInBackground(Object... params)
+    public Integer call() throws Exception
     {
         long startTime = System.currentTimeMillis();
 
@@ -368,48 +381,6 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return result;
     }
 
-    @Override
-    protected void onPreExecute()
-    {
-        signalStarted();
-    }
-
-    @Override
-    protected void onPostExecute(Integer result)
-    {
-        signalFinished(result);
-    }
-
-
-    /**
-     * Event Listener
-     */
-    private TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
-    }
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( Integer result ) {}
-    }
-
-    private void signalStarted()
-    {
-        if (taskListener != null)
-            taskListener.onStarted();
-    }
-    private void signalFinished( Integer result )
-    {
-        if (taskListener != null)
-            taskListener.onFinished(result);
-    }
-
     /**
      * OpenFileIntent
      */
@@ -420,7 +391,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     /**
      * promptAddWorldPlaces
      */
-    public static void promptAddWorldPlaces(final Context context, final BuildPlacesTask.TaskListener l)
+    public static void promptAddWorldPlaces(@NonNull final Context context, final TaskListener<Integer> taskListener)
     {
         BuildPlacesTask.chooseGroups(context, new BuildPlacesTask.ChooseGroupsDialogListener()
         {
@@ -435,9 +406,8 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                             items.add(groups[i]);
                         }
                     }
-                    BuildPlacesTask task = new BuildPlacesTask(context);
-                    task.setTaskListener(l);
-                    task.execute(false, null, items.toArray(new String[0]));
+                    BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, null, items.toArray(new String[0]) });
+                    ExecutorUtils.runTask("BuildPlacesTask", task, taskListener);
                 }
             }
         });
@@ -493,41 +463,44 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         };
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.configLabel_places_build))
+                .setTitle(context.getString(R.string.places_label_build))
                 .setIcon(iconResID)
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
-                .setPositiveButton(context.getString(R.string.configAction_addPlace), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.places_action_addPlace), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, groups, checked);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.dialog_cancel), null)
-                .setNeutralButton(context.getString(R.string.configAction_checkAll), new DialogInterface.OnClickListener() {
+                .setNeutralButton(context.getString(R.string.action_checkAll), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
                 });
 
-        final AlertDialog d = confirm.create();
+        final Dialog d = confirm.create();
         d.setOnShowListener(new DialogInterface.OnShowListener()
         {
             @Override
-            public void onShow(DialogInterface dialog)
+            public void onShow(final DialogInterface dialog)
             {
-                final AlertDialog d = (AlertDialog) dialog;
                 final View.OnClickListener toggleListener = new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        ListView list = d.getListView();
-                        for (int i=0; i<list.getCount(); i++)
+                        ListView list = AlertDialog.getListView(dialog);
+                        int n = (list != null ? list.getCount() : 0);
+                        for (int i=0; i<n; i++)
                         {
                             list.setItemChecked(i, true);
                             checked[i] = true;
                         }
                     }
                 };
-                d.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(toggleListener);
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(toggleListener);
+                }
             }
         });
         d.show();

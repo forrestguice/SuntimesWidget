@@ -18,11 +18,13 @@
 
 package com.forrestguice.suntimeswidget.settings.colors;
 
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +82,10 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder>
             notifyItemChanged(oldPosition);
         }
     }
+    @Nullable
     protected Integer selectedColor = null;
 
+    @NonNull
     @Override
     public ColorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layout = LayoutInflater.from(parent.getContext());

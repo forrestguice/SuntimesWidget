@@ -22,13 +22,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
@@ -989,7 +989,7 @@ public class SuntimesTheme
     {
         return themeWinterColor;
     }
-    public int getSeasonColor(WidgetSettings.SolsticeEquinoxMode event)
+    public int getSeasonColor(SolsticeEquinoxMode event)
     {
         switch (event)
         {
@@ -1023,25 +1023,25 @@ public class SuntimesTheme
     public float getTitleSizeSp()
     {
         return (themeTitleSize < THEME_TITLESIZE_MIN) ? THEME_TITLESIZE_DEF :
-                (themeTitleSize > THEME_TITLESIZE_MAX) ? THEME_TITLESIZE_MAX : themeTitleSize;
+                Math.min(themeTitleSize, THEME_TITLESIZE_MAX);
     }
 
     public float getTextSizeSp()
     {
         return (themeTextSize < THEME_TEXTSIZE_MIN) ? THEME_TEXTSIZE_DEF :
-                (themeTextSize > THEME_TEXTSIZE_MAX) ? THEME_TEXTSIZE_MAX : themeTextSize;
+                Math.min(themeTextSize, THEME_TEXTSIZE_MAX);
     }
 
     public float getTimeSizeSp()
     {
         return (themeTimeSize < THEME_TIMESIZE_MIN) ? THEME_TIMESIZE_DEF :
-                (themeTimeSize > THEME_TIMESIZE_MAX) ? THEME_TIMESIZE_MAX : themeTimeSize;
+                Math.min(themeTimeSize, THEME_TIMESIZE_MAX);
     }
 
     public float getTimeSuffixSizeSp()
     {
         return (themeTimeSuffixSize < THEME_TIMESUFFIXSIZE_MIN) ? THEME_TIMESUFFIXSIZE_DEF :
-                (themeTimeSuffixSize > THEME_TIMESUFFIXSIZE_MAX) ? THEME_TIMESUFFIXSIZE_MAX : themeTimeSuffixSize;
+                Math.min(themeTimeSuffixSize, THEME_TIMESUFFIXSIZE_MAX);
     }
 
     public ThemeBackground getBackground()
@@ -1102,12 +1102,12 @@ public class SuntimesTheme
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
 
-    public static class ThemeDescriptor implements Comparable
+    public static class ThemeDescriptor implements Comparable<ThemeDescriptor>
     {
         private final String name;
         private String displayString;
-        private String backgroundName;
-        private int backgroundColor;
+        private final String backgroundName;
+        private final int backgroundColor;
         private final int version;
         private final boolean isDefault;
 
@@ -1135,7 +1135,7 @@ public class SuntimesTheme
             }
         }
 
-        public ThemeDescriptor(String name, String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
+        public ThemeDescriptor(String name, @NonNull String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
         {
             this.name = name;
             this.displayString = displayString;
@@ -1169,11 +1169,13 @@ public class SuntimesTheme
             return backgroundColor;
         }
 
+        @NonNull
         public String displayString()
         {
             return displayString;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
@@ -1216,7 +1218,7 @@ public class SuntimesTheme
         }
 
         @Override
-        public int compareTo(@NonNull Object another)
+        public int compareTo(@NonNull ThemeDescriptor another)
         {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());
@@ -1234,11 +1236,11 @@ public class SuntimesTheme
         LIGHT(R.drawable.bg_widget, "Light", false),
         TRANSPARENT(android.R.color.transparent, "Transparent", false);
 
-        private int resID;
+        private final int resID;
         private String displayString;
         private boolean customColors = false;
 
-        private ThemeBackground(int resId, String displayString, boolean customColors )
+        private ThemeBackground(int resId, @NonNull String displayString, boolean customColors )
         {
             this.resID = resId;
             this.displayString = displayString;
@@ -1255,27 +1257,26 @@ public class SuntimesTheme
             return customColors;
         }
 
-        public String getDisplayString()
-        {
+        @NonNull
+        public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString )
-        {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
+        @NonNull
         @Override
-        public String toString()
-        {
+        public String toString() {
             return displayString;
         }
 
         public static void initDisplayStrings( Context context )
         {
-            DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
-            LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
-            TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
-            COLOR.setDisplayString(context.getString(R.string.configLabel_themeBackground_color));
+            DARK.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_dark));
+            LIGHT.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_light));
+            TRANSPARENT.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_trans));
+            COLOR.setDisplayString(context.getString(R.string.themes_configLabel_themeBackground_color));
         }
 
         @NonNull

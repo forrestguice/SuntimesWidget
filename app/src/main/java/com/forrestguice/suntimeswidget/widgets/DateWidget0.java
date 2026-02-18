@@ -25,7 +25,6 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -43,7 +42,7 @@ public class DateWidget0 extends SuntimesWidget0
     public static final String DATE_WIDGET_UPDATE = "suntimes.DATE_WIDGET_UPDATE";
 
     @Override
-    protected Class getConfigClass() {
+    protected Class<?> getConfigClass() {
         return DateWidget0ConfigActivity.class;
     }
 
@@ -59,16 +58,16 @@ public class DateWidget0 extends SuntimesWidget0
 
     @Override
     protected void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        DateWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getMinSize(context));
+        DateWidget0.updateAppWidget(context, new AppWidgetManagerWrapper(appWidgetManager), appWidgetId, getMinSize(context));
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
         DateLayout layout = DateWidget0.getWidgetLayout(context, appWidgetManager, appWidgetId, defSize);
         DateWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, layout);
     }
 
-    protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, DateLayout layout)
+    protected static void updateAppWidget(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, DateLayout layout)
     {
         SuntimesClockData data = new SuntimesClockData(context, appWidgetId);  // TODO: data
         data.calculate(context);
@@ -80,7 +79,7 @@ public class DateWidget0 extends SuntimesWidget0
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, DateWidget0.class));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(context, appWidgetId, views);
 
         Calendar nextUpdate = Calendar.getInstance();
         nextUpdate.setTimeInMillis(data.calendar().getTimeInMillis());
@@ -94,7 +93,7 @@ public class DateWidget0 extends SuntimesWidget0
         return new SuntimesClockData(context, appWidgetId);   // TODO: data
     }
 
-    protected static DateLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
+    protected static DateLayout getWidgetLayout(Context context, WidgetManagerInterface appWidgetManager, int appWidgetId, int[] defSize)
     {
         DateLayout layout = new DateLayout_1x1_0();
         layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));

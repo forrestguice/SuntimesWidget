@@ -38,25 +38,20 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
+
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
@@ -69,7 +64,19 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
+
+import com.forrestguice.support.app.ActivityCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.app.NotificationManagerHelper;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
+import com.forrestguice.support.preference.PreferenceFragment;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
@@ -79,7 +86,8 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermissio
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmPrefsFragment extends PreferenceFragment
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -154,7 +162,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     protected void setBootCompletedPrefEnabled(boolean value)
     {
-        final Preference pref = findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+        final Preference pref = (Preference) findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
         if (pref != null) {
             pref.setEnabled(value);
         }
@@ -164,7 +172,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_alarms(final AlarmPrefsFragment fragment)
     {
-        final Context context = fragment.getActivity();
+        Context context = fragment.getActivity();
         if (context == null) {
             return;
         }
@@ -175,7 +183,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(1,  R.color.text_accent_dark));
         typedArray.recycle();
 
-        Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        Preference batteryOptimization = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
         if (batteryOptimization != null)
         {
             if (Build.VERSION.SDK_INT >= 23)
@@ -189,7 +197,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference autostartPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
+        Preference autostartPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_AUTOSTART);
         if (autostartPref != null)
         {
             if (AlarmSettings.hasAutostartSettings(context))
@@ -203,48 +211,48 @@ public class AlarmPrefsFragment extends PreferenceFragment
             }
         }
 
-        Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
+        Preference notificationPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
             {
-                if (areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmClockItem.AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.alarms_label_notifications_off);
+                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
 
-                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, warning);
-                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, warning, colorWarning));
+                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM)) {
+                    String warning = context.getString(R.string.alarms_label_notifications_off);
+                    String summaryString = context.getString(R.string.alarms_label_notifications_summary1, warning);
+                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, summaryString, warning, colorWarning));
 
                 } else {
-                    String message = context.getString(R.string.configLabel_alarms_notifications_on);
-                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, message));
+                    String message = context.getString(R.string.alarms_label_notifications_on);
+                    notificationPrefs.setSummary(context.getString(R.string.alarms_label_notifications_summary0, message));
                 }
             } else {
-                String warning = context.getString(R.string.configLabel_alarms_notifications_off);
-                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, warning, warning, colorWarning));
+                String warning = context.getString(R.string.alarms_label_notifications_off);
+                notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
             }
         }
 
-        Preference fullscreenNotificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
+        Preference fullscreenNotificationPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
         if (fullscreenNotificationPrefs != null)
         {
             fullscreenNotificationPrefs.setOnPreferenceClickListener(onFullscreenNotificationPrefsClicked(context));
 
-            if (canUseFullScreenIntent(context))    // TODO: replace with NotificationManager#canUseFullScreenIntent()
+            if (NotificationManagerHelper.canUseFullScreenIntent(context))
             {
-                String enabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_on);
-                fullscreenNotificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_fullscreen_summary0, enabledString));
+                String enabledString = context.getString(R.string.alarms_label_notifications_fullscreen_on);
+                fullscreenNotificationPrefs.setSummary(context.getString(R.string.alarms_label_notifications_fullscreen_summary0, enabledString));
             } else {
-                String disabledString = context.getString(R.string.configLabel_alarms_notifications_fullscreen_off);
-                fullscreenNotificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+                String disabledString = context.getString(R.string.alarms_label_notifications_fullscreen_off);
+                fullscreenNotificationPrefs.setSummary(SpanUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
             }
         }
 
-        Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
+        Preference volumesPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
         }
@@ -257,13 +265,13 @@ public class AlarmPrefsFragment extends PreferenceFragment
             brightColorsPref.setPreviewIntentBuilder(brightColorPreviewIntent);
         }
 
-        Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
+        CheckBoxPreference powerOffAlarmsPref = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
         if (powerOffAlarmsPref != null)
         {
-            powerOffAlarmsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            powerOffAlarmsPref.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
                     Activity activity = fragment.getActivity();
                     boolean enabled = (Boolean)newValue;
@@ -275,7 +283,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             });
 
             AlarmSettings.PowerOffAlarmInfo info = AlarmSettings.loadPowerOffAlarmInfo(context);
-            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, info.getPermission())));
+            powerOffAlarmsPref.setSummary(context.getString(R.string.alarms_label_poweroffalarms_summary, findPermission(context, info.getPermission())));
         }
 
         CheckBoxPreference dndPermission = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_DND_PERMISSION);
@@ -287,11 +295,11 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 boolean hasDndPermission = BedtimeSettings.hasDoNotDisturbPermission(context);
 
                 SpannableString summary = (hasDndPermission
-                        ? new SpannableString(context.getString(R.string.configLabel_permissionGranted))
-                        : new SpannableString(SuntimesUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
+                        ? new SpannableString(context.getString(R.string.privacy_permissiondialog_granted_label))
+                        : new SpannableString(SpanUtils.fromHtml(context.getString(R.string.privacy_permission_dnd))));
 
                 if (bedtimeDndEnabled && !hasDndPermission) {
-                    summary = SuntimesUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
+                    summary = SpanUtils.createColorSpan(summary, summary.toString(), summary.toString(), colorWarning);
                 }
 
                 dndPermission.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
@@ -308,12 +316,15 @@ public class AlarmPrefsFragment extends PreferenceFragment
         if (dndRuleBased != null)
         {
             dndRuleBased.setChecked(BedtimeSettings.loadPrefBedtimeDoNotDisturbRuleBased(context));
-            dndRuleBased.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            dndRuleBased.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
-                    BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    Context context = preference.getContext();
+                    if (context != null) {
+                        BedtimeSettings.savePrefBedtimeDoNotDisturbRuleBased(context, (Boolean) newValue);
+                    }
                     return true;
                 }
             });
@@ -322,18 +333,19 @@ public class AlarmPrefsFragment extends PreferenceFragment
         initPref_alarms_bootCompleted(fragment);
         initPref_alarms_clearAll(fragment);
 
-        Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
+        CheckBoxPreference showLauncher = (CheckBoxPreference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
         {
-            showLauncher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            showLauncher.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
             {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue)
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
                 {
+                    Context context = preference.getContext();
                     if (context != null)
                     {
                         AlarmSettings.setShowLauncherIcon(context, (Boolean)newValue);
-                        Toast.makeText(context, context.getString(R.string.reboot_required_message), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, context.getString(R.string.app_reboot_required_message), Toast.LENGTH_LONG).show();
                         return true;
                     }
                     return false;
@@ -342,7 +354,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
+    private static final ColorValuesSheetActivity.PreviewColorsIntentBuilder brightColorPreviewIntent = new BrightColorsPreviewIntent();
     public static class BrightColorsPreviewIntent implements ColorValuesSheetActivity.PreviewColorsIntentBuilder
     {
         public BrightColorsPreviewIntent() {}
@@ -378,53 +390,6 @@ public class AlarmPrefsFragment extends PreferenceFragment
                     .putExtra(AlarmDismissActivity.EXTRA_TEST, true)
                     .putExtra(AlarmDismissActivity.EXTRA_TEST_CHALLENGE_ID, AlarmSettings.DismissChallenge.NONE.getID());
         }
-    };
-
-    /**
-     * this method calls areNotificationsPaused (api29+) via reflection
-     */
-    private static boolean areNotificationsPaused(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 29) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "areNotificationsPaused", false);
-        } else return false;
-    }
-
-    /**
-     * this method calls canUseFullScreenIntent (api34+) via reflection
-     */
-    private static boolean canUseFullScreenIntent(Context context)
-    {
-        if (Build.VERSION.SDK_INT >= 34) {
-            Object notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE);
-            return invokeBooleanMethod(context, notificationManager, "canUseFullScreenIntent", true);
-        } else return true;
-    }
-
-    private static boolean invokeBooleanMethod(Context context, Object object, String methodName, boolean defaultValue)
-    {
-        if (object != null)
-        {
-            try {
-                java.lang.reflect.Method method = object.getClass().getMethod(methodName);
-                try {
-                    boolean result = (boolean) method.invoke(object);
-                    Log.e(AlarmNotifications.TAG, methodName + ": successfully invoked: returned: " + result);
-                    return result;
-
-                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
-                    Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                    return defaultValue;
-                }
-            } catch (SecurityException | NoSuchMethodException e) {
-                Log.e(AlarmNotifications.TAG, methodName + ": false; " + e);
-                return defaultValue;
-            }
-        } else {
-            Log.e(AlarmNotifications.TAG, methodName + ": false; object is null!");
-            return defaultValue;
-        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -435,7 +400,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             return;
         }
 
-        final Preference bootCompletedPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
+        final Preference bootCompletedPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BOOTCOMPLETED);
         if (bootCompletedPref != null)
         {
             bootCompletedPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
@@ -444,7 +409,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 public boolean onPreferenceClick(Preference preference)
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                            .setMessage(context.getString(R.string.configLabel_alarms_bootcompleted_action_confirm))
+                            .setMessage(context.getString(R.string.alarms_label_bootcompleted_action_confirm))
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
@@ -462,12 +427,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
             AlarmSettings.BootCompletedInfo bootCompletedInfo = AlarmSettings.loadPrefLastBootCompleted(context);
             long lastRunMillis = bootCompletedInfo.getTimeMillis();
-            String lastBootCompleted = utils.calendarDateTimeDisplayString(context, lastRunMillis).toString();
-            String afterDelay = (lastRunMillis >= 0 ? utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
+            String lastBootCompleted = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), lastRunMillis).toString();
+            String afterDelay = (lastRunMillis >= 0 ? delta_utils.timeDeltaLongDisplayString(0, bootCompletedInfo.getAtElapsedMillis(), true).getValue() : "");
             String took = (lastRunMillis >= 0 ? bootCompletedInfo.getDurationMillis() + "ms": "");
-            CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.configLabel_alarms_bootcompleted_info, lastBootCompleted, afterDelay, took)
-                    : context.getString(R.string.configLabel_alarms_bootcompleted_info_never));
-            bootCompletedPref.setSummary(context.getString(R.string.configLabel_alarms_bootcompleted_summary, infoSpan));
+            CharSequence infoSpan = (lastRunMillis >= 0 ? context.getString(R.string.alarms_label_bootcompleted_info, lastBootCompleted, afterDelay, took)
+                    : context.getString(R.string.alarms_label_bootcompleted_info_never));
+            bootCompletedPref.setSummary(context.getString(R.string.alarms_label_bootcompleted_summary, infoSpan));
         }
     }
 
@@ -478,7 +443,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
             return;
         }
 
-        final Preference clearAllPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
+        final Preference clearAllPref = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CLEARALL);
         if (clearAllPref != null) {
             clearAllPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
@@ -519,7 +484,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
      */
     private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
-        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmClockItem.AlarmType.ALARM);
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
@@ -545,7 +510,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     /**
      * https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
-     * @param context
+     * @param context Context
      */
     public static void openNotificationSettings(@NonNull Context context)
     {
@@ -605,11 +570,11 @@ public class AlarmPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static Preference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
+    private static CheckBoxPreference.OnPreferenceClickListener onDndPermissionClicked(final Context context)
     {
-        return new Preference.OnPreferenceClickListener() {
+        return new CheckBoxPreference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference)
+            public boolean onPreferenceClick(CheckBoxPreference preference)
             {
                 BedtimeSettings.startDoNotDisturbAccessActivity(context);
                 return false;
@@ -645,9 +610,9 @@ public class AlarmPrefsFragment extends PreferenceFragment
         final boolean isAggressive = AlarmSettings.aggressiveBatteryOptimizations(context);
 
         String message =
-                isIgnoringOptimizations ? "[i] " + context.getString(R.string.configLabel_alarms_optWhiteList_listed)
-                        : (isAggressive ? "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted_aggressive)
-                        : "[w] " + context.getString(R.string.configLabel_alarms_optWhiteList_unlisted));
+                isIgnoringOptimizations ? "[i] " + context.getString(R.string.alarms_label_optWhiteList_listed)
+                        : (isAggressive ? "[w] " + context.getString(R.string.alarms_label_optWhiteList_unlisted_aggressive)
+                        : "[w] " + context.getString(R.string.alarms_label_optWhiteList_unlisted));
         if (!isIgnoringOptimizations) {
             message += "\n\n" + context.getString(R.string.help_battery_optimization, context.getString(R.string.app_name));
         }
@@ -659,19 +624,19 @@ public class AlarmPrefsFragment extends PreferenceFragment
         int[] iconAttrs = { R.attr.tagColor_warning, R.attr.icActionAbout, R.attr.icActionWarning };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
-        ImageSpan iconInfo = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
-        ImageSpan iconWarn = SuntimesUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
+        ImageSpan iconInfo = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
+        ImageSpan iconWarn = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
         typedArray.recycle();
 
-        SuntimesUtils.ImageSpanTag[] tags = {
-                new SuntimesUtils.ImageSpanTag("[i]", iconInfo),
-                new SuntimesUtils.ImageSpanTag("[w]", iconWarn)
+        SpanUtils.ImageSpanTag[] tags = {
+                new SpanUtils.ImageSpanTag("[i]", iconInfo),
+                new SpanUtils.ImageSpanTag("[w]", iconWarn)
         };
-        CharSequence messageSpan = SuntimesUtils.createSpan(context, message, tags);
+        CharSequence messageSpan = SpanUtils.createSpan(context, message, tags);
 
         return new AlertDialog.Builder(context)
                 .setMessage(messageSpan)
-                .setPositiveButton(context.getString(R.string.configLabel_alarms_optWhiteList),
+                .setPositiveButton(context.getString(R.string.alarms_label_optWhiteList),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
@@ -686,7 +651,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                                 }
                             }
                         })
-                .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                .setNeutralButton(context.getString(R.string.action_onlineHelp),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
@@ -716,8 +681,12 @@ public class AlarmPrefsFragment extends PreferenceFragment
         } else return false;
     }
 
-    public static void removePrefFromCategory(Preference pref, PreferenceCategory category)
-    {
+    public static void removePrefFromCategory(Preference pref, PreferenceCategory category) {
+        if (pref != null && category != null) {
+            category.removePreference(pref);
+        }
+    }
+    public static void removePrefFromCategory(CheckBoxPreference pref, PreferenceCategory category) {
         if (pref != null && category != null) {
             category.removePreference(pref);
         }

@@ -29,12 +29,15 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
+import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
-import com.forrestguice.suntimeswidget.graph.LightGraphView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_WORLDMAP_MINORGRID;
@@ -110,25 +113,23 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
-        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
         options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? dataset.timezone()
                 : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
 
-        LightGraphView.LightGraphTask drawTask = new LightGraphView.LightGraphTask();
-
-        SuntimesRiseSetDataset[] yearData = LightGraphView.LightGraphTask.createYearData(context, dataset);
-        drawTask.setData(yearData);
+        LightGraphBitmap graph = new LightGraphBitmap();
+        SuntimesRiseSetDataset[] yearData = LightGraphBitmap.createYearData(context, dataset);
 
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-        options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
+        options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
+        Bitmap bitmap = graph.makeBitmap( yearData, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options );
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         }
     }
 
-    protected LightGraphView.LightGraphOptions options;
+    protected LightGraphOptions options;
     protected int dpWidth = 512, dpHeight = 512;
 
     @Override
@@ -144,9 +145,9 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LightGraphView.LightGraphOptions(context);
+        options = new LightGraphOptions(AndroidResources.wrap(context));
 
-        options.colors = LightGraphColorValues.getColorDefaults(context, (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
+        options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), (theme.getBackground() == SuntimesTheme.ThemeBackground.DARK));
         options.colors.setColor(COLOR_DAY, theme.getDayColor());
         options.colors.setColor(COLOR_CIVIL, theme.getCivilColor());
         options.colors.setColor(COLOR_NAUTICAL, theme.getNauticalColor());

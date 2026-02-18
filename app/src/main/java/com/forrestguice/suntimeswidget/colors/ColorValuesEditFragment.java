@@ -20,33 +20,34 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorActivity;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.GridLayoutManager;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,9 +82,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState)
     {
         //android.support.v7.view.ContextThemeWrapper contextWrapper = new android.support.v7.view.ContextThemeWrapper(getActivity(), getThemeResID());    // hack: contextWrapper required because base theme is not properly applied
-        View content = inflater.cloneInContext(getActivity()).inflate(R.layout.fragment_colorvalues, container, false);
+        View content = inflater.cloneInContext(requireActivity()).inflate(R.layout.fragment_colorvalues, container, false);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(ColorValuesEditViewModel.class);
+        viewModel = ViewModelProviders.of(requireActivity()).get(ColorValuesEditViewModel.class);
 
         ImageButton overflow = (ImageButton) content.findViewById(R.id.overflow);
         if (overflow != null) {
@@ -100,7 +101,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             cancelButton.setOnClickListener(new ViewUtils.ThrottledClickListener(onCancelButtonClicked));
         }
 
-        adapter = new ColorValuesEditViewAdapter(getActivity(), colorValues);
+        adapter = new ColorValuesEditViewAdapter(requireActivity(), colorValues);
         adapter.setFilter(getFilter());
         adapter.setAdapterListener(new ColorValuesEditViewAdapter.AdapterListener()
         {
@@ -111,7 +112,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         });
 
         panel = (RecyclerView) content.findViewById(R.id.colorPanel);
-        panel.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+        panel.setLayoutManager(new GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false));
         panel.setAdapter(adapter);
         panel.scrollToPosition(0);
 
@@ -166,25 +167,25 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     {
         String colorsID = editID.getText().toString();
         if (colorsID.trim().isEmpty()) {    // must not be empty
-            editID.setError(getString(R.string.error_colorid_empty));
+            editID.setError(getString(R.string.colors_error_colorid_empty));
             return false;
 
         } else if (colorsID.contains(" ")) {    // must not contain spaces
-            editID.setError(getString(R.string.error_colorid_spaces));
+            editID.setError(getString(R.string.colors_error_colorid_spaces));
             editID.setSelection(colorsID.indexOf(" "), colorsID.indexOf(" ") + 1);
             return false;
         }
 
         String colorsLabel = editLabel.getText().toString();
         if (colorsLabel.trim().isEmpty()) {
-            editLabel.setError(getString(R.string.error_colorlabel_empty));
+            editLabel.setError(getString(R.string.colors_error_colorlabel_empty));
             return false;
         }
 
         return true;
     }
 
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onSaveColorValues();
@@ -207,7 +208,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         return false;
     }
 
-    private View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             onCancelled();
@@ -219,7 +220,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    private View.OnClickListener onOverflowButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener onOverflowButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showOverflowMenu(getActivity(), v);
@@ -239,8 +240,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     @Override
     public void onSaveInstanceState(@NonNull Bundle out)
     {
-        out.putParcelable("colorValues", colorValues);
-        out.putParcelable("defaultValues", defaultValues);
+        out.putSerializable("colorValues", colorValues);
+        out.putSerializable("defaultValues", defaultValues);
         out.putStringArray("filterValues", filterValues.toArray(new String[0]));
         out.putString("editID", editID.getText().toString());
         out.putString("editLabel", editLabel.getText().toString());
@@ -248,8 +249,8 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void onRestoreInstanceState(@NonNull Bundle savedState)
     {
-        colorValues = savedState.getParcelable("colorValues");
-        defaultValues = savedState.getParcelable("defaultValues");
+        colorValues = (ColorValues) savedState.getSerializable("colorValues");
+        defaultValues = (ColorValues) savedState.getSerializable("defaultValues");
         String[] filter = savedState.getStringArray("filterValues");
         if (filter != null) {
             filterValues  = new TreeSet<>(Arrays.asList(filter));
@@ -264,9 +265,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
 
         if (requestCode >= 0 && requestCode < REQUEST_IMPORT_THEME) {
             onPickColorResult(requestCode, resultCode, data);
@@ -304,7 +305,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     public void setApplyFilter(boolean value) {
-        getArguments().putBoolean("applyFilter", value);
+        getArgs().putBoolean("applyFilter", value);
         if (isAdded())
         {
             if (adapter != null) {
@@ -314,7 +315,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
     public boolean applyFilter() {
-        return getArguments().getBoolean("applyFilter", hasFilter());
+        return getArgs().getBoolean("applyFilter", hasFilter());
     }
     public boolean hasFilter() {
         return (!filterValues.isEmpty());
@@ -350,6 +351,18 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         updateViews();
     }
 
+    protected ActivityResultLauncherCompat[] startActivityForResult_pickColor = registerForActivityResult_pickColor();
+    protected ActivityResultLauncherCompat[] registerForActivityResult_pickColor()
+    {
+        //String[] keys = new String[100];     // = colorValues.getColorKeys();
+        int n = 100;  // colorValues is unset when we need to registerForActivityResult (before onCreate) so register 100 slots instead
+        ActivityResultLauncherCompat[] result = new ActivityResultLauncherCompat[n];
+        for (int i=0; i<n; i++) {
+            result[i] = registerForActivityResultCompat(i);
+        }
+        return result;
+    }
+
     public void pickColor(String key)
     {
         int requestCode = colorValues.colorKeyIndex(key);
@@ -357,7 +370,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         {
             Intent intent = pickColorIntent(key, requestCode);
             if (intent != null) {
-                startActivityForResult(pickColorIntent(key, requestCode), requestCode);
+                startActivityForResultCompat(pickColorIntent(key, requestCode), requestCode);
             }
         }
     }
@@ -447,16 +460,6 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void importColors(final Context context, String jsonInput)
     {
-        ColorValues values = new ColorValues(jsonInput) {
-            @Override
-            public String[] getColorKeys() {
-                return new String[0];
-            }
-        };
-        if (values != null)
-        {
-
-        }
         // TODO
     }
 
@@ -485,8 +488,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
 
     public static final int REQUEST_IMPORT_THEME = 1000;
+    protected ActivityResultLauncherCompat startActivityForResult_importTheme = registerForActivityResultCompat(REQUEST_IMPORT_THEME);
     protected void importFromTheme(Context context) {
-        startActivityForResult(pickThemeIntent(), REQUEST_IMPORT_THEME);
+        startActivityForResult_importTheme.launch(pickThemeIntent());
     }
     protected Intent pickThemeIntent() {
         return null;
@@ -495,12 +499,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public void showOverflowMenu(Context context, View v)
     {
-        PopupMenu popup = new PopupMenu(context, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_coloredit, popup.getMenu());
-        onPrepareOverflowMenu(context, popup.getMenu());
-        popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.menu_coloredit, onOverflowMenuItemSelected).show();
     }
 
     protected void onPrepareOverflowMenu(Context context, Menu menu)
@@ -511,35 +510,35 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuItemSelected = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            onPrepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                //case R.id.action_colors_copytheme:
-                //    importFromTheme(getActivity());
-                //    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors_import) {
+                importColors(getActivity());
+                return true;
 
-                case R.id.action_colors_import:
-                    importColors(getActivity());
-                    return true;
+            } else if (itemId == R.id.action_colors_delete) {
+                deleteColors(getActivity());
+                return true;
 
-                case R.id.action_colors_delete:
-                    deleteColors(getActivity());
-                    return true;
-
-                case R.id.action_colors_share:
-                    shareColors(getActivity());
-                    return true;
+            } else if (itemId == R.id.action_colors_share) {
+                shareColors(getActivity());
+                return true;
             }
             return false;
         }
     };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         //if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
         //    return true;

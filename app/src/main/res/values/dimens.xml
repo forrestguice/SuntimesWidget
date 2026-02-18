@@ -14,6 +14,7 @@
     <dimen name="chip_radius">6dp</dimen>
     <dimen name="chip_stroke">2dp</dimen>
     <dimen name="chip_minHeight">38dp</dimen>
+    <dimen name="lastitem_margin">300dp</dimen>
 
     <dimen name="snackbar_button_padding">8dp</dimen>
 
@@ -80,8 +81,8 @@
     <dimen name="widget_layout_spacing_small">4dp</dimen>
     <dimen name="widget_layout_spacing">8dp</dimen>
 
-    <dimen name="widget_settings_check_padding_left">8dp</dimen>
-    <dimen name="widget_settings_label_padding_left">12dp</dimen>
+    <dimen name="widget_settings_check_padding_left">12dp</dimen>
+    <dimen name="widget_settings_label_padding_left">16dp</dimen>
 
     <dimen name="sunIconLarge_width">32dip</dimen>
     <dimen name="sunIconLarge_height">8dip</dimen>
@@ -139,6 +140,7 @@
 
     <dimen name="aboutIcon_margin">0dip</dimen>
 
+    <dimen name="menuIcon_size">24dp</dimen>
     <dimen name="statusIcon_size">16dp</dimen>
     <dimen name="warningIcon_size">18dp</dimen>
     <dimen name="chipIcon_size">20dp</dimen>
@@ -147,7 +149,7 @@
     <dimen name="aboutIcon_size">96dp</dimen>
     <dimen name="welcomeIcon_size">128dp</dimen>
 
-    <dimen name="welcomeIndicator_size">36px</dimen>
+    <dimen name="welcomeIndicator_size">24dp</dimen>
     <dimen name="welcomeActivity_margin">16dp</dimen>
 
     <dimen name="equinoxItem_height">56dp</dimen>

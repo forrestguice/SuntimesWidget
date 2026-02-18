@@ -1,0 +1,224 @@
+/**
+    Copyright (C) 2021-2023 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.forrestguice.suntimeswidget.events;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
+import com.forrestguice.util.Log;
+
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.util.text.TimeDisplayText;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ShadowLengthEvent extends ElevationEvent
+{
+    public static final String NAME_PREFIX = "SHADOW_";
+
+    public ShadowLengthEvent(double objHeight, double length, int offset, boolean rising)
+    {
+        super(0, offset, rising);
+        this.objHeight = objHeight;
+        this.length = length;
+
+        if (this.objHeight != 0 && this.length != 0) {
+            this.angle = Math.toDegrees(Math.atan(this.objHeight / this.length));
+        }
+    }
+
+    protected double length;    // meters
+    public double getLength() {
+        return length;
+    }
+
+    protected double objHeight;    // meters
+    public double getObjHeight() {
+        return objHeight;
+    }
+
+    @Override
+    public String getEventTitle(SuntimesDataSettings context) {
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " (" + angle + ")";   // TODO: format
+    }
+
+    @Override
+    public String getEventPhrase(SuntimesDataSettings context) {
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
+        return offsetDisplay(context.getResources()) + eventTitle + " " + (rising ? "rising" : "setting") + " at " + angle;   // TODO: format
+    }
+
+    @Override
+    public String getEventGender(SuntimesDataSettings context) {
+        return (r != null) ? context.getString(r.string_phrase_gender()) : "other";
+    }
+
+    @Override
+    public String getEventSummary(SuntimesDataSettings context)
+    {
+        LengthUnit units = context.loadLengthUnitsPref(0);
+        String height = LengthUnitDisplay.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
+
+        TimeDisplayText t = LengthUnitDisplay.formatAsHeight(context.getResources(), getLength(), units, 1, true);
+        String length = context.getString(r.string_units_format_short(), t.getValue(), t.getUnits());
+        String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
+
+        if (offset == 0) {
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, height, length)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + height + " : " + length + ")";
+        } else {
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, height, length)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + height + " : " + length + ")";
+        }
+    }
+
+    public static boolean isShadowLengthEvent(String eventName) {
+        return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
+    }
+
+    /**
+     * @return e.g. SHADOW_1:10r          (@ 10 meters (rising)),
+     *              SHADOW_1:10|-300000r  (5m before @ 10 meters (rising))
+     */
+    @Override
+    public String getEventName() {
+        return getEventName(objHeight, length, offset, rising);
+    }
+    public static String getEventName(double objHeight, double length, int offset, @Nullable Boolean rising) {
+        String name = NAME_PREFIX
+                + objHeight + ":" + length
+                + ((offset != 0) ? "|" + (int)Math.ceil(offset / 1000d / 60d) : "");
+        if (rising != null) {
+            name += (rising ? SUFFIX_RISING : SUFFIX_SETTING);
+        }
+        return name;
+    }
+
+    @Nullable
+    public static ShadowLengthEvent valueOf(String eventName)
+    {
+        if (isShadowLengthEvent(eventName))
+        {
+            double height = 1, length = 1;
+            int offsetMinutes = 0;
+            boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
+            try {
+                String contentString = eventName.substring(NAME_PREFIX.length(), eventName.length() - (hasSuffix ? 1 : 0));    // SHADOW_<contentString>
+                String[] contentParts = contentString.split("\\|");
+
+                String[] shadowParts = contentParts[0].split(":");
+                if (shadowParts.length > 1)
+                {
+                    height = Double.parseDouble(shadowParts[0]);
+                    length = Double.parseDouble(shadowParts[1]);
+
+                } else if (shadowParts.length > 0) {
+                    //noinspection ConstantConditions
+                    height = 1;
+                    length = Double.parseDouble(shadowParts[0]);
+                }
+
+                if (contentParts.length > 1) {
+                    offsetMinutes = Integer.parseInt(contentParts[1]);
+                }
+
+            } catch (Exception e) {
+                Log.e("ShadowLengthEvent", "createEvent: bad length: " + e);
+                return null;
+            }
+            boolean rising = eventName.endsWith(SUFFIX_RISING);
+            return new ShadowLengthEvent(height, length, (offsetMinutes * 60 * 1000), rising);
+        } else return null;
+    }
+
+    public static Calendar updateAlarmTime_shadowLengthEvent(Object context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        SuntimesClockData data = getClockData(context, location);
+        data.initCalculator();
+        SuntimesCalculator calculator = data.calculator();
+
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime = null;
+
+        Calendar day = Calendar.getInstance();
+        data.setTodayIs(day);
+        data.calculate(context);
+
+        eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+        if (eventTime != null) {
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+
+        int c = 0;
+        Set<Long> timestamps = new HashSet<>();
+        while (now.after(alarmTime)
+                || eventTime == null
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
+                Log.e("AlarmReceiver", "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            Log.w("AlarmReceiver", "updateAlarmTime: shadowLengthEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            data.setTodayIs(day);
+            data.calculate(context);
+            eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                    : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+            if (eventTime != null) {
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
+        }
+        return eventTime;
+    }
+
+    private static SuntimesClockData getClockData(Object context, @NonNull Location location)
+    {
+        SuntimesClockData data = new SuntimesClockData(context, 0);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
+        return data;
+    }
+
+    @Nullable
+    protected static ResID_ShadowLengthEvent r = null;
+    public static void setResIDs(@NonNull ResID_ShadowLengthEvent values) {
+        r = values;
+    }
+
+    public interface ResID_ShadowLengthEvent extends ResID_BaseEvent
+    {
+        int string_title();
+        int string_phrase_gender();
+        int string_summary_format();
+        int string_summary_format1();
+        int string_units_format_short();
+    }
+}

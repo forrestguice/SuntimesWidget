@@ -22,13 +22,15 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.app.AppCompatActivity;
 
 public class ExceptionActivity extends AppCompatActivity
 {
@@ -40,7 +42,7 @@ public class ExceptionActivity extends AppCompatActivity
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
         {
             @Override
-            public void uncaughtException(Thread t, Throwable e) {
+            public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
                 Log.e("CRASH", e.getClass().getSimpleName(), e);
                 System.exit(0);
             }
@@ -77,7 +79,7 @@ public class ExceptionActivity extends AppCompatActivity
         TextView text_message1 = (TextView) findViewById(R.id.text_message1);
         if (text_message1 != null) {
             //text_message1.setMovementMethod(LinkMovementMethod.getInstance());
-            text_message1.setText(SuntimesUtils.fromHtml(getString(R.string.crash_dialog_message1, getString(R.string.help_support_url))));
+            text_message1.setText(SpanUtils.fromHtml(getString(R.string.crash_dialog_message1, getString(R.string.help_support_url))));
         }
 
         TextView text_report = (TextView) findViewById(R.id.text_exception);
@@ -107,7 +109,7 @@ public class ExceptionActivity extends AppCompatActivity
                 if (e != null)
                 {
                     clipboard.setPrimaryClip(ClipData.newPlainText("CRASH", e));
-                    Toast.makeText(context, context.getString(R.string.toast_copied_to_clipboard), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.msg_copied_to_clipboard), Toast.LENGTH_SHORT).show();
 
                 } else Log.e("ExceptionActivity", "copyToClipboard: failed to copy exception; null report!");
             } else Log.e("ExceptionActivity", "copyToClipboard: failed to copy exception; null clipboard!");

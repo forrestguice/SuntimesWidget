@@ -29,6 +29,7 @@ import android.view.ContextThemeWrapper;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData2;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 /**
@@ -43,7 +44,7 @@ public abstract class SuntimesTileService extends TileService
     protected SuntimesTileBase base = initTileBase();
 
     public static final String TAG = "AlarmTile";
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
 
     protected void initLocale(Context context) {
         SuntimesUtils.initDisplayStrings(context);

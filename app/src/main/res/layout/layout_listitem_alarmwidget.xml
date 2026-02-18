@@ -15,7 +15,7 @@
         android:layout_alignTop="@+id/layout_text"
         android:layout_alignBottom="@+id/layout_text">
 
-        <ImageView android:id="@android:id/icon1"
+        <com.forrestguice.support.widget.ImageView android:id="@android:id/icon1"
             android:layout_width="24dp" android:layout_height="24dp"
             android:src="@drawable/ic_action_alarms"
             tools:ignore="contentDescription" />

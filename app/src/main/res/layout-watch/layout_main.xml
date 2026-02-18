@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_drawer"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:openDrawer="start">
 
-<android.support.design.widget.CoordinatorLayout
+<com.forrestguice.support.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,21 +18,21 @@
         android:orientation="vertical">
 
         <!-- Action Bar -->
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
+            <com.forrestguice.support.widget.Toolbar
                 android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
                 app:title="@string/app_name" app:subtitle="@string/app_shortdesc" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <com.forrestguice.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 tools:ignore="UnusedAttribute"
@@ -101,9 +101,9 @@
 
                 </FrameLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </com.forrestguice.support.constraint.ConstraintLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <com.forrestguice.support.widget.RecyclerView
                 android:id="@+id/info_time_flipper1"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -144,7 +144,7 @@
 
     </LinearLayout>
     </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.widget.CoordinatorLayout>
 
 <include layout="@layout/nav_main" />
-</android.support.v4.widget.DrawerLayout>
+</com.forrestguice.support.widget.DrawerLayout>

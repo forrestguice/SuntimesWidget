@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:title="@string/configLabel_general"
+        android:title="@string/settings_general"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -11,7 +11,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_alarmClock"
+        android:title="@string/alarms_label_alarmClock"
         android:summary="" >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -20,7 +20,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_locale"
+        android:title="@string/locale_pref_title"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -29,7 +29,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_places"
+        android:title="@string/places_label"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -38,7 +38,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_ui"
+        android:title="@string/settings_ui"
         android:summary=""  >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
@@ -47,7 +47,7 @@
     </Preference>
 
     <Preference
-        android:title="@string/configLabel_widgetList"
+        android:title="@string/widgetList_label"
         android:summary="" >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"

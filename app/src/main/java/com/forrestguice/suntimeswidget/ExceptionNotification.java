@@ -25,8 +25,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.NotificationCompat;
 
 public abstract class ExceptionNotification
 {
@@ -74,7 +75,11 @@ public abstract class ExceptionNotification
         }
         builder.setContentText(message);
 
-        PendingIntent intent = PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent intent = PendingIntent.getActivity(context, message.hashCode(), getCrashReportActivityIntent(context, report), flags);
         String actionText = getNotificationActionText(context);
         if (actionText != null) {
             builder.addAction(getNotificationIconResID(), getNotificationActionText(context), intent);
@@ -90,6 +95,7 @@ public abstract class ExceptionNotification
         if (Build.VERSION.SDK_INT >= 26) {
             builder = new NotificationCompat.Builder(context, createNotificationChannel(context));
         } else {
+            //noinspection deprecation
             builder = new NotificationCompat.Builder(context);
         }
         return builder;
