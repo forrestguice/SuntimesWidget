@@ -1,5 +1,6 @@
 ### ~
 
+
 ### DEVELOP
 
 * adds "Material You" app themes (api31+) (#635).
@@ -29,6 +30,12 @@
 * refactor; decouples core data classes from the Android api (#388); decouples UI classes from the Android Support Library.
 * build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API.
 * build; adds `production`, `nightly`, and `legacy` build flavors (#892); the `legacy` flavor builds against the legacy Android Support Library.
+
+### v0.16.13 (2026-02-17)
+* fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
+* fixes missing `contentDescriptions` on event icons (accessibility) (#915).
+* updates translation to Arabic (ar) (#910 by islam2hamy).
+* updates translation to Russian (ru) (#916, #919 by Ruslan Chintsov).
 
 ### v0.16.12 (2025-12-28)
 * fixes bug where US English strings are displayed for other English locales. (#902)

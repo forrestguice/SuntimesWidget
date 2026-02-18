@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-[![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml)
+[![Android CI](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml/badge.svg)](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
@@ -213,7 +213,7 @@ Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
 Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
-Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>.<br />
+Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>, and <u><a href=https://github.com/islam2hamy>islam2hamy</a></u>.<br />
 
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
