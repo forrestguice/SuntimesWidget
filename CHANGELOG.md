@@ -27,9 +27,11 @@
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
 * adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by actions functionality to launch user-defined intents) [permission].
 * adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
-* refactor; decouples core data classes from the Android api (#388); decouples UI classes from the Android Support Library.
-* build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API.
-* build; adds `production`, `nightly`, and `legacy` build flavors (#892); the `legacy` flavor builds against the legacy Android Support Library.
+* refactor; decouples core data classes from the Android api (#388); moved into `calculator` and `util` Java libraries.
+* refactor; decouples UI classes from the Android Support Library; introduces Suntimes `support` library.
+* build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API (api30).
+* build; adds `legacy` flavor (uses the Android Support Library); assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle.
+* build; adds `production` and `nightly` build flavors (#892).
 
 ### v0.16.13 (2026-02-17)
 * fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
