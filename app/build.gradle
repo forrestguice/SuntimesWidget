@@ -74,14 +74,14 @@ android
         buildConfigField "String", "SUNTIMES_AUTHORITY_ROOT0", "\"suntimeswidget\""         // legacy; uses permission.READ_CALCULATOR
         buildConfigField "String", "SUNTIMES_PERMISSION_ROOT", "\"suntimes\""
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
-
+        
         if (useAndroidX) {
             testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         } else {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         }
 
-        resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh"
+        //resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh-rCN", "zh-rTW"    // breaks region specific defaults
     }
 
     buildTypes
