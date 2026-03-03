@@ -6,7 +6,7 @@
 * adds "Material You" app themes (api31+) (#635).
 * adds digital clock widgets with fancy typeface.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
-* adds custom events; `day/night percent`, `moon elevation`, and `moon illumination` (#900).
+* adds custom events; `shadow factor`, `day/night percent`, `moon elevation`, and `moon illumination` (#729, #900).
 * adds world map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
 * adds `map location` picker to the location dialog; choose coordinates from the world map.
 * adds `seek time/date` action to the sun, moon, and world map dialogs (#863).
@@ -14,7 +14,7 @@
 * adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek to twilight or custom events.
 * adds `seek altitude` and `seek shadow length` popups to the sun dialog; seek/manage custom events.
 * adds `10min`, `15min`, and `7d` step sizes to the sun dialog, and `7d` step size to the world map dialog.
-* adds `solar noon` and sun `symbol` options to the sun dialog; draw a "circle", "cross", "dot", or "line".
+* adds `solar noon` and sun `symbol` options to the sun dialog; "circle", "cross", "dot", or "line".
 * adds `sort places` action to the places activity; sort by label (ascending, descending), or nearest (to app location).
 * improves the `search places` action; adds descriptive tags/icons to the default world places.
 * enhances the add places dialog; adds `gps menu`, `gps status` views, `reload agps`, and `average location` actions (#884).
@@ -26,7 +26,7 @@
 * adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
 * adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by actions functionality to launch user-defined intents) [permission].
-* adds permission `suntimes.permission.ADDON` (an alternate to `suntimes.permission.READ_CALCULATOR`).
+* adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
 * refactor; decouples core data classes from the Android api (#388); decouples UI classes from the Android Support Library.
 * build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API.
 * build; adds `production`, `nightly`, and `legacy` build flavors (#892); the `legacy` flavor builds against the legacy Android Support Library.
