@@ -1,1 +1,1 @@
-- fixes lost/missing Chinese translations (#921).
+- fixes missing Chinese translations (#921).

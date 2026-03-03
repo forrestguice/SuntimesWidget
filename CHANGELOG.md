@@ -1,7 +1,8 @@
 ### ~
 
 ### v0.16.14 (2026-03-04)
-* fixes lost/missing Chinese translations (#921) (missing since v0.16.12).
+* fixes missing Chinese translations (#921) (missing since v0.16.12).
+* fixes missing region-specific default values.
 
 ### v0.16.13 (2026-02-17)
 * fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
