@@ -160,6 +160,7 @@ public class AlarmListDialog extends DialogBase
 
         adapter = new AlarmListDialogAdapter(context);
         adapter.setAdapterListener(adapterListener);
+        initSelectedRowID();
 
         AppColorValues colors = AppColorValuesCollection.initSelectedColors(context);
         if (colors != null) {
@@ -354,12 +355,25 @@ public class AlarmListDialog extends DialogBase
         return adapter;
     }
 
-    public void setSelectedRowID(long value) {
-        adapter.setSelectedRowID(value);
+    protected void initSelectedRowID()
+    {
+        long rowID = getArgs().getLong(EXTRA_SELECTED_ROWID, -1);
+        getArgs().remove(EXTRA_SELECTED_ROWID);
+        if (rowID != -1) {
+            adapter.setSelectedRowID(rowID);
+        }
     }
-
+    public void setSelectedRowID(long value)
+    {
+        if (adapter != null) {
+            adapter.setSelectedRowID(value);
+        } else {
+            getArgs().putLong(EXTRA_SELECTED_ROWID, value);
+        }
+    }
     public long getSelectedRowID() {
-        return ((adapter != null) ? adapter.getSelectedRowID() : -1);
+        return ((adapter != null) ? adapter.getSelectedRowID()
+                : getArgs().getLong(EXTRA_SELECTED_ROWID, -1));
     }
 
     public void scrollToSelectedItem()
