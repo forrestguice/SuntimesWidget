@@ -55,3 +55,4 @@ app/app.iml
 /.idea/modules
 SuntimesWidget.iml
 app/test_location_serializable.txt
+app/production/release/output-metadata.json
