@@ -93,9 +93,9 @@ public class NextEventTileBase extends SuntimesTileBase
     /**
      * initDataset
      */
-    protected SuntimesRiseSetDataset initDataset(Context context)
+    protected SuntimesRiseSetDataset initDataset(Context context, boolean reinit)
     {
-        if (dataset == null) {
+        if (dataset == null || reinit) {
             dataset = new SuntimesRiseSetDataset(context, appWidgetId());
             dataset.calculateData(context);
         }
@@ -109,7 +109,7 @@ public class NextEventTileBase extends SuntimesTileBase
     protected SuntimesRiseSetDataset.SearchResult findNextEvent(Context context, boolean reinit)
     {
         if (nextEvent == null || reinit) {
-            initDataset(context);
+            initDataset(context, reinit);
             nextEvent = dataset.findNextEvent();
         }
         return nextEvent;
