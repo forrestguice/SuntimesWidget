@@ -32,6 +32,7 @@ import android.service.notification.Condition;
 import android.service.notification.ConditionProviderService;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.app.NotificationManagerHelper;
@@ -165,6 +166,7 @@ public class BedtimeConditionService extends ConditionProviderService
         return filter;
     }
 
+    @NonNull
     @TargetApi(24)
     public static Condition createAutomaticZenRuleCondition(String summary, boolean value) {
         return new Condition(BedtimeConditionService.getAutomaticZenRuleConditionId(), summary, (value ? Condition.STATE_TRUE : Condition.STATE_FALSE));
@@ -186,12 +188,13 @@ public class BedtimeConditionService extends ConditionProviderService
         } else {
             if (Build.VERSION.SDK_INT >= 29)
             {
+                String zenRuleID = BedtimeSettings.getRecentAutomaticZenRuleID(context);
                 if (BuildConfig.DEBUG) {
-                    Log.d("DEBUG", "NotificationManager :: setAutomaticZenRuleState: " + value + ", " + BedtimeSettings.getRecentAutomaticZenRuleID(context));
+                    Log.d("DEBUG", "NotificationManager :: setAutomaticZenRuleState: " + value + ", " + zenRuleID);
                 }
                 String conditionSummary = (value ? context.getString(R.string.bedtime_msg_active) : "");
                 Condition condition = createAutomaticZenRuleCondition(conditionSummary, value);
-                NotificationManagerHelper.setAutomaticZenRuleState(context, BedtimeSettings.getRecentAutomaticZenRuleID(context), condition);
+                NotificationManagerHelper.setAutomaticZenRuleState(context, zenRuleID, condition);
             }
         }
     }

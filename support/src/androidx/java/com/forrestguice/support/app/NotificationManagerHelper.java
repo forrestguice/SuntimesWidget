@@ -9,6 +9,9 @@ import android.os.Build;
 import android.service.notification.Condition;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
 public class NotificationManagerHelper
 {
     public static boolean areNotificationsPaused(Context context)
@@ -62,15 +65,15 @@ public class NotificationManagerHelper
     }
 
     @TargetApi(29)
-    public static void setAutomaticZenRuleState(Context context, String id, Condition condition)
+    public static void setAutomaticZenRuleState(@NonNull Context context, @Nullable String id, @NonNull Condition condition)
     {
         if (Build.VERSION.SDK_INT >= 29)
         {
             NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (notifications != null) {
+            if (notifications != null && id != null && condition != null) {
                 notifications.setAutomaticZenRuleState(id, condition);
-                Log.d("DEBUG", "setAutomaticZenRuleState: " + condition);
             }
+            Log.d("DEBUG", "setAutomaticZenRuleState: " + id + ": " + condition);
         }
     }
 }
