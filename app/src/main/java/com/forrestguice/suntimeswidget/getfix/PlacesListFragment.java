@@ -1689,7 +1689,7 @@ public class PlacesListFragment extends DialogBase
                         if (comment.equals(constraint) || comment0.equals(constraint)
                                 || comment.equals("[" + constraint + "]") || comment0.equals("[" + constraint + "]")
                                 || comment.contains("[" + constraint + "]") || comment0.contains("[" + constraint + "]")) {
-                            values3.add(0, item);
+                            values3.add(item);
                             continue;
 
                         } else if (comment.startsWith(constraint) || comment0.startsWith(constraint)
