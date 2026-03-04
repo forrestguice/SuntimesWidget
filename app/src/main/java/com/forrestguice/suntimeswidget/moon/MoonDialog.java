@@ -1106,6 +1106,16 @@ public class MoonDialog extends BottomSheetDialogBase
                 updateContextMenu(context, menu, eventID, date.getTimeInMillis());
                 moonriseset.lockScrolling();   // prevent the popupmenu from nudging the view
             }
+
+            @Override
+            public void onDismiss() {
+                moonriseset.post(new Runnable() {
+                    @Override
+                    public void run() {                      // a submenu may be shown after the popup is dismissed
+                        moonriseset.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                    }
+                });
+            }
         });
     }
 
@@ -1117,6 +1127,16 @@ public class MoonDialog extends BottomSheetDialogBase
             public void onUpdateMenu(Context context, Menu menu) {
                 updateContextMenu(context, menu, SolarEvents.valueOf(phase), date.getTimeInMillis());
                 moonphases.lockScrolling();   // prevent the popupmenu from nudging the view
+            }
+
+            @Override
+            public void onDismiss() {
+                moonapsis.post(new Runnable() {
+                    @Override
+                    public void run() {                      // a submenu may be shown after the popup is dismissed
+                        moonphases.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                    }
+                });
             }
         });
     }
@@ -1130,11 +1150,29 @@ public class MoonDialog extends BottomSheetDialogBase
                 updateContextMenu(context, menu, event.first.getTimeInMillis());
                 moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
             }
+
+            @Override
+            public void onDismiss() {
+                moonapsis.post(new Runnable() {
+                    @Override
+                    public void run() {                      // a submenu may be shown after the popup is dismissed
+                        moonapsis.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                    }
+                });
+            }
         });
     }
 
     protected abstract class MoonContextMenuListener extends PopupMenuCompat.PopupMenuListener
     {
+        @Override
+        public abstract void onDismiss();
+
+        @Override
+        public boolean hasOnDismissListener() {
+            return true;
+        }
+
         @Override
         public abstract void onUpdateMenu(Context context, Menu menu);
 
@@ -1252,42 +1290,6 @@ public class MoonDialog extends BottomSheetDialogBase
         helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
-
-    private final PopupMenu.OnDismissListener onMoonRiseSetContextMenuDismissed = new PopupMenu.OnDismissListener() {
-        @Override
-        public void onDismiss(PopupMenu menu) {
-            moonriseset.post(new Runnable() {
-                @Override
-                public void run() {                      // a submenu may be shown after the popup is dismissed
-                    moonriseset.unlockScrolling();           // so defer unlockScrolling until after it is shown
-                }
-            });
-        }
-    };
-
-    private final PopupMenu.OnDismissListener onMoonPhaseContextMenuDismissed = new PopupMenu.OnDismissListener() {
-        @Override
-        public void onDismiss(PopupMenu menu) {
-            moonapsis.post(new Runnable() {
-                @Override
-                public void run() {                      // a submenu may be shown after the popup is dismissed
-                    moonphases.unlockScrolling();           // so defer unlockScrolling until after it is shown
-                }
-            });
-        }
-    };
-
-    private final PopupMenu.OnDismissListener onMoonApsisContextMenuDismissed = new PopupMenu.OnDismissListener() {
-        @Override
-        public void onDismiss(PopupMenu menu) {
-            moonapsis.post(new Runnable() {
-                @Override
-                public void run() {                      // a submenu may be shown after the popup is dismissed
-                    moonapsis.unlockScrolling();           // so defer unlockScrolling until after it is shown
-                }
-            });
-        }
-    };
 
     /*@Override
     public void onSaveInstanceState( Bundle outState )
