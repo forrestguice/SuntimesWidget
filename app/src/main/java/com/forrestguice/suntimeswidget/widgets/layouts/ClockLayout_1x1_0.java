@@ -119,42 +119,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
             views.setTextViewText(R.id.text_date, dateString);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
-            {
-                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
-
-                float[] adjustedSizeSp0 = new float[] {timeSizeSp, timeSizeSp};
-                float[] adjustedSizeSp1 = new float[] {textSizeSp, textSizeSp};
-
-                int c = 0;
-                boolean rescale = false;
-                do
-                {
-                    float maxSp = getMaxSp();
-                    int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - ((int)adjustedSizeSp1[0] * (showDate ? 1 : 0)))};
-
-                    adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
-                    if (adjustedSizeSp0[0] != timeSizeSp) {
-                        views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[0]);
-                        views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[1]);
-                    }
-
-                    if (showDate && dateString != null) {
-                        maxSp *= 0.33f;
-                        maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - (int)adjustedSizeSp0[0])};
-                        adjustedSizeSp1 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, dateString, textSizeSp, maxSp, "", 0);
-                        if (adjustedSizeSp1[0] != textSizeSp) {
-                            views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp1[0]);
-                            rescale = true;
-                        }
-                    }
-                    c++;
-                } while (rescale && c < 2);
-            }
-        }
-
+        scaleViews(context, appWidgetId, views, showDate, dateString);
         updateTimeViews(context, appWidgetId, views, now);
 
         if (showLabels)
@@ -189,6 +154,49 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
             } else {
                 views.setViewVisibility(R.id.text_time_extras, View.GONE);
+            }
+        }
+    }
+
+    protected void scaleViews(Context context, int appWidgetId, RemoteViews views, boolean showDate, String dateString)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
+            {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+
+                float[] adjustedSizeSp0 = new float[] {timeSizeSp, timeSizeSp};
+                float[] adjustedSizeSp1 = new float[] {textSizeSp, textSizeSp};
+
+                int c = 0;
+                boolean rescale = false;
+                do
+                {
+                    float maxSp = getMaxSp();
+                    int[] maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]),
+                            (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - ((int)adjustedSizeSp1[0] * (showDate ? 1 : 0))) };
+                    //(maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) - ((int)textSizeSp * (showDate ? 1 : 0)) };
+                    //(maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) };
+
+                    adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
+                    if (adjustedSizeSp0[0] != timeSizeSp) {
+                        views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[0]);
+                        views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[1]);
+                    }
+
+                    if (showDate && dateString != null) {
+                        maxSp *= 0.25f;
+                        maxDp = new int[] { maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]),
+                                (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - (int)adjustedSizeSp0[0]) };
+                        adjustedSizeSp1 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, dateString, textSizeSp, maxSp, "", 0);
+                        if (adjustedSizeSp1[0] != textSizeSp) {
+                            views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp1[0]);
+                            rescale = true;
+                        }
+                    }
+                    c++;
+                } while (rescale && c < 2);
             }
         }
     }

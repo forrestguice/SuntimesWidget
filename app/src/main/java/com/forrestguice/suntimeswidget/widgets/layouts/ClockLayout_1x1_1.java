@@ -503,4 +503,28 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         textPaint.getTextBounds(text, 0, text.length(), textBounds);
     }*/
 
+
+    @Override
+    protected void scaleViews(Context context, int appWidgetId, RemoteViews views, boolean showDate, String dateString)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
+            {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                if (showDate && dateString != null)
+                {
+                    float maxSp = getMaxSp();
+                    int[] maxDp = new int[] { (maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2])),
+                                              ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / 5) };
+                    float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, dateString, textSizeSp, maxSp, "", 0);
+
+                    if (adjustedSizeSp[0] != textSizeSp) {
+                        views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    }
+                }
+
+            }
+        }
+    }
 }
