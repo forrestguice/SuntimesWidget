@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.View;
@@ -318,7 +319,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
                 }
             });
 
-            Cursor cursor = db.getAllPlaces(0, false);
+            Cursor cursor = db.getAllPlaces(0, true);
             for (int i=0; i<locations.size(); i++)
             {
                 PlaceItem item = locations.get(i);
@@ -331,11 +332,23 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
                     item.comment = item.comment.concat(PlaceItem.TAG_DEFAULT);
                 }
 
-                int p = GetFixDatabaseAdapter.findPlaceByName(item.location.getLabel(), cursor);
+                String itemLabel = item.location.getLabel();
+                int p = GetFixDatabaseAdapter.findPlaceByName(itemLabel, cursor);
                 if (p < 0)    // if not found
                 {                 // then add new place
                     db.addPlace(item.location, item.comment);
                     result++;
+
+                } else {                                                             // if already exists
+                    if (WidgetSettings.PREF_DEF_LOCATION_LABEL.equals(itemLabel))        // and is the locale default
+                    {
+                        cursor.moveToPosition(p);
+                        long rowID = cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID));
+                        String comment = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
+                        if (rowID >= 0 && (comment == null || comment.trim().isEmpty())) {
+                            db.updateComment(rowID, item.comment);    // add missing comment/tags to preexisting locale default
+                        }
+                    }
                 }
             }
             cursor.close();
