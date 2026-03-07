@@ -12,13 +12,22 @@ android {
             targetVersion = 28
         }
     }
+    def compileVersion = project.properties['android.compileVersion'] != null ? project.properties['android.compileVersion'].toInteger() : null
+    if (compileVersion == null) {
+        if (useAndroidX) {
+            compileVersion = 31
+        } else {
+            compileVersion = 28
+        }
+    }
 
     defaultConfig {
-        if (targetVersion >= 33) {
-            compileSdk 33
+        if (useAndroidX) {
+            compileSdk compileVersion
         }
 
         minSdkVersion 11
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         versionCode 1
         versionName "0.1.0"
@@ -34,8 +43,8 @@ android {
         }
     }
 
-    if (targetVersion >= 33) {
-        namespace "com.forrestguice.support"
+    if (useAndroidX) {
+        namespace "com.forrestguice.suntimes.support"
         buildFeatures {
             buildConfig = true
         }
@@ -43,7 +52,7 @@ android {
 
     } else {
         //noinspection GrDeprecatedAPIUsage
-        compileSdkVersion targetVersion
+        compileSdkVersion compileVersion
         //noinspection GrDeprecatedAPIUsage
         flavorDimensions "support_version", "api"
     }
@@ -53,6 +62,7 @@ android {
             dimension "support_version"
             //noinspection ExpiredTargetSdkVersion,OldTargetApi
             targetSdkVersion 28
+            minSdkVersion 11
             versionNameSuffix "-supportlib"
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
@@ -64,6 +74,7 @@ android {
             }
             //noinspection ExpiredTargetSdkVersion,OldTargetApi
             targetSdkVersion 30
+            minSdkVersion 14
             versionNameSuffix "-androidx"
             testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         }
@@ -248,14 +259,16 @@ dependencies {
     if (useAndroidX) {
         androidTestImplementation 'androidx.test:core:1.1.0'
         androidTestImplementation 'androidx.test:rules:1.2.0'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-        if (targetVersion != null && targetVersion >= 33) {
-            androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-            androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-        } else {
-            androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-            androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-        }
+        //if (targetVersion != null && targetVersion >= 33) {
+        //    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+        //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+        //} else {
+        //    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+        //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+        //}
     } else {
         androidTestImplementation 'com.android.support:support-annotations:28.0.0'
         androidTestImplementation 'com.android.support.test:runner:1.0.2'
