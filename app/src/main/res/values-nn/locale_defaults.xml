@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="http://schemas.android.com/tools">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="default_location_label">Bergen</string>
     <string name="default_location_latitude">60.38713</string>    <!-- decimal degrees (DD) -->
