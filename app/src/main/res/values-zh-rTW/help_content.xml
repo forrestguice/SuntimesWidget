@@ -151,13 +151,13 @@
         <b>類:</b> 完整的類名。<br/><small>如 <em>app.package.name.MainActivity</em></small>
         <br/>
         <br/>
-        <b>資料:</b> 包含或指向附帶資料的URI。支援<em>%</em>替換。<small>如 <em>geo:%lat,%lon</em></small>
+        <b>資料:</b> 包含或指向附帶資料的URI。支援<em>&percnt;</em>替換。<small>如 <em>geo:&percnt;lat,&percnt;lon</em></small>
         <br/>
         <br/>
         <b>MIME:</b> 附帶資料的MIME型別。
         <br/>
         <br/>
-        <b>額外:</b> 包含額外值的由 <em>&amp;</em> 分割的字串。支援<em>%</em>替換。<br/><br/>值可為 <em>int</em>、<em>long</em>、<em>double</em>、<em>float</em>、<em>boolean</em> 或 String. <small>如 <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+        <b>額外:</b> 包含額外值的由 <em>&amp;</em> 分割的字串。支援<em>&percnt;</em>替換。<br/><br/>值可為 <em>int</em>、<em>long</em>、<em>double</em>、<em>float</em>、<em>boolean</em> 或 String. <small>如 <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           如果要<b>新增一個小工具</b>，您需要去手機的主頁。<br/><br/>

@@ -190,13 +190,13 @@
     <b>Klasa:</b> pełna nazwa klasy.<br/><small>np. <em>app.package.name.MainActivity</em></small>
     <br/>
     <br/>
-    <b>Dane:</b> URI zawierający lub wskazujący na dołączane dane. Wspiera <em>%p</em>odstawienia. <small>np. <em>geo:%lat,%lon</em></small>
+    <b>Dane:</b> URI zawierający lub wskazujący na dołączane dane. Wspiera <em>&percnt;p</em>odstawienia. <small>np. <em>geo:&percnt;lat,&percnt;lon</em></small>
     <br/>
     <br/>
     <b>MIME:</b> typ MIME dołączanych danych.
     <br/>
     <br/>
-    <b>Dodatkowe:</b> Ciąg zawierający dodatkowe wartości rozdzielone znakami &amp;</em>. Wspiera <em>%p</em>odstawienia.<br/><br/>Wartości mogą być typu <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> lub String. <small>np. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>]]></string>
+    <b>Dodatkowe:</b> Ciąg zawierający dodatkowe wartości rozdzielone znakami &amp;</em>. Wspiera <em>&percnt;p</em>odstawienia.<br/><br/>Wartości mogą być typu <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> lub String. <small>np. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>]]></string>
     <string name="help_widgetlist"><![CDATA[
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
           Aby <b>edytować istniejący widżet</b>, wybierz go z poniższej listy.<br/>

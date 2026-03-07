@@ -188,13 +188,13 @@
         <b>Classe:</b> Um nome de classe totalmente qualificado.<br/><small>exemplo: <em>app.package.name.MainActivity</em></small>
         <br/>
         <br/>
-        <b>Dados:</b> Um Uri que contém ou aponta para dados anexados. Suporta substituições de <em>%s</em>. <small>exemplo: <em>geo:%lat,%lon</em></small>
+        <b>Dados:</b> Um Uri que contém ou aponta para dados anexados. Suporta substituições de <em>&percnt;s</em>. <small>exemplo: <em>geo:&percnt;lat,&percnt;lon</em></small>
         <br/>
         <br/>
         <b>Mime:</b> O tipo MIME dos dados anexados.
         <br/>
         <br/>
-        <b>Extras:</b> Uma string delimitada por <em>&amp;</em> que contém valores extras. Suporta substituições de <em>%s</em>.<br/><br/>Os valores podem ser <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> ou String.<small>exemplo: <em>chave1=valor1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=dm</em></small>
+        <b>Extras:</b> Uma string delimitada por <em>&amp;</em> que contém valores extras. Suporta substituições de <em>&percnt;s</em>.<br/><br/>Os valores podem ser <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> ou String.<small>exemplo: <em>chave1=valor1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Pra <b>adicionar</b> ou <b>apagar</b> um widget, você deve fazer isso na tela inicial do sistema.<br/><br/>

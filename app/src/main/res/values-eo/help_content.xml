@@ -193,13 +193,13 @@
     <b>Klaso:</b> plena nomo de klaso.<br/><small>ekz. <em>app.package.name.MainActivity</em></small>
     <br/>
     <br/>
-    <b>Datumo:</b> ligilo enhavanta aŭ liganta al datumoj. Subtenas <em>%a</em>nstataŭigojn. <small>ekz. <em>geo:%lat,%lon</em></small>
+    <b>Datumo:</b> ligilo enhavanta aŭ liganta al datumoj. Subtenas <em>&percnt;a</em>nstataŭigojn. <small>ekz. <em>geo:&percnt;lat,&percnt;lon</em></small>
     <br/>
     <br/>
     <b>MIME:</b> MIME-tipo de aldonataj datumoj.
     <br/>
     <br/>
-    <b>Ekstraj:</b> ĉeno enhavanta pliajn valorojn apartigitajn per la signo <em>&amp;</em>. Subtenas <em>%a</em>nstataŭigojn.<br/><br/>Valoroj povas esti <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> aŭ String. <small>ekz. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>]]></string>
+    <b>Ekstraj:</b> ĉeno enhavanta pliajn valorojn apartigitajn per la signo <em>&amp;</em>. Subtenas <em>&percnt;a</em>nstataŭigojn.<br/><br/>Valoroj povas esti <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> aŭ String. <small>ekz. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>]]></string>
     <string name="help_widgetlist"><![CDATA[
           Por <b>aldoni novan fenestraĵon</b>, iru al la ĉefekrano.<br/><br/>
           Por <b>reagordi ekzistantan fenestraĵon</b>, elektu ĝin el la jena listo.<br/>

@@ -173,13 +173,13 @@
         <b>Class:</b> Полное имя класса. <br/><small>напр. <em>suntimeswidget.SuntimesActivity</em></small>
         <br/>
         <br/>
-        <b>Data:</b> URI, который содержит прикрепляемые данные или указывает на них. Поддерживаются регулярные выражения. <br/><small>напр. <em>geo:%lat,%lon</em></small>
+        <b>Data:</b> URI, который содержит прикрепляемые данные или указывает на них. Поддерживаются регулярные выражения. <br/><small>напр. <em>geo:&percnt;lat,&percnt;lon</em></small>
         <br/>
         <br/>
         <b>Mime:</b> Mime-тип прикрепляемых данных.
         <br/>
         <br/>
-        <b>Extras:</b> Разделенные знаком \"<em>&amp;</em>\" строки, содержащие дополнительные значения. Поддерживаются регулярные выражения.<br/><br/>Значения могут быть представлены типами <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> или <em>String</em>. <br/><small>напр. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+        <b>Extras:</b> Разделенные знаком \"<em>&amp;</em>\" строки, содержащие дополнительные значения. Поддерживаются регулярные выражения.<br/><br/>Значения могут быть представлены типами <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> или <em>String</em>. <br/><small>напр. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Для <b>добавления</b> или <b>удаления</b> виджета необходимо перейти на домашний экран устройства.<br/><br/>
