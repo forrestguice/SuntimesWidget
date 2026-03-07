@@ -89,7 +89,7 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g>  Часовой пояс может не соответствовать текущему местоположению</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote">время пояса <xliff:g id="tzID">%s</xliff:g> отличается от местного среднего солнечного времени на <xliff:g id="timeSpan">%s</xliff:g> в городе <xliff:g id="locationName">%s</xliff:g></string>
+    <string name="timezoneWarningNote">время пояса <xliff:g id="tzID">%1$s</xliff:g> отличается от местного среднего солнечного времени на <xliff:g id="timeSpan">%2$s</xliff:g> в городе <xliff:g id="locationName">%3$s</xliff:g></string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> летнее время</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> л.вр.</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> по уравнению времени</string>  <!-- timezone dialog label -->
@@ -2262,7 +2262,7 @@
         <a href="%1$s">трекер отслеживания проблем</a> на GitHub для создания запроса.
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        Приложение %s доступно бесплатно. Но если оно оказалось для вас полезным, вы можете
+        Приложение %1$s доступно бесплатно. Но если оно оказалось для вас полезным, вы можете
         <a href="%2$s">поддержать проект любой суммой</a>.
     ]]></string>
     <string name="about_app_license_notice">Suntimes — бесплатная программа с открытым исходным кодом.</string>   <!-- displayed by welcome dialog -->

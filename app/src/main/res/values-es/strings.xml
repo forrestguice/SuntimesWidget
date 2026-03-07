@@ -61,7 +61,7 @@
     -->
     <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horaria puede no ser la de esta ubicación.</string>
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> is <xliff:g id="timeSpan">%2$s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%3$s</xliff:g>).</string>  <!-- TODO -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> horario de verano</string>  <!-- timezone dialog label -->  
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> ecuación del tiempo</string>  <!-- timezone dialog label -->  
 
@@ -1963,7 +1963,7 @@
     <a href="%1$s">seguimiento de incidencias</a> para enviar una petición.
 ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        %s is available gratis, but if it has proven its value, please
+        %1$s is available gratis, but if it has proven its value, please
         <a href="%2$s">pay as you like</a>.
     ]]></string>    <!-- TODO -->
     <string name="about_app_sourcecode_field"><![CDATA[

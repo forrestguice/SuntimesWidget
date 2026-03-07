@@ -58,7 +58,7 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 此位置的時區可能是錯的。</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> 是 <xliff:g id="timeSpan">%s</xliff:g> 採用地方平時（<xliff:g id="locationName">%s</xliff:g>）</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> 是 <xliff:g id="timeSpan">%2$s</xliff:g> 採用地方平時（<xliff:g id="locationName">%3$s</xliff:g>）</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> 夏令時</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> 時間等式</string>  <!-- timezone dialog label -->
 
@@ -1994,7 +1994,7 @@
         <a href="%1$s">問題追蹤器</a> 提交一個請求。
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        %s 免費使用，如果您認為它有價值，請
+        %1$s 免費使用，如果您認為它有價值，請
         <a href="%2$s">隨意付費</a>。
     ]]></string>
     <string name="about_app_sourcecode_field"><![CDATA[

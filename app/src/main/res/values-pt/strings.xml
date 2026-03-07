@@ -84,7 +84,7 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> O fuso pode estar errado para essa localização.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> está <xliff:g id="timeSpan">%s</xliff:g> do Horário Médio Local (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> está <xliff:g id="timeSpan">%2$s</xliff:g> do Horário Médio Local (<xliff:g id="locationName">%3$s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> horário de verão</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equação do tempo</string>  <!-- timezone dialog label -->
@@ -2032,7 +2032,7 @@
         <a href="%1$s">o gerenciador de ocorrências</a> para enviar uma solicitação.
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        %s está disponível gratuitamente, mas se você achar que ele teve valor, por favor,
+        %1$s está disponível gratuitamente, mas se você achar que ele teve valor, por favor,
         <a href="%2$s">pague o quanto desejar</a>.
     ]]></string>
     <string name="about_app_sourcecode_field"><![CDATA[

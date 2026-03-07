@@ -61,7 +61,7 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Strefa czasowa może być niepoprawna dla tego miejsca (nie lokalna).</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> różni się o <xliff:g id="timeSpan">%s</xliff:g> od średniego czasu słonecznego (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> różni się o <xliff:g id="timeSpan">%2$s</xliff:g> od średniego czasu słonecznego (<xliff:g id="locationName">%3$s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> czas letni</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> równanie czasu</string>  <!-- timezone dialog label -->
 
@@ -2002,7 +2002,7 @@
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="about_app_support_field"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="%1$s">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        Aplikacja %s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
+        Aplikacja %1$s jest udostępniana bezpłatnie, ale jeżeli jest ona dla Ciebie użyteczna, prosimy
         <a href="%2$s">rozważyć wpłatę dowolnej kwoty</a>.
     ]]></string>
     <string name="about_app_license_notice">Aplikacja Czasy Słońca jest wolnym i otwartoźródłowym oprogramowaniem.</string>   <!-- displayed by welcome dialog -->-->

@@ -60,7 +60,7 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La horzono povas esti erara por tiu ĉi loko (ne ĉi-tiea).</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> diferencas je <xliff:g id="timeSpan">%s</xliff:g> de la mezuma suntempo (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> diferencas je <xliff:g id="timeSpan">%2$s</xliff:g> de la mezuma suntempo (<xliff:g id="locationName">%3$s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> somera tempo</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> da ekvacio de tempo</string>  <!-- timezone dialog label -->
 
@@ -1970,7 +1970,7 @@
         <a href="%1$s">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        La aplikaĵo %s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
+        La aplikaĵo %1$s estas disponebla senpage, sed se ĝi utilas al vi, bonvolu
         <a href="%2$s">konsideri donaci ajnan monkvanton</a>.
     ]]></string>
     <string name="about_app_license_notice">La aplikaĵo Suntempoj estas libera kaj malfermkoda programaro.</string>   <!-- displayed by welcome dialog -->-->
