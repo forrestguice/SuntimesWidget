@@ -19,7 +19,17 @@ jobs:
         echo "android.targetVersion = 28" >> gradle.properties
         echo "android.useAndroidX = false" >> gradle.properties
         echo "android.enableJetifier = false" >> gradle.properties  
-           
+
+    - name: Setup gradle-wrapper.properties (legacy)
+      run: |
+        echo "distributionBase=GRADLE_USER_HOME" > ./gradle/wrapper/gradle-wrapper.properties
+        echo "distributionPath=wrapper/dists" >> ./gradle/wrapper/gradle-wrapper.properties
+        echo "zipStoreBase=GRADLE_USER_HOME" >> ./gradle/wrapper/gradle-wrapper.properties
+        echo "zipStorePath=wrapper/dists" >> ./gradle/wrapper/gradle-wrapper.properties
+        echo "zipStorePath=wrapper/dists" >> ./gradle/wrapper/gradle-wrapper.properties
+        echo "distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-bin.zip" >> ./gradle/wrapper/gradle-wrapper.properties
+        echo "distributionSha256Sum=1f3067073041bc44554d0efe5d402a33bc3d3c93cc39ab684f308586d732a80d" >> ./gradle/wrapper/gradle-wrapper.properties
+        
     - name: Setup JDK 11
       uses: actions/setup-java@v4
       with:
