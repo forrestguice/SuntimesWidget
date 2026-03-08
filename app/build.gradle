@@ -1,16 +1,5 @@
 apply plugin: 'com.android.application'
 
-java {
-    toolchain {
-        Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
-        if (useAndroidX) {
-            languageVersion.set(JavaLanguageVersion.of(17))
-        } else {
-            languageVersion.set(JavaLanguageVersion.of(11))
-        }
-    }
-}
-
 android
 {
     Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
