@@ -25,12 +25,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.viewpager.widget.PagerAdapter;
-
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.view.PagerAdapter;
 import com.forrestguice.support.view.ViewPager;
 
 import java.lang.ref.WeakReference;

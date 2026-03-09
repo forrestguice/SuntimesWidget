@@ -39,6 +39,8 @@ import com.forrestguice.support.app.ActivityOptionsCompat;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AppCompatActivity;
 import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.app.OnActivityResultCompat;
 import com.forrestguice.support.app.OnPermissionResultCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
