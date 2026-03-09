@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
+          package="com.forrestguice.suntimeswidget"
           android:installLocation="internalOnly">   <!-- internalOnly; widgets may be unavailable when installed to external -->
 
     <uses-feature android:name="android.software.app_widgets" android:required="false"/>   <!-- provides app widgets -->
