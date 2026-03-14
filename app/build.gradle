@@ -56,6 +56,7 @@ android
             compileSdk compileVersion
         }
         minSdkVersion 14
+
         targetSdkVersion targetVersion
         missingDimensionStrategy 'support_version', 'androidx'
 
@@ -77,8 +78,8 @@ android
             missingDimensionStrategy 'api', 'api28'
         }
 
-        versionCode 127
-        versionName "0.16.13"
+        versionCode 128
+        versionName "0.16.14"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimes",
                                 suntimesAuthorityRoot0:"suntimeswidget",

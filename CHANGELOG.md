@@ -1,6 +1,5 @@
 ### ~
 
-
 ### DEVELOP
 
 * adds "Material You" app themes (api31+) (#635).
@@ -32,6 +31,10 @@
 * build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API (api30).
 * build; adds `legacy` flavor (uses the Android Support Library); assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle.
 * build; adds `production` and `nightly` build flavors (#892).
+
+### v0.16.14 (2026-03-14)
+* fixes missing Chinese translations (#921) (missing since v0.16.12).
+* fixes missing region-specific default values.
 
 ### v0.16.13 (2026-02-17)
 * fixes bug where apparent solar time alarms are scheduled incorrectly (#911).
