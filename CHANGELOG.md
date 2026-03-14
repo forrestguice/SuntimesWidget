@@ -1,6 +1,6 @@
 ### ~
 
-### v0.16.14 (2026-03-04)
+### v0.16.14 (2026-03-14)
 * fixes missing Chinese translations (#921) (missing since v0.16.12).
 * fixes missing region-specific default values.
 
