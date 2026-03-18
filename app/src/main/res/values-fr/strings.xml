@@ -26,14 +26,14 @@
     <string name="configAction_share">Partager</string>
     <string name="configAction_export">Exporter</string>
     <string name="configAction_import">Importer</string>
-    <string name="configAction_info">More Info</string>   <!-- TODO -->
-    <string name="configAction_sortBy">Sort by</string>                <!-- TODO -->
+    <string name="configAction_info">Plus d'infos</string>   <!-- TODO -->
+    <string name="configAction_sortBy">Trier par</string>                <!-- TODO -->
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>
-    <string name="configAction_openNavDrawer">Open navigation</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Close navigation</string>  <!-- TODO -->
-    <string name="configAction_clock">Clock</string>    <!-- TODO -->
+    <string name="configAction_openNavDrawer">Ouvrir le menu</string>  <!-- TODO -->
+    <string name="configAction_closeNavDrawer">Fermer le menu</string>  <!-- TODO -->
+    <string name="configAction_clock">Heure</string>    <!-- TODO -->
     <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
     <string name="configAction_lineGraph">Graphique d\'altitude</string>
     <string name="configAction_seekAltitude">Chercher l\'altitude</string>        <!-- checkbox label -->
@@ -237,7 +237,7 @@
 
     <string name="configAction_restoreDefaults">Restaurer la configuration par défaut</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>                <!-- TODO -->
+    <string name="configLabel_tagDefault">[défaut]</string>                <!-- TODO -->
     <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
@@ -312,24 +312,24 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Apparence</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Thème</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleText">Ajuste le texte et les icônes</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Remplis la cellule</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Aligne sur la base</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Show Icons</string>          <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showIcons">Montre les icônes</string>          <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_appearance_showEnabledOnly">Montrer les éléments actifs</string>          <!-- checkbox label -->    <!-- TODO -->
     <string name="configLabel_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titre :</string>              <!-- edittext label -->
     <!-- line commented to use default: <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> --><!-- edittext hint -->
 
     <!-- Setting: navigation -->
     <string name="configLabel_navigation">Navigation</string>           <!-- group title -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode">Navigation Style</string>      <!-- spinner label -->    <!-- TODO -->
-    <string name="configLabel_navigation_mode_simple">Simple (legacy)</string>   <!-- TODO -->
-    <string name="configLabel_navigation_mode_sidebar">Sidebar</string>   <!-- TODO -->
+    <string name="configLabel_navigation_mode">Style de navigation</string>      <!-- spinner label -->    <!-- TODO -->
+    <string name="configLabel_navigation_mode_simple">Menu unique</string>   <!-- TODO -->
+    <string name="configLabel_navigation_mode_sidebar">Barre latérale</string>   <!-- TODO -->
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Ordre :</string>     <!-- label -->  <!-- TODO -->
@@ -355,7 +355,7 @@
     <string name="timeMode_blue8">Heure bleue (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">Bleue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Heure bleue (4\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_none">None</string>                 <!-- label -->  <!-- TODO -->
+    <string name="timeMode_none">Aucune</string>                 <!-- label -->  <!-- TODO -->
 
     <string name="timeMode_equinox_vernal">Équinoxe du printemps</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Équinoxe</string>       <!-- setting -->
@@ -366,7 +366,7 @@
     <string name="timeMode_solstice_winter">Solstice d\'hiver</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter">Winter/Spring Cross-Quarter</string>      <!-- setting --> <!-- neutral labels; cross-quarter in "astronomical winter" -->   <!-- TODO -->
+    <string name="timeMode_cross_midwinter">Hiver/Printemps Cross-Quarter</string>      <!-- setting --> <!-- neutral labels; cross-quarter in "astronomical winter" -->   <!-- TODO -->
     <string name="timeMode_cross_midwinter_short">Cross-Quarter</string>       <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midsummer">Summer/Autumn Cross-Quarter</string>  <!-- setting -->    <!-- TODO -->
     <string name="timeMode_cross_midsummer_short">Cross-Quarter</string>     <!-- setting -->    <!-- TODO -->
