@@ -29,7 +29,7 @@
     <string name="configAction_info">Plus d'infos</string>
     <string name="configAction_sortBy">Trier par</string>
     <string name="configAction_sunDialog">Position du soleil</string>
-    <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
+    <string name="configAction_equinoxDialog">Solstice / oxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>
     <string name="configAction_openNavDrawer">Ouvrir le menu</string>
     <string name="configAction_closeNavDrawer">Fermer le menu</string>
@@ -357,10 +357,10 @@
     <string name="timeMode_blue4">Heure bleue (4\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_none">Aucune</string>                 <!-- label -->  <!-- TODO -->
 
-    <string name="timeMode_equinox_vernal">Équinoxe du printemps</string>      <!-- setting -->
-    <string name="timeMode_equinox_vernal_short">Équinoxe</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Équinoxe d\'automne</string>  <!-- setting -->
-    <string name="timeMode_equinox_autumnal_short">Équinoxe</string>     <!-- setting -->
+    <string name="timeMode_equinox_vernal">oxe du printemps</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">oxe</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">oxe d\'automne</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">oxe</string>     <!-- setting -->
     <string name="timeMode_solstice_summer">Solstice d\'été</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
     <string name="timeMode_solstice_winter">Solstice d\'hiver</string>    <!-- setting -->
@@ -1393,8 +1393,8 @@
     <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Afficher Solstice / Équinoxe</string>  
-    <string name="configLabel_ui_showEquinox_summary">Affiche la durée restante avant le prochain solstice ou équinoxe.</string>
+    <string name="configLabel_ui_showEquinox">Afficher Solstice / oxe</string>  
+    <string name="configLabel_ui_showEquinox_summary">Affiche la durée restante avant le prochain solstice ou oxe.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Suivi des solstices</string>
@@ -1732,9 +1732,9 @@
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>Équinoxe du printemps</item>
+        <item>oxe du printemps</item>
         <item>Solstice d\'été</item>
-        <item>Équinoxe d\'automne</item>
+        <item>oxe d\'automne</item>
         <item>Solstice d\'hiver</item>
         <item>Midi lunaire</item>
         <item>Minuit lunaire</item>
@@ -1766,9 +1766,9 @@
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>Équinoxe du printemps</item>
+        <item>oxe du printemps</item>
         <item>Solstice d\'été</item>
-        <item>Équinoxe d\'automne</item>
+        <item>oxe d\'automne</item>
         <item>Solstice d\'hiver</item>
         <item>Midi lunaire</item>
         <item>Minuit lunaire</item>
@@ -1800,9 +1800,9 @@
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>Équinoxe du printemps</item>
+        <item>oxe du printemps</item>
         <item>Solstice d\'été</item>
-        <item>Équinoxe d\'automne</item>
+        <item>oxe d\'automne</item>
         <item>Solstice d\'hiver</item>
         <item>Midi lunaire</item>
         <item>Minuit lunaire</item>
@@ -2044,58 +2044,58 @@
     ]]></string>      <!-- TODO -->
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Date Format:</b> A date format pattern.<br/>
-          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <b>Format de Date :</b> Un modèle de format de date.<br/>
+          <br/>Les éléments disponibles peuvent varier d\'un calendrier à l\'autre, mais comprennent généralement..<br/>
           <br/>
-          <b>E</b> : day of week <br/>
-          <b>d</b> : day of month <br/>
-          <b>D</b> : day of year <br/>
-          <b>F</b> : weekday in month <br/>
-          <b>M</b> : month of year <br/>
-          <b>y</b> : year of era <br/>
-          <b>G</b> : era <br/>
+          <b>E</b> : jour de la semaine <br/>
+          <b>d</b> : jour du mois <br/>
+          <b>D</b> : jour de l\'année <br/>
+          <b>F</b> : jour de la semaine dans le mois <br/>
+          <b>M</b> : mois de l\'année <br/>
+          <b>y</b> : année de l\'ère <br/>
+          <b>G</b> : ère <br/>
           <br/>
-    ]]></string>    <!-- TODO -->
+    ]]></string>
 
     <string name="help_general_moondialog"><![CDATA[
-          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
-          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
-          \n\nShare [Icon Share] will copy text to the clipboard.
-    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+          \n[Icon Rising]  lever de lune \t\t[Icon Noon]  midi lunaire
+          \n[Icon Setting]  coucher de lune \t\t[Icon Midnight]  minuit lunaire
+          \n\nPartager [Icon Share] copier le texte dans le presse-papier.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime -->
 
     <string name="help_general_timeMode2_1"><![CDATA[
-          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
-          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
-          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
-          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
-    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
+          <b>HIver/Printemps Cross-Quarter:</b> Le point médian entre le solstice d\'hiver et l\'équinoxe de printemps; <em>Février</em> [hémisphère nord] ou <em>Août</em> [hémisphère sud].<br/><br/>
+          <b>Printemps/Été Cross-Quarter:</b> Le point médian entre l\'équinoxe de printemps et le solstice d\'été; <em>Mai</em> [hémisphère nord] ou <em>Novembre</em> [hémisphère sud].<br/><br/>
+          <b>Été/Automne Cross-Quarter:</b> Le point médian entre le solstice d\'été et l\'équinoxe d'automne; <em>Août</em> [hémisphère nord] ou <em>Février</em> [hémisphère sud].<br/><br/>
+          <b>Automne/Hiver Cross-Quarter:</b> Le point médian entre l\'équinoxe d\'automne et le solstice d\'hiver; <em>Novembre</em> [hémisphère nord] ou <em>Mai</em> [hémisphère sud].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
-          [Icon OK] Choose a custom event.\n
-          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
-          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
-          [Icon View] Marked events are displayed by the app.
-    ]]></string>    <!-- TODO -->
+          [Icon OK] Choisissez un événement personnalisé.\n
+          [Icon Add] Ajouter, [Icon Edit] éditer ou [Icon Delete] supprimer un événement personnalisé.\n
+          \nLes événements personnalisés peuvent être affichés par l\'application ou via des widgets sur l\'écran d'accueil, ou encore utilisés pour programmer des alarmes et des notifications.\n
+          [Icon View] Les événements marqués s\'affichent dans l\'application.
+    ]]></string>
 
     <string name="help_alarms_bedtime"><![CDATA[
-           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           [Icon Bedtime] Le mode « Heure du coucher » permet de programmer la fonction <b>Ne pas déranger</b> pendant les heures de sommeil.<br/>
            <br/>
-           [Icon Reminder] Show a reminder notification before bedtime.<br/>
-           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
-    ]]></string>  <!-- TODO -->
+           [Icon Reminder] Afficher une notification de rappel avant l\'heure du coucher.<br/>
+           [Icon Alarm] Programmez un réveil pour le lendemain matin.<br/><br/>
+    ]]></string>
 
     <string name="help_alarms_edit"><![CDATA[
-          [Icon Back] to cancel without making changes.<br/>
-          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
-          [Icon Cancel] to save and disable.<br/>
-          [Icon Delete] to cancel and delete.<br/>
+          [Icon Back] ignorer les changements.<br/>
+          [Icon Save] enregistrer, et [Icon Done] enregistrer et activer.<br/>
+          [Icon Cancel] enregistrer et désactiver.<br/>
+          [Icon Delete] annuler et supprimer.<br/>
           <br/>
-          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
-    ]]></string>   <!-- TODO -->
+          [Icon Offset] s\'affiche lorsque l\'heure programmée est décalée avant ou après l\'heure de l<'événement.
+    ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
-    ]]></string>   <!-- TODO -->
+          <b>Heure d\'été :</b> [Icon DST] s\'affiche lorsque l\'heure actuelle est soumise à l\'heure d'été <b>DST</b>, ou a été modifié en vertu d\'une règle similaire.<br/><br/>
+    ]]></string>
 
     <string name="help_general_actualTime"><![CDATA[
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/>
@@ -2106,15 +2106,15 @@
           <b>Crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+          <b>Aujourd\'hui :</b> Heures de lever et de coucher du soleil pour la date d'aujourd'hui.<br/><br/>
+          <b>Dernier / Prochain :</b> La date du dernier événement et celle du prochain événement.<br/>
     ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Equinoxe de mars :</b> Le début du printemps astronomique. <em>Mars</em> [hémisphère nord] ou <em>Septembre</em> [hémisphère sud]. L\'équinoxe de mars est aussi appelé le <em>northward equinox</em>.<br/><br/>
-          <b>Solstice de juin :</b> Le début de l\'été astronomique, <em>Juin</em> [hémisphère nord] ou <em>Décembre</em> [hémisphère sud]. Le solstice de juin est aussi appelé le <em>northern solstice</em>.<br/><br/>
-          <b>Equinoxe de septembre :</b> Le début de l\'automne astronomique. <em>Septembre</em> [hémisphère nord] ou <em>Mars</em> [hémisphère sud]. L'équinoxe de septembre est aussi appelé le <em>southward equinox</em>.<br/><br/>
-          <b>Solstice de décembre:</b> Le début de l'hiver astronomique. <em>Décembre</em> [hémisphère nord] ou <em>Juin</em> [hémisphère sud]. Le solstice de décembre est aussi appelé le <em>southern solstice</em>.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>Equinoxe de mars :</b> Le début du printemps astronomique. <em>Mars</em> [hémisphère nord] ou <em>Septembre</em> [hémisphère sud]. L\'équinoxe de mars est aussi appelé l\'<em>équinoxe de printemps</em>.<br/><br/>
+          <b>Solstice de juin :</b> Le début de l\'été astronomique, <em>Juin</em> [hémisphère nord] ou <em>Décembre</em> [hémisphère sud]. Le solstice de juin est aussi appelé le <em>solstice d\'été</em>.<br/><br/>
+          <b>Equinoxe de septembre :</b> Le début de l\'automne astronomique. <em>Septembre</em> [hémisphère nord] ou <em>Mars</em> [hémisphère sud]. L'équinoxe de septembre est aussi appelé l\'<em>équinoxe d'automne</em>.<br/><br/>
+          <b>Solstice de décembre:</b> Le début de l'hiver astronomique. <em>Décembre</em> [hémisphère nord] ou <em>Juin</em> [hémisphère sud]. Le solstice de décembre est aussi appelé le <em>solstice d'hiver</em>.<br/>
+    ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
           <b>Année tropique:</b> Un cycle complet des saisons. La durée de l\'<em>année tropicale</em> est mesurée d\'un <em>équinoxe de printemps<\em> à l\'autre. Elle est en moyenne de environ <em>365,24 jours</em>, sa durée exacte variant d\'une année à l\'autre (jusqu'à 30 minutes)<br/>
     ]]></string>
