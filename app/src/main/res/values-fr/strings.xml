@@ -1176,46 +1176,46 @@
     <string name="configLabel_alarms_showlauncher">Icône du lanceur</string>
     <string name="configLabel_alarms_showlauncher_summary">Afficher l\'icône du réveil dans la barre d'applications.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Désactiver les alarmes</string> 
-    <string name="configLabel_alarms_poweroffalarms_summary">Réactivez l'appareil lorsqu'il est éteint.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms">Alarmes désactivées</string> 
+    <string name="configLabel_alarms_poweroffalarms_summary">Réactivez l\'appareil lorsqu'il est éteint.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME
     -->
-    <string name="configLabel_bedtime">Bedtime</string>              <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_bedtime">Heure du coucher</string>              <!-- group title -->
 
-    <string name="configAction_startBedtime">Turn on now</string>                   <!-- TODO -->
-    <string name="configAction_dismissBedtime">Turn off</string>                     <!-- TODO -->
+    <string name="configAction_startBedtime">Activer maintenant</string>
+    <string name="configAction_dismissBedtime">Désactiver</string>
 
-    <string name="configAction_set">Set</string>                   <!-- TODO -->
-    <string name="configAction_setBedtime">Set bedtime</string>                     <!-- TODO -->
-    <string name="configAction_setBedtime_fromAlarm">Set bedtime from alarm</string>                     <!-- TODO -->
-    <string name="configAction_setBedtime_toNow">Set bedtime to now</string>                     <!-- TODO -->
-    <string name="configAction_pauseBedtime">Pause</string>                         <!-- TODO -->
-    <string name="configAction_resumeBedtime">Resume</string>                       <!-- TODO -->
+    <string name="configAction_set">Définir</string>
+    <string name="configAction_setBedtime">Définir l\'heure du coucher</string>
+    <string name="configAction_setBedtime_fromAlarm">Définir l\'heure du coucher d\'après l\'alarme</string>
+    <string name="configAction_setBedtime_toNow">Définir l\'heure du coucher à maintenant</string>
+    <string name="configAction_pauseBedtime">Pause</string>
+    <string name="configAction_resumeBedtime">Reprendre</string>
 
-    <string name="configAction_setSleep">Set sleep time</string>                     <!-- TODO -->
+    <string name="configAction_setSleep">Définir la durée du sommeil</string>
 
-    <string name="msg_bedtime_sleep_length">Sleep for %s.</string>                             <!-- e.g. "Sleep for 8h" -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_other_plus">This is %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles">This is %1$s of %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->                     <!-- TODO -->
-    <string name="msg_bedtime_sleep_length_cycles_plus">This is %1$s of %2$s, plus %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->                     <!-- TODO -->
+    <string name="msg_bedtime_sleep_length">Dormir pour %s.</string>                             <!-- e.g. "Sleep for 8h" -->
+    <string name="msg_bedtime_sleep_length_other_plus">Ca fait %1$s, plus %2$s.</string>           <!-- e.g. "This is 7h 30m, plus 30m." -->
+    <string name="msg_bedtime_sleep_length_cycles">Ca fait %1$s de %2$s.</string>                  <!-- e.g. "This is '5 cycles' of '1h 30m' -->
+    <string name="msg_bedtime_sleep_length_cycles_plus">Ca fait %1$s de %2$s, plus %3$s.</string>    <!-- e.g. "This is '5 cycles' of '1h 30m', plus '30m' -->
 
-    <string name="configLabel_sleepBedtimeAutoOff">Turn off bedtime automatically</string>    <!-- TODO -->
-    <string name="configLabel_sleepBedtimeAlarmOff">Turn off bedtime with alarm</string>    <!-- TODO -->
+    <string name="configLabel_sleepBedtimeAutoOff">Désactiver l\'heure du coucher automatiquement</string>
+    <string name="configLabel_sleepBedtimeAlarmOff">Désactiver l\'heure du coucher avec l\'alarme</string>
 
-    <string name="configLabel_sleepOffset">Drift Asleep Duration</string>                     <!-- TODO -->
-    <string name="configLabel_sleepCycle">Sleep Cycle Length</string>                     <!-- TODO -->
-    <string name="configLabel_sleepCycles">Sleep Cycles</string>                     <!-- TODO -->
-    <string name="configLabel_numSleepCycles">Sleep for %1$s of %2$s, or %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <string name="configLabel_sleepOffset">Durée de l\'endormissement</string>
+    <string name="configLabel_sleepCycle">Durée du cycle de sommeil</string>
+    <string name="configLabel_sleepCycles">Cycles de sommeil</string>
+    <string name="configLabel_numSleepCycles">Dormir pour %1$s de %2$s, ou %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
     <plurals name="cyclePlural">
-        <item quantity="one">%d cycle</item>    <!-- TODO -->
-        <item quantity="other">%d cycles</item>    <!-- TODO -->
+        <item quantity="one">%d cycle</item>
+        <item quantity="other">%d cycles</item>
     </plurals>
-    <string name="cycleNone">None</string>  <!-- TODO -->
+    <string name="cycleNone">Aucun</string>
 
-    <string name="configAction_setWakeUp">Set wake up time</string>                     <!-- TODO -->
-    <string name="configAction_setWakeUp_fromBedtime">Set wake up from bedtime</string>                     <!-- TODO -->
+    <string name="configAction_setWakeUp">Définir l\'heure de réveil</string>
+    <string name="configAction_setWakeUp_fromBedtime">Définir l\'heure de réveil d\'après l'heure du coucher</string>
 
     <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
     <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
