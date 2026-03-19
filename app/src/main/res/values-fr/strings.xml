@@ -550,21 +550,21 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
-    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
-    <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
-    <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
-    <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
-    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
-    <string name="calendarMode_persian">Persian (Solar Hijri)</string>     <!-- TODO -->
-    <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
-    <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_coptic">Copte</string>
+    <string name="calendarMode_ethiopian">Ethiopien</string>
+    <string name="calendarMode_gregorian">Grégorien</string>
+    <string name="calendarMode_hebrew">Hebreu</string>
+    <string name="calendarMode_hijri_diyanet">hégirien (Turc)</string>
+    <string name="calendarMode_hijri_umalqura">hégirien (Umm al-Qura)</string>
+    <string name="calendarMode_julian">Julien</string>
+    <string name="calendarMode_persian">Persan (hégirien solaire)</string>
+    <string name="calendarMode_thaisolar">Thai Solaire</string>
+    <string name="calendarMode_chinese">Chinois</string>
+    <string name="calendarMode_korean">Coréen</string>
+    <string name="calendarMode_vietnamese">Vietnamien</string>
+    <string name="calendarMode_minguo">Minguo</string>
+    <string name="calendarMode_indian">Indien</string>
+    <string name="calendarMode_japanese">Japonais</string>
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">Aujourd\'hui</string>                  <!-- setting -->
@@ -579,23 +579,23 @@
     <string name="compareMode_tomorrow">Demain</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Comparer avec :</string>    <!-- spinner label -->
     <string name="configLabel_general_showComparison">Afficher la comparaison</string>  <!-- checkbox label -->
-    <string name="configLabel_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_showComparison_summary">Compare la durée d\'ensoleillement d\'aujourd\'hui à celle d\'hier ou de demain.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="trackingMode_recent">Evénement récent</string>                   <!-- setting -->
     <string name="trackingMode_closest">Événement le plus proche</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Prochain événement</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Suivi :</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_timeMode_override">Remplacement des données de suivi</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Afficher le zénith du soleil</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">Classe :</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_action_launch_package" />               <!-- edittext label -->
@@ -603,12 +603,12 @@
     <string name="configHint_action_launch_desc">Description courte</string>                 <!-- edittext hint -->
     <string name="configLabel_action_launch_type">Type :</string>                 <!-- spinner label -->
     <string name="configLabel_action_launch_action">Action :</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configHint_action_launch_action">&lt;aucun &gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_data">Donnée :</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_data">&lt;aucun &gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_datatype">Mime :</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras :</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_data">&lt;aucun &gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_datatype">Mime :</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">Extras :</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
     <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
@@ -754,12 +754,12 @@
     <string name="configLabel_themeColorNoon">Zénith</string>      <!-- color label -->
     <!--<string name="configHint_themeColorNoon">#FFFFFFFF</string>-->         <!-- color hint -->
 
-    <string name="configLabel_themeColorGraphSunFill">Sun (Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunStroke">Sun (Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayFill">Sun Path (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathDayStroke">Sun Path (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightFill">Sun Path (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorGraphSunPathNightStroke">Sun Path (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunFill">Soleil (Fill)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunStroke">Soleil (Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunPathDayFill">Trajectoire du soleil (Day Fill)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunPathDayStroke">Trajectoire du soleil (Day Stroke)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunPathNightFill">Trajectoire du soleil (Night Fill)</string>         <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorGraphSunPathNightStroke">Trajectoire du soleil (Night Stroke)</string>         <!-- color label -->    <!-- TODO -->
 
     <string name="configLabel_themeColorGraphMoonFill">Moon (Fill)</string>         <!-- color label -->    <!-- TODO -->
     <string name="configLabel_themeColorGraphMoonStroke">Moon (Stroke)</string>         <!-- color label -->    <!-- TODO -->
