@@ -26,15 +26,15 @@
     <string name="configAction_share">Partager</string>
     <string name="configAction_export">Exporter</string>
     <string name="configAction_import">Importer</string>
-    <string name="configAction_info">Plus d'infos</string>   <!-- TODO -->
-    <string name="configAction_sortBy">Trier par</string>                <!-- TODO -->
+    <string name="configAction_info">Plus d'infos</string>
+    <string name="configAction_sortBy">Trier par</string>
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>
-    <string name="configAction_openNavDrawer">Ouvrir le menu</string>  <!-- TODO -->
-    <string name="configAction_closeNavDrawer">Fermer le menu</string>  <!-- TODO -->
-    <string name="configAction_clock">Heure</string>    <!-- TODO -->
-    <string name="configAction_lightGraphDialog">Sunlight</string>  <!-- TODO -->
+    <string name="configAction_openNavDrawer">Ouvrir le menu</string>
+    <string name="configAction_closeNavDrawer">Fermer le menu</string>
+    <string name="configAction_clock">Heure</string>
+    <string name="configAction_lightGraphDialog">Lumière solaire</string>
     <string name="configAction_lineGraph">Graphique d\'altitude</string>
     <string name="configAction_seekAltitude">Chercher l\'altitude</string>        <!-- checkbox label -->
     <string name="configAction_search">Rechercher</string>        <!-- button (contentDescription) -->
@@ -42,7 +42,7 @@
     <string name="configAction_moon">Lune</string>
     <string name="configAction_help">Aide</string>
     <string name="configAction_onlineHelp">Aide en ligne</string>
-    <string name="configAction_appDetails">App info</string>    <!-- TODO -->
+    <string name="configAction_appDetails">Info app</string>
     <string name="configAction_overflow">Plus</string>
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Paramètres</string>
@@ -664,11 +664,11 @@
     <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
-    <string name="widgetThemes_dark">Sombre</string>                                <!-- default widget theme name --> <!-- TODO: review -->
-    <string name="widgetThemes_dark_transparent">Sombre (transparent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_dark_translucent">Sombre (translucent)</string>      <!-- default widget theme name --> <!-- TODO -->
-    <string name="widgetThemes_light">Clair</string>                              <!-- default widget theme name --> <!-- TODO: review -->
-    <string name="widgetThemes_light_transparent">Clair (transparent)</string>    <!-- default widget theme name --> <!-- TODO -->
+    <string name="widgetThemes_dark">Sombre</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_dark_transparent">Sombre (transparent)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_dark_translucent">Sombre (translucide)</string>      <!-- default widget theme name -->
+    <string name="widgetThemes_light">Clair</string>                              <!-- default widget theme name --> 
+    <string name="widgetThemes_light_transparent">Clair (transparent)</string>    <!-- default widget theme name -->
     <string name="widgetThemes_dark1">Sombre (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
     <string name="widgetThemes_light1">Clair (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
 
@@ -715,10 +715,10 @@
     <string name="configLabel_themeColorFall">Automne</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Hiver</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Spring (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorSummer_text">Summer (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorFall_text">Autumn (text)</string> <!-- color label -->    <!-- TODO -->
-    <string name="configLabel_themeColorWinter_text">Winter (text)</string> <!-- color label -->    <!-- TODO -->
+    <string name="configLabel_themeColorSpring_text">Printemps (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer_text">Eté (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Automne (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter_text">Hiver (text)</string> <!-- color label -->
 
     <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
@@ -728,8 +728,8 @@
     <string name="configLabel_themeColorMapSunShadow">Ombre</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Mise en valeur</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Moonrise (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonset_text">Moonset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorMoonrise_text">Lever de lune (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset_text">Coucher de lune (text)</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Lever de lune</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Coucher de lune</string> <!-- color label -->
@@ -738,16 +738,16 @@
     <string name="configLabel_themeColorMoonFull">Pleine lune</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Nouvelle lune</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">Full (text)</string> <!-- color label -->   <!-- TODO -->
-    <string name="configLabel_themeColorMoonNewText">New (text)</string> <!-- color label -->     <!-- TODO -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogee (text)</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigee (text)</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorMoonFullText">pleine (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Nouvelle (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonApogeeText">Apogée (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonPerigeeText">Perigée (text)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Sunrise (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunrise_text">Lever de soleil (text)</string> <!-- color label -->
     <string name="configLabel_themeColorSunrise">Lever de soleil</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Sunset (text)</string> <!-- color label -->   <!-- TODO -->
+    <string name="configLabel_themeColorSunset_text">Coucher de soleil (text)</string> <!-- color label -->
     <string name="configLabel_themeColorSunset">Coucher de soleil</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
@@ -864,22 +864,22 @@
     <string name="sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->  <!-- TODO -->
     <string name="sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
-    <string name="shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->   <!-- TODO -->
+    <string name="shadowevent_title">Ombre</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
 
     <string name="configLabel_manageEvents">Gérer les événements</string>  <!-- settings activity / pref -->
     <string name="configLabel_manageEvents_summary">Ajouter ou supprimer des événements personnalisés.</string>
     <string name="configLabel_manageEvents_emptyMsg">@string/configAction_manageEvents</string>    <!-- TODO -->
 
     <string name="configAction_manageEvents">Événements personnalisés</string>
-    <string name="configAction_selectEvent">Selectionner</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectEvent">Seléctionner</string>           <!-- button (contentDescription) -->
     <string name="configAction_addEvent">Ajouter</string>           <!-- button (contentDescription) -->
     <string name="configAction_editEvent">Modifier</string>           <!-- button (contentDescription) -->
     <string name="configAction_saveEvent">Enregistrer</string>           <!-- button (contentDescription) -->
     <string name="configAction_deleteEvent">Supprimer</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Effacer</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_addEvent_sunEvent">Add (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="configAction_addEvent_shadowEvent">Add (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_sunEvent">Ajouter (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_shadowEvent">Ajouter (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -2110,14 +2110,14 @@
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
     ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
-          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
-          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
-          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+          <b>Equinoxe de mars :</b> Le début du printemps astronomique. <em>Mars</em> [hémisphère nord] ou <em>Septembre</em> [hémisphère sud]. L\'équinoxe de mars est aussi appelé le <em>northward equinox</em>.<br/><br/>
+          <b>Solstice de juin :</b> Le début de l\'été astronomique, <em>Juin</em> [hémisphère nord] ou <em>Décembre</em> [hémisphère sud]. Le solstice de juin est aussi appelé le <em>northern solstice</em>.<br/><br/>
+          <b>Equinoxe de septembre :</b> Le début de l\'automne astronomique. <em>Septembre</em> [hémisphère nord] ou <em>Mars</em> [hémisphère sud]. L'équinoxe de septembre est aussi appelé le <em>southward equinox</em>.<br/><br/>
+          <b>Solstice de décembre:</b> Le début de l'hiver astronomique. <em>Décembre</em> [hémisphère nord] ou <em>Juin</em> [hémisphère sud]. Le solstice de décembre est aussi appelé le <em>southern solstice</em>.<br/>
     ]]></string>    <!-- TODO -->
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
-    ]]></string>   <!-- TODO -->
+          <b>Année tropique:</b> Un cycle complet des saisons. La durée de l\'<em>année tropicale</em> est mesurée d\'un <em>équinoxe de printemps<\em> à l\'autre. Elle est en moyenne de environ <em>365,24 jours</em>, sa durée exacte variant d\'une année à l\'autre (jusqu'à 30 minutes)<br/>
+    ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
         <b>Lumière utile :</b> espace de temps entre les crépuscules civils du matin et du soir.<br/>
@@ -2140,44 +2140,44 @@
           Pour <b>reconfigurer un widget existant</b> vous pouvez le sélectionner dans cette liste.<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          [Icon Add] créer un nouveau thème ou [Icon Copy] copier un thème existant.\n
           \n
-          [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
+          [Icon Edit] Editer ou [Icon Delete] supprimer un thème.\n
+          le [Icon Default] thème par default ne peut pas être modifier.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Ajouter des événements à l'application Calendrier (phases de lune, solstices et equinoxes).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar integration was removed in v0.10.0.</font></b></u><br />
+        <u><b><font color="#ff9900">L'intégration du calendrier a été supprimée dans la version 0.10.0.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Cette fonctionnalité est désormais disponible avec une <a href="moreInfoLink">application séparée</a>.
+    ]]></string>
 
-    <string name="privacy_policy0"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>.]]></string> <!-- TODO -->
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
+    <string name="privacy_policy0"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>.]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>. <br/><br/>L\'application les données de localisation. Ces informations (ainsi que les autres données utilisées par l\'application) sont stockées localement et ne quittent pas l\'appareil.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utilise l\'accès à la <b>localisation</b> pour determiner les longitude et latitude actuelles.<br/><br/>Cette autorisation est facultative. Par défaut, l\'emplacement est configuré manuellement.]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes utilise l\'accès au <b>stockage externe</b> pour les sauvegardes/exportations des fichiers de données (p.ex. lieux, thèmes).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l'accès est refusé. Cette autorisation n'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
+    <string name="privacy_permission_dnd"><![CDATA[Suntimes a besoin d\'un accès <b>Ne pas déranger</b> pour modifier ces paramètres à l\'heure du coucher.]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Demander les autorisations maintenant ?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignorer</string>
+    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacyTab">Vie privée</string>   <!-- TODO -->
 
     <string name="security_dialog_title">Alerte de sécurité</string>  <!-- TODO -->
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="security_duplicate_permissions">Autorisations accordée à Suntimes :\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
     <string name="reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
-    <string name="configLabel_permissionGranted">Permission Granted</string>    <!-- TODO -->
+    <string name="restart_required_message">Un redémarrage peut être nécessaire afin de prendre en compte les changememts.</string>   <!-- toast; app restart may be required -->
+    <string name="configLabel_permissionGranted">Autorisation accordée</string>
 
-    <string name="drag_hint">Drag here</string>    <!-- TODO -->
-    <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
+    <string name="drag_hint">Glisser ici</string>    <!-- TODO -->
+    <string name="hint_label">Étiquette</string>        <!-- edittext hint -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Annuler</string>
-    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
+    <string name="dialog_msg_donotshowagain">Ne plus montrer ce message</string>  <!-- checkbox text -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
@@ -2188,15 +2188,15 @@
     <string name="calculator_displayString_time4a_4j">Basé sur les calculs astronomiques publiés par Jean Meeus dans son livre "Astronomical Algorithms" (seconde édition).</string>
     <string name="help_datasources">
         <![CDATA[
-        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        Suntimes utilise des librairies de tierces parties pour les calculs astronomique.<br/>
         <br/>
-        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        Le paramètre <b>source de données<b> permet de choisir entre différentes bibliothèques (ou choisir parmi les différents algorithmes proposés par ces bibliothèques). Par défaut : <b>time4a-time4j</b>.<br/>
         <br/>
-        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        Ce paramètre influe sur la vitesse et la précision des calculs et peut limiter les fonctionnalités disponibles. <br/>
         <br/>
-        For more information about available choices, or extending the app to support other libraries, see the online help.
+        Pour plus d\'informations sur les options disponibles ou sur l\'extension de l\'application afin de prendre en charge d'autres bibliothèques, consultez l\'aide en ligne.
     ]]>
-    </string>   <!-- TODO -->
+    </string>
 
     <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
 
