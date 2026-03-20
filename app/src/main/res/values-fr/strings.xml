@@ -26,10 +26,10 @@
     <string name="configAction_share">Partager</string>
     <string name="configAction_export">Exporter</string>
     <string name="configAction_import">Importer</string>
-    <string name="configAction_info">Plus d'infos</string>
+    <string name="configAction_info">Plus d\'infos</string>
     <string name="configAction_sortBy">Trier par</string>
     <string name="configAction_sunDialog">Position du soleil</string>
-    <string name="configAction_equinoxDialog">Solstice / oxe</string>
+    <string name="configAction_equinoxDialog">Solstice / équinoxe</string>
     <string name="configAction_worldMap">Carte mondiale</string>
     <string name="configAction_openNavDrawer">Ouvrir le menu</string>
     <string name="configAction_closeNavDrawer">Fermer le menu</string>
@@ -275,7 +275,7 @@
     <string name="configLabel_general_showTimeDate_summary">Ajoute l\'heure dans l\'affichage des dates.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showAbbrMonth">Abréviations de noms des mois</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showAbbrMonth_summary">Afficher les noms abrégés des mois lors de l'affichage des dates.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showAbbrMonth_summary">Afficher les noms abrégés des mois lors de l\'affichage des dates.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Afficher les semaines</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Divise les durées supérieures à 7 jours en semaines (ex : 15j devient 2s 1j).</string>        <!-- checkbox label -->
@@ -424,7 +424,7 @@
     <string name="configLabel_general_calendarFormat_EEEE">%s [jour de la semaine]</string>       <!-- spinner value -->
     <string name="configLabel_general_calendarFormat_MM">%s [mois]</string>       <!-- spinner value -->
     <string name="configLabel_general_calendarFormat_dd">%s [jour du mois]</string>       <!-- spinner value -->
-    <string name="configLabel_general_calendarFormat_DD">%s [jour de l'année]</string>       <!-- spinner value -->
+    <string name="configLabel_general_calendarFormat_DD">%s [jour de l\'année]</string>       <!-- spinner value -->
     <string name="configAction_editCalendarFormat">Edition</string>                        <!-- button (contentDescription) -->
 
     <!-- Widget Setting: layout mode -->
@@ -899,7 +899,7 @@
     <string name="editevent_dialog_title">Événement</string>    <!-- 'add event' title -->
     <string name="editevent_dialog_title1">Événement</string>    <!-- 'edit event' title -->
     <string name="editevent_dialog_label_label">Etiquette</string>
-    <string name="editevent_dialog_label_hint">Etiquette d'événement</string>
+    <string name="editevent_dialog_label_hint">Etiquette d\'événement</string>
     <string name="editevent_dialog_label_error">@string/addaction_error_title</string>
     <string name="editevent_dialog_label_suggested">Angle personnalisé</string>
 
@@ -954,7 +954,7 @@
     <string name="configAction_testAlarmDismissChallenge">Tester le défi de désactivation</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Définir la localisation</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">Définir la répétition</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Définir l'événement</string>         <!-- button (contentDescription) --> 
+    <string name="configAction_setAlarmEvent">Définir l\'événement</string>         <!-- button (contentDescription) --> 
     <string name="configAction_setAlarmTime">Heure de remplacement</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmAction">Définir une action</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmSound">Définir un son</string>         <!-- button (contentDescription) -->
@@ -1013,7 +1013,7 @@
     <string name="clearalarms_dialog_cancel">Annuler</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarmes effacées.</string> <!-- toast msg -->
 
-    <string name="importalarms_title_warning">Avertissement concernant l'importation</string> <!-- dialog title -->
+    <string name="importalarms_title_warning">Avertissement concernant l\'importation</string> <!-- dialog title -->
     <string name="importalarms_msg_warning">Les alarmes importées peuvent rétablir certains paramètres par défaut.\n\nVous devrez peut-être (re)sélectionner des sons et des actions.</string> <!-- toast msg -->
     <string name="importalarms_toast_success">Importé %s alarmes.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
@@ -1050,7 +1050,7 @@
 
     <string name="configLabel_alarms_optWhiteList">Optimisation de la batterie</string>
     <string name="configLabel_alarms_optWhiteList_listed">Non optmisé (recommendé)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimisation de l'utilisation de la batterie.\nLes alarmes peuvent être retardées jusqu'à 15 minutes.</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimisation de l\'utilisation de la batterie.\nLes alarmes peuvent être retardées jusqu\'à 15 minutes.</string>
     <string name="sonyStaminaModeWarning"><xliff:g id="warningTag">[w]</xliff:g> Le mode Sony STAMINA est activé.\nIl se peut que les alarmes ne fonctionnent pas correctement.</string>  <!-- snackbar message (sony devices only) -->
     <string name="configLabel_alarms_optWhiteList_unlisted_aggressive">Optimisation de la batterie active.\nIl se peut que les alarmes ne fonctionnent pas correctement.</string>
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> doit être \"non optimisée\" pour de meilleures résultas.</string>
@@ -1063,7 +1063,7 @@
     <string name="autostartWarning"><xliff:g id="warningTag">[w] Le démarrage automatique est déclenché!\nIl se peut que les alarmes ne fonctionnent plus après le redémarrage.</xliff:g> </string>  <!-- snackbar message (xiomi devices only) -->
 
     <string name="restrictedBucketWarning"><xliff:g id="warningTag">[w]</xliff:g> L\'application est soumise à des restrictions !\nALes alarmes risquent de ne pas fonctionner correctement.</string>  <!-- snackbar message --> 
-    <string name="help_restricted_bucket">L'application a été placée dans le groupe des applications en veille « rares » ou « restreintes ». Il est possible que les alarmes ne fonctionnent pas de manière fiable.</string>
+    <string name="help_restricted_bucket">L\'application a été placée dans le groupe des applications en veille « rares » ou « restreintes ». Il est possible que les alarmes ne fonctionnent pas de manière fiable.</string>
 
     <string name="configLabel_alarms_notifications">Notifications</string>
     <string name="configLabel_alarms_notifications_on">Actives</string>
@@ -1077,7 +1077,7 @@
     <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nIl se peut que les alarmes ne s'affichent pas sur l\'écran de verrouillage.</string>
     <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_fullscreen_summary1">Gère les autorisations relatives aux notifications en plein écran.</string>
-    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Les notifications en plein écran sont désactivées. Il se peut que les alarmes ne s'affichent pas sur l'écran de verrouillage.</string>  <!-- snackbar message -->
+    <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Les notifications en plein écran sont désactivées. Il se peut que les alarmes ne s\'affichent pas sur l\'écran de verrouillage.</string>  <!-- snackbar message -->
 
     <string name="configLabel_alarms_bootcompleted">Le démarrage est terminé</string>
     <string name="configLabel_alarms_bootcompleted_summary">Les alarmes sont automatiquement reprogrammées quelques minutes après le redémarrage.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
@@ -1106,7 +1106,7 @@
 
     <string name="configLabel_alarms_upcoming">Rappel dans</string>  <!-- TODO -->
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
-    <string name="configLabel_alarms_upcoming_checkbox">Afficher les notifications de rappel d'alarme.</string>
+    <string name="configLabel_alarms_upcoming_checkbox">Afficher les notifications de rappel d\'alarme.</string>
 
     <string name="configLabel_alarms_fadein">Augmentez progressivement le volume</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
@@ -1174,10 +1174,10 @@
 
     <string name="configLabel_alarmMisc">Divers</string>
     <string name="configLabel_alarms_showlauncher">Icône du lanceur</string>
-    <string name="configLabel_alarms_showlauncher_summary">Afficher l\'icône du réveil dans la barre d'applications.</string>
+    <string name="configLabel_alarms_showlauncher_summary">Afficher l\'icône du réveil dans la barre d\'applications.</string>
 
     <string name="configLabel_alarms_poweroffalarms">Alarmes désactivées</string> 
-    <string name="configLabel_alarms_poweroffalarms_summary">Réactivez l\'appareil lorsqu'il est éteint.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
+    <string name="configLabel_alarms_poweroffalarms_summary">Réactivez l\'appareil lorsqu\'il est éteint.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
       BEDTIME
@@ -1215,7 +1215,7 @@
     <string name="cycleNone">Aucun</string>
 
     <string name="configAction_setWakeUp">Définir l\'heure de réveil</string>
-    <string name="configAction_setWakeUp_fromBedtime">Définir l\'heure de réveil d\'après l'heure du coucher</string>
+    <string name="configAction_setWakeUp_fromBedtime">Définir l\'heure de réveil d\'après l\'heure du coucher</string>
 
     <string name="msg_bedtime_active">L\'heure de coucher est active.</string>              <!-- textview text -->
     <string name="msg_bedtime_paused">L\'heure de coucher est en pause.</string>              <!-- textview text -->
@@ -1236,7 +1236,7 @@
     <string name="configLabel_bedtime_tile_paused">Heure de coucher (Pause)</string>
 
     <string name="configLabel_dnd_rulebased">Règles \'Ne pas déranger\'</string>
-    <string name="configLabel_dnd_rulebased_summary">Contrôle des réglages \'Ne pas déranger\' avec des règles automatiques.</string>
+    <string name="configLabel_dnd_rulebased_summary">Contrôle des paramètres \'Ne pas déranger\' avec des règles automatiques.</string>
 
     <string name="configLabel_bedtime_zenrule_name">Heure de coucher (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
@@ -1287,7 +1287,7 @@
     <string name="exportwidget_dialog_message">Exporter les paramètres des widgets dans un fichier.</string>
     <string name="importwidget_dialog_title">Importer les paramètres</string>
     <string name="importwidget_dialog_message">Importer les paramètres des widgets depuis un fichier.</string>
-    <string name="importwidget_dialog_title1">Paramètres trouvés,\nmais ils sont pour d'autres widget…</string>
+    <string name="importwidget_dialog_title1">Paramètres trouvés,\nmais ils sont pour d\'autres widget…</string>
     <string name="importwidget_dialog_title2">Trouvé plusieurs paramètres…</string>
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
     <string name="importwidget_dialog_item_unknown">(unconnu)</string>   <!-- shown as item when type cannot be determined -->
@@ -1367,7 +1367,7 @@
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Transcirption audio</string>   <!-- TODO Verify -->
-    <string name="configLabel_accessibility_verbose_summary">Signaler les modifications automatiques apportées à l'interface utilisateur.</string>
+    <string name="configLabel_accessibility_verbose_summary">Signaler les modifications automatiques apportées à l\'interface utilisateur.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Afficher les avertissements</string>
@@ -1484,7 +1484,7 @@
     <string name="configActionDesc_localeSettings">Paramètres régionaux</string>
     <string name="configActionDesc_locationSettings">Paramètres de localisation</string>
     <string name="configActionDesc_createCalendarRisingEvent">Créer un événement de calendrier (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Créer un événement de calendrier (définir l'heure)</string>   <!-- TODO -->
+    <string name="configActionDesc_createCalendarSettingEvent">Créer un événement de calendrier (définir l\'heure)</string>   <!-- TODO -->
     <string name="configLabel_android">Android</string>
     <string name="configLabel_calendarEvent">Evénement de calendrier</string>
 
@@ -1800,9 +1800,9 @@
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>oxe du printemps</item>
+        <item>équinoxe du printemps</item>
         <item>Solstice d\'été</item>
-        <item>oxe d\'automne</item>
+        <item>équinoxe d\'automne</item>
         <item>Solstice d\'hiver</item>
         <item>Midi lunaire</item>
         <item>Minuit lunaire</item>
@@ -1938,7 +1938,7 @@
     <string name="msg_colors_saved">Enregistré %s</string>        <!-- toast -->
     <string name="msg_colors_deleted">Supprimé %s</string>    <!-- toast -->
     <string name="msg_colors_imported">Couleurs importées %s</string>    <!-- toast -->
-    <string name="msg_colors_import_failed">Échec de l'importation des couleurs !</string>    <!-- toast -->
+    <string name="msg_colors_import_failed">Échec de l\'importation des couleurs !</string>    <!-- toast -->
 
     <string name="colorsimport_dialog_title">@string/configAction_importColors</string>    <!-- TODO -->
     <string name="colorsimport_dialog_hint">Collez ici les couleurs que vous avez précédemment partagées.</string>
@@ -2002,7 +2002,7 @@
     <string name="help_appearance_allowresize"><![CDATA[
       <big>Modifier la disposition pour remplir l\'espace disponible</big><br/><br/>
       <i><b>[enabled]</b></i> Le widget changera de disposition en fonction de l\'espace disponible.<br/><br/>
-      <i><b>[disabled]</b></i> Le widget conserve sa mise en page initiale lorsqu\'on modifie sa taille. Utilisez cette option avec l'option \"<i>mettre le texte et les icônes à l\'échelle</i>\" pour les widgets de très grande taille.<br/>
+      <i><b>[disabled]</b></i> Le widget conserve sa mise en page initiale lorsqu\'on modifie sa taille. Utilisez cette option avec l\'option \"<i>mettre le texte et les icônes à l\'échelle</i>\" pour les widgets de très grande taille.<br/>
     ]]></string>
     <string name="help_appearance_widgetlayout"><![CDATA[
         Ce widget a été créé à partir d\'une <em>mise en page initiale</em> <b>%1$s</b>.<br/></br/>
@@ -2066,14 +2066,14 @@
     <string name="help_general_timeMode2_1"><![CDATA[
           <b>HIver/Printemps Cross-Quarter:</b> Le point médian entre le solstice d\'hiver et l\'équinoxe de printemps; <em>Février</em> [hémisphère nord] ou <em>Août</em> [hémisphère sud].<br/><br/>
           <b>Printemps/Été Cross-Quarter:</b> Le point médian entre l\'équinoxe de printemps et le solstice d\'été; <em>Mai</em> [hémisphère nord] ou <em>Novembre</em> [hémisphère sud].<br/><br/>
-          <b>Été/Automne Cross-Quarter:</b> Le point médian entre le solstice d\'été et l\'équinoxe d'automne; <em>Août</em> [hémisphère nord] ou <em>Février</em> [hémisphère sud].<br/><br/>
+          <b>Été/Automne Cross-Quarter:</b> Le point médian entre le solstice d\'été et l\'équinoxe d\'automne; <em>Août</em> [hémisphère nord] ou <em>Février</em> [hémisphère sud].<br/><br/>
           <b>Automne/Hiver Cross-Quarter:</b> Le point médian entre l\'équinoxe d\'automne et le solstice d\'hiver; <em>Novembre</em> [hémisphère nord] ou <em>Mai</em> [hémisphère sud].<br/>
     ]]></string>   <!-- help contents: cross-quarter days -->
 
     <string name="help_eventlist"><![CDATA[
           [Icon OK] Choisissez un événement personnalisé.\n
           [Icon Add] Ajouter, [Icon Edit] éditer ou [Icon Delete] supprimer un événement personnalisé.\n
-          \nLes événements personnalisés peuvent être affichés par l\'application ou via des widgets sur l\'écran d'accueil, ou encore utilisés pour programmer des alarmes et des notifications.\n
+          \nLes événements personnalisés peuvent être affichés par l\'application ou via des widgets sur l\'écran d\'accueil, ou encore utilisés pour programmer des alarmes et des notifications.\n
           [Icon View] Les événements marqués s\'affichent dans l\'application.
     ]]></string>
 
@@ -2106,17 +2106,17 @@
           <b>Crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Aujourd\'hui :</b> Heures de lever et de coucher du soleil pour la date d'aujourd'hui.<br/><br/>
+          <b>Aujourd\'hui :</b> Heures de lever et de coucher du soleil pour la date d\'aujourd\'hui.<br/><br/>
           <b>Dernier / Prochain :</b> La date du dernier événement et celle du prochain événement.<br/>
     ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
           <b>Equinoxe de mars :</b> Le début du printemps astronomique. <em>Mars</em> [hémisphère nord] ou <em>Septembre</em> [hémisphère sud]. L\'équinoxe de mars est aussi appelé l\'<em>équinoxe de printemps</em>.<br/><br/>
           <b>Solstice de juin :</b> Le début de l\'été astronomique, <em>Juin</em> [hémisphère nord] ou <em>Décembre</em> [hémisphère sud]. Le solstice de juin est aussi appelé le <em>solstice d\'été</em>.<br/><br/>
-          <b>Equinoxe de septembre :</b> Le début de l\'automne astronomique. <em>Septembre</em> [hémisphère nord] ou <em>Mars</em> [hémisphère sud]. L'équinoxe de septembre est aussi appelé l\'<em>équinoxe d'automne</em>.<br/><br/>
-          <b>Solstice de décembre:</b> Le début de l'hiver astronomique. <em>Décembre</em> [hémisphère nord] ou <em>Juin</em> [hémisphère sud]. Le solstice de décembre est aussi appelé le <em>solstice d'hiver</em>.<br/>
+          <b>Equinoxe de septembre :</b> Le début de l\'automne astronomique. <em>Septembre</em> [hémisphère nord] ou <em>Mars</em> [hémisphère sud]. L\'équinoxe de septembre est aussi appelé l\'<em>équinoxe d\'automne</em>.<br/><br/>
+          <b>Solstice de décembre:</b> Le début de l\'hiver astronomique. <em>Décembre</em> [hémisphère nord] ou <em>Juin</em> [hémisphère sud]. Le solstice de décembre est aussi appelé le <em>solstice d\'hiver</em>.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Année tropique:</b> Un cycle complet des saisons. La durée de l\'<em>année tropicale</em> est mesurée d\'un <em>équinoxe de printemps<\em> à l\'autre. Elle est en moyenne de environ <em>365,24 jours</em>, sa durée exacte variant d\'une année à l\'autre (jusqu'à 30 minutes)<br/>
+          <b>Année tropique:</b> Un cycle complet des saisons. La durée de l\'<em>année tropicale</em> est mesurée d\'un <em>équinoxe de printemps<\em> à l\'autre. Elle est en moyenne de environ <em>365,24 jours</em>, sa durée exacte variant d\'une année à l\'autre (jusqu\'à 30 minutes)<br/>
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
@@ -2146,9 +2146,9 @@
           le [Icon Default] thème par default ne peut pas être modifier.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Ajouter des événements à l'application Calendrier (phases de lune, solstices et equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Ajouter des événements à l\'application Calendrier (phases de lune, solstices et equinoxes).<br />
         <br />
-        <u><b><font color="#ff9900">L'intégration du calendrier a été supprimée dans la version 0.10.0.</font></b></u><br />
+        <u><b><font color="#ff9900">L\'intégration du calendrier a été supprimée dans la version 0.10.0.</font></b></u><br />
         <br />
         Cette fonctionnalité est désormais disponible avec une <a href="moreInfoLink">application séparée</a>.
     ]]></string>
@@ -2157,7 +2157,7 @@
     <string name="privacy_policy"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>. <br/><br/>L\'application les données de localisation. Ces informations (ainsi que les autres données utilisées par l\'application) sont stockées localement et ne quittent pas l\'appareil.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilise l\'accès à la <b>localisation</b> pour determiner les longitude et latitude actuelles.<br/><br/>Cette autorisation est facultative. Par défaut, l\'emplacement est configuré manuellement.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilise l\'accès au <b>stockage externe</b> pour les sauvegardes/exportations des fichiers de données (p.ex. lieux, thèmes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l'accès est refusé. Cette autorisation n'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l\'accès est refusé. Cette autorisation n'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
     <string name="privacy_permission_dnd"><![CDATA[Suntimes a besoin d\'un accès <b>Ne pas déranger</b> pour modifier ces paramètres à l\'heure du coucher.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demander les autorisations maintenant ?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorer</string>
@@ -2194,7 +2194,7 @@
         <br/>
         Ce paramètre influe sur la vitesse et la précision des calculs et peut limiter les fonctionnalités disponibles. <br/>
         <br/>
-        Pour plus d\'informations sur les options disponibles ou sur l\'extension de l\'application afin de prendre en charge d'autres bibliothèques, consultez l\'aide en ligne.
+        Pour plus d\'informations sur les options disponibles ou sur l\'extension de l\'application afin de prendre en charge d\'autres bibliothèques, consultez l\'aide en ligne.
     ]]>
     </string>
 
