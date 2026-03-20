@@ -2094,7 +2094,7 @@
     ]]></string>
 
     <string name="help_general_dst"><![CDATA[
-          <b>Heure d\'été :</b> [Icon DST] s\'affiche lorsque l\'heure actuelle est soumise à l\'heure d'été <b>DST</b>, ou a été modifié en vertu d\'une règle similaire.<br/><br/>
+          <b>Heure d\'été :</b> [Icon DST] s\'affiche lorsque l\'heure actuelle est soumise à l\'heure d\'été <b>DST</b>, ou a été modifié en vertu d\'une règle similaire.<br/><br/>
     ]]></string>
 
     <string name="help_general_actualTime"><![CDATA[
