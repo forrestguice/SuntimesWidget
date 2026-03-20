@@ -1217,40 +1217,40 @@
     <string name="configAction_setWakeUp">Définir l\'heure de réveil</string>
     <string name="configAction_setWakeUp_fromBedtime">Définir l\'heure de réveil d\'après l'heure du coucher</string>
 
-    <string name="msg_bedtime_active">Bedtime mode is active.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_paused">Bedtime mode is paused.</string>              <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_set">Bedtime at</string>                                        <!-- textview text (next line shows time) -->   <!-- TODO -->
-    <string name="msg_bedtime_notset">Bedtime is not set.</string>                            <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_reminder">Show a reminder %1$s before bedtime</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->   <!-- TODO -->
-    <string name="msg_bedtime_wakeup_set">Wake up at</string>                                 <!-- textview text (next line shows time) -->   <!-- TODO -->
-    <string name="msg_bedtime_wakeup_notset">Wake up time is not set.</string>                <!-- textview text -->   <!-- TODO -->
-    <string name="msg_bedtime_note">Bedtime in %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->   <!-- TODO -->
+    <string name="msg_bedtime_active">L\'heure de coucher est active.</string>              <!-- textview text -->
+    <string name="msg_bedtime_paused">L\'heure de coucher est en pause.</string>              <!-- textview text -->
+    <string name="msg_bedtime_set">Heure de coucher à</string>                                        <!-- textview text (next line shows time) -->
+    <string name="msg_bedtime_notset">Heure de coucher non définie.</string>                            <!-- textview text -->
+    <string name="msg_bedtime_reminder">Montrer un rappel %1$s avant l\'heure de coucher</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
+    <string name="msg_bedtime_wakeup_set">Réveil à</string>                                 <!-- textview text (next line shows time) -->
+    <string name="msg_bedtime_wakeup_notset">Heure de réveil non définie.</string>                <!-- textview text -->
+    <string name="msg_bedtime_note">Heure decoucher dans %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
-    <string name="configLabel_bedtime_alarm_notify">Bedtime</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_notify_off">Bedtime (off)</string>             <!-- AlarmItem label for Bedtime notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_reminder">Bedtime (reminder)</string>    <!-- AlarmItem label for reminder notification --> <!-- TODO -->
-    <string name="configLabel_bedtime_alarm_wakeup">Wake up</string>             <!-- AlarmItem label for wake up alarm --> <!-- TODO -->
+    <string name="configLabel_bedtime_alarm_notify">Heure de coucher</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="configLabel_bedtime_alarm_notify_off">Heure de coucher (off)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="configLabel_bedtime_alarm_reminder">Heure de coucher (rappel)</string>    <!-- AlarmItem label for reminder notification -->
+    <string name="configLabel_bedtime_alarm_wakeup">Réveil</string>             <!-- AlarmItem label for wake up alarm -->
 
-    <string name="configLabel_bedtime_tile_normal">Bedtime</string>             <!-- Quick Settings Tile labels --> <!-- TODO -->
-    <string name="configLabel_bedtime_tile_active">Bedtime (Active)</string>    <!-- TODO -->
-    <string name="configLabel_bedtime_tile_paused">Bedtime (Paused)</string>    <!-- TODO -->
+    <string name="configLabel_bedtime_tile_normal">Heure de coucher</string>             <!-- Quick Settings Tile labels -->
+    <string name="configLabel_bedtime_tile_active">Heure de coucher (Active)</string>
+    <string name="configLabel_bedtime_tile_paused">Heure de coucher (Pause)</string>
 
-    <string name="configLabel_dnd_rulebased">DND Rules</string>    <!-- TODO -->
-    <string name="configLabel_dnd_rulebased_summary">Control \'Do Not Disturb\' settings with an automatic rule.</string>    <!-- TODO -->
+    <string name="configLabel_dnd_rulebased">Règles \'Ne pas déranger\'</string>
+    <string name="configLabel_dnd_rulebased_summary">Contrôle des réglages \'Ne pas déranger\' avec des règles automatiques.</string>
 
-    <string name="configLabel_bedtime_zenrule_name">Bedtime (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->    <!-- TODO -->
+    <string name="configLabel_bedtime_zenrule_name">Heure de coucher (Suntimes)</string>    <!-- do-not-disturb rule name; appears in global-dnd-settings/schedule -->
 
-    <string name="configAction_dnd_allow">Allow Access</string>              <!-- button label when requesting permission -->    <!-- TODO -->
-    <string name="configLabel_dnd">Do Not Disturb</string>              <!-- textview text (next line shows time) -->    <!-- TODO -->
-    <string name="configLabel_dnd_disabled">DND: Disabled</string>         <!-- do-not-disturb menu item -->    <!-- TODO -->
-    <string name="configLabel_dnd_priority">DND: Priority only</string>    <!-- do-not-disturb menu item -->    <!-- TODO -->
-    <string name="configLabel_dnd_alarms">DND: Alarms only</string>        <!-- do-not-disturb menu item -->    <!-- TODO -->
+    <string name="configAction_dnd_allow">Autoriser l\'accès</string>              <!-- button label when requesting permission -->
+    <string name="configLabel_dnd">Ne pas déranger</string>              <!-- textview text (next line shows time) -->
+    <string name="configLabel_dnd_disabled">Désactivé</string>         <!-- do-not-disturb menu item -->
+    <string name="configLabel_dnd_priority">Seulement prioritaire</string>    <!-- do-not-disturb menu item -->
+    <string name="configLabel_dnd_alarms">Seulement les alarmes</string>        <!-- do-not-disturb menu item -->
 
-    <string name="prompt_bedtime_setFrom_wakeup">Set the bedtime to %s before wake up time?</string>    <!-- snackbar message -->    <!-- TODO -->
-    <string name="prompt_bedtime_setFrom_bedtime">Set the wake up alarm to %s after bedtime?</string>    <!-- snackbar message -->    <!-- TODO -->
+    <string name="prompt_bedtime_setFrom_wakeup">Définir l\'heure de coucher %s avant l\'heure de réveil ?</string>    <!-- snackbar message -->
+    <string name="prompt_bedtime_setFrom_bedtime">Définir l\'heure de réveil %s après l\'heure de coucher ?</string>    <!-- snackbar message -->
 
-    <string name="configActionDesc_triggerBedtime">Turn on bedtime mode</string>  <!-- TODO -->
-    <string name="configActionDesc_dismissBedtime">Turn off bedtime mode</string>  <!-- TODO -->
+    <string name="configActionDesc_triggerBedtime">Activer l\'heure de coucher</string>
+    <string name="configActionDesc_dismissBedtime">Désactiver l\'heure de coucher</string>
 
     <!--
          APP SETTINGS
@@ -1265,45 +1265,45 @@
     <string name="configLabel_widgetListHelp_summary">Voir l\'aide du widget</string>
     <string name="configLabel_widgetList_emptyMsg">Aucun widget</string>          <!-- a label that is displayed in place of an empty listview -->
 
-    <string name="configAction_createBackup">Create Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->    <!-- TODO -->
-    <string name="configAction_restoreBackup">Restore Backup</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->    <!-- TODO -->
-    <string name="restorebackup_dialog_item_alarmitems">Alarms</string>              <!-- TODO -->
-    <string name="restorebackup_dialog_item_appsettings">App Settings</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors">Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_appcolors">App Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_mapcolors">Map Colors</string>   <!-- TODO -->
-    <string name="restorebackup_dialog_item_colors_alarmcolors">Alarm Colors</string>  <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetsettings">Widget Settings</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_widgetthemes">Widget Themes</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_placeitems">Places</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_eventitems">Events</string> <!-- TODO -->
-    <string name="restorebackup_dialog_item_actions">Actions</string> <!-- TODO -->
+    <string name="configAction_createBackup">Créer une sauvegarde</string>    <!-- menu item, dialog title, progress text -->  <!-- export all -->
+    <string name="configAction_restoreBackup">Restorer une sauvegarde</string>    <!-- menu item, dialog title, progress text -->  <!-- import all -->
+    <string name="restorebackup_dialog_item_alarmitems">Alarmes</string>
+    <string name="restorebackup_dialog_item_appsettings">Paramètres de l\'application</string>
+    <string name="restorebackup_dialog_item_colors">Couleurs</string>   <!-- TODO -->
+    <string name="restorebackup_dialog_item_colors_appcolors">Couleurs de l\'application</string>
+    <string name="restorebackup_dialog_item_colors_mapcolors">Couleurs des cartess</string>
+    <string name="restorebackup_dialog_item_colors_alarmcolors">Couleurs des alarmes</string>
+    <string name="restorebackup_dialog_item_widgetsettings">Paramètres des Widgets</string>
+    <string name="restorebackup_dialog_item_widgetthemes">Thèmes des Widget</string>
+    <string name="restorebackup_dialog_item_placeitems">Lieux</string>
+    <string name="restorebackup_dialog_item_eventitems">Evénements</string>
+    <string name="restorebackup_dialog_item_actions">Actions</string>
     <!--<string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>-->
     <!--<string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>-->
 
     <string name="configAction_exportWidget">@string/configAction_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
     <string name="configAction_importWidget">@string/configAction_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
-    <string name="exportwidget_dialog_title">Export Settings</string>    <!-- TODO -->
-    <string name="exportwidget_dialog_message">Exporting widget settings to file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title">Import Settings</string>    <!-- TODO -->
-    <string name="importwidget_dialog_message">Importing widget settings from file.</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title1">Settings found,\nbut they are for other widgets…</string>     <!-- TODO -->
-    <string name="importwidget_dialog_title2">Found multiple settings…</string>     <!-- TODO -->
+    <string name="exportwidget_dialog_title">Exporter les paramètres</string>
+    <string name="exportwidget_dialog_message">Exporter les paramètres des widgets dans un fichier.</string>
+    <string name="importwidget_dialog_title">Importer les paramètres</string>
+    <string name="importwidget_dialog_message">Importer les paramètres des widgets depuis un fichier.</string>
+    <string name="importwidget_dialog_title1">Paramètres trouvés,\nmais ils sont pour d'autres widget…</string>
+    <string name="importwidget_dialog_title2">Trouvé plusieurs paramètres…</string>
     <string name="importwidget_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="importwidget_dialog_item_unknown">(unknown)</string>   <!-- shown as item when type cannot be determined -->   <!-- TODO -->
-    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string> <!-- TODO -->
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string> <!-- TODO -->
+    <string name="importwidget_dialog_item_unknown">(unconnu)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restoration de sauvegarde</b>. Les paramètres importés seront pour l\'instant mis en cache et restaurés ultérieurement, lorsque le lanceur en fera la demande.<br/>]]></string>
+    <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Meilleure estimation</b>. Les paramètres importés seront appliqués aux widgets existants en fonction de leur type.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Importation directe</b>. Les paramètres importés seront directement appliqués. Cela ne fonctionne correctement que si les identifiants des widgets n'ont pas changé.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
-    <string name="resetwidget_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>    <!-- TODO: verify -->
+    <string name="resetwidget_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>
 
-    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing alarms will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
+    <string name="importalarms_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les alarmes seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
+    <string name="importalarms_dialog_item_addall"><![CDATA[<b>Garder les existantes</b>. Les alarmes existantes seront conservées (ce qui peut entraîner des doublons).<br/>]]></string>
 
-    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Clear</b>. Places will be cleared before importing from backup.<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Keep Existing</b>. Existing places will be preserved (may result in duplicates).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignore Existing</b>. Places will be added if they do not already exist (ignore existing).<br/>]]></string> <!-- TODO -->
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Overwrite Existing</b>. Places will be updated if they already exist.<br/>]]></string> <!-- TODO -->
+    <string name="importplaces_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les lieux seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
+    <string name="importplaces_dialog_item_addall"><![CDATA[<b>Garder les existants</b>. Les lieux existants seront conservés (ce qui peut entraîner des doublons).<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignorer les existants</b>. Les lieux seront ajoutés s'ils n'existent pas encore (ignorer ceux qui existent déjà).<br/>]]></string>v
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Ecraser les existants</b>. Les lieux seront mis à jour s'ils existent déjà.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d item</item>
@@ -1336,28 +1336,28 @@
     <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
     <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
-    <string name="place_label_AN">Antarctica</string>    <!-- TODO -->
-    <string name="place_label_AF">Africa</string>    <!-- TODO -->
-    <string name="place_label_AF_EG">Africa (Egypt)</string>   <!-- TODO -->
-    <string name="place_label_AS">Asia</string>    <!-- TODO -->
-    <string name="place_label_AS_CN">Asia (China)</string>    <!-- TODO -->
-    <string name="place_label_AS_IN">Asia (India)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>    <!-- TODO -->
-    <string name="place_label_EU">Europe</string>    <!-- TODO -->
-    <string name="place_label_EU_ES">Europe (Spain)</string>    <!-- TODO -->
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>    <!-- TODO -->
-    <string name="place_label_NA">North America</string>    <!-- TODO -->
-    <string name="place_label_NA_CA">North America (Canada)</string>    <!-- TODO -->
-    <string name="place_label_NA_US">North America (US)</string>    <!-- TODO -->
-    <string name="place_label_OC">Oceania</string>    <!-- TODO -->
-    <string name="place_label_OC_AU">Oceania (Australia)</string>  <!-- TODO -->
-    <string name="place_label_SA">South and Central America</string>    <!-- TODO -->
-    <string name="place_label_other">Other</string>    <!-- TODO -->
+    <string name="place_label_AN">Antarctique</string>
+    <string name="place_label_AF">Afrique</string>
+    <string name="place_label_AF_EG">Afrique (Egypte)</string>
+    <string name="place_label_AS">Asie</string>
+    <string name="place_label_AS_CN">Asie (Chine)</string>
+    <string name="place_label_AS_IN">Asie (Inde)</string>
+    <string name="place_label_AS_JP">Asie (Japon)</string>
+    <string name="place_label_AS_SA">Asie (Arabie Saoudite)</string>
+    <string name="place_label_AS_VN">Asie (Vietnam)</string>
+    <string name="place_label_EU">Europe</string>
+    <string name="place_label_EU_ES">Europe (Espagne)</string>
+    <string name="place_label_EU_UK">Europe (Royaume Uni)</string>
+    <string name="place_label_NA">Amérique du nord</string>
+    <string name="place_label_NA_CA">Amérique du nord (Canada)</string>
+    <string name="place_label_NA_US">Amérique du nord (US)</string>
+    <string name="place_label_OC">Océanie</string>
+    <string name="place_label_OC_AU">Océanie (Australie)</string>
+    <string name="place_label_SA">Amérique centrale et sud</string>
+    <string name="place_label_other">Autre</string>
 
     <!-- App Setting: Launch Activity -->
-    <string name="configLabel_launcherMode">Launcher Activity</string>    <!-- TODO -->
+    <string name="configLabel_launcherMode">Activité du lanceur</string>
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->
@@ -1366,8 +1366,8 @@
     <string name="configLabel_ui_misc">Divers</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>     <!-- TODO -->
+    <string name="configLabel_accessibility_verbose">Transcirption audio</string>   <!-- TODO Verify -->
+    <string name="configLabel_accessibility_verbose_summary">Signaler les modifications automatiques apportées à l'interface utilisateur.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Afficher les avertissements</string>
