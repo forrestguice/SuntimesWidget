@@ -1306,13 +1306,13 @@
     <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Ecraser les existants</b>. Les lieux seront mis à jour s'ils existent déjà.<br/>]]></string>
 
     <plurals name="itemsPlural">
-        <item quantity="one">%d item</item>
-        <item quantity="other">%d items</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d élément</item>
+        <item quantity="other">%d éléments</item>
+    </plurals>
     <plurals name="widgetPlural">
         <item quantity="one">%d widget</item>
         <item quantity="other">%d widgets</item>
-    </plurals>  <!-- TODO -->
+    </plurals>
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lieux</string>                           <!-- group title -->
@@ -1386,15 +1386,15 @@
     <string name="configLabel_ui_showmoon_noon_summary">Affiche le midi lunaire et minuit lunaire dans le cadre du dialogue de la lune.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="configLabel_ui_showmoon_phase_columns">Columns (phases)</string>    <!-- TODO -->
+    <string name="configLabel_ui_showmoon_phase_columns">Colonnes (phases)</string>    <!-- TODO -->
 
     <!-- App Setting: Show Cross Quarter days -->
     <string name="configLabel_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
-    <string name="configLabel_ui_showCrossQuarter_summary">Include midpoints between solstices and equinoxes.</string>  <!-- TODO -->
+    <string name="configLabel_ui_showCrossQuarter_summary">Ajoute les points médian entre les solstices et les équinoxes.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Afficher Solstice / oxe</string>  
-    <string name="configLabel_ui_showEquinox_summary">Affiche la durée restante avant le prochain solstice ou oxe.</string>
+    <string name="configLabel_ui_showEquinox">Afficher Solstice / équinoxe</string>  
+    <string name="configLabel_ui_showEquinox_summary">Affiche la durée restante avant le prochain solstice ou équinoxe.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Suivi des solstices</string>
@@ -1409,7 +1409,7 @@
     <string name="configLabel_ui_showmapbutton_summary">Affiche un bouton de la barre d\'action qui ouvre l\'application de carte par défaut.</string>
 
     <!-- App Setting: emphasize field -->
-    <string name="configLabel_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
+    <string name="configLabel_ui_emphasizefield_text">Mettre en évidence le champ</string>              <!-- checkbox label -->
     <string name="configLabel_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
@@ -1479,14 +1479,14 @@
     <string name="configActionDesc_nextSunset">Afficher le prochain coucher de soleil</string>
     <string name="configActionDesc_updateWidgets">@string/actionMode_update_all</string>
     <string name="configActionDesc_timerList">Timer List</string>   <!-- TODO -->
-    <string name="configActionDesc_dateSettings">Date Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_displaySettings">Display Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_localeSettings">Locale Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_locationSettings">Location Settings</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarRisingEvent">Create a calendar event (rising time)</string>   <!-- TODO -->
-    <string name="configActionDesc_createCalendarSettingEvent">Create a calendar event (setting time)</string>   <!-- TODO -->
-    <string name="configLabel_android">Android</string>   <!-- TODO -->
-    <string name="configLabel_calendarEvent">Calendar Event</string>   <!-- TODO -->
+    <string name="configActionDesc_dateSettings">Paramètres de date</string>
+    <string name="configActionDesc_displaySettings">Paramètres d\'affichage</string>
+    <string name="configActionDesc_localeSettings">Paramètres régionaux</string>
+    <string name="configActionDesc_locationSettings">Paramètres de localisation</string>
+    <string name="configActionDesc_createCalendarRisingEvent">Créer un événement de calendrier (rising time)</string>   <!-- TODO -->
+    <string name="configActionDesc_createCalendarSettingEvent">Créer un événement de calendrier (définir l'heure)</string>   <!-- TODO -->
+    <string name="configLabel_android">Android</string>
+    <string name="configLabel_calendarEvent">Evénement de calendrier</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">par décalage</string>
@@ -1528,7 +1528,7 @@
         <item>deux jours (48 heures)</item>
         <item>une semaine (168 heures)</item>
         <item>un mois (672 heures)</item>
-        <item>any age</item>  <!-- TODO -->
+        <item>sans limite</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1570,7 +1570,7 @@
         <item>Néerlandais</item>
         <item>Tchèque</item>
         <item>Chinois simplifié</item>
-        <item>Arabic</item>    <!-- TODO -->
+        <item>Arabe</item>
     </string-array>
 
     <!-- position formats -->
@@ -1627,64 +1627,64 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Lecture</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">Enregistrement</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_next">Suivant</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_prev">Précédent</string>   <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_reset">Réinitialiser</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-    <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_option_sunlight">Lumière du soleil</string>
+    <string name="worldmap_dialog_option_moonlight">Clair de lune</string>
+    <string name="worldmap_dialog_option_all">Les deux</string>
     <string name="worldmap_dialog_option_location">Emplacement</string>
     <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
-    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
-    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Major Lines</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
-    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center">Centrer sur la localisation</string>
+    <string name="worldmap_dialog_option_center_current">Centrer: %s</string>
+    <string name="worldmap_dialog_option_center_msg">Carte centrée sur la localisation actuelle \n[%s]</string>    <!-- toast message; center set to... -->
+    <string name="worldmap_dialog_option_center_clear">Réinitialiser le centrage de la carte</string>
+    <string name="worldmap_dialog_option_center_clear_msg">Réinitialiser le centrage de la carte par défaut \n[%s]</string>
+    <string name="worldmap_dialog_option_background">Définir l\'arrière-plan</string>
+    <string name="worldmap_dialog_option_background_clear">Effacer l\'arrière-plan</string>
+    <string name="worldmap_dialog_option_background_warning0">Cette image a un format incorrect.. attendu %2$s, trouvé %1$s!</string>    <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_error0">Impossible d\'ouvrir l\'arrière-plan de la carte.</string>    <!-- toast message; io error -->
+    <string name="worldmap_dialog_option_latitudes">Lignes principales</string>
+    <string name="worldmap_dialog_option_minorgrid">Grille</string> 
+    <string name="worldmap_dialog_option_debuglines">Lignes de débogage</string>
+    <string name="worldmap_dialog_option_tintmap">Teinte</string>
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string> 
+    <string name="worldmap_dialog_speed_1d">&#215; 1j</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nFor best results select an image matching these properties.
-    </string>    <!-- TODO -->
+      \n\nPour obtenir les meilleurs résultats, choisissez une image présentant ces caractéristiques.
+    </string>
 
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/configAction_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
-    <string name="configLabel_earliest_sunrise">Earliest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_earliest_sunset">Earliest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunrise">Latest Sunrise</string>       <!-- label / contentDescription -->    <!-- TODO -->
-    <string name="configLabel_latest_sunset">Latest Sunset</string>       <!-- label / contentDescription -->    <!-- TODO -->
+    <string name="configLabel_earliest_sunrise">Lever de soleil le plus précoce</string>       <!-- label / contentDescription -->
+    <string name="configLabel_earliest_sunset">Coucher de soleil le plus précoce</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunrise">Lever de soleil le plus tardif</string>       <!-- label / contentDescription -->
+    <string name="configLabel_latest_sunset">Coucher de soleil le plus tardif</string>       <!-- label / contentDescription -->
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <string name="graph_option_crosshair">Crosshair</string>  <!-- TODO -->
-    <string name="graph_option_grid">Grid</string>              <!-- TODO -->
-    <string name="graph_option_labels">Labels</string>          <!-- TODO -->
-    <string name="graph_option_axis">Axis</string>              <!-- TODO -->
-    <string name="graph_option_points">Points</string>    <!-- TODO -->
-    <string name="graph_option_twilights">Twilights</string>   <!-- TODO -->
-    <string name="graph_option_seasons">Seasons</string>  <!-- TODO -->
+    <string name="graph_option_grid">Grille</string> 
+    <string name="graph_option_labels">Étiquettes</string>
+    <string name="graph_option_axis">Axes</string>
+    <string name="graph_option_points">Points</string>
+    <string name="graph_option_twilights">Jumeaux</string>
+    <string name="graph_option_seasons">Saisons</string>
     <string name="graph_option_filledpath">Filled Path</string> <!-- TODO -->
-    <string name="graph_option_moon">Show Moon</string>         <!-- TODO -->
+    <string name="graph_option_moon">Montrer la lune</string>
 
     <string name="seekAltitude_configHint">degrees</string>   <!-- TODO -->
     <string name="seekAltitude_suffix">°∠</string>
