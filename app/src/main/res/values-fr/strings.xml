@@ -1074,7 +1074,7 @@
 
     <string name="configLabel_alarms_notifications_fullscreen">Notifications plein écran</string>
     <string name="configLabel_alarms_notifications_fullscreen_on">On</string>
-    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nIl se peut que les alarmes ne s'affichent pas sur l\'écran de verrouillage.</string>
+    <string name="configLabel_alarms_notifications_fullscreen_off">Off.\nIl se peut que les alarmes ne s\'affichent pas sur l\'écran de verrouillage.</string>
     <string name="configLabel_alarms_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_fullscreen_summary1">Gère les autorisations relatives aux notifications en plein écran.</string>
     <string name="notificationsWarning1"><xliff:g id="warningTag">[w]</xliff:g> Les notifications en plein écran sont désactivées. Il se peut que les alarmes ne s\'affichent pas sur l\'écran de verrouillage.</string>  <!-- snackbar message -->
@@ -1293,7 +1293,7 @@
     <string name="importwidget_dialog_item_unknown">(unconnu)</string>   <!-- shown as item when type cannot be determined -->
     <string name="importwidget_dialog_item_restorebackup"><![CDATA[<b>Restoration de sauvegarde</b>. Les paramètres importés seront pour l\'instant mis en cache et restaurés ultérieurement, lorsque le lanceur en fera la demande.<br/>]]></string>
     <string name="importwidget_dialog_item_bestguess"><![CDATA[<b>Meilleure estimation</b>. Les paramètres importés seront appliqués aux widgets existants en fonction de leur type.<br/>]]></string>
-    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Importation directe</b>. Les paramètres importés seront directement appliqués. Cela ne fonctionne correctement que si les identifiants des widgets n'ont pas changé.<br/>]]></string>
+    <string name="importwidget_dialog_item_direct"><![CDATA[<b>Importation directe</b>. Les paramètres importés seront directement appliqués. Cela ne fonctionne correctement que si les identifiants des widgets n\'ont pas changé.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
     <string name="resetwidget_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>
 
@@ -1302,8 +1302,8 @@
 
     <string name="importplaces_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les lieux seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
     <string name="importplaces_dialog_item_addall"><![CDATA[<b>Garder les existants</b>. Les lieux existants seront conservés (ce qui peut entraîner des doublons).<br/>]]></string>
-    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignorer les existants</b>. Les lieux seront ajoutés s'ils n'existent pas encore (ignorer ceux qui existent déjà).<br/>]]></string>v
-    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Ecraser les existants</b>. Les lieux seront mis à jour s'ils existent déjà.<br/>]]></string>
+    <string name="importplaces_dialog_item_ignore"><![CDATA[<b>Ignorer les existants</b>. Les lieux seront ajoutés s\'ils n\'existent pas encore (ignorer ceux qui existent déjà).<br/>]]></string>v
+    <string name="importplaces_dialog_item_overwrite"><![CDATA[<b>Ecraser les existants</b>. Les lieux seront mis à jour s\'ils existent déjà.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d élément</item>
@@ -1896,7 +1896,7 @@
 
     <string name="msg_import_success">Importé avec succès <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="msg_import_failure">Impossible d\'importer depuis <xliff:g id="filepath">%s</xliff:g> !</string>
-    <string name="msg_import_noresults">Importation ignorée, aucun nouveau thème n'a été trouvé.</string>
+    <string name="msg_import_noresults">Importation ignorée, aucun nouveau thème n\'a été trouvé.</string>
     <string name="msg_import_label_file">fichier</string>   <!-- used in import failure messages; e.g. "Import from file failed!" --> <!-- TODO-->
 
     <plurals name="themePlural">
@@ -1970,7 +1970,7 @@
         <a href="%1$s">gestionnaire de ticket</a> pour soumettre une requête.
     ]]></string>
     <string name="app_donate_url"><![CDATA[
-        %s est disponible gratuitement, mais s'il vous a été utile, n'hésitez pas à faire un
+        %s est disponible gratuitement, mais s\'il vous a été utile, n\'hésitez pas à faire un
         <a href="%2$s">don à votre convenance</a>.
     ]]></string>
     <string name="app_legal1"><![CDATA[
@@ -2090,7 +2090,7 @@
           [Icon Cancel] enregistrer et désactiver.<br/>
           [Icon Delete] annuler et supprimer.<br/>
           <br/>
-          [Icon Offset] s\'affiche lorsque l\'heure programmée est décalée avant ou après l\'heure de l<'événement.
+          [Icon Offset] s\'affiche lorsque l\'heure programmée est décalée avant ou après l\'heure de l\'événement.
     ]]></string>
 
     <string name="help_general_dst"><![CDATA[
@@ -2157,7 +2157,7 @@
     <string name="privacy_policy"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>. <br/><br/>L\'application les données de localisation. Ces informations (ainsi que les autres données utilisées par l\'application) sont stockées localement et ne quittent pas l\'appareil.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilise l\'accès à la <b>localisation</b> pour determiner les longitude et latitude actuelles.<br/><br/>Cette autorisation est facultative. Par défaut, l\'emplacement est configuré manuellement.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilise l\'accès au <b>stockage externe</b> pour les sauvegardes/exportations des fichiers de données (p.ex. lieux, thèmes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l\'accès est refusé. Cette autorisation n'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l\'accès est refusé. Cette autorisation n\'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
     <string name="privacy_permission_dnd"><![CDATA[Suntimes a besoin d\'un accès <b>Ne pas déranger</b> pour modifier ces paramètres à l\'heure du coucher.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demander les autorisations maintenant ?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorer</string>
