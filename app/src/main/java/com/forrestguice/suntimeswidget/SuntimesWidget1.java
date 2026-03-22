@@ -96,7 +96,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
         RemoteViews views = getWidgetViews(context, appWidgetManager, appWidgetId);
         views.setOnClickPendingIntent(R.id.widgetframe_outer_1x1, SuntimesWidget0.clickActionIntent(context, appWidgetId, SuntimesWidget1.class));
 
-        appWidgetManager.updateAppWidget(appWidgetId, null);   // null on this line to discard previously cached RemoveViews
+        appWidgetManager.updateAppWidget(appWidgetId, new RemoteViews(context.getPackageName(), R.layout.layout_widget_1x1_empty));   // previously null on this line to discard previously cached RemoveViews (see #926)
         appWidgetManager.updateAppWidget(appWidgetId, views);  // so this next line actually updates...
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
