@@ -637,7 +637,7 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Nedávná událost</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Nedávná událost</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Nejbližší událost</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Nadcházející událost</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Sledovat:</string>            <!-- spinner label -->
@@ -1532,7 +1532,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_recent</item>
         <item>@string/settings_trackingMode_closest</item>
         <item>@string/settings_trackingMode_soonest</item>
     </string-array>

@@ -578,7 +578,7 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Legutóbbi esemény</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Legközelebbi esemény</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Közelgő esemény</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Követés:</string>            <!-- spinner label -->

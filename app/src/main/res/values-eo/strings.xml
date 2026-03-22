@@ -592,7 +592,7 @@
     <string name="settings_general_showComparison_summary">Kompari kvanton de taglumo hodiaŭ kun hieraŭ aŭ morgaŭ.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">antaŭan</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">antaŭan</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">plej proksiman</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">sekvan</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Spuri:</string>            <!-- spinner label -->

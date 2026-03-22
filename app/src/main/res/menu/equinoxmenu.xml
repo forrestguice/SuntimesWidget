@@ -11,7 +11,7 @@
             <group android:checkableBehavior="single">
 
                 <item android:id="@+id/trackRecent"
-                    android:title="@string/stetings_trackingMode_recent"
+                    android:title="@string/settings_trackingMode_recent"
                     android:icon="?attr/icActionSort" />
 
                 <item android:id="@+id/trackClosest"

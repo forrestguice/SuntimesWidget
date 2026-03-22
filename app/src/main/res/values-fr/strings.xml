@@ -577,7 +577,7 @@
     <string name="settings_general_showComparison_summary">Compare la durée d\'ensoleillement d\'aujourd\'hui à celle d\'hier ou de demain.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Evénement récent</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Evénement récent</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Événement le plus proche</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Prochain événement</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Suivi :</string>            <!-- spinner label -->

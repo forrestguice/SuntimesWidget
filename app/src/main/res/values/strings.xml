@@ -693,7 +693,7 @@
     </string-array>
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Recent Event</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Recent Event</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Nearest Event</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Track:</string>            <!-- spinner label -->
@@ -1835,7 +1835,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_recent</item>
         <item>@string/settings_trackingMode_closest</item>
         <item>@string/settings_trackingMode_soonest</item>
     </string-array>

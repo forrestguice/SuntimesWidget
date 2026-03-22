@@ -1119,7 +1119,7 @@ public class WidgetSettings
 
     public static void initDisplayStrings_TrackingMode( Context context )
     {
-        TrackingMode.RECENT.setDisplayString( context.getString(R.string.stetings_trackingMode_recent) );
+        TrackingMode.RECENT.setDisplayString( context.getString(R.string.settings_trackingMode_recent) );
         TrackingMode.CLOSEST.setDisplayString( context.getString(R.string.settings_trackingMode_closest) );
         TrackingMode.SOONEST.setDisplayString( context.getString(R.string.settings_trackingMode_soonest) );
     }

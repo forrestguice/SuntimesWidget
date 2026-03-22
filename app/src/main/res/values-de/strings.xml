@@ -573,7 +573,7 @@
   <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
   <!-- Widget Setting: tracking mode -->
-  <string name="stetings_trackingMode_recent">Letztes Ereignis</string>                   <!-- setting -->
+  <string name="settings_trackingMode_recent">Letztes Ereignis</string>                   <!-- setting -->
   <string name="settings_trackingMode_closest">Nächstes Ereignis</string>                 <!-- setting -->
   <string name="settings_trackingMode_soonest">Bevorstehendes Ereignis</string>                <!-- setting -->
   <string name="settings_general_trackingMode">Aufzeichnung:</string>            <!-- spinner label -->

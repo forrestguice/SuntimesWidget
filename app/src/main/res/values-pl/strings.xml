@@ -599,7 +599,7 @@
     <string name="settings_general_showComparison_summary">Porównaj ilość światła słonecznego dzisiaj z wczoraj lub jutrem.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">poprzednie</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">poprzednie</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">najbliższe</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">następne</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Śledź:</string>            <!-- spinner label -->

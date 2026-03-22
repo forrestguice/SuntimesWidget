@@ -578,7 +578,7 @@
     <string name="settings_general_showComparison_summary">Compare the amount of daylight today against yesterday or tomorrow.</string>  <!-- checkbox label -->  <!-- TODO -->
 
 
-    <string name="stetings_trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="settings_trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="settings_trackingMode_closest">Evento más cercano</string>
     <string name="settings_trackingMode_soonest">Evento más temprano</string>
     <string name="settings_general_trackingMode">Seguimiento:</string>
@@ -1443,7 +1443,7 @@
     </string-array>
     
     <string-array name="settings_solsticeTrackingMode_display">
-        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_recent</item>
         <item>@string/settings_trackingMode_closest</item>
         <item>@string/settings_trackingMode_soonest</item>
     </string-array>

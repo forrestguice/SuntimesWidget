@@ -600,7 +600,7 @@
     <string name="settings_general_showComparison_summary">将今天的日照量与昨天或明天进行比较。</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">近期事件</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">近期事件</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">最近事件</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">即将发生事件</string>                <!-- setting -->
     <string name="settings_general_trackingMode">追踪:</string>            <!-- spinner label -->
@@ -1474,7 +1474,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_recent</item>
         <item>@string/settings_trackingMode_closest</item>
         <item>@string/settings_trackingMode_soonest</item>
     </string-array>

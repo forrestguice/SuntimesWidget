@@ -602,7 +602,7 @@
     <string name="settings_general_showComparison_summary">Sammenlign mengden dagslys i dag med i går eller i morgen.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Nærmeste hendelse</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Kommende hendelse</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Spor:</string>            <!-- spinner label -->

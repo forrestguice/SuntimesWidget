@@ -604,7 +604,7 @@
     <string name="settings_general_showComparison_summary">Confronta le ore di luce di oggi con ieri o domani.</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="stetings_trackingMode_recent">Ultimo evento</string>                   <!-- setting -->
+    <string name="settings_trackingMode_recent">Ultimo evento</string>                   <!-- setting -->
     <string name="settings_trackingMode_closest">Evento più vicino</string>                 <!-- setting -->
     <string name="settings_trackingMode_soonest">Prossimo evento</string>                <!-- setting -->
     <string name="settings_general_trackingMode">Tracciamento:</string>            <!-- spinner label -->
@@ -1483,7 +1483,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="settings_solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
-        <item>@string/stetings_trackingMode_recent</item>
+        <item>@string/settings_trackingMode_recent</item>
         <item>@string/settings_trackingMode_closest</item>
         <item>@string/settings_trackingMode_soonest</item>
     </string-array>
