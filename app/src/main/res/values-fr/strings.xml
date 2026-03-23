@@ -35,8 +35,8 @@
     <string name="configAction_closeNavDrawer">Fermer le menu</string>
     <string name="configAction_clock">Heure</string>
     <string name="configAction_lightGraphDialog">Lumière solaire</string>
-    <string name="configAction_lineGraph">Graphique d\'altitude</string>
-    <string name="configAction_seekAltitude">Chercher l\'altitude</string>        <!-- checkbox label -->
+    <string name="configAction_lineGraph">Hauteur</string>
+    <string name="configAction_seekAltitude">Choix de la hauteur</string>        <!-- checkbox label -->
     <string name="configAction_search">Rechercher</string>        <!-- button (contentDescription) -->
     <string name="configAction_deselect">Effacer la sélection</string>
     <string name="configAction_moon">Lune</string>
@@ -64,9 +64,9 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être erroné pour cet emplacement.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Heure d\'été</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> équation du temps</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -137,13 +137,13 @@
         <item quantity="other">%1$s après</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
     <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
     <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
-    <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
-    <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
+    <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -179,7 +179,7 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
-    <string name="delta_weeks">s</string>    <!-- e.g. 2w -->
+    <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
     <string name="delta_days">j</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
@@ -203,19 +203,19 @@
     <string name="lengthUnits_metric">Métriques</string>
     <string name="lengthUnits_imperial">Impériales</string>
 
-    <string name="units_feet">pieds</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">pieds</string>
+    <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
         <item quantity="one">%s pied</item>
         <item quantity="other">%s pieds</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">miles</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
         <item quantity="one">%s mile</item>
         <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+    </plurals>
 
     <string name="units_meters">mètres</string>
     <string name="units_meters_short">m</string>
@@ -253,7 +253,7 @@
 
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Général</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Source de données</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator">Source de données :</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Source de données pour le soleil</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Source de données pour la lune</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_help">Sources de données</string>    <!-- preference title / help button text -->
@@ -261,10 +261,10 @@
     <string name="configLabel_general_timeFormatMode">Format des heures :</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Utiliser l\'altitude</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Appliquer des filtres en fonction de l\'altitude.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Ajuster en fonction de l\'altitude.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localiser dans l\'hémisphère</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Appliquer une localisation basée sur les hémisphères (indicateurs de saison, icônes des phases lunaires).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere">Adapter selon l\'hémisphère</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">Afichage adapté à l\'hémisphères (indicateurs de saison, icônes des phases lunaires).</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Unités de longueur</string>        <!-- spinner label -->
 
@@ -284,19 +284,19 @@
     <string name="configLabel_general_showHours_summary">Ajoute les heures et les minutes dans les durées supérieures à un jour.</string>    <!-- checkbox label -->
 
     <string name="configLabel_general_observerheight">Ombre des objets</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Afficher l\'ombre d\'un objet d\'une hauteur de<xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight_summary">Afficher l\'ombre d\'un objet d\'une hauteur de<xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_dayOffset">Décalage horaire</string>        <!-- edittext label --> 
     <string name="configLabel_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Paramètres avancés</string>                        <!-- group title -->  <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
-    <string name="configLabel_experimental">Paramètres expérimentaux</string>                <!-- group title -->     <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
+    <string name="configLabel_advanced">Avancés</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Expérimental</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">Source de données</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Rechercher et charger des extensions tierces.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Mise en page</string>           <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_widgetlayout">Mise en page</string>           <!-- group title -->
     <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
         <item>Haut-gauche</item>
@@ -313,14 +313,14 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Apparence</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Thème</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Ajuste le texte et les icônes</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_theme">Thème :</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Adapter selon l\'espace disponible</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">Mets à l'échelle le texte et les icônes</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Remplis la cellule</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_gravity">Aligne sur la base</string>  <!-- spinner label -->
+    <string name="configLabel_appearance_gravity">Alignement :</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showIcons">Montre les icônes</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showEnabledOnly">Montrer les éléments actifs</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showIcons">Afficher les icônes</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showEnabledOnly">Afficher les éléments actifs</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titre :</string>              <!-- edittext label -->
     <!-- line commented to use default: <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> --><!-- edittext hint -->
@@ -379,15 +379,15 @@
     <string name="timeMode_moon_new">Nouvelle lune</string>                               <!-- setting -->
     <string name="timeMode_moon_new_short">Nouvelle</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent">Premier croissant de lune</string>                     <!-- label -->
-    <string name="timeMode_moon_waxingcrescent_short">Premier croissant</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent_short">1er croissant</string>               <!-- label -->
     <string name="timeMode_moon_firstquarter">Premier quartier</string>                 <!-- setting -->
-    <string name="timeMode_moon_firstquarter_short">Premier quartier</string>           <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">1er quartier</string>           <!-- setting -->
     <string name="timeMode_moon_waxinggibbous">Lune gibbeuse ascendante</string>                     <!-- label -->
-    <string name="timeMode_moon_waxinggibbous_short">Gibbeuse ascendante</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous_short">Gibbeuse asc.</string>               <!-- label -->
     <string name="timeMode_moon_full">Pleine lune</string>                             <!-- setting -->
     <string name="timeMode_moon_full_short">Pleine</string>                            <!-- setting -->
     <string name="timeMode_moon_waninggibbous">Lune gibbeuse descendante</string>                     <!-- label -->
-    <string name="timeMode_moon_waninggibbous_short">Gibbeuse descendante</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous_short">Gibbeuse desc.</string>               <!-- label -->
     <string name="timeMode_moon_thirdquarter">Dernier quartier</string>                 <!-- setting -->
     <string name="timeMode_moon_thirdquarter_short">Dernier quartier</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent">Dernier croissant de lune</string>                     <!-- label -->
@@ -414,7 +414,7 @@
     <!-- Widget Setting: calendar -->
     <string name="configLabel_general_showDate">Montrer la date</string>   <!-- group title -->
     <string name="configLabel_general_calendar">Calendrier</string>   <!-- group title -->
-    <string name="configLabel_general_calendarMode">Calendrier:</string>          <!-- spinner label -->
+    <string name="configLabel_general_calendarMode">Calendrier :</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarFormat">Format de date :</string>          <!-- spinner label --> 
     <string name="configLabel_general_calendarFormatPattern">Format de date:</string>          <!-- edittext label -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->
@@ -434,8 +434,8 @@
     <string name="widgetMode1x1_both_2">Lever &amp; Coucher (2)</string>  <!-- setting -->
     <string name="widgetMode3x1_sunrise_sunset_noon">Lever, coucher &amp; midi</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimut</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Déclination &amp; Ascension droite</string>     <!-- setting -->
+    <string name="widgetMode1x1_altaz">Hauteur &amp; Azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Déclinaison &amp; Ascension droite</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Distance actuelle</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Prochain apogée ou périgée</string>     <!-- setting -->
     <string name="widgetMode1x1_moonday">Jour lunaire</string>     <!-- setting -->
@@ -450,7 +450,7 @@
     <string name="widgetMode_sunPosMap_simplerectangular">Basique</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polaire [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polaire [sud]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Bille Bleue</string>    <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_location">Équidistant azimutal</string>     <!-- setting -->
 
     <string name="worldmap_projection_equirectangular">Rectangulaire équidistant</string>
@@ -467,12 +467,12 @@
     <string name="widgetMode2x2_alarmlist">Liste des alarmes</string>     <!-- setting -->
     <string name="widgetMode3x2_alarmlist">Liste des alarmes (détails)</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_1x1mode">1x1 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x1mode">2x1 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x2mode">2x2 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x1mode">3x1 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 :</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3 :</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
@@ -504,7 +504,7 @@
 
     <string name="locationPermissionWarning"><xliff:g id="warningTag">[w]</xliff:g> Les autorisations de localisation sont nécessaires pour mettre à jour la position actuelle.</string>           <!-- snackbar text -->
 
-    <string name="configLabel_location">Paramètres de localisation</string>               <!-- group title -->    <!-- TODO: shortened "Location Settings" to "Location" -->
+    <string name="configLabel_location">Localisation</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode :</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitude :</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">Degrés décimaux</string>      <!-- edittext hint -->
@@ -522,23 +522,23 @@
     <string name="configAction_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Heure solaire</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_standard">Heure standard</string>                       <!-- setting -->
     <string name="timezoneMode_current">Fuseau horaire système</string>               <!-- setting -->
     <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 
-    <string name="time_lmst">Heure sidérale locale (LMST)</string>                  <!-- timezone label -->
+    <string name="time_lmst">Temps sidéral local (LMST)</string>                  <!-- timezone label -->
     <string name="time_gmst">Temps sidéral de Greenwich (GMST)</string>              <!-- timezone label -->
-    <string name="time_utc">temps universel coordonné (UTC)</string>            <!-- timezone label -->
+    <string name="time_utc">Temps universel coordonné (UTC)</string>            <!-- timezone label -->
     <string name="time_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="configAction_suggestTimeZone">Fuseau horaire recommandé</string>
 
-    <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="configLabel_timezone_standard">Heure standard :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="configLabel_timezone_fromapp">Utiliser la localisation de l\'application</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
@@ -632,7 +632,7 @@
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Actions réinitialisées aux valeurs par défaut.</string>
 
-    <string name="saveaction_dialog_title">Ajout une action</string>
+    <string name="saveaction_dialog_title">Ajouter une action</string>
     <string name="saveaction_dialog_ok">Enregistrer</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Suggestion</string>
@@ -669,8 +669,8 @@
     <string name="widgetThemes_dark_translucent">Sombre (translucide)</string>      <!-- default widget theme name -->
     <string name="widgetThemes_light">Clair</string>                              <!-- default widget theme name --> 
     <string name="widgetThemes_light_transparent">Clair (transparent)</string>    <!-- default widget theme name -->
-    <string name="widgetThemes_dark1">Sombre (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
-    <string name="widgetThemes_light1">Clair (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
+    <string name="widgetThemes_dark1">Sombre (hérité)</string>                                <!-- default widget theme name -->
+    <string name="widgetThemes_light1">Clair (hérité)</string>                              <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -715,10 +715,10 @@
     <string name="configLabel_themeColorFall">Automne</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Hiver</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSpring_text">Printemps (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer_text">Eté (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorFall_text">Automne (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter_text">Hiver (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring_text">Printemps</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer_text">Eté</string> <!-- color label -->
+    <string name="configLabel_themeColorFall_text">Automne</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter_text">Hiver</string> <!-- color label -->
 
     <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
@@ -728,8 +728,8 @@
     <string name="configLabel_themeColorMapSunShadow">Ombre</string> <!-- color label -->
     <string name="configLabel_themeColorMapMoonHighlight">Mise en valeur</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise_text">Lever de lune (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset_text">Coucher de lune (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise_text">Lever de lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset_text">Coucher de lune</string> <!-- color label -->
 
     <string name="configLabel_themeColorMoonrise">Lever de lune</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Coucher de lune</string> <!-- color label -->
@@ -738,16 +738,16 @@
     <string name="configLabel_themeColorMoonFull">Pleine lune</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Nouvelle lune</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonFullText">pleine (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNewText">Nouvelle (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonApogeeText">Apogée (text)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonPerigeeText">Perigée (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFullText">pleine lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNewText">Nouvelle lune</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonApogeeText">Apogée (lune)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonPerigeeText">Perigée (lune)</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise_text">Lever de soleil (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise_text">Lever de soleil</string> <!-- color label -->
     <string name="configLabel_themeColorSunrise">Lever de soleil</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset_text">Coucher de soleil (text)</string> <!-- color label -->
+    <string name="configLabel_themeColorSunset_text">Coucher de soleil</string> <!-- color label -->
     <string name="configLabel_themeColorSunset">Coucher de soleil</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
@@ -771,7 +771,7 @@
     <string name="configLabel_themeColorGraphPointFill">Points (Fill)</string>         <!-- color label -->    <!-- TODO -->
     <string name="configLabel_themeColorGraphPointStroke">Points (trajectoire)</string>         <!-- color label -->
 
-    <string name="configLabel_themeColorGraphLabels">Etiquettes (texte)</string>         <!-- color label -->
+    <string name="configLabel_themeColorGraphLabels">Etiquettes</string>         <!-- color label -->
     <string name="configLabel_themeColorGraphLabelsBG">Etiquettes (arrière-plan)</string>         <!-- color label --> 
 
     <string name="configLabel_themeColorGraphBackground">Arrière-plan graphique</string>         <!-- color label -->
@@ -878,8 +878,8 @@
     <string name="configAction_deleteEvent">Supprimer</string>           <!-- button (contentDescription) -->
     <string name="configAction_clearEvents">Effacer</string>           <!-- button (contentDescription) -->
 
-    <string name="configAction_addEvent_sunEvent">Ajouter (Sun Elevation)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
-    <string name="configAction_addEvent_shadowEvent">Ajouter (Shadow Length)</string>           <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="configAction_addEvent_sunEvent">Ajouter (Hauteur du soleil)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_shadowEvent">Ajouter (Longeur d'ombre)</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -906,25 +906,25 @@
     <string name="editevent_dialog_angle">Angle</string>
     <string name="editevent_dialog_angle_hint">-6</string>
     <string name="editevent_dialog_angle_suffix">°</string>
-    <string name="editevent_dialog_angle_error">L\'angle est nécessaire!</string>
+    <string name="editevent_dialog_angle_error">L\'angle est nécessaire !</string>
 
     <string name="editevent_dialog_length">Longueur de l\'ombre</string>
     <string name="editevent_dialog_length_hint">6</string>
-    <string name="editevent_dialog_length_error">La longueur de l\'ombre est nécessaire!</string>
+    <string name="editevent_dialog_length_error">La longueur de l\'ombre est nécessaire !</string>
     <string name="editevent_dialog_label_suggested1">Longueur de l\'ombre</string>
 
     <string name="editevent_dialog_height">Hauteur d\'objet</string>
     <string name="editevent_dialog_height_hint">1</string>
-    <string name="editevent_dialog_height_error">La hauteur de l\'objet est nécessaire!</string>
+    <string name="editevent_dialog_height_error">La hauteur de l\'objet est nécessaire !</string>
 
     <string name="delevent_dialog_msg">Etes-vous sur de vouloir supprimer %1$s (%2$s)?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
     <string name="delevent_dialog_ok">Supprimer</string>
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
+    <string name="clearevents_dialog_msg">Etes-vous sur de vouloir supprimer les événements personnalisés ?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
     <string name="clearevents_dialog_ok">Effacer</string>
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearevents_toast">Evenements personnalisés supprimés.</string>
+    <string name="clearevents_toast">Evénements personnalisés supprimés.</string>
 
 
     <!--
@@ -932,7 +932,7 @@
     -->
     <string name="configLabel_alarmClock">Alarmes</string>            <!-- group title -->
     <string name="configLabel_alarmClock_emptyMsg">Aucune alarme</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Définir l\'alarm</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addAlarm">Définir l\'alarme</string>               <!-- button (contentDescription) -->
     <string name="configAction_addNotification">Définir les notifications</string> <!-- button (contentDescription) -->
     <string name="configAction_editAlarm">Modifier</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Supprimer</string>               <!-- button (contentDescription) -->
@@ -997,7 +997,7 @@
     <string name="alarmOption_repeat_all">Chaque jour</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="deletealarm_dialog_title">Supprimer</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Etes-vous certain de vouloir supprimer<xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="deletealarm_dialog_message">Etes-vous certain de vouloir supprimer <xliff:g id="type">%1$s</xliff:g> a <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) ?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Supprimer</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Annuler</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
