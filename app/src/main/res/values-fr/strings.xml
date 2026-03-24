@@ -1455,7 +1455,7 @@
     <string name="configActionDesc_doNothing">Ne rien faire</string>
     <string name="configActionDesc_nextNote">Affichage suivant</string>
     <string name="configActionDesc_prevNote">Affichage précédent</string>
-    <string name="configActionDesc_resetNote">Afficher l\'événement à venir'</string>
+    <string name="configActionDesc_resetNote">Afficher l\'événement à venir</string>
     <string name="configActionDesc_showCalendar">Afficher le calendrier</string>
     <string name="configActionDesc_mapLocation">Afficher l\'emplacement sur la carte</string>
     <string name="configActionDesc_setAlarm">Définir une alarme</string>
