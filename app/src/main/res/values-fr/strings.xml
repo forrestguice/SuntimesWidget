@@ -315,7 +315,7 @@
     <string name="configLabel_appearance_mode">Apparence</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Thème :</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Adapter selon l\'espace disponible</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Mets à l'échelle le texte et les icônes</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">Mets à l\'échelle le texte et les icônes</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Remplis la cellule</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Alignement :</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
@@ -879,7 +879,7 @@
     <string name="configAction_clearEvents">Effacer</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_addEvent_sunEvent">Ajouter (Hauteur du soleil)</string>           <!-- button (contentDescription) -->
-    <string name="configAction_addEvent_shadowEvent">Ajouter (Longeur d'ombre)</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addEvent_shadowEvent">Ajouter (Longeur d\'ombre)</string>           <!-- button (contentDescription) -->
 
     <string name="configAction_importEvents">@string/configAction_import</string>           <!-- button (contentDescription) -->
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
@@ -1366,7 +1366,7 @@
     <string name="configLabel_ui_misc">Divers</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Retour d'informations détaillé</string>   <!-- TODO Verify -->
+    <string name="configLabel_accessibility_verbose">Retour d\'informations détaillé</string>   <!-- TODO Verify -->
     <string name="configLabel_accessibility_verbose_summary">Signaler les modifications automatiques apportées à l\'interface utilisateur.</string>
 
     <!-- App Setting: UI Warnings -->
@@ -2086,7 +2086,7 @@
 
     <string name="help_alarms_edit"><![CDATA[
           [Icon Back] ignorer les changements.<br/>
-          [Icon Save] enregistrer, et [Icon Done] enregistrer et activer.<br/>
+          [Icon Save] enregistrer, [Icon Done] enregistrer et activer.<br/>
           [Icon Cancel] enregistrer et désactiver.<br/>
           [Icon Delete] annuler et supprimer.<br/>
           <br/>
@@ -2108,7 +2108,7 @@
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Aujourd\'hui :</b> Heures de lever et de coucher du soleil pour la date d\'aujourd\'hui.<br/><br/>
           <b>Dernier / Prochain :</b> La date du dernier événement et celle du prochain événement.<br/>
-    ]]></string>  <!-- TODO -->
+    ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
           <b>Equinoxe de mars :</b> Le début du printemps astronomique. <em>Mars</em> [hémisphère nord] ou <em>Septembre</em> [hémisphère sud]. L\'équinoxe de mars est aussi appelé l\'<em>équinoxe de printemps</em>.<br/><br/>
           <b>Solstice de juin :</b> Le début de l\'été astronomique, <em>Juin</em> [hémisphère nord] ou <em>Décembre</em> [hémisphère sud]. Le solstice de juin est aussi appelé le <em>solstice d\'été</em>.<br/><br/>
@@ -2120,17 +2120,17 @@
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
-        <b>Lumière utile :</b> espace de temps entre les crépuscules civils du matin et du soir.<br/>
+        <b>Lumière utile :</b> espace de temps entre l\'aube civile et le crépuscule civil.<br/>
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
         <b>Illumination de la lune :</b> Le widget de la lune et la page principale affiche l\'illumination de la lune au zénith lunaire (le milieu entre le lever et le coucher de la lune), tandis que la fenêtre de la lune affiche l\'illumination actuelle de la lune.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Heure dorée :</b> Le soleil est entre 6 degrés en dessous ou au-dessus de l\'horizon. Le matin, l\'heure dorée débute avec l\'aube civil et termine peu de temps après le lever du soleil. Le soir, l\'heure dorée débute peu de temps avant le coucher du soleil et se termine avec le crépuscule civil.<br/>
+        <b>Heure dorée :</b> Le soleil est entre 6 degrés en dessous ou au-dessus de l\'horizon. Le matin, l\'heure dorée débute avec l\'aube civile et termine peu de temps après le lever du soleil. Le soir, l\'heure dorée débute peu de temps avant le coucher du soleil et se termine avec le crépuscule civil.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Heure bleue :</b> Le soleil est entre 8 degrés et 4 degrés en dessous de l\'horizon. Le début et la fin de l\'heure bleue se situe entre le crépuscule nautique et civil.<br/>
+        <b>Heure bleue :</b> Le soleil est entre 8 degrés et 4 degrés en dessous de l\'horizon. Le début et la fin de l\'heure bleue se situe entre le crépuscule, respectivement l\'aube nautique et civil.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         Nom complet de la classe (Activity) à lancer.<br/>
@@ -2168,7 +2168,7 @@
     <string name="security_duplicate_permissions">Autorisations accordée à Suntimes :\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
-    <string name="reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
+    <string name="reboot_required_message">Vous devez redémarrer l\'application pour que ces modifciations soient appliquées.</string>
     <string name="restart_required_message">Un redémarrage peut être nécessaire afin de prendre en compte les changememts.</string>   <!-- toast; app restart may be required -->
     <string name="configLabel_permissionGranted">Autorisation accordée</string>
 
@@ -2188,9 +2188,9 @@
     <string name="calculator_displayString_time4a_4j">Basé sur les calculs astronomiques publiés par Jean Meeus dans son livre "Astronomical Algorithms" (seconde édition).</string>
     <string name="help_datasources">
         <![CDATA[
-        Suntimes utilise des librairies de tierces parties pour les calculs astronomique.<br/>
+        Suntimes utilise des librairies de parties tierces pour les calculs astronomique.<br/>
         <br/>
-        Le paramètre <b>source de données<b> permet de choisir entre différentes bibliothèques (ou choisir parmi les différents algorithmes proposés par ces bibliothèques). Par défaut : <b>time4a-time4j</b>.<br/>
+        Le paramètre <b>sources de données<b> permet de choisir entre différentes bibliothèques (ou choisir parmi les différents algorithmes proposés par ces bibliothèques). Par défaut : <b>time4a-time4j</b>.<br/>
         <br/>
         Ce paramètre influe sur la vitesse et la précision des calculs et peut limiter les fonctionnalités disponibles. <br/>
         <br/>
