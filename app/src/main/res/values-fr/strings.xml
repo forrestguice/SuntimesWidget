@@ -30,8 +30,8 @@
     <string name="action_closeNavDrawer">Fermer le menu</string>
     <string name="action_clock">Heure</string>
     <string name="action_lightGraphDialog">Lumière solaire</string>
-    <string name="action_lineGraph">Graphique d\'altitude</string>
-    <string name="action_seekAltitude">Chercher l\'altitude</string>        <!-- checkbox label -->
+    <string name="action_lineGraph">Hauteur</string>
+    <string name="action_seekAltitude">Choix de la hauteur</string>        <!-- checkbox label -->
     <string name="action_search">Rechercher</string>        <!-- button (contentDescription) -->
     <string name="action_deselect">Effacer la sélection</string>
     <string name="action_moon">Lune</string>
@@ -59,9 +59,9 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être erroné pour cet emplacement.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%s</xliff:g>).</string>  <!-- TODO -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Heure d\'été</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Heure d\'été</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> équation du temps</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -132,13 +132,13 @@
         <item quantity="other">%1$s après</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
     <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
     <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
-    <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
-    <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
+    <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -174,7 +174,7 @@
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
-    <string name="delta_weeks">s</string>    <!-- e.g. 2w -->
+    <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
     <string name="delta_days">j</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">min</string>  <!-- e.g. 3m -->
@@ -198,19 +198,19 @@
     <string name="settings_lengthUnits_metric">Métriques</string>
     <string name="settings_lengthUnits_imperial">Impériales</string>
 
-    <string name="units_feet">pieds</string>   <!-- TODO -->
-    <string name="units_feet_short">ft</string>   <!-- TODO -->
+    <string name="units_feet">pieds</string>
+    <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
         <item quantity="one">%s pied</item>
         <item quantity="other">%s pieds</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">miles</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
         <item quantity="one">%s mile</item>
         <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+    </plurals>
 
     <string name="units_meters">mètres</string>
     <string name="units_meters_short">m</string>
@@ -248,7 +248,7 @@
 
     <!-- Widget Setting: general -->
     <string name="settings_general">Général</string>                <!-- group title -->
-    <string name="settings_general_calculator">Source de données</string>         <!-- spinner label -->
+    <string name="settings_general_calculator">Source de données :</string>         <!-- spinner label -->
     <string name="settings_general_calculator_sun">Source de données pour le soleil</string>         <!-- preference label -->
     <string name="settings_general_calculator_moon">Source de données pour la lune</string>         <!-- preference label -->
     <string name="settings_general_calculator_help">Sources de données</string>    <!-- preference title / help button text -->
@@ -256,10 +256,10 @@
     <string name="settings_general_timeFormatMode">Format des heures :</string>         <!-- spinner label -->
 
     <string name="settings_general_altitude_enabled">Utiliser l\'altitude</string>        <!-- checkbox label -->
-    <string name="settings_general_altitude_enabled_summary">Appliquer des filtres en fonction de l\'altitude.</string>        <!-- checkbox label -->
+    <string name="settings_general_altitude_enabled_summary">Ajuster en fonction de l\'altitude.</string>        <!-- checkbox label -->
 
-    <string name="settings_general_localize_hemisphere">Localiser dans l\'hémisphère</string>        <!-- checkbox label -->
-    <string name="settings_general_localize_hemisphere_summary">Appliquer une localisation basée sur les hémisphères (indicateurs de saison, icônes des phases lunaires).</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere">Adapter selon l\'hémisphère</string>        <!-- checkbox label -->
+    <string name="settings_general_localize_hemisphere_summary">Afichage adapté à l\'hémisphères (indicateurs de saison, icônes des phases lunaires).</string>        <!-- checkbox label -->
 
     <string name="settings_general_lengthUnits">Unités de longueur</string>        <!-- spinner label -->
 
@@ -279,14 +279,14 @@
     <string name="settings_general_showHours_summary">Ajoute les heures et les minutes dans les durées supérieures à un jour.</string>    <!-- checkbox label -->
 
     <string name="settings_general_observerheight">Ombre des objets</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">Afficher l\'ombre d\'un objet d\'une hauteur de<xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="settings_general_observerheight_summary">Afficher l\'ombre d\'un objet d\'une hauteur de<xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">Décalage horaire</string>        <!-- edittext label -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="settings_advanced">Paramètres avancés</string>                        <!-- group title -->
-    <string name="settings_experimental">Paramètres expérimentaux</string>                <!-- group title -->
+    <string name="settings_advanced">Avancés</string>                        <!-- group title -->
+    <string name="settings_experimental">Expérimental</string>                <!-- group title -->
     <string name="settings_general_scanPlugins">Source de données</string>                                <!-- checkbox label -->
     <string name="settings_general_scanPlugins_summary">Rechercher et charger des extensions tierces.</string>   <!-- pref summary -->
 
@@ -308,17 +308,16 @@
     <!-- Widget Setting: appearance -->
     <string name="settings_appearance">Apparence</string>           <!-- group title -->
     <string name="settings_appearance_mode">Apparence</string>                  <!-- spinner label -->
-    <string name="settings_appearance_theme">Thème</string>                  <!-- spinner label -->
-    <string name="settings_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->
-    <string name="settings_appearance_scaleText">Ajuste le texte et les icônes</string>  <!-- checkbox label -->
+    <string name="settings_appearance_theme">Thème :</string>                  <!-- spinner label -->
+    <string name="settings_appearance_allowResize">Adapter selon l\'espace disponible</string>  <!-- checkbox label -->
+    <string name="settings_appearance_scaleText">Mets à l\'échelle le texte et les icônes</string>  <!-- checkbox label -->
     <string name="settings_appearance_scaleBase">Remplis la cellule</string>  <!-- checkbox label -->
-    <string name="settings_appearance_gravity">Aligne sur la base</string>  <!-- spinner label -->
+    <string name="settings_appearance_gravity">Alignement :</string>  <!-- spinner label -->
     <string name="settings_appearance_showLabels">Afficher les libellés</string>          <!-- checkbox label -->
-    <string name="settings_appearance_showIcons">Montre les icônes</string>          <!-- checkbox label -->
-    <string name="settings_appearance_showEnabledOnly">Montrer les éléments actifs</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showIcons">Afficher les icônes</string>          <!-- checkbox label -->
+    <string name="settings_appearance_showEnabledOnly">Afficher les éléments actifs</string>          <!-- checkbox label -->
     <string name="settings_appearance_showTitle">Afficher le titre</string>          <!-- checkbox label -->
     <string name="settings_appearance_titleText">Titre :</string>              <!-- edittext label -->
-    <!-- line commented to use default: <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> --><!-- edittext hint -->
 
     <!-- Setting: navigation -->
     <string name="settings_navigation">Navigation</string>           <!-- group title -->
@@ -374,15 +373,15 @@
     <string name="timeMode_moon_new">Nouvelle lune</string>                               <!-- setting -->
     <string name="timeMode_moon_new_short">Nouvelle</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent">Premier croissant de lune</string>                     <!-- label -->
-    <string name="timeMode_moon_waxingcrescent_short">Premier croissant</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent_short">1er croissant</string>               <!-- label -->
     <string name="timeMode_moon_firstquarter">Premier quartier</string>                 <!-- setting -->
-    <string name="timeMode_moon_firstquarter_short">Premier quartier</string>           <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">1er quartier</string>           <!-- setting -->
     <string name="timeMode_moon_waxinggibbous">Lune gibbeuse ascendante</string>                     <!-- label -->
-    <string name="timeMode_moon_waxinggibbous_short">Gibbeuse ascendante</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous_short">Gibbeuse asc.</string>               <!-- label -->
     <string name="timeMode_moon_full">Pleine lune</string>                             <!-- setting -->
     <string name="timeMode_moon_full_short">Pleine</string>                            <!-- setting -->
     <string name="timeMode_moon_waninggibbous">Lune gibbeuse descendante</string>                     <!-- label -->
-    <string name="timeMode_moon_waninggibbous_short">Gibbeuse descendante</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous_short">Gibbeuse desc.</string>               <!-- label -->
     <string name="timeMode_moon_thirdquarter">Dernier quartier</string>                 <!-- setting -->
     <string name="timeMode_moon_thirdquarter_short">Dernier quartier</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent">Dernier croissant de lune</string>                     <!-- label -->
@@ -409,7 +408,7 @@
     <!-- Widget Setting: calendar -->
     <string name="settings_general_showDate">Montrer la date</string>   <!-- group title -->
     <string name="settings_general_calendar">Calendrier</string>   <!-- group title -->
-    <string name="settings_general_calendarMode">Calendrier:</string>          <!-- spinner label -->
+    <string name="settings_general_calendarMode">Calendrier :</string>          <!-- spinner label -->
     <string name="settings_general_calendarFormat">Format de date :</string>          <!-- spinner label -->
     <string name="settings_general_calendarFormatPattern">Format de date:</string>          <!-- edittext label -->
     <string name="settings_general_calendarFormatPattern_hint">MMMM d, yyyy</string>       <!-- edittext hint -->
@@ -429,8 +428,8 @@
     <string name="widgetMode1x1_both_2">Lever &amp; Coucher (2)</string>  <!-- setting -->
     <string name="widgetMode3x1_sunrise_sunset_noon">Lever, coucher &amp; midi</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimut</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Déclination &amp; Ascension droite</string>     <!-- setting -->
+    <string name="widgetMode1x1_altaz">Hauteur &amp; Azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Déclinaison &amp; Ascension droite</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Distance actuelle</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Prochain apogée ou périgée</string>     <!-- setting -->
     <string name="widgetMode1x1_moonday">Jour lunaire</string>     <!-- setting -->
@@ -445,7 +444,7 @@
     <string name="widgetMode_sunPosMap_simplerectangular">Basique</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polaire [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polaire [sud]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_bluemarble">Bille Bleue</string>    <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_location">Équidistant azimutal</string>     <!-- setting -->
 
     <string name="worldmap_projection_equirectangular">Rectangulaire équidistant</string>
@@ -462,12 +461,12 @@
     <string name="widgetMode2x2_alarmlist">Liste des alarmes</string>     <!-- setting -->
     <string name="widgetMode3x2_alarmlist">Liste des alarmes (détails)</string>     <!-- setting -->
 
-    <string name="settings_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="settings_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="settings_appearance_2x2mode">2x2:</string>     <!-- spinner label -->
-    <string name="settings_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="settings_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="settings_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="settings_appearance_1x1mode">1x1 :</string>     <!-- spinner label -->
+    <string name="settings_appearance_2x1mode">2x1 :</string>     <!-- spinner label -->
+    <string name="settings_appearance_2x2mode">2x2 :</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x1mode">3x1 :</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x2mode">3x2 :</string>     <!-- spinner label -->
+    <string name="settings_appearance_3x3mode">3x3 :</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ne rien faire</string>           <!-- setting -->
@@ -499,7 +498,7 @@
 
     <string name="location_warning_permissions"><xliff:g id="warningTag">[w]</xliff:g> Les autorisations de localisation sont nécessaires pour mettre à jour la position actuelle.</string>           <!-- snackbar text -->
 
-    <string name="location_label">Paramètres de localisation</string>               <!-- group title -->
+    <string name="location_label">Localisation</string>               <!-- group title -->
     <string name="location_label_mode">Mode :</string>                      <!-- spinner label -->
     <string name="location_label_lat">Latitude :</string>                   <!-- edittext label -->
     <string name="location_hint_lat">Degrés décimaux</string>      <!-- edittext hint -->
@@ -517,23 +516,23 @@
     <string name="places_action_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="settings_timezoneMode_standard">Heure solaire</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezoneMode_standard">Heure standard</string>                       <!-- setting -->
     <string name="settings_timezoneMode_current">Fuseau horaire système</string>               <!-- setting -->
     <string name="settings_timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 
-    <string name="time_lmst">Heure sidérale locale (LMST)</string>                  <!-- timezone label -->
+    <string name="time_lmst">Temps sidéral local (LMST)</string>                  <!-- timezone label -->
     <string name="time_gmst">Temps sidéral de Greenwich (GMST)</string>              <!-- timezone label -->
-    <string name="time_utc">temps universel coordonné (UTC)</string>            <!-- timezone label -->
+    <string name="time_utc">Temps universel coordonné (UTC)</string>            <!-- timezone label -->
     <string name="time_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
     <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="settings_timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Fuseau horaire recommandé</string>
 
-    <string name="settings_timezone">Fuseau horaire</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
+    <string name="settings_timezone">Fuseau horaire</string>             <!-- group title -->
     <string name="settings_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="settings_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
-    <string name="settings_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="settings_timezone_standard">Heure standard :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="settings_timezone_fromapp">Utiliser la localisation de l\'application</string>                  <!-- checkbox text -->
 
     <!-- Widget Setting: timeFormat mode -->
@@ -627,7 +626,7 @@
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="actions_clearactions_toast">Actions réinitialisées aux valeurs par défaut.</string>
 
-    <string name="actions_saveaction_dialog_title">Ajout une action</string>
+    <string name="actions_saveaction_dialog_title">Ajouter une action</string>
     <string name="actions_saveaction_dialog_ok">Enregistrer</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="actions_saveaction_dialog_suggest">Suggestion</string>
@@ -664,8 +663,8 @@
     <string name="themes_widgetThemes_dark_translucent">Sombre (translucide)</string>      <!-- default widget theme name -->
     <string name="themes_widgetThemes_light">Clair</string>                              <!-- default widget theme name -->
     <string name="themes_widgetThemes_light_transparent">Clair (transparent)</string>    <!-- default widget theme name -->
-    <string name="themes_widgetThemes_dark1">Sombre (legacy)</string>                                <!-- default widget theme name -->   <!-- TODO -->
-    <string name="themes_widgetThemes_light1">Clair (legacy)</string>                              <!-- default widget theme name -->   <!-- TODO -->
+    <string name="themes_widgetThemes_dark1">Sombre (système)</string>                                <!-- default widget theme name -->
+    <string name="themes_widgetThemes_light1">Clair (système)</string>                              <!-- default widget theme name -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -710,10 +709,10 @@
     <string name="themes_configLabel_themeColorFall">Automne</string> <!-- color label -->
     <string name="themes_configLabel_themeColorWinter">Hiver</string> <!-- color label -->
 
-    <string name="themes_configLabel_themeColorSpring_text">Printemps (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorSummer_text">Eté (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorFall_text">Automne (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorWinter_text">Hiver (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSpring_text">Printemps</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSummer_text">Eté</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorFall_text">Automne</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorWinter_text">Hiver</string> <!-- color label -->
 
     <string name="themes_configLabel_themeColorAccent">Accent</string> <!-- color label -->
     <string name="themes_configLabel_themeColorAction">Action</string> <!-- color label -->
@@ -723,8 +722,8 @@
     <string name="themes_configLabel_themeColorMapSunShadow">Ombre</string> <!-- color label -->
     <string name="themes_configLabel_themeColorMapMoonHighlight">Mise en valeur</string> <!-- color label -->
 
-    <string name="themes_configLabel_themeColorMoonrise_text">Lever de lune (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorMoonset_text">Coucher de lune (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonrise_text">Lever de lune</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonset_text">Coucher de lune</string> <!-- color label -->
 
     <string name="themes_configLabel_themeColorMoonrise">Lever de lune</string> <!-- color label -->
     <string name="themes_configLabel_themeColorMoonset">Coucher de lune</string> <!-- color label -->
@@ -733,16 +732,16 @@
     <string name="themes_configLabel_themeColorMoonFull">Pleine lune</string> <!-- color label -->
     <string name="themes_configLabel_themeColorMoonNew">Nouvelle lune</string> <!-- color label -->
 
-    <string name="themes_configLabel_themeColorMoonFullText">pleine (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorMoonNewText">Nouvelle (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorMoonApogeeText">Apogée (text)</string> <!-- color label -->
-    <string name="themes_configLabel_themeColorMoonPerigeeText">Perigée (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonFullText">pleine lune</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonNewText">Nouvelle lune</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonApogeeText">Apogée (lune)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorMoonPerigeeText">Perigée (lune)</string> <!-- color label -->
 
-    <string name="themes_configLabel_themeColorSunrise_text">Lever de soleil (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunrise_text">Lever de soleil</string> <!-- color label -->
     <string name="themes_configLabel_themeColorSunrise">Lever de soleil</string> <!-- color label -->
     <string name="themes_configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="themes_configLabel_themeColorSunset_text">Coucher de soleil (text)</string> <!-- color label -->
+    <string name="themes_configLabel_themeColorSunset_text">Coucher de soleil</string> <!-- color label -->
     <string name="themes_configLabel_themeColorSunset">Coucher de soleil</string>   <!-- color label -->
     <string name="themes_configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
@@ -766,7 +765,7 @@
     <string name="themes_configLabel_themeColorGraphPointFill">Points (Fill)</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphPointStroke">Points (trajectoire)</string>         <!-- color label -->
 
-    <string name="themes_configLabel_themeColorGraphLabels">Etiquettes (texte)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphLabels">Etiquettes</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphLabelsBG">Etiquettes (arrière-plan)</string>         <!-- color label -->
 
     <string name="themes_configLabel_themeColorGraphBackground">Arrière-plan graphique</string>         <!-- color label -->
@@ -873,8 +872,8 @@
     <string name="events_action_deleteEvent">Supprimer</string>           <!-- button (contentDescription) -->
     <string name="events_action_clearEvents">Effacer</string>           <!-- button (contentDescription) -->
 
-    <string name="events_action_addEvent_sunEvent">Ajouter (Sun Elevation)</string>           <!-- button (contentDescription) -->
-    <string name="events_action_addEvent_shadowEvent">Ajouter (Shadow Length)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_sunEvent">Ajouter (Hauteur du soleil)</string>           <!-- button (contentDescription) -->
+    <string name="events_action_addEvent_shadowEvent">Ajouter (Longeur d\'ombre)</string>           <!-- button (contentDescription) -->
 
     <string name="events_action_importEvents">@string/action_import</string>           <!-- button (contentDescription) -->
     <string name="events_action_exportEvents">@string/action_export</string>           <!-- button (contentDescription) -->
@@ -901,25 +900,25 @@
     <string name="events_editevent_dialog_angle">Angle</string>
     <string name="events_editevent_dialog_angle_hint">-6</string>
     <string name="events_editevent_dialog_angle_suffix">°</string>
-    <string name="events_editevent_dialog_angle_error">L\'angle est nécessaire!</string>
+    <string name="events_editevent_dialog_angle_error">L\'angle est nécessaire !</string>
 
     <string name="events_editevent_dialog_length">Longueur de l\'ombre</string>
     <string name="events_editevent_dialog_length_hint">6</string>
-    <string name="events_editevent_dialog_length_error">La longueur de l\'ombre est nécessaire!</string>
+    <string name="events_editevent_dialog_length_error">La longueur de l\'ombre est nécessaire !</string>
     <string name="events_editevent_dialog_label_suggested1">Longueur de l\'ombre</string>
 
     <string name="events_editevent_dialog_height">Hauteur d\'objet</string>
     <string name="events_editevent_dialog_height_hint">1</string>
-    <string name="events_editevent_dialog_height_error">La hauteur de l\'objet est nécessaire!</string>
+    <string name="events_editevent_dialog_height_error">La hauteur de l\'objet est nécessaire !</string>
 
     <string name="events_delevent_dialog_msg">Etes-vous sur de vouloir supprimer %1$s (%2$s)?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
     <string name="events_delevent_dialog_ok">Supprimer</string>
     <string name="events_delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="events_clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
+    <string name="events_clearevents_dialog_msg">Etes-vous sur de vouloir supprimer les événements personnalisés ?\n\nLes alarmes, notifications ou widgets utilisant cet événement risquent de ne plus fonctionner et doivent être reconfigurés.</string>
     <string name="events_clearevents_dialog_ok">Effacer</string>
     <string name="events_clearevents_dialog_cancel">@string/dialog_cancel</string>
-    <string name="events_clearevents_toast">Evenements personnalisés supprimés.</string>
+    <string name="events_clearevents_toast">Evénements personnalisés supprimés.</string>
 
 
     <!--
@@ -927,7 +926,7 @@
     -->
     <string name="alarms_label_alarmClock">Alarmes</string>            <!-- group title -->
     <string name="alarms_label_alarmClock_emptyMsg">Aucune alarme</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="alarms_action_addAlarm">Définir l\'alarm</string>               <!-- button (contentDescription) -->
+    <string name="alarms_action_addAlarm">Définir l\'alarme</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_addNotification">Définir les notifications</string> <!-- button (contentDescription) -->
     <string name="alarms_action_editAlarm">Modifier</string>               <!-- button (contentDescription) -->
     <string name="alarms_action_deleteAlarm">Supprimer</string>               <!-- button (contentDescription) -->
@@ -992,18 +991,18 @@
     <string name="alarmOption_repeat_all">Chaque jour</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="alarmdelete_dialog_title">Supprimer</string>        <!-- dialog title -->
-    <string name="alarmdelete_dialog_message">Etes-vous certain de vouloir supprimer<xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="alarmdelete_dialog_message">Etes-vous certain de vouloir supprimer <xliff:g id="type">%1$s</xliff:g> a <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) ?</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">Supprimer</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">Annuler</string>    <!-- button -->
-    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> a <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) supprimée.</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">De modifications ne sont pas enregistrées.</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_message">Des modifications ne sont pas enregistrées.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Ignorer</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Annuler</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Enregistrer</string>                            <!-- button -->
 
     <string name="alarmsclear_dialog_title">Effacer les alarmes</string>        <!-- dialog title -->
-    <string name="alarmsclear_dialog_message">Etes-vous sure de vouloir supprimer toutes les alarmes ?</string>   <!-- dialog msg -->
+    <string name="alarmsclear_dialog_message">Etes-vous sure de vouloir effacer toutes les alarmes ?</string>   <!-- dialog msg -->
     <string name="alarmsclear_dialog_ok">Effacer</string>        <!-- button -->
     <string name="alarmsclear_dialog_cancel">Annuler</string>    <!-- button -->
     <string name="alarmsclear_toast_success">Alarmes effacées.</string> <!-- toast msg -->
@@ -1028,11 +1027,11 @@
 
     <string name="alarmnote_dialog_title">Note</string>        <!-- dialog title -->
 
-    <string name="alarmrepeat_dialog_title">Répéter l\'alarme</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmrepeat_dialog_title">Répéter l\'alarme</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Appliquer</string>        <!-- button -->
     <string name="alarmrepeat_dialog_cancel">Annuler</string>    <!-- button -->
 
-    <string name="alarmtime_dialog_title">Heure d\'alarme</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmtime_dialog_title">Heure d\'alarme</string>        <!-- dialog title -->
     <string name="alarmtime_dialog_ok">Ecraser</string>        <!-- button -->
     <string name="alarmtime_dialog_cancel">Annuler</string>    <!-- button -->
     <string name="alarmtime_dialog_message">Remplacer l\'heure de l\'alarme?\n\nCette alarme ne sera plus programmée en fonction d\'un événement.</string>   <!-- dialog msg -->
@@ -1049,8 +1048,7 @@
     <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> Le mode Sony STAMINA est activé.\nIl se peut que les alarmes ne fonctionnent pas correctement.</string>  <!-- snackbar message (sony devices only) -->
     <string name="alarms_label_optWhiteList_unlisted_aggressive">Optimisation de la batterie active.\nIl se peut que les alarmes ne fonctionnent pas correctement.</string>
 
-
-    <string name="alarms_label_autostart">Démarrage automatique</string>   <!-- TODO -->
+    <string name="alarms_label_autostart">Démarrage automatique</string>
     <string name="alarms_label_autostart_on">On</string>   <!-- TODO -->
     <string name="alarms_label_autostart_off">Off.\nIl se peut que les alarmes ne fonctionnent plus après le redémarrage.</string>
     <!--<string name="configLabel_alarms_autostart_summary">%1$s</string>-->                    <!-- "On", "Off" -->
@@ -1071,11 +1069,11 @@
     <string name="alarms_label_notifications_fullscreen_summary1">Gère les autorisations relatives aux notifications en plein écran.</string>
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Les notifications en plein écran sont désactivées. Il se peut que les alarmes ne s\'affichent pas sur l\'écran de verrouillage.</string>  <!-- snackbar message -->
 
-    <string name="alarms_label_bootcompleted">Le démarrage est terminé</string>
+    <string name="alarms_label_bootcompleted">Démarrage terminé</string>
     <string name="alarms_label_bootcompleted_summary">Les alarmes sont automatiquement reprogrammées quelques minutes après le redémarrage.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
     <string name="alarms_label_bootcompleted_info">Dernière exécution en <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> après démarrage (pris <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
     <string name="alarms_label_bootcompleted_info_never">Jamais</string>
-    <string name="alarms_label_bootcompleted_action_confirm">Voulez-vous reprogrammer toutes les alarmes et notifications ?</string>
+    <string name="alarms_label_bootcompleted_action_confirm">Reprogrammer toutes les alarmes et notifications ?</string>
     <string name="alarms_label_bootcompleted_action_message">Reprogrammation des alarmes et des notifications...</string>
 
     <string name="alarms_message_background_action">%s effectue des tâches en arrière-plan.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
@@ -1094,10 +1092,10 @@
     <string name="alarms_label_snoozeLimit_none">Sans limite</string>
 
     <string name="alarms_label_snooze">Répète après</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="alarms_label_upcoming">Rappel dans</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_upcoming">Notification d\'alarme à venir</string>
+    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">Afficher les notifications de rappel d\'alarme.</string>
 
     <string name="alarms_label_fadein">Augmentez progressivement le volume</string>
@@ -1109,7 +1107,7 @@
     <string name="alarms_label_brightMode_summary">Les alertes en plein écran apparaissent d\'abord sombres, puis changent lentement de couleur et gagnent en luminosité.</string>
 
     <string name="alarms_label_brightMode_fadein">Augmenter progressivement la luminosité</string>
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
 
     <string name="alarms_label_brightMode_colors">Couleurs pour les alarmes</string>
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1127,12 +1125,12 @@
     <string name="alarmtile_dialogmsg_format0">La prochaine alarme retentira à <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
     <string name="alarmtile_dialogmsg_format1">La prochaine alarme retentira à <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
 
-    <string name="alarms_label_hardwarebuttons">Boutons matériels</string>  <!-- TODO -->
+    <string name="alarms_label_hardwarebuttons">Boutons physiques</string>
     <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->  <!-- TODO -->
         <item>Ignorer</item>
         <item>Silence</item>
-        <item>Répétition</item>
+        <item>Répéter</item>
         <item>Ne rien faire</item>
     </string-array>
 
@@ -1166,7 +1164,7 @@
 
     <string name="alarms_label_alarmMisc">Divers</string>
     <string name="alarms_label_showlauncher">Icône du lanceur</string>
-    <string name="alarms_label_showlauncher_summary">Afficher l\'icône du réveil dans la barre d\'applications.</string>
+    <string name="alarms_label_showlauncher_summary">Afficher l\'icône du réveil dans le tiroir d\'applications.</string>
 
     <string name="alarms_label_poweroffalarms">Alarmes désactivées</string>
     <string name="alarms_label_poweroffalarms_summary">Réactivez l\'appareil lorsqu\'il est éteint.\npackage: <xliff:g id="packageName">%s</xliff:g></string>
@@ -1199,7 +1197,7 @@
     <string name="bedtime_label_sleepOffset">Durée de l\'endormissement</string>
     <string name="bedtime_label_sleepCycle">Durée du cycle de sommeil</string>
     <string name="bedtime_label_sleepCycles">Cycles de sommeil</string>
-    <string name="bedtime_label_numSleepCycles">Dormir pour %1$s de %2$s, ou %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->        <!-- TODO -->
+    <string name="bedtime_label_numSleepCycles">Dormir pour %1$s de %2$s, ou %3$s.</string>    <!-- e.g. sleep for '5 cycles' of '1h 30m', or '7h 30m' -->
     <plurals name="bedtime_cyclePlural">
         <item quantity="one">%d cycle</item>
         <item quantity="other">%d cycles</item>
@@ -1216,16 +1214,16 @@
     <string name="bedtime_msg_reminder">Montrer un rappel %1$s avant l\'heure de coucher</string>          <!-- textview text; "Show a reminder 15m before bedtime" -->
     <string name="bedtime_msg_wakeup_set">Réveil à</string>                                 <!-- textview text (next line shows time) -->
     <string name="bedtime_msg_wakeup_notset">Heure de réveil non définie.</string>                <!-- textview text -->
-    <string name="bedtime_msg_note">Heure decoucher dans %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
+    <string name="bedtime_msg_note">Heure de coucher dans %1$s.</string>              <!-- textview text -->  <!-- e.g. bedtime in 2h 15m -->
 
     <string name="bedtime_label_alarm_notify">Heure de coucher</string>             <!-- AlarmItem label for Bedtime notification -->
-    <string name="bedtime_label_alarm_notify_off">Heure de coucher (off)</string>             <!-- AlarmItem label for Bedtime notification -->
+    <string name="bedtime_label_alarm_notify_off">Heure de coucher (inactive)</string>             <!-- AlarmItem label for Bedtime notification -->
     <string name="bedtime_label_alarm_reminder">Heure de coucher (rappel)</string>    <!-- AlarmItem label for reminder notification -->
     <string name="bedtime_label_alarm_wakeup">Réveil</string>             <!-- AlarmItem label for wake up alarm -->
 
     <string name="bedtime_label_tile_normal">Heure de coucher</string>             <!-- Quick Settings Tile labels -->
-    <string name="bedtime_label_tile_active">Heure de coucher (Active)</string>
-    <string name="bedtime_label_tile_paused">Heure de coucher (Pause)</string>
+    <string name="bedtime_label_tile_active">Heure de coucher (active)</string>
+    <string name="bedtime_label_tile_paused">Heure de coucher (pause)</string>
 
     <string name="bedtime_label_dnd_rulebased">Règles \'Ne pas déranger\'</string>
     <string name="bedtime_label_dnd_rulebased_summary">Contrôle des paramètres \'Ne pas déranger\' avec des règles automatiques.</string>
@@ -1263,7 +1261,7 @@
     <string name="restorebackup_dialog_item_appsettings">Paramètres de l\'application</string>
     <string name="restorebackup_dialog_item_colors">Couleurs</string>
     <string name="restorebackup_dialog_item_colors_appcolors">Couleurs de l\'application</string>
-    <string name="restorebackup_dialog_item_colors_mapcolors">Couleurs des cartess</string>
+    <string name="restorebackup_dialog_item_colors_mapcolors">Couleurs des cartes</string>
     <string name="restorebackup_dialog_item_colors_alarmcolors">Couleurs des alarmes</string>
     <string name="restorebackup_dialog_item_widgetsettings">Paramètres des Widgets</string>
     <string name="restorebackup_dialog_item_widgetthemes">Thèmes des Widget</string>
@@ -1282,20 +1280,20 @@
     <string name="widgetimport_dialog_title1">Paramètres trouvés,\nmais ils sont pour d\'autres widget…</string>
     <string name="widgetimport_dialog_title2">Trouvé plusieurs paramètres…</string>
     <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
-    <string name="widgetimport_dialog_item_unknown">(unconnu)</string>   <!-- shown as item when type cannot be determined -->
-    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restoration de sauvegarde</b>. Les paramètres importés seront pour l\'instant mis en cache et restaurés ultérieurement, lorsque le lanceur en fera la demande.<br/>]]></string>
+    <string name="widgetimport_dialog_item_unknown">(inconnu)</string>   <!-- shown as item when type cannot be determined -->
+    <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restoration de sauvegarde</b>. Les paramètres importés sont pour l\'instant mis en cache et seront restaurés ultérieurement, lorsque le lanceur en fera la demande.<br/>]]></string>
     <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Meilleure estimation</b>. Les paramètres importés seront appliqués aux widgets existants en fonction de leur type.<br/>]]></string>
-    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Importation directe</b>. Les paramètres importés seront directement appliqués. Cela ne fonctionne correctement que si les identifiants des widgets n\'ont pas changé.<br/>]]></string>
+    <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Importation directe</b>. Les paramètres importés seront appliqués directement. Cela ne fonctionne correctement que si les identifiants des widgets n\'ont pas changé.<br/>]]></string>
     <!--<string name="importwidget_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>-->
     <string name="widgetreset_dialog_message">Êtes-vous sûr de vouloir revenir aux valeurs par défaut ?</string>
 
-    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les alarmes seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
-    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Garder les existantes</b>. Les alarmes existantes seront conservées (ce qui peut entraîner des doublons).<br/>]]></string>
+    <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les alarmes actuelles seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
+    <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Conserver</b>. Les alarmes existantes seront conservées (ce qui peut entraîner des doublons).<br/>]]></string>
 
-    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les lieux seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
-    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Garder les existants</b>. Les lieux existants seront conservés (ce qui peut entraîner des doublons).<br/>]]></string>
-    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignorer les existants</b>. Les lieux seront ajoutés s\'ils n\'existent pas encore (ignorer ceux qui existent déjà).<br/>]]></string>v
-    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Ecraser les existants</b>. Les lieux seront mis à jour s\'ils existent déjà.<br/>]]></string>
+    <string name="placesimport_dialog_item_clear"><![CDATA[<b>Effacer</b>. Les lieux actuels seront effacées avant l\'importation à partir de la sauvegarde.<br/>]]></string>
+    <string name="placesimport_dialog_item_addall"><![CDATA[<b>Conserver</b>. Les lieux existants seront conservés (ce qui peut entraîner des doublons).<br/>]]></string>
+    <string name="placesimport_dialog_item_ignore"><![CDATA[<b>Ignorer</b>. Les lieux seront ajoutés s\'ils n\'existent pas encore (ignorer ceux qui existent déjà).<br/>]]></string>v
+    <string name="placesimport_dialog_item_overwrite"><![CDATA[<b>Ecraser</b>. Les lieux existants seront mis à jour.<br/>]]></string>
 
     <plurals name="itemsPlural">
         <item quantity="one">%d élément</item>
@@ -1310,7 +1308,7 @@
     <string name="places_label">Lieux</string>                           <!-- group title -->
     <string name="places_label_manage">Gérer les lieux</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="places_label_build">Ajouter des lieux mondiaux</string>
+    <string name="places_label_build">Ajouter des lieux</string>
     <string name="places_label_build_summary">Ajoute des villes du monde entier à la base de données.</string>
 
     <plurals name="placePlural">
@@ -1358,7 +1356,7 @@
     <string name="settings_ui_misc">Divers</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="settings_accessibility_verbose">Transcirption audio</string>
+    <string name="settings_accessibility_verbose">Retour d\'informations détaillé</string>   <!-- TODO Verify -->
     <string name="settings_accessibility_verbose_summary">Signaler les modifications automatiques apportées à l\'interface utilisateur.</string>
 
     <!-- App Setting: UI Warnings -->
@@ -1378,15 +1376,15 @@
     <string name="settings_ui_showmoon_noon_summary">Affiche le midi lunaire et minuit lunaire dans le cadre du dialogue de la lune.</string>
 
     <!-- App Setting: Moon Phase Columns -->
-    <string name="settings_ui_showmoon_phase_columns">Colonnes (phases)</string>    <!-- TODO -->
+    <string name="settings_ui_showmoon_phase_columns">Colonnes (phases)</string>
 
     <!-- App Setting: Show Cross Quarter days -->
-    <string name="settings_ui_showCrossQuarter">Cross-Quarter Days</string>  <!-- TODO -->
+    <string name="settings_ui_showCrossQuarter">Jours Cross-Quarter</string>
     <string name="settings_ui_showCrossQuarter_summary">Ajoute les points médian entre les solstices et les équinoxes.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="settings_ui_showEquinox">Afficher Solstice / équinoxe</string>
-    <string name="settings_ui_showEquinox_summary">Affiche la durée restante avant le prochain solstice ou équinoxe.</string>
+    <string name="settings_ui_showEquinox_summary">Affiche la durée restante jusqu\'au prochain solstice ou équinoxe.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">Suivi des solstices</string>
@@ -1447,7 +1445,7 @@
     <string name="actionDesc_doNothing">Ne rien faire</string>
     <string name="actionDesc_nextNote">Affichage suivant</string>
     <string name="actionDesc_prevNote">Affichage précédent</string>
-    <string name="actionDesc_resetNote">Note de réinitialisation</string>
+    <string name="actionDesc_resetNote">Afficher l\'événement à venir</string>
     <string name="actionDesc_showCalendar">Afficher le calendrier</string>
     <string name="actionDesc_mapLocation">Afficher l\'emplacement sur la carte</string>
     <string name="actionDesc_setAlarm">Définir une alarme</string>
@@ -1495,7 +1493,7 @@
     <string name="timezone_sort_msg">Trié par fuseaux horaires (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="location_pref_maxElapse">En attente des signaux GPS</string>    <!-- TODO: "GPS" to "Location" -->
+    <string name="location_pref_maxElapse">En attente des signaux de localisation</string>
     <string name="location_pref_maxElapse_summary">Abandonner après <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 secondes</item>
@@ -1639,9 +1637,9 @@
     <string name="worldmap_dialog_option_background_clear">Effacer l\'arrière-plan</string>
     <string name="worldmap_dialog_option_background_warning0">Cette image a un format incorrect.. attendu %2$s, trouvé %1$s!</string>    <!-- toast message; aspect ratio warning -->
     <string name="worldmap_dialog_option_background_error0">Impossible d\'ouvrir l\'arrière-plan de la carte.</string>    <!-- toast message; io error -->
-    <string name="worldmap_dialog_option_latitudes">Lignes principales</string>
-    <string name="worldmap_dialog_option_minorgrid">Grille</string>
-    <string name="worldmap_dialog_option_debuglines">Lignes imaginaires</string>
+    <string name="worldmap_dialog_option_latitudes">Latitudes principales</string>
+    <string name="worldmap_dialog_option_minorgrid">Grille</string> 
+    <string name="worldmap_dialog_option_debuglines">Latitudes principales colorées</string>
     <string name="worldmap_dialog_option_tintmap">Teinte</string>
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
@@ -1663,15 +1661,15 @@
 
     <string name="lightmap_graph_option_crosshair">Axes solaire</string>
     <string name="lightmap_graph_option_grid">Grille</string>
-    <string name="lightmap_graph_option_labels">Étiquettes</string>
-    <string name="lightmap_graph_option_axis">Axes principaux</string>
+    <string name="lightmap_graph_option_labels">Graduations</string>
+    <string name="lightmap_graph_option_axis">Axes</string>
     <string name="lightmap_graph_option_points">Points</string>
-    <string name="lightmap_graph_option_twilights">Jumeaux</string>
+    <string name="lightmap_graph_option_twilights">Crépuscule</string>
     <string name="lightmap_graph_option_seasons">Saisons</string>
     <string name="lightmap_graph_option_filledpath">Filled Path</string> <!-- TODO -->
     <string name="lightmap_graph_option_moon">Montrer la lune</string>
 
-    <string name="lightmap_seekAltitude_configHint">degrés</string>
+    <string name="lightmap_seekAltitude_configHint">hauteur</string>
     <string name="lightmap_seekAltitude_suffix">°∠</string>
     <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
     <string name="lightmap_seekAltitude_rising_contentDescription">@string/table_header_sunrise</string>
@@ -1693,7 +1691,7 @@
     <string name="schedalarm_dialog_error">L\'alarme n\'a pas été réglée…</string>
     <string name="schedalarm_dialog_error2">L\'alarme ne peut pas être réglée…</string>
     <string name="schedalarm_dialog_note">dans <xliff:g example="6h 30m" id="timetext">%s</xliff:g> environ</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g> environ</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g></string>
     <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> n\'a pas lieu.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>crépuscule astronomique</item>
@@ -1730,10 +1728,10 @@
         <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
-        <item>crépuscule astronomique du matin</item>
-        <item>crépuscule nautique du matin</item>
+        <item>aube astronomique</item>
+        <item>aube nautique</item>
         <item>heure bleue du matin (début)</item>  
-        <item>crépuscule civil du matin</item>
+        <item>aube civil</item>
         <item>heure bleue du matin (fin)</item>  
         <item>lever du soleil</item>
         <item>heure dorée du matin (fin)</item>  
@@ -1741,17 +1739,17 @@
         <item>heure dorée du soir (début)</item>  
         <item>coucher du soleil</item>
         <item>heure bleue du soir (début)</item>  
-        <item>crépuscule civil du soir</item>
+        <item>crépuscule civil</item>
         <item>heure bleue du soir (fin)</item>  
-        <item>crépuscule nautique du soir</item>
-        <item>crépuscule astronomique du soir</item>
+        <item>crépuscule nautique</item>
+        <item>crépuscule astronomique</item>
         <item>lever de la lune</item>    
         <item>coucher de la lune</item>
         <item>nouvelle lune</item>
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>Equinoxe du printemps</item>
+        <item>Equinoxe de printemps</item>
         <item>Solstice d\'été</item>
         <item>Equinoxe d\'automne</item>
         <item>Solstice d\'hiver</item>
@@ -1764,10 +1762,10 @@
         <item>@string/timeMode_midnight</item>
     </string-array>
     <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
-        <item>crépuscule astronomique du matin</item>
-        <item>crépuscule nautique du matin</item>
+        <item>aube astronomique</item>
+        <item>aube nautique</item>
         <item>heure bleue du matin (début)</item>
-        <item>crépuscule civil du matin</item>
+        <item>aube civile</item>
         <item>heure bleue du matin (fin)</item>
         <item>lever du soleil</item>
         <item>heure dorée du matin (fin)</item>
@@ -1775,17 +1773,17 @@
         <item>heure dorée du soir (début)</item>
         <item>coucher du soleil</item>
         <item>heure bleue du soir (début)</item>
-        <item>crépuscule civil du soir</item>
+        <item>crépuscule civil</item>
         <item>heure bleue du soir (fin)</item>
-        <item>crépuscule nautique du soir</item>
-        <item>crépuscule astronomique du soir</item>
+        <item>crépuscule nautique</item>
+        <item>crépuscule astronomique</item>
         <item>lever de la lune</item>
         <item>coucher de la lune</item>
         <item>nouvelle lune</item>
         <item>premier quartier</item>
         <item>pleine lune</item>
         <item>dernier quartier</item>
-        <item>équinoxe du printemps</item>
+        <item>équinoxe de printemps</item>
         <item>Solstice d\'été</item>
         <item>équinoxe d\'automne</item>
         <item>Solstice d\'hiver</item>
@@ -1877,7 +1875,7 @@
 
     <!-- Dialog: Import Themes -->
     <string name="themesimport_dialog_title">Import de Thèmes en cours</string>
-    <string name="themesimport_dialog_message">Import de Thèmes en cours depuis le fichier …</string>
+    <string name="themesimport_dialog_message">Import de Thèmes en cours depuis le fichier…</string>
 
     <string name="themesimport_msg_success">Importé avec succès <xliff:g id="themePlural">%s</xliff:g>.</string>
     <string name="themesimport_msg_failure">Impossible d\'importer depuis <xliff:g id="filepath">%s</xliff:g> !</string>
@@ -1931,8 +1929,8 @@
     <string name="colorsimport_dialog_cancel">@string/dialog_cancel</string>    <!-- TODO -->
 
     <string name="colorsdelete_dialog_title">Supprimer les couleurs ?</string>    <!-- toast -->
-    <string name="colorsdelete_dialog_message">Etes-vous sur de vouloir supprimer %s?</string>    <!-- toast -->
-    <string name="colorsdelete_dialog_ok">Supprimer</string>    <!-- toast -->    <!-- TODO -->
+    <string name="colorsdelete_dialog_message">Etes-vous sur de vouloir supprimer %s ?</string>    <!-- toast -->
+    <string name="colorsdelete_dialog_ok">Supprimer</string>    <!-- toast -->
     <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->    <!-- TODO -->
 
     <!-- Dialog: About -->
@@ -1968,7 +1966,7 @@
     <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
-    <string name="about_dialog_credits">Credits</string>   <!-- TODO -->
+    <string name="about_dialog_credits">Crédits</string>
 
     <string name="about_libraries_field"><![CDATA[ <b>Bibliothèques :</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     <string name="about_media_field"><![CDATA[ <b>Media :</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
@@ -1980,13 +1978,13 @@
     <string name="welcome_action_done">Terminer</string>
     <string name="welcome_message">@string/app_shortdesc</string>
     <string name="welcome_pref_title">Écran d\'accueil</string>
-    <string name="welcome_pref_summary">Démarrer l\'assistant de configuration au premier lancement.</string>
+    <string name="welcome_pref_summary">Démarrer l\'assistant de configuration du premier lancement.</string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Aide</string>
 
     <string name="privacy_policy0"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>.]]></string>
-    <string name="privacy_policy"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>. <br/><br/>L\'application les données de localisation. Ces informations (ainsi que les autres données utilisées par l\'application) sont stockées localement et ne quittent pas l\'appareil.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Vie privée:</b><br/>Suntimes ne collecte, enregistre, ou transmet aucune donnée peronnelle. Ne contient <b>pas de publicité</b>, <b>pas d\'analyse des données</b>, <b>pas de traceur</b>, et <b>pas d\'autorisation inutile</b>. <br/><br/>L\'application utilise les données de localisation. Ces informations (ainsi que les autres données utilisées par l\'application) sont stockées localement et ne quittent pas l\'appareil.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilise l\'accès à la <b>localisation</b> pour determiner les longitude et latitude actuelles.<br/><br/>Cette autorisation est facultative. Par défaut, l\'emplacement est configuré manuellement.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilise l\'accès au <b>stockage externe</b> pour les sauvegardes/exportations des fichiers de données (p.ex. lieux, thèmes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utilise le <b>stockage externe</b> pour jouer les sons enregistrés sur la carte SD.<br/><br/>Cette autorisation est facultative. Le sons par défaut sera joué si l\'accès est refusé. Cette autorisation n\'est pas nécessaire pour les sons système (Stockage multimédia).]]></string>
@@ -2000,7 +1998,7 @@
     <string name="privacy_securitydialog_duplicate_permissions">Autorisations accordée à Suntimes :\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="app_feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
     <string name="app_feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
-    <string name="app_reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
+    <string name="app_reboot_required_message">Vous devez redémarrer l\'application pour que ces modifciations soient appliquées.</string>
     <string name="app_restart_required_message">Un redémarrage peut être nécessaire afin de prendre en compte les changememts.</string>   <!-- toast; app restart may be required -->
     <string name="privacy_permissiondialog_granted_label">Autorisation accordée</string>
 
