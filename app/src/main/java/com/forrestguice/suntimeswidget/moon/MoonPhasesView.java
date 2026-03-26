@@ -20,8 +20,12 @@ package com.forrestguice.suntimeswidget.moon;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 
 import android.view.Gravity;
@@ -32,29 +36,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 @Deprecated
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhasesView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+
     private boolean isRtl = false;
     private boolean centered = false;
 
     private LinearLayout content;
     private PhaseField phaseNew, phaseFirst, phaseFull, phaseLast;
-    private ArrayList<PhaseField> phases = new ArrayList<>();
+    private final ArrayList<PhaseField> phases = new ArrayList<>();
     private TextView empty;
 
     public MoonPhasesView(Context context)
@@ -143,8 +150,8 @@ public class MoonPhasesView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_MoonPhaseMode(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
     private void showEmptyView( boolean show )
@@ -308,14 +315,14 @@ public class MoonPhasesView extends LinearLayout
         {
             if (field != null)
             {
-                field.setText(utils.calendarDateTimeDisplayString(context, dateTime, showTime, showSeconds).getValue());
+                field.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dateTime, showTime, showSeconds).getValue());
             }
 
             if (note != null)
             {
-                String noteText = (dateTime == null ? "" : utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
-                String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
+                String noteText = (dateTime == null ? "" : delta_utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
+                String noteString = now.after(dateTime) ? context.getString(R.string.delta_ago, noteText) : context.getString(R.string.delta_hence, noteText);
+                note.setText(SpanUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);
             }
         }

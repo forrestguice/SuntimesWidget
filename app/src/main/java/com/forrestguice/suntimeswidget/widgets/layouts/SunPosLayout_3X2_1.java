@@ -29,11 +29,13 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.graph.LineGraphView;
+import com.forrestguice.suntimeswidget.graph.LineGraphBitmap;
+import com.forrestguice.suntimeswidget.graph.LineGraphOptions;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_FILLPATH;
 import static com.forrestguice.suntimeswidget.graph.LightMapDialog.DEF_KEY_GRAPH_SHOWAXIS;
@@ -98,17 +100,17 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
-        LineGraphView.LineGraphTask drawTask = new LineGraphView.LineGraphTask(context);
+        LineGraphBitmap graph = new LineGraphBitmap();
         options.densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-        options.setTimeFormat(context, WidgetSettings.loadTimeFormatModePref(context, 0));
-        Bitmap bitmap = drawTask.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
+        options.setTimeFormat(WidgetSettings.loadTimeFormatModePref(context, 0));
+        Bitmap bitmap = graph.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_graph, bitmap);
             //Log.d("DEBUG", "graph is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         }
     }
 
-    protected LineGraphView.LineGraphOptions options;
+    protected LineGraphOptions options;
     protected int dpWidth = 512, dpHeight = 256;
 
     @Override
@@ -123,10 +125,11 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        options = new LineGraphView.LineGraphOptions(context);
+        AndroidResources resources = AndroidResources.wrap(context);
+        options = new LineGraphOptions(resources);
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
-            options.initDefaultLight(context);
-        else options.initDefaultDark(context);
+            options.initDefaultLight(resources);
+        else options.initDefaultDark(resources);
 
         options.colors.setColor(LineGraphColorValues.COLOR_GRAPH_BG, theme.getNightColor());
         options.colors.setColor(LineGraphColorValues.COLOR_POINT_FILL, theme.getGraphPointFillColor());
@@ -144,7 +147,7 @@ public class SunPosLayout_3X2_1 extends SunPosLayout
         options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_STROKE, theme.getMoonsetTextColor());
         options.colors.setColor(LineGraphColorValues.COLOR_MOONPATH_NIGHT_FILL, theme.getMoonsetTextColor());
 
-        options.graph_width = LineGraphView.MINUTES_IN_DAY;
+        options.graph_width = LineGraphBitmap.MINUTES_IN_DAY;
         options.graph_height = 180;
         options.graph_x_offset = options.graph_y_offset = 0;
         options.gridX_minor_show = options.gridY_minor_show = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, MAPTAG_LIGHTMAP, DEF_KEY_WORLDMAP_MINORGRID);

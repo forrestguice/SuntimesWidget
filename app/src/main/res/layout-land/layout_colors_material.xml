@@ -3,9 +3,9 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="horizontal" android:gravity="center" android:layout_gravity="top">
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/color_grid"
+    <com.forrestguice.support.widget.RecyclerView android:id="@+id/color_grid"
         android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager" app:spanCount="14" tools:itemCount="266"
+        app:layoutManager="@string/layoutManager_GridLayoutManager" app:spanCount="14" tools:itemCount="266"
         tools:listitem="@layout/layout_listitem_color" />
 
     <LinearLayout android:orientation="vertical"
@@ -19,11 +19,13 @@
             android:gravity="center"
             android:background="@color/grey_900" android:textColor="@color/teal_500"
             android:textSize="?attr/text_size_small"
-            android:text="@string/configLabel_themeColorText" />
+            android:text="@string/themes_configLabel_themeColorText"
+            tools:ignore="InconsistentLayout" />
 
         <View android:id="@+id/preview_color"
             android:layout_width="match_parent" android:layout_height="0dp"  android:layout_weight="1"
-            android:background="@color/teal_500" />
+            android:background="@color/teal_500"
+            tools:ignore="InconsistentLayout" />
 
         <TextView android:id="@+id/preview_color_text1"
             android:layout_width="@dimen/large_actionbar_size" android:layout_height="wrap_content"
@@ -32,7 +34,8 @@
             android:gravity="center"
             android:background="@color/teal_500" android:textColor="@color/grey_900"
             android:textSize="?attr/text_size_small"
-            android:text="@string/configLabel_themeColorText" />
+            android:text="@string/themes_configLabel_themeColorText"
+            tools:ignore="InconsistentLayout" />
 
     </LinearLayout>
 

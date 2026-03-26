@@ -24,21 +24,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
+import android.widget.ListView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.SolsticeWidgetSettings;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
 
@@ -55,11 +59,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, WidgetSettingsImportTask.TaskResult>
+public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, WidgetSettingsImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
     protected final WeakReference<Context> contextRef;
+    protected final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -72,28 +77,14 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return isPaused;
     }
 
-    public WidgetSettingsImportTask(Context context) {
+    public WidgetSettingsImportTask(Context context, Uri uri) {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
+    public TaskResult call() throws Exception
     {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
-    {
-        Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         ArrayList<ContentValues> items = new ArrayList<>();
@@ -149,12 +140,16 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            //noinspection CharsetObjectCanBeUsed
             JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
             reader.setLenient(true);
             try {
                 Map<String,ContentValues[]> data = new HashMap<>();
                 SuntimesBackupLoadTask.readBackupItem(context, reader, data);
-                items.addAll(Arrays.asList(data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS)));
+                ContentValues[] v = data.get(SuntimesBackupTask.KEY_WIDGETSETTINGS);
+                if (v != null) {
+                    items.addAll(Arrays.asList(v));
+                }
 
             } finally {
                 reader.close();
@@ -164,20 +159,6 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         } else {
             Log.w("ImportSettings", "Unsupported; skipping import");
             in.close();
-        }
-    }
-
-    @Override
-    protected void onProgressUpdate(ContentValues... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
         }
     }
 
@@ -194,19 +175,19 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private ContentValues[] items;
+        private final ContentValues[] items;
         public ContentValues[] getItems()
         {
             return items;
         }
 
-        private Uri uri;
+        private final Uri uri;
         public Uri getUri()
         {
             return uri;
@@ -216,28 +197,14 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
         public Exception getException()
         {
             return e;
         }
     }
 
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<ContentValues, TaskResult> {}
 
     /**
      * ContentValuesJson
@@ -477,25 +444,30 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 keyParts[1] = toAppWidgetId + "";
                 String toKey = TextUtils.join("_", keyParts);
 
-                if (map.get(key).getClass().equals(String.class)) {
-                    toPrefs.putString(toKey, (String) map.get(key));
-                    result = true;
+                Object object = map.get(key);
+                if (object != null)
+                {
+                    Class<?> clazz = object.getClass();
+                    if (clazz.equals(String.class)) {
+                        toPrefs.putString(toKey, (String) object);
+                        result = true;
 
-                } else if (map.get(key).getClass().equals(Integer.class)) {
-                    toPrefs.putInt(toKey, (Integer) map.get(key));
-                    result = true;
+                    } else if (clazz.equals(Integer.class)) {
+                        toPrefs.putInt(toKey, (Integer) object);
+                        result = true;
 
-                } else if (map.get(key).getClass().equals(Long.class)) {
-                    toPrefs.putLong(toKey, (Long) map.get(key));
-                    result = true;
+                    } else if (clazz.equals(Long.class)) {
+                        toPrefs.putLong(toKey, (Long) object);
+                        result = true;
 
-                } else if (map.get(key).getClass().equals(Float.class)) {
-                    toPrefs.putFloat(toKey, (Float) map.get(key));
-                    result = true;
+                    } else if (clazz.equals(Float.class)) {
+                        toPrefs.putFloat(toKey, (Float) object);
+                        result = true;
 
-                } else if (map.get(key).getClass().equals(Boolean.class)) {
-                    toPrefs.putBoolean(toKey, (Boolean) map.get(key));
-                    result = true;
+                    } else if (clazz.equals(Boolean.class)) {
+                        toPrefs.putBoolean(toKey, (Boolean) object);
+                        result = true;
+                    }
                 }
             }
         }
@@ -503,7 +475,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
         return result;
     }
 
-    public static boolean importValue(SharedPreferences.Editor prefs, Class type, String key, Object value)
+    public static boolean importValue(SharedPreferences.Editor prefs, Class<?> type, String key, Object value)
     {
         boolean retValue = true;
         if (type.equals(String.class)) {
@@ -537,18 +509,20 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     }
     public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
     {
-        Map<String,Class> prefTypes = WidgetSettings.getPrefTypes();
+        Map<String,Class<?>> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
+        prefTypes.putAll(ClockWidgetSettings.getPrefTypes());
         prefTypes.putAll(CalendarSettings.getPrefTypes());
         prefTypes.putAll(WidgetActions.getPrefTypes());
         prefTypes.putAll(WorldMapWidgetSettings.getPrefTypes());
+        prefTypes.putAll(SolsticeWidgetSettings.getPrefTypes());
         if (includeMetadata) {
             prefTypes.putAll(WidgetSettingsMetadata.getPrefTypes());
         }
         importValues(prefs, prefTypes, values, true, toPrefix, appWidgetId, "WidgetSettings");
     }
 
-    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
+    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class<?>> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
     {
         Set<Map.Entry<String, Object>> entries = values.valueSet();
         for (Map.Entry<String, Object> entry : entries)
@@ -578,16 +552,16 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
 
             if (prefTypes.containsKey(k0))
             {
-                Class expectedType = prefTypes.get(k0);
-                Class valueType = value.getClass();
+                Class<?> expectedType = prefTypes.get(k0);
+                Class<?> valueType = value.getClass();
                 if (valueType.equals(expectedType)) {
                     importValue(prefs, expectedType, k, value);    // types match (direct cast)
 
                 } else {
-                    if (expectedType.equals(String.class)) {
+                    if (String.class.equals(expectedType)) {
                         importValue(prefs, String.class, k, value.toString());    // int, long, double, or bool as String
 
-                    } else if (expectedType.equals(Boolean.class)) {
+                    } else if (Boolean.class.equals(expectedType)) {
                         if (valueType.equals(String.class))    // bool as String
                         {
                             String s = (String) value;
@@ -596,7 +570,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + s + " (String)");
                         } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
-                    } else if (expectedType.equals(Integer.class)) {
+                    } else if (Integer.class.equals(expectedType)) {
                         if (valueType.equals(String.class)) {    // int as String
                             try {
                                 importValue(prefs, Integer.class, k, Integer.parseInt((String) value));
@@ -605,7 +579,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             }
                         } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
-                    } else if (expectedType.equals(Long.class)) {
+                    } else if (Long.class.equals(expectedType)) {
                         if (valueType.equals(String.class)) {    // long as String
                             try {
                                 importValue(prefs, Long.class, k, Long.parseLong((String) value));
@@ -614,7 +588,7 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                             }
                         } else Log.w(tag, "import: skipping " + k + "... expected " + expectedType.getSimpleName() + ", found " + valueType.getSimpleName());
 
-                    } else if (expectedType.equals(Double.class)) {
+                    } else if (Double.class.equals(expectedType)) {
                         if (valueType.equals(String.class)) {    // double as String
                             try {
                                 importValue(prefs, Double.class, k, Double.parseDouble((String) value));
@@ -712,11 +686,12 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
-                .setPositiveButton(context.getString(R.string.configAction_import), new DialogInterface.OnClickListener()
+                .setPositiveButton(context.getString(R.string.action_import), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
-                        int p = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        ListView v = AlertDialog.getListView(dialog);
+                        int p = (v != null ? v.getCheckedItemPosition() : 0);
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })
@@ -726,9 +701,9 @@ public class WidgetSettingsImportTask extends AsyncTask<Uri, ContentValues, Widg
     protected static CharSequence displayStringForImportMethod(Context context, int method)
     {
         switch (method) {
-            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_direct));
-            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_bestguess));
-            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SuntimesUtils.fromHtml(context.getString(R.string.importwidget_dialog_item_restorebackup));
+            case IMPORT_WIDGETS_METHOD_DIRECTIMPORT: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_direct));
+            case IMPORT_WIDGETS_METHOD_MAKEBESTGUESS: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_bestguess));
+            case IMPORT_WIDGETS_METHOD_RESTOREBACKUP: return SpanUtils.fromHtml(context.getString(R.string.widgetimport_dialog_item_restorebackup));
             default: return method + "";
         }
     }

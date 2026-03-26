@@ -48,6 +48,7 @@ public class SunPositionTest1
         Moment moment1 = calculator.sunset(plainDate, latitude, longitude, zenith);
         Calendar date1 = momentToCalendar(moment1, tz);
 
+        //noinspection PointlessArithmeticExpression
         double toleranceMs = 1 * 60 * 1000;    // 1min
         long difference = date1.getTimeInMillis() - date0.getTimeInMillis();
         assertTrue("expected time near " + date0.getTimeInMillis() + " (within " + (toleranceMs / (1000d * 60d)) + " min); " + date1.getTimeInMillis() + " differs by " + (difference / (1000d * 60d)) + " min",

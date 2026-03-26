@@ -23,9 +23,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+
+import com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,15 +37,14 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static org.hamcrest.Matchers.allOf;
@@ -51,7 +52,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WidgetConfigActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -139,7 +140,7 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetConfigActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -166,10 +167,10 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
         public WidgetConfigActivityRobot assertReconfigureMode(Context context, boolean isReconfigureMode)
         {
             if (isReconfigureMode) {
-                onView(allOf( withText(R.string.configAction_reconfigWidget_short),
+                onView(allOf( withText(R.string.widgetConfig_action_reconfigWidget_short),
                         isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             } else {
-                onView(allOf( withText(R.string.configAction_addWidget),
+                onView(allOf( withText(R.string.widgetConfig_action_addWidget),
                         isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             }
             return this;
@@ -177,10 +178,10 @@ public class WidgetConfigActivityTest extends SuntimesActivityTestBase
 
         public WidgetConfigActivityRobot assertOverflowMenuShown(Context context)
         {
-            onView(withText(R.string.configAction_importWidget)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportWidget)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_restoreDefaults)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetlist_action_importWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.widgetlist_action_exportWidget)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_restoreDefaults)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }

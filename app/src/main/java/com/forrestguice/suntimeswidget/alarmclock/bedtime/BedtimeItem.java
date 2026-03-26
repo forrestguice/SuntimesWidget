@@ -19,10 +19,11 @@
 package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class BedtimeItem
         this.slot = slot;
     }
 
-    protected ItemType type;
+    protected final ItemType type;
     public ItemType getItemType() {
         return type;
     }
@@ -50,6 +51,7 @@ public class BedtimeItem
         return alarmId;
     }
 
+    @Nullable
     protected AlarmClockItem alarmItem = null;
     @Nullable
     public AlarmClockItem getAlarmItem() {
@@ -58,22 +60,22 @@ public class BedtimeItem
     public void setAlarmItem(@Nullable AlarmClockItem item) {
         alarmItem = item;
     }
-    protected boolean loadAlarmItem(Context context, final AlarmListDialog.AlarmListTask.AlarmListTaskListener onItemLoaded)
+    protected boolean loadAlarmItem(Context context, final ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemLoaded)
     {
         setAlarmItem(null);
         final Long alarmId = getAlarmID(context);
         if (alarmId != null && alarmId != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0) {
                         setAlarmItem(result.get(0));
                     }
                     if (onItemLoaded != null) {
-                        onItemLoaded.onLoadFinished(result);
+                        onItemLoaded.onFinished(result);
                     }
                 }
             });
@@ -81,7 +83,7 @@ public class BedtimeItem
 
         } else {
             if (onItemLoaded != null) {
-                onItemLoaded.onLoadFinished(null);
+                onItemLoaded.onFinished(null);
             }
             return false;
         }

@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:minHeight="125dp"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/info_time_worldmap_layout"
         app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
 
-    <ImageButton
+    <com.forrestguice.support.widget.ImageButton
         android:id="@+id/map_modemenu"
         android:layout_width="0dp" android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
@@ -81,7 +81,7 @@
             android:visibility="gone"
             android:layout_margin="@dimen/activity_margin"
             android:textSize="?attr/text_size_small"
-            android:text="@string/feature_not_supported_by_source" />
+            android:text="@string/app_feature_not_supported_by_source" />
 
     </FrameLayout>
 
@@ -127,4 +127,4 @@
             android:text="@string/worldmap_dialog_option_all" />
     </RadioGroup>-->
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

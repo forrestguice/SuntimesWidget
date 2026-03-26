@@ -18,31 +18,31 @@
 
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.lifecycle.MutableLiveData;
+import com.forrestguice.support.lifecycle.Observer;
+import com.forrestguice.support.lifecycle.ViewModel;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
 
 import java.util.Locale;
 
 /**
  * ColorPickerFragment
  */
-public class ColorPickerFragment extends Fragment
+public class ColorPickerFragment extends DialogBase
 {
     protected ColorPickerModel colorViewModel;
 
@@ -54,16 +54,14 @@ public class ColorPickerFragment extends Fragment
         setArguments(new Bundle());
     }
 
-    @CallSuper
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        colorViewModel = ViewModelProviders.of(getActivity()).get(ColorPickerModel.class);
-        colorViewModel.color.observe(getActivity(), onViewModelColorChanged);
+        colorViewModel = ViewModelProviders.of(requireActivity()).get(ColorPickerModel.class);
+        colorViewModel.color.observe(requireActivity(), onViewModelColorChanged);
         return null;
     }
-
-    @CallSuper
+    
     protected void initViews(Context context, View view)
     {
         preview = view.findViewById(R.id.preview_color);
@@ -91,7 +89,8 @@ public class ColorPickerFragment extends Fragment
     }
 
     public int getColor() {
-        return (colorViewModel != null ? colorViewModel.color.getValue() : Color.WHITE);
+        Integer retValue = (colorViewModel != null ? colorViewModel.color.getValue() : Color.WHITE);
+        return (retValue != null ? retValue : Color.WHITE);
     }
 
     public boolean showAlpha() {
@@ -111,7 +110,6 @@ public class ColorPickerFragment extends Fragment
         }
     };
 
-    @CallSuper
     public void updateViews(Context context) {
         updatePreview(context);
     }
@@ -159,7 +157,7 @@ public class ColorPickerFragment extends Fragment
             case ColorPickerModel.PREVIEW_TEXT:
             default:
                 String text = colorViewModel.getPreviewText();
-                return (text != null) ? text : context.getString(R.string.configLabel_themeColorText);
+                return (text != null) ? text : context.getString(R.string.themes_configLabel_themeColorText);
         }
     }
 
@@ -167,9 +165,9 @@ public class ColorPickerFragment extends Fragment
     protected void clearListeners() {}
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
+    public void setUserVisibleHintCompat(boolean isVisibleToUser)
     {
-        super.setUserVisibleHint(isVisibleToUser);
+        super.setUserVisibleHintCompat(isVisibleToUser);
         if (isVisibleToUser && getView() != null) {
             getView().post(new Runnable() {
                 @Override

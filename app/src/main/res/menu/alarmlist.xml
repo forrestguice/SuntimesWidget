@@ -5,7 +5,7 @@
 
         <item android:id="@+id/action_sort"
             android:icon="?attr/icActionSort"
-            android:title="@string/configAction_sortAlarms"
+            android:title="@string/alarms_action_sortAlarms"
             app:showAsAction="never"
             android:orderInCategory="500">
 
@@ -13,23 +13,23 @@
                 <group android:checkableBehavior="single">
 
                     <item android:id="@+id/sortByAlarmTime"
-                        android:title="@string/configAction_sortAlarms_by_time"
+                        android:title="@string/alarms_action_sortAlarms_by_time"
                         android:icon="?attr/icActionSort" />
 
                     <item android:id="@+id/sortByCreation"
-                        android:title="@string/configAction_sortAlarms_by_creation"
+                        android:title="@string/alarms_action_sortAlarms_by_creation"
                         android:icon="?attr/icActionSort" />
 
                 </group>
 
                 <item android:id="@+id/sortEnabledFirst"
                     android:checkable="true" android:checked="false"
-                    android:title="@string/configAction_sortAlarms_enabled_first"
+                    android:title="@string/alarms_action_sortAlarms_enabled_first"
                     android:icon="?attr/icActionSort" />
 
                 <item android:id="@+id/showOffset"
                     android:checkable="true" android:checked="false"
-                    android:title="@string/configAction_sortAlarms_offset"
+                    android:title="@string/alarms_action_sortAlarms_offset"
                     android:icon="?attr/icActionVisibilityOn" />
 
             </menu>
@@ -38,19 +38,19 @@
 
         <item android:id="@+id/action_clear"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configAction_clearAlarms"
+            android:title="@string/alarms_action_clearAlarms"
             app:showAsAction="never"
             android:orderInCategory="510" />
 
         <item android:id="@+id/action_export"
             android:icon="?attr/icActionSave"
-            android:title="@string/configAction_exportAlarms"
+            android:title="@string/alarms_action_exportAlarms"
             app:showAsAction="never"
             android:orderInCategory="520" />
 
         <item android:id="@+id/action_import"
             android:icon="?attr/icActionCopy"
-            android:title="@string/configAction_importAlarms"
+            android:title="@string/alarms_action_importAlarms"
             app:showAsAction="never"
             android:orderInCategory="530" />
 

@@ -1,2 +1,7 @@
-include ':lib-quadflask-colorpicker', ':app'
+include ':lib-ca-rmen-sunrisesunset'
+include ':lib-luckycatlabs-sunrisesunset'
+
+include ':lib-quadflask-colorpicker'
 project(':lib-quadflask-colorpicker').projectDir = new File(rootDir, 'lib-quadflask-colorpicker/library/')
+
+include ':util', ':support', 'calculator', ':app'

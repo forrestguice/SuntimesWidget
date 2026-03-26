@@ -22,10 +22,11 @@ import android.app.Dialog;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.AppCompatActivity;
 
 /**
  * SuntimesTileActivity; displays a "tile dialog" over the lock screen.
@@ -35,7 +36,8 @@ public abstract class SuntimesTileActivity extends AppCompatActivity
 {
     @Nullable
     protected abstract SuntimesTileBase initTileBase();
-    protected SuntimesTileBase tileBase;
+    @Nullable
+    protected SuntimesTileBase tileBase = null;
 
     public SuntimesTileActivity() {
         super();

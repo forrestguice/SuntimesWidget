@@ -21,12 +21,10 @@ package com.forrestguice.suntimeswidget.events;
 import android.content.Context;
 import android.graphics.Color;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,12 +32,14 @@ import org.junit.runner.RunWith;
 
 import java.util.Set;
 
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-@SuppressWarnings("ConstantConditions")
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class EventSettingsTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -48,9 +48,9 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_saveLoadDeleteEvent()
     {
-        Context context = activityRule.getActivity();
+        AndroidEventSettings context = AndroidEventSettings.wrap(activityRule.getActivity());
 
-        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
+        EventType type0 = EventType.SUN_ELEVATION;
         String id0 = "TEST0";
         String label0 = "label0";
         String uri0 = "uri0";
@@ -62,7 +62,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         Set<String> list0 = EventSettings.loadEventList(context, type0);
         assertFalse(list0.contains(id0));
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
+        EventAlias alias0 = new EventAlias(EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.saveEvent(context, alias0);
@@ -71,7 +71,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         Set<String> list1 = EventSettings.loadEventList(context, type0);
         assertTrue(list1.contains(id0));
 
-        EventSettings.EventAlias alias1 = EventSettings.loadEvent(context, id0);
+        EventAlias alias1 = EventSettings.loadEvent(context, id0);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias1);
 
         EventSettings.deleteEvent(context, id0);
@@ -81,7 +81,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         assertFalse(list2.contains(id0));
     }
 
-    protected void verify_eventAlias(AlarmEventProvider.EventType type, String id, String label, Integer color, String uri, EventSettings.EventAlias alias)
+    protected void verify_eventAlias(EventType type, String id, String label, Integer color, String uri, EventAlias alias)
     {
         assertEquals(type, alias.getType());
         assertEquals(id, alias.getID());
@@ -92,9 +92,13 @@ public class EventSettingsTest extends SuntimesActivityTestBase
 
     public static Set<String> populateEventListWithTestItems(Context context)
     {
-        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
-        EventSettings.saveEvent(context, new EventSettings.EventAlias(AlarmEventProvider.EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
-        return EventSettings.loadEventList(getContext());
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SUN_ELEVATION, "TEST0", "label0", Color.GREEN, "uri0", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SHADOWLENGTH, "TEST1", "label1", Color.RED, "uri1", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.DAYPERCENT, "TEST2", "label2", Color.BLUE, "uri2", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.MOONILLUM, "TEST3", "label3", Color.CYAN, "uri3", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.MOON_ELEVATION, "TEST4", "label4", Color.MAGENTA, "uri4", false));
+        EventSettings.saveEvent(AndroidEventSettings.wrap(context), new EventAlias(EventType.SHADOWRATIO, "TEST5", "label5", Color.GREEN, "uri5", false));
+        return EventSettings.loadEventList(AndroidEventSettings.wrap(context));
     }
 
 }

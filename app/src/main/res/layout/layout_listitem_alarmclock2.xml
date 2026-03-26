@@ -28,14 +28,14 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
 
-        <android.support.constraint.ConstraintLayout
+        <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/layout_alarmcard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingTop="4dp" android:paddingBottom="8dp"
             android:background="@drawable/card_alarmitem_enabled_dark0"
             android:orientation="horizontal" android:descendantFocusability="blocksDescendants">
 
-            <android.support.constraint.Guideline
+            <com.forrestguice.support.constraint.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent" android:animateLayoutChanges="true"
                 android:layout_marginLeft="6dp" android:layout_marginRight="6dp">
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/type_menu"
                     android:layout_width="32dp" android:layout_height="32dp"
                     android:src="?attr/icActionAlarm"
@@ -203,7 +203,7 @@
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
         </FrameLayout>
 
         <LinearLayout android:id="@+id/layout_alarmcard_tray" android:orientation="vertical"
@@ -257,16 +257,16 @@
 
                 <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
 
-                <ImageButton android:id="@+id/button_delete"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/button_delete"
                     android:layout_width="48dp" android:layout_height="48dp"
-                    android:contentDescription="@string/configAction_deleteAlarm"
+                    android:contentDescription="@string/alarms_action_deleteAlarm"
                     style="@style/ActionButton"
                     android:src="?attr/icActionDelete" />
 
-                <ImageButton
+                <com.forrestguice.support.widget.ImageButton
                     android:id="@+id/overflow_menu" android:visibility="gone"
                     android:layout_width="48dp" android:layout_height="48dp"
-                    android:contentDescription="@string/configAction_alarmMenu"
+                    android:contentDescription="@string/alarms_action_alarmMenu"
                     style="?attr/actionOverflowButtonStyle" />
 
             </LinearLayout>

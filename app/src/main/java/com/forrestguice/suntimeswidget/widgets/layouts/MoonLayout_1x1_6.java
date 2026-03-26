@@ -28,11 +28,13 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -153,23 +155,23 @@ public class MoonLayout_1x1_6 extends MoonLayout
 
     public static SpannableString styleRightAscText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
     {
-        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(moonPosition.rightAscension, PositionLayout.DECIMAL_PLACES);
+        TimeDisplayText rightAscDisplay = angle_utils.formatAsRightAscension(moonPosition.rightAscension, PositionLayout.DECIMAL_PLACES);
         String rightAscSymbol = rightAscDisplay.getSuffix();
-        String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
-        SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
-        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
-        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        String rightAscString = angle_utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
+        SpannableString rightAsc = SpanUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+        rightAsc = SpanUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+        rightAsc = SpanUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return rightAsc;
     }
 
     public static SpannableString styleDeclinationText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
     {
-        SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(moonPosition.declination, PositionLayout.DECIMAL_PLACES);
+        TimeDisplayText declinationDisplay = angle_utils.formatAsDeclination(moonPosition.declination, PositionLayout.DECIMAL_PLACES);
         String declinationSymbol = declinationDisplay.getSuffix();
-        String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
-        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
-        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
-        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        String declinationString = angle_utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
+        SpannableString declination = SpanUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        declination = SpanUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+        declination = SpanUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return declination;
     }
 
@@ -185,7 +187,7 @@ public class MoonLayout_1x1_6 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 }

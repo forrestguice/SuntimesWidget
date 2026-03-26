@@ -24,19 +24,18 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
+
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SnackbarUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.ActivityOptionsCompat;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -46,8 +45,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -55,22 +55,22 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmEditDialog;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
-import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.LinearLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.Calendar;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
-public class BedtimeDialog extends DialogFragment
+public class BedtimeDialog extends DialogBase
 {
     public static final int REQUEST_EDIT_WAKEUP = 10;
     public static final int REQUEST_ADD_WAKEUP = 20;
@@ -80,10 +80,20 @@ public class BedtimeDialog extends DialogFragment
 
     public static final int REQUEST_EDIT_REMINDER = 50;
 
+    protected ActivityResultLauncherCompat startActivityForResult_editWakeUp = registerForActivityResultCompat(REQUEST_EDIT_WAKEUP);
+    protected ActivityResultLauncherCompat startActivityForResult_addWakeUp = registerForActivityResultCompat(REQUEST_ADD_WAKEUP);
+    protected ActivityResultLauncherCompat startActivityForResult_editBedtime = registerForActivityResultCompat(REQUEST_EDIT_BEDTIME);
+    protected ActivityResultLauncherCompat startActivityForResult_addBedtime = registerForActivityResultCompat(REQUEST_ADD_BEDTIME);
+    protected ActivityResultLauncherCompat startActivityForResult_editReminder = registerForActivityResultCompat(REQUEST_EDIT_REMINDER);
+
     protected RecyclerView list;
     protected BedtimeItemAdapter adapter;
     protected LinearLayoutManager layout;
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDeltaDisplay utils = new TimeDeltaDisplay();
+
+    public static BedtimeDialog newInstance() {
+        return new BedtimeDialog();
+    }
 
     @Override
     public void onCreate(Bundle savedState)
@@ -93,29 +103,23 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        AlarmSettings.setDefaultRingtoneUris(getActivity());
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
+        Context context = requireContext();
+        AlarmSettings.setDefaultRingtoneUris(context);
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_bedtime, parent, false);
 
-        adapter = new BedtimeItemAdapter(getActivity());
+        adapter = new BedtimeItemAdapter(context);
         adapter.setAdapterListener(adapterListener);
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
-        list.setLayoutManager(layout = new LinearLayoutManager(getActivity()));
+        list.setLayoutManager(layout = new LinearLayoutManager(context));
         list.addOnScrollListener(onListScrolled);
         //list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
-
-        SimpleItemAnimator animator = (SimpleItemAnimator) list.getItemAnimator();
-        animator.setChangeDuration(0);
+        com.forrestguice.support.widget.RecyclerView.setChangeDuration(list, 0);
 
         if (savedState != null) {
             loadSettings(savedState);
@@ -133,7 +137,7 @@ public class BedtimeDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -161,17 +165,16 @@ public class BedtimeDialog extends DialogFragment
         if (list != null) {
             list.setLayoutManager(layout);
         }
-        restoreDialogs(getActivity());
+        restoreDialogs(requireContext());
         if (onResume_refreshData) {
-            adapter.reloadAlarmClockItems(getActivity());
+            adapter.reloadAlarmClockItems(requireContext());
         } else onResume_refreshData = true;
     }
     protected boolean onResume_refreshData = true;
 
-    protected void restoreDialogs(Context context)
+    protected void restoreDialogs(@NonNull Context context)
     {
-        FragmentManager fragments = getChildFragmentManager();
-        AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOG_ADD_ALARM);
+        AlarmCreateDialog addAlarmDialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(DIALOG_ADD_ALARM);
         if (addAlarmDialog != null)
         {
             int position = adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM);
@@ -179,26 +182,26 @@ public class BedtimeDialog extends DialogFragment
             addAlarmDialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
         }
 
-        TimeOffsetPickerDialog sleepOffsetDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_OFFSET);
+        TimeOffsetPickerDialog sleepOffsetDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_OFFSET);
         if (sleepOffsetDialog != null) {
             sleepOffsetDialog.setDialogListener(onSleepOffsetDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
 
-        TimeOffsetPickerDialog sleepCycleDialog = (TimeOffsetPickerDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLE);
+        TimeOffsetPickerDialog sleepCycleDialog = (TimeOffsetPickerDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLE);
         if (sleepCycleDialog != null) {
             sleepCycleDialog.setDialogListener(onSleepCycleDialogListener(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
 
-        BedtimeSleepDialog sleepDialog = (BedtimeSleepDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLES);
+        BedtimeSleepDialog sleepDialog = (BedtimeSleepDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLES);
         if (sleepDialog != null) {
             sleepDialog.setOnAcceptedListener(onSleepCyclesDialogAccepted(adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.SLEEP_CYCLE))));
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, final Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, final Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         onResume_refreshData = false;
         switch (requestCode)
         {
@@ -212,7 +215,7 @@ public class BedtimeDialog extends DialogFragment
                 {
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items)
                     {
-                        Context context = getActivity();
+                        Context context = getContext();
                         if (context != null
                                 && result && items != null && items.length > 0)
                         {
@@ -230,7 +233,7 @@ public class BedtimeDialog extends DialogFragment
                 {
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items)
                     {
-                        Context context = getActivity();
+                        Context context = getContext();
                         if (context != null
                                 && result && items != null && items.length > 0) {
                             if (items[0] != null && items[0].getEvent() == null) {    // items based on events shouldn't touch this setting
@@ -246,7 +249,7 @@ public class BedtimeDialog extends DialogFragment
                 {
                     public void onFinished(Boolean result, @Nullable AlarmClockItem[] items)
                     {
-                        Context context = getActivity();
+                        Context context = getContext();
                         if (context != null
                                 && result && items != null && items.length > 0)
                         {
@@ -277,24 +280,24 @@ public class BedtimeDialog extends DialogFragment
     /**
      * OnScrollListener
      */
-    private final RecyclerView.OnScrollListener onListScrolled = new RecyclerView.OnScrollListener()
+    private final RecyclerView.OnScrollListenerCompat onListScrolled = new RecyclerView.OnScrollListenerCompat()
     {
         private int lastCompletelyVisibleItemPosition;
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
         }
 
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
         {
             if (listener != null)
             {
                 int position = layout.findLastCompletelyVisibleItemPosition();
                 if (position != lastCompletelyVisibleItemPosition) {
                     lastCompletelyVisibleItemPosition = position;
-                    listener.onScrolled(recyclerView, lastCompletelyVisibleItemPosition);
+                    listener.onScrolled(lastCompletelyVisibleItemPosition);
                 }
             }
             super.onScrolled(recyclerView, dx, dy);
@@ -306,32 +309,34 @@ public class BedtimeDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.bedtime_list, menu);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_clear:
-                confirmClearAlarms(getActivity(), new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        BedtimeAlarmHelper.clearBedtimeItems(getActivity());
-                    }
-                });
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        Context context = getContext();
+        if (context == null) {
+            return false;
         }
+
+        if (item.getItemId() == R.id.action_clear) {
+            confirmClearAlarms(context, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (getContext() != null) {
+                        BedtimeAlarmHelper.clearBedtimeItems(getContext());
+                    }
+                }
+            });
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,11 +369,7 @@ public class BedtimeDialog extends DialogFragment
                 switch (item.getItemType())
                 {
                     case WAKEUP_ALARM:
-                        //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
-                        break;
-
                     case BEDTIME:
-                        //Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();    // TODO
                         break;
 
                     default:
@@ -383,7 +384,7 @@ public class BedtimeDialog extends DialogFragment
         @Override
         public void onItemAction(BedtimeViewHolder holder, BedtimeItem item)
         {
-            Context context = getActivity();
+            Context context = getContext();
             if (item != null && context != null)
             {
                 switch (item.getItemType())
@@ -415,7 +416,7 @@ public class BedtimeDialog extends DialogFragment
         @Override
         public void onItemConfigure(BedtimeViewHolder holder, BedtimeItem item)
         {
-            Context context = getActivity();
+            Context context = getContext();
             if (item != null && context != null)
             {
                 switch (item.getItemType())
@@ -452,7 +453,7 @@ public class BedtimeDialog extends DialogFragment
 
     public interface DialogListener extends BedtimeItemAdapter.AdapterListener
     {
-        void onScrolled(RecyclerView recyclerView, int firstCompletelyVisibleItemPosition);
+        void onScrolled(int firstCompletelyVisibleItemPosition);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -460,41 +461,38 @@ public class BedtimeDialog extends DialogFragment
 
     protected void configureSleepTime(final Context context, View v, @Nullable final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                MenuItem item_enabled = menu.findItem(R.id.action_bedtime_sleep_autooff);
+                item_enabled.setChecked(BedtimeSettings.loadPrefBedtimeAutoOff(context));
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_bedtime_sleepCycles:
-                        showConfigureSleepCyclesDialog(context, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_bedtime_sleepCycles) {
+                    showConfigureSleepCyclesDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleepCycleLength:
-                        showConfigureSleepCycleDialog(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_sleepCycleLength) {
+                    showConfigureSleepCycleDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleep_offset:
-                        showConfigureSleepOffsetDialog(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_sleep_offset) {
+                    showConfigureSleepOffsetDialog(context, item);
+                    return true;
 
-                    case R.id.action_bedtime_sleep_autooff:
-                        toggleConfigureBedtimeAutoOff(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_sleep_autooff) {
+                    toggleConfigureBedtimeAutoOff(context, item);
+                    return true;
                 }
+                return false;
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-
-        MenuItem item_enabled = menu.findItem(R.id.action_bedtime_sleep_autooff);
-        item_enabled.setChecked(BedtimeSettings.loadPrefBedtimeAutoOff(context));
-
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_sleep, onMenuItemClickListener).show();
     }
 
     protected void toggleConfigureBedtimeAlarmOff(Context context, BedtimeItem item)
@@ -524,7 +522,7 @@ public class BedtimeDialog extends DialogFragment
                 configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, linkedAlarmItem.getEvent(), linkedAlarmItem.location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), linkedAlarmItem.getAlarmFlags(), true, linkedAlarmItem.enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
 
             } else {
-                AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), linkedAlarmItem);
                 Calendar bedtime = Calendar.getInstance();
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
@@ -548,7 +546,7 @@ public class BedtimeDialog extends DialogFragment
 
             } else {
                 // when bedtime is based on some time, changes to sleep duration modify "bedtime off"
-                AlarmNotifications.updateAlarmTime(context, linkedAlarmItem);
+                AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), linkedAlarmItem);
                 Calendar bedtime = Calendar.getInstance();
                 bedtime.set(Calendar.HOUR_OF_DAY, linkedAlarmItem.hour);
                 bedtime.set(Calendar.MINUTE, linkedAlarmItem.minute);
@@ -564,17 +562,15 @@ public class BedtimeDialog extends DialogFragment
     private static final String DIALOG_SLEEP_CYCLE = "dialog_sleep_cycle";
     protected void showConfigureSleepCycleDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
-
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
         dialog.setRange(getResources().getInteger(R.integer.minSleepCycleMillis),
                         getResources().getInteger(R.integer.maxSleepCycleMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepCycleMs(context));
         dialog.setDialogListener(onSleepCycleDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepCycle));
-        dialog.setRestoreDefault(getString(R.string.configAction_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
-        dialog.show(fragments, DIALOG_SLEEP_CYCLE);
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepCycle));
+        dialog.setRestoreDefault(getString(R.string.action_restoreDefaults), (int)BedtimeSettings.PREF_DEF_SLEEPCYCLE_LENGTH);
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLE);
     }
 
     private TimeOffsetPickerDialog.DialogListener onSleepCycleDialogListener(final BedtimeItem item)
@@ -582,14 +578,19 @@ public class BedtimeDialog extends DialogFragment
         return new TimeOffsetPickerDialog.DialogListener()
         {
             @Override
-            public void onDialogAccepted(long value) {
-                BedtimeSettings.savePrefSleepCycleMs(getActivity(), value);
-                onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
-                adapter.notifyItemChanged(adapter.findItemPosition(item));
+            public void onDialogAccepted(long value)
+            {
+                Context context = getContext();
+                if (context != null)
+                {
+                    BedtimeSettings.savePrefSleepCycleMs(context, value);
+                    onSleepTimeChanged_updateBedtimeOff(context, item);
+                    adapter.notifyItemChanged(adapter.findItemPosition(item));
 
-                BedtimeItem linkedItem = item.getLinkedItem();
-                if (linkedItem != null) {
-                    adapter.notifyItemChanged(adapter.findItemPosition(linkedItem));
+                    BedtimeItem linkedItem = item.getLinkedItem();
+                    if (linkedItem != null) {
+                        adapter.notifyItemChanged(adapter.findItemPosition(linkedItem));
+                    }
                 }
             }
         };
@@ -601,27 +602,26 @@ public class BedtimeDialog extends DialogFragment
     private static final String DIALOG_SLEEP_CYCLES = "dialog_sleep_cycles";
     protected void showConfigureSleepCyclesDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
         final BedtimeSleepDialog dialog = new BedtimeSleepDialog();
         dialog.setNumCycles(BedtimeSettings.loadPrefSleepCycleCount(context));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepCycles));
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepCycles));
         dialog.setOnAcceptedListener(onSleepCyclesDialogAccepted(item));
-        dialog.show(fragments, DIALOG_SLEEP_CYCLES);
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLES);
     }
 
-    private final DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
+    private DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                final BedtimeSleepDialog dialog = (BedtimeSleepDialog) fragments.findFragmentByTag(DIALOG_SLEEP_CYCLES);
-                if (dialog != null)
+                Context context = getContext();
+                final BedtimeSleepDialog dialog = (BedtimeSleepDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLES);
+                if (dialog != null && context != null)
                 {
-                    BedtimeSettings.savePrefSleepCycleCount(getActivity(), dialog.getNumCycles());
-                    onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
+                    BedtimeSettings.savePrefSleepCycleCount(context, dialog.getNumCycles());
+                    onSleepTimeChanged_updateBedtimeOff(context, item);
                     adapter.notifyItemChanged(adapter.findItemPosition(item));
 
                     BedtimeItem linkedItem = item.getLinkedItem();
@@ -640,16 +640,15 @@ public class BedtimeDialog extends DialogFragment
 
     protected void showConfigureSleepOffsetDialog(Context context, final BedtimeItem item)
     {
-        FragmentManager fragments = getChildFragmentManager();
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
         dialog.setRange(getResources().getInteger(R.integer.minFallAsleepMillis),
                         getResources().getInteger(R.integer.maxFallAsleepMillis));
         dialog.setValue((int) BedtimeSettings.loadPrefSleepOffsetMs(context));
         dialog.setDialogListener(onSleepOffsetDialogListener(item));
-        dialog.setDialogTitle(getString(R.string.configLabel_sleepOffset));
-        dialog.setZeroText(getString(R.string.cycleNone));
-        dialog.show(fragments, DIALOG_SLEEP_OFFSET);
+        dialog.setDialogTitle(getString(R.string.bedtime_label_sleepOffset));
+        dialog.setZeroText(getString(R.string.bedtime_cycleNone));
+        dialog.show(getChildFragmentManager(), DIALOG_SLEEP_OFFSET);
     }
 
     private TimeOffsetPickerDialog.DialogListener onSleepOffsetDialogListener(final BedtimeItem item)
@@ -657,14 +656,19 @@ public class BedtimeDialog extends DialogFragment
         return new TimeOffsetPickerDialog.DialogListener()
         {
             @Override
-            public void onDialogAccepted(long value) {
-                BedtimeSettings.savePrefSleepOffsetMs(getActivity(), value);
-                onSleepTimeChanged_updateBedtimeOff(getActivity(), item);
-                adapter.notifyItemChanged(adapter.findItemPosition(item));
+            public void onDialogAccepted(long value)
+            {
+                Context context = getContext();
+                if (context != null)
+                {
+                    BedtimeSettings.savePrefSleepOffsetMs(context, value);
+                    onSleepTimeChanged_updateBedtimeOff(context, item);
+                    adapter.notifyItemChanged(adapter.findItemPosition(item));
 
-                BedtimeItem linkedItem = item.getLinkedItem();
-                if (linkedItem != null) {
-                    adapter.notifyItemChanged(adapter.findItemPosition(linkedItem));
+                    BedtimeItem linkedItem = item.getLinkedItem();
+                    if (linkedItem != null) {
+                        adapter.notifyItemChanged(adapter.findItemPosition(linkedItem));
+                    }
                 }
             }
         };
@@ -730,10 +734,10 @@ public class BedtimeDialog extends DialogFragment
         if (wakeupId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, wakeupId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -762,10 +766,10 @@ public class BedtimeDialog extends DialogFragment
         if (rowId != BedtimeSettings.ID_NONE)
         {
             final long sleepTotalMs = BedtimeSettings.totalSleepTimeMs(context);
-            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowId, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     if (result != null && result.size() > 0)
                     {
@@ -808,10 +812,10 @@ public class BedtimeDialog extends DialogFragment
             scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
 
         } else {
-            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, alarmID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem alarmItem = ((result != null && result.size() > 0 && result.get(0) != null) ? result.get(0) : null);
                     boolean addAlarm = (alarmItem == null);
@@ -857,8 +861,9 @@ public class BedtimeDialog extends DialogFragment
                 BedtimeAlarmHelper.saveAlarmItem(context, alarmItem, addAlarm, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
-                    public void onFinished(Boolean result, AlarmClockItem alarmItem)
+                    public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                     {
+                        AlarmClockItem alarmItem = result.getItem();
                         BedtimeSettings.saveAlarmID(context, slot, alarmItem.rowID);
                         //if (!alarmItem.enabled) {
                         context.sendBroadcast(AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()));
@@ -885,12 +890,12 @@ public class BedtimeDialog extends DialogFragment
         if (rowID == BedtimeSettings.ID_NONE) {
             return false;
         }
-        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+        BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
         {
             @Override
-            public void onLoadFinished(List<AlarmClockItem> result)
+            public void onFinished(List<AlarmClockItem> result)
             {
-                super.onLoadFinished(result);
+                super.onFinished(result);
                 if (result != null && result.size() > 0) {
                     showAlarmEditActivity(context, result.get(0), sharedView, requestCode, isNewAlarm);
                 }
@@ -911,11 +916,11 @@ public class BedtimeDialog extends DialogFragment
             ViewCompat.setTransitionName(sharedView, transitionName);
             if (getActivity() != null) {
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-                startActivityForResult(intent, requestCode, options.toBundle());
+                startActivityForResultCompat(intent, requestCode, options);
             }
 
         } else {
-            startActivityForResult(intent, requestCode);
+            startActivityForResultCompat(intent, requestCode);
         }
         return true;
     }
@@ -926,7 +931,7 @@ public class BedtimeDialog extends DialogFragment
             return false;
         }
 
-        BedtimeAlarmHelper.loadAlarmItem(getActivity(), rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+        BedtimeAlarmHelper.loadAlarmItem(getContext(), rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
         {
             @Override
             public void onLoadFinished(List<AlarmClockItem> result)
@@ -944,7 +949,7 @@ public class BedtimeDialog extends DialogFragment
                     bedtimeItem.setRepeatingDays(toItem.getRepeatingDays());
                     bedtimeItem.modified = true;
 
-                    BedtimeAlarmHelper.saveAlarmItem(getActivity(), bedtimeItem, false, new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                    BedtimeAlarmHelper.saveAlarmItem(getContext(), bedtimeItem, false, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                     {
                         @Override
                         public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
@@ -964,17 +969,19 @@ public class BedtimeDialog extends DialogFragment
     {
         if (resultCode == Activity.RESULT_OK && data != null)
         {
+            Context context = getContext();
             final AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
-            if (item != null)
+            if (item != null && context != null)
             {
-                BedtimeAlarmHelper.saveAlarmItem(getActivity(), item, isNewAlarm, new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                BedtimeAlarmHelper.saveAlarmItem(context, item, isNewAlarm, new AlarmDatabaseAdapter.AlarmItemTaskListener()
                 {
                     @Override
-                    public void onFinished(Boolean result, @Nullable final AlarmClockItem[] items)
+                    public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                     {
-                        if (result)
+                        Context context = getContext();
+                        if (result.getResult() && context != null)
                         {
-                            Integer[] positions = adapter.findItemPositions(getActivity(), item.rowID);
+                            Integer[] positions = adapter.findItemPositions(context, item.rowID);
                             for (int position : positions)
                             {
                                 Log.d("DEBUG", "onEditAlarmResult :: " + position);
@@ -988,23 +995,23 @@ public class BedtimeDialog extends DialogFragment
                                 }
                             }
                         }
-                        if (getActivity() != null) {
-                            BedtimeAlarmHelper.scheduleAlarmItem(getActivity(), item, item.enabled);
+                        if (context != null) {
+                            BedtimeAlarmHelper.scheduleAlarmItem(context, item, item.enabled);
                         }
 
                         if (onSaved != null) {
-                            onSaved.onFinished(result, items);
+                            onSaved.onFinished(result);
                         }
                     }
                 });
             } else {
                 if (onSaved != null) {    // data may contain null item if EditActivity deleted its entry
-                    onSaved.onFinished(true, new AlarmClockItem[] { null });
+                    onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(true, null, new AlarmClockItem[] { null }));
                 }
             }
         } else {
             if (onSaved != null) {
-                onSaved.onFinished(false, (AlarmClockItem[])null);
+                onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(false, null, (AlarmClockItem[])null));
             }
         }
     }
@@ -1016,20 +1023,18 @@ public class BedtimeDialog extends DialogFragment
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
 
-        String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context));
-        String messageString = context.getString(R.string.prompt_bedtime_setFrom_wakeup, sleepHours);
-        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
+        String sleepHours = utils.timeDeltaLongDisplayString(-1 * BedtimeSettings.totalSleepTimeMs(context)).toString();
+        String messageString = context.getString(R.string.bedtime_prompt_setFrom_wakeup, sleepHours);
+        CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
-        Snackbar snackbar = Snackbar.make(getList(), message, 7000);
-        snackbar.setAction(context.getString(R.string.configAction_setBedtime), new View.OnClickListener()
+        SnackbarUtils.make(context, getList(), message, 7000)
+                .setAction(context.getString(R.string.bedtime_action_setBedtime), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 configBedtimeFromWakeup(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.BEDTIME)), false);
             }
-        });
-        ViewUtils.themeSnackbar(context, snackbar, null);
-        snackbar.show();
+        }).show();
     }
 
     protected void offerModifyWakeupFromBedtime(final Context context)
@@ -1039,20 +1044,18 @@ public class BedtimeDialog extends DialogFragment
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
 
-        String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context));
-        String messageString = context.getString(R.string.prompt_bedtime_setFrom_bedtime, sleepHours);
-        CharSequence message = SuntimesUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
+        String sleepHours = utils.timeDeltaLongDisplayString(BedtimeSettings.totalSleepTimeMs(context)).toString();
+        String messageString = context.getString(R.string.bedtime_prompt_setFrom_bedtime, sleepHours);
+        CharSequence message = SpanUtils.createBoldColorSpan(null, messageString, sleepHours, accentColor);
 
-        Snackbar snackbar = Snackbar.make(getList(), message, 7000);
-        snackbar.setAction(context.getString(R.string.configAction_setAlarm), new View.OnClickListener()
+        SnackbarUtils.make(context, getList(), message, 7000)
+                .setAction(context.getString(R.string.action_setAlarm), new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 configWakeupFromBedtime(context, adapter.getItem(adapter.findItemPosition(BedtimeItem.ItemType.WAKEUP_ALARM)), false);
             }
-        });
-        ViewUtils.themeSnackbar(context, snackbar, null);
-        snackbar.show();
+        }).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1062,34 +1065,33 @@ public class BedtimeDialog extends DialogFragment
 
     protected void showAddBedtimeMenu(final Context context, final View v, final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateAddBedtimeMenu(context, v, menu);
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_bedtime_set:
-                        showAddBedtimeDialog(context, v, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_bedtime_set) {
+                    showAddBedtimeDialog(context, v, item);
+                    return true;
 
-                    case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item, false);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_from_wakeup) {
+                    configBedtimeFromWakeup(context, item, false);
+                    return true;
 
-                    case R.id.action_bedtime_now:
-                        triggerBedtimeNow(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_now) {
+                    triggerBedtimeNow(context, item);
+                    return true;
                 }
+                return false;
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-        updateAddBedtimeMenu(context, v, menu);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_add, onMenuItemClickListener).show();
     }
 
     protected void updateAddBedtimeMenu(final Context context, final View v, final Menu menu)
@@ -1103,7 +1105,6 @@ public class BedtimeDialog extends DialogFragment
     protected void showAddBedtimeDialog(final Context context, View v, BedtimeItem item)
     {
         AlarmCreateDialog dialog = new AlarmCreateDialog();
-        FragmentManager fragments = getChildFragmentManager();
 
         dialog.setAlarmTime(22, 30, null);    // TODO: default bedtime
         dialog.setShowTabs(false);            // hide solar events tab
@@ -1112,25 +1113,25 @@ public class BedtimeDialog extends DialogFragment
         dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
-        dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_notify));         // override type labels
-        dialog.setAlarmType(AlarmClockItem.AlarmType.NOTIFICATION1);    // restrict type to notification
+        dialog.setLabelOverride(context.getString(R.string.bedtime_label_alarm_notify));         // override type labels
+        dialog.setAlarmType(AlarmType.NOTIFICATION1);    // restrict type to notification
 
         dialog.setOnAcceptedListener(onAddBedtimeDialogAccept(DIALOG_ADD_BEDTIME, BedtimeSettings.SLOT_BEDTIME_NOTIFY, item));
-        dialog.show(fragments, DIALOG_ADD_BEDTIME);
+        dialog.show(getChildFragmentManager(), DIALOG_ADD_BEDTIME);
     }
 
-    private final DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
+    private DialogInterface.OnClickListener onAddBedtimeDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
-                if (dialog != null && getActivity() != null)
+                Context context = getContext();
+                AlarmCreateDialog dialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(dialogTag);
+                if (dialog != null && context != null)
                 {
-                    //AlarmClockItem alarmItem = BedtimeAlarmHelper.createBedtimeEventItem(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
+                    //AlarmClockItem alarmItem = BedtimeAlarmHelper.createBedtimeEventItem(context, item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
                     //alarmItem.type = dialog.getAlarmType();
                     //alarmItem.location = dialog.getLocation();
                     //Calendar bedtime = Calendar.getInstance();
@@ -1138,9 +1139,9 @@ public class BedtimeDialog extends DialogFragment
 
                     String flags = (dialog.useAppLocation() ? AlarmClockItem.FLAG_LOCATION_FROM_APP + "=true" : null);
 
-                    configBedtimeToDate(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getLocation(), flags, true, true);
-                    //scheduleBedtimeAlarmItem(getActivity(), slot, alarmItem, item, true);
-                    offerModifyWakeupFromBedtime(getActivity());
+                    configBedtimeToDate(context, item, dialog.getHour(), dialog.getMinute(), dialog.getLocation(), flags, true, true);
+                    //scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
+                    offerModifyWakeupFromBedtime(context);
                 }
             }
         };
@@ -1153,28 +1154,28 @@ public class BedtimeDialog extends DialogFragment
 
     protected void showAddAlarmMenu(final Context context, final View v, final BedtimeItem item)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_wakeup_set:
-                        showAddAlarmDialog(context, item);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_wakeup_set) {
+                    showAddAlarmDialog(context, item);
+                    return true;
 
-                    case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item, true);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_wakeup_from_bedtime) {
+                    configWakeupFromBedtime(context, item, true);
+                    return true;
                 }
+                return false;
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener, null);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.bedtime_wakeup_add, onMenuItemClickListener).show();
     }
     protected void updateAddAlarmMenu(final Context context, final View v, final Menu menu)
     {
@@ -1194,19 +1195,18 @@ public class BedtimeDialog extends DialogFragment
     protected void showAddAlarmDialog(final Context context, BedtimeItem item)
     {
         AlarmCreateDialog dialog = new AlarmCreateDialog();
-        FragmentManager fragments = getChildFragmentManager();
 
         dialog.setShowTimePreview(false);           // hide time preview
         dialog.setShowDateSelectButton(false);      // hide date selection
         dialog.setShowTimeZoneSelectButton(false);  // hide time zone selection
         dialog.setShowAlarmListButton(false);       // hide list button
         dialog.setAllowSelectType(false);           // disable type selector
-        dialog.setLabelOverride(context.getString(R.string.configLabel_bedtime_alarm_wakeup));         // override type labels
-        dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);    // restrict type to alarms only
+        dialog.setLabelOverride(context.getString(R.string.bedtime_label_alarm_wakeup));         // override type labels
+        dialog.setAlarmType(AlarmType.ALARM);    // restrict type to alarms only
         // TODO: locked/disabled events
 
         dialog.setOnAcceptedListener(onAddAlarmDialogAccept(DIALOG_ADD_ALARM, BedtimeSettings.SLOT_WAKEUP_ALARM, item));
-        dialog.show(fragments, DIALOG_ADD_ALARM);
+        dialog.show(getChildFragmentManager(), DIALOG_ADD_ALARM);
     }
 
     private DialogInterface.OnClickListener onAddAlarmDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
@@ -1216,8 +1216,7 @@ public class BedtimeDialog extends DialogFragment
             @Override
             public void onClick(DialogInterface d, int which)
             {
-                FragmentManager fragments = getChildFragmentManager();
-                final AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(dialogTag);
+                final AlarmCreateDialog dialog = (AlarmCreateDialog) getChildFragmentManager().findFragmentByTag(dialogTag);
                 if (dialog != null) {
                     onAddAlarmDialogAccept(dialog, slot, item, null);
                 }
@@ -1226,8 +1225,14 @@ public class BedtimeDialog extends DialogFragment
     }
     protected void onAddAlarmDialogAccept(AlarmCreateDialog dialog, String slot, BedtimeItem item, @Nullable AlarmClockItem alarmItem)
     {
+        Context context = getContext();
+        if (context == null) {
+            Log.w("BedtimeDialog", "onAddAlarmDialogAccept: context is null!");
+            return;
+        }
+
         if (alarmItem == null) {
-            alarmItem = BedtimeAlarmHelper.createBedtimeAlarmItem(getActivity(), item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
+            alarmItem = BedtimeAlarmHelper.createBedtimeAlarmItem(context, item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
         }
 
         alarmItem.type = dialog.getAlarmType();
@@ -1250,10 +1255,9 @@ public class BedtimeDialog extends DialogFragment
                 alarmItem.setEvent(eventString);
             }
         }
-        if (getActivity() != null) {
-            scheduleBedtimeAlarmItem(getActivity(), slot, alarmItem, item, true);
-            offerModifyBedtimeFromWakeup(getActivity());
-        }
+
+        scheduleBedtimeAlarmItem(context, slot, alarmItem, item, true);
+        offerModifyBedtimeFromWakeup(context);
     }
 
     protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID) {
@@ -1261,71 +1265,67 @@ public class BedtimeDialog extends DialogFragment
     }
     protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
     {
-        PopupMenu.OnMenuItemClickListener onMenuItemClickListener = new PopupMenu.OnMenuItemClickListener()
+        PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
+            @Override
+            public void onUpdateMenu(Context context, Menu menu) {
+                updateAddBedtimeMenu(context, v, menu);
+                updateAddAlarmMenu(context, v, menu);
+                updateEditAlarmMenu(context, v, menu);
+            }
+
             @Override
             public boolean onMenuItemClick(MenuItem menuItem)
             {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.action_wakeup_edit:
-                    case R.id.action_reminder_edit:
-                    case R.id.action_bedtime_edit:
-                        showAlarmEditActivity(context, BedtimeSettings.loadAlarmID(context, slotName), sharedView, requestID, false);
-                        return true;
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.action_wakeup_edit || itemId == R.id.action_reminder_edit || itemId == R.id.action_bedtime_edit) {
+                    showAlarmEditActivity(context, BedtimeSettings.loadAlarmID(context, slotName), sharedView, requestID, false);
+                    return true;
 
-                    case R.id.action_wakeup_delete:
-                    case R.id.action_reminder_delete:
-                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BedtimeAlarmHelper.clearBedtimeItem(context, slotName);
-                            }
-                        });
-                        return true;
+                } else if (itemId == R.id.action_wakeup_delete || itemId == R.id.action_reminder_delete) {
+                    AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            BedtimeAlarmHelper.clearBedtimeItem(context, slotName);
+                        }
+                    });
+                    return true;
 
-                    case R.id.action_bedtime_delete:
-                        AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
-                                BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
-                            }
-                        });
-                        return true;
+                } else if (itemId == R.id.action_bedtime_delete) {
+                    AlarmEditDialog.confirmDeleteAlarm(context, item.getAlarmItem(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF);
+                            BedtimeAlarmHelper.clearBedtimeItem(context, BedtimeSettings.SLOT_BEDTIME_REMINDER);
+                        }
+                    });
+                    return true;
 
-                    case R.id.action_bedtime_set:
-                        showAddBedtimeDialog(context, v, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_set) {
+                    showAddBedtimeDialog(context, v, item);
+                    return true;
 
-                    case R.id.action_bedtime_from_wakeup:
-                        configBedtimeFromWakeup(context, item, false);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_from_wakeup) {
+                    configBedtimeFromWakeup(context, item, false);
+                    return true;
 
-                    case R.id.action_bedtime_now:
-                        triggerBedtimeNow(context, item);
-                        return true;
+                } else if (itemId == R.id.action_bedtime_now) {
+                    triggerBedtimeNow(context, item);
+                    return true;
 
-                    case R.id.action_wakeup_from_bedtime:
-                        configWakeupFromBedtime(context, item, true);
-                        return true;
+                } else if (itemId == R.id.action_wakeup_from_bedtime) {
+                    configWakeupFromBedtime(context, item, true);
+                    return true;
 
-                    case R.id.action_bedtime_alarmoff:
-                        toggleConfigureBedtimeAlarmOff(context, item);
-                        return true;
-
-                    default:
-                        return false;
+                } else if (itemId == R.id.action_bedtime_alarmoff) {
+                    toggleConfigureBedtimeAlarmOff(context, item);
+                    return true;
                 }
+                return false;
             }
         };
-        PopupMenu popup = PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener, null);
-        Menu menu = popup.getMenu();
-        updateAddBedtimeMenu(context, v, menu);
-        updateAddAlarmMenu(context, v, menu);
-        updateEditAlarmMenu(context, v, menu);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, menuResID, onMenuItemClickListener).show();
     }
 
     public static void confirmClearAlarms(@Nullable final Context context, DialogInterface.OnClickListener onDeleteConfirmed)
@@ -1337,11 +1337,11 @@ public class BedtimeDialog extends DialogFragment
             int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
             a.recycle();
 
-            String message = context.getString(R.string.clearalarms_dialog_message);
+            String message = context.getString(R.string.alarmsclear_dialog_message);
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.clearalarms_dialog_title)).setMessage(message).setIcon(iconResID)
-                    .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), onDeleteConfirmed)
-                    .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+                    .setTitle(context.getString(R.string.alarmsclear_dialog_title)).setMessage(message).setIcon(iconResID)
+                    .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onDeleteConfirmed)
+                    .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
             confirm.show();
         }
     }

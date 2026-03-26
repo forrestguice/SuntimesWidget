@@ -26,41 +26,39 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
+import com.forrestguice.support.widget.BottomSheetDialogBase;
+import com.forrestguice.support.widget.PopupMenuCompat;
+
 import java.util.Calendar;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 @Deprecated
-public class EquinoxDialog extends BottomSheetDialogFragment
+public class EquinoxDialog extends BottomSheetDialogBase
 {
     public static final String DIALOGTAG_HELP = "equinox_help";
 
@@ -69,26 +67,28 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                if (equinoxView.hasSelection()) {
-                    equinoxView.setSelection(null);
-                } else super.onBackPressed();
-            }
-        };
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }
 
     @Override
+    public boolean onBackPressed() {
+        if (equinoxView.hasSelection()) {
+            equinoxView.setSelection(null);
+            return true;
+        } else return false;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireActivity();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_equinox, parent, false);
 
         equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
-        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(getContext(), 0));
+        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(context, 0));
         if (savedState != null)
         {
             //Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
@@ -99,14 +99,20 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         {
             @Override
             public void onMenuClick(View v, int position) {
-                showOverflowMenu(getContext(), v);
+                Context context = getContext();
+                if (context != null) {
+                    showOverflowMenu(context, v);
+                }
             }
             @Override
-            public void onMenuClick(View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
-                showContextMenu(getContext(), v, mode, datetime);
+            public void onMenuClick(View v, int position, SolsticeEquinoxMode mode, long datetime) {
+                Context context = getContext();
+                if (context != null) {
+                    showContextMenu(context, v, mode, datetime);
+                }
             }
         });
-        themeViews(getContext());
+        themeViews(context);
 
         if (overrideColumnWidthPx >= 0) {
             equinoxView.adjustColumnWidth(overrideColumnWidthPx);
@@ -122,53 +128,21 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
-            if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        }
-    }
-    private void collapseSheet(Dialog dialog)
-    {
-        if (dialog != null) {
-            BottomSheetBehavior bottomSheet = initSheet(dialog);
-            if (bottomSheet != null) {
-                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        }
-    }
-    @Nullable
-    private BottomSheetBehavior initSheet(DialogInterface dialog)
-    {
-        if (dialog != null)
-        {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(true);
-                ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
-                return behavior;
-            }
-        }
-        return null;
+    @Override
+    protected int getPeekViewId() {
+        return R.id.info_equinoxsolstice_flipper1;
     }
 
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
+    private final DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialogInterface) {
             Context context = getContext();
             if (context != null) {
-                equinoxView.updateViews(getContext());
+                equinoxView.updateViews(context);
                 equinoxView.post(new Runnable() {
                     @Override
                     public void run() {
-                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        BottomSheetDialogBase.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
@@ -195,14 +169,14 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     public void updateViews()
     {
-        if (equinoxView != null) {
+        if (equinoxView != null && getContext() != null) {
             equinoxView.updateViews(getContext());
             //Log.d("DEBUG", "EquinoxDialog updated");
         }
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         equinoxView.saveState(outState);
         outState.putInt("overrideColumnWidthPx", overrideColumnWidthPx);
@@ -231,19 +205,12 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     protected boolean showOverflowMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.equinoxmenu, menu.getMenu());
-        menu.setOnMenuItemClickListener(onOverflowMenuClick);
-        updateOverflowMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.equinoxmenu, onOverflowMenuClick).show();
         return true;
     }
 
-    private void updateOverflowMenu(Context context, PopupMenu popup)
+    private void updateOverflowMenu(Context context, Menu menu)
     {
-        Menu menu = popup.getMenu();
         MenuItem trackingItem = menu.findItem(R.id.action_tracking_mode);
         if (trackingItem != null) {
             stripMenuItemLabel(trackingItem);
@@ -258,7 +225,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         }
     }
 
-    private void updateTrackingMenu(SubMenu trackingMenu, WidgetSettings.TrackingMode trackingMode)
+    private void updateTrackingMenu(SubMenu trackingMenu, TrackingMode trackingMode)
     {
         if (trackingMenu != null)
         {
@@ -276,11 +243,13 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     private void onTrackingModeChanged(Context context, int id)
     {
-        WidgetSettings.TrackingMode mode = null;
-        switch (id) {
-            case R.id.trackRecent: mode = WidgetSettings.TrackingMode.RECENT; break;
-            case R.id.trackClosest: mode = WidgetSettings.TrackingMode.CLOSEST; break;
-            case R.id.trackUpcoming: mode = WidgetSettings.TrackingMode.SOONEST; break;
+        TrackingMode mode = null;
+        if (id == R.id.trackRecent) {
+            mode = TrackingMode.RECENT;
+        } else if (id == R.id.trackClosest) {
+            mode = TrackingMode.CLOSEST;
+        } else if (id == R.id.trackUpcoming) {
+            mode = TrackingMode.SOONEST;
         }
         if (mode != null) {
             WidgetSettings.saveTrackingModePref(context, 0, mode);
@@ -291,52 +260,50 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         } else Log.w("EquinoxDialog", "setTrackingMode: invalid item id " + id);
     }
 
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
-                    onTrackingModeChanged(getContext(), item.getItemId());
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.trackRecent || itemId == R.id.trackClosest || itemId == R.id.trackUpcoming) {
+                Context context = getContext();
+                if (context != null) {
+                    onTrackingModeChanged(context, item.getItemId());
+                }
+                return true;
 
-                case R.id.action_help:
-                    showHelp(getContext());
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.action_help) {
+                Context context = getContext();
+                if (context != null) {
+                    showHelp(context);
+                }
+                return true;
             }
+            return false;
         }
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
+    protected boolean showContextMenu(final Context context, View view, final SolsticeEquinoxMode mode, final long datetime)
     {
-        PopupMenu menu = new PopupMenu(context, view, Gravity.START);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-        menu.setOnDismissListener(onContextMenuDismissed);
-        updateContextMenu(context, menu, mode, datetime);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-
-        equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.equinoxcontext, Gravity.START, onContextMenuClick(mode, datetime)).show();
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu, final WidgetSettings.SolsticeEquinoxMode mode, final long datetime)
+    private void updateContextMenu(Context context, Menu m, final SolsticeEquinoxMode mode, final long datetime)
     {
         Intent data = new Intent();
         data.putExtra(MenuAddon.EXTRA_SHOW_DATE, datetime);
         data.putExtra("mode", mode.name());
 
-        Menu m = menu.getMenu();
         setDataToMenu(m, data);
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
@@ -359,82 +326,92 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         }
     }
 
-    private PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
-        @Override
-        public void onDismiss(PopupMenu menu) {
-            equinoxView.post(new Runnable() {
-                @Override
-                public void run() {                      // a submenu may be shown after the popup is dismissed
-                    equinoxView.unlockScrolling();           // so defer unlockScrolling until after it is shown
-                }
-            });
-        }
-    };
-
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private PopupMenuCompat.PopupMenuListener onContextMenuClick(final SolsticeEquinoxMode mode, final long datetime)
     {
-        @Override
-        public boolean onMenuItemClick(MenuItem item)
+        return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
-            Context context = getContext();
-            if (context == null) {
-                return false;
+            @Override
+            public boolean hasOnDismissListener() {
+                return true;
             }
 
-            Intent itemData = item.getIntent();
-            long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
-            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+            @Override
+            public void onDismiss() {
+                equinoxView.post(new Runnable() {
+                    @Override
+                    public void run() {                      // a submenu may be shown after the popup is dismissed
+                        equinoxView.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                    }
+                });
+            }
 
-            switch (item.getItemId())
+            @Override
+            public void onUpdateMenu(Context context, Menu menu)
             {
-                case R.id.action_alarm:
+                updateContextMenu(context, menu, mode, datetime);
+                equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
+            }
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    return false;
+                }
+
+                Intent itemData = item.getIntent();
+                long itemTime = ((itemData != null) ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
+                SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_alarm) {
                     if (dialogListener != null) {
                         dialogListener.onSetAlarm(itemMode);
                         //collapseSheet(getDialog());
                     }
                     return true;
 
-                case R.id.action_sunposition:
+                } else if (itemId == R.id.action_sunposition) {
                     if (dialogListener != null) {
                         dialogListener.onShowPosition(itemTime);
                         //collapseSheet(getDialog());
                     }
                     return true;
 
-                case R.id.action_moon:
+                } else if (itemId == R.id.action_moon) {
                     if (dialogListener != null) {
                         dialogListener.onShowMoonInfo(itemTime);
                         //collapseSheet(getDialog());
                     }
                     return true;
 
-                case R.id.action_worldmap:
+                } else if (itemId == R.id.action_worldmap) {
                     if (dialogListener != null) {
                         dialogListener.onShowMap(itemTime);
                         //collapseSheet(getDialog());
                     }
                     return true;
 
-                case R.id.action_date:
+                } else if (itemId == R.id.action_date) {
                     if (dialogListener != null) {
                         dialogListener.onShowDate(itemTime);
                     }
                     collapseSheet(getDialog());
                     return true;
 
-                case R.id.action_share:
-                    shareItem(getContext(), itemData);
+                } else if (itemId == R.id.action_share) {
+                    shareItem(context, itemData);
                     return true;
-
-                default:
-                    return false;
+                }
+                return false;
             }
-        }
-    });
+        });
+    }
 
-    protected void shareItem(Context context, Intent itemData)  // TODO: refactor to use ViewUtils after v0.15.0 branches are merged
+    protected void shareItem(Context context, Intent itemData)
     {
-        WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+        SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
         if (itemMode != null && itemMillis != -1L)
         {
@@ -445,7 +422,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
             SuntimesUtils utils = new SuntimesUtils();
             SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+            String itemDisplay = context.getString(R.string.equinox_format_share, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
@@ -454,12 +431,14 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                     clipboard.setPrimaryClip(ClipData.newPlainText(itemMode.getLongDisplayString(), itemDisplay));
                 }
             } else {
+                @SuppressWarnings("deprecation")
                 android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (clipboard != null) {
+                    //noinspection deprecation
                     clipboard.setText(itemDisplay);
                 }
             }
-            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, itemDisplay, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -476,7 +455,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
      */
     public static class EquinoxDialogListener
     {
-        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
+        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}

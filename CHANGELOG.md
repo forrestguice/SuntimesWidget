@@ -1,5 +1,37 @@
 ### ~
 
+### DEVELOP
+
+* adds "Material You" app themes (api31+) (#635).
+* adds digital clock widgets with fancy typeface.
+* adds `widget preview` (and `share` action) to the widget configuration activity (#6).
+* adds custom events; `shadow factor`, `day/night percent`, `moon elevation`, and `moon illumination` (#729, #900).
+* adds world map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
+* adds `map location` picker to the location dialog; choose coordinates from the world map.
+* adds `seek time/date` action to the sun, moon, and world map dialogs (#863).
+* adds `seek bar` to the sun dialog; tapping or dragging the lightmap or graph jumps to that time (#826).
+* adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek to twilight or custom events.
+* adds `seek altitude` and `seek shadow length` popups to the sun dialog; seek/manage custom events.
+* adds `10min`, `15min`, and `7d` step sizes to the sun dialog, and `7d` step size to the world map dialog.
+* adds `solar noon` and sun `symbol` options to the sun dialog; "circle", "cross", "dot", or "line".
+* adds `sort places` action to the places activity; sort by label (ascending, descending), or nearest (to app location).
+* improves the `search places` action; adds descriptive tags/icons to the default world places.
+* enhances the add places dialog; adds `gps menu`, `gps status` views, `reload agps`, and `average location` actions (#884).
+* adds permission `android.permission.ACCESS_LOCATION_EXTRA_COMMANDS`; required to reload agps data [PERMISSION].
+* adds `last update` location debug information to place settings; time of last update, location provider, accuracy, time elapsed, and number of satellites (#884).
+* adds option to hide the location coordinates in the action bar.
+* adds option `label (alternate)` that displays alternate labels "dawn" and "dusk" in the main table.
+* adds `snooze` and `snooze limit` chips to the alarm edit dialog that allows setting these values per alarm.
+* adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
+* adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
+* adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by actions functionality to launch user-defined intents) [permission].
+* adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
+* refactor; decouples core data classes from the Android api (#388); moved into `calculator` and `util` Java libraries.
+* refactor; decouples UI classes from the Android Support Library; introduces Suntimes `support` library.
+* build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API (api30).
+* build; adds `legacy` flavor (uses the Android Support Library); assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle.
+* build; adds `production` and `nightly` build flavors (#892).
+
 ### v0.16.14 (2026-03-14)
 * fixes missing Chinese translations (#921) (missing since v0.16.12).
 * fixes missing region-specific default values.

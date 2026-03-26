@@ -22,10 +22,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.test.filters.FlakyTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.FlakyTest;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,16 +38,16 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.hasTextColor;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeRight;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
+import static androidx.test.espresso.matcher.ViewMatchers.hasTextColor;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertClickable;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShownCompletely;
@@ -55,7 +58,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WelcomeActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -67,13 +70,13 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -271,7 +274,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
         }
         public WelcomeActivityRobot assertAboutPageIsShown(Context context)
         {
-            onView(allOf(withText(R.string.configAction_aboutWidget), withClassName(endsWith("Button"))))
+            onView(allOf(withText(R.string.action_about), withClassName(endsWith("Button"))))
                     .check(assertShownCompletely)
                     .check(assertClickable);
             //onView(allOf(withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
@@ -279,23 +282,23 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public WelcomeActivityRobot assertAppearancePageIsShown(Context context) {
-            onView(allOf(withId(R.id.text_title), withText(R.string.configLabel_appearance))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.text_title), withText(R.string.settings_appearance))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertUIPageIsShown(Context context) {
-            onView(allOf(withId(R.id.text_title), withText(R.string.configLabel_ui))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.text_title), withText(R.string.settings_ui))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertLocationPageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_location))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_title), withText(R.string.location_label))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertTimeZonePageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_about_name), withText(R.string.configLabel_timezone))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_about_name), withText(R.string.settings_timezone))).check(assertShownCompletely);
             return this;
         }
         public WelcomeActivityRobot assertAlarmsPageIsShown(Context context) {
-            onView(allOf(withId(R.id.txt_title), withText(R.string.configLabel_alarmClock))).check(assertShownCompletely);
+            onView(allOf(withId(R.id.txt_title), withText(R.string.alarms_label_alarmClock))).check(assertShownCompletely);
             return this;
         }
 

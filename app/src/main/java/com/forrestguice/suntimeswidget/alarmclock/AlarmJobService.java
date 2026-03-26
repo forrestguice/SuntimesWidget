@@ -80,7 +80,9 @@ public class AlarmJobService extends JobService
                 .setOverrideDeadline(delay + AlarmSettings.AFTER_BOOT_COMPLETED_WINDOW_MS);
 
         JobScheduler jobs = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobs.schedule(job.build());
+        if (jobs != null) {
+            jobs.schedule(job.build());
+        }
     }
 
 }

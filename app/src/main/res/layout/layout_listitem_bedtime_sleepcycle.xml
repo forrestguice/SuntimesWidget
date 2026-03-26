@@ -38,12 +38,13 @@
             android:paddingTop="8dp" android:paddingBottom="8dp"
             android:clipToPadding="false">
 
-            <Switch android:id="@+id/switch_enabled"
+            <com.forrestguice.support.widget.SwitchCompat android:id="@+id/switch_enabled"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end" android:visibility="invisible"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_configure"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_configure"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:src="?attr/icActionSettings"
                 android:tint="?attr/fab_foregroundColorAlt"
@@ -51,7 +52,7 @@
                 android:scaleType="center"
                 app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="0dp"
-                android:contentDescription="@string/configAction_settings" />
+                android:contentDescription="@string/action_settings" />
 
         </FrameLayout>
 

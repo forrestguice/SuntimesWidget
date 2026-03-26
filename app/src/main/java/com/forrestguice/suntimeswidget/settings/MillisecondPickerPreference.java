@@ -23,7 +23,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -34,6 +33,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.preference.DialogPreference;
 
 /**
  * A dialog preference that allows selecting a millisecond value as either hours, minutes, or
@@ -130,9 +130,9 @@ public class MillisecondPickerPreference extends DialogPreference
         return dialogView;
     }
 
-    private static int SECOND_TO_MS = 1000;
-    private static int MINUTE_TO_MS = 1000 * 60;
-    private static int HOUR_TO_MS = 1000 * 60 * 60;
+    private static final int SECOND_TO_MS = 1000;
+    private static final int MINUTE_TO_MS = 1000 * 60;
+    private static final int HOUR_TO_MS = 1000 * 60 * 60;
 
     @Override
     protected void onBindDialogView(View v)
@@ -346,14 +346,14 @@ public class MillisecondPickerPreference extends DialogPreference
                 if (context != null) {
                     if (valueHours == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_hours, valueHours, valueHours);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_hours, valueHours, valueHours);
                 } else return valueHours + "";
 
             case MODE_SECONDS:
                 if (context != null) {
                     if (valueSeconds == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_seconds, valueSeconds, valueSeconds);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_seconds, valueSeconds, valueSeconds);
                 } else return valueSeconds + "";
 
             case MODE_MINUTES:
@@ -361,7 +361,7 @@ public class MillisecondPickerPreference extends DialogPreference
                 if (context != null) {
                     if (valueMinutes == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_minutes, valueMinutes, valueMinutes);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_minutes, valueMinutes, valueMinutes);
                 } else return valueMinutes + "";
         }
     }

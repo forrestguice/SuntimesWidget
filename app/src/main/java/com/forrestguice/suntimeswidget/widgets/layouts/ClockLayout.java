@@ -19,17 +19,19 @@
 package com.forrestguice.suntimeswidget.widgets.layouts;
 
 import android.content.Context;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 
 public abstract class ClockLayout extends SuntimesLayout
 {
-
+    protected int dpWidth = 512, dpHeight = 512;
     protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
     public ClockLayout()
@@ -41,8 +43,14 @@ public abstract class ClockLayout extends SuntimesLayout
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
      */
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data) {
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data, int[] widgetSize)
+    {
         this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        if (Build.VERSION.SDK_INT >= 16)
+        {
+            this.dpWidth = widgetSize[0];
+            this.dpHeight = widgetSize[1];
+        }
     }
 
     /**
@@ -54,8 +62,8 @@ public abstract class ClockLayout extends SuntimesLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }

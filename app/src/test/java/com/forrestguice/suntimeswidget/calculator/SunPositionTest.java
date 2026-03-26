@@ -4,10 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import android.support.annotation.Nullable;
+import com.forrestguice.annotation.Nullable;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -43,7 +42,7 @@ public class SunPositionTest
         date.setTimeInMillis(TEST_DATE);
         solarTime = SolarTime.ofLocation(TEST_LATITUDE, TEST_LONGITUDE, TEST_ALTITUDE, TEST_CALCULATOR);
     }
-    private Calendar date = Calendar.getInstance();
+    private final Calendar date = Calendar.getInstance();
     private SolarTime solarTime;
 
     @Test

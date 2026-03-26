@@ -25,14 +25,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
+
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -41,26 +34,32 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.view.ViewCompat;
+import com.forrestguice.support.widget.SwitchCompat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
-public class AlarmRepeatDialog extends DialogFragment
+public class AlarmRepeatDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_REPEAT = "alarmrepeat_repeat";
     public static final boolean PREF_DEF_ALARM_REPEAT = false;
 
     public static final String PREF_KEY_ALARM_REPEATDAYS = "alarmrepeat_days";
-    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = AlarmClockItem.everyday();
+    public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = AlarmItemInterface.everyday();
 
     public static final String KEY_COLORS = "alarmrepeat_colors";
-
-    protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private SwitchCompat switchRepeat;
     private CheckBox checkRepeat;
@@ -83,12 +82,13 @@ public class AlarmRepeatDialog extends DialogFragment
      * @return an Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmrepeat, null);
@@ -100,10 +100,10 @@ public class AlarmRepeatDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         //builder.setTitle(myParent.getString(R.string.alarmrepeat_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmrepeat_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -117,7 +117,7 @@ public class AlarmRepeatDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmrepeat_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -135,7 +135,7 @@ public class AlarmRepeatDialog extends DialogFragment
             loadSettings(savedInstanceState);
         }
         initViews(myParent, dialogContent);
-        updateViews(getContext());
+        updateViews(myParent);
         return dialog;
     }
 
@@ -143,7 +143,7 @@ public class AlarmRepeatDialog extends DialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "AlarmDialog onSaveInstanceState");
         saveSettings(outState);
@@ -181,7 +181,7 @@ public class AlarmRepeatDialog extends DialogFragment
             checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat);
             if (checkRepeat != null) {
                 checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
-                CompoundButtonCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
+                ViewCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
             }
         }
 
@@ -202,7 +202,7 @@ public class AlarmRepeatDialog extends DialogFragment
             if (button != null)
             {
                 button.setOnCheckedChangeListener(onRepeatDayChanged);
-                String dayName = utils.getShortDayString(context, day);
+                String dayName = TimeDateDisplay.getShortDayString(day);
                 button.setTextOn(dayName);
                 button.setTextOff(dayName);
             }
@@ -216,10 +216,10 @@ public class AlarmRepeatDialog extends DialogFragment
         {
             if (days.size() == 1)
             {
-                retString.append(utils.getDayString(context, days.get(0)));
+                retString.append(TimeDateDisplay.getDayString(days.get(0)));
 
             } else {
-                String[] dayStrings = utils.getShortDayStrings(context);
+                String[] dayStrings = TimeDateDisplay.getShortDayStrings();
                 Collections.sort(days);
                 int n = days.size();
                 for (int i=0; i<n; i++)
@@ -247,7 +247,9 @@ public class AlarmRepeatDialog extends DialogFragment
         {
             repeat = isChecked;
             repeatDays = (repeat ? new ArrayList<Integer>(PREF_DEF_ALARM_REPEATDAYS) : new ArrayList<Integer>());
-            updateViews(getContext());
+            if (getContext() != null) {
+                updateViews(getContext());
+            }
         }
     };
 
@@ -276,7 +278,9 @@ public class AlarmRepeatDialog extends DialogFragment
                 if (repeatDays.isEmpty()) {
                     repeat = false;
                 }
-                updateViews(getContext());
+                if (getContext() != null) {
+                    updateViews(getContext());
+                }
             }
         }
     };
@@ -302,11 +306,13 @@ public class AlarmRepeatDialog extends DialogFragment
     public void setRepetition(boolean value, @Nullable ArrayList<Integer> days)
     {
         this.repeat = value;
-        repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmClockItem.everyday());
-        updateViews(getContext());
+        repeatDays = (days != null ? new ArrayList<Integer>(days) : AlarmItemInterface.everyday());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
-    private void updateViews(Context context)
+    private void updateViews(@NonNull Context context)
     {
         if (Build.VERSION.SDK_INT >= 14)
         {

@@ -25,29 +25,31 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentActivity;
 
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.DialogBase;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.support.app.PermissionResultLauncherCompat;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentCompat;
 
-public class LocationConfigDialog extends BottomSheetDialogFragment
+public class LocationConfigDialog extends BottomSheetDialogBase
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
@@ -55,14 +57,21 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     public static final String KEY_LOCATION_SHOWADDBUTTON = "showaddbutton";
 
     public static final int REQUEST_LOCATION = 30;
+    private final ActivityResultLauncherCompat startActivityForResult_location = registerForActivityResultCompat(REQUEST_LOCATION);
+    private final PermissionResultLauncherCompat requestPermissions_location = registerForPermissionResult(GetFixHelper.REQUEST_GETFIX_LOCATION);
 
     protected ImageButton btn_accept, btn_cancel;
 
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
-    {
-        super.onInflate(activity, attrs, savedInstanceState);
+    public static LocationConfigDialog newInstance() {
+        return new LocationConfigDialog();
+    }
 
-        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.LocationConfigDialog);
+    @Override
+    public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs, Bundle savedInstanceState)
+    {
+        super.onInflate(context, attrs, savedInstanceState);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LocationConfigDialog);
         setHideDialogHeader(a.getBoolean(R.styleable.LocationConfigDialog_hideHeader, hideHeader));
         setHideDialogFooter(a.getBoolean(R.styleable.LocationConfigDialog_hideFooter, hideFooter));
         setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
@@ -102,7 +111,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
     {
         @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return dialogContent.saveSettings(context);
         }
@@ -122,7 +131,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             /* EMPTY */
         }
 
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        public boolean saveSettings(Context context, LocationMode locationMode, Location location)
         {
             return true;
         }
@@ -130,14 +139,13 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     /**
      * setLocation
-     * @param location
      */
     private Location presetLocation = null;
     public void setLocation(Context context, Location location)
     {
         presetLocation = location;
         if (dialogContent != null) {
-            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }
 
@@ -232,9 +240,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     public void setData(Uri data)
     {
         presetData = data;
-        if (dialogContent != null)
-        {
-            dialogContent.loadSettings(getActivity(), presetData);
+        if (dialogContent != null && getContext() != null) {
+            dialogContent.loadSettings(getContext(), presetData);
         }
     }
 
@@ -244,11 +251,10 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param grantResults either PERMISSION_GRANTED or PERMISSION_DENIED for each of the requested permissions
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (dialogContent != null)
-        {
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+        if (dialogContent != null) {
             dialogContent.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -269,6 +275,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         super.onResume();
         if (dialogContent != null)
         {
+            dialogContent.setFragmentManager(this);
             dialogContent.onResume();
         }
         expandSheet(getDialog());
@@ -277,33 +284,46 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
-        final FragmentActivity myParent = getActivity();
 
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.setShouldCollapse(collapse);
         dialogContent.setShowAddButton(showAddButton);
-        dialogContent.init(myParent, false);
-        dialogContent.setFragment(this);
+        dialogContent.init((AppCompatActivity) requireActivity(), false);
+        dialogContent.setFragmentManager(this);
 
-        dialogContent.setOnListButtonClicked(new View.OnClickListener() {
+        dialogContent.setOnListButtonClicked(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PlacesActivity.class);
-                intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
-                //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
-                startActivityForResult(intent, REQUEST_LOCATION);
+            public void onClick(View v)
+            {
+                if (getContext() != null)
+                {
+                    Intent intent = new Intent(getContext(), PlacesActivity.class);
+                    intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
+                    //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
+                    startActivityForResult_location.launch(intent);
+                } else Log.w("LocationConfigDialog", "onListButtonClicked: activity is null!");
             }
         });
-        dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener() {
+        dialogContent.setViewListener(new LocationConfigView.LocationConfigViewListener()
+        {
+            @Override
             public void onModeChanged(LocationConfigView.LocationViewMode mode) {
                 if (dialogListener != null) {
                     dialogListener.onEditModeChanged(mode);
                 }
             }
+
+            @Override
+            public void onRequestPermissions(@NonNull String[] permissions, int requestCode) {
+                requestPermissionsCompat(permissions, requestCode);
+            }
+
         });
 
         View header = view.findViewById(R.id.dialog_header);
@@ -319,7 +339,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         btn_cancel = (ImageButton) view.findViewById(R.id.dialog_button_cancel);
         TooltipCompat.setTooltipText(btn_cancel, btn_cancel.getContentDescription());
         btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
-        if (AppSettings.isTelevision(getActivity())) {
+        if (AppSettings.isTelevision(context)) {
             btn_cancel.setFocusableInTouchMode(true);
         }
 
@@ -331,10 +351,10 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             loadSettings(savedInstanceState);
 
         } else if (presetData != null) {
-            dialogContent.loadSettings(myParent, presetData);
+            dialogContent.loadSettings(context, presetData);
 
         } else if (presetLocation != null) {
-            setLocation(getContext(), presetLocation);
+            setLocation(context, presetLocation);
         }
         return view;
     }
@@ -343,7 +363,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param savedInstanceState a Bundle containing previously saved dialog state
      * @return an AlertDialog ready for display
      */
-    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @SuppressWarnings({"RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -356,7 +376,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
      * @param outState a Bundle used to save state
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         //Log.d("DEBUG", "LocationConfigDialog onSaveInstanceState");
         saveSettings(outState);
@@ -397,8 +417,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         showAddButton = bundle.getBoolean(KEY_LOCATION_SHOWADDBUTTON);
         setShowAddButton(showAddButton);
 
-        if (dialogContent != null) {
-            dialogContent.loadSettings(getActivity(), bundle);
+        if (dialogContent != null && getContext() != null) {
+            dialogContent.loadSettings(getContext(), bundle);
         }
     }
 
@@ -406,9 +426,9 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialog)
         {
-            ViewUtils.initPeekHeight(dialog, R.id.dialog_footer);
+            BottomSheetDialogBase.initPeekHeight(dialog, R.id.dialog_footer);
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();
             }
         }
@@ -417,12 +437,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     private final View.OnClickListener onDialogCancelClick = new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            if (getDialog() != null) {
+                getDialog().cancel();
+            }
         }
     });
 
     @Override
-    public void onCancel(DialogInterface dialog)
+    public void onCancel(@NonNull DialogInterface dialog)
     {
         dialogContent.cancelGetFix();
         dismiss();
@@ -436,9 +458,10 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
+            Context context = getContext();
             dialogContent.cancelGetFix();
-            if (dialogListener != null &&
-                    dialogListener.saveSettings(getActivity(), dialogContent.getLocationMode(), dialogContent.getLocation()))
+            if (context != null && dialogListener != null &&
+                    dialogListener.saveSettings(context, dialogContent.getLocationMode(), dialogContent.getLocation(context)))
             {
                 LocationConfigView.LocationViewMode mode = dialogContent.getMode();
                 switch (mode)
@@ -458,34 +481,17 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     });
 
-    private void expandSheet(DialogInterface dialog)
+    @Override
+    public void onActivityCreatedCompat(Bundle savedInstanceState)
     {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
+        super.onActivityCreatedCompat(savedInstanceState);
+        DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityCreated(savedInstanceState);
-        ViewUtils.disableTouchOutsideBehavior(getDialog());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_LOCATION:
@@ -502,9 +508,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
         if (resultCode == Activity.RESULT_OK && data != null)
         {
-            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
-            if (location != null) {
-                setLocation(getActivity(), location);
+            Location location = (Location) data.getSerializableExtra(PlacesActivity.EXTRA_LOCATION);
+            if (location != null && getContext() != null) {
+                setLocation(getContext(), location);
+            } else {
+                Log.w("LocationDialog", "onLocationResult: the expected result is missing!");
             }
             if (AppSettings.isTelevision(getContext())) {
                 btn_accept.requestFocus();

@@ -20,7 +20,7 @@
        xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools">
 
-	<android.support.constraint.ConstraintLayout android:id="@+id/background"
+	<com.forrestguice.support.constraint.ConstraintLayout android:id="@+id/background"
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical" android:animateLayoutChanges="true">
 
@@ -74,21 +74,21 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_alarm_label"
 			app:layout_constraintBottom_toTopOf="@+id/btn_dismiss">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_sounding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_huge"
                 android:contentDescription="@string/alarmMode_alarm" />
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_snooze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_snooze_huge"
 				android:contentDescription="@string/alarmAction_snooze" />
 
-			<ImageView
+			<com.forrestguice.support.widget.ImageView
 				android:id="@+id/icon_alarm_timeout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
 			android:animateLayoutChanges="true"
 			android:id="@+id/layout_back">
 
-			<android.support.design.widget.FloatingActionButton
+			<com.forrestguice.support.widget.FloatingActionButton
 				android:id="@+id/btn_back" android:visibility="visible"
 				android:layout_width="match_parent" android:layout_height="match_parent"
 				android:layout_gravity="bottom|start" android:layout_margin="8dp"
@@ -207,6 +207,6 @@
 
 		</FrameLayout>
 
-	</android.support.constraint.ConstraintLayout>
+	</com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

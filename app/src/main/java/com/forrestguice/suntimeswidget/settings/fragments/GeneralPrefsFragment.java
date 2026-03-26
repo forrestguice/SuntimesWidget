@@ -26,12 +26,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
+
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -39,14 +36,21 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.WelcomeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.ListPreference;
+import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceFragment;
 
 /**
  * General Prefs
@@ -163,7 +167,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
 
-        Preference introScreenPref = fragment.findPreference("appwidget_0_intro_screen");
+        Preference introScreenPref = (Preference) fragment.findPreference("appwidget_0_intro_screen");
         if (introScreenPref != null)
         {
             introScreenPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
@@ -183,8 +187,8 @@ public class GeneralPrefsFragment extends PreferenceFragment
     }
     public static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures, String defaultCalculator)
     {
-        String tagDefault = context.getString(R.string.configLabel_tagDefault);
-        String tagPlugin = context.getString(R.string.configLabel_tagPlugin);
+        String tagDefault = context.getString(R.string.tag_tagDefault);
+        String tagPlugin = context.getString(R.string.tag_tagPlugin);
 
         int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -192,8 +196,8 @@ public class GeneralPrefsFragment extends PreferenceFragment
         @SuppressLint("ResourceType") int colorPlugin = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
         typedArray.recycle();
 
-        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values(context)
-                : SuntimesCalculatorDescriptor.values(context, requestedFeatures));
+        SuntimesCalculatorDescriptor[] calculators = (requestedFeatures == null ? SuntimesCalculatorDescriptor.values()
+                : SuntimesCalculatorDescriptor.values(requestedFeatures));
         String[] calculatorEntries = new String[calculators.length];
         String[] calculatorValues = new String[calculators.length];
         CharSequence[] calculatorSummaries = new CharSequence[calculators.length];
@@ -201,22 +205,26 @@ public class GeneralPrefsFragment extends PreferenceFragment
         int i = 0;
         for (SuntimesCalculatorDescriptor calculator : calculators)
         {
-            calculator.initDisplayStrings(context);
+            int resID = calculator.getDisplayStringResID();
+            if (resID != -1 ){
+                calculator.setDisplayString(context.getString(resID));
+            }
+
             calculatorEntries[i] = calculatorValues[i] = calculator.getName();
 
             String displayString = (calculator.getName().equalsIgnoreCase(defaultCalculator))
-                    ? context.getString(R.string.configLabel_prefSummaryTagged, calculator.getDisplayString(), tagDefault)
+                    ? context.getString(R.string.tag_prefSummaryTagged, calculator.getDisplayString(), tagDefault)
                     : calculator.getDisplayString();
 
             if (calculator.isPlugin()) {
-                displayString = context.getString(R.string.configLabel_prefSummaryTagged, displayString, tagPlugin);
+                displayString = context.getString(R.string.tag_prefSummaryTagged, displayString, tagPlugin);
             }
 
-            SpannableString styledSummary = SuntimesUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
-            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagDefault, 1.15f);
+            SpannableString styledSummary = SpanUtils.createBoldColorSpan(null, displayString, tagDefault, colorDefault);
+            styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, tagDefault, 1.15f);
 
-            styledSummary = SuntimesUtils.createBoldColorSpan(styledSummary, displayString, tagPlugin, colorPlugin);
-            styledSummary = SuntimesUtils.createRelativeSpan(styledSummary, displayString, tagPlugin, 1.15f);
+            styledSummary = SpanUtils.createBoldColorSpan(styledSummary, displayString, tagPlugin, colorPlugin);
+            styledSummary = SpanUtils.createRelativeSpan(styledSummary, displayString, tagPlugin, 1.15f);
 
             calculatorSummaries[i] = styledSummary;
             i++;
@@ -247,14 +255,14 @@ public class GeneralPrefsFragment extends PreferenceFragment
         }
     }
 
-    public static void initPref_timeFormat(final Activity context, final Preference timeformatPref)
+    public static void initPref_timeFormat(final Activity context, final ListPreference timeformatPref)
     {
-        timeformatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        timeformatPref.setOnPreferenceChangeListener(new ListPreference.OnPreferenceChangeListener()
         {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object o)
+            public boolean onPreferenceChange(ListPreference preference, Object o)
             {
-                timeformatPref.setSummary(timeFormatPrefSummary(WidgetSettings.TimeFormatMode.valueOf((String)o), context));
+                timeformatPref.setSummary(timeFormatPrefSummary(TimeFormatMode.valueOf((String)o), context));
                 return true;
             }
         });
@@ -262,28 +270,28 @@ public class GeneralPrefsFragment extends PreferenceFragment
 
     public static void loadPref_timeFormat(final Activity context, final ListPreference timeformatPref)
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+        TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
         int index = timeformatPref.findIndexOfValue(mode.name());
         if (index < 0)
         {
             index = 0;
-            WidgetSettings.TimeFormatMode mode0 = mode;
-            mode = WidgetSettings.TimeFormatMode.values()[index];
+            TimeFormatMode mode0 = mode;
+            mode = TimeFormatMode.values()[index];
             Log.w("loadPref", "timeFormat not found (" + mode0 + ") :: loading " + mode.name() + " instead..");
         }
         timeformatPref.setValueIndex(index);
         timeformatPref.setSummary(timeFormatPrefSummary(mode, context));
     }
 
-    public static String timeFormatPrefSummary(WidgetSettings.TimeFormatMode mode, Context context)
+    public static String timeFormatPrefSummary(TimeFormatMode mode, Context context)
     {
         String summary = "%s";
-        if (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM)
+        if (mode == TimeFormatMode.MODE_SYSTEM)
         {
             String sysPref = android.text.format.DateFormat.is24HourFormat(context)
-                    ? WidgetSettings.TimeFormatMode.MODE_24HR.getDisplayString()
-                    : WidgetSettings.TimeFormatMode.MODE_12HR.getDisplayString();
-            summary = context.getString(R.string.configLabel_timeFormatMode_systemsummary, "%s", sysPref);
+                    ? TimeFormatMode.MODE_24HR.getDisplayString()
+                    : TimeFormatMode.MODE_12HR.getDisplayString();
+            summary = context.getString(R.string.settings_timeFormatMode_systemsummary, "%s", sysPref);
         }
         return summary;
     }
@@ -294,10 +302,10 @@ public class GeneralPrefsFragment extends PreferenceFragment
         int drawableID = a.getResourceId(0, R.drawable.baseline_terrain_black_18);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_altitude_enabled) + " [i]";
+        String title = context.getString(R.string.settings_general_altitude_enabled) + " [i]";
         int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
-        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
-        SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
+        ImageSpan altitudeIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
+        SpannableStringBuilder altitudeSpan = SpanUtils.createSpan(context, title, "[i]", altitudeIcon);
         altitudePref.setTitle(altitudeSpan);
     }
 

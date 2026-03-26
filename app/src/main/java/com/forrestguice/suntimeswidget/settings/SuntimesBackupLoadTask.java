@@ -22,14 +22,13 @@ import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsImportTask.ContentValuesJson;
 
@@ -41,40 +40,23 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
-public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupLoadTask.TaskResult>
+public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.TaskResult>
 {
     public static final String TAG = "RestoreBackup";
     public static final long MIN_WAIT_TIME = 2000;
 
     protected final WeakReference<Context> contextRef;
+    protected final Uri[] params;
 
-    protected boolean isPaused = false;
-    public void pauseTask() {
-        isPaused = true;
-    }
-    public void resumeTask() {
-        isPaused = false;
-    }
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public SuntimesBackupLoadTask(Context context) {
+    public SuntimesBackupLoadTask(Context context, Uri... params) {
         contextRef = new WeakReference<>(context);
+        this.params = params;
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
+    public TaskResult call() throws Exception
     {
         Log.d(TAG, "doInBackground: starting");
         Uri uri = null;
@@ -222,18 +204,15 @@ public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupL
         return retValue;
     }
 
-    @Override
-    protected void onProgressUpdate(Void... progressItems) {
-        super.onProgressUpdate(progressItems);
+    protected boolean isPaused = false;
+    public void pauseTask() {
+        isPaused = true;
     }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(TAG, "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
+    public void resumeTask() {
+        isPaused = false;
+    }
+    public boolean isPaused() {
+        return isPaused;
     }
 
     /**
@@ -274,22 +253,6 @@ public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupL
         }
     }
 
-    /**
-     * TaskListener
-     */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -303,8 +266,8 @@ public class SuntimesBackupLoadTask extends AsyncTask<Uri, Void, SuntimesBackupL
         }
         //Toast.makeText(context, context.getString(R.string.msg_import_success, context.getString(R.string.configAction_settings)), Toast.LENGTH_SHORT).show();
         //Toast.makeText(context, context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)), Toast.LENGTH_SHORT).show();
-        CharSequence message = (result ? context.getString(R.string.msg_import_success, context.getResources().getQuantityString(R.plurals.itemsPlural, numResults, numResults))
-                : context.getString(R.string.msg_import_failure, context.getString(R.string.msg_import_label_file)));
+        CharSequence message = (result ? context.getString(R.string.themesimport_msg_success, context.getResources().getQuantityString(R.plurals.itemsPlural, numResults, numResults))
+                : context.getString(R.string.themesimport_msg_failure, context.getString(R.string.msg_import_label_file)));
         SuntimesBackupTask.showIOResultSnackbar(context, view, null, result, message, report);
     }
 

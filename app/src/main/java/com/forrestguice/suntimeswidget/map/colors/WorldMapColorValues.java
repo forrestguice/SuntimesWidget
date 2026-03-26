@@ -19,20 +19,21 @@
 
 package com.forrestguice.suntimeswidget.map.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class WorldMapColorValues extends ResourceColorValues
+public class WorldMapColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_WORLDMAP = "worldmap";
 
     public static final String COLOR_BACKGROUND = "color_background";
@@ -74,11 +75,11 @@ public class WorldMapColorValues extends ResourceColorValues
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorMapBackground, R.string.configLabel_themeColorMapForeground,
-                R.string.configLabel_themeColorMapSunShadow, R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-                R.string.worldmap_dialog_option_moonlight, R.string.configLabel_themeColorGraphMoonFill, R.string.configLabel_themeColorGraphMoonStroke,
-                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
-                R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
+                R.string.themes_configLabel_themeColorMapBackground, R.string.themes_configLabel_themeColorMapForeground,
+                R.string.themes_configLabel_themeColorMapSunShadow, R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.worldmap_dialog_option_moonlight, R.string.themes_configLabel_themeColorGraphMoonFill, R.string.themes_configLabel_themeColorGraphMoonStroke,
+                R.string.themes_configLabel_themeColorGraphPointFill, R.string.themes_configLabel_themeColorGraphPointStroke,
+                R.string.themes_configLabel_themeColorGraphAxis, R.string.themes_configLabel_themeColorGraphGridMajor, R.string.themes_configLabel_themeColorGraphGridMinor,
         };
     }
     public int[] getColorRoles() {
@@ -121,25 +122,18 @@ public class WorldMapColorValues extends ResourceColorValues
     public WorldMapColorValues(ColorValues other) {
         super(other);
     }
-    public WorldMapColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    protected WorldMapColorValues(Parcel in) {
+    /*protected WorldMapColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public WorldMapColorValues() {
         super();
     }
 
-    public WorldMapColorValues(Context context, boolean darkTheme) {
+    public WorldMapColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
 
-    public WorldMapColorValues(String jsonString) {
-        super(jsonString);
-    }
-
-    public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
+    /*public static final Creator<WorldMapColorValues> CREATOR = new Creator<WorldMapColorValues>()
     {
         public WorldMapColorValues createFromParcel(Parcel in) {
             return new WorldMapColorValues(in);
@@ -147,9 +141,14 @@ public class WorldMapColorValues extends ResourceColorValues
         public WorldMapColorValues[] newArray(int size) {
             return new WorldMapColorValues[size];
         }
-    };
+    };*/
 
-    public static WorldMapColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
+    }
+
+    public static WorldMapColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new WorldMapColorValues(new WorldMapColorValues().getDefaultValues(context, darkTheme));
     }
 

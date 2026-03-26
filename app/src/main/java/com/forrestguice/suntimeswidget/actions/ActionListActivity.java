@@ -25,21 +25,23 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.widget.Toolbar;
 
 public class ActionListActivity extends AppCompatActivity
 {
@@ -80,18 +82,17 @@ public class ActionListActivity extends AppCompatActivity
 
         initData(this);
 
-        helper = new ActionListHelper(this, getSupportFragmentManager());
+        helper = new ActionListHelper(this);
         helper.setData(data);
         helper.initViews(this, findViewById(android.R.id.content), icicle);
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (preselectedAction != null && !preselectedAction.trim().isEmpty()) {
@@ -100,7 +101,7 @@ public class ActionListActivity extends AppCompatActivity
         }
     }
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
@@ -116,7 +117,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getSupportFragmentManager());
+        helper.setFragmentManager(this);
         helper.setData(data);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.onResume();
@@ -126,12 +127,12 @@ public class ActionListActivity extends AppCompatActivity
     private void initData(Context context)
     {
         data = new SuntimesRiseSetData(context, AppWidgetManager.INVALID_APPWIDGET_ID);   // use app configuration
-        data.setCompareMode(WidgetSettings.CompareMode.TOMORROW);
-        data.setTimeMode(WidgetSettings.TimeMode.OFFICIAL);
+        data.setCompareMode(CompareMode.TOMORROW);
+        data.setTimeMode(TimeMode.OFFICIAL);
         data.calculate(context);
 
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data.linkData(noonData);
     }
@@ -140,7 +141,7 @@ public class ActionListActivity extends AppCompatActivity
     public void onBackPressed() {
         onCancelled.onClick(null);
     }
-    private View.OnClickListener onCancelled = new View.OnClickListener() {
+    private final View.OnClickListener onCancelled = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
@@ -162,43 +163,39 @@ public class ActionListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.addAction:
-                helper.addAction();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.addAction) {
+            helper.addAction();
+            return true;
 
-            case R.id.clearAction:
-                helper.clearActions();
-                return true;
+        } else if (itemId == R.id.clearAction) {
+            helper.clearActions();
+            return true;
 
-            case R.id.exportAction:
-                helper.exportActions();
-                return true;
+        } else if (itemId == R.id.exportAction) {
+            helper.exportActions();
+            return true;
 
-            case R.id.importAction:
-                helper.importActions();
-                return true;
+        } else if (itemId == R.id.importAction) {
+            helper.importActions();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState ) {
+    public void onSaveInstanceState( @NonNull Bundle outState ) {
         super.onSaveInstanceState(outState);
         helper.onSaveInstanceState(outState);
     }

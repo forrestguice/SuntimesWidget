@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/card_content"
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
@@ -34,7 +34,7 @@
             app:layout_constraintBottom_toTopOf="@+id/text_date_equinox_vernal_label"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_prevbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -43,9 +43,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_title"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
-            android:contentDescription="@string/prevYear" />
+            android:contentDescription="@string/action_prevYear" />
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/info_time_nextbtn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_title"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
-            android:contentDescription="@string/nextYear" />
+            android:contentDescription="@string/action_nextYear" />
 
         <!-- Row 0 (vernal equinox) -->
         <TextView style="@style/SunsetTimeTextView"
@@ -192,5 +192,5 @@
                 android:layout_marginBottom="8dp" />
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 </merge>

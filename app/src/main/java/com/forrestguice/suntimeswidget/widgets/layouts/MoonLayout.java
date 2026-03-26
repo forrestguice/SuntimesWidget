@@ -27,10 +27,17 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -57,7 +64,9 @@ public abstract class MoonLayout extends SuntimesLayout
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data) {
         this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
-        northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (data.location().getLatitudeAsDouble() < 0));
+        Location location = data.location();
+        double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
+        northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (latitude < 0));
     }
     protected boolean northward = false;
 
@@ -72,16 +81,16 @@ public abstract class MoonLayout extends SuntimesLayout
     {
         // update title
         String titlePattern = WidgetSettings.loadTitleTextPref(context, appWidgetId);
-        String titleText = DataSubstitutions.displayStringForTitlePattern0(context, titlePattern, data);
-        CharSequence title = (boldTitle ? SuntimesUtils.createBoldSpan(null, titleText, titleText) : titleText);
+        String titleText = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data);
+        CharSequence title = (boldTitle ? SpanUtils.createBoldSpan(null, titleText, titleText) : titleText);
         views.setTextViewText(R.id.text_title, title);
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, WidgetSettings.TimeFormatMode timeFormat)
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, RiseSetOrder order, TimeFormatMode timeFormat)
     {
         Calendar moonrise, moonset;
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        if (order == RiseSetOrder.TODAY)
         {
             moonrise = data.moonriseCalendarToday();
             moonset = data.moonsetCalendarToday();
@@ -154,15 +163,16 @@ public abstract class MoonLayout extends SuntimesLayout
             }
         }
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds, timeFormat);
+        AndroidResources res = AndroidResources.wrap(context);
+        TimeDisplayText riseText = time_utils.calendarTimeShortDisplayString(res, moonrise, showSeconds, timeFormat);
         String riseString = riseText.getValue();
-        CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+        CharSequence riseSequence = (boldTime ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds, timeFormat);
+        TimeDisplayText setText = time_utils.calendarTimeShortDisplayString(res, moonset, showSeconds, timeFormat);
         String setString = setText.getValue();
-        CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+        CharSequence setSequence = (boldTime ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }
@@ -280,9 +290,9 @@ public abstract class MoonLayout extends SuntimesLayout
         views.setImageViewBitmap(R.id.icon_time_moonset, moonsetIcon);
     }
 
-    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data, WidgetSettings.RiseSetOrder order)
+    protected int chooseMoonLayout(int layout1, int layout2, SuntimesMoonData data, RiseSetOrder order)
     {
-        if (order == WidgetSettings.RiseSetOrder.TODAY)
+        if (order == RiseSetOrder.TODAY)
         {
             Calendar riseTime = data.moonriseCalendarToday();
             Calendar setTime = data.moonsetCalendarToday();

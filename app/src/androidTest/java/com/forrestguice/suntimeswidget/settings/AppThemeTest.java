@@ -20,18 +20,18 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTest;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AppThemeTest extends SuntimesActivityTestBase
 {
     @Test

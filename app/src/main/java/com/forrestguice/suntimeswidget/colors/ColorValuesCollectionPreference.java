@@ -24,11 +24,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.preference.Preference;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
 
@@ -149,9 +149,9 @@ public class ColorValuesCollectionPreference extends Preference
         //String selectedColorsID = getSelectedColorsID(context);
         String selectedColorsLabel = getSelectedColorsLabel(context);
         if (summaryStringResID != 0) {
-            setSummary(context.getString(summaryStringResID, (selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault))));
+            setSummary(context.getString(summaryStringResID, (selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.tag_tagDefault))));
         } else {
-            setSummary((selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.configLabel_tagDefault)));
+            setSummary((selectedColorsLabel != null ? selectedColorsLabel : context.getString(R.string.tag_tagDefault)));
         }
     }
     protected int summaryStringResID = 0;

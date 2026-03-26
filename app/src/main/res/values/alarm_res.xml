@@ -6,6 +6,8 @@
     <integer name="maxAlarmSnoozeLimit">5</integer>
     <integer name="minAlarmSnoozeMillis">120000</integer>    <!-- 2 minutes -->
     <integer name="maxAlarmSnoozeMillis">14400000</integer>   <!-- 4 hours -->
+    <integer name="minAlarmSnoozeMinutes">2</integer>
+    <integer name="maxAlarmSnoozeMinutes">240</integer>
     <integer name="minAlarmTimeoutMillis">60000</integer>     <!-- 1 minute -->
     <integer name="maxAlarmTimeoutMillis">7200000</integer>   <!-- 2 hours -->
     <integer name="minAlarmAutoDismissMillis">5000</integer>

@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.preference.DialogPreference;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -33,8 +31,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.preference.DialogPreference;
 
 /**
  * A "preference" (non-persistent) that displays help content in a dialog.
@@ -130,7 +130,7 @@ public class HelpPreference extends DialogPreference
             String buttonText = null;
             TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HelpPreference, 0, 0);
             try {
-                this.helpText = SuntimesUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
+                this.helpText = SpanUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
                 helpLink = a.getString(R.styleable.HelpPreference_helpLink);
                 helpPath = a.getString(R.styleable.HelpPreference_helpPath);
                 buttonText = a.getString(R.styleable.HelpPreference_moreHelpButtonText);

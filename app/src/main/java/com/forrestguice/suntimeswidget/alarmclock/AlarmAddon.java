@@ -28,12 +28,11 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
@@ -41,13 +40,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * AlarmAddon
@@ -55,7 +47,6 @@ import java.util.concurrent.TimeoutException;
  *
  * @see AlarmEventContract
  */
-@SuppressWarnings("Convert2Diamond")
 public class AlarmAddon
 {
     public static final String CATEGORY_SUNTIMES_ALARM = "suntimes.SUNTIMES_ALARM";
@@ -70,14 +61,6 @@ public class AlarmAddon
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
     public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
-
-    public static String getEventInfoUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + eventID;
-    }
-
-    public static String getEventCalcUri(String authority, String eventID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
-    }
 
     /**
      * queryAlarmDismissChallenges
@@ -182,17 +165,18 @@ public class AlarmAddon
             this.info = info;
         }
 
-        protected String title;
+        protected final String title;
         @NonNull
         public String getTitle() {
             return title;
         }
 
-        protected ActivityInfo info;
+        protected final ActivityInfo info;
         public ActivityInfo getInfo() {
             return info;
         }
 
+        @NonNull
         public String toString() {
             return title;
         }
@@ -219,7 +203,7 @@ public class AlarmAddon
      */
     public static class DismissChallengeInfo extends AddonActivityInfo
     {
-        protected long id;
+        protected final long id;
 
         public DismissChallengeInfo(@NonNull String title, ActivityInfo info, long challengeID) {
             super(title, info);
@@ -365,7 +349,7 @@ public class AlarmAddon
                     int i_phrase_quantity = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE_QUANTITY);
                     String noun = (i_phrase >= 0 ? cursor.getString(i_phrase) : item.title);
                     item.phrase = new AlarmEvent.AlarmEventPhrase(
-                            noun != null && !noun.trim().isEmpty() ? noun : item.title,
+                            noun != null && !noun.trim().isEmpty() ? noun : (item.title != null ? item.title : ""),
                             i_phrase_gender >= 0 ? cursor.getString(i_phrase_gender) : null,
                             i_phrase_quantity >= 0 ? cursor.getInt(i_phrase_quantity) : 1);
                 }

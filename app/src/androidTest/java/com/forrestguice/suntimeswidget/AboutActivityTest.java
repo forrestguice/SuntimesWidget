@@ -21,14 +21,15 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.FlakyTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.filters.FlakyTest;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.support.espresso.action.ViewActionsContrib;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,15 +39,15 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.action.ViewActions.swipeRight;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShownCompletely;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.hasDrawable;
@@ -57,7 +58,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AboutActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -69,13 +70,13 @@ public class AboutActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -149,12 +150,12 @@ public class AboutActivityTest extends SuntimesActivityTestBase
             if (AppSettings.NAVIGATION_SIDEBAR.equals(navMode))
             {
                 onView(navigationButton()).perform(click());
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
 
             } else {
-                openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+                openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
                 sleep(500);
-                onView(withText(R.string.configAction_aboutWidget)).perform(click());
+                onView(withText(R.string.action_about)).perform(click());
             }
             return this;
         }
@@ -176,7 +177,7 @@ public class AboutActivityTest extends SuntimesActivityTestBase
 
         public AboutActivityRobot assertActivityShown(Context context)
         {
-            onView(allOf(withText(R.string.configAction_aboutWidget), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
+            onView(allOf(withText(R.string.action_about), isDescendantOfA(withClassName(endsWith("Toolbar"))))).check(assertShown);
             onView(allOf(withId(R.id.container), withClassName(endsWith("ViewPager")))).check(assertShown);
             return this;
         }

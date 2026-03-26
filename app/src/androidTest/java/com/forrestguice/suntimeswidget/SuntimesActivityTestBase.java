@@ -28,14 +28,23 @@ import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
+import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
@@ -44,6 +53,7 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.jraska.falcon.Falcon;
 
 import org.hamcrest.Description;
@@ -58,20 +68,20 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.hasDrawable;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
@@ -82,7 +92,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public abstract class SuntimesActivityTestBase
 {
     public static final String TESTLOC_0_LABEL = "Test Location 0";
@@ -108,11 +118,14 @@ public abstract class SuntimesActivityTestBase
     protected SharedPreferences config(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
+    protected SharedPreferences widgetConfig(Context context) {
+        return context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+    }
 
     /**
      * Rotate the device to landscape and back.
      */
-    public void rotateDevice(ActivityTestRule activityRule)
+    public void rotateDevice(ActivityTestRule<?> activityRule)
     {
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -122,7 +135,7 @@ public abstract class SuntimesActivityTestBase
      * Rotate to given orientation.
      * @param orientation ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE | ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      */
-    public void rotateDevice(ActivityTestRule activityRule, int orientation )
+    public void rotateDevice(ActivityTestRule<?> activityRule, int orientation )
     {
         activityRule.getActivity().setRequestedOrientation(orientation);
     }
@@ -283,15 +296,15 @@ public abstract class SuntimesActivityTestBase
     {
         public Location location;
         public String timezoneID;
-        public WidgetSettings.TimeFormatMode timeformat;
-        public WidgetSettings.LengthUnit lengthUnits;
+        public TimeFormatMode timeformat;
+        public LengthUnit lengthUnits;
 
         public SuntimesTestConfig(Location location, String timezoneID, boolean format24, String units)
         {
             this.location = location;
             this.timezoneID = timezoneID;
-            this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
-            this.lengthUnits = WidgetSettings.LengthUnit.valueOf(units);
+            this.timeformat = (format24 ? TimeFormatMode.MODE_24HR : TimeFormatMode.MODE_12HR);
+            this.lengthUnits = LengthUnit.valueOf(units);
         }
     }
 
@@ -324,8 +337,8 @@ public abstract class SuntimesActivityTestBase
 
     protected void configureAppForTesting(Activity context)
     {
-        WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
-        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.RECENT);
+        WidgetSettings.saveDateModePref(context, 0, DateMode.CURRENT_DATE);
+        WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.RECENT);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
         WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
         WidgetSettings.saveLocalizeHemispherePref(context, 0, true);
@@ -337,6 +350,7 @@ public abstract class SuntimesActivityTestBase
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCOORDINATES, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOXDATE, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, false);
@@ -355,22 +369,22 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
         WidgetSettings.saveLengthUnitsPref(context, 0, configuration.lengthUnits);
 
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
-        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, 0, TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 
     public static SimpleDateFormat[] timeDateFormats12 = new SimpleDateFormat[] {
-            new SimpleDateFormat("MMM d, h:mm a"),
-            new SimpleDateFormat("MMMM d, h:mm a"),
-            new SimpleDateFormat("MMMM d, yyyy, h:mm a")
+            new SimpleDateFormat("MMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm\u00A0a")
     };
     public static SimpleDateFormat[] timeDateFormats12s = new SimpleDateFormat[] {
-            new SimpleDateFormat("MMM d, h:mm:ss a"),
-            new SimpleDateFormat("MMMM d, h:mm:ss a"),
-            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss a")
+            new SimpleDateFormat("MMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss\u00A0a")
     };
     public static SimpleDateFormat[] timeDateFormats24 = new SimpleDateFormat[] {
             new SimpleDateFormat("MMM d, HH:mm"),
@@ -387,17 +401,11 @@ public abstract class SuntimesActivityTestBase
     {
         if (Build.VERSION.SDK_INT >= 21)
         {
-            UiAutomation automation = android.support.test.InstrumentationRegistry.getInstrumentation().getUiAutomation();
+            UiAutomation automation = InstrumentationRegistry.getInstrumentation().getUiAutomation();
             automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
             automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
-        } else {
-            // TODO
-        }
-    }
-
-    public static Context getContext() {
-        return android.support.test.InstrumentationRegistry.getInstrumentation().getTargetContext();
+        } // else // TODO
     }
 
     ///////////////////////////////////////////////////////////////
@@ -441,7 +449,7 @@ public abstract class SuntimesActivityTestBase
     protected boolean savedState_showDataSource;
     protected boolean savedState_showMapButton;
     protected boolean savedState_firstLaunch;
-    protected WidgetSettings.LocationMode savedState_locationMode;
+    protected LocationMode savedState_locationMode;
     //protected AppSettings.LocaleMode savedState_localeMode;
 
     public static abstract class Robot<T>
@@ -518,27 +526,27 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickSidebarMenu_clock(Context context) {
-            onView(allOf(withText(R.string.configAction_clock),
+            onView(allOf(withText(R.string.action_clock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T clickSidebarMenu_alarms(Context context) {
-            onView(allOf(withText(R.string.configLabel_alarmClock),
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T clickSidebarMenu_settings(Context context) {
-            onView(allOf(withText(R.string.configAction_settings),
+            onView(allOf(withText(R.string.action_settings),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T clickSidebarMenu_about(Context context) {
-            onView(allOf(withText(R.string.configAction_aboutWidget),
+            onView(allOf(withText(R.string.action_about),
                     not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
             return robot;
         }
         public T cancelSidebarMenu(Context context) {
-            onView(withText(R.string.configAction_aboutWidget)).perform(pressBack());
+            onView(withText(R.string.action_about)).perform(pressBack());
             return robot;
         }
 
@@ -547,22 +555,22 @@ public abstract class SuntimesActivityTestBase
             return robot;
         }
         public T clickOverflowMenu_help() {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
         public T clickOverflowMenu_settings() {
-            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
         public T clickOverflowMenu_about() {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).perform(click());
             return robot;
         }
 
         public T assertOverflowMenu_hasSimpleNavigation(boolean isSimple)
         {
-            onView(withText(R.string.configAction_aboutWidget)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
-            onView(withText(R.string.configAction_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
             return robot;
         }
 
@@ -576,13 +584,13 @@ public abstract class SuntimesActivityTestBase
         }
 
         public T assertSideBarMenuShown(Activity context) {
-            onView(allOf(withText(R.string.configAction_clock),
+            onView(allOf(withText(R.string.action_clock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configLabel_alarmClock),
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configAction_settings),
+            onView(allOf(withText(R.string.action_settings),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
-            onView(allOf(withText(R.string.configAction_aboutWidget),
+            onView(allOf(withText(R.string.action_about),
                     not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
             return robot;
         }
@@ -605,14 +613,23 @@ public abstract class SuntimesActivityTestBase
             return TimeZone.getTimeZone("UTC");
         }
         public static TimeZone timeZone_ApparentSolar(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+            return WidgetTimezones.getTimeZone(TimeZones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
         }
         public static TimeZone timeZone_LocalMean(Context context) {
-            return WidgetTimezones.getTimeZone(WidgetTimezones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+            return WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
         }
         public static TimeZone timeZone_Suntimes(Context context) {
             return appTimeZone(context);
         }
+    }
+
+    public static boolean registerIdlingResources(IdlingResource... resources) {
+        //return Espresso.registerIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().register(resources);
+    }
+    public static boolean unregisterIdlingResources(IdlingResource... resources) {
+        //return Espresso.unregisterIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().unregister(resources);
     }
 
 }

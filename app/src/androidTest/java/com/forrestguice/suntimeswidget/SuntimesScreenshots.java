@@ -20,19 +20,19 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialogTest;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.equinox.EquinoxCardDialogTest;
 import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,12 +44,11 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
+import static org.junit.Assert.assertNotNull;
 
 @Category(UnlistedTest.class)
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesScreenshots extends SuntimesActivityTestBase
 {
     @Rule
@@ -110,6 +109,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         if (config.containsKey(languageTag)) {
             configuration = config.get(languageTag);
         }
+        assertNotNull(configuration);
 
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
@@ -122,6 +122,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
         for (int i = 0; i<3; i++) {
             long t = System.currentTimeMillis();
+            //noinspection StatementWithEmptyBody
             while (System.currentTimeMillis() - t < waitTime) { /* busy */ }
         }
         captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-main0-" + theme);
@@ -135,6 +136,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         if (config.containsKey(languageTag)) {
             configuration = config.get(languageTag);
         }
+        assertNotNull(configuration);
 
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
@@ -169,7 +171,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
         new TimeZoneDialogTest.TimeZoneDialogRobot().showDialog(activity)
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone0-" + theme);
-        new TimeZoneDialogTest.TimeZoneDialogRobot().inputTimezoneDialogMode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
+        new TimeZoneDialogTest.TimeZoneDialogRobot().inputTimezoneDialogMode(context, TimezoneMode.TIME_STANDARD);
         new TimeZoneDialogTest.TimeZoneDialogRobot()
                 .captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone1-" + theme)
                 .cancelDialog(activity);

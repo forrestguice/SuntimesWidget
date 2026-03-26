@@ -12,6 +12,6 @@
     android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:initialLayout="@layout/layout_widget_clock_1x1_0"
     android:widgetFeatures="reconfigurable"
-    android:configure="com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity">
+    android:configure="com.forrestguice.suntimeswidget.widgets.ClockWidget0ConfigActivity">
 
 </appwidget-provider>

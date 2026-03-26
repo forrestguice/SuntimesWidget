@@ -19,21 +19,27 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+import com.forrestguice.util.android.AndroidTaskHandler;
+import com.forrestguice.util.concurrent.SimpleTaskListener;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.Executors;
+
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WidgetTimezonesTest extends SuntimesActivityTestBase
 {
     private Context context;
@@ -50,8 +56,8 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
     @Test
     public void test_timeZonesLoadTask()
     {
-        WidgetTimezones.TimeZonesLoadTask task = new WidgetTimezones.TimeZonesLoadTask(context);
-        task.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
+        WidgetTimezones.TimeZonesLoadTask task = new WidgetTimezones.TimeZonesLoadTask(context, WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        TaskListener<WidgetTimezones.TimeZoneItemAdapter> taskListener = new SimpleTaskListener<WidgetTimezones.TimeZoneItemAdapter>()
         {
             @Override
             public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
@@ -67,8 +73,8 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
                 assertTrue(result.getItem(i_npt).getRawOffsetHr() == 5.75);
                 assertTrue(i_npt > i_ist);
             }
-        });
-        task.execute(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+        };
+        ExecutorUtils.runTask("TimeZoneLoadTest", task, taskListener);
     }
 
 }

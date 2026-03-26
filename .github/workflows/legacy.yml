@@ -63,14 +63,21 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app
-        path: app/build/outputs/apk/production/release/app-legacy-release-unsigned.apk
+        path: app/build/outputs/apk/legacy/release/app-legacy-release-unsigned.apk
         
     - name: Upload artifacts (lint results)
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
-        name: lint-results.html
+        name: lint-results
         path: app/build/reports/lint-results-legacyRelease-fatal.html
+
+    - name: Upload artifacts (merge report)
+      if: success() || failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: manifest-merger-report
+        path: app/build/outputs/logs/manifest-merger-legacy-release-report.html
 
     - name: Upload artifacts (test results)
       if: success() || failure()

@@ -22,13 +22,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.R;
 
 /**
@@ -45,9 +44,9 @@ public class TooltipCompat
         final Context context = view.getContext();
         if (context != null && tooltipText != null)
         {
-            if (context.getApplicationContext().getApplicationInfo().targetSdkVersion >= 26) {
+            //if (context.getApplicationContext().getApplicationInfo().targetSdkVersion >= 26) {
                 //return;  // TODO: call through to built-in api
-            }
+            //}
 
             view.setLongClickable(true);
             view.setOnLongClickListener(new View.OnLongClickListener()
@@ -93,6 +92,14 @@ public class TooltipCompat
             }
         }
         return toast;
+    }
+
+    /**
+     * initTooltip; sets v's tooltip to its contentDescription
+     * @param v View
+     */
+    public static void setTooltipText(View v) {
+        TooltipCompat.setTooltipText(v, v.getContentDescription());
     }
 
 }

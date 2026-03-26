@@ -18,35 +18,44 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.preference.PreferenceManager;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.app.AppCompatActivity;
+import androidx.test.rule.ActivityTestRule;
+
 import android.util.Log;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class GetFixTaskTest
 {
+    private static final CountDownLatch waitForStart = new CountDownLatch(1);
+    private static final CountDownLatch waitForFinish = new CountDownLatch(1);
+
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Test
-    public void test_getFix()
-    {
+    public void test_getFix() throws InterruptedException {
         AppCompatActivity activity = (AppCompatActivity) activityRule.getActivity();
-        LocationHelper helper = new GetFixHelper(activity, uiObj) {
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activity, uiObj, listener) {
             public int getMinElapsedTime() {
                 return 0;
             }
@@ -66,17 +75,16 @@ public class GetFixTaskTest
 
         long bench_start = System.nanoTime();
         assertTrue(helper.getFix());
+        waitForStart.await();
+
         assertTrue("gettingFix should return true", helper.gettingFix());
-        assertTrue(waitForTask);
-        while (waitForTask) {
-            /* busy wait for completion */
-        }
+        waitForFinish.await();
+
         long bench_end = System.nanoTime();
         double bench_time = (bench_end - bench_start) / 1000000.0;
         Log.d("TEST", "getFix: " + taskResult + " (from " + GetFixHelper.t_locationProvider + " provider in " + bench_time + " ms)");
         Log.d("TEST", "getFix: bench: " + bench_time + " ms");
 
-        assertFalse(waitForTask);
         assertFalse("gettingFix should return false", helper.gettingFix());
         assertTrue("hasFix should return true", helper.hasFix());
     }
@@ -84,7 +92,11 @@ public class GetFixTaskTest
     @Test
     public void test_getLastKnownLocation()
     {
-        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj);
+        GetFixHelper.GetFixHelperListener listener = new GetFixHelper.GetFixHelperListener() {
+            @Override
+            public void onRequestPermissions(String[] permissions, int requestID) {}
+        };
+        LocationHelper helper = new GetFixHelper(activityRule.getActivity(), uiObj, listener);
 
         long bench_start = System.nanoTime();
         Location location = helper.getLastKnownLocation(activityRule.getActivity());
@@ -94,14 +106,14 @@ public class GetFixTaskTest
         Log.d("TEST", "lastKnownLocation: " + location + " (from " + GetFixHelper.t_locationProvider + " provider in " + bench_time + " ms)");
     }
 
-    private boolean waitForTask = false;
+    @Nullable
     private Location taskResult = null;
     private final GetFixTaskListener taskListener = new GetFixTaskListener()
     {
         @Override
         public void onStarted() {
             super.onStarted();
-            waitForTask = true;
+            waitForStart.countDown();
             Log.d("TEST", "onStarted");
         }
 
@@ -109,7 +121,7 @@ public class GetFixTaskTest
         public void onFinished(Location result) {
             super.onFinished(result);
             taskResult = result;
-            waitForTask = false;
+            waitForFinish.countDown();
             Log.d("TEST", "onFinished");
         }
 
@@ -117,7 +129,7 @@ public class GetFixTaskTest
         public void onCancelled() {
             super.onCancelled();
             taskResult = null;
-            waitForTask = false;
+            waitForFinish.countDown();
             Log.d("TEST", "onCancelled");
         }
     };
@@ -145,8 +157,8 @@ public class GetFixTaskTest
         }
 
         @Override
-        public void onResult(Location result, boolean wasCancelled) {
-            Log.d("TEST", "UI: onResult: " + result + " (was cancelled? " + wasCancelled + ")");
+        public void onResult(LocationResult result) {
+            Log.d("TEST", "UI: onResult: " + result);
         }
     };
 }

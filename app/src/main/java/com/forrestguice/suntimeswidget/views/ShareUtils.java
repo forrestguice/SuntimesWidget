@@ -24,12 +24,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.io.File;
 import java.util.Calendar;
@@ -46,9 +47,8 @@ public class ShareUtils
             Calendar itemTime = Calendar.getInstance();
             itemTime.setTimeInMillis(itemMillis);
 
-            SuntimesUtils utils = new SuntimesUtils();
-            SuntimesUtils.initDisplayStrings(context);
-            String itemDisplay = context.getString(R.string.share_format, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+            TimeDateDisplay utils = new TimeDateDisplay();
+            String itemDisplay = context.getString(R.string.format_share, (itemString != null ? itemString : ""), utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), itemTime, showTime, showSeconds).toString());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             {
@@ -57,8 +57,10 @@ public class ShareUtils
                     clipboard.setPrimaryClip(ClipData.newPlainText((itemString != null ? itemString : itemDisplay), itemDisplay));
                 }
             } else {
+                @SuppressWarnings("deprecation")
                 android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (clipboard != null) {
+                    //noinspection deprecation
                     clipboard.setText(itemDisplay);
                 }
             }

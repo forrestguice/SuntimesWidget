@@ -21,27 +21,27 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,8 +167,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     protected void onColorValuesSelected(int position)
     {
         ColorValuesItem item = (ColorValuesItem) selector.getItemAtPosition(position);
-        getArguments().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
-        getArguments().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
+        getArgs().putString(ARG_COLOR_SELECTED_ID, (item != null ? item.colorsID : null));
+        getArgs().putBoolean(ARG_COLOR_SELECTED_DEFAULT, (item != null && item.colorsID == null));
         if (listener != null) {
             listener.onItemSelected(item);
         }
@@ -237,7 +237,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         if (onOverflowMenuItemSelected.onMenuItemClick(item)) {
             return true;
@@ -246,12 +246,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     protected void showOverflowMenu(Context context, View v)
     {
-        PopupMenu popup = new PopupMenu(context, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_colorlist, popup.getMenu());
-        onPrepareOverflowMenu(context, popup.getMenu());
-        popup.setOnMenuItemClickListener(onOverflowMenuItemSelected);
-        popup.show();
+        PopupMenuCompat.createMenu(context, v, R.menu.menu_colorlist, onOverflowMenuItemSelected).show();
     }
     protected void onPrepareOverflowMenu(Context context, Menu menu)
     {
@@ -260,28 +255,32 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             deleteItem.setEnabled(!colorCollection.isDefaultColorID(getSelectedID()));
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onOverflowMenuItemSelected = new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onOverflowMenuItemSelected = new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            onPrepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            switch (item.getItemId())
-            {
-                case R.id.action_colors_add:
-                    onAddItem();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_colors_add) {
+                onAddItem();
+                return true;
 
-                case R.id.action_colors_delete:
-                    onDeleteItem();
-                    return true;
+            } else if (itemId == R.id.action_colors_delete) {
+                onDeleteItem();
+                return true;
 
-                case R.id.action_colors_share:
-                    onShareColors();
-                    return true;
+            } else if (itemId == R.id.action_colors_share) {
+                onShareColors();
+                return true;
 
-                case R.id.action_colors_import:
-                    onImportColors();
-                    return true;
+            } else if (itemId == R.id.action_colors_import) {
+                onImportColors();
+                return true;
             }
             return false;
         }
@@ -301,7 +300,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, colors.toJSON(false));
+                intent.putExtra(Intent.EXTRA_TEXT, new ColorValuesJSON().toJSON(colors, false));
                 startActivity(Intent.createChooser(intent, null));
             }
         }
@@ -321,10 +320,10 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     }
 
     public void setPreviewKeys(String... keys) {
-        getArguments().putStringArray("previewKeys", keys);
+        getArgs().putStringArray("previewKeys", keys);
     }
     public String[] previewKeys() {
-        return getArguments().getStringArray("previewKeys");
+        return getArgs().getStringArray("previewKeys");
     }
 
     protected void onRestoreInstanceState(@NonNull Bundle savedState) { /* EMPTY */ }
@@ -342,8 +341,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             {
                 int selectedIndex = 0;
                 String selectedColorsID0 = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
-                boolean defaultIsSelected = getArguments().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
-                String selectedColorsID = getArguments().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
+                boolean defaultIsSelected = getArgs().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
+                String selectedColorsID = getArgs().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
 
                 for (int i=0; i<selector.getCount(); i++)
                 {
@@ -451,29 +450,21 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
     public void setAppWidgetID(int appWidgetID)
     {
-        Bundle args = getArguments();
-        if (args != null) {
-            args.putInt(ARG_APPWIDGETID, appWidgetID);
-            updateViews();
-        }
+        getArgs().putInt(ARG_APPWIDGETID, appWidgetID);
+        updateViews();
     }
     public int getAppWidgetID() {
-        Bundle args = getArguments();
-        return args != null ? args.getInt(ARG_APPWIDGETID, DEF_APPWIDGETID) : DEF_APPWIDGETID;
+        return getArgs().getInt(ARG_APPWIDGETID, DEF_APPWIDGETID);
     }
 
     public void setColorTag(@Nullable String tag)
     {
-        Bundle args = getArguments();
-        if (args != null) {
-            args.putString(ARG_COLOR_TAG, tag);
-            updateViews();
-        }
+        getArgs().putString(ARG_COLOR_TAG, tag);
+        updateViews();
     }
     @Nullable
     public String getColorTag() {
-        Bundle args = getArguments();
-        return args != null ? args.getString(ARG_COLOR_TAG, DEF_COLOR_TAG) : DEF_COLOR_TAG;
+        return getArgs().getString(ARG_COLOR_TAG, DEF_COLOR_TAG);
     }
 
     /**
@@ -481,9 +472,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
      */
     public static class ColorValuesItem
     {
-        public String displayString;
-        public String colorsID;
-        public int[] previewColors;
+        @Nullable
+        public final String displayString;
+        @Nullable
+        public final String colorsID;
+        public final int[] previewColors;
 
         public ColorValuesItem(@Nullable String displayString, @Nullable String colorsID, int... previewColors)
         {
@@ -492,8 +485,11 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             this.previewColors = previewColors;
         }
 
+        @NonNull
         public String toString() {
-            return displayString;
+            return (displayString != null ? displayString
+                    : colorsID != null ? colorsID
+                    : "null");
         }
 
         public static ColorValuesItem[] createItems(Context context, ColorValuesCollection<ColorValues> collection, String[] previewKeys)
@@ -501,7 +497,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
             String[] colorIDs = collection != null ? collection.getCollection() : new String[0];
             ColorValuesItem[] items = new ColorValuesItem[colorIDs.length+1];
 
-            items[0] = new ColorValuesItem(context.getString(R.string.configLabel_tagDefault), null, getPreviewColors(context, collection, null, previewKeys));
+            items[0] = new ColorValuesItem(context.getString(R.string.tag_tagDefault), null, getPreviewColors(context, collection, null, previewKeys));
             for (int i=0; i<colorIDs.length; i++) {
                 items[i+1] = new ColorValuesItem(collection.getColorsLabel(context, colorIDs[i]), colorIDs[i], getPreviewColors(context, collection, colorIDs[i], previewKeys));
             }
@@ -515,15 +511,15 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                 int[] colors = ((previewKeys != null) ? new int[previewKeys.length] : new int[0]);
                 if (previewKeys != null)
                 {
-                    ColorValues values = collection.getDefaultColors(context);
+                    ColorValues values = (collection != null ? collection.getDefaultColors(context) : null);
                     for (int i=0; i<previewKeys.length; i++) {
-                        colors[i] = values.getColor(previewKeys[i]);
+                        colors[i] = (values != null ? values.getColor(previewKeys[i]) : Color.MAGENTA);
                     }
                 }
                 return colors;
 
             } else {
-                return collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys);
+                return collection != null ? collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys) : new int[0];
             }
         }
     }

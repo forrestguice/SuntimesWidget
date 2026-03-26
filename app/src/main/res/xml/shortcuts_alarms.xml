@@ -13,7 +13,7 @@
         <intent
             android:action="com.forrestguice.suntimeswidget.alarmclock.ADD_ALARM"
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity" />     <!-- TODO: targetPackage and targetClass must be hardcoded; shortcuts are broken for nightly build flavor without providing alternate resources -->
     </shortcut>
 
     <shortcut

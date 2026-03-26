@@ -33,13 +33,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.graph.LightMapOptions;
+import com.forrestguice.suntimeswidget.graph.LightMapTask;
+import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
+import com.forrestguice.suntimeswidget.map.WorldMapOptions;
+import com.forrestguice.suntimeswidget.map.WorldMapProjection;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -62,15 +68,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.graph.LightMapView;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
+import com.forrestguice.suntimeswidget.graph.SunSymbolBitmap;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout_1x1_0;
@@ -84,6 +94,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
@@ -91,6 +106,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
@@ -201,7 +218,6 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private int param_previewID = 0;
     private boolean param_wallpaper = true;
 
-    private ActionBar actionBar;
     private EditText editDisplay;
     private SizeChooser chooseTitleSize, chooseTextSize, chooseTimeSize, chooseSuffixSize;
     private SizeChooser chooseIconStroke, chooseNoonIconStroke;
@@ -210,7 +226,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
 
-    private ArrayList<Integer> recentColors = new ArrayList<>();
+    private final ArrayList<Integer> recentColors = new ArrayList<>();
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
@@ -232,7 +248,18 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ViewFlipper preview;
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    @Nullable
+    private ExecutorService executor = null;
+    @NonNull
+    protected ExecutorService getExecutor() {
+        if (executor == null) {
+            executor = Executors.newCachedThreadPool();
+        }
+        return executor;
+    }
+
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public WidgetThemeConfigActivity()
     {
@@ -282,7 +309,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         data1 = data0.dataActual;
         SuntimesRiseSetData noonData = new SuntimesRiseSetData(data1);
-        noonData.setTimeMode(WidgetSettings.TimeMode.NOON);
+        noonData.setTimeMode(TimeMode.NOON);
         noonData.calculate(context);
         data1.linkData(noonData);
 
@@ -307,11 +334,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         spinBackground_adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, SuntimesTheme.ThemeBackground.values());
@@ -522,7 +548,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         switch (mode)
         {
             case EDIT_THEME:
-                actionBar.setTitle(getString(R.string.configLabel_widgetThemeEdit));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(getString(R.string.themes_action_widgetThemeEdit));
+                }
                 labelName.setEnabled(false);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 editName.setEnabled(false);
@@ -531,7 +559,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             case ADD_THEME:
             default:
-                actionBar.setTitle(getString(R.string.configLabel_widgetThemeAdd));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(getString(R.string.themes_action_widgetThemeAdd));
+                }
                 labelName.setEnabled(true);
                 labelName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 editName.setEnabled(true);
@@ -541,7 +571,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    private CompoundButton.OnCheckedChangeListener onCheckChanged = new CompoundButton.OnCheckedChangeListener()
+    private final CompoundButton.OnCheckedChangeListener onCheckChanged = new CompoundButton.OnCheckedChangeListener()
     {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -691,7 +721,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     {
         for (ColorChooser chooser : colorChoosers)
         {
-            chooser.setFragmentManager(getSupportFragmentManager());
+            chooser.setFragmentManager(this);
             chooser.setCollapsed(true);
         }
     }
@@ -803,7 +833,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             boolean boldText = checkTitleBold.isChecked();
             if (boldText)
-                previewTitle.setText(SuntimesUtils.createBoldSpan(null, titleText, titleText));
+                previewTitle.setText(SpanUtils.createBoldSpan(null, titleText, titleText));
             else previewTitle.setText(titleText);
 
             updateSizeFromChooser(previewTitle, chooseTitleSize);
@@ -827,8 +857,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
         if (view != null)
         {
-            LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
-            colors.initDefaultDark(this);
+            LightMapOptions colors = new LightMapOptions();
+            colors.initDefaultDark(AndroidResources.wrap(this));
 
             colors.values.setColor(LightMapColorValues.COLOR_DAY, chooseColorDay.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_CIVIL, chooseColorCivil.getColor());
@@ -840,13 +870,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.values.setColor(LightMapColorValues.COLOR_SUN_FILL, chooseColorPointFill.getColor());
             colors.values.setColor(LightMapColorValues.COLOR_SUN_STROKE, chooseColorPointStroke.getColor());
 
-            colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
+            colors.option_drawNow = SunSymbolBitmap.DRAW_SUN1;
+            colors.option_drawNoon = true;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
             int dpWidth = 256;
             int dpHeight = 64;
-            LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask(view.getContext());
-            drawTask.setListener(new LightMapView.LightMapTaskListener()
+            LightMapTask drawTask = new LightMapTask(view.getContext(), new Object[] { data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), colors });
+            LightMapTaskListener taskListener = new LightMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result)
@@ -854,8 +885,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     super.onFinished(result);
                     view.setImageBitmap(result);
                 }
-            });
-            drawTask.execute(data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), colors);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemeConfig", getExecutor(), drawTask, taskListener);
         }
     }
 
@@ -864,7 +896,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
         if (view != null)
         {
-            WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
+            WorldMapOptions options = new WorldMapOptions();
             options.map = ContextCompat.getDrawable(this, R.drawable.worldmap);
             options.colors.setColor(WorldMapColorValues.COLOR_BACKGROUND, chooseColorMapBackground.getColor());
             options.colors.setColor(WorldMapColorValues.COLOR_FOREGROUND, chooseColorMapForeground.getColor());
@@ -881,9 +913,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
             int dpWidth = 128;
             int dpHeight = 64;
-            WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
-            WorldMapTask drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
+            WorldMapProjection projection = new WorldMapEquirectangular();
+            Object[] args = new Object[] { data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection };
+            WorldMapTask drawTask = new WorldMapTask(args);
+            WorldMapTask.WorldMapTaskListener taskListener = new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap lastFrame)
@@ -891,8 +924,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     super.onFinished(lastFrame);
                     view.setImageBitmap(lastFrame);
                 }
-            });
-            drawTask.execute(data0,  SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
+            };
+            drawTask.setListener(taskListener);
+            ExecutorUtils.runProgress("WidgetThemeConfig", drawTask, taskListener);
+            //drawTask.execute(data0, SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
         }
     }
 
@@ -911,10 +946,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
 
             Calendar now = Calendar.getInstance();
-            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
-            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
+            TimeDisplayText nowText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), now, false, timeFormat);
             String nowString = nowText.getValue();
-            CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+            CharSequence nowChars = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
             previewTime.setTextColor(chooseColorTime.getColor());
             previewTime.setText(nowChars);
@@ -934,13 +969,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewNoonSuffix = (TextView)previewLayout.findViewById(R.id.text_time_noon_suffix);
 
         SuntimesRiseSetData noonData = data1.getLinked();
-        SuntimesUtils.TimeDisplayText noonText = ((noonData != null)
-                ? utils.calendarTimeShortDisplayString(this, noonData.sunriseCalendarToday())
-                : new SuntimesUtils.TimeDisplayText("12:00"));
+        TimeDisplayText noonText = ((noonData != null)
+                ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), noonData.sunriseCalendarToday())
+                : new TimeDisplayText("12:00"));
         if (previewNoon != null)
         {
             String noonString = noonText.getValue();
-            CharSequence noon = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
+            CharSequence noon = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
             previewNoon.setText(noon);
             previewNoon.setTextColor(chooseColorNoon.getColor());
             updateSizeFromChooser(previewNoon, chooseTimeSize);
@@ -956,11 +991,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewRise = (TextView)previewLayout.findViewById(R.id.text_time_rise);
         TextView previewRiseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_rise_suffix);
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(this, data1.sunriseCalendarToday());
+        TimeDisplayText riseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data1.sunriseCalendarToday());
         if (previewRise != null)
         {
             String riseString = riseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewRise.setText(rise);
             previewRise.setTextColor(chooseColorRise.getColor());
             updateSizeFromChooser(previewRise, chooseTimeSize);
@@ -976,11 +1011,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewSet = (TextView)previewLayout.findViewById(R.id.text_time_set);
         TextView previewSetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_set_suffix);
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(this, data1.sunsetCalendarToday());
+        TimeDisplayText setText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data1.sunsetCalendarToday());
         if (previewSet != null)
         {
             String setString = setText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewSet.setText(set);
             previewSet.setTextColor(chooseColorSet.getColor());
             updateSizeFromChooser(previewSet, chooseTimeSize);
@@ -999,7 +1034,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         if (previewTimeDelta != null)
         {
-            previewTimeDelta.setText(utils.timeDeltaLongDisplayString(data1.dayLengthToday(), data1.dayLengthOther()).getValue());
+            previewTimeDelta.setText(delta_utils.timeDeltaLongDisplayString(data1.dayLengthToday(), data1.dayLengthOther()).getValue());
             previewTimeDelta.setTextColor(chooseColorTime.getColor());
             updateSizeFromChooser(previewTimeDelta, chooseTextSize);
         }
@@ -1080,11 +1115,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
 
-        SuntimesUtils.TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(this, data2.moonriseCalendarToday());
+        TimeDisplayText moonriseText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data2.moonriseCalendarToday());
         if (previewMoonrise != null)
         {
             String riseString = moonriseText.getValue();
-            CharSequence rise = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
+            CharSequence rise = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, riseString, riseString) : riseString);
             previewMoonrise.setText(rise);
             previewMoonrise.setTextColor(chooseColorMoonrise.getColor());
             updateSizeFromChooser(previewMoonrise, chooseTimeSize);
@@ -1100,11 +1135,11 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         TextView previewMoonset = (TextView)previewLayout.findViewById(R.id.text_time_moonset);
         TextView previewMoonsetSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonset_suffix);
 
-        SuntimesUtils.TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(this, data2.moonsetCalendarToday());
+        TimeDisplayText moonsetText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(this), data2.moonsetCalendarToday());
         if (previewMoonset != null)
         {
             String setString = moonsetText.getValue();
-            CharSequence set = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
+            CharSequence set = (checkTimeBold.isChecked() ? SpanUtils.createBoldSpan(null, setString, setString) : setString);
             previewMoonset.setText(set);
             previewMoonset.setTextColor(chooseColorMoonset.getColor());
             updateSizeFromChooser(previewMoonset, chooseTimeSize);
@@ -1294,7 +1329,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    /**@Override
+    /*@Override
     public void onDestroy()
     {
         super.onDestroy();
@@ -1318,7 +1353,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      * @param outState Bundle
      */
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         outState.putString(THEME_NAME, chooseName.getThemeName());
@@ -1388,7 +1423,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooser.setColor(savedState);
         }
 
-        choosePadding.setPadding(savedState.getIntArray(THEME_PADDING));   // TODO: might be null (check)
+        int[] p = savedState.getIntArray(THEME_PADDING);
+        if (p != null) {
+            choosePadding.setPadding(p);
+        }
     }
 
     protected void flipToPreview( int previewID )
@@ -1428,19 +1466,16 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.saveTheme:
-                onSaveClicked();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.saveTheme) {
+            onSaveClicked();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onSaveClicked()
@@ -1557,7 +1592,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
     {
         int backgroundPos = spinBackground_adapter.getPosition(themeBackground);
-        spinBackground.setSelection( backgroundPos < 0 ? 0 : backgroundPos );
+        spinBackground.setSelection(Math.max(backgroundPos, 0));
     }
 
     /**
@@ -1748,7 +1783,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         int i = 1;
         String generatedName;
         do {
-            generatedName = getString(R.string.addtheme_custname, i+"");
+            generatedName = getString(R.string.themes_addtheme_custname, i+"");
             i++;
         } while (WidgetThemes.valueOf(generatedName) != null);
         return generatedName;
@@ -1762,7 +1797,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     protected String generateThemeName( @NonNull String suggestedName )
     {
         int i = 1;
-        String copyName = getString(R.string.addtheme_copyname, "", "");
+        String copyName = getString(R.string.themes_addtheme_copyname, "", "");
         String generatedName = suggestedName;
         while (WidgetThemes.valueOf(generatedName) != null)
         {
@@ -1779,14 +1814,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                     i++;
                 }
             }
-            generatedName = getString(R.string.addtheme_copyname, root, Integer.toString(i));
+            generatedName = getString(R.string.themes_addtheme_copyname, root, Integer.toString(i));
         }
         return generatedName;
     }
 
     protected String generateThemeDisplayString( String suggestedName )
     {
-        return getString(R.string.addtheme_copydisplay, suggestedName);
+        return getString(R.string.themes_addtheme_copydisplay, suggestedName);
     }
 
     /**
@@ -1818,14 +1853,14 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (themeID.isEmpty())
         {
             isValid = false;       // themeName is required
-            editName.setError(context.getString(R.string.edittheme_error_themeName_empty));
+            editName.setError(context.getString(R.string.themes_edittheme_error_themeName_empty));
             if (grabFocus)
                 editName.requestFocus();
         }
         if (mode == UIMode.ADD_THEME && WidgetThemes.valueOf(editName.getText().toString()) != null)
         {
             isValid = false;       // themeName is already taken
-            editName.setError(context.getString(R.string.edittheme_error_themeName_unique));
+            editName.setError(context.getString(R.string.themes_edittheme_error_themeName_unique));
             if (grabFocus)
                 editName.requestFocus();
         }
@@ -1844,7 +1879,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         if (editDisplay.getText().toString().trim().isEmpty())
         {
             isValid = false;     // display text is empty
-            editDisplay.setError(context.getString(R.string.edittheme_error_displaytext));
+            editDisplay.setError(context.getString(R.string.themes_edittheme_error_displaytext));
             if (grabFocus)
                 editDisplay.requestFocus();
         }
@@ -1882,7 +1917,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     private class ThemeNameChooser implements TextWatcher, View.OnFocusChangeListener
     {
-        private EditText edit;
+        private final EditText edit;
         private String themeName;
 
         public ThemeNameChooser( EditText editField )

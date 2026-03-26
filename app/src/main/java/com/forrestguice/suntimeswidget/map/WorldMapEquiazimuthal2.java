@@ -23,19 +23,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PathEffect;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +54,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         center[0] = lat;
         center[1] = lon;
     }
-    public boolean setCenterFromOptions(@Nullable WorldMapTask.WorldMapOptions options) {
+    public boolean setCenterFromOptions(@Nullable WorldMapOptions options) {
         if (options != null && options.center != null                                               // if options defines a center
                 && (options.center[0] != center[0] || options.center[1] != center[1]))                  // and that center is not the same
         {
@@ -72,6 +68,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     public double[] getMatrix() {
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
@@ -189,11 +186,11 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
                 // k = 1;
                 point[0] = point[1] = 0;
 
-            } else if (cosC < 0) {
+            } //else if (cosC < 0) {
                 // k = 1;
                 //point[0] = -1 * center[0];    // TODO
                 //point[1] = center[1] + 180;
-            }
+            //}
         } else {
             double k = c / Math.sin(c);
             double R = 1;
@@ -214,10 +211,10 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return r;
     }
 
-    private Rect pixelDst = new Rect();
+    private final Rect pixelDst = new Rect();
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0) {
@@ -265,7 +262,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
                 break drawData;
             }
 
-            long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+            long gmtMillis = now.getTimeInMillis() + (long)(TimeZones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
             double gmtArc = gmtHours * 15d;
 
@@ -364,7 +361,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -391,7 +388,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -441,10 +438,11 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
     private static ArrayList<float[]> grid_x = null, grid_y = null;
+    @Nullable
     private static double[] grid_mid;
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
             initGrid(mid);

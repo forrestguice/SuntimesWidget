@@ -196,7 +196,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
             if (textSize < min)
             {
                 isValid = false;       // too small
-                editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+                editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_min, min+""));
                 if (grabFocus)
                     editValue.requestFocus();
             }
@@ -204,14 +204,14 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
             if (textSize > max)
             {
                 isValid = false;       // too large
-                editValue.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
+                editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_max, max+""));
                 if (grabFocus)
                     editValue.requestFocus();
             }
 
         } catch (NumberFormatException e) {
             isValid = false;          // NaN (too small)
-            editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+            editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_min, min+""));
             if (grabFocus)
                 editValue.requestFocus();
         }

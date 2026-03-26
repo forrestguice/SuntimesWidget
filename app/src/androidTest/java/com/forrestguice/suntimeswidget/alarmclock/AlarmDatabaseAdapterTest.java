@@ -21,11 +21,11 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,13 +44,13 @@ import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTLOC_1
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_0;
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_1;
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_2;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.NOTIFICATION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.ALARM;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.NOTIFICATION;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmDatabaseAdapterTest
 {
     private Context mockContext;
@@ -60,7 +60,7 @@ public class AlarmDatabaseAdapterTest
     @Before
     public void setup()
     {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
 
         db = new AlarmDatabaseAdapter(mockContext.getApplicationContext());
         db.open();
@@ -111,7 +111,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor0);
             assertTrue("cursor should not be after last", !cursor0.isAfterLast());
             long id = cursor0.getLong(0);
-            verifyAlarm(cursor0, false, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor0, false, id, v.asContentValues(true));
             cursor0.moveToNext();
         }
 
@@ -124,7 +126,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor1);
             assertTrue("cursor should not be after last", !cursor1.isAfterLast());
             long id = cursor1.getLong(0);
-            verifyAlarm(cursor1, true, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor1, true, id, v.asContentValues(true));
             cursor1.moveToNext();
         }
 
@@ -137,7 +141,9 @@ public class AlarmDatabaseAdapterTest
             assertNotNull(cursor2);
             assertTrue("cursor should not be after last", !cursor2.isAfterLast());
             long id = cursor2.getLong(0);
-            verifyAlarm(cursor2, false, id, map.get(id).asContentValues(true));
+            AlarmClockItem v = map.get(id);
+            assertNotNull(v);
+            verifyAlarm(cursor2, false, id, v.asContentValues(true));
             cursor2.moveToNext();
         }
 
@@ -359,7 +365,7 @@ public class AlarmDatabaseAdapterTest
         String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
         String[] repeatDays = new String[] {"", "1", "0,1,2,3", "1,2", null, "1,2,3,4,5,6"};   // 0 is invalid value
         String[] flags = new String[] {"", "flag1=true", "flag1=true,flag2=false,flag3=true", "flag1=true,flag2=burrito", "flag3=false", null};
-        AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
+        AlarmType[] types = new AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
         int[] hours = new int[] {6, 18, 5, 19, 12, 6};
         int[] minutes = new int[] {30, 10, 0, 1, 59, 6};
 

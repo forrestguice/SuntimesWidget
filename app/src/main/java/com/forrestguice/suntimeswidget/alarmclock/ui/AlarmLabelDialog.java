@@ -26,11 +26,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -42,11 +37,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.support.view.ViewCompat;
 
-public class AlarmLabelDialog extends DialogFragment
+public class AlarmLabelDialog extends DialogBase
 {
     public static final String PREF_KEY_ALARM_LABEL = "alarmlabel";
     public static final String PREF_DEF_ALARM_LABEL = "";
@@ -63,37 +62,37 @@ public class AlarmLabelDialog extends DialogFragment
     }
 
     public void setShowHelp(boolean showHelp, CharSequence helpContent, String helpUrl, String helpTag) {
-        getArguments().putBoolean("showHelp", showHelp);
-        getArguments().putCharSequence("helpContent", helpContent);
-        getArguments().putString("helpUrl", helpUrl);
-        getArguments().putString("helpTag", helpTag);
+        getArgs().putBoolean("showHelp", showHelp);
+        getArgs().putCharSequence("helpContent", helpContent);
+        getArgs().putString("helpUrl", helpUrl);
+        getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArguments().getCharSequence("helpContent");
+        return getArgs().getCharSequence("helpContent");
     }
     public String helpUrl() {
-        return getArguments().getString("helpUrl");
+        return getArgs().getString("helpUrl");
     }
     public String helpTag() {
-        return getArguments().getString("helpTag");
+        return getArgs().getString("helpTag");
     }
     public boolean showHelp() {
-        return getArguments().getBoolean("showHelp", false);
+        return getArgs().getBoolean("showHelp", false);
     }
 
     public void setDialogTitle(String value) {
-        getArguments().putString("dialogTitle", value);
+        getArgs().putString("dialogTitle", value);
     }
     public String getDialogTitle(Context context) {
-        String title = getArguments().getString("dialogTitle");
+        String title = getArgs().getString("dialogTitle");
         return (title != null ? title : context.getString(R.string.alarmlabel_dialog_title));
     }
 
     public void setMultiLine(boolean value) {
-        getArguments().putBoolean("multiLine", value);
+        getArgs().putBoolean("multiLine", value);
     }
     public boolean isMultiLine() {
-        return getArguments().getBoolean("multiLine", false);
+        return getArgs().getBoolean("multiLine", false);
     }
 
     /**
@@ -101,12 +100,13 @@ public class AlarmLabelDialog extends DialogFragment
      * @return an Dialog ready to be shown
      */
     @SuppressWarnings({"deprecation","RestrictedApi"})
-    @NonNull @Override
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        final Activity myParent = getActivity();
+        final Activity myParent = requireActivity();
         LayoutInflater inflater = myParent.getLayoutInflater();
         @SuppressLint("InflateParams")
         View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmlabel, null);
@@ -118,10 +118,10 @@ public class AlarmLabelDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(getDialogTitle(myParent));
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmlabel_dialog_cancel),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmlabel_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -138,7 +138,7 @@ public class AlarmLabelDialog extends DialogFragment
                 }
         );
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmlabel_dialog_ok),
+        AlertDialog.setButton(dialog, AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.alarmlabel_dialog_ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -154,12 +154,14 @@ public class AlarmLabelDialog extends DialogFragment
 
         if (showHelp())
         {
-            dialog.setButton(AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.configAction_help), (DialogInterface.OnClickListener)null);
+            AlertDialog.setButton(dialog, AlertDialog.BUTTON_NEUTRAL, myParent.getString(R.string.action_help), (DialogInterface.OnClickListener)null);
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {    // AlertDialog.neutralButton calls dismiss unless the listener is initially null
                 @Override
                 public void onShow(DialogInterface dialog) {
-                    Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
-                    button.setOnClickListener(onHelpButtonClicked);
+                    Button button = AlertDialog.getButton(dialog, AlertDialog.BUTTON_NEUTRAL);
+                    if (button != null) {
+                        button.setOnClickListener(onHelpButtonClicked);
+                    }
                 }
             });
         }
@@ -168,7 +170,7 @@ public class AlarmLabelDialog extends DialogFragment
             loadSettings(savedInstanceState);
         }
         initViews(myParent, dialogContent);
-        updateViews(getContext());
+        updateViews(myParent);
 
         Window w = dialog.getWindow();
         if (w != null) {
@@ -183,8 +185,7 @@ public class AlarmLabelDialog extends DialogFragment
     {
         super.onResume();
 
-        FragmentManager fragments = getChildFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        HelpDialog helpDialog = (HelpDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_HELP);
         if (helpDialog != null) {
             helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
         }
@@ -195,7 +196,7 @@ public class AlarmLabelDialog extends DialogFragment
         CharSequence helpContent = helpContent();
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent != null ? helpContent : "");
-        helpDialog.setShowNeutralButton(getString(R.string.configAction_onlineHelp));
+        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
         helpDialog.setNeutralButtonListener(onlineHelpClickListener, helpTag());
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
@@ -230,7 +231,7 @@ public class AlarmLabelDialog extends DialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         saveSettings(outState);
         super.onSaveInstanceState(outState);
@@ -276,7 +277,9 @@ public class AlarmLabelDialog extends DialogFragment
     public void setLabel(String value)
     {
         this.label = value;
-        updateViews(getContext());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
     public String getLabel()
     {

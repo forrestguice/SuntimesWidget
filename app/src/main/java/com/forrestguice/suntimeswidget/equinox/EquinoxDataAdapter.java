@@ -20,18 +20,20 @@ package com.forrestguice.suntimeswidget.equinox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     protected final WeakReference<Context> contextRef;
     protected final EquinoxViewOptions options;
 
-    public EquinoxDataAdapter(Context context, WidgetSettings.SolsticeEquinoxMode[] modes, EquinoxViewOptions options)
+    public EquinoxDataAdapter(Context context, SolsticeEquinoxMode[] modes, EquinoxViewOptions options)
     {
         this.contextRef = new WeakReference<>(context);
         this.modes = modes;
@@ -57,8 +59,9 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
+    private final HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
 
+    @NonNull
     @Override
     public EquinoxDataViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -69,9 +72,9 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
 
     /**
      * Initialize data at position (returns cached data if it already exists).
-     * @param context
-     * @param position
-     * @return
+     * @param context context
+     * @param position position
+     * @return data
      */
     public SuntimesEquinoxSolsticeData initData(Context context, int position)
     {
@@ -106,7 +109,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @Override
-    public void onViewRecycled(EquinoxDataViewHolder holder)
+    public void onViewRecycled(@NonNull EquinoxDataViewHolder holder)
     {
         detachListeners(holder);
         if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
@@ -117,13 +120,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
 
     @Override
-    public void onBindViewHolder(EquinoxDataViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull EquinoxDataViewHolder holder, int position)
     {
         Context context = contextRef.get();
         if (context == null) {
             Log.w("EquinoxDataAdapter", "onBindViewHolder: null context!");
             return;
         }
+        //noinspection ConstantConditions
         if (holder == null) {
             Log.w("EquinoxDataAdapter", "onBindViewHolder: null view holder!");
             return;
@@ -145,8 +149,8 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return MAX_POSITIONS;
     }
 
-    protected WidgetSettings.SolsticeEquinoxMode[] modes = WidgetSettings.SolsticeEquinoxMode.values();
-    public void setModes(WidgetSettings.SolsticeEquinoxMode[] modes) {
+    protected SolsticeEquinoxMode[] modes = SolsticeEquinoxMode.values();
+    public void setModes(SolsticeEquinoxMode[] modes) {
         this.modes = modes;
     }
 
@@ -183,22 +187,24 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         holder.button_menu.setOnClickListener(null);
     }
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
-    public void setThemeOverride( SuntimesTheme theme ) {
+    public void setThemeOverride( @Nullable SuntimesTheme theme ) {
         options.themeOverride = theme;
     }
 
     public boolean hasSelection() {
         return (selected_position != null);
     }
-    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+    public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
-    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+    public void setSelection(@Nullable SolsticeEquinoxMode mode) {
         this.selected_mode = mode;
         notifyDataSetChanged();
     }
-    protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
+    @Nullable
+    protected SolsticeEquinoxMode selected_mode = null;
 
     public void setSelection(Integer position) {
         selected_position = position;
@@ -206,7 +212,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     }
     protected Integer selected_position = null;
 
-    private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+    private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,14 +245,14 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
         return options.highlightPosition;
     }
 
-    public static int findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestNote(Calendar now, TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
 
-        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
-        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
+        boolean upcoming = (mode == TrackingMode.SOONEST);
+        boolean recent = (mode == TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;

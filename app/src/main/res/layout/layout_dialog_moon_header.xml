@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.constraint.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:id="@+id/dialog_header"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dialog_margin" android:layout_marginRight="0dp"
@@ -35,18 +35,18 @@
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible">
 
-        <ImageButton android:id="@+id/media_reset" android:visibility="gone"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/media_reset" android:visibility="gone"
             android:layout_width="48dp" android:layout_height="48dp"
             android:padding="12dp" android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/worldmap_dialog_action_reset"
             android:src="?attr/icActionTimeReset" android:scaleType="fitXY" />
 
-        <ImageButton android:id="@+id/menu_button"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
             android:layout_width="48dp" android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
             style="?attr/actionOverflowButtonStyle"
-            android:contentDescription="@string/configAction_overflow" />
+            android:contentDescription="@string/action_overflow" />
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

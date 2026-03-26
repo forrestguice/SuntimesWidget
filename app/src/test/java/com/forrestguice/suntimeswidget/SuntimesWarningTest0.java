@@ -19,7 +19,6 @@
 package com.forrestguice.suntimeswidget;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 
 import org.junit.Test;
 import static junit.framework.Assert.assertFalse;
@@ -39,9 +38,9 @@ public class SuntimesWarningTest0
         assertFalse(warning0.wasDismissed());
 
         // setDuration, getDuration
-        assertEquals(Snackbar.LENGTH_INDEFINITE, warning0.getDuration());
-        warning0.setDuration(Snackbar.LENGTH_SHORT);
-        assertEquals(Snackbar.LENGTH_SHORT, warning0.getDuration());
+        assertEquals(-2, warning0.getDuration());   // -2 indefinite
+        warning0.setDuration(-1);   // -1 short
+        assertEquals(-1, warning0.getDuration());  // -1 short
 
         // setContentDescription
         assertNull(warning0.contentDescription);

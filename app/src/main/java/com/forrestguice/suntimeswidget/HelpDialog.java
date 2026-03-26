@@ -19,27 +19,23 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
 
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.views.ViewUtils;
 
-public class HelpDialog extends BottomSheetDialogFragment
+public class HelpDialog extends BottomSheetDialogBase
 {
     public static final String KEY_HELPTEXT = "helpText";
     public static final String KEY_NEUTRALTEXT = "neutralText";
@@ -55,7 +51,7 @@ public class HelpDialog extends BottomSheetDialogFragment
     }
     public void setContent( String content )
     {
-        setContent((CharSequence)SuntimesUtils.fromHtml(content));
+        setContent((CharSequence) SpanUtils.fromHtml(content));
     }
 
     public void setContent( CharSequence content )
@@ -69,7 +65,7 @@ public class HelpDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(requireContext(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_help, parent, false);
 
         initViews(dialogContent);
@@ -89,19 +85,17 @@ public class HelpDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private void expandSheet(DialogInterface dialog)
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-            if (layout != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(false);
-                behavior.setSkipCollapsed(false);
-                behavior.setPeekHeight(200);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return false;
+    }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return false;
+    }
+    @Override
+    protected int getPeekHeight() {
+        return 200;
     }
 
     /**
@@ -116,7 +110,7 @@ public class HelpDialog extends BottomSheetDialogFragment
         buttonFrame = dialogView.findViewById(R.id.dialog_buttons);
         neutralButton = (Button)dialogView.findViewById(R.id.dialog_button_neutral);
         if (neutralButton != null) {
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 neutralButton.setFocusableInTouchMode(true);
             }
         }

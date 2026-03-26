@@ -34,17 +34,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
+
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -54,18 +51,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
+import com.forrestguice.support.widget.BottomSheetDialogBase;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings.MapSpeed;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValuesCollection;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.suntimeswidget.timepicker.TimeDateDialog;
+import com.forrestguice.suntimeswidget.timepicker.TimeDialog;
+import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.suntimeswidget.views.Toast;
 
 import com.forrestguice.suntimeswidget.MenuAddon;
@@ -81,6 +85,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.ImageViewCompat;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,14 +95,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class WorldMapDialog extends BottomSheetDialogFragment
+public class WorldMapDialog extends BottomSheetDialogBase
 {
     public static final String LOGTAG = "WorldMapDialog";
     public static final String ARG_DATETIME = "datetime";
 
     public static final String DIALOGTAG_COLORS = "worldmap_colors";
+    public static final String DIALOGTAG_TIME = "worldmap_time";
 
     public static final int REQUEST_BACKGROUND = 400;
+    private final ActivityResultLauncherCompat startActivityForResult_background = registerForActivityResultCompat(REQUEST_BACKGROUND);
 
     private View dialogHeader;
     private TextView dialogTitle;
@@ -119,7 +128,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int color_warning = Color.RED;
     private int color_sun = Color.RED;
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public WorldMapDialog()
     {
@@ -135,7 +145,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public void showPositionAt(@Nullable Long datetime) {
-        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
+        getArgs().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded()) {
             updateViews();
         }
@@ -144,18 +154,19 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = requireContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
         initColors(contextWrapper);
 
-        initLocale(getContext());
-        initViews(getContext(), dialogContent);
+        initLocale(context);
+        initViews(context, dialogContent);
         if (savedState != null)
         {
             Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
-            worldmap.loadSettings(getContext(), savedState);
+            worldmap.loadSettings(context, savedState);
         }
-        themeViews(dialogContent.getContext());
+        themeViews(context);
 
         return dialogContent;
     }
@@ -170,7 +181,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     @Override
-    public void onSaveInstanceState( Bundle state )
+    public void onSaveInstanceState( @NonNull Bundle state )
     {
         worldmap.saveSettings(state);
     }
@@ -184,46 +195,23 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             updateViews();
             startUpdateTask();
 
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 menuButton.requestFocus();
             }
         }
     };
 
-    private void expandSheet(Dialog dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(true);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_skipCollapsed() {
+        return true;
     }
-
-    private void collapseSheet(Dialog dialog)
-    {
-        if (dialog == null) {
-            return;
-        }
-
-        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(ViewUtils.getBottomSheetResourceID());
-        if (layout != null)
-        {
-            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(false);
-            behavior.setSkipCollapsed(false);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+    @Override
+    protected boolean getBottomSheetBehavior_hideable() {
+        return false;
+    }
+    @Override
+    protected int getPeekHeight() {
+        return (int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin));
     }
 
     private void startUpdateTask()
@@ -250,7 +238,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
-    public static final int RESET_THRESHOLD[] = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
+    public static final int[] RESET_THRESHOLD = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
     private final Runnable updateTask = new Runnable()
     {
         @Override
@@ -285,8 +273,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
-        WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
-        WidgetSettings.SolarTimeMode.initDisplayStrings(dialogContent.getContext());
+        WorldMapWidgetSettings.initDisplayStrings(context);
+        WidgetSettings.initDisplayStrings_TimeStandardMode(context);
 
         int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
@@ -344,9 +332,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0, WorldMapWidgetSettings.MAPTAG_DEF);
         int modePosition = mapAdapter.getPosition(mapMode);
-        mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
+        mapSelector.setSelection(Math.max(modePosition, 0));
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
@@ -429,7 +417,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             TooltipCompat.setTooltipText(menuButton, menuButton.getContentDescription());
             menuButton.setOnClickListener(menuClickListener);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(context)) {
                 menuButton.setFocusableInTouchMode(true);
             }
         }
@@ -443,7 +431,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         seekGroup = dialogView.findViewById(R.id.media_seek);
     }
 
-    private void updateSeekbarDrawables(Context context)
+    private void updateSeekbarDrawables(@Nullable Context context)
     {
         if (context == null) {
             return;
@@ -455,11 +443,25 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-        int color = speed_1d ? color_warning : color_accent;
+        int color = getColor(WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
         seekbar.setTrackColor(color);
         seekbar.setTickColor(color, color, color);
         seekbar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    private int getColor(MapSpeed value) {
+        switch (value) {
+            case ONE_WEEK: case ONE_DAY: return color_warning;
+            case FIVE_MINUTES: case ONE_MINUTE: default: return color_accent;
+        }
+    }
+
+    private int getFrameOffsetMinutes(MapSpeed value) {
+        switch (value) {
+            case FIVE_MINUTES: return 3;
+            case ONE_WEEK: case ONE_DAY: return MapSpeed.ONE_DAY.getStepMinutes();
+            default: return value.getStepMinutes();
+        }
     }
 
     @SuppressWarnings("ResourceType")
@@ -479,6 +481,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             utcTime.setTextSize(themeOverride.getTimeSizeSp());
             utcTime.setTypeface(utcTime.getTypeface(), (themeOverride.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
+            //noinspection deprecation
             worldmap.themeViews(context, themeOverride);
         } else {
             worldmap.themeViews(context);
@@ -505,7 +508,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private SuntimesTheme themeOverride = null;
     @Deprecated
-    public void themeViews(Context context, SuntimesTheme theme)
+    public void themeViews(Context context, @Nullable SuntimesTheme theme)
     {
         if (theme != null)
         {
@@ -516,19 +519,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    public void updateOptions(Context context)
+    public void updateOptions(@Nullable Context context)
     {
         if (context != null)
         {
             Location location = WidgetSettings.loadLocationPref(context, 0);
-            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+            WorldMapOptions options = worldmap.getOptions();
             options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showGrid = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showDebugLines = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
-            options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
-                    ? 24 * 60 : 3;
+            options.anim_frameOffsetMinutes = getFrameOffsetMinutes(WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
 
             try {
                 options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
@@ -541,10 +543,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;
 
-            long now = getArguments().getLong(ARG_DATETIME);
+            long now = getArgs().getLong(ARG_DATETIME);
             if (now != -1L)
             {
-                getArguments().putLong(ARG_DATETIME, -1L);
+                getArgs().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
                 //Log.d("DEBUG", "updateOptions: now: " + now);
@@ -617,18 +619,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Context context = getContext();
         if (speedButton != null && context != null)
         {
-            boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
-            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
+            MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            speedButton.setText(mapSpeed.getDisplayString(context));
+            speedButton.setTextColor(getColor(mapSpeed));
         }
     }
 
-    private WidgetSettings.DateInfo getMapDate() {
-        return new WidgetSettings.DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+    private DateInfo getMapDate() {
+        return new DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
     }
     private long getMapTime(long now)
     {
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        WorldMapOptions options = worldmap.getOptions();
         long offsetMillis = options.offsetMinutes * 60 * 1000;
         return ((options.now == -1) ? now : options.now + offsetMillis);
     }
@@ -656,29 +658,31 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             mapTime.setTimeInMillis(mapTimeMillis);
             nowIsAfter = now.after(mapTime);
             if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
-                suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+                suffix = ((nowIsAfter) ? context.getString(R.string.cardlabel_past_today) : context.getString(R.string.cardlabel_future_today));
             }
         }
 
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), mapTime);
         if (utcTime != null)
         {
             String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
             if (suffix.isEmpty())
                 utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
-            else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
+            else utcTime.setText(SpanUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
-        SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+        TimeDisplayText offsetText = delta_utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
-        String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+        String displayString = context.getString((nowIsAfter ? R.string.delta_ago : R.string.delta_hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);
     }
 
-    private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
+            if (getContext() != null) {
+                setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
+            }
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -697,7 +701,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    /**private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
+    /*private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -753,48 +757,99 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showTimeZoneMenu(Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
-        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick).show();
         return true;
     }
-    private final PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onTimeZoneMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            WidgetTimezones.updateTimeZoneMenu(menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
-            Context context = getContext();
-            if (context == null) {
-                return false;
+            if (item.getItemId() == R.id.action_seektime) {
+                if (getActivity() != null) {
+                    showSeekTimeDialog(getActivity());
+                }
+                return true;
+
+            } else {
+                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                if (tzID != null && getContext() != null)
+                {
+                    WorldMapWidgetSettings.saveWorldMapString(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
+                    updateViews();
+                }
+                return (tzID != null);
             }
-            String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
-            if (tzID != null)
-            {
-                WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
-                updateViews();
-            }
-            return (tzID != null);
         }
     });
 
+    protected void showSeekTimeDialog(Activity activity)
+    {
+        TimeDateDialog dialog = new TimeDateDialog();
+        dialog.loadSettings(activity);
+        dialog.setTimeIs24(WidgetSettings.loadTimeFormatModePref(activity, 0) == TimeFormatMode.MODE_24HR);
+        dialog.setDialogTitle(activity.getString(R.string.action_seekTime));
+        dialog.setOnAcceptedListener(onSeekTimeDialogAccepted(dialog));
+        dialog.show(getChildFragmentManager(), DIALOGTAG_TIME);
+    }
+    private DialogInterface.OnClickListener onSeekTimeDialogAccepted(final TimeDialog dialog) {
+        return new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface d, int which)
+            {
+                Context context = getContext();
+                if (context != null)
+                {
+                    String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+                    TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                    Calendar mapTime = Calendar.getInstance(timezone);
+                    mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    seekDateTime(context, TimeDialog.getCalendar(dialog.getSelected(), mapTime));
+                }
+            }
+        };
+    }
+
+    @Nullable
+    public Long seekDateTime( Context context, @Nullable Calendar calendar ) {
+        return (calendar != null ? seekDateTime(context, calendar.getTimeInMillis()) : null);
+    }
+    @Nullable
+    public Long seekDateTime( Context context, @Nullable Long datetime )
+    {
+        if (datetime != null)
+        {
+            stopMap(false);
+            worldmap.seekDateTime(context, datetime);
+        }
+        return datetime;
+    }
+
     protected boolean showMapModeMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
-        updateMapModeMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick).show();
         return true;
     }
-    private void updateMapModeMenu(Context context, PopupMenu menu)
+    private void updateMapModeMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
         MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
         if (option_mapmode != null) {
             option_mapmode.setChecked(true);
         }
     }
-    private final PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onMapModeMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateMapModeMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -803,49 +858,49 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 return false;
             }
 
-            switch (item.getItemId())
-            {
-                case R.id.action_worldmap_simplerectangular:
-                case R.id.action_worldmap_bluemarble:
-                case R.id.action_worldmap_simpleazimuthal:
-                case R.id.action_worldmap_simpleazimuthal_south:
-                case R.id.action_worldmap_simpleazimuthal_location:
-                    item.setChecked(true);
-                    setMapMode(context, mapModeForMenuItem(item));
-                    return true;
-
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_worldmap_simplemercator || itemId == R.id.action_worldmap_simplesinusoidal || itemId == R.id.action_worldmap_simplevandergrinten || itemId == R.id.action_worldmap_simplerectangular || itemId == R.id.action_worldmap_bluemarble || itemId == R.id.action_worldmap_simpleazimuthal || itemId == R.id.action_worldmap_simpleazimuthal_south || itemId == R.id.action_worldmap_simpleazimuthal_location) {
+                item.setChecked(true);
+                setMapMode(context, mapModeForMenuItem(item));
+                return true;
             }
+            return false;
         }
     });
 
     protected boolean showSpeedMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
-        updateSpeedMenu(context, menu);
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick).show();
         return true;
     }
 
-    private void updateSpeedMenu(Context context, PopupMenu menu)
+    private void updateSpeedMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
-        boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
 
         MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
         if (speed_15m != null) {
-            speed_15m.setChecked(!is1d);
+            speed_15m.setChecked(mapSpeed == MapSpeed.FIFTEEN_MINUTES);
         }
 
         MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
         if (speed_1d != null) {
-            speed_1d.setChecked(is1d);
+            speed_1d.setChecked(mapSpeed == MapSpeed.ONE_DAY);
+        }
+
+        MenuItem speed_7d = m.findItem(R.id.mapSpeed_7d);
+        if (speed_7d != null) {
+            speed_7d.setChecked(mapSpeed == MapSpeed.ONE_WEEK);
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onSpeedMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateSpeedMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -854,39 +909,38 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 return false;
             }
 
-            switch (item.getItemId())
-            {
-                case R.id.mapSpeed_1d:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, true);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.mapSpeed_7d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_WEEK);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                case R.id.mapSpeed_15m:
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, false);
-                    item.setChecked(true);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapSpeed_1d) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.ONE_DAY);
+                item.setChecked(true);
+                updateViews();
+                return true;
 
-                default:
-                    return false;
+            } else if (itemId == R.id.mapSpeed_15m) {
+                WorldMapWidgetSettings.saveMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, MapSpeed.FIFTEEN_MINUTES);
+                item.setChecked(true);
+                updateViews();
+                return true;
             }
+            return false;
         }
     });
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
-        updateContextMenu(context, menu);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, view, R.menu.mapmenu, onContextMenuClick).show();
         return true;
     }
 
-    private void updateContextMenu(Context context, PopupMenu menu)
+    private void updateContextMenu(Context context, Menu m)
     {
-        Menu m = menu.getMenu();
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        WorldMapOptions options = worldmap.getOptions();
 
         MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
@@ -962,6 +1016,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private int menuItemForMapMode(WorldMapWidgetSettings.WorldMapWidgetMode mode) {
         switch (mode) {
+            case MERCATOR_SIMPLE: return R.id.action_worldmap_simplemercator;
+            case VANDERGRINTEN_SIMPLE: return R.id.action_worldmap_simplevandergrinten;
+            case SINUSOIDAL_SIMPLE: return R.id.action_worldmap_simplesinusoidal;
             case EQUIAZIMUTHAL_SIMPLE: return R.id.action_worldmap_simpleazimuthal;
             case EQUIAZIMUTHAL_SIMPLE1: return R.id.action_worldmap_simpleazimuthal_south;
             case EQUIAZIMUTHAL_SIMPLE2: return R.id.action_worldmap_simpleazimuthal_location;
@@ -969,14 +1026,31 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             case EQUIRECTANGULAR_SIMPLE: default: return R.id.action_worldmap_simplerectangular;
         }
     }
-    private WorldMapWidgetSettings.WorldMapWidgetMode mapModeForMenuItem(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
-            case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
-            case R.id.action_worldmap_simpleazimuthal_location: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
-            case R.id.action_worldmap_bluemarble: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
-            case R.id.action_worldmap_simplerectangular: default: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
+    private WorldMapWidgetSettings.WorldMapWidgetMode mapModeForMenuItem(MenuItem item)
+    {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_worldmap_simplemercator) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.MERCATOR_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simplevandergrinten) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.VANDERGRINTEN_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simplesinusoidal) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.SINUSOIDAL_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal_south) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+
+        } else if (itemId == R.id.action_worldmap_simpleazimuthal_location) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
+
+        } else if (itemId == R.id.action_worldmap_bluemarble) {
+            return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
         }
+        return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
     }
 
     private void shareMap()
@@ -1001,7 +1075,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         String locationDisplay = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
@@ -1015,7 +1089,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
-        updateOptions(getContext());
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
@@ -1040,7 +1114,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                             mapBackgroundFilePicker(REQUEST_BACKGROUND);
                         }
                     })
-                    .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                    .setNeutralButton(context.getString(R.string.action_onlineHelp),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -1146,13 +1220,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
         intent.setType("image/*");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
+        startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case REQUEST_BACKGROUND:
@@ -1161,8 +1235,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
-    private final PopupMenu.OnMenuItemClickListener onContextMenuClick = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    private final PopupMenuCompat.PopupMenuListener onContextMenuClick = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            updateContextMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem item)
         {
@@ -1171,127 +1250,124 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 return false;
             }
 
-            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+            WorldMapOptions options = worldmap.getOptions();
 
             boolean toggledValue;
-            switch (item.getItemId())
-            {
-                case R.id.action_sunposition:
-                    if (dialogListener != null) {
-                        dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_sunposition) {
+                if (dialogListener != null) {
+                    dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_moon:
-                    if (dialogListener != null) {
-                        dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            } else if (itemId == R.id.action_moon) {
+                if (dialogListener != null) {
+                    dialogListener.onShowMoonInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_date:
-                    if (dialogListener != null) {
-                        dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        collapseSheet(getDialog());
-                    }
-                    return true;
+            } else if (itemId == R.id.action_date) {
+                if (dialogListener != null) {
+                    dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                    collapseSheet(getDialog());
+                }
+                return true;
 
-                case R.id.action_calendar:
-                    openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
-                    return true;
+            } else if (itemId == R.id.action_calendar) {
+                openCalendar(context, getMapTime(Calendar.getInstance().getTimeInMillis()));
+                return true;
 
-                case R.id.action_timezone:
-                    showTimeZoneMenu(context, utcTime);
-                    return true;
+            } else if (itemId == R.id.action_timezone) {
+                showTimeZoneMenu(context, utcTime);
+                return true;
 
-                case R.id.shareMap:
-                    shareMap();
-                    return true;
+            } else if (itemId == R.id.shareMap) {
+                shareMap();
+                return true;
 
-                case R.id.recordMap:
-                    playMap();
-                    shareMap();
-                    return true;
+            } else if (itemId == R.id.recordMap) {
+                playMap();
+                shareMap();
+                return true;
 
-                case R.id.mapOption_center:
-                    setMapCenter(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_center) {
+                setMapCenter(context);
+                return true;
 
-                case R.id.mapOption_center_clear:
-                    clearMapCenter(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_center_clear) {
+                clearMapCenter(context);
+                return true;
 
-                case R.id.mapOption_background:
-                    setMapBackground(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_background) {
+                setMapBackground(context);
+                return true;
 
-                case R.id.mapOption_background_clear:
-                    clearMapBackground(context);
-                    return true;
+            } else if (itemId == R.id.mapOption_background_clear) {
+                clearMapBackground(context);
+                return true;
 
-                case R.id.mapOption_location:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_location) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_tintMap:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
-                    item.setChecked(toggledValue);
-                    updateOptions(context);
-                    worldmap.setMapMode(context, mapMode);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_tintMap) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
+                item.setChecked(toggledValue);
+                updateOptions(context);
+                worldmap.setMapMode(context, mapMode);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_debugLines:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_debugLines) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_majorLatitudes:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_majorLatitudes) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_minorgrid:
-                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    item.setChecked(toggledValue);
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_minorgrid) {
+                toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                item.setChecked(toggledValue);
+                updateViews();
+                return true;
 
-                case R.id.mapOption_sunlight:
-                    toggledValue = !options.showSunShadow;
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    if (!toggledValue && !options.showMoonLight) {
-                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, true);
-                    }
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_sunlight) {
+                toggledValue = !options.showSunShadow;
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                if (!toggledValue && !options.showMoonLight) {
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                }
+                updateViews();
+                return true;
 
-                case R.id.mapOption_moonlight:
-                    toggledValue = !options.showMoonLight;
-                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                    if (!toggledValue && !options.showSunShadow) {
-                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
-                    }
-                    updateViews();
-                    return true;
+            } else if (itemId == R.id.mapOption_moonlight) {
+                toggledValue = !options.showMoonLight;
+                WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                if (!toggledValue && !options.showSunShadow) {
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                }
+                updateViews();
+                return true;
 
-                case R.id.mapOption_colors:
-                    showColorDialog(context);
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.mapOption_colors) {
+                showColorDialog(context);
+                return true;
             }
+            return false;
         }
     });
 
@@ -1302,23 +1378,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         context.startActivity(intent);
     }
 
-    public static final int SEEK_STEPSIZE_5m = 5;
-
     public static final int SEEK_TOTALMINUTES_15m = 12 * 2 * 60;   // +- 12 hours
-    public static final int SEEK_STEPSIZE_15m = 15;
-
     public static final int SEEK_TOTALMINUTES_1d = 364 * 24 * 60;  // +- 182 days
-    public static final int SEEK_STEPSIZE_1d = 24 * 60;
 
-    private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
-    private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
+    private final int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
+    private final int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
     private final View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v) {
             playMap();
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (pauseButton != null) {
                     pauseButton.requestFocus();
                 }
@@ -1332,7 +1403,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             if (worldmap.isAnimated()) {
                 stopMap(false);
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(getContext())) {
                     if (playButton != null) {
                         playButton.requestFocus();
                     }
@@ -1341,7 +1412,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             } else {
                 playMap();
                 shareMap();
-                if (AppSettings.isTelevision(getActivity())) {
+                if (AppSettings.isTelevision(getContext())) {
                     if (recordButton != null) {
                         recordButton.requestFocus();
                     }
@@ -1361,7 +1432,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             stopMap(false);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (playButton != null) {
                     playButton.requestFocus();
                 }
@@ -1373,7 +1444,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             stopMap(true);
-            if (AppSettings.isTelevision(getActivity())) {
+            if (AppSettings.isTelevision(getContext())) {
                 if (playButton != null) {
                     playButton.requestFocus();
                 }
@@ -1394,7 +1465,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            showContextMenu(getContext(), dialogTitle);
+            if (getContext() != null) {
+                showContextMenu(getContext(), dialogTitle);
+            }
         }
     });
 
@@ -1402,38 +1475,40 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            showSpeedMenu(getContext(), v);
+            if (getContext() != null) {
+                showSpeedMenu(getContext(), v);
+            }
         }
     });
 
-    private View.OnClickListener nextClickListener = new View.OnClickListener()
+    private final View.OnClickListener nextClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + mapSpeed.getStepMinutes());
             }
         }
     };
 
-    private View.OnClickListener prevClickListener = new View.OnClickListener()
+    private final View.OnClickListener prevClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
             Context context = getContext();
             if (context != null) {
-                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - mapSpeed.getStepMinutes());
             }
         }
     };
 
     private int t_prevProgress = -1;
-    private SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
+    private final SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
     {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
@@ -1442,11 +1517,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 t_prevProgress = seek_now;
             }
 
-            if (fromUser)
+            Context context = getContext();
+            if (fromUser && context != null)
             {
                 long offset = progress - t_prevProgress;
-                boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / SEEK_STEPSIZE_1d) * SEEK_STEPSIZE_1d : offset);
+                MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                boolean speed_1d = (mapSpeed == MapSpeed.ONE_DAY);
+                long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / mapSpeed.getStepMinutes()) * mapSpeed.getStepMinutes() : offset);
                 worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + scaledOffset);
                 updateTimeText();
             }
@@ -1461,7 +1538,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
-    private WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
+    private final WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
         public void onFrame(Bitmap result, long offsetMinutes)
@@ -1492,16 +1569,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (context == null) {
             return;
         }
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-        long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
+        MapSpeed mapSpeed = WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean speed_days = (mapSpeed == MapSpeed.ONE_DAY || mapSpeed == MapSpeed.ONE_WEEK);
+        long offsetMinutes1 = (speed_days ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
 
         //long offset = progress - t_prevProgress;
 
         long progress = seek_now + offsetMinutes1;
         if (progress > seek_totalMinutes) {
-            seekbar.setProgress(!speed_1d ? seek_now : seek_totalMinutes);
+            seekbar.setProgress(!speed_days ? seek_now : seek_totalMinutes);
         } else if (progress < 0) {
-            seekbar.setProgress(!speed_1d ? seek_now : 0);
+            seekbar.setProgress(!speed_days ? seek_now : 0);
         } else {
             seekbar.setProgress((int)progress);
         }
@@ -1527,16 +1605,19 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         super.onResume();
 
-        Context context = getActivity();
-        FragmentManager fragments = getChildFragmentManager();
-        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) fragments.findFragmentByTag(DIALOGTAG_COLORS);
+        ColorValuesSheetDialog colorDialog = (ColorValuesSheetDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_COLORS);
         if (colorDialog != null)
         {
-            boolean isNightMode = context.getResources().getBoolean(R.bool.is_nightmode);
+            boolean isNightMode = getResources().getBoolean(R.bool.is_nightmode);
             colorDialog.setAppWidgetID((isNightMode ? 1 : 0));
             colorDialog.setColorTag(WorldMapColorValues.TAG_WORLDMAP);
             colorDialog.setColorCollection(colors);
             colorDialog.setDialogListener(colorDialogListener);
+        }
+
+        TimeDateDialog timeDialog = (TimeDateDialog) getChildFragmentManager().findFragmentByTag(DIALOGTAG_TIME);
+        if (timeDialog != null) {
+            timeDialog.setOnAcceptedListener(onSeekTimeDialogAccepted(timeDialog));
         }
     }
 
@@ -1562,14 +1643,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         protected void updateColors(ColorValues values)
         {
-            if (values != null) {
-                worldmap.getOptions().colors = new WorldMapColorValues(values);
-            } else {
-                worldmap.getOptions().init(getActivity());
+            Context context = getContext();
+            if (context != null)
+            {
+                if (values != null) {
+                    worldmap.getOptions().colors = new WorldMapColorValues(values);
+                } else {
+                    worldmap.getOptions().init(context);
+                }
+                worldmap.themeViews(context);
+                worldmap.setMapMode(context, mapMode);
+                updateViews();
             }
-            worldmap.themeViews(getActivity());
-            worldmap.setMapMode(getActivity(), mapMode);
-            updateViews();
         }
 
         public void requestPeekHeight(int height) {}
@@ -1577,10 +1662,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void requestExpandSheet() {}
         public void onModeChanged(int mode) {}
 
+        @SuppressWarnings("ConstantConditions")
         @Nullable
         @Override
         public ColorValues getDefaultValues() {
-            return new WorldMapColorValues(getActivity(), true);
+            return (getContext() != null ? new WorldMapColorValues(AndroidResources.wrap(getContext()), true) : null);
         }
     };
 

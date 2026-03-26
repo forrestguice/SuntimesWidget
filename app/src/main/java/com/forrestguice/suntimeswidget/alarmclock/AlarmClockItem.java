@@ -24,26 +24,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * AlarmClockItem
  */
-public class AlarmClockItem implements Parcelable
+public class AlarmClockItem implements AlarmItemInterface, Parcelable
 {
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
@@ -51,36 +49,45 @@ public class AlarmClockItem implements Parcelable
     public static final int ICON_NOTIFICATION2 = R.drawable.ic_action_notification2;
 
     public long rowID = -1L;
+    @Nullable
     public AlarmType type = AlarmType.ALARM;
     public boolean enabled = false;
     public boolean repeating = false;
+    @Nullable
     public ArrayList<Integer> repeatingDays = null;
     public long alarmtime = -1L;
     public long timestamp = -1L;
     public int hour = -1, minute = -1;
     public long offset = 0;
+    @Nullable
     public String label = null;
+    @Nullable
     public String note = null;
+    @Nullable
     private String event = null;
+    @Nullable
     public String timezone = null;
+    @Nullable
     public Location location = null;
+    @Nullable
     public String ringtoneName = null;
+    @Nullable
     public String ringtoneURI = null;
     public boolean vibrate = false;
+    @Nullable
     public String actionID0 = null;
+    @Nullable
     public String actionID1 = null;
+    @Nullable
     public String actionID2 = null;
+    @Nullable
     public String actionID3 = null;
 
+    @Nullable
     protected HashMap<String, Long> alarmFlags = null;
-    public static final String FLAG_REMINDER_WITHIN = "reminder";               // milliseconds
-    public static final String FLAG_DISMISS_CHALLENGE = "dismissChallenge";    // DismissChallenge enum ordinal (0 disabled)
-    public static final String FLAG_SNOOZE = "snoozeMillis";                         // milliseconds
-    public static final String FLAG_SNOOZE_LIMIT = "snoozeLimit";                    // 0; unlimited
-    public static final String FLAG_SNOOZE_COUNT = "snoozeCount";                    // [0, limit)
-    public static final String FLAG_LOCATION_FROM_APP = "locationFromApp";     // use app location
 
     public boolean modified = false;
+    @Nullable
     public AlarmState state = null;
 
     public AlarmClockItem() {}
@@ -104,6 +111,7 @@ public class AlarmClockItem implements Parcelable
 
         this.location = ((other.location != null) ? new Location(other.location) : null);
         this.event = other.event;
+        this.eventItem = null;
         this.timezone = other.timezone;
 
         this.vibrate = other.vibrate;
@@ -315,6 +323,7 @@ public class AlarmClockItem implements Parcelable
         return values;
     }
 
+    @Override
     public void setState(int value)
     {
         if (state == null)
@@ -322,20 +331,146 @@ public class AlarmClockItem implements Parcelable
         else state.setState(value);
     }
 
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean value) {
+        enabled = value;
+    }
+
+    @Override
+    public void setLabel(String value) {
+        this.label = value;
+    }
+
+    @Override
+    public void setNote(String value) {
+        note = value;
+    }
+    @Override
+    public String getNote() {
+        return note;
+    }
+
+    @Override
     public int getState()
     {
         return (state != null ? state.getState() : AlarmState.STATE_NONE);
+    }
+
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+    @Override
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Nullable
     public String getEvent() {
         return event;
     }
+    @Override
     public void setEvent(@Nullable String event) {
         this.event = event;
         eventItem = null;
     }
 
+    @Override
+    public long getOffset() {
+        return offset;
+    }
+    @Override
+    public void setOffset(long offsetMillis) {
+        offset = offsetMillis;
+    }
+
+    @Override
+    public int getHour() {
+        return hour;
+    }
+    @Override
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    @Override
+    public int getMinute() {
+        return minute;
+    }
+    @Override
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    @Override
+    public boolean isRepeating() {
+        return repeating;
+    }
+    @Override
+    public void setRepeating(boolean value) {
+        repeating = value;
+    }
+
+    @Override
+    public String getTimeZone() {
+        return timezone;
+    }
+    @Override
+    public void setTimeZone(String tzID) {
+        timezone = tzID;
+    }
+
+    @Override
+    public long getTimestamp() {
+        return timestamp;
+    }
+    @Override
+    public void setTimestamp(long value) {
+        timestamp = value;
+    }
+
+    @Override
+    public boolean getVibrate() {
+        return vibrate;
+    }
+    @Override
+    public void setVibrate(boolean value) {
+        vibrate = value;
+    }
+
+    @Override
+    public String getRingtoneURI() {
+        return ringtoneURI;
+    }
+    @Override
+    public void setRingtoneURI(String value) {
+        ringtoneURI = value;
+    }
+
+    @Override
+    public String getRingtoneName() {
+        return ringtoneName;
+    }
+    @Override
+    public void setRingtoneName(String value) {
+        ringtoneName = value;
+    }
+
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+    @Override
+    public void setModified(boolean value) {
+        modified = value;
+    }
+
+    @Nullable
     private AlarmEvent.AlarmEventItem eventItem = null;
     public AlarmEvent.AlarmEventItem getEventItem(Context context)
     {
@@ -347,6 +482,9 @@ public class AlarmClockItem implements Parcelable
 
     public int getIcon()
     {
+        if (this.type == null) {
+            return ICON_NOTIFICATION;
+        }
         switch (this.type) {
             case ALARM: return ICON_ALARM;
             case NOTIFICATION2: return ICON_NOTIFICATION2;
@@ -357,6 +495,9 @@ public class AlarmClockItem implements Parcelable
 
     public String getLabel(Context context)
     {
+        if (type == null) {
+            return context.getString(R.string.alarmMode_notification);
+        }
         switch(type) {
             case ALARM: return context.getString(R.string.alarmMode_alarm);
             case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
@@ -370,6 +511,7 @@ public class AlarmClockItem implements Parcelable
         return getLabel((solarEvent != null) ? solarEvent.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));   // TODO
     }*/
 
+    @Override
     public String getLabel(String emptyLabel)
     {
         return (label == null || label.isEmpty() ? emptyLabel : label);
@@ -391,11 +533,13 @@ public class AlarmClockItem implements Parcelable
         return calendar;
     }
 
+    @Override
     public boolean hasActionID(int actionNum)
     {
         String value = getActionID(actionNum);
         return (value != null && !value.trim().isEmpty());
     }
+    @Override
     public String getActionID(int actionNum)
     {
         String value;
@@ -407,25 +551,23 @@ public class AlarmClockItem implements Parcelable
         }
         return (value != null ? value.trim() : null);
     }
+    @Override
     public void setActionID(int actionNum, String actionID)
     {
         String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
-            case ACTIONID_RESERVED: actionID2 = value; break;
+            case ACTIONID_RESERVED: actionID3 = value; break;
             case ACTIONID_REMINDER: actionID2 = value; break;
             case ACTIONID_DISMISS: actionID1 = value; break;
             case ACTIONID_MAIN: default: actionID0 = value; break;
         }
     }
-    public static final int ACTIONID_MAIN = 0;
-    public static final int ACTIONID_DISMISS = 1;
-    public static final int ACTIONID_REMINDER = 2;
-    public static final int ACTIONID_RESERVED = 3;
 
     /**
      * setAlarmFlags
      * @param flags as a String, e.g. "flag1=true;flag2=false;..."
      */
+    @Override
     public void setAlarmFlags(String flags)
     {
         if (flags != null && !flags.trim().isEmpty())
@@ -464,6 +606,7 @@ public class AlarmClockItem implements Parcelable
         }
     }
 
+    @Override
     public String getAlarmFlags()
     {
         if (alarmFlags != null)
@@ -490,15 +633,18 @@ public class AlarmClockItem implements Parcelable
         } else return false;
     }
 
+    @Override
     public boolean hasFlag(@Nullable String flagname)
     {
         if (alarmFlags != null && flagname != null) {
             return alarmFlags.containsKey(flagname);
         } else return false;
     }
+    @Override
     public long getFlag(@Nullable String flagname) {
         return getFlag(flagname, 0L);
     }
+    @Override
     public long getFlag(@Nullable String flagname, long defaultValue)
     {
         if (alarmFlags != null && flagname != null) {
@@ -506,16 +652,20 @@ public class AlarmClockItem implements Parcelable
             return (value != null) ? value : defaultValue;
         } else return defaultValue;
     }
+    @Override
     public boolean flagIsTrue(@Nullable String flagname) {
         return (getFlag(flagname) != 0L);
     }
+
     public static boolean flagIsTrue(@NonNull HashMap<String,Long> map, @Nullable String flagname) {
         Long value = map.get(flagname);
         return (value != null && value != 0L);
     }
+    @Override
     public boolean setFlag(@NonNull String flag, boolean value) {
         return setFlag(flag, (value ? 1L : 0L));
     }
+    @Override
     public boolean setFlag(@NonNull String flag, long value)
     {
         if (isValidFlagName(flag))
@@ -531,9 +681,22 @@ public class AlarmClockItem implements Parcelable
             return false;
         }
     }
+
+    @Override
+    public AlarmType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(AlarmType type) {
+        this.type = type;
+    }
+
+    @Override
     public boolean incrementFlag(@NonNull String flag) {
         return setFlag(flag, getFlag(flag) + 1);
     }
+    @Override
     public boolean clearFlag(@Nullable String flag)
     {
         if (flag != null && alarmFlags != null && alarmFlags.containsKey(flag))
@@ -568,6 +731,7 @@ public class AlarmClockItem implements Parcelable
      * getRepeatingDays
      * @return a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
      */
+    @Override
     public String getRepeatingDays()
     {
         if (repeatingDays != null)
@@ -588,8 +752,9 @@ public class AlarmClockItem implements Parcelable
         } else return null;
     }
 
-    public static ArrayList<Integer> everyday() {
-        return new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
+    @Override
+    public ArrayList<Integer> getRepeatingDaysArray() {
+        return repeatingDays;
     }
 
     /**
@@ -660,160 +825,6 @@ public class AlarmClockItem implements Parcelable
             }
         }
         return challenge;
-    }
-
-    /**
-     * AlarmType
-     */
-    public static enum AlarmType
-    {
-        ALARM("Alarm"),
-        NOTIFICATION("Notification"),
-        NOTIFICATION1("Notification (ephemeral)"),
-        NOTIFICATION2("Notification (persistent)");
-
-        private String displayString;
-
-        private AlarmType(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            ALARM.setDisplayString(context.getString(R.string.alarmMode_alarm));
-            NOTIFICATION.setDisplayString(context.getString(R.string.alarmMode_notification));
-            NOTIFICATION1.setDisplayString(context.getString(R.string.alarmMode_notification1));
-            NOTIFICATION2.setDisplayString(context.getString(R.string.alarmMode_notification2));
-        }
-
-        public static AlarmType valueOf(String value, AlarmType defaultType)
-        {
-            AlarmType retValue = defaultType;
-            if (value != null)
-            {
-                try {
-                    retValue = AlarmType.valueOf(value);
-
-                } catch (IllegalArgumentException e) {
-                    Log.w("AlarmType", "valueOf :: failed to load '" + value);
-                    retValue = defaultType;
-                }
-            }
-            return retValue;
-        }
-    }
-
-    /**
-     * AlarmTimeZone
-     */
-    public static enum AlarmTimeZone
-    {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
-        SYSTEM_TIME("System Time Zone", null);
-
-        private String displayString;
-        private String tzID;
-
-        private AlarmTimeZone(String displayString, String tzID)
-        {
-            this.displayString = displayString;
-            this.tzID = tzID;
-        }
-
-        public String timeZoneID() {
-            return tzID;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String displayString() {
-            return displayString;
-        }
-
-        public static String displayString(String tzID)
-        {
-            if (tzID == null) {
-                return SYSTEM_TIME.displayString();
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return APPARENT_SOLAR_TIME.displayString();
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return LOCAL_MEAN_TIME.displayString;
-
-            } else {
-                return TimeZone.getTimeZone(tzID).getDisplayName();
-            }
-        }
-
-        public void setDisplayString( String displayString ) {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
-        }
-
-        @NonNull
-        public TimeZone getTimeZone(@Nullable Location location) {
-            return AlarmTimeZone.getTimeZone(timeZoneID(), location);
-        }
-
-        @NonNull
-        public static TimeZone getTimeZone(@Nullable String tzID, @Nullable Location location)
-        {
-            if (location == null || tzID == null) {
-                return TimeZone.getDefault();
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
-
-            } else {
-                return TimeZone.getTimeZone(tzID);
-            }
-        }
-
-        public static AlarmTimeZone valueOfID(String tzID)
-        {
-            if (tzID == null) {
-                return SYSTEM_TIME;
-
-            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
-                return APPARENT_SOLAR_TIME;
-
-            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
-                return LOCAL_MEAN_TIME;
-
-            } else {
-                return null;
-            }
-        }
     }
 
     @Override

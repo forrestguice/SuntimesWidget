@@ -18,20 +18,21 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * AlarmColorValues
  */
-public class AlarmColorValues extends ResourceColorValues
+public class AlarmColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String TAG_ALARMCOLORS = "alarmcolors";
 
     public static final String COLOR_SOUNDING_PULSE_START = "color_sounding_pulse_start";
@@ -80,13 +81,13 @@ public class AlarmColorValues extends ResourceColorValues
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_alarms_bg_endColor, R.string.configLabel_alarms_bg_startColor,
-                R.string.configLabel_alarms_soundingPulse_startColor, R.string.configLabel_alarms_soundingPulse_endColor,
-                R.string.configLabel_alarms_snoozingPulse_startColor, R.string.configLabel_alarms_snoozingPulse_endColor,
-                R.string.configLabel_alarms_text_primaryColor, R.string.configLabel_alarms_text_primaryColorInverse,
-                R.string.configLabel_alarms_text_secondaryColor, R.string.configLabel_alarms_text_secondaryColorInverse,
-                R.string.configLabel_alarms_text_timeColor, R.string.configLabel_alarms_text_timeColorInverse,
-                R.string.configLabel_themeColorAccent, R.string.configLabel_alarms_text_disabledColor, R.string.configLabel_themeColorAction,
+                R.string.themes_label_alarms_bg_endColor, R.string.themes_label_alarms_bg_startColor,
+                R.string.themes_label_alarms_soundingPulse_startColor, R.string.themes_label_alarms_soundingPulse_endColor,
+                R.string.themes_label_alarms_snoozingPulse_startColor, R.string.themes_label_alarms_snoozingPulse_endColor,
+                R.string.themes_label_alarms_text_primaryColor, R.string.themes_label_alarms_text_primaryColorInverse,
+                R.string.themes_label_alarms_text_secondaryColor, R.string.themes_label_alarms_text_secondaryColorInverse,
+                R.string.themes_label_alarms_text_timeColor, R.string.themes_label_alarms_text_timeColorInverse,
+                R.string.themes_configLabel_themeColorAccent, R.string.themes_label_alarms_text_disabledColor, R.string.themes_configLabel_themeColorAction,
         };
     }
     public int[] getColorRoles() {
@@ -137,25 +138,18 @@ public class AlarmColorValues extends ResourceColorValues
     public AlarmColorValues(ColorValues other) {
         super(other);
     }
-    public AlarmColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    protected AlarmColorValues(Parcel in) {
+    /*protected AlarmColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public AlarmColorValues() {
         super();
     }
 
-    public AlarmColorValues(Context context, boolean fallbackDarkTheme) {
+    public AlarmColorValues(Resources context, boolean fallbackDarkTheme) {
         super(context, fallbackDarkTheme);
     }
 
-    public AlarmColorValues(String jsonString) {
-        super(jsonString);
-    }
-
-    public static final Creator<AlarmColorValues> CREATOR = new Creator<AlarmColorValues>()
+    /*public static final Creator<AlarmColorValues> CREATOR = new Creator<AlarmColorValues>()
     {
         public AlarmColorValues createFromParcel(Parcel in) {
             return new AlarmColorValues(in);
@@ -163,9 +157,14 @@ public class AlarmColorValues extends ResourceColorValues
         public AlarmColorValues[] newArray(int size) {
             return new AlarmColorValues[size];
         }
-    };
+    };*/
 
-    public static AlarmColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
+    }
+
+    public static AlarmColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new AlarmColorValues(new AlarmColorValues().getDefaultValues(context, darkTheme));
     }
 }

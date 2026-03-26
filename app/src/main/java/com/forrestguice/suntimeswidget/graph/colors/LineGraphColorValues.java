@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.graph.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class LineGraphColorValues extends ResourceColorValues implements Parcelable
+public class LineGraphColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_GRAPH_BG = AppColorKeys.COLOR_GRAPH_BG;
 
     public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
@@ -93,16 +93,16 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorGraphBackground,
-                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-                R.string.configLabel_themeColorGraphMoonFill, R.string.configLabel_themeColorGraphMoonStroke,
-                R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
-                R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
-                R.string.configLabel_themeColorGraphLabels, R.string.configLabel_themeColorGraphLabelsBG,
-                R.string.configLabel_themeColorGraphSunPathDayFill, R.string.configLabel_themeColorGraphSunPathDayStroke,
-                R.string.configLabel_themeColorGraphSunPathNightFill, R.string.configLabel_themeColorGraphSunPathNightStroke,
-                R.string.configLabel_themeColorGraphMoonPathDayFill, R.string.configLabel_themeColorGraphMoonPathDayStroke,
-                R.string.configLabel_themeColorGraphMoonPathNightFill, R.string.configLabel_themeColorGraphMoonPathNightStroke,
+                R.string.themes_configLabel_themeColorGraphBackground,
+                R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.themes_configLabel_themeColorGraphMoonFill, R.string.themes_configLabel_themeColorGraphMoonStroke,
+                R.string.themes_configLabel_themeColorGraphPointFill, R.string.themes_configLabel_themeColorGraphPointStroke,
+                R.string.themes_configLabel_themeColorGraphAxis, R.string.themes_configLabel_themeColorGraphGridMajor, R.string.themes_configLabel_themeColorGraphGridMinor,
+                R.string.themes_configLabel_themeColorGraphLabels, R.string.themes_configLabel_themeColorGraphLabelsBG,
+                R.string.themes_configLabel_themeColorGraphSunPathDayFill, R.string.themes_configLabel_themeColorGraphSunPathDayStroke,
+                R.string.themes_configLabel_themeColorGraphSunPathNightFill, R.string.themes_configLabel_themeColorGraphSunPathNightStroke,
+                R.string.themes_configLabel_themeColorGraphMoonPathDayFill, R.string.themes_configLabel_themeColorGraphMoonPathDayStroke,
+                R.string.themes_configLabel_themeColorGraphMoonPathNightFill, R.string.themes_configLabel_themeColorGraphMoonPathNightStroke,
         };
     }
     public int[] getColorRoles() {
@@ -163,26 +163,20 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
     public LineGraphColorValues(ColorValues other) {
         super(other);
     }
-    public LineGraphColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private LineGraphColorValues(Parcel in) {
+    /*private LineGraphColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public LineGraphColorValues() {
         super();
     }
-    public LineGraphColorValues(Context context) {
+    public LineGraphColorValues(Resources context) {
         this(context, true);
     }
-    public LineGraphColorValues(Context context, boolean darkTheme) {
+    public LineGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public LineGraphColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<LineGraphColorValues> CREATOR = new Creator<LineGraphColorValues>()
+    /*public static final Creator<LineGraphColorValues> CREATOR = new Creator<LineGraphColorValues>()
     {
         public LineGraphColorValues createFromParcel(Parcel in) {
             return new LineGraphColorValues(in);
@@ -190,9 +184,14 @@ public class LineGraphColorValues extends ResourceColorValues implements Parcela
         public LineGraphColorValues[] newArray(int size) {
             return new LineGraphColorValues[size];
         }
-    };
+    };*/
 
-    public static LineGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
+    }
+
+    public static LineGraphColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LineGraphColorValues(new LineGraphColorValues().getDefaultValues(context, darkTheme));
     }
 }

@@ -20,18 +20,21 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
 import android.content.Intent;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 import android.widget.DatePicker;
 
 import com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper;
 import com.forrestguice.suntimeswidget.support.espresso.contrib.PickerActions;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -40,24 +43,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Automated UI tests for the TimeDateDialog.
  */
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -69,13 +72,13 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     @Test @QuickTest
@@ -119,8 +122,8 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
         public TimeDateDialogRobot showDialog(Activity context)
         {
-            String actionDateText = context.getString(R.string.configAction_viewDate);
-            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+            String actionDateText = context.getString(R.string.action_viewDate);
+            openActionBarOverflowOrOptionsMenu(InstrumentationUtils.getContext());
             onView(withText(actionDateText)).perform(click());
             return this;
         }
@@ -134,11 +137,11 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
             return this;
         }
         public TimeDateDialogRobot clickTodayButton() {
-            onView(withText(R.string.today)).perform(click());
+            onView(withText(R.string.cardlabel_today)).perform(click());
             return this;
         }
         public TimeDateDialogRobot clickClearButton() {
-            onView(withText(R.string.configAction_clearDate)).perform(click());
+            onView(withText(R.string.alarms_action_clearDate)).perform(click());
             return this;
         }
 
