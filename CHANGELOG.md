@@ -1,8 +1,8 @@
 ### ~
 
-### v0.16.15 (2026-03-26)
+### v0.16.15 (2026-03-28)
 * fixes crash when updating flippable widget (#926).
-* updates translation to French (fr) (#925 by chfo-bidouille).
+* updates translation to French (fr) (#925, #928 by chfo-bidouille).
 
 ### v0.16.14 (2026-03-14)
 * fixes missing Chinese translations (#921) (missing since v0.16.12).
