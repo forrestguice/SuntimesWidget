@@ -207,8 +207,12 @@ public enum SolarEvents
         }
     }
 
-    public static SolarEvents valueOf(String value, SolarEvents defaultType)
+    @Nullable
+    public static SolarEvents valueOf(@Nullable String value, @Nullable SolarEvents defaultType)
     {
+        if (value == null) {
+            return defaultType;
+        }
         for (SolarEvents e : values()) {
             if (e.name().equals(value))
                 return e;
