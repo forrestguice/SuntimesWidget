@@ -20,6 +20,8 @@ package com.forrestguice.util.android;
 
 import android.net.Uri;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.content.Cursor;
 
@@ -34,8 +36,11 @@ public class AndroidContentResolver implements ContentResolver
         return new AndroidContentResolver(resolver);
     }
 
+    @Nullable
     @Override
-    public Cursor query(String uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return AndroidCursor.wrap(resolver.query(Uri.parse(uri), projection, selection, selectionArgs, sortOrder));
+    public Cursor query(@NonNull String uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    {
+        android.database.Cursor c = resolver.query(Uri.parse(uri), projection, selection, selectionArgs, sortOrder);
+        return (c != null ? AndroidCursor.wrap(c) : null);
     }
 }
