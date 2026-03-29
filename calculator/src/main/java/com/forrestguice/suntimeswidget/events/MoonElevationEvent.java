@@ -69,7 +69,7 @@ public class MoonElevationEvent extends ElevationEvent
         }
     }
 
-    public static boolean isMoonElevationEvent(String eventName) {
+    public static boolean isMoonElevationEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -92,7 +92,7 @@ public class MoonElevationEvent extends ElevationEvent
     }
 
     @Nullable
-    public static MoonElevationEvent valueOf(String eventName)
+    public static MoonElevationEvent valueOf(@Nullable String eventName)
     {
         if (isMoonElevationEvent(eventName))
         {

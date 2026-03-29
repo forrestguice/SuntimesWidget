@@ -332,6 +332,7 @@ public class AlarmScheduler
         return eventTime;
     }
 
+    @Nullable
     public static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
         if (repeatingDays.isEmpty()) {
@@ -341,7 +342,10 @@ public class AlarmScheduler
 
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating + ", repeatingDays: " + repeatingDays);
         long nowMillis = now.getTimeInMillis();
-        String uri_calc = EventUri.getEventCalcUri(UriUtils.getAuthority(eventID), UriUtils.getLastPathSegment(eventID));
+
+        String authority = UriUtils.getAuthority(eventID);
+        String lastPathSegment = UriUtils.getLastPathSegment(eventID);
+        String uri_calc = ((authority != null && lastPathSegment != null) ? EventUri.getEventCalcUri(authority, lastPathSegment) : null);
 
         StringBuilder repeatingDaysString = new StringBuilder("[");
         if (repeating) {
@@ -373,18 +377,22 @@ public class AlarmScheduler
     }
 
     public static final long MAX_WAIT_MS = 990;
-    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, final String uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
+    @Nullable
+    protected static Calendar queryAddonAlarmTimeWithTimeout(@Nullable final ContentResolver resolver, @Nullable final String uri_calc, final String selection, final String[] selectionArgs, final long offset, final Calendar now, long timeoutAfter)
     {
         return ExecutorUtils.getResult(TAG, new Callable<Calendar>() {
+            @Nullable
+            @Override
             public Calendar call() {
                 return queryAddonAlarmTime(resolver, uri_calc, selection, selectionArgs, offset, now);
             }
         }, timeoutAfter);
     }
 
-    protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, String uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
+    @Nullable
+    protected static Calendar queryAddonAlarmTime(@Nullable ContentResolver resolver, @Nullable String uri_calc, String selection, String[] selectionArgs, long offset, Calendar now)
     {
-        if (resolver != null)
+        if (resolver != null && uri_calc != null)
         {
             long nowMillis = now.getTimeInMillis();
             Cursor cursor = resolver.query(uri_calc, AlarmEventContract.QUERY_EVENT_CALC_PROJECTION, selection, selectionArgs, null);

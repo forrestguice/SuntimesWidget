@@ -69,7 +69,7 @@ public class SunElevationEvent extends ElevationEvent
         }
     }
 
-    public static boolean isElevationEvent(String eventName) {
+    public static boolean isElevationEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -92,7 +92,7 @@ public class SunElevationEvent extends ElevationEvent
     }
 
     @Nullable
-    public static SunElevationEvent valueOf(String eventName)
+    public static SunElevationEvent valueOf(@Nullable String eventName)
     {
         if (isElevationEvent(eventName))
         {

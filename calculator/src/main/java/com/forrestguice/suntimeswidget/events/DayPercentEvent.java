@@ -80,7 +80,7 @@ public class DayPercentEvent extends ElevationEvent
         }
     }
 
-    public static boolean isDayPercentEvent(String eventName) {
+    public static boolean isDayPercentEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -114,7 +114,7 @@ public class DayPercentEvent extends ElevationEvent
     }
 
     @Nullable
-    public static DayPercentEvent valueOf(String eventName)
+    public static DayPercentEvent valueOf(@Nullable String eventName)
     {
         if (isDayPercentEvent(eventName))
         {

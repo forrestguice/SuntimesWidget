@@ -86,7 +86,7 @@ public class MoonIllumEvent extends BaseEvent
         }
     }
 
-    public static boolean isMoonIllumEvent(String eventName) {
+    public static boolean isMoonIllumEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -111,7 +111,7 @@ public class MoonIllumEvent extends BaseEvent
     }
 
     @Nullable
-    public static MoonIllumEvent valueOf(String eventName)
+    public static MoonIllumEvent valueOf(@Nullable String eventName)
     {
         if (isMoonIllumEvent(eventName))
         {

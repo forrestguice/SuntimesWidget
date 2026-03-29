@@ -96,7 +96,7 @@ public class ShadowLengthEvent extends ElevationEvent
         }
     }
 
-    public static boolean isShadowLengthEvent(String eventName) {
+    public static boolean isShadowLengthEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -119,7 +119,7 @@ public class ShadowLengthEvent extends ElevationEvent
     }
 
     @Nullable
-    public static ShadowLengthEvent valueOf(String eventName)
+    public static ShadowLengthEvent valueOf(@Nullable String eventName)
     {
         if (isShadowLengthEvent(eventName))
         {

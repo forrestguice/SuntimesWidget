@@ -81,7 +81,7 @@ public final class ShadowRatioEvent extends ShadowLengthEvent
         }
     }
 
-    public static boolean isShadowRatioEvent(String eventName) {
+    public static boolean isShadowRatioEvent(@Nullable String eventName) {
         return (eventName != null && (eventName.startsWith(NAME_PREFIX)));
     }
 
@@ -108,7 +108,7 @@ public final class ShadowRatioEvent extends ShadowLengthEvent
     public static final String PREFIX_RELATIVE_NOON = "X";
 
     @Nullable
-    public static ShadowRatioEvent valueOf(String eventName)
+    public static ShadowRatioEvent valueOf(@Nullable String eventName)
     {
         if (isShadowRatioEvent(eventName))
         {

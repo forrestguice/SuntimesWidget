@@ -31,8 +31,11 @@ public class EventTypeResolver
     }
 
     @Nullable
-    public static EventType resolveEventType(EventSettingsInterface settings, String eventID)
+    public static EventType resolveEventType(EventSettingsInterface settings, @Nullable String eventID)
     {
+        if (eventID == null) {
+            return null;
+        }
         if (isNumeric(eventID)) {
             return EventType.DATE;
         }
