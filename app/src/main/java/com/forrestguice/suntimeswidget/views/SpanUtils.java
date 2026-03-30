@@ -123,7 +123,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createRoundedBackgroundColorSpan(SpannableString span, String text, String toColorize,
+    public static SpannableString createRoundedBackgroundColorSpan(@Nullable SpannableString span, String text, String toColorize,
                                                                    final int textColor, final boolean boldText,
                                                                    final int backgroundColor, final float cornerRadiusPx, final float paddingPx)
     {
@@ -159,7 +159,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createBackgroundColorSpan(SpannableString span, String text, String toColorize, int color)
+    public static SpannableString createBackgroundColorSpan(@Nullable SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -173,7 +173,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color)
+    public static SpannableString createColorSpan(@Nullable SpannableString span, String text, String toColorize, int color)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -186,7 +186,7 @@ public class SpanUtils
         }
         return span;
     }
-    public static SpannableString createColorSpan(SpannableString span, String text, String toColorize, int color, boolean bold)
+    public static SpannableString createColorSpan(@Nullable SpannableString span, String text, String toColorize, int color, boolean bold)
     {
         if (bold) {
             span = createBoldSpan(span, text, toColorize);
@@ -194,7 +194,7 @@ public class SpanUtils
         return createColorSpan(span, text, toColorize, color);
     }
 
-    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline)
+    public static SpannableString createUnderlineSpan(@Nullable SpannableString span, String text, String toUnderline)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -207,7 +207,7 @@ public class SpanUtils
         }
         return span;
     }
-    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline, int color)
+    public static SpannableString createUnderlineSpan(@Nullable SpannableString span, String text, String toUnderline, int color)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -225,7 +225,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)
+    public static SpannableString createBoldSpan(@Nullable SpannableString span, String text, String toBold)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -239,7 +239,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createItalicSpan(SpannableString span, String text, String toBold)
+    public static SpannableString createItalicSpan(@Nullable SpannableString span, String text, String toBold)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -253,12 +253,12 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createBoldColorSpan(SpannableString span, String text, String toBold, int color)
+    public static SpannableString createBoldColorSpan(@Nullable SpannableString span, String text, String toBold, int color)
     {
         return createColorSpan(createBoldSpan(span, text, toBold), text, toBold, color);
     }
 
-    public static SpannableString createRelativeSpan(SpannableString span, String text, String toRelative, float relativeSize)
+    public static SpannableString createRelativeSpan(@Nullable SpannableString span, String text, String toRelative, float relativeSize)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -272,7 +272,7 @@ public class SpanUtils
         return span;
     }
 
-    public static SpannableString createAbsoluteSpan(SpannableString span, String text, String toAbsolute, int pointSizePixels)
+    public static SpannableString createAbsoluteSpan(@Nullable SpannableString span, String text, String toAbsolute, int pointSizePixels)
     {
         if (span == null) {
             span = new SpannableString(text);
@@ -290,7 +290,7 @@ public class SpanUtils
      * TypefaceSpan
      */
 
-    public static SpannableString createTypefaceSpan(SpannableString span, String text, String toTypeface, String typeface)
+    public static SpannableString createTypefaceSpan(@Nullable SpannableString span, String text, String toTypeface, String typeface)
     {
         if (span == null) {
             span = new SpannableString(text);

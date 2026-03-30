@@ -16,13 +16,17 @@
 
 package com.forrestguice.util;
 
+import com.forrestguice.annotation.Nullable;
+
 /**
  * Container to ease passing around a tuple of two objects. This object provides a sensible
  * implementation of equals(), returning true if equals() is true on each of the contained
  * objects.
  */
 public class Pair<F, S> {
+    @Nullable
     public final F first;
+    @Nullable
     public final S second;
 
     /**
@@ -31,7 +35,7 @@ public class Pair<F, S> {
      * @param first the first object in the Pair
      * @param second the second object in the pair
      */
-    public Pair(F first, S second) {
+    public Pair(@Nullable F first, @Nullable S second) {
         this.first = first;
         this.second = second;
     }
@@ -53,7 +57,7 @@ public class Pair<F, S> {
         return equals(p.first, first) && equals(p.second, second);
     }
 
-    protected boolean equals(Object o1, Object o2)
+    protected boolean equals(@Nullable Object o1, @Nullable Object o2)
     {
         if (o1 != null) {
             return o1.equals(o2);

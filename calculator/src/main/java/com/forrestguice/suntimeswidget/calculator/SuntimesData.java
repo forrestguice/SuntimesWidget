@@ -124,6 +124,7 @@ public class SuntimesData
      */
     @Nullable
     protected SuntimesCalculator calculator = null;
+    @Nullable
     public SuntimesCalculator calculator()
     {
         return calculator;
@@ -211,6 +212,10 @@ public class SuntimesData
 
         // from general settings
         SuntimesDataSettings settings = getDataSettings(context);
+        if (settings == null) {
+            throw new NullPointerException("SuntimesData: context is null!");
+        }
+
         calculatorMode = settings.loadCalculatorModePref(appWidgetId, calculatorName);
 
         // from location settings
@@ -241,8 +246,14 @@ public class SuntimesData
         }
     }
 
-    public void initTimezone(SuntimesDataSettings settings)
+    public void initTimezone(@Nullable SuntimesDataSettings settings)
     {
+        if (settings == null) {
+            timezone = TimeZone.getDefault();
+            timezoneMode = TimezoneMode.CURRENT_TIMEZONE;
+            return;
+        }
+
         int widgetID = appWidgetID;
         if (appWidgetID != 0 && settings.loadTimeZoneFromAppPref(appWidgetID))
         {
@@ -296,6 +307,7 @@ public class SuntimesData
         settingsFactory = value;
     }
 
+    @Nullable
     public SuntimesDataSettings getDataSettings(Object object)
     {
         if (settingsFactory != null) {
@@ -306,7 +318,7 @@ public class SuntimesData
         }
     }
 
-    public void setCalculator(SuntimesCalculator calculator, SuntimesCalculatorDescriptor descriptor)
+    public void setCalculator(@Nullable SuntimesCalculator calculator, SuntimesCalculatorDescriptor descriptor)
     {
         this.calculator = calculator;
         this.calculatorMode = descriptor;
@@ -342,6 +354,7 @@ public class SuntimesData
     /**
      * @return the start of today (@see calendar()), at 0h 0m 0s
      */
+    @Nullable
     public Calendar midnight()
     {
         Calendar midnight = null;

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator.settings.display;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.Resources;
@@ -117,15 +118,15 @@ public enum MoonPhaseDisplay
         viewResource = resID;
     }
 
-    public static CharSequence getMoonPhaseLabel(SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
+    public static CharSequence getMoonPhaseLabel(@Nullable SuntimesCalculator calculator, SuntimesCalculator.MoonPhase majorPhase, @Nullable Calendar phaseDate)
     {
         if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
         {
-            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
-            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
+            SuntimesCalculator.MoonPosition phasePosition = (calculator != null && phaseDate != null ? calculator.getMoonPosition(phaseDate) : null);
+            if (phasePosition != null && SuntimesMoonData.isSuperMoon(phasePosition)) {
                 return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? strSuperNew : strSuperFull;
 
-            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
+            } else if (phasePosition != null && SuntimesMoonData.isMicroMoon(phasePosition)) {
                 return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? strMicroNew : strMicroFull;
 
             } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();

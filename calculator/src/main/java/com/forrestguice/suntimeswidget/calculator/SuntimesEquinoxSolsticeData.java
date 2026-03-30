@@ -86,13 +86,14 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
         SuntimesDataSettings settings = getDataSettings(context);
-        timeMode = settings.loadTimeMode2Pref(appWidgetId);
-        localizeHemisphere = settings.loadLocalizeHemispherePref(appWidgetId);
+        timeMode = (settings != null ? settings.loadTimeMode2Pref(appWidgetId) : SolsticeEquinoxMode.EQUINOX_SPRING);
+        localizeHemisphere = (settings != null && settings.loadLocalizeHemispherePref(appWidgetId));
     }
 
     /**
      * result: eventCalendarUpcoming
      */
+    @Nullable
     public Calendar eventCalendarUpcoming(Calendar now) {
         Calendar event = eventCalendarThisYear();
         if (now.after(event)) {
@@ -100,6 +101,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         }
         return event;
     }
+    @Nullable
     public Calendar eventCalendarRecent(Calendar now) {
         Calendar event = eventCalendarNextYear();
         if (!now.after(event)) {
@@ -108,6 +110,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         return event;
     }
 
+    @Nullable
     public Calendar eventCalendarClosest(Calendar now)
     {
         long timeDeltaMin = Long.MAX_VALUE;
@@ -142,6 +145,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      */
     @Nullable
     private Calendar eventCalendarThisYear;
+    @Nullable
     public Calendar eventCalendarThisYear() {
         return eventCalendarThisYear;
     }
@@ -151,6 +155,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      */
     @Nullable
     private Calendar eventCalendarLastYear;
+    @Nullable
     public Calendar eventCalendarLastYear() {
         return eventCalendarLastYear;
     }
@@ -160,6 +165,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
      */
     @Nullable
     private Calendar eventCalendarNextYear;
+    @Nullable
     public Calendar eventCalendarNextYear() {
         return eventCalendarNextYear;
     }

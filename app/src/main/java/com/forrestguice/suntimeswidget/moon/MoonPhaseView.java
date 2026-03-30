@@ -67,6 +67,7 @@ public class MoonPhaseView extends LinearLayout
     protected LinearLayout content;
     protected TextView phaseText, illumText, azimuthText, elevationText;
 
+    @Nullable
     protected SuntimesMoonData data = null;  // cached
 
     public MoonPhaseView(Context context)
@@ -98,7 +99,7 @@ public class MoonPhaseView extends LinearLayout
         return R.layout.layout_view_moonphase;
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         themeViews(context);
@@ -177,7 +178,7 @@ public class MoonPhaseView extends LinearLayout
         themeIcons(context, theme);
     }
 
-    private void themeIcons(Context context, SuntimesTheme theme)
+    private void themeIcons(Context context, @Nullable SuntimesTheme theme)
     {
         int[] viewID = getIconViewIDs();
         Bitmap[] bitmaps = getThemedBitmaps(context, theme);
@@ -239,10 +240,10 @@ public class MoonPhaseView extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
-    public void updateViews(Context context, SuntimesMoonData data) {
+    public void updateViews(Context context, @Nullable SuntimesMoonData data) {
         updateViews(context, data, null);
     }
-    public void updateViews(Context context, SuntimesMoonData data, @Nullable Calendar dateTime)
+    public void updateViews(Context context, @Nullable SuntimesMoonData data, @Nullable Calendar dateTime)
     {
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);

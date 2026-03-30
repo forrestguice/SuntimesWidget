@@ -356,8 +356,12 @@ public class SuntimesRiseSetData extends SuntimesData
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
         SuntimesDataSettings settings = getDataSettings(context);
-        setDataMode(settings.loadTimeModePref(appWidgetId));
-        this.compareMode = settings.loadCompareModePref(appWidgetId);
+        if (settings != null) {
+            setDataMode(settings.loadTimeModePref(appWidgetId));
+            this.compareMode = settings.loadCompareModePref(appWidgetId);
+        } else {
+            Log.w("SuntimesData", "null context!");
+        }
     }
 
     public boolean isDay()
@@ -394,7 +398,6 @@ public class SuntimesRiseSetData extends SuntimesData
         if (calculator == null) {
             throw new IllegalStateException("calculator is null after initCalculator() was called!");
         }
-
         initTimezone(getDataSettings(context));
 
         todaysCalendar = Calendar.getInstance(timezone);

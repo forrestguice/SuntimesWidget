@@ -185,7 +185,9 @@ public class SuntimesMoonData extends SuntimesMoonData0
     public Calendar[] getRiseSetEvents()
     {
         Calendar midnight = midnight();
-        midnight.add(Calendar.DAY_OF_MONTH, 1);
+        if (midnight != null) {
+            midnight.add(Calendar.DAY_OF_MONTH, 1);
+        }
         return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
     }
@@ -306,19 +308,21 @@ public class SuntimesMoonData extends SuntimesMoonData0
         }
         moonPhaseToday = findPhaseOf(after, true);
 
-        Calendar midnight1 = (Calendar)after.clone();
-        midnight1.add(Calendar.DAY_OF_MONTH, 1);
+        Calendar midnight1 = (after != null ? (Calendar)after.clone() : null);
+        if (midnight1 != null) {
+            midnight1.add(Calendar.DAY_OF_MONTH, 1);
+        }
         moonPhaseTomorrow = findPhaseOf(midnight1);
     }
 
-    private double getMoonIllumination(Calendar lunarNoon, Calendar today)
+    private double getMoonIllumination(@Nullable Calendar lunarNoon, @Nullable Calendar today)
     {
         if (calculator != null)
         {
             if (lunarNoon != null) {
                 return calculator.getMoonIlluminationForDate(lunarNoon);
             }
-            Calendar solarNoon = calculator.getSolarNoonCalendarForDate(today);
+            Calendar solarNoon = (today != null ? calculator.getSolarNoonCalendarForDate(today) : null);
             if (solarNoon != null) {
                 return calculator.getMoonIlluminationForDate(solarNoon);
             }
@@ -412,7 +416,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * @param updateNext sideeffect; cache next major phase in results (@see getMoonPhaseNext)
      * @return a MoonPhaseDisplay enum
      */
-    protected MoonPhaseDisplay findPhaseOf(Calendar calendar, boolean updateNext)
+    protected MoonPhaseDisplay findPhaseOf(@Nullable Calendar calendar, boolean updateNext)
     {
         SuntimesCalculator.MoonPhase nextPhase = nextPhase(calendar);
         if (updateNext) {

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
@@ -87,6 +88,7 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticesEquinoxes = new SuntimesEquinoxSolsticeData[] { dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
     }
 
+    @Nullable
     public SuntimesCalculator calculator() {
         return dataEquinoxSpring.calculator();
     }
@@ -107,18 +109,22 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.calculate(context);
     }
 
+    @Nullable
     public SuntimesEquinoxSolsticeData findSoonest(Calendar now) {
         return findClosest(now, false, true);
     }
 
+    @Nullable
     public SuntimesEquinoxSolsticeData findClosest(Calendar now) {
         return findClosest(now, false, false);
     }
 
+    @Nullable
     public SuntimesEquinoxSolsticeData findRecent(Calendar now) {
         return findClosest(now, true, false);
     }
 
+    @Nullable
     protected SuntimesEquinoxSolsticeData findClosest(Calendar now, boolean recent, boolean upcoming)
     {
         long timeDeltaMin = Long.MAX_VALUE;
@@ -178,8 +184,9 @@ public class SuntimesEquinoxSolsticeDataset
         }
     }
 
+    @Nullable
     public Calendar todayIs() {
-        return dataEquinoxSpring.todayIs();
+        return (dataEquinoxSpring != null ? dataEquinoxSpring.todayIs() : null);
     }
 
     public boolean todayIsNotToday() {

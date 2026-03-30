@@ -49,7 +49,7 @@ public class TimeZones
         return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID);
     }
 
-    public static TimeZone apparentSolarTime(Location location, SuntimesCalculator calculator) {
+    public static TimeZone apparentSolarTime(Location location, @Nullable SuntimesCalculator calculator) {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID, calculator);
     }
 
@@ -173,7 +173,7 @@ public class TimeZones
             return getRawOffset() + eotOffset;
         }
 
-        public static int equationOfTimeOffset(long date, SuntimesCalculator calculator)
+        public static int equationOfTimeOffset(long date, @Nullable SuntimesCalculator calculator)
         {
             if (calculator != null)
             {

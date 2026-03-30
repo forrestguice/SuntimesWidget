@@ -173,7 +173,9 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         System.arraycopy(sunset, 0, retValue, sunrise.length, sunset.length);
 
         Calendar midnight = midnight();
-        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        if (midnight != null) {
+            midnight.add(Calendar.DAY_OF_MONTH, 1);
+        }
         retValue[retValue.length-1] = midnight;
 
         return retValue;
@@ -198,7 +200,6 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         if (calculator == null) {
             throw new IllegalStateException("calculator is null after initCalculator() was called!");
         }
-
         initTimezone(getDataSettings(context));
 
         for (int i=0; i<calendar.length; i++)
@@ -222,13 +223,13 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         switch (compareMode)
         {
             case YESTERDAY:
-                dayDeltaPrefix = r.string_delta_day_yesterday();
+                dayDeltaPrefix = (r != null ? r.string_delta_day_yesterday() : 0);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, -1);
                 break;
 
             case TOMORROW:
             default:
-                dayDeltaPrefix = r.string_delta_day_tomorrow();
+                dayDeltaPrefix = (r != null ? r.string_delta_day_tomorrow() : 0);
                 otherCalendar.add(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
@@ -250,9 +251,10 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
 
             if (relativeShadowRatio != null)
             {
-                double noonShadow = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(calendar[i]));
-                sunrise[i] = calculator.getTimeOfShadowBeforeNoon(calendar[i], 1, relativeShadowRatio + noonShadow);
-                sunset[i] = calculator.getTimeOfShadowAfterNoon(calendar[i], 1, relativeShadowRatio + noonShadow);
+                Calendar noon = calculator.getSolarNoonCalendarForDate(calendar[i]);
+                Double noonShadow = (noon != null ? calculator.getShadowLength(1, noon) : null);
+                sunrise[i] = (noonShadow != null ? calculator.getTimeOfShadowBeforeNoon(calendar[i], 1, relativeShadowRatio + noonShadow) : null);
+                sunset[i] = (noonShadow != null ? calculator.getTimeOfShadowAfterNoon(calendar[i], 1, relativeShadowRatio + noonShadow) : null);
                 addOffset(i, offset);
                 continue;
             }

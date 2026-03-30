@@ -107,7 +107,7 @@ public class MoonRiseSetView extends LinearLayout
 
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         initColors(context);
@@ -201,7 +201,7 @@ public class MoonRiseSetView extends LinearLayout
         }
     }
 
-    public void updateViews(Context context, SuntimesMoonData data)
+    public void updateViews(Context context, @Nullable SuntimesMoonData data)
     {
         if (isInEditMode())
         {
@@ -301,7 +301,7 @@ public class MoonRiseSetView extends LinearLayout
         return midday;
     }
 
-    private void reorderLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    private void reorderLayout( @Nullable Calendar rising0, @Nullable Calendar setting0, @Nullable Calendar rising1, @Nullable Calendar setting1 )
     {
         clearLayout();
 
@@ -314,7 +314,7 @@ public class MoonRiseSetView extends LinearLayout
     }
 
     @SuppressWarnings("ConstantConditions")
-    private MoonRiseSetFieldLayoutSet determineLayout(Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    private MoonRiseSetFieldLayoutSet determineLayout(@Nullable Calendar rising0, @Nullable Calendar setting0, @Nullable Calendar rising1, @Nullable Calendar setting1)
     {
         if (tomorrowMode)
         {
@@ -494,9 +494,9 @@ public class MoonRiseSetView extends LinearLayout
             timeView.setText(timeText);
         }
 
-        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        public void updateField(Context context, @Nullable Calendar dateTime, boolean showSeconds)
         {
-            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds);
+            TimeDisplayText text = (dateTime != null ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds) : new TimeDisplayText());
             timeView.setText(text.toString());
         }
 
@@ -505,7 +505,7 @@ public class MoonRiseSetView extends LinearLayout
             return timeView;
         }
 
-        public void updateField(Context context, SuntimesCalculator.Position position)
+        public void updateField(Context context, @Nullable SuntimesCalculator.Position position)
         {
             if (position == null)
             {

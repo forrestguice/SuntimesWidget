@@ -428,7 +428,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         toggleNextPrevButtons(position);
     }
 
-    protected void updateLightmapColors(Context context, ColorValues values)
+    protected void updateLightmapColors(Context context, @Nullable ColorValues values)
     {
         if (values != null) {
             lightmap.getColors().values = new LightMapColorValues(values);
@@ -638,7 +638,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
     }
 
-    public static void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
+    public static void styleAzimuthText(TextView view, double azimuth, @Nullable Integer color, int places)
     {
         TimeDisplayText azimuthText = angle_utils.formatAsDirection2(azimuth, places, false);
         String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
@@ -850,7 +850,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        public static void highlight(TextView textView)
+        public static void highlight(@Nullable TextView textView)
         {
             if (textView != null && textView.getVisibility() == View.VISIBLE) {
                 textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
@@ -858,7 +858,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        public static void resetHighlight(TextView textView)
+        public static void resetHighlight(@Nullable TextView textView)
         {
             if (textView != null && textView.getVisibility() == View.VISIBLE) {
                 textView.setTypeface(Typeface.create(textView.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
@@ -938,6 +938,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return rows;
         }
 
+        @Nullable
         @SuppressLint("ResourceType")
         public TimeFieldRow addRow(Context context, EventAlias event)
         {

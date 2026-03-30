@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.util.Pair;
 
@@ -108,7 +109,9 @@ public class SuntimesMoonData0 extends SuntimesData
     public void calculate(Object context)
     {
         initCalculator();
-        initTimezone(getDataSettings(context));
+
+        SuntimesDataSettings settings = getDataSettings(context);
+        initTimezone(settings);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
