@@ -197,6 +197,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      * @param rowID the item's rowID
      * @return an AlarmClockItem or null if not found
      */
+    @Nullable
     public AlarmClockItem findItem( Long rowID )
     {
         if (rowID != null) {

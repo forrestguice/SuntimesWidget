@@ -483,6 +483,7 @@ public class EquinoxView extends LinearLayout
         card_adapter.notifyDataSetChanged();
     }
 
+    @Nullable
     public static EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxNote> notes)
     {
         if (notes == null || now == null) {

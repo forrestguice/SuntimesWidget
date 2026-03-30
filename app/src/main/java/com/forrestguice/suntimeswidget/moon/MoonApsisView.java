@@ -536,6 +536,7 @@ public class MoonApsisView extends LinearLayout
             card_adapter.notifyDataSetChanged();
         }
     }
+    @Nullable
     public ColorValues getColors() {
         if (card_adapter != null) {
             return card_adapter.colors;

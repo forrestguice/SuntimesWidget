@@ -67,6 +67,7 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
                 : (colors != null ? colors.getColorKeys() : new String[0]);
     }
 
+    @Nullable
     public String getKey(int position)
     {
         String[] keys = getKeys();

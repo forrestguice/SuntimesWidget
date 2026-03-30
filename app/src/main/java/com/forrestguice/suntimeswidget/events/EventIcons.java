@@ -118,6 +118,7 @@ public class EventIcons
     }
 
     @SuppressLint("ResourceType")
+    @Nullable
     public static Integer getIconTint(@Nullable Context context, SolarEvents event, ColorValues colors)
     {
         switch (event)
@@ -144,6 +145,7 @@ public class EventIcons
             default: return null;
         }
     }
+    @Nullable
     public static Integer getIconTint(@Nullable Context context, String tag) {
         if (tag != null)
         {

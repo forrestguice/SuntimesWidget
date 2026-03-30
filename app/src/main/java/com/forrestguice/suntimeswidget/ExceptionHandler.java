@@ -24,6 +24,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.support.app.NotificationManagerCompat;
 
@@ -115,6 +116,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             return context.getString(R.string.notificationChannel_misc_title);
         }
 
+        @Nullable
         @Override
         protected Intent getCrashReportActivityIntent(Context context, String report)
         {

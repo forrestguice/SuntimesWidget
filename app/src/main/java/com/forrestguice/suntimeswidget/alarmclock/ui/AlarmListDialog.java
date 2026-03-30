@@ -1063,6 +1063,7 @@ public class AlarmListDialog extends DialogBase
             }
         }
 
+        @Nullable
         public AlarmClockItem getItem(long rowID)
         {
             for (int i=0; i<items.size(); i++)

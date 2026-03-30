@@ -867,9 +867,11 @@ public class AppSettings
         } else return false;
     }
 
+    @Nullable
     public static String getThemeOverride(Context context, String appTheme) {
         return getThemeOverride(context, loadThemeInfo(appTheme));
     }
+    @Nullable
     public static String getThemeOverride(Context context, AppThemeInfo themeInfo)
     {
         int nightMode = themeInfo.getDefaultNightMode();

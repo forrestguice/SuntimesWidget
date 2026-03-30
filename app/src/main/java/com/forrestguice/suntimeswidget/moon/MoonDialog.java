@@ -922,6 +922,7 @@ public class MoonDialog extends BottomSheetDialogBase
         }
     }
 
+    @Nullable
     protected View createMediaPopupView(@NonNull final Context context)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);

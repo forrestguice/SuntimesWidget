@@ -1652,6 +1652,7 @@ public class SuntimesUtils
         }
     }
 
+    @Nullable
     public static Drawable tintDrawable(GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (drawable != null)
@@ -1662,6 +1663,7 @@ public class SuntimesUtils
         return drawable;
     }
 
+    @Nullable
     public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (drawable != null)

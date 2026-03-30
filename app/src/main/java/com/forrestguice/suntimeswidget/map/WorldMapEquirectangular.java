@@ -133,6 +133,7 @@ public class WorldMapEquirectangular extends WorldMapProjection
         paintInitialized = true;
     }
 
+    @Nullable
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {

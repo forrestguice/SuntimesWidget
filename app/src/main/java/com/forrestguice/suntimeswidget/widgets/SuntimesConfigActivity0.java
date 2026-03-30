@@ -3937,14 +3937,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return view;
         }
 
+        @Nullable
         protected String getNameForMode(T mode) {
             return null;
         }
 
+        @Nullable
         protected String getSummaryForMode(T mode) {
             return null;
         }
 
+        @Nullable
         protected String getLabelForMode(T mode) {
             return mode.toString();
         }

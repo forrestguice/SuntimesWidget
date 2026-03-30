@@ -131,6 +131,7 @@ public class WidgetTimezones
             }
         } else return R.id.tz_item_utc;
     }
+    @Nullable
     public static String timeZoneForMenuItem(int itemId)
     {
         if (itemId == R.id.tz_item_apparentsolar) {
@@ -655,6 +656,7 @@ public class WidgetTimezones
             this.sortBy = sort;
         }
 
+        @Nullable
         @Override
         public TimeZoneItemAdapter call() throws Exception
         {

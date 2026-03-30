@@ -1573,6 +1573,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             seekAltitudePopup.dismiss();
         }
     }
+    @Nullable
     protected View createSeekAltitudePopupView(@NonNull final Context context)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -1909,6 +1910,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
     }
 
+    @Nullable
     protected View createShadowObjHeightPopupView(@NonNull final Context context)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -2109,6 +2111,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             seekShadowPopup.dismiss();
         }
     }
+    @Nullable
     protected View createShadowSeekPopupView(@NonNull final Context context)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -2691,6 +2694,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     protected String getSelectedTZID(Context context) {
         return WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, TimeZones.LocalMeanTime.TIMEZONEID);
     }
+    @Nullable
     protected TimeZone getSelectedTZ(Context context, @Nullable SuntimesRiseSetDataset data)
     {
         if (data == null) {

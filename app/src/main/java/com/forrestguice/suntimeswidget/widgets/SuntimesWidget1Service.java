@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -168,6 +169,7 @@ class SuntimesWidget1RemoteViewsFactory implements RemoteViewsService.RemoteView
         return views;
     }
 
+    @Nullable
     @Override
     public RemoteViews getLoadingView()
     {

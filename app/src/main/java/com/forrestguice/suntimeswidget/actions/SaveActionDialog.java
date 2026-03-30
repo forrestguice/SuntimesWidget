@@ -41,6 +41,7 @@ import java.util.Set;
  */
 public class SaveActionDialog extends EditActionDialog
 {
+    @Nullable
     @Override
     public String getIntentTitle()
     {
@@ -52,6 +53,7 @@ public class SaveActionDialog extends EditActionDialog
         intentTitle = value;
     }
 
+    @Nullable
     public String getIntentDesc() {
         if (edit.edit_desc != null) {
             return edit.edit_desc.getText().toString();

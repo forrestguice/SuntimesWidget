@@ -245,6 +245,7 @@ public class WidgetThemes
         return theme;
     }
 
+    @Nullable
     public static ThemeDescriptor loadDescriptor(Context context, String themeName)
     {
         ThemeDescriptor desc = new ThemeDescriptor(themeName, context, PREFS_THEMES);
@@ -403,6 +404,7 @@ public class WidgetThemes
             else return themes.length;
         }
 
+        @Nullable
         @Override
         public Object getItem(int position)
         {

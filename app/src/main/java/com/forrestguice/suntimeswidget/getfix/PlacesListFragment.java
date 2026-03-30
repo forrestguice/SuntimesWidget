@@ -1376,6 +1376,7 @@ public class PlacesListFragment extends DialogBase
             }
         }
 
+        @Nullable
         public PlaceItem getItem(long rowID)
         {
             int position = indexOf(rowID, items0);

@@ -166,6 +166,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new Pair<>(sun, moon);
     }
 
+    @Nullable
     public Long findDateForPosition(Context context, int position)
     {
         if (position < 0) {

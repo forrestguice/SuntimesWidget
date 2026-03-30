@@ -272,6 +272,7 @@ public class WorldMapWidgetSettings
             EQUIRECTANGULAR_BLUEMARBLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
         }
 
+        @Nullable
         public static WorldMapWidgetMode findMode(int layoutID)
         {
             for (WorldMapWidgetMode mode : values()) {

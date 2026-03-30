@@ -95,6 +95,7 @@ public class WorldMapEquiazimuthal extends WorldMapProjection
      * @param y image coordinate y
      * @return [longitude, latitude]
      */
+    @Nullable
     @Override
     public double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h) {
         return null;    // TODO: implement for clickable projection
@@ -247,6 +248,7 @@ public class WorldMapEquiazimuthal extends WorldMapProjection
         paintInitialized = true;
     }
 
+    @Nullable
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {

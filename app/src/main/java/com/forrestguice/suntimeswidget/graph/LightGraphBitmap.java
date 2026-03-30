@@ -765,6 +765,7 @@ public class LightGraphBitmap
         c.drawRect(0, 0, w, h, p);
     }
 
+    @Nullable
     protected Path createHorizontalPath(@Nullable Calendar calendar, Canvas c)
     {
         if (calendar != null) {

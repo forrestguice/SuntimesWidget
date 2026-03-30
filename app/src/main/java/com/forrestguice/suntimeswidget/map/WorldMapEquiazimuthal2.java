@@ -213,6 +213,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 
     private final Rect pixelDst = new Rect();
 
+    @Nullable
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {

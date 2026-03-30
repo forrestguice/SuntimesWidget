@@ -492,6 +492,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     protected void importFromTheme(Context context) {
         startActivityForResult_importTheme.launch(pickThemeIntent());
     }
+    @Nullable
     protected Intent pickThemeIntent() {
         return null;
     }

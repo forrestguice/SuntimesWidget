@@ -236,6 +236,7 @@ public class EventListHelper
         }
     }
 
+    @Nullable
     public String getEventID()
     {
         if (list != null) {
@@ -244,6 +245,7 @@ public class EventListHelper
         } else return null;
     }
 
+    @Nullable
     public String getAliasUri()
     {
         if (list != null)
@@ -258,6 +260,7 @@ public class EventListHelper
         } else return null;
     }
 
+    @Nullable
     public String getLabel()
     {
         if (list != null) {
@@ -1086,6 +1089,7 @@ public class EventListHelper
             return selectedChild;
         }
 
+        @Nullable
         public EventAlias findItemByID(String eventID)
         {
             for (int i=0; i<objects.size(); i++) {
@@ -1150,6 +1154,7 @@ public class EventListHelper
             return -1;
         }
 
+        @Nullable
         public EventAlias findItemByID(String eventID)
         {
             for (int i=0; i<getCount(); i++) {

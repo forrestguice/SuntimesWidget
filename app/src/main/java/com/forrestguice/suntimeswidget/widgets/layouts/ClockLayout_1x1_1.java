@@ -34,6 +34,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -188,6 +189,7 @@ public class ClockLayout_1x1_1 extends ClockLayout_1x1_0
         private Paint pDebug;
         private TextPaint p;
 
+        @Nullable
         public Bitmap makeClockBitmap(Context context, int w, int h, String text, ClockFaceOptions options)
         {
             if (context == null || w <= 0 || h <= 0) {

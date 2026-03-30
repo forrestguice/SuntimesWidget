@@ -55,6 +55,7 @@ public class LineGraphBitmap
     @Nullable
     private SuntimesRiseSetDataset t_data = null;
 
+    @Nullable
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LineGraphOptions options )
     {
         long bench_start = System.nanoTime();

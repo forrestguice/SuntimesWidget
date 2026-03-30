@@ -387,6 +387,7 @@ public class LightMapView extends ImageView
         colors.offsetMinutes = (offsetMillis / 1000 / 60);
         updateViews(true);
     }
+    @Nullable
     public Long seekAltitude( Context context, @Nullable Integer degrees, boolean rising )
     {
         if (data != null && degrees != null)
@@ -399,6 +400,7 @@ public class LightMapView extends ImageView
         }
         return null;
     }
+    @Nullable
     public Long findAltitude( Context context, @Nullable Integer degrees, boolean rising )
     {
         if (data != null && degrees != null)
@@ -411,6 +413,7 @@ public class LightMapView extends ImageView
         } else return null;
     }
 
+    @Nullable
     public Long findShadow( Context context, @Nullable Double shadowLengthMeters, @Nullable Double objHeightMeters, boolean rising )
     {
         if (data != null && shadowLengthMeters != null && objHeightMeters != null)
@@ -442,6 +445,7 @@ public class LightMapView extends ImageView
         mapListener = listener;
     }
 
+    @Nullable
     public static CharSequence getLabel(Context context, SuntimesRiseSetDataset data)
     {
         if (data.dayLength() <= 0) {

@@ -174,6 +174,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
         updateControls();
     }
+    @Nullable
     public String getSelectedID() {
         if (selector != null) {
             ColorValuesItem item = (ColorValuesItem) selector.getSelectedItem();

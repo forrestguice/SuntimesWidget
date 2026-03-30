@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.util.concurrent.ProgressCallable;
@@ -49,6 +50,7 @@ public class WorldMapTask extends ProgressCallable<Bitmap, Bitmap>
     /**
      * @return a bitmap, or null params are invalid
      */
+    @Nullable
     @Override
     public Bitmap call() throws Exception
     {

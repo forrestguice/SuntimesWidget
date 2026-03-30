@@ -185,7 +185,6 @@ public class DateDialog extends TimeDialogBase
             public Integer getDay() {
                 return getSelectedDay();
             }
-
             @Override
             public Integer getHour() {
                 return null;

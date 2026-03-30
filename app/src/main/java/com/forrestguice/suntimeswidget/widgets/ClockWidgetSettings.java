@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.ClockLayout;
@@ -243,6 +244,7 @@ public class ClockWidgetSettings
             //CLOCK1.setDisplayString(context.getString(R.string.configAction_clock));
         }
 
+        @Nullable
         public static ClockWidgetSettings.WidgetModeClock1x1 findMode(int layoutID)
         {
             for (WidgetModeClock1x1 mode : values()) {

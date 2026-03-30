@@ -179,6 +179,7 @@ public class AndroidSharedPreferences implements SharedPreferences
         }
     }
 
+    @Nullable
     public static String stringSetToString(@Nullable Set<String> values)
     {
         if (values != null) {

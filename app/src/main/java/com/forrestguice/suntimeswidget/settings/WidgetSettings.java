@@ -1755,10 +1755,12 @@ public class WidgetSettings
         return PREF_DEF_GENERAL_CALCULATOR;
     }
 
+    @Nullable
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId)
     {
         return loadCalculatorModePref(context, appWidgetId, "");
     }
+    @Nullable
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);

@@ -307,7 +307,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
      * @return the "best fix" we were able to obtain (potentially null)
      */
     @Override
-
+    @Nullable
     public Location call() throws Exception
     {
         ExecutorUtils.getHandler().post(new Runnable()

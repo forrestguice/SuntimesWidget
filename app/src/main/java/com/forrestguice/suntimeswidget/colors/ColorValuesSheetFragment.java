@@ -236,6 +236,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         return suggestion;
     }
 
+    @Nullable
     public ColorValues getColors() {
         if (editDialog != null) {
             return editDialog.getColorValues();
@@ -483,6 +484,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         return getArgs().getBoolean(ColorValuesSelectFragment.ARG_SHOW_MENU, ColorValuesSelectFragment.DEF_SHOW_MENU);
     }
 
+    @Nullable
     public String getSelectedID() {
         return (listDialog != null ? listDialog.getSelectedID() : null);
     }

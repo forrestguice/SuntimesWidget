@@ -477,6 +477,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         } else dismissAlarm(context);
     }
 
+    @Nullable
     @Override
     public Uri getAlarmUri() {
         return (alarm != null ? alarm.getUri() : null);
@@ -527,6 +528,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         getWindow().setAttributes(layoutParams);
     }
 
+    @Nullable
     private ValueAnimator animateBrightness(float downToValue, @SuppressWarnings("SameParameterValue") int durationMillis)
     {
         if (Build.VERSION.SDK_INT < 12) {
@@ -1158,6 +1160,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }, delay);
     }
 
+    @Nullable
     public AlarmDismissInterface.AlarmDismissChallenge getDismissChallenge(Context context, AlarmSettings.DismissChallenge setting)
     {
         switch (setting) {
@@ -1257,6 +1260,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             }
         }
 
+        @Nullable
         @Override
         public Dialog createDismissChallengeDialog(Context context, View view, AlarmDismissInterface parent) {
             return null;
@@ -1400,6 +1404,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             };
         }
 
+        @Nullable
         protected String sanitizeInput(@Nullable String text)
         {
             if (text != null)

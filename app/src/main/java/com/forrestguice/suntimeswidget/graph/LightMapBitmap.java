@@ -48,6 +48,7 @@ public class LightMapBitmap
         return colors;
     }
 
+    @Nullable
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapOptions colors)
     {
         if (w <= 0 || h <= 0)

@@ -125,6 +125,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         return v;
     }
 
+    @Nullable
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {

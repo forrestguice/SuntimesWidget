@@ -210,12 +210,14 @@ public class WidgetSettingsMetadata
             return maxDimens;
         }
 
+        @Nullable
         public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values)
         {
             Long values_id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
             return WidgetMetadata.getMetaDataFromValues(values, values_id);
         }
 
+        @Nullable
         public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
         {
             if (appWidgetId != null)

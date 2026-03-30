@@ -1,11 +1,13 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettingsFactory;
 import com.forrestguice.util.Log;
 
 public class AndroidSuntimesDataSettingsFactory implements SuntimesDataSettingsFactory
 {
+    @Nullable
     @Override
     public SuntimesDataSettings getDataSettings(Object object)
     {

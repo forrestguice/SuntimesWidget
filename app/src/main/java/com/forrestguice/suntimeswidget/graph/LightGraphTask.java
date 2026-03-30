@@ -56,6 +56,7 @@ public class LightGraphTask extends ProgressCallable<Bitmap, Bitmap>
     /**
      * @return a bitmap, or null params are invalid
      */
+    @Nullable
     @Override
     public Bitmap call() throws Exception
     {

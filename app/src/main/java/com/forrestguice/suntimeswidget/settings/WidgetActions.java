@@ -459,6 +459,7 @@ public class WidgetActions
         return (((actionId == null) || actionId.equals("0")) ? PREFS_WIDGETS : PREFS_ACTIONS);
     }
 
+    @Nullable
     public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues)    // TODO: needs test
     {
         if (Build.VERSION.SDK_INT >= 11) {
@@ -481,6 +482,7 @@ public class WidgetActions
             prefs.apply();
         }
     }
+    @Nullable
     public static String stringSetToString(@Nullable Set<String> values)
     {
         if (values != null) {

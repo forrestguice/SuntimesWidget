@@ -327,6 +327,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
         };
     }
 
+    @Nullable
     public static EquinoxDatasetViewHolder.EquinoxNote findClosestNote(Calendar now, TrackingMode mode, ArrayList<EquinoxDatasetViewHolder.EquinoxNote> notes)
     {
         if (notes == null || now == null) {
