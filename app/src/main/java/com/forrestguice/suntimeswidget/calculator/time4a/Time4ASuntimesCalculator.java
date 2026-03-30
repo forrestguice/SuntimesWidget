@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -99,6 +101,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return value;
     }
 
+    @Nullable
     @Override
     public Calendar getCivilSunriseCalendarForDate( Calendar date )
     {
@@ -107,6 +110,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(civilRise));
     }
 
+    @Nullable
     @Override
     public Calendar getNauticalSunriseCalendarForDate( Calendar date )
     {
@@ -115,6 +119,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(nauticalRise));
     }
 
+    @Nullable
     @Override
     public Calendar getAstronomicalSunriseCalendarForDate( Calendar date )
     {
@@ -123,6 +128,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(astroRise));
     }
 
+    @Nullable
     @Override
     public Calendar getOfficialSunriseCalendarForDate( Calendar date )
     {
@@ -131,6 +137,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(sunrise));
     }
 
+    @Nullable
     @Override
     public Calendar getSolarNoonCalendarForDate(Calendar date)
     {
@@ -139,6 +146,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(noon));
     }
 
+    @Nullable
     @Override
     public Calendar getSolarMidnightCalendarForDate(Calendar date)
     {
@@ -147,6 +155,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(noon));
     }
 
+    @Nullable
     @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
@@ -155,6 +164,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(civilSet));
     }
 
+    @Nullable
     @Override
     public Calendar getNauticalSunsetCalendarForDate( Calendar date )
     {
@@ -163,6 +173,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(nauticalSet));
     }
 
+    @Nullable
     @Override
     public Calendar getAstronomicalSunsetCalendarForDate( Calendar date )
     {
@@ -171,6 +182,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(astroSet));
     }
 
+    @Nullable
     @Override
     public Calendar getSunriseCalendarForDate( Calendar date, double angle )
     {
@@ -186,6 +198,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(moment);
     }
 
+    @Nullable
     @Override
     public Calendar getSunsetCalendarForDate( Calendar date, double angle )
     {
@@ -201,6 +214,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(moment);
     }
 
+    @NonNull
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
@@ -218,6 +232,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return new Calendar[] { momentToCalendar(blueMorningStart), momentToCalendar(blueMorningEnd) };
     }
 
+    @NonNull
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
@@ -235,6 +250,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return new Calendar[] { momentToCalendar(blueEveningStart), momentToCalendar(blueEveningEnd) };
     }
 
+    @Nullable
     @Override
     public Calendar getMorningGoldenHourForDate(Calendar date)
     {
@@ -250,6 +266,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(goldMorningEnd);
     }
 
+    @Nullable
     @Override
     public Calendar getEveningGoldenHourForDate(Calendar date)
     {
@@ -269,6 +286,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public static final double SUN_ALTITUDE_BLUE_HIGH = 8.0;
     public static final double SUN_ALTITUDE_BLUE_LOW = 4.0;
 
+    @Nullable
     @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
@@ -277,12 +295,14 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(sunset));
     }
 
+    @Nullable
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
         return getSpringEquinoxForYear(date);
     }
 
+    @Nullable
     @Override
     public Calendar getSpringEquinoxForYear(Calendar date)
     {
@@ -291,6 +311,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(moment);
     }
 
+    @Nullable
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
@@ -299,6 +320,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(moment);
     }
 
+    @Nullable
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
@@ -307,6 +329,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(moment);
     }
 
+    @Nullable
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
@@ -350,6 +373,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return moment.toZonalTimestamp(zonalOffset).toDate();
     }
 
+    @Nullable
     protected Calendar momentToCalendar(Moment moment)
     {
         Calendar retValue = null;
@@ -370,6 +394,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         else return season.onSouthernHemisphere();
     }
 
+    @Nullable
     @Override
     public MoonTimes getMoonTimesForDate(Calendar date)
     {
@@ -393,6 +418,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return net.time4j.calendar.astro.MoonPhase.getIllumination(moment, 1);
     }
 
+    @Nullable
     @Override
     public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
     {
@@ -412,6 +438,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         }
     }
 
+    @Nullable
     @Override
     public SunPosition getSunPosition(Calendar dateTime)
     {
@@ -426,6 +453,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return result;
     }
 
+    @Nullable
     @Override
     public MoonPosition getMoonPosition(Calendar dateTime)
     {
@@ -449,6 +477,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return position.getShadowLength(objHeight);
     }
 
+    @Nullable
     @Override
     public Calendar getTimeOfShadowBeforeNoon(Calendar date, double objHeight, double shadowLength)
     {
@@ -457,6 +486,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(localDate.get(shadow));
     }
 
+    @Nullable
     @Override
     public Calendar getTimeOfShadowAfterNoon(Calendar date, double objHeight, double shadowLength)
     {
@@ -472,6 +502,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return SolarTime.equationOfTime(moment, solarTime.getCalculator().name());
     }
 
+    @Nullable
     @Override
     public Calendar getMoonPerigeeNextDate(Calendar dateTime)
     {
@@ -480,6 +511,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return momentToCalendar(apogeeMoment);
     }
 
+    @Nullable
     @Override
     public Calendar getMoonApogeeNextDate(Calendar dateTime)
     {

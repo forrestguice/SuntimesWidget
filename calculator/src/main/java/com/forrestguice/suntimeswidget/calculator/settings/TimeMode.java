@@ -37,7 +37,7 @@ public enum TimeMode implements RiseSetDataMode
     private String longDisplayString;
     private String shortDisplayString;
 
-    private TimeMode(@NonNull String shortDisplayString, @NonNull String longDisplayString, Double angle)
+    private TimeMode(@NonNull String shortDisplayString, @NonNull String longDisplayString, @Nullable Double angle)
     {
         this.shortDisplayString = shortDisplayString;
         this.longDisplayString = longDisplayString;

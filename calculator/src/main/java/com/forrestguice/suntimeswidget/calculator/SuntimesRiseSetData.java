@@ -102,7 +102,7 @@ public class SuntimesRiseSetData extends SuntimesData
                 case SHADOWRATIO:
                     ShadowRatioEvent ratioEvent = ShadowRatioEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
                     event = ratioEvent;
-                    if (ratioEvent.isRelativeToNoon()) {
+                    if (ratioEvent != null && ratioEvent.isRelativeToNoon()) {
                         this.relativeShadowRatio = (event == null ? null : ratioEvent.getRatio());
                     } else {
                         this.angle = (event == null ? null : event.getAngle());
@@ -130,6 +130,7 @@ public class SuntimesRiseSetData extends SuntimesData
      */
     @Nullable
     protected Double relativeShadowRatio = null;
+    @Nullable
     public Double relativeShadowRatio() {
         return relativeShadowRatio;
     }
@@ -142,6 +143,7 @@ public class SuntimesRiseSetData extends SuntimesData
      */
     @Nullable
     protected Double angle = null;
+    @Nullable
     public Double angle() {
         return angle;
     }
@@ -154,6 +156,7 @@ public class SuntimesRiseSetData extends SuntimesData
      */
     @Nullable
     protected Double fraction = null;
+    @Nullable
     public Double fraction() {
         return fraction;
     }
@@ -188,11 +191,13 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunrise today
      */
+    @Nullable
     protected Calendar sunriseCalendarToday;
     public boolean hasSunriseTimeToday()
     {
         return (sunriseCalendarToday != null);
     }
+    @Nullable
     public Calendar sunriseCalendarToday()
     {
         return sunriseCalendarToday;
@@ -201,11 +206,13 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunset today
      */
+    @Nullable
     protected Calendar sunsetCalendarToday;
     public boolean hasSunsetTimeToday()
     {
         return (sunsetCalendarToday != null);
     }
+    @Nullable
     public Calendar sunsetCalendarToday()
     {
         return sunsetCalendarToday;
@@ -214,11 +221,13 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunrise other
      */
+    @Nullable
     protected Calendar sunriseCalendarOther;
     public boolean hasSunriseTimeOther()
     {
         return (sunriseCalendarOther != null);
     }
+    @Nullable
     public Calendar sunriseCalendarOther()
     {
         return sunriseCalendarOther;
@@ -227,16 +236,19 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * result: sunset other
      */
+    @Nullable
     protected Calendar sunsetCalendarOther;
     public boolean hasSunsetTimeOther()
     {
         return (sunsetCalendarOther != null);
     }
+    @Nullable
     public Calendar sunsetCalendarOther()
     {
         return sunsetCalendarOther;
     }
 
+    @Nullable
     public Calendar sunriseCalendar(int i)
     {
         if (i == 1)
@@ -244,6 +256,7 @@ public class SuntimesRiseSetData extends SuntimesData
         else return sunriseCalendarOther;
     }
 
+    @Nullable
     public Calendar sunsetCalendar(int i)
     {
         if (i == 1)
@@ -418,8 +431,10 @@ public class SuntimesRiseSetData extends SuntimesData
             sunsetCalendarOther = calculator.getSunsetCalendarForDate(otherCalendar, angle);
 
         } else if (relativeShadowRatio != null) {
-            double noonShadowToday = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(todaysCalendar));
-            double noonShadowOther = calculator.getShadowLength(1, calculator.getSolarNoonCalendarForDate(otherCalendar));
+            Calendar noonToday = calculator.getSolarNoonCalendarForDate(todaysCalendar);
+            double noonShadowToday = (noonToday != null ? calculator.getShadowLength(1, noonToday) : Double.POSITIVE_INFINITY);
+            Calendar noonOther = calculator.getSolarNoonCalendarForDate(otherCalendar);
+            double noonShadowOther = (noonOther != null ? calculator.getShadowLength(1, noonOther) : Double.POSITIVE_INFINITY);
             sunriseCalendarToday = calculator.getTimeOfShadowBeforeNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
             sunsetCalendarToday = calculator.getTimeOfShadowAfterNoon(todaysCalendar, 1, relativeShadowRatio + noonShadowToday);
             sunriseCalendarOther = calculator.getTimeOfShadowBeforeNoon(otherCalendar, 1, relativeShadowRatio + noonShadowOther);
@@ -545,7 +560,7 @@ public class SuntimesRiseSetData extends SuntimesData
      * @param sunset sunset
      * @return day length millis
      */
-    protected long determineDayLength(Calendar sunrise, Calendar sunset)
+    protected long determineDayLength(@Nullable Calendar sunrise, @Nullable Calendar sunset)
     {
         if (sunrise != null && sunset != null) {
             // average case: rises and sets

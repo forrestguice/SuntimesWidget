@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.util.Pair;
 
@@ -76,6 +77,7 @@ public class SuntimesMoonData0 extends SuntimesData
     /**
      * @return the date and position (Pair) of the upcoming lunar apogee.
      */
+    @Nullable
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
     {
         Calendar apogeeDate = (calculator != null ? calculator.getMoonApogeeNextDate(todaysCalendar) : null);
@@ -88,6 +90,7 @@ public class SuntimesMoonData0 extends SuntimesData
     /**
      * @return the date and position (Pair) of the upcoming lunar perigee.
      */
+    @Nullable
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
     {
         Calendar perigeeDate = (calculator != null ? calculator.getMoonPerigeeNextDate(todaysCalendar) : null);

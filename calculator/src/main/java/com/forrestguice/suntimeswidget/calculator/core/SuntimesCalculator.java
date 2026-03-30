@@ -18,6 +18,9 @@
 
 package com.forrestguice.suntimeswidget.calculator.core;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -86,6 +89,7 @@ public interface SuntimesCalculator
      * @return a Calendar for astronomical sunrise for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getAstronomicalSunriseCalendarForDate( Calendar date );
 
     /**
@@ -94,6 +98,7 @@ public interface SuntimesCalculator
      * @return a Calendar for nautical sunrise for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getNauticalSunriseCalendarForDate( Calendar date );
 
     /**
@@ -102,6 +107,7 @@ public interface SuntimesCalculator
      * @return a Calendar for civil sunrise for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getCivilSunriseCalendarForDate( Calendar date );
 
     /**
@@ -110,6 +116,7 @@ public interface SuntimesCalculator
      * @return a Calendar for the official sunrise for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getOfficialSunriseCalendarForDate( Calendar date );
 
     /**
@@ -118,6 +125,7 @@ public interface SuntimesCalculator
      * @return a Calendar for solar noon for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getSolarNoonCalendarForDate( Calendar date );
 
     /**
@@ -126,6 +134,7 @@ public interface SuntimesCalculator
      * @return a Calendar for solar midnight for the given date
      * @since 1.8.1 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getSolarMidnightCalendarForDate( Calendar date );
 
     /**
@@ -134,6 +143,7 @@ public interface SuntimesCalculator
      * @return a Calendar for the official sunset for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getOfficialSunsetCalendarForDate( Calendar date );
 
     /**
@@ -142,6 +152,7 @@ public interface SuntimesCalculator
      * @return a Calendar for civil sunset for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getCivilSunsetCalendarForDate( Calendar date );
 
     /**
@@ -150,6 +161,7 @@ public interface SuntimesCalculator
      * @return a Calendar for nautical sunset for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getNauticalSunsetCalendarForDate( Calendar date );
 
     /**
@@ -158,6 +170,7 @@ public interface SuntimesCalculator
      * @return a Calendar for astronomical sunset for the given date
      * @since 1.0.0 (FEATURE_RISESET)
      */
+    @Nullable
     Calendar getAstronomicalSunsetCalendarForDate( Calendar date );
 
     //
@@ -170,6 +183,7 @@ public interface SuntimesCalculator
      * @since 1.2.0 (FEATURE_SOLSTICE)
      * @deprecated since 1.5.1 (use getSpringEquinoxForYear instead).
      */
+    @Nullable
     @Deprecated
     Calendar getVernalEquinoxForYear( Calendar date );
 
@@ -178,6 +192,7 @@ public interface SuntimesCalculator
      * @return a Calendar for spring equinox (adjusted to hemisphere) for the year of the given date
      * @since 1.5.1
      */
+    @Nullable
     Calendar getSpringEquinoxForYear( Calendar date );
 
 
@@ -186,6 +201,7 @@ public interface SuntimesCalculator
      * @return a Calendar for summer solstice (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
+    @Nullable
     Calendar getSummerSolsticeForYear( Calendar date );
 
     /**
@@ -193,6 +209,7 @@ public interface SuntimesCalculator
      * @return a Calendar for autumnal equinox (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
+    @Nullable
     Calendar getAutumnalEquinoxForYear( Calendar date );
 
     /**
@@ -200,6 +217,7 @@ public interface SuntimesCalculator
      * @return a Calendar for winter soltice (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
+    @Nullable
     Calendar getWinterSolsticeForYear( Calendar date );
 
     //
@@ -212,6 +230,7 @@ public interface SuntimesCalculator
      * @return [start,end] of the morning blue hour
      * @since 1.3.0 FEATURE_GOLDBLUE
      */
+    @NonNull
     Calendar[] getMorningBlueHourForDate( Calendar date );
 
     /**
@@ -220,6 +239,7 @@ public interface SuntimesCalculator
      * @return [start,end] of the evening blue hour
      * @since 1.3.0 FEATURE_GOLDBLUE
      */
+    @NonNull
     Calendar[] getEveningBlueHourForDate( Calendar date );
 
     /**
@@ -228,6 +248,7 @@ public interface SuntimesCalculator
      * @return end of the morning golden hour
      * @since 1.3.0 FEATURE_GOLDBLUE
      */
+    @Nullable
     Calendar getMorningGoldenHourForDate( Calendar date );
 
     /**
@@ -236,6 +257,7 @@ public interface SuntimesCalculator
      * @return start of the evening golden hour
      * @since 1.1.0 FEATURE_GOLDBLUE
      */
+    @Nullable
     Calendar getEveningGoldenHourForDate( Calendar date );
 
     //
@@ -259,10 +281,13 @@ public interface SuntimesCalculator
      * @return a MoonTimes obj wrapping riseTime, setTime, etc.
      * @since 1.3.0 FEATURE_MOON
      */
+    @Nullable
     MoonTimes getMoonTimesForDate(Calendar date);
     class MoonTimes
     {
+        @Nullable
         public Calendar riseTime = null;
+        @Nullable
         public Calendar setTime = null;
     }
 
@@ -281,7 +306,8 @@ public interface SuntimesCalculator
      * @return a Calendar for the given phase (occurring after the given date).
      * @since 1.3.0 FEATURE_MOON
      */
-    Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date);
+    @Nullable
+    Calendar getMoonPhaseNextDate(@Nullable MoonPhase phase, Calendar date);
     enum MoonPhase
     {
         NEW, FIRST_QUARTER, FULL, THIRD_QUARTER;
@@ -298,6 +324,7 @@ public interface SuntimesCalculator
      * @return a SunPosition obj wrapping azimuth, elevation, etc
      * @since 1.4.0 FEATURE_POSITION, FEATURE_RISESET
      */
+    @Nullable
     SunPosition getSunPosition(Calendar dateTime);
     class Position
     {
@@ -314,6 +341,7 @@ public interface SuntimesCalculator
      * @return a MoonPosition obj wrapping azimuth, elevation, etc
      * @since 1.4.0 FEATURE_POSITION, FEATURE_MOON
      */
+    @Nullable
     MoonPosition getMoonPosition(Calendar dateTime);
     class MoonPosition extends Position
     {
@@ -341,6 +369,7 @@ public interface SuntimesCalculator
      * @return a Calendar for next perigee (occurring on or after date).
      * @since 1.6.0 FEATURE_POSITION, FEATURE_MOON
      */
+    @Nullable
     Calendar getMoonPerigeeNextDate(Calendar date);
 
     /**
@@ -349,6 +378,7 @@ public interface SuntimesCalculator
      * @return a Calendar for next apogee (occurring on or after date).
      * @since 1.6.0 FEATURE_POSITION, FEATURE_MOON
      */
+    @Nullable
     Calendar getMoonApogeeNextDate(Calendar date);
 
     /**
@@ -385,6 +415,7 @@ public interface SuntimesCalculator
      * @return time for sunrise at give angle
      * @since 1.7.0 FEATURE_RISESET1
      */
+    @Nullable
     Calendar getSunriseCalendarForDate( Calendar date, double angle );
 
     /**
@@ -394,6 +425,7 @@ public interface SuntimesCalculator
      * @return time for sunset at give angle
      * @since 1.7.0 FEATURE_RISESET1
      */
+    @Nullable
     Calendar getSunsetCalendarForDate( Calendar date, double angle );
 
     //
@@ -408,6 +440,7 @@ public interface SuntimesCalculator
      * @return time of shadow before noon; may throw UnsupportedOperationException for polar regions (+-66 degrees)
      * @since 1.8.0 FEATURE_SHADOW
      */
+    @Nullable
     Calendar getTimeOfShadowBeforeNoon( Calendar date, double objHeight, double shadowLength );
 
     /**
@@ -418,6 +451,7 @@ public interface SuntimesCalculator
      * @return time of shadow after noon; may throw UnsupportedOperationException for polar regions (+-66 degrees)
      * @since 1.8.0 FEATURE_SHADOW
      */
+    @Nullable
     Calendar getTimeOfShadowAfterNoon( Calendar date, double objHeight, double shadowLength );
 
 }

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
@@ -52,18 +53,21 @@ public class SuntimesMoonData extends SuntimesMoonData0
     /**
      * result: moonrise yesterday/today/tomorrow
      */
+    @Nullable
     public Calendar moonriseCalendarYesterday()
     {
         if (riseSet[0] != null)
             return riseSet[0].riseTime;
         else return null;
     }
+    @Nullable
     public Calendar moonriseCalendarToday()
     {
         if (riseSet[1] != null)
             return riseSet[1].riseTime;
         else return null;
     }
+    @Nullable
     public Calendar moonriseCalendarTomorrow()
     {
         if (riseSet[2] != null)
@@ -74,18 +78,21 @@ public class SuntimesMoonData extends SuntimesMoonData0
     /**
      * result: moonset yesterday/today/tomorrow
      */
+    @Nullable
     public Calendar moonsetCalendarYesterday()
     {
         if (riseSet[0] != null)
             return riseSet[0].setTime;
         else return null;
     }
+    @Nullable
     public Calendar moonsetCalendarToday()
     {
         if (riseSet[1] != null)
             return riseSet[1].setTime;
         else return null;
     }
+    @Nullable
     public Calendar moonsetCalendarTomorrow()
     {
         if (riseSet[2] != null)
@@ -165,6 +172,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * result: major phases (date of next: new moon, first quarter, full moon, third quarter)
      */
     private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
+    @Nullable
     public Calendar moonPhaseCalendar(SuntimesCalculator.MoonPhase phase)
     {
         if (moonPhases.containsKey(phase))

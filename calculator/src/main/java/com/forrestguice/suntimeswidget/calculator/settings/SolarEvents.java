@@ -271,16 +271,19 @@ public enum SolarEvents
         }
     }
 
+    @Nullable
     public TimeMode toTimeMode()
     {
         return toTimeMode(this);
     }
 
+    @Nullable
     public SuntimesCalculator.MoonPhase toMoonPhase()
     {
         return toMoonPhase(this);
     }
 
+    @Nullable
     public SolsticeEquinoxMode toSolsticeEquinoxMode()
     {
         return toSolsticeEquinoxMode(this);
@@ -291,9 +294,11 @@ public enum SolarEvents
      * @param event SolarEvents enum
      * @return a TimeMode (or null if not applicable)
      */
+    @Nullable
     public static TimeMode toTimeMode(SolarEvents event ) {
         return toTimeMode(event.name());
     }
+    @Nullable
     public static TimeMode toTimeMode(String eventID )
     {
         if (MORNING_ASTRONOMICAL.name().equals(eventID) || EVENING_ASTRONOMICAL.name().equals(eventID))
@@ -316,6 +321,7 @@ public enum SolarEvents
             return TimeMode.OFFICIAL;
         else return null;
     }
+    @Nullable
     public static SolarEvents valueOf(@Nullable TimeMode mode, boolean rising)
     {
         if (mode == null) {
@@ -340,6 +346,7 @@ public enum SolarEvents
      * @param event SolarEvents enum
      * @return a MoonPhaseMode (or null if not applicable)
      */
+    @Nullable
     public static SuntimesCalculator.MoonPhase toMoonPhase(SolarEvents event)
     {
         switch (event)
@@ -351,6 +358,7 @@ public enum SolarEvents
         }
         return null;
     }
+    @Nullable
     public static SolarEvents valueOf(@Nullable SuntimesCalculator.MoonPhase phase)
     {
         if (phase == null) {
@@ -370,6 +378,7 @@ public enum SolarEvents
      * @param event SolarEvents enum
      * @return a SolsticeEquinoxMode (or null if not applicable)
      */
+    @Nullable
     public static SolsticeEquinoxMode toSolsticeEquinoxMode(SolarEvents event)
     {
         switch (event)
@@ -385,6 +394,7 @@ public enum SolarEvents
         }
         return null;
     }
+    @Nullable
     public static SolarEvents valueOf(@Nullable SolsticeEquinoxMode mode)
     {
         if (mode == null) {

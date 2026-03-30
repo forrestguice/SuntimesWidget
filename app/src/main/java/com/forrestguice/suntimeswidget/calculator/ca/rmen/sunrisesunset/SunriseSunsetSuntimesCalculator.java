@@ -18,12 +18,14 @@
 
 package com.forrestguice.suntimeswidget.calculator.ca.rmen.sunrisesunset;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
 import ca.rmen.sunrisesunset.SunriseSunset;
 
 public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
@@ -63,6 +65,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return NAME;
     }
 
+    @Nullable
     @Override
     public Calendar getCivilSunriseCalendarForDate( Calendar date )
     {
@@ -72,6 +75,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return civilTwilight[0];
     }
 
+    @Nullable
     @Override
     public Calendar getNauticalSunriseCalendarForDate( Calendar date )
     {
@@ -81,6 +85,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return nauticalTwilight[0];
     }
 
+    @Nullable
     @Override
     public Calendar getAstronomicalSunriseCalendarForDate( Calendar date )
     {
@@ -90,6 +95,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return astroTwilight[0];
     }
 
+    @Nullable
     @Override
     public Calendar getOfficialSunriseCalendarForDate( Calendar date )
     {
@@ -99,6 +105,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return riseset[0];
     }
 
+    @Nullable
     @Override
     public Calendar getSolarNoonCalendarForDate(Calendar date)
     {
@@ -107,11 +114,13 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return noon;
     }
 
+    @Nullable
     @Override
     public Calendar getSolarMidnightCalendarForDate(Calendar date) {
         return null;    // TODO
     }
 
+    @Nullable
     @Override
     public Calendar getCivilSunsetCalendarForDate( Calendar date )
     {
@@ -121,6 +130,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return civilTwilight[1];
     }
 
+    @Nullable
     @Override
     public Calendar getNauticalSunsetCalendarForDate( Calendar date )
     {
@@ -130,6 +140,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return nauticalTwilight[1];
     }
 
+    @Nullable
     @Override
     public Calendar getAstronomicalSunsetCalendarForDate( Calendar date )
     {
@@ -139,36 +150,42 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return astroTwilight[1];
     }
 
+    @Nullable
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getSpringEquinoxForYear(Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getAutumnalEquinoxForYear(Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getWinterSolsticeForYear(Calendar date)
     {
         return null;
     }
 
+    @NonNull
     @Override
     public Calendar[] getMorningBlueHourForDate(Calendar date)
     {
@@ -185,6 +202,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return blueTimes;
     }
 
+    @NonNull
     @Override
     public Calendar[] getEveningBlueHourForDate(Calendar date)
     {
@@ -201,6 +219,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return blueTimes;
     }
 
+    @Nullable
     @Override
     public Calendar getMorningGoldenHourForDate(Calendar date)
     {
@@ -210,6 +229,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         else return goldenTimes[0];
     }
 
+    @Nullable
     @Override
     public Calendar getEveningGoldenHourForDate(Calendar date)
     {
@@ -229,6 +249,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return SunriseSunset.isDay(dateTime, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
     }
 
+    @Nullable
     @Override
     public MoonTimes getMoonTimesForDate(Calendar date)
     {
@@ -240,18 +261,21 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return -1;
     }
 
+    @Nullable
     @Override
     public Calendar getMoonPhaseNextDate(MoonPhase phase, Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public SunPosition getSunPosition(Calendar dateTime)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public MoonPosition getMoonPosition(Calendar dateTime) {
         return null;
@@ -263,16 +287,19 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return -1;
     }
 
+    @Nullable
     @Override
     public Calendar getTimeOfShadowBeforeNoon(Calendar dateTime, double objHeight, double shadowLength) {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getTimeOfShadowAfterNoon(Calendar dateTime, double objHeight, double shadowLength) {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getOfficialSunsetCalendarForDate( Calendar date )
     {
@@ -288,12 +315,14 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return Double.POSITIVE_INFINITY;
     }
 
+    @Nullable
     @Override
     public Calendar getMoonPerigeeNextDate(Calendar date)
     {
         return null;
     }
 
+    @Nullable
     @Override
     public Calendar getMoonApogeeNextDate(Calendar date)
     {
@@ -315,12 +344,14 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return (long)Math.floor(365.24 * 24 * 60 * 60 * 1000);
     }
 
+    @Nullable
     @Override
     public Calendar getSunriseCalendarForDate( Calendar date, double angle ) {
         Calendar[] result = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle);
         return ((result != null) ? result[0] : null);
     }
 
+    @Nullable
     @Override
     public Calendar getSunsetCalendarForDate( Calendar date, double angle ) {
         Calendar[] result = SunriseSunset.getSunriseSunset(date, location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), angle);

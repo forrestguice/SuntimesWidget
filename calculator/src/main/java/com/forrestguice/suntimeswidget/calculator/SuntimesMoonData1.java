@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
@@ -49,9 +50,10 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
      * result: major phases (date of next: new moon, first quarter, full moon, third quarter)
      */
     private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
-    public Calendar moonPhaseCalendar(SuntimesCalculator.MoonPhase phase)
+    @Nullable
+    public Calendar moonPhaseCalendar(@Nullable SuntimesCalculator.MoonPhase phase)
     {
-        if (moonPhases.containsKey(phase)) {
+        if (phase != null && moonPhases.containsKey(phase)) {
             return moonPhases.get(phase);
         }
         return null;

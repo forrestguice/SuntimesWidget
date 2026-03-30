@@ -65,7 +65,7 @@ public class Location implements Serializable
         this(label, latitude, longitude, "0", true);
     }
 
-    public Location(@Nullable String label, String latitude, String longitude, String altitude )
+    public Location(@Nullable String label, String latitude, String longitude, @Nullable String altitude )
     {
         this(label, latitude, longitude, altitude, true);
     }
@@ -77,12 +77,15 @@ public class Location implements Serializable
      * @param altitude feet or meters string
      * @param altitudeUnitsMetric true altitude is meters, false altitude is feet
      */
-    public Location(String label, String latitude, String longitude, String altitude, boolean altitudeUnitsMetric)
+    public Location(@Nullable String label, String latitude, String longitude, @Nullable String altitude, boolean altitudeUnitsMetric)
     {
         this.label = (label == null) ? "" : label;
         this.latitude = latitude;
         this.longitude = longitude;
 
+        if (altitude == null) {
+            altitude = "";
+        }
         if (!altitudeUnitsMetric)
         {
             try {
