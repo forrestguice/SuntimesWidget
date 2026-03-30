@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
@@ -182,18 +183,20 @@ public class SuntimesRiseSetDataset
         private final boolean isRising;
         private final RiseSetDataMode mode;
 
-        public SearchResult(RiseSetDataMode mode, Calendar calendar, boolean isRising)
+        public SearchResult(@Nullable RiseSetDataMode mode, @Nullable Calendar calendar, boolean isRising)
         {
             this.mode = mode;
             this.calendar = calendar;
             this.isRising = isRising;
         }
+        @Nullable
         public Calendar getCalendar() {
             return calendar;
         }
         public boolean isRising() {
             return isRising;
         }
+        @Nullable
         public RiseSetDataMode getMode() {
             return mode;
         }
@@ -232,6 +235,7 @@ public class SuntimesRiseSetDataset
         return new SearchResult(mode, nearest, isRising);
     }
 
+    @Nullable
     public Calendar todayIs()
     {
         return dataActual.todayIs();
@@ -249,9 +253,9 @@ public class SuntimesRiseSetDataset
 
     public boolean isNight( Calendar dateTime )
     {
-        Date time = dateTime.getTime();
-        Date sunrise = dataActual.sunriseCalendarToday().getTime();
-        Date sunsetAstroTwilight = dataAstro.sunsetCalendarToday().getTime();
+        Calendar time = dateTime;
+        Calendar sunrise = dataActual.sunriseCalendarToday();
+        Calendar sunsetAstroTwilight = dataAstro.sunsetCalendarToday();
         return (time.before(sunrise) || time.after(sunsetAstroTwilight));
     }
 
@@ -281,6 +285,7 @@ public class SuntimesRiseSetDataset
         }
     }
 
+    @Nullable
     public Location location()
     {
         return dataActual.location();
@@ -335,6 +340,7 @@ public class SuntimesRiseSetDataset
         }
     }
 
+    @Nullable
     public SuntimesCalculator calculator() {
         return (calculator != null ? calculator : dataActual.calculator());
     }
@@ -345,12 +351,14 @@ public class SuntimesRiseSetDataset
     public void setCalculator(SuntimesCalculatorDescriptor value)
     {
         this.calculatorDescriptor = value;
-        this.calculator = new SuntimesCalculatorFactory(value).createCalculator(location(), timezone());
+        Location location = location();
+        this.calculator = (location != null ? new SuntimesCalculatorFactory(value).createCalculator(location, timezone()) : null);
     }
-    public void setCalculator(SuntimesCalculatorDescriptor calculatorDescriptor, SuntimesCalculator calculator) {
+    public void setCalculator(SuntimesCalculatorDescriptor calculatorDescriptor, @Nullable SuntimesCalculator calculator) {
         this.calculatorDescriptor = calculatorDescriptor;
         this.calculator = calculator;
     }
+    @Nullable
     protected SuntimesCalculator calculator;
     protected SuntimesCalculatorDescriptor calculatorDescriptor;
 
@@ -552,7 +560,7 @@ public class SuntimesRiseSetDataset
     public static int NONE_DAY = 0;      // no daylength because the sun doesn't set lower
     public static int NONE_NIGHT = -1;    // no daylength because the sun doesn't rise higher
 
-    public static void makeDayLengthCorrections(SuntimesRiseSetDataset data, SuntimesCalculator calculator, boolean isOther)
+    public static void makeDayLengthCorrections(SuntimesRiseSetDataset data, @Nullable SuntimesCalculator calculator, boolean isOther)
     {
         SuntimesRiseSetData dataActual = data.dataActual;
         SuntimesRiseSetData dataCivil = data.dataCivil;

@@ -103,9 +103,10 @@ public class SuntimesRiseSetData extends SuntimesData
                     ShadowRatioEvent ratioEvent = ShadowRatioEvent.valueOf(UriUtils.getLastPathSegment(alias.getUri()));
                     event = ratioEvent;
                     if (ratioEvent != null && ratioEvent.isRelativeToNoon()) {
-                        this.relativeShadowRatio = (event == null ? null : ratioEvent.getRatio());
+                        this.relativeShadowRatio = ratioEvent.getRatio();
                     } else {
                         this.angle = (event == null ? null : event.getAngle());
+                        this.relativeShadowRatio = null;
                     }
                     break;
 
@@ -267,7 +268,9 @@ public class SuntimesRiseSetData extends SuntimesData
     public Calendar[] getEvents()
     {
         Calendar midnight = midnight();
-        midnight.add(Calendar.DAY_OF_MONTH,  1);
+        if (midnight != null) {
+            midnight.add(Calendar.DAY_OF_MONTH, 1);
+        }
         return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
     }
 
@@ -576,13 +579,17 @@ public class SuntimesRiseSetData extends SuntimesData
         } else if (sunrise != null) {
             // edge case.. rises but doesn't set
             Calendar midnight1 = midnight();
-            midnight1.add(Calendar.DAY_OF_YEAR, 1);
-            return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
+            if (midnight1 != null) {
+                midnight1.add(Calendar.DAY_OF_YEAR, 1);
+                return midnight1.getTimeInMillis() - sunrise.getTimeInMillis();
+            } else return 0;
 
         } else {
             // edge case.. sets but doesn't rise
             Calendar midnight0 = midnight();
-            return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
+            if (midnight0 != null) {
+                return sunset.getTimeInMillis() - midnight0.getTimeInMillis();
+            } else return 0;
         }
     }
 

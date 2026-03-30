@@ -303,8 +303,10 @@ public class SuntimesMoonData extends SuntimesMoonData0
         }
 
         Calendar after = midnight();
-        for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {
-            moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, after));
+        if (after != null) {
+            for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {
+                moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, after));
+            }
         }
         moonPhaseToday = findPhaseOf(after, true);
 
@@ -397,7 +399,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * @param calendar a date/time
      * @return the next major phase occurring after the supplied date/time
      */
-    public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar) {
+    public SuntimesCalculator.MoonPhase nextPhase(@Nullable Calendar calendar) {
         return nextPhase(moonPhases, calendar);
     }
 
@@ -407,7 +409,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * @param calendar a date/time
      * @return a MoonPhaseDisplay enum
      */
-    public MoonPhaseDisplay findPhaseOf(Calendar calendar) {
+    public MoonPhaseDisplay findPhaseOf(@Nullable Calendar calendar) {
         return findPhaseOf(calendar, false);
     }
 
@@ -424,7 +426,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
         }
 
         Calendar nextPhaseDate = moonPhases.get(nextPhase);
-        boolean nextPhaseIsToday = (nextPhaseDate != null) &&
+        boolean nextPhaseIsToday = (nextPhaseDate != null) && (calendar != null) &&
                                    (calendar.get(Calendar.YEAR) == nextPhaseDate.get(Calendar.YEAR)) &&
                                    (calendar.get(Calendar.DAY_OF_YEAR) == nextPhaseDate.get(Calendar.DAY_OF_YEAR));
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));

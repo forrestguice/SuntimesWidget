@@ -343,7 +343,7 @@ public class SuntimesData
         if (calculatorMode == null) {
             calculatorMode = calculatorFactory.fallbackCalculatorDescriptor();
         }
-        this.calculator = calculatorFactory.createCalculator(location, timezone);
+        this.calculator = (location != null ? calculatorFactory.createCalculator(location, timezone) : null);
     }
 
     public SuntimesCalculatorFactory initFactory()

@@ -203,10 +203,10 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param calendar a date/time to compare against
      * @return the next major phase occurring after the supplied date/time
      */
-    public SuntimesCalculator.MoonPhase nextPhase(HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases, Calendar calendar)
+    public SuntimesCalculator.MoonPhase nextPhase(HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases, @Nullable Calendar calendar)
     {
         SuntimesCalculator.MoonPhase result = SuntimesCalculator.MoonPhase.FULL;
-        long date = calendar.getTimeInMillis();
+        long date = (calendar != null ? calendar.getTimeInMillis() : 0);
 
         long least = Long.MAX_VALUE;
         for (SuntimesCalculator.MoonPhase phase : moonPhases.keySet())
