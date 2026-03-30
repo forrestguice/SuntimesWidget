@@ -18,6 +18,8 @@
 
 package com.forrestguice.util.concurrent;
 
+import com.forrestguice.annotation.Nullable;
+
 import java.util.Collection;
 
 /**
@@ -28,5 +30,5 @@ import java.util.Collection;
  */
 public interface ProgressListener<P, T> extends TaskListener<T> {
     void onProgressUpdate(Collection<P> values);
-    void onCancelled(T result);
+    void onCancelled(@Nullable T result);
 }

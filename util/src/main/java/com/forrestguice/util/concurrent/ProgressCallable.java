@@ -34,9 +34,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInterface<P>
 {
     public void onPreExecute() {}                             // runs on UI thread, runs separately from TaskListener.onStarted
-    public void onPostExecute(T result) {}                    // runs on UI thread, runs separately from TaskListener.onFinished
+    public void onPostExecute(@Nullable T result) {}          // runs on UI thread, runs separately from TaskListener.onFinished
     public void onProgressUpdate(Collection<P> progress) {}   // runs on UI thread
-    public void onCancelled(T result) {}                      // runs on UI thread (replaces onFinished when task is cancelled)
+    public void onCancelled(@Nullable T result) {}            // runs on UI thread (replaces onFinished when task is cancelled)
 
     @Override
     public void publishProgress(P progress) {
