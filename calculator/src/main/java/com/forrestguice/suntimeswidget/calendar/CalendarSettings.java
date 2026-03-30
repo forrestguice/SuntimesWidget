@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calendar;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.prefs.PrefTypeInfo;
 import com.forrestguice.util.ContextInterface;
 import com.forrestguice.util.prefs.SharedPreferences;
@@ -148,7 +149,9 @@ public class CalendarSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
-        return prefs.getString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag, defaultCalendarFormatPattern(tag));
+        String defaultPattern = defaultCalendarFormatPattern(tag);
+        String pattern = prefs.getString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag, defaultPattern);
+        return (pattern != null ? pattern : defaultPattern);
     }
     public static void deleteCalendarFormatPatternPref(ContextInterface context, int appWidgetId, String tag)
     {
@@ -157,6 +160,7 @@ public class CalendarSettings
         prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag);
         prefs.apply();
     }
+    @NonNull
     public static String defaultCalendarFormatPattern(String tag)
     {
         CalendarMode mode;

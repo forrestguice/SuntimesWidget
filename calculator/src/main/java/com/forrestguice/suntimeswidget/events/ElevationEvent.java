@@ -50,7 +50,9 @@ public abstract class ElevationEvent extends BaseEvent
         if (offset != 0)
         {
             String offsetDisplay = utils.timeDeltaLongDisplayString(0, offset, false).getValue();
-            return context.getQuantityString((offset < 0 ? r.plurals_before() : r.plurals_after()), (int)angle, offsetDisplay);
+            if (r != null) {
+                return context.getQuantityString((offset < 0 ? r.plurals_before() : r.plurals_after()), (int) angle, offsetDisplay);
+            } else return (offset < 0 ? offsetDisplay + " before" : offsetDisplay + " after");
         } else return "";
     }
 }

@@ -58,7 +58,7 @@ public class ColorChooser implements View.OnFocusChangeListener
     private boolean showAlpha = false;
     private TextWatcher textWatcher = new HexColorTextWatcher(showAlpha);
 
-    public ColorChooser(final Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
+    public ColorChooser(final Context context, @Nullable TextView txtLabel, @Nullable EditText editField, @Nullable ImageButton imgButton, String id)
     {
         chooserID = id;
 

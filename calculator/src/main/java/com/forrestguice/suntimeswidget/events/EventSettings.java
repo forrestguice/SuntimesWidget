@@ -148,6 +148,7 @@ public class EventSettings
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
 
+    @Nullable
     public static String loadEventValue(ContextInterface context, @NonNull String id, @Nullable String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
@@ -267,6 +268,7 @@ public class EventSettings
         prefs.apply();
     }
 
+    @Nullable
     public static String getEventUriLastPathSegment(ContextInterface context, @NonNull String id)
     {
         String eventUri = EventSettings.loadEventValue(context, id, PREF_KEY_EVENT_URI);
@@ -296,6 +298,7 @@ public class EventSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Nullable
     public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues) {
         return prefs.getStringSet(key, defValues);
     }

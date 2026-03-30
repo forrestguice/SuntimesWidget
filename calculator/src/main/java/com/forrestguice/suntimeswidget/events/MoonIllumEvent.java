@@ -82,7 +82,9 @@ public class MoonIllumEvent extends BaseEvent
         if (offset == 0) {
             return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay);
         } else {
-            return context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, percentDisplay);
+            return ((r != null)
+                    ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, percentDisplay)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " at " + percentDisplay);
         }
     }
 
@@ -147,6 +149,7 @@ public class MoonIllumEvent extends BaseEvent
      * @param now now
      * @return Calendar or null
      */
+    @Nullable
     public static Calendar updateAlarmTime(Object context, @NonNull MoonIllumEvent event, SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         data.initCalculator();
@@ -189,6 +192,7 @@ public class MoonIllumEvent extends BaseEvent
         return eventTime;
     }
 
+    @Nullable
     public static Calendar getMoonIllumEventCalendar(@NonNull Calendar day, @NonNull MoonIllumEvent event, @NonNull SuntimesCalculator calculator)
     {
         boolean isWaxing = event.isWaxing();

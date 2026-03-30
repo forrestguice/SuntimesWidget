@@ -3816,6 +3816,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             return mode.name();
         }
 
+        @Nullable
         @Override
         protected String getSummaryForMode(RiseSetDataMode item)
         {

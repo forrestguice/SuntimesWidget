@@ -84,7 +84,7 @@ public class ShadowLengthEvent extends ElevationEvent
         String height = LengthUnitDisplay.formatAsHeight(context.getResources(), getObjHeight(), units, 1, true).getValue();
 
         TimeDisplayText t = LengthUnitDisplay.formatAsHeight(context.getResources(), getLength(), units, 1, true);
-        String length = context.getString(r.string_units_format_short(), t.getValue(), t.getUnits());
+        String length = (r != null ? context.getString(r.string_units_format_short(), t.getValue(), t.getUnits()) : t.getValue() + " " + t.getUnits());
         String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow";
 
         if (offset == 0) {
@@ -155,6 +155,7 @@ public class ShadowLengthEvent extends ElevationEvent
         } else return null;
     }
 
+    @Nullable
     public static Calendar updateAlarmTime_shadowLengthEvent(Object context, @NonNull ShadowLengthEvent event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesClockData data = getClockData(context, location);

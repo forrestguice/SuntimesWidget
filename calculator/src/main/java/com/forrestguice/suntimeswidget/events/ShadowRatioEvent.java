@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class ShadowRatioEvent extends ShadowLengthEvent
+public class ShadowRatioEvent extends ShadowLengthEvent
 {
     public static final String NAME_PREFIX = "SHADOWRATIO_";
 
@@ -41,12 +41,12 @@ public final class ShadowRatioEvent extends ShadowLengthEvent
         this.relativeToNoon = relativeToNoon;
     }
 
-    protected final double ratio;    // shadow length / object height
+    protected double ratio;    // shadow length / object height
     public double getRatio() {
         return ratio;
     }
 
-    protected final boolean relativeToNoon;
+    protected boolean relativeToNoon;
     public boolean isRelativeToNoon() {
         return relativeToNoon;
     }
@@ -154,6 +154,7 @@ public final class ShadowRatioEvent extends ShadowLengthEvent
      * @param now now
      * @return calendar or null
      */
+    @Nullable
     public static Calendar updateAlarmTime(Object context, @NonNull ShadowRatioEvent event, @NonNull SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         Log.d("DEBUG", "updateAlarmTime: relativeToNoon? " + event.isRelativeToNoon());
@@ -197,6 +198,7 @@ public final class ShadowRatioEvent extends ShadowLengthEvent
         return eventTime;
     }
 
+    @Nullable
     private static Calendar getShadowRatioEventCalendar(SuntimesCalculator calculator, Calendar day, ShadowRatioEvent event, long offset)
     {
         Calendar noon = calculator.getSolarNoonCalendarForDate(day);

@@ -158,6 +158,7 @@ public class MoonElevationEvent extends ElevationEvent
         return eventTime;
     }
 
+    @Nullable
     public static Calendar getMoonElevationEventCalendar(@NonNull MoonElevationEvent event, @NonNull SuntimesMoonData data)
     {
         Calendar noon0 = data.getLunarNoonToday();

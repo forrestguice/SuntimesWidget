@@ -90,12 +90,12 @@ public class DayPercentEvent extends ElevationEvent
      *              DAYPERCENT_50r          (@ 50% (after rising) (noon)),
      *              DAYPERCENT_75r          (@ 75% (after rising)),
      *              DAYPERCENT_25s          (@ 25% (before setting)),
-     *
+     *              ---------------
      *              DAYPERCENT_-50r         (@ 50% (before rising) (midnight)),
      *              DAYPERCENT_-50s         (@ 50% (after setting) (midnight)),
      *              DAYPERCENT_-75s         (@ 25% (75 after setting)),
      *              DAYPERCENT_-25r         (@ 25% (before rising)),
-     *
+     *              ---------------
      *              DAYPERCENT_25|-300000r  (5m before @ 25% (after rising))
      */
     @Override
@@ -150,6 +150,7 @@ public class DayPercentEvent extends ElevationEvent
      * @param now now
      * @return calendar or null
      */
+    @Nullable
     public static Calendar updateAlarmTime(Object context, @NonNull DayPercentEvent event, @NonNull SuntimesData data, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         data.initCalculator();

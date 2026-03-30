@@ -86,6 +86,7 @@ public class EventAlias
 
     @Nullable
     private String summary;
+    @Nullable
     public String getSummary(final Object context)
     {
         if (summary == null) {

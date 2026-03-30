@@ -1062,6 +1062,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+    @Nullable
     public Double getFactorValue()
     {
         Context context = getContext();
@@ -1161,6 +1162,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         }
     }
 
+    @Nullable
     public Double getPercentValue()
     {
         boolean isDay = true;

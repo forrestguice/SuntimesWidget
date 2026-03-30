@@ -1,6 +1,7 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
@@ -76,6 +77,7 @@ public class AndroidEventSettings implements EventSettingsInterface
         return EventSettings.loadEventList(this, type);
     }
 
+    @Nullable
     @Override
     public String loadEventValue(@NonNull String id, String key) {
         return EventSettings.loadEventValue(this, id, key);
@@ -121,6 +123,7 @@ public class AndroidEventSettings implements EventSettingsInterface
         EventSettings.setShown(this, id, value);
     }
 
+    @Nullable
     @Override
     public String getEventUriLastPathSegment(@NonNull String id) {
         return EventSettings.getEventUriLastPathSegment(this, id);
