@@ -354,6 +354,8 @@
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
     <string name="timeMode_noon">Lokal middag</string>                    <!-- setting -->
+    <string name="timeMode_midnight_short">Midnatt</string>                    <!-- setting -->
+    <string name="timeMode_midnight">Astronomisk midnatt</string>                    <!-- setting -->
     <string name="timeMode_official_short">Faktisk</string>              <!-- setting -->
     <string name="timeMode_official">Faktisk tid</string>               <!-- setting -->
     <string name="timeMode_civil_short">Alminnelig</string>                  <!-- setting -->
@@ -782,6 +784,10 @@
     <string name="themes_configLabel_themeColorGraphSunPathNightFill">Solens bane (nattfyll)</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphSunPathNightStroke">Solens bane (nattstrek)</string>         <!-- color label -->
 
+    <string name="themes_configLabel_themeColorGraphMidnightText">Midnatt (tekst)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMidnightFill">Midnatt (fyll)</string>         <!-- color label -->
+    <string name="themes_configLabel_themeColorGraphMidnightStroke">Midnatt (strek)</string>         <!-- color label -->
+
     <string name="themes_configLabel_themeColorGraphMoonFill">Månen (fyll)</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphMoonStroke">Månen (strek)</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphMoonPathDayFill">Månens bane (dagfyll)</string>         <!-- color label -->
@@ -874,6 +880,15 @@
          CUSTOM EVENTS
     -->
     <string name="eventType_sun_elevation">Solen (høyde)</string>
+    <string name="eventType_sun_shadowlength">Solen (skyggelengde)</string>
+    <string name="eventType_date">Dato</string>
+    <string name="eventType_alias">Alias</string>
+    <string name="eventType_default">Standard</string>
+    <string name="eventType_default_sun">Solen</string>
+    <string name="eventType_default_moon">Månen</string>
+    <string name="eventType_default_moonphases">Månefaser</string>
+    <string name="eventType_default_seasons">Årstider</string>
+
     <string name="eventlist_dialog_title">Egendefinerte hendelser</string>
 
     <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
