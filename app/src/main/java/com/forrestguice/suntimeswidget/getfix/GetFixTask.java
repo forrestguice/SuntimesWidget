@@ -168,7 +168,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
     private class GetFixTaskLocationListener implements LocationListener
     {
         @Override
-        public synchronized void onLocationChanged(Location location) {
+        public synchronized void onLocationChanged(@NonNull Location location) {
             boolean result = onLocationChanged(TAG_LOCATION_CHANGED, location);
             if (firstFixTime == null && result) {
                 firstFixTime = System.currentTimeMillis();
@@ -555,7 +555,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
             }
 
             @Override
-            public void onSatelliteStatusChanged(GnssStatus status)
+            public void onSatelliteStatusChanged(@NonNull GnssStatus status)
             {
                 super.onSatelliteStatusChanged(status);
 

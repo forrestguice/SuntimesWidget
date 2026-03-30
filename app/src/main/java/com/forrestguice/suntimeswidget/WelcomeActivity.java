@@ -140,7 +140,7 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle bundle)
+    public void onRestoreInstanceState(@NonNull Bundle bundle)
     {
         super.onRestoreInstanceState(bundle);
         if (pagerAdapter != null) {

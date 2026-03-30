@@ -194,7 +194,7 @@ public abstract class GnssStatusView extends FrameLayout
                 onGnssFirstFix(ttffMillis);
             }
             @Override
-            public void onSatelliteStatusChanged(GnssStatus status) {
+            public void onSatelliteStatusChanged(@NonNull GnssStatus status) {
                 super.onSatelliteStatusChanged(status);
                 updateViews(status);
             }

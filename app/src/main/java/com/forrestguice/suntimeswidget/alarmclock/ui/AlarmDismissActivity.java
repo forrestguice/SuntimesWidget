@@ -371,7 +371,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     }
 
     @Override
-    public void onRestoreInstanceState( Bundle bundle )
+    public void onRestoreInstanceState( @NonNull Bundle bundle )
     {
         super.onRestoreInstanceState(bundle);
         AlarmClockItem item = bundle.getParcelable("alarmItem");
