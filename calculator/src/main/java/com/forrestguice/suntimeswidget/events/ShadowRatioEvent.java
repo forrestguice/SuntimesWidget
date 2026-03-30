@@ -160,6 +160,10 @@ public class ShadowRatioEvent extends ShadowLengthEvent
         Log.d("DEBUG", "updateAlarmTime: relativeToNoon? " + event.isRelativeToNoon());
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
+        if (calculator == null) {
+            Log.w("AlarmReceiver", "updateAlarmTime: null calculator! " + event);
+            return null;
+        }
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;

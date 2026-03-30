@@ -161,6 +161,10 @@ public class ShadowLengthEvent extends ElevationEvent
         SuntimesClockData data = getClockData(context, location);
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
+        if (calculator == null) {
+            Log.w("AlarmReceiver", "updateAlarmTime: null calculator! " + event);
+            return null;
+        }
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime = null;

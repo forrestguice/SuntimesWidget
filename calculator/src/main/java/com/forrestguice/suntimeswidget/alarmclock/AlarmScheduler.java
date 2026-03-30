@@ -230,6 +230,7 @@ public class AlarmScheduler
         return eventTime;
     }
 
+    @Nullable
     public static Calendar moonEventCalendar(SolarEvents event, SuntimesMoonData data, boolean today)
     {
         if (today)
@@ -253,7 +254,6 @@ public class AlarmScheduler
     @Nullable
     protected static Calendar updateAlarmTime_moonPhaseEvent(SuntimesDataSettings context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, @NonNull ArrayList<Integer> repeatingDays, @NonNull Calendar now)
     {
-        t_updateAlarmTime_runningLoop = true;
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
         SuntimesMoonData moonData = getData_moonEvent(context, location);
 
@@ -266,9 +266,14 @@ public class AlarmScheduler
 
         int c = 0;
         Calendar eventTime = moonData.moonPhaseCalendar(phase);
+        if (eventTime == null) {
+            Log.e(TAG, "updateAlarmTime: null phase event! 0, " + event);
+            return null;
+        }
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        t_updateAlarmTime_runningLoop = true;
         Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime))
                 //|| (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for moon phases? probably not.
@@ -286,8 +291,13 @@ public class AlarmScheduler
             moonData.setTodayIs(day);
             moonData.calculate(context);
             eventTime = moonData.moonPhaseCalendar(phase);
-            eventTime.set(Calendar.SECOND, 0);
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            if (eventTime != null) {
+                eventTime.set(Calendar.SECOND, 0);
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            } else {
+                Log.e(TAG, "updateAlarmTime: null phase event! " + c + ", " + event);
+                break;
+            }
         }
         t_updateAlarmTime_runningLoop = false;
         return eventTime;
@@ -306,6 +316,10 @@ public class AlarmScheduler
         data.calculate(context);
 
         Calendar eventTime = data.eventCalendarUpcoming(day);
+        if (eventTime == null) {
+            Log.e(TAG, "updateAlarmTime: null season event! " + event);
+            return null;
+        }
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
@@ -325,8 +339,13 @@ public class AlarmScheduler
             data.setTodayIs(day);
             data.calculate(context);
             eventTime = data.eventCalendarUpcoming(day);
-            eventTime.set(Calendar.SECOND, 0);
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            if (eventTime != null) {
+                eventTime.set(Calendar.SECOND, 0);
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            } else {
+                Log.e(TAG, "updateAlarmTime: null season event! " + event);
+                break;
+            }
         }
         t_updateAlarmTime_runningLoop = false;
         return eventTime;
@@ -535,7 +554,11 @@ public class AlarmScheduler
     {
         SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
-        data.setTimeMode(season);
+        if (season != null) {
+            data.setTimeMode(season);
+        } else {
+            Log.w(TAG, "getData_seasons: invalid event " + event + ", using " + data.timeMode() + " instead.");
+        }
         data.setLocation(location);
         data.setTodayIs(Calendar.getInstance());
         return data;

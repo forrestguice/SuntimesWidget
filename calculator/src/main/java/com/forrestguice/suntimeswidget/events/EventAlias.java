@@ -63,6 +63,7 @@ public class EventAlias
     /**
      * @return a partial AlarmEvent uri (needs rising/setting suffix to be complete)
      */
+    @Nullable
     public String getUri() {
         return uri;
     }

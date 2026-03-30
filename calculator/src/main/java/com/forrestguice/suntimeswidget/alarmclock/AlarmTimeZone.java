@@ -105,6 +105,7 @@ public enum AlarmTimeZone
         }
     }
 
+    @Nullable
     public static AlarmTimeZone valueOfID(String tzID)
     {
         if (tzID == null) {

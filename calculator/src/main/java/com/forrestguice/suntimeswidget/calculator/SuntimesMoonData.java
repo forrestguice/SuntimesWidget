@@ -173,7 +173,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      */
     private HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases = new HashMap<>(4);
     @Nullable
-    public Calendar moonPhaseCalendar(SuntimesCalculator.MoonPhase phase)
+    public Calendar moonPhaseCalendar(@Nullable SuntimesCalculator.MoonPhase phase)
     {
         if (moonPhases.containsKey(phase))
         {

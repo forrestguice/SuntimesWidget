@@ -183,6 +183,10 @@ public class MoonElevationEvent extends ElevationEvent
 
         double eventAngle = event.getAngle();
         SuntimesCalculator calculator = data.calculator();
+        if (calculator == null) {
+            Log.w("AlarmReceiver", "getMoonElevationEventCalendar: null calculator! " + event);
+            return null;
+        }
 
         Calendar mid = Calendar.getInstance();
         long left = start.getTimeInMillis();
@@ -193,6 +197,9 @@ public class MoonElevationEvent extends ElevationEvent
             long m = left + ((right - left) / 2L);
             mid.setTimeInMillis(m);
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(mid);
+            if (position == null) {
+                break;
+            }
 
             if (almostEquals(position.elevation, eventAngle)) {
                 return mid;

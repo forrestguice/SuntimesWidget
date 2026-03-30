@@ -70,7 +70,6 @@ public enum AlarmType
 
             } catch (IllegalArgumentException e) {
                 Log.w("AlarmType", "valueOf :: failed to load '" + value);
-                retValue = defaultType;
             }
         }
         return retValue;

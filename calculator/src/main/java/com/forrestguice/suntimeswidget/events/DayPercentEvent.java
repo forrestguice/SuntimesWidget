@@ -155,6 +155,10 @@ public class DayPercentEvent extends ElevationEvent
     {
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
+        if (calculator == null) {
+            Log.w("AlarmReceiver", "updateAlarmTime: null calculator! " + event);
+            return null;
+        }
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -187,7 +191,10 @@ public class DayPercentEvent extends ElevationEvent
             eventTime = getDayPercentEventCalendar(day, event, calculator);
             if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-                event.setAngle(calculator.getSunPosition(eventTime).elevation);
+                SuntimesCalculator.SunPosition position = calculator.getSunPosition(eventTime);
+                if (position != null) {
+                    event.setAngle(position.elevation);
+                }
             }
             c++;
         }

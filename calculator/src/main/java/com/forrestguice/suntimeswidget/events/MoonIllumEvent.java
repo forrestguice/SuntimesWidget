@@ -154,6 +154,10 @@ public class MoonIllumEvent extends BaseEvent
     {
         data.initCalculator();
         SuntimesCalculator calculator = data.calculator();
+        if (calculator == null) {
+            Log.w("AlarmReceiver", "updateAlarmTime: null calculator! " + event);
+            return null;
+        }
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -207,7 +211,7 @@ public class MoonIllumEvent extends BaseEvent
             //endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, startDay);
             //} else {
             //startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, day);
-            endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, startDay);
+            endDay = (startDay != null ? calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, startDay) : null);
             //}
         } else {
             //if (eventPercent >= 0.5) {
@@ -215,8 +219,11 @@ public class MoonIllumEvent extends BaseEvent
             //endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, startDay);
             //} else {
             //startDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, day);
-            endDay = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW, startDay);
+            endDay = (startDay != null ? calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW, startDay) : null);
             //}
+        }
+        if (startDay == null || endDay == null) {
+            return null;
         }
 
         Calendar mid = Calendar.getInstance();
