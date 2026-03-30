@@ -584,7 +584,7 @@ public class PlacesListFragment extends DialogBase
         }
     };
 
-    public void showProgress( Context context, CharSequence title, CharSequence message )
+    public void showProgress( Context context, @Nullable CharSequence title, @Nullable CharSequence message )
     {
         if (progressView != null) {
             progressView.setVisibility(View.VISIBLE);
@@ -1283,8 +1283,8 @@ public class PlacesListFragment extends DialogBase
 
     public interface FragmentListener extends AdapterListener
     {
-        boolean onItemEdit(PlaceItem item);
-        void onItemPicked(PlaceItem item);
+        boolean onItemEdit(@Nullable PlaceItem item);
+        void onItemPicked(@Nullable PlaceItem item);
         void onActionModeFinished();
         void onToggleProgress(boolean value);
         void onLiftAppBar(boolean value);

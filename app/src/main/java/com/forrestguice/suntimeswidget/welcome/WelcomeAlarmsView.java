@@ -243,7 +243,7 @@ public class WelcomeAlarmsView extends WelcomeView
         public void onFinished(AlarmClockItemImportTask.TaskResult result)
         {
             final Context context = getContext();
-            if (result.getResult() && context != null)
+            if (result != null && result.getResult() && context != null)
             {
                 final AlarmClockItem[] items = result.getItems();
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, items, true, true);

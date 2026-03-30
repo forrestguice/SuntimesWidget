@@ -505,7 +505,7 @@ public class SuntimesRiseSetDataset
      * @param noonPosition the sunPosition at noon
      * @return true if rising (before noon) or if either position or noonPosition is null, false if setting (on or after noon)
      */
-    public static boolean isRising(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
+    public static boolean isRising(@Nullable SuntimesCalculator.SunPosition position, @Nullable SuntimesCalculator.SunPosition noonPosition)
     {
         if (position == null || noonPosition == null) {
             return true;

@@ -203,6 +203,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity
         }
     }
 
+    @Nullable
     private String prefKeyForRequestCode(int requestCode)
     {
         switch(requestCode)

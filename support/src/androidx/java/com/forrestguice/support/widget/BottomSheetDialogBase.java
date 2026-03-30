@@ -56,7 +56,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         setArguments(new Bundle());
     }
 
-    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)
+    public static void initPeekHeight(@Nullable DialogInterface dialog, int bottomViewResId)
     {
         if (dialog != null) {
             BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
@@ -111,7 +111,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return getBottomSheetResourceID();
     }
 
-    protected void expandSheet(DialogInterface dialog)
+    protected void expandSheet(@Nullable DialogInterface dialog)
     {
         if (dialog != null) {
             BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
@@ -143,7 +143,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         }
     }
 
-    protected void collapseSheet(DialogInterface dialog)
+    protected void collapseSheet(@Nullable DialogInterface dialog)
     {
         if (dialog != null) {
             BottomSheetBehavior<?> bottomSheet = initSheet(dialog);
@@ -163,7 +163,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
     }
 
     @Nullable
-    protected BottomSheetBehavior<?> initSheet(DialogInterface dialog)
+    protected BottomSheetBehavior<?> initSheet(@Nullable DialogInterface dialog)
     {
         if (dialog != null)
         {

@@ -129,7 +129,7 @@ public class SuntimesAlarmsProvider extends ContentProvider
     /**
      * queryAlarms
      */
-    private Cursor queryAlarms(String alarmID, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
+    private Cursor queryAlarms(@Nullable String alarmID, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_ALARMS_PROJECTION_MIN);
         MatrixCursor retValue = new MatrixCursor(columns);

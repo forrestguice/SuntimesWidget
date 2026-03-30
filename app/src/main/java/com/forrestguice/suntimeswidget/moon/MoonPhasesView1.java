@@ -90,13 +90,13 @@ public class MoonPhasesView1 extends LinearLayout
         init(context, null);
     }
 
-    public MoonPhasesView1(Context context, AttributeSet attrs)
+    public MoonPhasesView1(Context context, @Nullable AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         setNumColumns(AppSettings.loadMoonPhaseColumnsPref(context));
         initLocale(context);

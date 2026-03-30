@@ -91,10 +91,12 @@ public class MoonRiseSetView1 extends LinearLayout
         init(context, null);
     }
 
-    public MoonRiseSetView1(Context context, AttributeSet attrs)
+    public MoonRiseSetView1(Context context, @Nullable AttributeSet attrs)
     {
         super(context, attrs);
-        applyAttributes(context, attrs);
+        if (attrs != null) {
+            applyAttributes(context, attrs);
+        }
         init(context, attrs);
     }
 
@@ -151,7 +153,7 @@ public class MoonRiseSetView1 extends LinearLayout
     @Nullable
     private MoonRiseSetDivider1 dividers = null;
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonriseset1, this, true);
@@ -293,6 +295,7 @@ public class MoonRiseSetView1 extends LinearLayout
     public SuntimesMoonData getData() {
         return card_adapter.initData(getContext(), getDataPosition());
     }
+    @Nullable
     public SuntimesMoonData getData(int adapterPosition)
     {
         if (card_adapter != null) {
@@ -711,6 +714,7 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }
 
+        @Nullable
         protected CharSequence getContentDescriptionForEvent(Context context, @Nullable MoonRiseSetEvent event)
         {
             if (event == null) {
@@ -724,6 +728,7 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }
 
+        @Nullable
         protected Drawable getIconForEvent(@Nullable MoonRiseSetEvent event)
         {
             if (event == null) {
@@ -866,6 +871,7 @@ public class MoonRiseSetView1 extends LinearLayout
         MOONRISE, MOONNOON, MOONSET, MOONNIGHT;    // needs to match enum values from SolarEvents
         private MoonRiseSetEvent() {}
 
+        @Nullable
         public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable String eventID)
         {
             if (eventID == null || data == null) {
@@ -878,6 +884,7 @@ public class MoonRiseSetView1 extends LinearLayout
                 return null;
             }
         }
+        @Nullable
         public static Calendar getCalendarForEvent(@Nullable SuntimesMoonData data, @Nullable MoonRiseSetEvent event)
         {
             if (event == null || data == null) {

@@ -154,6 +154,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     public double getLongitude() {
         return getArgs().getDouble(KEY_LONGITUDE, 0);
     }
+    @Nullable
     public String getLongitudeLabel() {
         return getArgs().getString(KEY_LONGITUDE_LABEL);
     }

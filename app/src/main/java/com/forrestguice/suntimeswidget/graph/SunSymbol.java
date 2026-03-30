@@ -18,12 +18,14 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 
 public enum SunSymbol
 {
     CIRCLE, CROSS, DOT, LINE;
 
+    @Nullable
     public static SunSymbol valueOfOrNull(String name)
     {
         try {

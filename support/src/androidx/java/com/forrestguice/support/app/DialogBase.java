@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
@@ -54,7 +55,7 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         return com.google.android.material.R.id.touch_outside;   // androidx
     }
 
-    public static void disableTouchOutsideBehavior(Dialog dialog)
+    public static void disableTouchOutsideBehavior(@Nullable Dialog dialog)
     {
         Window window = (dialog != null ? dialog.getWindow() : null);
         if (window != null) {

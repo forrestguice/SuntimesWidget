@@ -293,11 +293,13 @@ public class AlarmDatabaseAdapter
      * @param fullEntry true get all alarm data, false get display name only
      * @return a Cursor into the database
      */
+    @Nullable
     public Cursor getAllAlarms(int n, boolean fullEntry)
     {
         String[] QUERY = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
         return getAllAlarms(n, QUERY, null, null);
     }
+    @Nullable
     public Cursor getAllAlarms(int n, boolean fullEntry, boolean enabledOnly)
     {
         String selection = (enabledOnly ? KEY_ALARM_ENABLED + " = ?" : null);    // select enabled
@@ -306,6 +308,7 @@ public class AlarmDatabaseAdapter
         return getAllAlarms(n, query, selection, selectionArgs);
     }
 
+    @Nullable
     public Cursor getAllAlarmsByState(int n, int... alarmState)
     {
         if (database == null) {
@@ -327,6 +330,7 @@ public class AlarmDatabaseAdapter
         return cursor;
     }
 
+    @Nullable
     public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         if (database == null) {
@@ -346,6 +350,7 @@ public class AlarmDatabaseAdapter
      * @return a Cursor into the database
      * @throws SQLException if query failed
      */
+    @Nullable
     public Cursor getAlarm(long row) throws SQLException
     {
         if (database == null) {
@@ -361,6 +366,7 @@ public class AlarmDatabaseAdapter
         }
         return cursor;
     }
+    @Nullable
     public Cursor getAlarm(long row, @NonNull String[] columns, @Nullable String selection, @Nullable String[] selectionArgs) throws SQLException
     {
         if (database == null) {
@@ -378,9 +384,11 @@ public class AlarmDatabaseAdapter
         return cursor;
     }
 
+    @Nullable
     public Long findUpcomingAlarmId(long nowMillis) throws SQLException {
         return findUpcomingAlarmId(nowMillis, new String[] { AlarmType.ALARM.name() });
     }
+    @Nullable
     public Long findUpcomingAlarmId(long nowMillis, @Nullable String[] types) throws SQLException
     {
         if (database == null) {
@@ -448,6 +456,7 @@ public class AlarmDatabaseAdapter
      * @return a Cursor into the database
      * @throws SQLException if query failed
      */
+    @Nullable
     public Cursor getAlarmState(long row) throws SQLException
     {
         if (database == null) {
@@ -463,7 +472,8 @@ public class AlarmDatabaseAdapter
         }
         return cursor;
     }
-    public Cursor getAlarmState(long row, String selection, String[] selectionArgs) throws SQLException
+    @Nullable
+    public Cursor getAlarmState(long row, @Nullable String selection, @Nullable String[] selectionArgs) throws SQLException
     {
         if (database == null) {
             throw new IllegalStateException(MSG_ILLEGAL_STATE);
@@ -794,6 +804,7 @@ public class AlarmDatabaseAdapter
             return new AlarmItemTaskResult(true, item, new AlarmClockItem[] { item } );
         }
 
+        @Nullable
         public static AlarmClockItem loadAlarmClockItem(Context context, AlarmDatabaseAdapter db, long rowId)
         {
             AlarmClockItem item = null;

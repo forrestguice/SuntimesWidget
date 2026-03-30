@@ -118,7 +118,7 @@ public class AlarmButton extends RelativeLayout
         return activated;
     }
 
-    protected void initLocale(Context context, AttributeSet attrs)
+    protected void initLocale(Context context, @Nullable AttributeSet attrs)
     {
         isRtl = AppSettings.isLocaleRtl(context);
 
@@ -138,7 +138,7 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
-    protected void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    protected void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         initLocale(context, attrs);
         LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
@@ -271,7 +271,9 @@ public class AlarmButton extends RelativeLayout
             }
         });
 
-        applyAttributes(context, attrs);
+        if (attrs != null) {
+            applyAttributes(context, attrs);
+        }
     }
 
     protected void applyAttributes(Context context, AttributeSet attrs)

@@ -106,6 +106,7 @@ public class ActionListHelper
         return (fragments != null ? fragments.getFragmentManagerCompat() : null);
     }
 
+    @Nullable
     protected Context getContext() {
         FragmentManagerProvider fragments = contextRef.get();
         return (fragments != null ? fragments.getContext() : null);
@@ -164,6 +165,7 @@ public class ActionListHelper
         }
     }
 
+    @Nullable
     public String getIntentID()
     {
         if (list != null) {
@@ -172,6 +174,7 @@ public class ActionListHelper
         } else return null;
     }
 
+    @Nullable
     public String getIntentTitle()
     {
         if (list != null) {
@@ -523,6 +526,7 @@ public class ActionListHelper
             return selectedItem;
         }
 
+        @Nullable
         public ActionDisplay findItemByID(String actionID)
         {
             for (int i=0; i<getCount(); i++)

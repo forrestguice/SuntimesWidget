@@ -251,6 +251,7 @@ public class SuntimesNotes
         return currentNote;
     }
 
+    @Nullable
     public NoteData getNote(int noteIndex)
     {
         if (noteIndex >=0 && noteIndex < notesList.size())
@@ -782,6 +783,7 @@ public class SuntimesNotes
         }
     }
 
+    @Nullable
     public NoteData getNote(String eventID)
     {
         //Log.d("DEBUG", "getNote: " + eventID);

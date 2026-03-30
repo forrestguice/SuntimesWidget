@@ -517,6 +517,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         return (label == null || label.isEmpty() ? emptyLabel : label);
     }
 
+    @Nullable
     public Calendar getCalendar()
     {
         if (timestamp >= 0) {
@@ -539,6 +540,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         String value = getActionID(actionNum);
         return (value != null && !value.trim().isEmpty());
     }
+    @Nullable
     @Override
     public String getActionID(int actionNum)
     {
@@ -606,6 +608,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         }
     }
 
+    @Nullable
     @Override
     public String getAlarmFlags()
     {
@@ -731,6 +734,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
      * getRepeatingDays
      * @return a stringlist representation of repeatingDays Array (e.g. "0,1,2,3");
      */
+    @Nullable
     @Override
     public String getRepeatingDays()
     {

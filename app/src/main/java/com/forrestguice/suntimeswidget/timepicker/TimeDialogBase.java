@@ -56,9 +56,9 @@ public abstract class TimeDialogBase extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(getDialogLayoutResID(), parent, false);
-        initViews(getContext(), dialogContent);
+        initViews(requireContext(), dialogContent);
         if (savedState != null) {
             loadSettings(savedState);
         }
@@ -247,11 +247,17 @@ public abstract class TimeDialogBase extends BottomSheetDialogBase
     public abstract TimeDialogResult getSelected();
     public interface TimeDialogResult
     {
+        @Nullable
         Integer getYear();
+        @Nullable
         Integer getMonth();
+        @Nullable
         Integer getDay();
+        @Nullable
         Integer getHour();
+        @Nullable
         Integer getMinute();
+        @Nullable
         Integer getSecond();
     }
 

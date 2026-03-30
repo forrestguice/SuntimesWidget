@@ -350,6 +350,7 @@ public class LightGraphBitmap
         }
     }
 
+    @Nullable
     private float[][] createPathPoints(Canvas c, LightGraphOptions options)
     {
         EarliestLatestSunriseSunsetData data = options.earliestLatestData;
@@ -804,7 +805,7 @@ public class LightGraphBitmap
         return path;
     }
 
-    protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         if (calendar != null)
         {
@@ -818,14 +819,14 @@ public class LightGraphBitmap
      * @param day day_of_year
      * @param hour lmt_hour
      */
-    protected void drawPoint(double day, double hour, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(double day, double hour, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         float x = (float) daysToBitmapCoords(c, day, options);
         float y = (float) hoursToBitmapCoords(c, hour, options);
         drawPoint(x, y, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
     }
 
-    protected void drawPoint(float x, float y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(float x, float y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         p.setStyle(Paint.Style.FILL);
         p.setColor(fillColor);
@@ -842,7 +843,7 @@ public class LightGraphBitmap
         c.drawCircle(x, y, radius, p);
     }
 
-    protected void drawVerticalLine(@Nullable Calendar calendar, Canvas c, Paint p, int lineWidth, int lineColor, DashPathEffect lineEffect)
+    protected void drawVerticalLine(@Nullable Calendar calendar, Canvas c, Paint p, int lineWidth, int lineColor, @Nullable DashPathEffect lineEffect)
     {
         if (calendar != null)
         {

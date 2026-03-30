@@ -543,7 +543,7 @@ public class MoonDialog extends BottomSheetDialogBase
             LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(dateTime);
+            SuntimesCalculator.MoonPosition position = (calculator != null ? calculator.getMoonPosition(dateTime) : null);
             if (position != null)
             {
                 ColorValues colors = moonapsis.getColors();
@@ -1242,7 +1242,7 @@ public class MoonDialog extends BottomSheetDialogBase
         context.startActivity(intent);
     }
 
-    protected void shareItem(Context context, Intent itemData)
+    protected void shareItem(Context context, @Nullable Intent itemData)
     {
         String eventID = (itemData != null && itemData.hasExtra("event") ? itemData.getStringExtra("event") : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;

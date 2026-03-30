@@ -433,6 +433,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
         return ((graph.getNow() == -1) ? now : graph.getNow() + offsetMillis);
     }
 
+    @Nullable
     protected Calendar getCalendar(Context context, int day, double hour)
     {
         SuntimesRiseSetDataset data0 = (graph != null ? graph.getData0() : null);

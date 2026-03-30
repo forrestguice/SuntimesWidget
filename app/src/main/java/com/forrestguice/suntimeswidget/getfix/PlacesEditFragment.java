@@ -168,6 +168,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             else return R.color.red_a200;
         }
 
+        @Nullable
         protected Integer getColorForAccuracy(Context context, double accuracy)
         {
             /*if (accuracy <= 0) return null;
@@ -800,7 +801,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateViews(Location location)
+    private void updateViews(@Nullable Location location)
     {
         if (text_locationName == null || text_locationLat == null || text_locationLon == null || text_locationAlt == null) {
             return;
@@ -812,7 +813,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             text_locationName.setText("");
             text_locationAlt.setText("");
 
-        } else {
+        } else if (location != null) {
             text_locationLat.setText(location.getLatitude());
             text_locationLon.setText(location.getLongitude());
             text_locationName.setText(location.getLabel());
@@ -824,7 +825,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
             updateAltitudeLabel(getContext());
         }
     }
-    private void updateComment(String comment)
+    private void updateComment(@Nullable String comment)
     {
         if (text_locationComment != null) {
             text_locationComment.setText((item == null || comment == null) ? "" : comment);

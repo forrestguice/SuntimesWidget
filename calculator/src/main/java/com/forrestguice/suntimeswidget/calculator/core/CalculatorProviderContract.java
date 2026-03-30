@@ -429,6 +429,7 @@ public interface CalculatorProviderContract
     String COLUMN_SEASON_YEAR = "season_year";               // int (year, e.g. 2022)
     String COLUMN_SEASON_TROPICAL_YEAR_LENGTH = "season_tropical_year";           // long (millisecond duration)
 
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated String COLUMN_SEASON_VERNAL = "season_vernal";           // long (timestamp)
     String COLUMN_SEASON_SPRING = "season_spring";           // long (timestamp)
     String COLUMN_SEASON_SUMMER = "season_summer";           // long (timestamp)

@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 
@@ -50,7 +51,7 @@ public class PlaceTags
     public static HashMap<String, String> loadTagMap(Context context) {
         return loadTagMap(context, null, ALL_TAG_ARRAYS);
     }
-    public static HashMap<String, String> loadTagMap(Context context, HashMap<String, String> map, int... arrayResID)
+    public static HashMap<String, String> loadTagMap(Context context, @Nullable HashMap<String, String> map, int... arrayResID)
     {
         if (map == null) {
             map = new HashMap<>();
@@ -60,7 +61,7 @@ public class PlaceTags
         }
         return map;
     }
-    public static HashMap<String, String> loadTagMap(Context context, int arrayResID, HashMap<String, String> map)
+    public static HashMap<String, String> loadTagMap(Context context, int arrayResID, @Nullable HashMap<String, String> map)
     {
         if (map == null) {
             map = new HashMap<>();

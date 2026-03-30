@@ -178,8 +178,10 @@ public class WelcomeAdapter extends PagerAdapter
     {
         Log.d("DEBUG", "WelcomeAdapter.onRestoreInstanceState");
         int[] viewIDs = bundle.getIntArray(KEY_VIEWIDS);
-        for (int i=0; i<pages.size(); i++) {
-            pages.get(i).setViewID(viewIDs[i]);
+        if (viewIDs != null) {
+            for (int i = 0; i < pages.size(); i++) {
+                pages.get(i).setViewID(viewIDs[i]);
+            }
         }
     }
 

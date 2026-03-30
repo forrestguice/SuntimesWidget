@@ -107,7 +107,7 @@ public class SunSymbolBitmap
         }
     }
 
-    public static void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    public static void drawPoint(int x, int y, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         p.setStyle(Paint.Style.FILL);
         p.setColor(fillColor);

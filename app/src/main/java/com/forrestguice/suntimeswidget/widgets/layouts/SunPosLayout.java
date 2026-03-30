@@ -73,6 +73,7 @@ public abstract class SunPosLayout extends PositionLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
+    @Nullable
     protected SuntimesCalculator.SunPosition updateLabels(Context context, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         Calendar now = dataset.now();
