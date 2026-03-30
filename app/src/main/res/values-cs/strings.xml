@@ -156,16 +156,19 @@
         <item quantity="one">v</item>
         <item quantity="other">v</item>
         <item quantity="few">ve</item>
+        <item quantity="many">ve</item>   <!-- TODO: verify -->
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s před</item>
         <item quantity="other">%1$s před</item>
         <item quantity="few">%1$s před</item>
+        <item quantity="many">%1$s před</item>   <!-- TODO: verify -->
     </plurals>
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s po</item>
         <item quantity="other">%1$s po</item>
         <item quantity="few">%1$s po</item>
+        <item quantity="many">%1$s po</item>   <!-- TODO: verify -->
     </plurals>
 
     <string name="offset_before_msg">%1$s před %2$s</string>     <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
@@ -255,6 +258,7 @@
         <item quantity="one">%s stopa</item>
         <item quantity="other">%s stopy</item>
         <item quantity="few">%s stop</item>
+        <item quantity="many">%s stop</item>    <!-- TODO: verify -->
     </plurals>
 
     <string name="units_miles">míle</string>
@@ -263,6 +267,7 @@
         <item quantity="one">%s míle</item>
         <item quantity="other">%s mil</item>
         <item quantity="few">%s míle</item>
+        <item quantity="many">%s míle</item>    <!-- TODO: verify -->
     </plurals>
 
     <string name="units_meters">metry</string>
@@ -271,6 +276,7 @@
         <item quantity="one">%s metr</item>
         <item quantity="other">%s metrů</item>
         <item quantity="few">%s metry</item>
+        <item quantity="many">%s metry</item>    <!-- TODO: verify -->
     </plurals>
 
     <string name="units_kilometers">kilometry</string>
@@ -279,6 +285,7 @@
         <item quantity="one">%s kilometr</item>
         <item quantity="other">%s kilometrů</item>
         <item quantity="few">%s kilometry</item>
+        <item quantity="many">%s kilometry</item>    <!-- TODO: verify -->
     </plurals>
 
     <!--
@@ -947,6 +954,7 @@
         <item quantity="one">%d event</item>
         <item quantity="other">%d events</item>
         <item quantity="few">%d events</item>
+        <item quantity="many">%d events</item>
     </plurals>   <!-- TODO -->
 
     <string name="events_editevent_dialog_id_label">ID</string>    <!-- TODO -->
@@ -1082,6 +1090,7 @@
         <item quantity="one">%d alarm</item>
         <item quantity="other">%d alarms</item>
         <item quantity="few">%d alarms</item>
+        <item quantity="many">%d alarms</item>
     </plurals>   <!-- TODO -->
 
     <string name="alarms_label_dismissChallenge">Dismiss Challenge</string>            <!-- pref title -->   <!-- TODO -->
@@ -1217,25 +1226,28 @@
         <item quantity="one">%d hodina</item>
         <item quantity="other">%d hodin</item>
         <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodiny</item>    <!-- TODO: verify -->
     </plurals>
 
     <plurals name="time_units_minutes">
         <item quantity="one">%d minuta</item>
         <item quantity="other">%d minut</item>
         <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minuty</item>   <!-- TODO: verify -->
     </plurals>
 
     <plurals name="time_units_seconds">
         <item quantity="one">%d sekunda</item>
         <item quantity="other">%d sekund</item>
         <item quantity="few">%d sekundy</item>
+        <item quantity="many">%d sekundy</item>   <!-- TODO: verify -->
     </plurals>
 
     <plurals name="time_units_days">
         <item quantity="one">%s den</item>
         <item quantity="other">%s dní</item>
         <item quantity="few">%s dny</item>
-        <!--<item quantity="many">%s dne</item>-->
+        <item quantity="many">%s dne</item>    <!-- TODO: verify -->
     </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="alarms_label_alarmMisc">Různé</string>
@@ -1278,6 +1290,7 @@
         <item quantity="one">%d cycle</item>    <!-- TODO -->
         <item quantity="other">%d cycles</item>    <!-- TODO -->
         <item quantity="few">%d cycles</item>    <!-- TODO -->
+        <item quantity="many">%d cycles</item>    <!-- TODO -->
     </plurals>
     <string name="bedtime_cycleNone">None</string>  <!-- TODO -->
 
@@ -1377,11 +1390,13 @@
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>
         <item quantity="few">%d items</item>
+        <item quantity="many">%d items</item>
     </plurals>  <!-- TODO -->
     <plurals name="widgetPlural">
         <item quantity="one">%d widget</item>
         <item quantity="other">%d widgets</item>
         <item quantity="few">%d widgets</item>
+        <item quantity="many">%d widgets</item>
     </plurals>  <!-- TODO -->
 
     <!-- App Setting: Places -->
@@ -1395,6 +1410,7 @@
         <item quantity="one">%d místo</item>
         <item quantity="other">%d místa</item>
         <item quantity="few">%d místa</item>
+        <item quantity="many">%d místa</item>
     </plurals>
 
     <string name="places_action_addPlace">Přidat</string>              <!-- button (contentDescription) -->
@@ -1974,6 +1990,7 @@
         <item quantity="one">Misto bylo odstraněno.</item>
         <item quantity="other">%d místa byla odstraněna.</item>
         <item quantity="few">%d míst bylo odstraněno.</item>
+        <item quantity="many">%d míst bylo odstraněno.</item>   <!-- TODO: verify -->
     </plurals>
     <string name="locationdelete_dialog_ok">Odstranit</string>
     <string name="locationdelete_dialog_cancel">Zrušit</string>
@@ -2020,6 +2037,7 @@
         <item quantity="one">%d téma</item>
         <item quantity="other">%d témat</item>
         <item quantity="few">%d témata</item>
+        <item quantity="many">%d témata</item>  <!-- TODO: verify -->
     </plurals>
 
     <!-- Dialog: Color -->
