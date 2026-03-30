@@ -25,9 +25,11 @@ import android.net.Uri;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.events.EventAlias;
 import com.forrestguice.suntimeswidget.events.EventItemResolver;
+import com.forrestguice.annotation.Nullable;
 
 public class AndroidEventAliasResolver implements EventItemResolver
 {
+    @Nullable
     public String resolveSummary(Object contextObj, EventAlias alias)
     {
         Context context = (Context) contextObj;

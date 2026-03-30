@@ -1610,7 +1610,7 @@ public class SuntimesUtils
     }
 
     @Nullable
-    public static Drawable tintDrawableCompat(Drawable d, int color)
+    public static Drawable tintDrawableCompat(@Nullable Drawable d, int color)
     {
         if (d != null)
         {
@@ -1653,7 +1653,7 @@ public class SuntimesUtils
     }
 
     @Nullable
-    public static Drawable tintDrawable(GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    public static Drawable tintDrawable(@Nullable GradientDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (drawable != null)
         {
@@ -1664,7 +1664,7 @@ public class SuntimesUtils
     }
 
     @Nullable
-    public static Drawable tintDrawable(LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    public static Drawable tintDrawable(@Nullable LayerDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (drawable != null)
         {
@@ -1700,7 +1700,7 @@ public class SuntimesUtils
      * @param pxValues true w and h are in pixels, false w and h are in dp
      * @return a Bitmap measuring w,h of the specified drawable
      */
-    public static Bitmap drawableToBitmap(Context context, Drawable drawable, int w, int h, boolean pxValues)
+    public static Bitmap drawableToBitmap(Context context, @Nullable Drawable drawable, int w, int h, boolean pxValues)
     {
         if (drawable instanceof BitmapDrawable)
         {
@@ -1735,7 +1735,7 @@ public class SuntimesUtils
      * @param view the View to trigger the accessibility event
      * @param msg text that will be read aloud (if accessibility enabled)
      */
-    public static void announceForAccessibility(View view, CharSequence msg)
+    public static void announceForAccessibility(@Nullable View view, @Nullable CharSequence msg)
     {
         if (view != null && msg != null)
         {

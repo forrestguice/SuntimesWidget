@@ -468,7 +468,7 @@ public class AlarmListDialog extends DialogBase
     }
 
     @SuppressLint("WrongConstant")
-    public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
+    public void offerUndoDeleteAlarm(Context context, @Nullable final AlarmClockItem deletedItem)
     {
         View view = getView();
         if (context != null && view != null && deletedItem != null)
@@ -503,7 +503,7 @@ public class AlarmListDialog extends DialogBase
         return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, @Nullable Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, @Nullable String event, @Nullable Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, @Nullable Uri ringtoneUri, @Nullable String ringtoneName, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();

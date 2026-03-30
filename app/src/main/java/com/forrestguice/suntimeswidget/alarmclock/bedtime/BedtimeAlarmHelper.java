@@ -125,7 +125,7 @@ public class BedtimeAlarmHelper
         return alarmItem;
     }
 
-    public static AlarmClockItem createBedtimeEventItem(final Context context, String slot, @Nullable final BedtimeItem item, int hour, int minute, long offset)
+    public static AlarmClockItem createBedtimeEventItem(final Context context, @Nullable String slot, @Nullable final BedtimeItem item, int hour, int minute, long offset)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
         AlarmClockItem alarmItem = AlarmListDialog.createAlarm(context, AlarmType.NOTIFICATION1,

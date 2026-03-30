@@ -136,11 +136,13 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event Label */
+    @Nullable
     protected String label = null;
+    @Nullable
     public String getEventLabel() {
         return (edit_label != null ? edit_label.getText().toString() : label);
     }
-    public void setEventLabel(String value) {
+    public void setEventLabel(@Nullable String value) {
         label = value;
         if (edit_label != null) {
             edit_label.setText(label != null ? label : eventID);
@@ -160,22 +162,26 @@ public class EditEventDialog extends EditBottomSheetDialog
     }
 
     /* Event Uri */
+    @Nullable
     protected String uri = null;
+    @Nullable
     public String getEventUri() {
         return uri;
     }
-    public void setEventUri(String value) {
+    public void setEventUri(@Nullable String value) {
         uri = value;
         if (edit_uri != null) {
             edit_uri.setText(uri);
         }
     }
 
+    @Nullable
     protected String uri1 = null;
+    @Nullable
     public String getEventUri1() {
         return uri1;
     }
-    public void setEventUri1(String value) {
+    public void setEventUri1(@Nullable String value) {
         uri1 = value;
         if (edit_uri1 != null) {
             edit_uri1.setText(uri1);

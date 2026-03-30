@@ -264,6 +264,7 @@ public class CalendarFormatDialog extends DialogBase
             updateViews(getContext());
         }
     }
+    @Nullable
     public String getFormatPattern() {
         return getArgs().getString(PREF_KEY_CALENDAR_FORMATPATTERN);
     }

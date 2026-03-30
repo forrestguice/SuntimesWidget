@@ -265,6 +265,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
             }
         }
     }
+    @Nullable
     public String getChoice() { return choice; }
 
     @Nullable

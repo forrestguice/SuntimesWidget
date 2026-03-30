@@ -213,7 +213,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     @Nullable
     private ColorValuesSheetFragment colorSheet;
 
-    public void updateFilterVisibility(Context context)
+    public void updateFilterVisibility(@Nullable Context context)
     {
         if (check_filter != null) {
             check_filter.setVisibility((colorSheet != null && colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT && hasFilter())

@@ -39,6 +39,8 @@ import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 
 import java.util.Calendar;
 
+import androidx.annotation.Nullable;
+
 /**
  *  Alarm widget
  */
@@ -143,6 +145,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         return layout;
    }
 
+   @Nullable
     public static AlarmClockItem loadAlarmClockItem(Context context, long rowID)
     {
         long bench_start = System.nanoTime();
@@ -155,6 +158,7 @@ public class AlarmWidget0 extends SuntimesWidget0
         return item;
     }
 
+    @Nullable
     public static Long findUpcomingAlarmId(Context context, long now, String[] types)
     {
         AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(context);

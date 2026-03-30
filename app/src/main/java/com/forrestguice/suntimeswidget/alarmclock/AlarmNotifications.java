@@ -627,7 +627,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return filter;
     }
 
-    public static Intent getAlarmListIntent(Context context, Long selectedAlarmId)
+    public static Intent getAlarmListIntent(Context context, @Nullable Long selectedAlarmId)
     {
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -2165,7 +2165,7 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        public static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
+        public static Intent getNotificationIntent(Context context, String action, @Nullable Uri data, @Nullable Bundle extras)
         {
             Intent intent = new Intent(context, NotificationService.class);
             intent.setAction(action);

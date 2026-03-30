@@ -187,7 +187,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         }
     }
 
-    protected void selectColorID( String colorID )
+    protected void selectColorID( @Nullable String colorID )
     {
         Intent intent = createReturnIntent();
         intent.putExtra(EXTRA_SELECTED_COLORS_ID, colorID);

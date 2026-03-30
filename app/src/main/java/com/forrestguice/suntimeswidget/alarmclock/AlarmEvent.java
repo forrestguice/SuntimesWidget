@@ -225,6 +225,7 @@ public class AlarmEvent
             return getTitle();
         }
 
+        @Nullable
         public String getEventID() {
             return (event != null ? event.name() : uri);
         }
@@ -362,7 +363,7 @@ public class AlarmEvent
         }
     }
 
-    public static void adjustIcon(Context context, int iconRes, ImageView iconView, int[] dimen, int marginDp, Integer color)
+    public static void adjustIcon(Context context, int iconRes, ImageView iconView, int[] dimen, int marginDp, @Nullable Integer color)
     {
         Resources resources = iconView.getContext().getResources();
         ViewGroup.LayoutParams iconParams = iconView.getLayoutParams();

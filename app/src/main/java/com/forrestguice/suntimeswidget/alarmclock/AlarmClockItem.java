@@ -219,7 +219,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         out.writeParcelable(state, 0);
     }
 
-    public void fromContentValues(Context context, ContentValues alarm)
+    public void fromContentValues(@Nullable Context context, ContentValues alarm)
     {
         rowID = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ROWID) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID) : -1L);
         type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
@@ -693,13 +693,14 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         }
     }
 
+    @Nullable
     @Override
     public AlarmType getType() {
         return type;
     }
 
     @Override
-    public void setType(AlarmType type) {
+    public void setType(@Nullable AlarmType type) {
         this.type = type;
     }
 
@@ -764,6 +765,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         } else return null;
     }
 
+    @Nullable
     @Override
     public ArrayList<Integer> getRepeatingDaysArray() {
         return repeatingDays;

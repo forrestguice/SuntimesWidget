@@ -514,6 +514,7 @@ public class AlarmSettings
         return ringtoneName;
     }
 
+    @Nullable
     public static String getRingtoneTitle(@NonNull Context context, @NonNull Uri uri, @NonNull Ringtone ringtone, boolean isAudioFile)
     {
         String ringtoneTitle = ringtone.getTitle(context);

@@ -43,6 +43,7 @@ public class BedtimeItem
         return type;
     }
 
+    @Nullable
     public Long getAlarmID(Context context) {
         return ((slot != null) ? alarmId = BedtimeSettings.loadAlarmID(context, getSlot()) : null);
     }

@@ -288,7 +288,8 @@ public class AlarmAddon
         Uri uri = Uri.parse(eventUri);
         PackageManager packageManager = context.getPackageManager();
         try {
-            ProviderInfo providerInfo = packageManager.resolveContentProvider(uri.getAuthority(), 0);
+            String authority = uri.getAuthority();
+            ProviderInfo providerInfo = (authority != null ? packageManager.resolveContentProvider(authority, 0) : null);
             if (providerInfo != null)
             {
                 PackageInfo packageInfo = packageManager.getPackageInfo(providerInfo.packageName, PackageManager.GET_PERMISSIONS);

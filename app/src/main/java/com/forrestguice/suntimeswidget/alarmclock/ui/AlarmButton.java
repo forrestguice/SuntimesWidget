@@ -336,7 +336,7 @@ public class AlarmButton extends RelativeLayout
         return ((thumb.getX() <= dragHint.getX() + dragHint.getWidth() / 2f));
     }
 
-    protected void animateActivated(boolean value, final AnimatorListenerAdapter listener)
+    protected void animateActivated(boolean value, @Nullable final AnimatorListenerAdapter listener)
     {
         int duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         AnimatorListenerAdapter l = (value ? new AnimatorListenerAdapter()    // to active
@@ -424,7 +424,7 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
-    protected void animateReturnThumb(float x, float y, final AnimatorListenerAdapter listener)
+    protected void animateReturnThumb(float x, float y, @Nullable final AnimatorListenerAdapter listener)
     {
         int duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         thumb.animate().x(x).y(y).setDuration(duration).setInterpolator(new OvershootInterpolator()).setListener(new AnimatorListenerAdapter()

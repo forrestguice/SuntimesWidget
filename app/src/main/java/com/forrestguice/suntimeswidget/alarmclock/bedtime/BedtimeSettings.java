@@ -363,6 +363,7 @@ public class BedtimeSettings
      * @param enabled true set rule enabled, false set rule disabled
      * @return ruleID
      */
+    @Nullable
     public static String setAutomaticZenRule(Context context, boolean enabled)
     {
         NotificationManager notifications = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -405,7 +406,8 @@ public class BedtimeSettings
     }
 
     public static final String PREF_KEY_ZENRULE_ID = "zenruleid";
-    public static String saveRecentAutomaticZenRuleID(Context context, String id)
+    @Nullable
+    public static String saveRecentAutomaticZenRuleID(Context context, @Nullable String id)
     {
         Log.d("DEBUG", "saveRecentAutomaticZenRuleID: " + id);
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -413,6 +415,7 @@ public class BedtimeSettings
         prefs.apply();
         return id;
     }
+    @Nullable
     public static String getRecentAutomaticZenRuleID(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(PREF_KEY_ZENRULE_ID, null);

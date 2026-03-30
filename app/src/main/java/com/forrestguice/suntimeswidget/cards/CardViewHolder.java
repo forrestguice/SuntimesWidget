@@ -597,7 +597,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         return new Pair<>(label, null);
     }
 
-    protected void updateHeaderViews(Context context, Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
+    protected void updateHeaderViews(Context context, @Nullable Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
     {
         int textVisibility = (options.showHeaderText != AppSettings.HEADER_TEXT_NONE ? View.VISIBLE : View.GONE);
         header_sunrise.setVisibility(textVisibility);

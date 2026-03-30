@@ -61,7 +61,8 @@ public enum AlarmType
         NOTIFICATION2.setDisplayString(context.getString(r.string_alarmMode_notification2()));
     }
 
-    public static AlarmType valueOf(@Nullable String value, AlarmType defaultType)
+    @Nullable
+    public static AlarmType valueOf(@Nullable String value, @Nullable AlarmType defaultType)
     {
         AlarmType retValue = defaultType;
         if (value != null)

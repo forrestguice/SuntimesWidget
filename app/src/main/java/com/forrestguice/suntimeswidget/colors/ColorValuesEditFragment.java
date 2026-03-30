@@ -296,10 +296,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
          return colorValues;
     }
 
+    @Nullable
     protected ColorValues defaultValues = null;
-    public void setDefaultValues(ColorValues v) {
+    public void setDefaultValues(@Nullable ColorValues v) {
         defaultValues = v;
     }
+    @Nullable
     public ColorValues getDefaultValues() {
         return defaultValues;
     }
@@ -490,7 +492,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public static final int REQUEST_IMPORT_THEME = 1000;
     protected ActivityResultLauncherCompat startActivityForResult_importTheme = registerForActivityResultCompat(REQUEST_IMPORT_THEME);
     protected void importFromTheme(Context context) {
-        startActivityForResult_importTheme.launch(pickThemeIntent());
+        Intent intent = pickThemeIntent();
+        if (intent != null) {
+            startActivityForResult_importTheme.launch(intent);
+        }
     }
     @Nullable
     protected Intent pickThemeIntent() {

@@ -49,6 +49,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileBase;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.android.AndroidResources;
 
@@ -105,7 +106,10 @@ public class AlarmWidgetService extends RemoteViewsService
             if (intent != null) {
                 appWidgetID = intent.getIntExtra(EXTRA_APPWIDGETID, 0);
                 if (intent.hasExtra(EXTRA_LAYOUTMODE)) {
-                    layoutMode = intent.getStringExtra(EXTRA_LAYOUTMODE);
+                    String m = intent.getStringExtra(EXTRA_LAYOUTMODE);
+                    if (m != null) {
+                        layoutMode = m;
+                    }
                 }
             }
         }
@@ -232,6 +236,7 @@ public class AlarmWidgetService extends RemoteViewsService
             return view;
         }
 
+        @Nullable
         @Override
         public RemoteViews getLoadingView() {
             return null;

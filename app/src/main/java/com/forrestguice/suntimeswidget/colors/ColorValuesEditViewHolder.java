@@ -50,7 +50,7 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
         text1 = (TextView) itemView.findViewById(android.R.id.text1);
     }
 
-    public void bindColorToView(Context context, ColorValues values, String key)
+    public void bindColorToView(Context context, ColorValues values, @Nullable String key)
     {
         if (key != null)
         {
@@ -135,7 +135,7 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
     }
 
     @Nullable
-    public static Integer getContrastingColor(ColorValues colorValues, String key, Integer defaultValue)
+    public static Integer getContrastingColor(ColorValues colorValues, String key, @Nullable Integer defaultValue)
     {
         String k;
         switch (colorValues.getRole(key))

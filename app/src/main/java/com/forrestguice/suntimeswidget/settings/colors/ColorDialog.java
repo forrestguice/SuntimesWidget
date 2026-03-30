@@ -367,7 +367,7 @@ public class ColorDialog extends BottomSheetDialogBase
     }
 
     private final ArrayList<Integer> recentColors_list = new ArrayList<>();
-    public void setRecentColors(ArrayList<Integer> colors)
+    public void setRecentColors(@Nullable ArrayList<Integer> colors)
     {
         recentColors_list.clear();
 

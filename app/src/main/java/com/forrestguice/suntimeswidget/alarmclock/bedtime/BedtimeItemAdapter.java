@@ -261,7 +261,7 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
         }
     }
 
-    protected void attachClickListeners(final Context context, final BedtimeViewHolder holder, final BedtimeItem item)
+    protected void attachClickListeners(final Context context, final BedtimeViewHolder holder, @Nullable final BedtimeItem item)
     {
         holder.attachClickListeners(context, item);
 
@@ -335,8 +335,8 @@ public class BedtimeItemAdapter extends RecyclerView.Adapter<BedtimeViewHolder>
      * AdapterListener
      */
     public interface AdapterListener {
-        void onItemClick(BedtimeViewHolder holder, BedtimeItem item);
-        void onItemAction(BedtimeViewHolder holder, BedtimeItem item);
-        void onItemConfigure(BedtimeViewHolder holder, BedtimeItem item);
+        void onItemClick(BedtimeViewHolder holder, @Nullable BedtimeItem item);
+        void onItemAction(BedtimeViewHolder holder, @Nullable BedtimeItem item);
+        void onItemConfigure(BedtimeViewHolder holder, @Nullable BedtimeItem item);
     }
 }

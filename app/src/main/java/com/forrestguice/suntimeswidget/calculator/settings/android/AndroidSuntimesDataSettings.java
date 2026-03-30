@@ -1,5 +1,6 @@
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
 import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
@@ -68,6 +69,7 @@ public class AndroidSuntimesDataSettings implements SuntimesDataSettings
         return AndroidCalendarSettings.wrap(context);
     }
 
+    @Nullable
     @Override
     public SuntimesCalculatorDescriptor loadCalculatorModePref(int appWidgetId, String calculatorName) {
         return WidgetSettings.loadCalculatorModePref(context, appWidgetId, calculatorName);
