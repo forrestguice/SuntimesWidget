@@ -470,7 +470,8 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
         {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                int i = items.get(which).first;
+                Pair<Integer,CharSequence> pair = items.get(which);
+                int i = (pair.first != null ? pair.first : 0);
                 checked[i] = isChecked;
             }
         };

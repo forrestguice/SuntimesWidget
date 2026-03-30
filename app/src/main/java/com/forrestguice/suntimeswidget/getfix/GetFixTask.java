@@ -28,6 +28,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -37,6 +38,7 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI.LocationProgress;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.TaskHandler;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -310,7 +312,13 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
     @Nullable
     public Location call() throws Exception
     {
-        ExecutorUtils.getHandler().post(new Runnable()
+        TaskHandler handler = ExecutorUtils.getHandler();
+        if (handler == null) {
+            Log_e(TAG, "null TaskHandler! returning null.");
+            return null;
+        }
+
+        handler.post(new Runnable()
         {
             public void run()
             {

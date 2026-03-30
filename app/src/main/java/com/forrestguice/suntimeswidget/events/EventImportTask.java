@@ -118,7 +118,7 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable EventAlias[] items, Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, @Nullable EventAlias[] items, @Nullable Exception e)
         {
             this.result = result;
             this.items = items;
@@ -133,12 +133,14 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
         }
 
         private final EventAlias[] items;
+        @Nullable
         public EventAlias[] getItems()
         {
             return items;
         }
 
         private final Uri uri;
+        @Nullable
         public Uri getUri()
         {
             return uri;
@@ -149,6 +151,7 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException()
         {
             return e;

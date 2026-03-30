@@ -547,7 +547,8 @@ public class GetFixHelper implements LocationHelper
             this.helper = helper;
         }
 
-        @NonNull @Override
+        @NonNull
+        @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
             final Activity context = requireActivity();

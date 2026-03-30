@@ -64,7 +64,7 @@ public class GnssStatusItemView extends FrameLayout
         updateViews(context, null);
     }
 
-    public void updateViews(Context context, GnssStatusView.SatelliteItem item)
+    public void updateViews(@Nullable Context context, @Nullable GnssStatusView.SatelliteItem item)
     {
         id = (item != null ? item.id : -1);
         constellation = (item != null ? item.constellation : -1);
@@ -104,20 +104,20 @@ public class GnssStatusItemView extends FrameLayout
             check_ephemeris = (CheckBox) itemView.findViewById(R.id.check_satellite_ephemeris);
         }
 
-        public void updateViews(Context context, @Nullable GnssStatusView.SatelliteItem item)
+        public void updateViews(@Nullable Context context, @Nullable GnssStatusView.SatelliteItem item)
         {
             if (text_label != null) {
-                text_label.setText(item != null ? context.getString(R.string.location_label_gnss_labelFormat,
+                text_label.setText(item != null && context != null ? context.getString(R.string.location_label_gnss_labelFormat,
                         GpsDebugDisplay.constellationTypeLabel(item.constellation, false), item.id + "")
                         : "");
             }
             if (text_cnr != null) {
-                text_cnr.setText(item != null ? context.getString(R.string.location_label_gnss_cnrFormat,
+                text_cnr.setText(item != null && context != null ? context.getString(R.string.location_label_gnss_cnrFormat,
                         String.format(Locale.getDefault(), "%.2f", item.cnr))
                         : "");
             }
             if (text_position != null) {
-                text_position.setText(item != null ? context.getString(R.string.location_label_gnss_positionFormat,
+                text_position.setText(item != null && context != null ? context.getString(R.string.location_label_gnss_positionFormat,
                         utils.formatAsDirection(item.azimuth, 2),
                         utils.formatAsElevation(item.elevation, 2).toString())
                         : "");

@@ -161,7 +161,7 @@ public class GnssStatusBarView extends GnssStatusView
             popupItem = null;
         }
     };
-    protected void updateSatellitePopup(Context context) {
+    protected void updateSatellitePopup(@Nullable Context context) {
         if (popupItem != null && adapter != null) {
             SatelliteItem item = adapter.getItem(popupItem.id, popupItem.constellation);
             if (item != null) {
@@ -381,20 +381,21 @@ public class GnssStatusBarView extends GnssStatusView
             void onOptionsChanged(SatelliteViewHolderOptions options);
         }
 
-        public void setAdapterListener(AdapterListener listener) {
+        public void setAdapterListener(@Nullable AdapterListener listener) {
             adapterListener = listener;
         }
         protected boolean hasAdapterListener() {
             return adapterListener != null;
         }
+        @Nullable
         private AdapterListener adapterListener = null;
 
-        protected void notifyItemClicked(View v, SatelliteItem item) {
+        protected void notifyItemClicked(View v, @Nullable SatelliteItem item) {
             if (item != null && adapterListener != null) {
                 adapterListener.onItemClicked(v, SatelliteAdapter.this, item);
             }
         }
-        protected boolean notifyItemLongClicked(View v, SatelliteItem item) {
+        protected boolean notifyItemLongClicked(View v, @Nullable SatelliteItem item) {
             if (item != null && adapterListener != null) {
                 return adapterListener.onItemLongClicked(v, this, item);
             } else return false;

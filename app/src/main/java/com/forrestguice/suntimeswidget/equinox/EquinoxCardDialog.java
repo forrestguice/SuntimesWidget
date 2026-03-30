@@ -46,6 +46,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -368,8 +369,13 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     }
     protected void updateViews(@NonNull Context context, SuntimesEquinoxSolsticeData data)
     {
-        text_title.setText(utils.calendarDateYearDisplayString(AndroidResources.wrap(context), data.eventCalendarThisYear()).toString());
-        text_year_length.setText(styleYearDisplayText(context, data.calculator().getTropicalYearLength(data.calendar())));
+        Calendar calendar = data.eventCalendarThisYear();
+        CharSequence titleDisplay = (calendar != null ? utils.calendarDateYearDisplayString(AndroidResources.wrap(context), calendar).toString() : "");
+        text_title.setText(titleDisplay);
+
+        SuntimesCalculator calculator = data.calculator();
+        CharSequence yearDisplay = (calculator != null ? styleYearDisplayText(context, calculator.getTropicalYearLength(data.calendar())) : "");
+        text_year_length.setText(yearDisplay);
     }
 
     protected CharSequence styleYearDisplayText(@NonNull Context context, long yearLengthMillis)
@@ -707,7 +713,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         context.startActivity(intent);
     }
 
-    protected void shareItem(Context context, Intent itemData)
+    protected void shareItem(Context context, @Nullable Intent itemData)
     {
         SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
         long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
@@ -895,6 +901,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
         }
     };
 
+    @Nullable
     public SolsticeEquinoxMode getSelection() {
         return card_adapter.getSelection();
     }
@@ -929,13 +936,13 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
      */
     public static class EquinoxDialogListener
     {
-        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
+        public void onSetAlarm( @Nullable SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowMoon( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
-        public void onColorsModified(ColorValues values) {}
+        public void onColorsModified( @Nullable ColorValues values ) {}
     }
 
 

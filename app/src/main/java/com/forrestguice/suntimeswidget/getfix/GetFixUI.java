@@ -24,6 +24,8 @@ import android.location.Location;
 
 import com.forrestguice.suntimeswidget.R;
 
+import androidx.annotation.Nullable;
+
 /**
  */
 public abstract class GetFixUI
@@ -66,7 +68,7 @@ public abstract class GetFixUI
      */
     public static class LocationResult extends LocationProgress
     {
-        public LocationResult(Location result, long elapsed, boolean wasCancelled, String log)
+        public LocationResult(@Nullable Location result, long elapsed, boolean wasCancelled, String log)
         {
             super(result, elapsed, log);
             this.wasCancelled = wasCancelled;
@@ -83,7 +85,7 @@ public abstract class GetFixUI
      */
     public static class LocationProgress
     {
-        public LocationProgress(Location location, long elapsed, String log) {
+        public LocationProgress(@Nullable Location location, long elapsed, String log) {
             this.result = location;
             this.elapsed = elapsed;
             this.accuracy = (location != null ? location.getAccuracy() : -1);

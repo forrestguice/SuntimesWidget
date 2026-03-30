@@ -133,7 +133,7 @@ public class GpsDebugDisplay
         if (status != null) {
             for (int i : getSatellites(status, usedInFix)) {
                 int type = status.getConstellationType(i);
-                Integer c0 = (count.containsKey(type) ? count.get(type) : 0);
+                Integer c0 = (count.containsKey(type) ? count.get(type) : Integer.valueOf(0));
                 int c = (c0 != null ? c0 : 0);
                 count.put(type, ++c);
             }
@@ -230,7 +230,7 @@ public class GpsDebugDisplay
         public final int constellation;
         public final T linked;
 
-        public SatelliteInfo(int i, int svid, int constellation, T linked) {
+        public SatelliteInfo(int i, int svid, int constellation, @Nullable T linked) {
             this.i = i;
             this.id = svid;
             this.constellation = constellation;

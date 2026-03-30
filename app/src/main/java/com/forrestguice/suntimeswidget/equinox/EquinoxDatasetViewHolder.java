@@ -63,6 +63,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 
     public View clickArea;
     public View[] clickAreas = new View[4];
+    @Nullable
     public SolsticeEquinoxMode selected = null;
 
     public View container;
@@ -116,10 +117,11 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
         }
     }
 
-    public void setSelected(SolsticeEquinoxMode mode) {
+    public void setSelected(@Nullable SolsticeEquinoxMode mode) {
         this.selected = mode;
         updateItemFocus();
     }
+    @Nullable
     public SolsticeEquinoxMode getSelected() {
         return selected;
     }
@@ -211,7 +213,8 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
 
         if (data.isImplemented() && data.isCalculated())
         {
-            TimeDisplayText titleText = utils.calendarDateYearDisplayString(AndroidResources.wrap(context), data.dataEquinoxSpring.eventCalendarThisYear());
+            Calendar calendar = data.dataEquinoxSpring.eventCalendarThisYear();
+            TimeDisplayText titleText = (calendar != null ? utils.calendarDateYearDisplayString(AndroidResources.wrap(context), calendar) : new TimeDisplayText());
             title.setText(titleText.toString());
 
             boolean showSeconds = !options.minimized || WidgetSettings.loadShowSecondsPref(context, 0);
@@ -304,6 +307,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
     {
         public TextView labelView, timeView, noteView;
         public ImageButton contextMenu;
+        @Nullable
         public Calendar time;
         public boolean highlighted;
         public int pageIndex;
@@ -354,21 +358,21 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
         }
 
-        public void updateDate( Context context, Calendar time )
+        public void updateDate( Context context, @Nullable Calendar time )
         {
             updateDate(context, time, true, false);
         }
-        public void updateDate( Context context, Calendar time, boolean showTime, boolean showSeconds )
+        public void updateDate( Context context, @Nullable Calendar time, boolean showTime, boolean showSeconds )
         {
             this.time = time;
             if (timeView != null)
             {
-                TimeDisplayText timeText = new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), time, showTime, showSeconds);
+                TimeDisplayText timeText = (time != null ? new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), time, showTime, showSeconds) : new TimeDisplayText());
                 timeView.setText(timeText.toString());
             }
         }
 
-        public void updateNote( Context context, Calendar now, boolean showWeeks, boolean showHours )
+        public void updateNote( Context context, @Nullable Calendar now, boolean showWeeks, boolean showHours )
         {
             if (noteView != null)
             {
@@ -446,6 +450,7 @@ public class EquinoxDatasetViewHolder extends RecyclerView.ViewHolder
             noteLayout.setVisibility( visible ? View.VISIBLE : View.GONE );
         }
 
+        @Nullable
         public Calendar getTime() {
             return time;
         }

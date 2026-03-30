@@ -126,6 +126,7 @@ public class EquinoxDatasetAdapter extends RecyclerView.Adapter<EquinoxDatasetVi
     public boolean hasSelection() {
         return (selected_mode != null);
     }
+    @Nullable
     public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }

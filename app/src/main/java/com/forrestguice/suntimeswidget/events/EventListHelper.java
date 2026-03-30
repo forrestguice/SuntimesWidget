@@ -476,7 +476,7 @@ public class EventListHelper
     public EditEventDialog addEvent(EventType type) {
         return addEvent(type, null, null, null);
     }
-    public EditEventDialog addEvent(EventType type, final Double angle, final Double shadowLength, final Double objHeight)
+    public EditEventDialog addEvent(EventType type, @Nullable final Double angle, @Nullable final Double shadowLength, @Nullable final Double objHeight)
     {
         final Context context = getContext();
         final EditEventDialog saveDialog = new EditEventDialog();

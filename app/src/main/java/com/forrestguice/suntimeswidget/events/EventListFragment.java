@@ -83,7 +83,7 @@ public class EventListFragment extends DialogBase
         helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
         helper.setTypeFilter(getArgs().getStringArray(EXTRA_TYPEFILTER));
         helper.setSelectFilter(getArgs().getStringArray(EXTRA_SELECTFILTER));
-        helper.initViews(getActivity(), v, savedState);
+        helper.initViews(v.getContext(), v, savedState);
 
         String preselectedEvent = getArgs().getString(EXTRA_SELECTED);
         if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
@@ -143,8 +143,9 @@ public class EventListFragment extends DialogBase
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.exportEvents(getActivity(), uri);
+                    Context context = getActivity();
+                    if (uri != null && context != null) {
+                        helper.exportEvents(context, uri);
                     }
                 }
                 break;
@@ -153,8 +154,9 @@ public class EventListFragment extends DialogBase
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.importEvents(getActivity(), uri);
+                    Context context = getActivity();
+                    if (uri != null && context != null) {
+                        helper.importEvents(context, uri);
                     }
                 }
                 break;
@@ -166,7 +168,7 @@ public class EventListFragment extends DialogBase
         inflater.inflate(R.menu.eventlist, menu);
     }
 
-    public void showAddEventDialog(EventType type, Double angle, Double shadowLength, Double objectHeight) {
+    public void showAddEventDialog(EventType type, @Nullable Double angle, @Nullable Double shadowLength, @Nullable Double objectHeight) {
         helper.addEvent(type, angle, shadowLength, objectHeight);
     }
 
@@ -357,7 +359,7 @@ public class EventListFragment extends DialogBase
      */
     public interface FragmentListener
     {
-        void onItemPicked(String eventID, String eventUri);
+        void onItemPicked(@Nullable String eventID, @Nullable String eventUri);
     }
 
     protected FragmentListener listener;

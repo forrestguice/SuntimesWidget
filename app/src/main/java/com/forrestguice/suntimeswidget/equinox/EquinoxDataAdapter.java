@@ -196,6 +196,7 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     public boolean hasSelection() {
         return (selected_position != null);
     }
+    @Nullable
     public SolsticeEquinoxMode getSelection() {
         return this.selected_mode;
     }
@@ -206,10 +207,11 @@ public class EquinoxDataAdapter extends RecyclerView.Adapter<EquinoxDataViewHold
     @Nullable
     protected SolsticeEquinoxMode selected_mode = null;
 
-    public void setSelection(Integer position) {
+    public void setSelection(@Nullable Integer position) {
         selected_position = position;
         notifyDataSetChanged();
     }
+    @Nullable
     protected Integer selected_position = null;
 
     private View.OnClickListener onMenuClick(final View v, final int position, final SolsticeEquinoxMode selection, final long selectionTime) {

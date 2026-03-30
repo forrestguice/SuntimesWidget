@@ -130,6 +130,7 @@ public class GetFixDatabaseAdapter
      * @param fullEntry true get all place data, false get display name only
      * @return a Cursor into the database
      */
+    @Nullable
     public Cursor getAllPlaces(int n, boolean fullEntry)
     {
         if (database == null) {
@@ -151,6 +152,7 @@ public class GetFixDatabaseAdapter
      * @return a Cursor into the database
      * @throws SQLException if query failed
      */
+    @Nullable
     public Cursor getPlace(long row) throws SQLException
     {
         if (database == null) {
@@ -168,6 +170,7 @@ public class GetFixDatabaseAdapter
         return cursor;
     }
 
+    @Nullable
     public Cursor getPlace(String name, boolean fullEntry) throws SQLException
     {
         if (database == null) {

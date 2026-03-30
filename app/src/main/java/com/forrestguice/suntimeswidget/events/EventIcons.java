@@ -72,7 +72,7 @@ public class EventIcons
             default: return 0;
         }
     }
-    public static int getIconResID(@Nullable Context context, String tag)
+    public static int getIconResID(@Nullable Context context, @Nullable String tag)
     {
         if (tag != null)
         {
@@ -146,7 +146,7 @@ public class EventIcons
         }
     }
     @Nullable
-    public static Integer getIconTint(@Nullable Context context, String tag) {
+    public static Integer getIconTint(@Nullable Context context, @Nullable String tag) {
         if (tag != null)
         {
             if (tag.startsWith(TAG_ALIAS)) {
@@ -194,13 +194,16 @@ public class EventIcons
         }
     }
 
-    public static Drawable getIconDrawable(Context context, String tag, int width, int height) {
+    @Nullable
+    public static Drawable getIconDrawable(Context context, @Nullable String tag, int width, int height) {
         return getIconDrawable(context, EventIcons.getIconResID(context, tag), width, height, getIconScale(tag), getIconDrawableInset(context, tag), EventIcons.getIconTint(context, tag));
     }
+    @Nullable
     public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward, ColorValues colors) {
         return getIconDrawable(context, EventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), EventIcons.getIconTint(context, event, colors));
     }
-    public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
+    @Nullable
+    public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, @Nullable Integer tint)
     {
         Drawable eventIcon = ContextCompat.getDrawable(context, resID);
         if (eventIcon != null) {
@@ -248,19 +251,22 @@ public class EventIcons
         return defColor;
     }
 
-    public static void tintDrawable(Drawable d, int color)
+    public static void tintDrawable(@Nullable Drawable d, int color)
     {
-        if (Build.VERSION.SDK_INT >= 21) {
-            ContextCompat.setTint(d, color);
-            ContextCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
-        } else {
-            d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        if (d != null) {
+            if (Build.VERSION.SDK_INT >= 21) {
+                ContextCompat.setTint(d, color);
+                ContextCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
+            } else {
+                d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
         }
     }
 
     public static final String TAG_ALIAS = "alias_";
     public static final String TAG_TZ = "tz_";
 
+    @Nullable
     public static String getIconTag(@Nullable Context context, @Nullable String uriString)
     {
         if (uriString == null) {
@@ -287,6 +293,7 @@ public class EventIcons
         return tag;
     }
 
+    @Nullable
     public static String getIconTag(@Nullable Context context, AlarmClockItem item)
     {
         return (item.timezone != null)
