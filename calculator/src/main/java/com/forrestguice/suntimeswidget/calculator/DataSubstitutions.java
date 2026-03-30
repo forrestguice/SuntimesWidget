@@ -193,28 +193,29 @@ public class DataSubstitutions
             return null;
         }
 
+        SuntimesCalculator calculator = data.calculator();
         switch (event)
         {
-            case MIDNIGHT: return data.calculator().getSolarMidnightCalendarForDate(data.calendar());
-            case NOON: return data.calculator().getSolarNoonCalendarForDate(data.calendar());
-            case SUNRISE: return data.calculator().getOfficialSunriseCalendarForDate(data.calendar());
-            case MORNING_CIVIL: return data.calculator().getCivilSunriseCalendarForDate(data.calendar());
-            case MORNING_NAUTICAL: return data.calculator().getNauticalSunriseCalendarForDate(data.calendar());
-            case MORNING_ASTRONOMICAL: return data.calculator().getAstronomicalSunriseCalendarForDate(data.calendar());
-            case MORNING_GOLDEN: return data.calculator().getMorningGoldenHourForDate(data.calendar());
-            case MORNING_BLUE8: return data.calculator().getMorningBlueHourForDate(data.calendar())[0];
-            case MORNING_BLUE4: return data.calculator().getMorningBlueHourForDate(data.calendar())[1];
+            case MIDNIGHT: return (calculator != null ? calculator.getSolarMidnightCalendarForDate(data.calendar()) : null);
+            case NOON: return (calculator != null ? calculator.getSolarNoonCalendarForDate(data.calendar()) : null);
+            case SUNRISE: return (calculator != null ? calculator.getOfficialSunriseCalendarForDate(data.calendar()) : null);
+            case MORNING_CIVIL: return (calculator != null ? calculator.getCivilSunriseCalendarForDate(data.calendar()) : null);
+            case MORNING_NAUTICAL: return (calculator != null ? calculator.getNauticalSunriseCalendarForDate(data.calendar()) : null);
+            case MORNING_ASTRONOMICAL: return (calculator != null ? calculator.getAstronomicalSunriseCalendarForDate(data.calendar()) : null);
+            case MORNING_GOLDEN: return (calculator != null ? calculator.getMorningGoldenHourForDate(data.calendar()) : null);
+            case MORNING_BLUE8: return (calculator != null ? calculator.getMorningBlueHourForDate(data.calendar())[0] : null);
+            case MORNING_BLUE4: return (calculator != null ? calculator.getMorningBlueHourForDate(data.calendar())[1] : null);
 
-            case SUNSET: return data.calculator().getOfficialSunsetCalendarForDate(data.calendar());
-            case EVENING_CIVIL: return data.calculator().getCivilSunsetCalendarForDate(data.calendar());
-            case EVENING_NAUTICAL: return data.calculator().getNauticalSunsetCalendarForDate(data.calendar());
-            case EVENING_ASTRONOMICAL: return data.calculator().getAstronomicalSunsetCalendarForDate(data.calendar());
-            case EVENING_GOLDEN: return data.calculator().getEveningGoldenHourForDate(data.calendar());
-            case EVENING_BLUE4: return data.calculator().getEveningBlueHourForDate(data.calendar())[0];
-            case EVENING_BLUE8: return data.calculator().getEveningBlueHourForDate(data.calendar())[1];
+            case SUNSET: return (calculator != null ? calculator.getOfficialSunsetCalendarForDate(data.calendar()) : null);
+            case EVENING_CIVIL: return (calculator != null ? calculator.getCivilSunsetCalendarForDate(data.calendar()) : null);
+            case EVENING_NAUTICAL: return (calculator != null ? calculator.getNauticalSunsetCalendarForDate(data.calendar()) : null);
+            case EVENING_ASTRONOMICAL: return (calculator != null ? calculator.getAstronomicalSunsetCalendarForDate(data.calendar()) : null);
+            case EVENING_GOLDEN: return (calculator != null ? calculator.getEveningGoldenHourForDate(data.calendar()) : null);
+            case EVENING_BLUE4: return (calculator != null ? calculator.getEveningBlueHourForDate(data.calendar())[0] : null);
+            case EVENING_BLUE8: return (calculator != null ? calculator.getEveningBlueHourForDate(data.calendar())[1] : null);
 
-            case MOONRISE: return data.calculator().getMoonTimesForDate(data.calendar()).riseTime;
-            case MOONSET: return data.calculator().getMoonTimesForDate(data.calendar()).setTime;
+            case MOONRISE: return (calculator != null ? calculator.getMoonTimesForDate(data.calendar()).riseTime : null);
+            case MOONSET: return (calculator != null ? calculator.getMoonTimesForDate(data.calendar()).setTime : null);
             case MOONNOON:
                 if (data instanceof SuntimesMoonData) {
                     return ((SuntimesMoonData) data).getLunarNoonToday();
@@ -227,17 +228,17 @@ public class DataSubstitutions
             case FULLMOON: case NEWMOON: case FIRSTQUARTER: case THIRDQUARTER:
                 if (data instanceof SuntimesMoonData1) {
                     return ((SuntimesMoonData1) data).moonPhaseCalendar(SolarEvents.toMoonPhase(event));
-                } else return data.calculator().getMoonPhaseNextDate(SolarEvents.toMoonPhase(event), data.calendar());
+                } else return (calculator != null ? calculator.getMoonPhaseNextDate(SolarEvents.toMoonPhase(event), data.calendar()) : null);
 
             case CROSS_SUMMER: case CROSS_WINTER: case CROSS_AUTUMNAL: case CROSS_SPRING:
                 if (data instanceof SuntimesEquinoxSolsticeData) {
                     return ((SuntimesEquinoxSolsticeData) data).eventCalendarThisYear();
                 } else return null;   // requires matching data
 
-            case SOLSTICE_SUMMER: return data.calculator().getSummerSolsticeForYear(data.calendar());
-            case SOLSTICE_WINTER: return data.calculator().getWinterSolsticeForYear(data.calendar());
-            case EQUINOX_AUTUMNAL: return data.calculator().getAutumnalEquinoxForYear(data.calendar());
-            case EQUINOX_SPRING: return data.calculator().getSpringEquinoxForYear(data.calendar());
+            case SOLSTICE_SUMMER: return (calculator != null ? calculator.getSummerSolsticeForYear(data.calendar()) : null);
+            case SOLSTICE_WINTER: return (calculator != null ? calculator.getWinterSolsticeForYear(data.calendar()) : null);
+            case EQUINOX_AUTUMNAL: return (calculator != null ? calculator.getAutumnalEquinoxForYear(data.calendar()) : null);
+            case EQUINOX_SPRING: return (calculator != null ? calculator.getSpringEquinoxForYear(data.calendar()) : null);
 
             default: return data.calendar();
         }

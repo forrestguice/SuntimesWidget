@@ -249,11 +249,10 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
         return SunriseSunset.isDay(dateTime, location.getLatitudeAsDouble(), location.getLongitudeAsDouble());
     }
 
-    @Nullable
     @Override
     public MoonTimes getMoonTimesForDate(Calendar date)
     {
-        return null;
+        return new MoonTimes();
     }
 
     @Override

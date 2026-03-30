@@ -281,7 +281,6 @@ public interface SuntimesCalculator
      * @return a MoonTimes obj wrapping riseTime, setTime, etc.
      * @since 1.3.0 FEATURE_MOON
      */
-    @Nullable
     MoonTimes getMoonTimesForDate(Calendar date);
     class MoonTimes
     {
