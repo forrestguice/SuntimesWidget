@@ -170,7 +170,8 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
 
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options) {
-        return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
+        Bitmap b = super.makeBitmap(data, w, h, options);
+        return (b != null ? makeMaskedBitmap(w, h, b) : null);
     }
 
     protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)

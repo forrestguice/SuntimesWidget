@@ -650,8 +650,10 @@ public class WorldMapDialog extends BottomSheetDialogBase
         boolean nowIsAfter = false;
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+        Location location = data.location();
+        Double longitude = (location != null ? location.getLongitudeAsDouble() : null);
         TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                : WidgetTimezones.getTimeZone(tzId, longitude, data.calculator());
         Calendar mapTime = Calendar.getInstance(timezone);
         if (empty.getVisibility() != View.VISIBLE)
         {
@@ -807,7 +809,9 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 if (context != null)
                 {
                     String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
-                    TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                    Location location = data.location();
+                    Double longitude = (location != null ? location.getLongitudeAsDouble() : null);
+                    TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone() : WidgetTimezones.getTimeZone(tzId, longitude, data.calculator());
                     Calendar mapTime = Calendar.getInstance(timezone);
                     mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
                     seekDateTime(context, TimeDialog.getCalendar(dialog.getSelected(), mapTime));

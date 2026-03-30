@@ -341,7 +341,7 @@ public class WorldMapWidgetSettings
     public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag) {
         return loadWorldMapPref(context, appWidgetId, key, mapTag, null);
     }
-    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag, Boolean defaultValue)
+    public static boolean loadWorldMapPref(Context context, int appWidgetId, String key, String mapTag, @Nullable Boolean defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
@@ -379,7 +379,7 @@ public class WorldMapWidgetSettings
     public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag) {
         return loadWorldMapString(context, appWidgetId, key, mapTag, null);
     }
-    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag, String defValue)
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag, @Nullable String defValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;

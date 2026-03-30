@@ -49,7 +49,7 @@ public class LightMapBitmap
     }
 
     @Nullable
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapOptions colors)
+    public Bitmap makeBitmap(@Nullable SuntimesRiseSetDataset data, int w, int h, @Nullable LightMapOptions colors)
     {
         if (w <= 0 || h <= 0)
         {

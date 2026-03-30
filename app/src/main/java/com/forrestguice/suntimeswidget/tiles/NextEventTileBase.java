@@ -126,8 +126,13 @@ public class NextEventTileBase extends SuntimesTileBase
     protected SpannableStringBuilder formatDialogTitle(Context context)
     {
         SuntimesRiseSetDataset.SearchResult nextEvent = findNextEvent(context, false);
+        Calendar nextEventCalendar = nextEvent.getCalendar();
+        if (nextEventCalendar == null) {
+            return new SpannableStringBuilder();
+        }
+
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
-        event.setTimeInMillis(nextEvent.getCalendar().getTimeInMillis());
+        event.setTimeInMillis(nextEventCalendar.getTimeInMillis());
         String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false).toString();
         SpannableString timeDisplay = SpanUtils.createBoldSpan(null, timeString, timeString);
         timeDisplay = SpanUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
@@ -141,8 +146,13 @@ public class NextEventTileBase extends SuntimesTileBase
     {
         Calendar now = now(context);
         SuntimesRiseSetDataset.SearchResult nextEvent = findNextEvent(context, false);
+        Calendar nextEventCalendar = nextEvent.getCalendar();
+        if (nextEventCalendar == null) {
+            return new SpannableStringBuilder();
+        }
+
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
-        event.setTimeInMillis(nextEvent.getCalendar().getTimeInMillis());
+        event.setTimeInMillis(nextEventCalendar.getTimeInMillis());
 
         RiseSetDataMode mode = nextEvent.getMode();
         String modeString = (mode != null ? mode.toString() : "null");

@@ -283,7 +283,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, Uri exportUri, File exportFile, String mimeType )
+        public ExportResult( boolean result, Uri exportUri, @Nullable File exportFile, String mimeType )
         {
             this.result = result;
             this.exportUri = exportUri;
@@ -298,6 +298,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
         public Uri getExportUri() { return exportUri; }
 
         private final File exportFile;
+        @Nullable
         public File getExportFile() { return exportFile; }
 
         private final String mimeType;

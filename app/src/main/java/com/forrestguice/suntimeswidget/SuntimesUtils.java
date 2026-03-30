@@ -1585,8 +1585,11 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
-    public static Drawable tintDrawable(Drawable drawable, int fillColor, int strokeColor, int strokePixels)
+    public static Drawable tintDrawable(@Nullable Drawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
+        if (drawable == null) {
+            return null;
+        }
         Drawable d = null;
         try {
             d = tintDrawable((InsetDrawable)drawable, fillColor, strokeColor, strokePixels);

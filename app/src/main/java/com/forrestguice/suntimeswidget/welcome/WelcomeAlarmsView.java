@@ -280,7 +280,7 @@ public class WelcomeAlarmsView extends WelcomeView
                 toggleControlsEnabled(true);
                 if (isAdded() && context != null)
                 {
-                    Uri uri = result.getUri();   // import failed
+                    Uri uri = (result != null ? result.getUri() : null);   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
                     String failureMessage = context.getString(R.string.themesimport_msg_failure, path);
                     Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();

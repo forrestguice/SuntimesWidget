@@ -32,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.TimeZoneDialog;
@@ -133,14 +134,18 @@ public class WelcomeTimeZoneView extends WelcomeView
                     public void run()
                     {
                         TimeZoneDialog dialog = (TimeZoneDialog) fragments.findFragmentByTag(TAG_FRAGMENT_TIMEZONE);
-                        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) dialog.getView().getLayoutParams();
-                        params.height = LayoutParams.MATCH_PARENT;
-                        WelcomeTimeZoneView.this.invalidate();
+                        View v = (dialog != null ? dialog.getView() : null);
+                        FrameLayout.LayoutParams params = (v != null ? (FrameLayout.LayoutParams) v.getLayoutParams() : null);
+                        if (params != null) {
+                            params.height = LayoutParams.MATCH_PARENT;
+                            WelcomeTimeZoneView.this.invalidate();
+                        }
                     }
                 })
                 .commit();
     }
 
+    @Nullable
     protected TimeZoneDialog getTimeZoneDialog()
     {
         FragmentManagerCompat fragments = getFragmentManager();

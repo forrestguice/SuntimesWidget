@@ -2596,7 +2596,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         return (AppColorValues) colors.getSelectedColors(context, (isNightMode ? 1 : 0), AppColorValues.TAG_APPCOLORS);
     }
 
-    private void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
+    private void styleAzimuthText(TextView view, double azimuth, @Nullable Integer color, int places)
     {
         TimeDisplayText azimuthText = angle_utils.formatAsDirection2(azimuth, places, false);
         String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());

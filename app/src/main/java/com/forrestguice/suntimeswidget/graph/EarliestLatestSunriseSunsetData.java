@@ -23,6 +23,7 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 
 import java.util.Calendar;
@@ -52,7 +53,8 @@ public class EarliestLatestSunriseSunsetData
         EarliestLatestSunriseSunsetData result = new EarliestLatestSunriseSunsetData();
 
         if (data.length > 0 && data[0] != null) {
-            result.longitude = data[0].location().getLongitudeAsDouble();
+            Location location0 = data[0].location();
+            result.longitude = (location0 != null ? location0.getLongitudeAsDouble() : 0);
         }
 
         int i = 0;

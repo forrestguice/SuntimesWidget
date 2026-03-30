@@ -98,10 +98,11 @@ public class LightGraphOptions
         is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat()));
     }
 
-    public void setLocation(Location value) {
+    public void setLocation(@Nullable Location value) {
         location = value;
-        longitude = location.getLongitudeAsDouble();
+        longitude = (location != null ? location.getLongitudeAsDouble() : 0);
     }
+    @Nullable
     public Location location = null;
     public double longitude;
 

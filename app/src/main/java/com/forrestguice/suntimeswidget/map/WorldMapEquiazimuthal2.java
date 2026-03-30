@@ -254,11 +254,11 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         {
             Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
-            SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+            SuntimesCalculator.SunPosition sunPos = (calculator != null ? calculator.getSunPosition(now) : null);
+            SuntimesCalculator.MoonPosition moonPos = (calculator != null ? calculator.getMoonPosition(now) : null);
             Location location = data.location();
 
-            if (sunPos == null || moonPos == null) {
+            if (sunPos == null || moonPos == null || location == null) {
                 Log.e(WorldMapView.LOGTAG, "not supported by this data source");
                 break drawData;
             }

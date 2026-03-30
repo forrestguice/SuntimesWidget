@@ -312,7 +312,7 @@ public class WelcomeAppearanceView extends WelcomeView
         };
     }
 
-    private OnClickListener onThemeButtonClicked(final String themeID0, final String lightID0, final String darkID0) {
+    private OnClickListener onThemeButtonClicked(final String themeID0, @Nullable final String lightID0, @Nullable final String darkID0) {
         return new OnClickListener() {
             @Override
             public void onClick(View v)
@@ -338,7 +338,7 @@ public class WelcomeAppearanceView extends WelcomeView
         return 1;
     }
 
-    private void recreate(Activity activity)
+    private void recreate(@Nullable Activity activity)
     {
         if (activity != null)
         {

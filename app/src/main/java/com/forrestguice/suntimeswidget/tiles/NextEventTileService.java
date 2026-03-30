@@ -58,8 +58,12 @@ public class NextEventTileService extends ClockTileService
         Tile tile = getQsTile();
 
         SuntimesRiseSetDataset.SearchResult result = getNextEventTileBase().findNextEvent(context, true);
+        Calendar resultCalendar = result.getCalendar();
+
         Calendar event = Calendar.getInstance(TimeZone.getDefault());
-        event.setTimeInMillis(result.getCalendar().getTimeInMillis());
+        if (resultCalendar != null) {
+            event.setTimeInMillis(resultCalendar.getTimeInMillis());
+        }
 
         RiseSetDataMode mode = result.getMode();
 

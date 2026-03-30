@@ -143,6 +143,10 @@ public class WorldMapEquirectangular extends WorldMapProjection
         }
 
         double[] matrix = getMatrix();
+        if (matrix == null) {
+            Log.e(WorldMapView.LOGTAG, "makeBitmap: null matrix! returning null bitmap.");
+            return null;
+        }
 
         double[] mid = new double[2];
         mid[0] = w/2d;
@@ -169,11 +173,11 @@ public class WorldMapEquirectangular extends WorldMapProjection
         {
             Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
-            SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+            SuntimesCalculator.SunPosition sunPos = (calculator != null ? calculator.getSunPosition(now) : null);
+            SuntimesCalculator.MoonPosition moonPos = (calculator != null ? calculator.getMoonPosition(now) : null);
             Location location = data.location();
 
-            if (sunPos == null || moonPos == null) {
+            if (sunPos == null || moonPos == null || location == null) {
                 Log.e(WorldMapView.LOGTAG, "not supported by this data source");
                 break drawData;
             }

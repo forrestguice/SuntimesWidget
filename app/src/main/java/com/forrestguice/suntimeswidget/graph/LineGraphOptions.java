@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
@@ -116,13 +117,16 @@ public class LineGraphOptions
         is24 = ((timeFormat == TimeFormatMode.MODE_24HR) || (timeFormat == TimeFormatMode.MODE_SYSTEM && SystemTimeFormat.is24HourFormat()));
     }
 
+    @Nullable
     public Location location = null;
+    @Nullable
     public TimeZone timezone = null;
 
     public long offsetMinutes = 0;
     public long now = -1L;
     public int anim_frameLengthMs = 100;         // frames shown for 200 ms
     public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
+    @Nullable
     public Lock anim_lock = null;
 
     public LineGraphOptions() {

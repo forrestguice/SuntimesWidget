@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.graphics.Bitmap;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.util.concurrent.ProgressListener;
 
@@ -34,9 +35,9 @@ public abstract class LineGraphTaskListener implements ProgressListener<Bitmap, 
     public void onFrame(Bitmap frame, long offsetMinutes) {}
     public void afterFrame(Bitmap frame, long offsetMinutes) {}
     @Override
-    public void onFinished(Bitmap result) {}
+    public void onFinished(@Nullable Bitmap result) {}
     @Override
-    public void onCancelled(Bitmap result) {}
+    public void onCancelled(@Nullable Bitmap result) {}
     @Override
     public void onProgressUpdate(Collection<Bitmap> values) {}
 }
