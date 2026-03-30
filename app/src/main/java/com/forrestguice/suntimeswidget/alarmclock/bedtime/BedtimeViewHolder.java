@@ -444,17 +444,20 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, final BedtimeItem item)
+        protected CompoundButton.OnCheckedChangeListener onSwitchChanged(final Context context, @Nullable final BedtimeItem item)
         {
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    toggleAlarm(context, item.getAlarmItem(), isChecked);
-                    BedtimeItem linkedItem = item.getLinkedItem();
+                    if (item != null)
+                    {
+                        toggleAlarm(context, item.getAlarmItem(), isChecked);
+                        BedtimeItem linkedItem = item.getLinkedItem();
 
-                    if (linkedItem != null && linkedItem.shouldMirrorParent(context)) {
-                        toggleAlarm(context, linkedItem.getAlarmItem(), isChecked);
+                        if (linkedItem != null && linkedItem.shouldMirrorParent(context)) {
+                            toggleAlarm(context, linkedItem.getAlarmItem(), isChecked);
+                        }
                     }
                 }
             };

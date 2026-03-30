@@ -267,7 +267,7 @@ public abstract class TimeDialogBase extends BottomSheetDialogBase
     }
     @SuppressWarnings("ConstantConditions")
     @Nullable
-    public static Calendar getCalendar(Integer year, Integer month, Integer day, Integer hour, Integer minute, Calendar now )
+    public static Calendar getCalendar(@Nullable Integer year, @Nullable Integer month, @Nullable Integer day, @Nullable Integer hour, @Nullable Integer minute, Calendar now )
     {
         Calendar calendar = Calendar.getInstance(now.getTimeZone());
         calendar.setTimeInMillis(now.getTimeInMillis());

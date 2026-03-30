@@ -445,12 +445,12 @@ public class MoonPhaseView extends LinearLayout
 
     /**public void loadState(Bundle bundle) {}*/
 
-    public void setOnClickListener( OnClickListener listener )
+    public void setOnClickListener( @Nullable OnClickListener listener )
     {
         content.setOnClickListener(listener);
     }
 
-    public void setOnLongClickListener( OnLongClickListener listener)
+    public void setOnLongClickListener( @Nullable OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
     }

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.Log;
 import com.forrestguice.util.Resources;
 
@@ -60,7 +61,7 @@ public enum AlarmType
         NOTIFICATION2.setDisplayString(context.getString(r.string_alarmMode_notification2()));
     }
 
-    public static AlarmType valueOf(String value, AlarmType defaultType)
+    public static AlarmType valueOf(@Nullable String value, AlarmType defaultType)
     {
         AlarmType retValue = defaultType;
         if (value != null)

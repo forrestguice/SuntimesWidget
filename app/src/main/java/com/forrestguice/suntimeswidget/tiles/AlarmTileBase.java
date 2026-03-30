@@ -206,6 +206,7 @@ public class AlarmTileBase extends SuntimesTileBase
         return msg;
     }
 
+    @Nullable
     public static String formatEventDisplay(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         String eventString = item.getEvent();

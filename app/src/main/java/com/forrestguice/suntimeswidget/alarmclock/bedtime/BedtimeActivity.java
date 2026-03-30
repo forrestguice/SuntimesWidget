@@ -195,12 +195,13 @@ public class BedtimeActivity extends AppCompatActivity
 
             if (action != null)
             {
-                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
-                {
-                    boolean alarmDeleted = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
-                    onAlarmItemUpdated(ContentUris.parseId(data), alarmDeleted);
+                if (data != null) {
+                    if (action.equals(AlarmNotifications.ACTION_UPDATE_UI)) {
+                        boolean alarmDeleted = intent.getBooleanExtra(AlarmNotifications.ACTION_DELETE, false);
+                        onAlarmItemUpdated(ContentUris.parseId(data), alarmDeleted);
 
-                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+                    } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+                } else Log.e(TAG, "updateReceiver.onReceive: null data!");
             } else Log.e(TAG, "updateReceiver.onReceive: null action!");
         }
     };

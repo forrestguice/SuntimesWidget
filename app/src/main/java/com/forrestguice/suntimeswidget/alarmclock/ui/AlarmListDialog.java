@@ -503,7 +503,7 @@ public class AlarmListDialog extends DialogBase
         return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, @Nullable Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();
@@ -824,10 +824,10 @@ public class AlarmListDialog extends DialogBase
     public void reloadAdapter() {
         reloadAdapter(null, onListLoaded);
     }
-    public void reloadAdapter(Long rowId) {
+    public void reloadAdapter(@Nullable Long rowId) {
         reloadAdapter(rowId, onItemChanged);
     }
-    public void reloadAdapter(Long rowId, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
+    public void reloadAdapter(@Nullable Long rowId, ProgressListener<AlarmClockItem, List<AlarmClockItem>> taskListener)
     {
         if (getContext() != null) {
             AlarmListTask listTask = new AlarmListTask(getContext(), new Long[] { rowId });

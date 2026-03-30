@@ -113,7 +113,7 @@ public class EventIcons
     public static float[] getIconScale(SolarEvents event) {
         return new float[] {1f, 1f};
     }
-    public static float[] getIconScale(String tag) {
+    public static float[] getIconScale(@Nullable String tag) {
         return new float[] {1f, 1f};
     }
 
@@ -171,7 +171,7 @@ public class EventIcons
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
         }
     }
-    public static int getIconDrawablePadding(Context context, String tag) {
+    public static int getIconDrawablePadding(Context context, @Nullable String tag) {
         return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
     }
 
@@ -185,7 +185,7 @@ public class EventIcons
                 return 0;
         }
     }
-    public static int getIconDrawableInset(Context context, String tag)
+    public static int getIconDrawableInset(Context context, @Nullable String tag)
     {
         if (tag != null && (tag.equals(TimeZones.ApparentSolarTime.TIMEZONEID) || tag.equals(TimeZones.LocalMeanTime.TIMEZONEID))) {
             return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);

@@ -319,8 +319,9 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.suppressLayout(false);
     }
 
+    @Nullable
     private MoonPhasesViewListener viewListener = null;
-    public void setViewListener(MoonPhasesViewListener listener) {
+    public void setViewListener(@Nullable MoonPhasesViewListener listener) {
         this.viewListener = listener;
     }
 
@@ -647,7 +648,8 @@ public class MoonPhasesView1 extends LinearLayout
             CharSequence phaseLabel = phaseDisplay.getLongDisplayString();
             if (phase == SuntimesCalculator.MoonPhase.FULL || phase == SuntimesCalculator.MoonPhase.NEW)
             {
-                SuntimesCalculator.MoonPosition phasePosition = data.calculator().getMoonPosition(phaseDate);
+                SuntimesCalculator calculator = data.calculator();
+                SuntimesCalculator.MoonPosition phasePosition = (calculator != null && phaseDate != null ? calculator.getMoonPosition(phaseDate) : null);
                 if (phasePosition != null)
                 {
                     if (SuntimesMoonData1.isSuperMoon(phasePosition)) {
@@ -688,7 +690,7 @@ public class MoonPhasesView1 extends LinearLayout
             icon.setImageBitmap(bitmap);
         }
 
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showDate, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
+        public void updateField(Context context, Calendar now, @Nullable Calendar dateTime, boolean showDate, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
         {
             if (field != null)
             {

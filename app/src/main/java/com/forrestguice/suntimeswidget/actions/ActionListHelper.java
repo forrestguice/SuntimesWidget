@@ -71,6 +71,7 @@ public class ActionListHelper
 
     private WeakReference<FragmentManagerProvider> contextRef;
 
+    @Nullable
     private ActionDisplay selectedItem;
     private ListView list;
     private ActionDisplayAdapter adapter;

@@ -160,7 +160,7 @@ public class WidgetTimezones
         }
     }
 
-    public static void selectTimeZone( Spinner spinner, TimeZoneItemAdapter adapter, String timezoneID )
+    public static void selectTimeZone( @Nullable Spinner spinner, @Nullable TimeZoneItemAdapter adapter, @Nullable String timezoneID )
     {
         if (spinner == null || adapter == null || timezoneID == null)
             return;
@@ -246,6 +246,7 @@ public class WidgetTimezones
     public static class TimeZoneItemAdapter extends ArrayAdapter<TimeZoneItem>
     {
         private int[] colors;
+        @Nullable
         private TimeZoneSort sortBy = null;
         private String line1, line2;
         private List<TimeZoneItem> items;
@@ -273,7 +274,7 @@ public class WidgetTimezones
             init(context, resource_line1, resource_line2);
         }
 
-        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, TimeZoneSort sortBy)
+        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, @Nullable TimeZoneSort sortBy)
         {
             super(context, resource, items);
             this.resID = resource;
@@ -300,6 +301,7 @@ public class WidgetTimezones
             return colors[offset % colors.length];
         }
 
+        @Nullable
         public TimeZoneSort getSort()
         {
             return sortBy;

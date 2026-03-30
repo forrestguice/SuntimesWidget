@@ -200,6 +200,7 @@ public class AlarmEvent
                     : EventIcons.getIconResID(context, EventIcons.getIconTag(context, uri));
         }
 
+        @Nullable
         public Integer getColor(@Nullable Context context) {
             if (event == null) {
                 return EventIcons.getIconTint(context, EventIcons.getIconTag(context, uri));

@@ -219,8 +219,9 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     /**
      * The user's alarm choice.
      */
+    @Nullable
     private String choice = null;
-    public void setChoice( String choice )
+    public void setChoice( @Nullable String choice )
     {
         if (choice != null)
         {
@@ -266,6 +267,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     }
     public String getChoice() { return choice; }
 
+    @Nullable
     public Location getLocation()
     {
         if (dataset != null) {
@@ -731,6 +733,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         onCanceled = listener;
     }
 
+    @Nullable
     public Calendar getCalendarForAlarmChoice( @NonNull Context context, String choice, Calendar now )
     {
         AlarmClockItem item = createAlarmItem(context);
@@ -751,7 +754,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
     });
 
-    public static boolean updateLocationLabel(Context context, TextView text_location, Location location)
+    public static boolean updateLocationLabel(Context context, @Nullable TextView text_location, @Nullable Location location)
     {
         if (text_location != null)
         {

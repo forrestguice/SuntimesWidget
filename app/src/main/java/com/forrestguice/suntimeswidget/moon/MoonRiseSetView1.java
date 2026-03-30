@@ -381,8 +381,9 @@ public class MoonRiseSetView1 extends LinearLayout
         card_view.suppressLayout(false);
     }
 
+    @Nullable
     private MoonRiseSetViewListener viewListener = null;
-    public void setViewListener(MoonRiseSetViewListener listener) {
+    public void setViewListener(@Nullable MoonRiseSetViewListener listener) {
         this.viewListener = listener;
     }
 

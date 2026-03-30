@@ -70,9 +70,9 @@ public class HelpDialog extends BottomSheetDialogBase
 
         initViews(dialogContent);
         if (savedState != null) {
-            rawContent = savedState.getCharSequence(KEY_HELPTEXT);
+            rawContent = getCharSequence(savedState, KEY_HELPTEXT, "");
             neutralButtonMsg = savedState.getString(KEY_NEUTRALTEXT);
-            listenerTag = savedState.getString(KEY_NEUTRALTAG);
+            listenerTag = getString(savedState, KEY_NEUTRALTAG, "");
         }
         return dialogContent;
     }
@@ -142,13 +142,15 @@ public class HelpDialog extends BottomSheetDialogBase
      * Show/hide the neutral button.
      * @param msg neutral button text (null hides button, default is null)
      */
-    public void setShowNeutralButton( String msg ) {
+    public void setShowNeutralButton( @Nullable String msg ) {
         neutralButtonMsg = msg;
     }
+    @Nullable
     private String neutralButtonMsg = null;
 
+    @Nullable
     private View.OnClickListener onNeutralButtonClick = null;
-    public void setNeutralButtonListener( View.OnClickListener listener, String tag )
+    public void setNeutralButtonListener( @Nullable View.OnClickListener listener, String tag )
     {
         onNeutralButtonClick = listener;
         listenerTag = tag;

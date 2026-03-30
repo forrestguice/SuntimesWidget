@@ -187,7 +187,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
-        if (data_today == null) {
+        if (data_today == null || data_today.first == null) {
             return TODAY_POSITION;
         }
 

@@ -638,7 +638,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getAlarmIntent(Context context, String action, Uri data)
+    public static Intent getAlarmIntent(Context context, String action, @Nullable Uri data)
     {
         Intent intent = new Intent(context, AlarmNotifications.class);
         intent.setAction(action);

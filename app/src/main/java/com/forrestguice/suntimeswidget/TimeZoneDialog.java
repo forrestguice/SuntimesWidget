@@ -94,6 +94,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
     public static final String SLOT_CUSTOM0 = "custom0";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    @Nullable
     private String customTimezoneID;
 
     private ImageButton btn_accept;
@@ -502,7 +503,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         layout_timezoneExtras.setVisibility(View.VISIBLE);
     }
 
-    private void updateExtrasLabel(String text)
+    private void updateExtrasLabel(@Nullable String text)
     {
         if (text == null)
         {
@@ -1057,7 +1058,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         DialogBase.disableTouchOutsideBehavior(getDialog());
     }
 
-    public String timeZoneRecommendation(String label, double longitude)
+    public String timeZoneRecommendation(@Nullable String label, double longitude)
     {
         Calendar now = Calendar.getInstance();
         Log.d("DEBUG", "longitude label: " + label);

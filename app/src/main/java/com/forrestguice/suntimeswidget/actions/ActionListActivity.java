@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
@@ -53,6 +54,7 @@ public class ActionListActivity extends AppCompatActivity
     public static final String PARAM_NOSELECT = "noselect";
 
     private ActionListHelper helper;
+    @Nullable
     private String preselectedAction;
 
     public ActionListActivity() {

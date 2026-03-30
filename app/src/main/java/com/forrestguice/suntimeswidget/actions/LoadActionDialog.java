@@ -72,12 +72,14 @@ public class LoadActionDialog extends EditActionDialog
             btn_accept.performClick();
         }
     };
-
+    
+    @Nullable
     @Override
     public String getIntentID() {
         return listHelper.getIntentID();
     }
 
+    @Nullable
     @Override
     public String getIntentTitle() {
         return listHelper.getIntentTitle();

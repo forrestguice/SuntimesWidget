@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.preference.ListPreference;
 
 /**
@@ -70,7 +71,9 @@ public class ActionButtonPreference extends ListPreference
         }
     }
 
+    @Nullable
     private String actionButtonContentDescription = null;
+    @Nullable
     public String getActionButtonContentDescription() {
         return actionButtonContentDescription;
     }

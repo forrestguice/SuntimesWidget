@@ -477,7 +477,7 @@ public class AlarmButton extends RelativeLayout
         thumbText.setTextColor(color);
     }
 
-    public void setThumbImageDrawable(Drawable d) {
+    public void setThumbImageDrawable(@Nullable Drawable d) {
         thumbIcon.setImageDrawable(d);
     }
 

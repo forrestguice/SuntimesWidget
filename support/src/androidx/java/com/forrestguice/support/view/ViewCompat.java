@@ -35,7 +35,7 @@ public class ViewCompat // extends androidx.core.view.ViewCompat  // ... default
         return androidx.core.view.ViewCompat.getTransitionName(view);
     }
 
-    public static void setTransitionName(@NonNull View view, String transitionName) {
+    public static void setTransitionName(@NonNull View view, @Nullable String transitionName) {
         androidx.core.view.ViewCompat.setTransitionName(view, transitionName);
     }
 

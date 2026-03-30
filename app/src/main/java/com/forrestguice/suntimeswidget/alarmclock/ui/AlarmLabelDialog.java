@@ -288,10 +288,8 @@ public class AlarmLabelDialog extends DialogBase
 
     protected void loadSettings(Bundle bundle)
     {
-        this.label =  bundle.getString(PREF_KEY_ALARM_LABEL);
-        if (this.label == null) {
-            this.label = PREF_DEF_ALARM_LABEL;
-        }
+        String label0 = bundle.getString(PREF_KEY_ALARM_LABEL);
+        this.label = (label0 != null ? label0 : PREF_DEF_ALARM_LABEL);
         this.accentColor = bundle.getInt(KEY_COLORS, accentColor);
     }
 

@@ -982,7 +982,7 @@ public class MoonDialog extends BottomSheetDialogBase
             }
         };
     }
-    protected void updateMediaPopupView(View popupView)
+    protected void updateMediaPopupView(@Nullable View popupView)
     {
         if (popupView != null)
         {
@@ -1478,7 +1478,7 @@ public class MoonDialog extends BottomSheetDialogBase
      */
     public static class MoonDialogListener
     {
-        public void onSetAlarm( SolarEvents suggestedEvent ) {}
+        public void onSetAlarm( @Nullable SolarEvents suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}

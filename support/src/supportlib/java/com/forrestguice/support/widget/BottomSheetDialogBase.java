@@ -334,4 +334,14 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
     public FragmentManagerCompat getFragmentManagerCompat() {
         return FragmentManagerCompat.from(this, true);
     }
+
+    public static CharSequence getCharSequence(Bundle bundle, String key, CharSequence defaultValue) {
+        CharSequence s = bundle.getCharSequence(key);
+        return (s != null ? s : defaultValue);
+    }
+
+    public static String getString(Bundle bundle, String key, String defaultValue) {
+        String s = bundle.getString(key);
+        return (s != null ? s : defaultValue);
+    }
 }

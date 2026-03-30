@@ -273,8 +273,9 @@ public class MoonApsisView extends LinearLayout
         content.setOnLongClickListener(listener);
     }
 
+    @Nullable
     private MoonApsisViewListener viewListener = null;
-    public void setViewListener(MoonApsisViewListener listener) {
+    public void setViewListener(@Nullable MoonApsisViewListener listener) {
         this.viewListener = listener;
     }
     
@@ -371,7 +372,7 @@ public class MoonApsisView extends LinearLayout
             SuntimesMoonData0 moon = initData(context, CENTER_POSITION);
             Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = moon.getMoonPerigee();
             Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = moon.getMoonApogee();
-            isRising = (perigee.first != null && !perigee.first.before(apogee.first));
+            isRising = (perigee != null && apogee != null && perigee.first != null && !perigee.first.before(apogee.first));
         }
 
         public SuntimesMoonData0 initData( Context context, int position )
@@ -403,7 +404,7 @@ public class MoonApsisView extends LinearLayout
                 SuntimesMoonData0 moon0 = initData(context, CENTER_POSITION);
                 Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = moon0.getMoonPerigee();
                 Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = moon0.getMoonApogee();
-                if (perigee.first != null && apogee.first != null)
+                if (perigee != null && perigee.first != null && apogee != null && apogee.first != null)
                 {
                     Calendar date = Calendar.getInstance(moon.timezone());
                     date.setTimeInMillis(isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
@@ -433,7 +434,7 @@ public class MoonApsisView extends LinearLayout
             SuntimesMoonData0 moon0 = initData(context, CENTER_POSITION);
             Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = moon0.getMoonPerigee();
             Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = moon0.getMoonApogee();
-            if (perigee.first != null && apogee.first != null)
+            if (perigee != null && perigee.first != null && apogee != null && apogee.first != null)
             {
                 long dateCenter = (isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
                 long deltaMs = (datetime - dateCenter);
@@ -616,7 +617,7 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
+        public void updateField(Context context, @Nullable Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
         {
             if (apsis != null)
             {
