@@ -921,15 +921,9 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void run()
         {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            {
+            if (Build.VERSION.SDK_INT >= 11) {
                 recreate();
-
-            } else {
-                finish();
-                startActivity(getIntent());
-                overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
-            }
+            }  // TODO: legacy support
         }
     };
 

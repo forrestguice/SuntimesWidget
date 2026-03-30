@@ -1469,13 +1469,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void run()
         {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (Build.VERSION.SDK_INT >= 11) {
                 recreate();
-
-            } else {
-                finish();
-                startActivity(getIntent());
-            }
+            } // TODO: legacy support
         }
     };
 
