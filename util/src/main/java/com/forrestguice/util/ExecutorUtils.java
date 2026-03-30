@@ -45,6 +45,7 @@ public class ExecutorUtils
     public static void initHandler(TaskHandlerFactory value) {
         handler = value;
     }
+    @Nullable
     public static TaskHandler getHandler()
     {
         if (handler != null) {
@@ -234,7 +235,7 @@ public class ExecutorUtils
     private interface HandlerCallback {
         void post();
     }
-    private static <T,A> void postCallback(@NonNull TaskHandler handler, @Nullable HandlerCallback callback)
+    private static <T,A> void postCallback(@Nullable TaskHandler handler, @Nullable HandlerCallback callback)
     {
         if (handler != null && callback != null) {
             handler.post(new Runnable() {
@@ -245,36 +246,42 @@ public class ExecutorUtils
             });
         }
     }
-    private static <T,C extends TaskListener<T>> void postStarted(@NonNull TaskHandler handler, @Nullable Collection<C> listeners)
+    private static <T,C extends TaskListener<T>> void postStarted(@Nullable TaskHandler handler, @Nullable Collection<C> listeners)
     {
         postCallback(handler, new HandlerCallback() {
             @Override
             public void post() {
-                for (TaskListener<T> listener : listeners) {
-                    listener.onStarted();
+                if (listeners != null) {
+                    for (TaskListener<T> listener : listeners) {
+                        listener.onStarted();
+                    }
                 }
             }
         });
     }
-    private static <T,C extends TaskListener<T>> void postFinished(@NonNull TaskHandler handler, T result, @Nullable Collection<C> listeners)
+    private static <T,C extends TaskListener<T>> void postFinished(@Nullable TaskHandler handler, T result, @Nullable Collection<C> listeners)
     {
         postCallback(handler, new HandlerCallback() {
             @Override
             public void post() {
-                for (TaskListener<T> listener : listeners) {
-                    listener.onFinished(result);
+                if (listeners != null) {
+                    for (TaskListener<T> listener : listeners) {
+                        listener.onFinished(result);
+                    }
                 }
             }
         });
     }
-    private static <T,P,C extends ProgressListener<P, T>> void postProgress(@NonNull TaskHandler handler, ProgressCallable<P,T> callable, @Nullable Collection<C> listeners, Collection<P> progress)
+    private static <T,P,C extends ProgressListener<P, T>> void postProgress(@Nullable TaskHandler handler, ProgressCallable<P,T> callable, @Nullable Collection<C> listeners, Collection<P> progress)
     {
         postCallback(handler, new HandlerCallback() {
             @Override
             public void post() {
                 callable.onProgressUpdate(progress);
-                for (ProgressListener<P, T> listener : listeners) {
-                    listener.onProgressUpdate(progress);
+                if (listeners != null) {
+                    for (ProgressListener<P, T> listener : listeners) {
+                        listener.onProgressUpdate(progress);
+                    }
                 }
             }
         });

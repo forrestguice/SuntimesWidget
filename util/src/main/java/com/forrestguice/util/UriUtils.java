@@ -76,6 +76,7 @@ public class UriUtils
      *
      * @return the authority or null if none is found
      */
+    @Nullable
     static String parseAuthority(String uriString, int ssi) {
         int length = uriString.length();
         // If "//" follows the scheme separator, we have an authority.
