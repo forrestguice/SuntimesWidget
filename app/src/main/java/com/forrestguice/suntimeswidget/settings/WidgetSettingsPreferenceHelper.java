@@ -126,7 +126,7 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.valueOf(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_TRACKINGMODE.name())));
-	        return;
+            return;
         }
 
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_SHOWSECONDS))
