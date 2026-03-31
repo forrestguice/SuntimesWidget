@@ -64,6 +64,7 @@ public class NoteData
         this.textColor = other.textColor;
         this.iconColor = other.iconColor;
         this.iconColor2 = other.iconColor2;
+        this.iconDescription = other.iconDescription;
         this.noteIconStroke = other.noteIconStroke;
         this.squareIcon = other.squareIcon;
         this.time = other.time;
