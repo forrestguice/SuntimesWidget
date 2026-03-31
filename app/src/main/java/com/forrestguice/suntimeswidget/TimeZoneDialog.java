@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -143,7 +144,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         this.now = now;
     }
 
-    public void setLongitude( String label, double longitude )
+    public void setLongitude( @Nullable String label, double longitude )
     {
         getArgs().putDouble(KEY_LONGITUDE, longitude);
         getArgs().putString(KEY_LONGITUDE_LABEL, label);
@@ -775,7 +776,8 @@ public class TimeZoneDialog extends BottomSheetDialogBase
 
         } else {
             // LEGACY; ActionMode for pre HONEYCOMB
-            ActionModeCompat actionMode = AppCompatActivity.startSupportActionMode(getActivity(), new WidgetTimezones.TimeZoneSpinnerSortActionCompat(context, spinner_timezone)
+            Activity activity = getActivity();
+            ActionModeCompat actionMode = (activity == null ? null : AppCompatActivity.startSupportActionMode(activity, new WidgetTimezones.TimeZoneSpinnerSortActionCompat(context, spinner_timezone)
             {
                 @Override
                 public void onSortTimeZones(WidgetTimezones.TimeZoneItemAdapter result, WidgetTimezones.TimeZoneSort sortMode)
@@ -800,7 +802,7 @@ public class TimeZoneDialog extends BottomSheetDialogBase
                     super.onDestroyActionMode(mode);
                     TimeZoneDialog.this.actionMode = null;
                 }
-            });
+            }));
             if (actionMode != null)
             {
                 this.actionMode = actionMode;

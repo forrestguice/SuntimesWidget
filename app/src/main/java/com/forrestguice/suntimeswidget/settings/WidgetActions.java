@@ -499,7 +499,7 @@ public class WidgetActions
     /**
      * startIntent
      */
-    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class<?> fallbackLaunchClass, @Nullable Integer flags)
+    public static void startIntent(@NonNull Context context, int appWidgetId, @Nullable String id, @Nullable SuntimesData data, @Nullable Class<?> fallbackLaunchClass, @Nullable Integer flags)
     {
         Intent launchIntent = WidgetActions.createIntent(context, appWidgetId, id, data, fallbackLaunchClass);
         if (launchIntent != null)

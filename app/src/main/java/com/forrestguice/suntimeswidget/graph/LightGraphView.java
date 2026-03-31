@@ -241,6 +241,7 @@ public class LightGraphView extends ImageView
     public SuntimesRiseSetDataset getData0() {
         return data0;
     }
+    @Nullable
     public SuntimesRiseSetDataset[] getData() {
         return this.data;
     }

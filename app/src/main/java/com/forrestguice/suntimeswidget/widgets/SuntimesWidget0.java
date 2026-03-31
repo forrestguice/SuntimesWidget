@@ -247,7 +247,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
     protected void onAlarmUpdateUIBroadcast(Context context) {}
 
-    public boolean isClickAction(String action)
+    public boolean isClickAction(@Nullable String action)
     {
         for (String clickAction : getClickActions())
         {
@@ -355,7 +355,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
         int[] widgetIds = getWidgetIds(context, widgetManager);
         onUpdate(context, widgetManager, widgetIds);
     }
-    public void updateWidgets(Context context, String themeName)
+    public void updateWidgets(Context context, @Nullable String themeName)
     {
         if (themeName == null)
         {

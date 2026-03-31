@@ -1613,7 +1613,7 @@ public class PlacesListFragment extends DialogBase
             return filterText;
         }
 
-        public void setFilterExceptions(long... values)
+        public void setFilterExceptions(@Nullable long... values)
         {
             filterExceptions.clear();
             if (values != null) {

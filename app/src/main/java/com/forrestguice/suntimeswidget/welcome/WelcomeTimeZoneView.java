@@ -88,10 +88,11 @@ public class WelcomeTimeZoneView extends WelcomeView
         getArgs().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
     }
 
+    @Nullable
     public String getLongitudeLabel() {
         return getArgs().getString(LocationConfigView.KEY_LOCATION_LABEL);
     }
-    public void setLongitudeLabel( String value ) {
+    public void setLongitudeLabel( @Nullable String value ) {
         getArgs().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
     }
     protected String label_longitude;

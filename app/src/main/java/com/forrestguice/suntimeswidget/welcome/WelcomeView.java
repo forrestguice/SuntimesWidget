@@ -187,7 +187,7 @@ public class WelcomeView extends FrameLayout
     public void setArgs( @NonNull Bundle values ) {
         args = values;
     }
-    public void setArg(String key, String value) {
+    public void setArg(String key, @Nullable String value) {
         getArgs().putString(key, value);
     }
     public void setArg(String key, boolean value) {
@@ -223,8 +223,11 @@ public class WelcomeView extends FrameLayout
             Log.d("DEBUG", "onSaveInstanceState: " + getId());
         }
         Bundle bundle = new Bundle();
-        ViewState state = new ViewState(super.onSaveInstanceState(), getArgs());
-        bundle.putParcelable(ViewState.STATE, state);
+        Parcelable p = super.onSaveInstanceState();
+        if (p != null) {
+            ViewState state = new ViewState(p, getArgs());
+            bundle.putParcelable(ViewState.STATE, state);
+        }
         return bundle;
     }
     @Override

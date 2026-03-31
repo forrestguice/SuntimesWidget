@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.graph;
 
 import android.graphics.Bitmap;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.concurrent.ProgressListener;
 
 import java.util.Collection;
@@ -29,12 +30,12 @@ public abstract class LightGraphTaskListener implements ProgressListener<Bitmap,
 {
     @Override
     public void onStarted() {}
-    public void onFrame(Bitmap frame, long offsetDays) {}
-    public void afterFrame(Bitmap frame, long offsetDays) {}
+    public void onFrame(@Nullable Bitmap frame, long offsetDays) {}
+    public void afterFrame(@Nullable Bitmap frame, long offsetDays) {}
     @Override
-    public void onFinished(Bitmap result) {}
+    public void onFinished(@Nullable Bitmap result) {}
     @Override
-    public void onCancelled(Bitmap result) {}
+    public void onCancelled(@Nullable Bitmap result) {}
     public void onProgress(boolean value) {}
     @Override
     public void onProgressUpdate(Collection<Bitmap> values) {}

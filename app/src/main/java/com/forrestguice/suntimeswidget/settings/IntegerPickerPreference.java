@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.preference.DialogPreference;
+import com.forrestguice.annotation.Nullable;
 
 @TargetApi(11)
 public class IntegerPickerPreference extends DialogPreference
@@ -48,6 +49,7 @@ public class IntegerPickerPreference extends DialogPreference
 
     private int param_min = 1;
     private int param_max = MAX_VALUE;
+    @Nullable
     private String param_zeroText = null;
 
     @TargetApi(21)

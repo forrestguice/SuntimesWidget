@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
@@ -87,7 +88,7 @@ public class MoonPhasesView extends LinearLayout
         }
     }*/
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         themeViews(context);
@@ -160,7 +161,7 @@ public class MoonPhasesView extends LinearLayout
         content.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context, SuntimesMoonData data )
+    protected void updateViews( Context context, @Nullable SuntimesMoonData data )
     {
         for (PhaseField phase : phases) {
             phase.showLabel(true);
@@ -188,8 +189,9 @@ public class MoonPhasesView extends LinearLayout
             Calendar fullMoonDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL);
             Calendar thirdQuarterDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER);
 
-            SuntimesCalculator.MoonPosition newMoonPosition = data.calculator().getMoonPosition(newMoonDate);
-            SuntimesCalculator.MoonPosition fullMoonPosition = data.calculator().getMoonPosition(fullMoonDate);
+            SuntimesCalculator calculator = data.calculator();
+            SuntimesCalculator.MoonPosition newMoonPosition = (calculator != null ? calculator.getMoonPosition(newMoonDate) : null);
+            SuntimesCalculator.MoonPosition fullMoonPosition = (calculator != null ? calculator.getMoonPosition(fullMoonDate) : null);
 
             phaseNew.updateField(context, data.now(), newMoonDate, showWeeks, showTime, showHours, showSeconds);
             phaseFirst.updateField(context, data.now(), firstQuarterDate, showWeeks, showTime, showHours, showSeconds);
@@ -311,11 +313,11 @@ public class MoonPhasesView extends LinearLayout
             icon.setImageBitmap(bitmap);
         }
 
-        public void updateField(Context context, Calendar now, Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
+        public void updateField(Context context, Calendar now, @Nullable Calendar dateTime, boolean showWeeks, boolean showTime, boolean showHours, boolean showSeconds)
         {
             if (field != null)
             {
-                field.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dateTime, showTime, showSeconds).getValue());
+                field.setText(dateTime != null ? utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), dateTime, showTime, showSeconds).getValue() : "");
             }
 
             if (note != null)

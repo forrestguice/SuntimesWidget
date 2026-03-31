@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.support.view.ViewCompat;
 
 /**
@@ -34,6 +35,7 @@ import com.forrestguice.support.view.ViewCompat;
  */
 public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
 {
+    @Nullable
     protected Drawable divider;
     protected final int centerPosition;
     protected final int itemsPerDay;
@@ -89,7 +91,7 @@ public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
                 drawHeader(c, position, left, top);
                 drawFooter(c, position, left, bottom);
 
-            } else if (offset == (itemsPerDay - 1)) {
+            } else if (offset == (itemsPerDay - 1) && divider != null) {
                 int right = bounds.right + Math.round(ViewCompat.getTranslationX(child));
                 int left = right - divider.getIntrinsicWidth();
                 divider.setBounds(left, top, right, bottom);
@@ -109,6 +111,6 @@ public class MoonRiseSetDivider extends RecyclerView.ItemDecoration
 
     @Override
     public void getItemOffsets(Rect rect, @NonNull View v, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-        rect.set(0, 0, divider.getIntrinsicWidth(), 0);
+        rect.set(0, 0, (divider != null ? divider.getIntrinsicWidth() : 0), 0);
     }
 }

@@ -70,6 +70,7 @@ public class LightGraphBitmap
 
     @Nullable
     protected SuntimesRiseSetDataset[] yearData = null;    // set in `makeBitmap`
+    @Nullable
     public SuntimesRiseSetDataset[] getYearData() {
         return yearData;
     }
@@ -620,10 +621,12 @@ public class LightGraphBitmap
 
         SuntimesCalculator calculator = data[0].calculator();
         ArrayList<Calendar> events = new ArrayList<>();
-        events.add(calculator.getSpringEquinoxForYear(data[0].calendar()));
-        events.add(calculator.getSummerSolsticeForYear(data[0].calendar()));
-        events.add(calculator.getAutumnalEquinoxForYear(data[0].calendar()));
-        events.add(calculator.getWinterSolsticeForYear(data[0].calendar()));
+        if (calculator != null) {
+            events.add(calculator.getSpringEquinoxForYear(data[0].calendar()));
+            events.add(calculator.getSummerSolsticeForYear(data[0].calendar()));
+            events.add(calculator.getAutumnalEquinoxForYear(data[0].calendar()));
+            events.add(calculator.getWinterSolsticeForYear(data[0].calendar()));
+        }
 
         float h = c.getHeight();
         Calendar calendar = events.get(events.size() - 1);
@@ -699,7 +702,8 @@ public class LightGraphBitmap
         int colorWinter = options.colors.getColor(LightGraphColorValues.COLOR_WINTER);
 
         int gradientWidth = (int)(c.getWidth() / 4d);
-        int[] gradientColors = (options.location.getLatitudeAsDouble() < 0 && options.localizeToHemisphere)
+        double latitude = (options.location != null ? options.location.getLatitudeAsDouble() : 0);
+        int[] gradientColors = (latitude < 0 && options.localizeToHemisphere)
                 ? new int[] { colorSummer, colorAutumn, colorWinter, colorSpring, colorSummer}
                 : new int[] { colorWinter, colorSpring, colorSummer, colorAutumn, colorWinter};
 

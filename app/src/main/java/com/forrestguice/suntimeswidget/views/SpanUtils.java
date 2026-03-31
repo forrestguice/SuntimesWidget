@@ -388,25 +388,28 @@ public class SpanUtils
         } catch (Exception e) {
             Log.e("createImageSpan", "invalid drawableID " + drawableID + "! ...set to null.");
         }
-
-        if (drawable != null)
-        {
-            drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
-            if (width > 0 && height > 0)
-            {
-                drawable.setBounds(0, 0, width, height);
-            }
-            drawable.setColorFilter(tint, tintMode);
+        if (drawable == null) {
+            throw new IllegalArgumentException("createImageSpan: invalid drawableID " + drawableID);
         }
+
+        drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
+        if (width > 0 && height > 0)
+        {
+            drawable.setBounds(0, 0, width, height);
+        }
+        drawable.setColorFilter(tint, tintMode);
         return new ImageSpan(drawable);
     }
 
     public static ImageSpan createImageSpan(ImageSpan other)
     {
         Drawable drawable = null;
-        if (other != null)
+        if (other != null) {
             drawable = other.getDrawable();
-
+        }
+        if (drawable == null) {
+            throw new IllegalArgumentException("createImageSpan: invalid drawable " + other);
+        }
         return new ImageSpan(drawable);
     }
 

@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_0;
@@ -106,7 +107,7 @@ public class SuntimesWidget1 extends SuntimesWidget0
         }
     }
 
-    protected static RemoteViews getWidgetViews(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    protected static RemoteViews getWidgetViews(Context context, @Nullable AppWidgetManager appWidgetManager, int appWidgetId)
     {
         int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
         int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);

@@ -43,6 +43,7 @@ import com.forrestguice.support.preference.DialogPreference;
 public class HelpPreference extends DialogPreference
 {
     private CharSequence helpText = "";
+    @Nullable
     private String helpLink = null;
     private String helpPath = "";
     private TextView helpView;
@@ -130,9 +131,11 @@ public class HelpPreference extends DialogPreference
             String buttonText = null;
             TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HelpPreference, 0, 0);
             try {
-                this.helpText = SpanUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
+                String helpText0 = a.getString(R.styleable.HelpPreference_helpText);
+                this.helpText = (helpText0 != null ? SpanUtils.fromHtml(helpText0) : "");
                 helpLink = a.getString(R.styleable.HelpPreference_helpLink);
-                helpPath = a.getString(R.styleable.HelpPreference_helpPath);
+                String helpPath0 = a.getString(R.styleable.HelpPreference_helpPath);
+                helpPath = (helpPath0 != null ? helpPath0 : "");
                 buttonText = a.getString(R.styleable.HelpPreference_moreHelpButtonText);
             } finally {
                 a.recycle();

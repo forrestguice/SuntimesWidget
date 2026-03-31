@@ -446,7 +446,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             public void onFinished(final SuntimesBackupLoadTask.TaskResult result)
             {
                 dismissProgress();
-                if (result.getResult() && result.numResults() > 0)
+                if (result != null && result.getResult() && result.numResults() > 0)
                 {
                     final Map<String, ContentValues[]> allValues = result.getItems();
                     SuntimesBackupTask.chooseBackupContent(context, allValues.keySet(), true, new SuntimesBackupTask.ChooseBackupDialogListener()
@@ -538,12 +538,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             public void onFinished(SuntimesBackupRestoreTask.TaskResult result)
             {
                 dismissProgress();
-                if (result.getResult())
+                if (result != null && result.getResult())
                 {
                     int c = result.getNumResults();
                     SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), (c > 0), c, ((c > 0) ? result.getReport() : null));
 
-                } else {
+                } else if (result != null) {
                     SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, result.getNumResults(), result.getReport());
                 }
             }

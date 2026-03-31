@@ -130,6 +130,7 @@ public class WidgetSettingsMetadata
      */
     public static class WidgetMetadata
     {
+        @Nullable
         private String className = null;
         private int versionCode = -1;
         private int category = -1;
@@ -147,13 +148,13 @@ public class WidgetSettingsMetadata
             this.maxDimens[1] = other.maxDimens[1];
         }
 
-        public WidgetMetadata(String widgetClassName)
+        public WidgetMetadata(@Nullable String widgetClassName)
         {
             this.className = widgetClassName;
             this.versionCode = BuildConfig.VERSION_CODE;
         }
 
-        public WidgetMetadata(String widgetClassName, int versionCode, int category,
+        public WidgetMetadata(@Nullable String widgetClassName, int versionCode, int category,
                               int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
             this.className = widgetClassName;
@@ -165,7 +166,7 @@ public class WidgetSettingsMetadata
             this.maxDimens[1] = maxHeight;
         }
 
-        public WidgetMetadata(String widgetClassName, int versionCode, WidgetMetadata other)
+        public WidgetMetadata(@Nullable String widgetClassName, int versionCode, WidgetMetadata other)
         {
             this.className = widgetClassName;
             this.versionCode = versionCode;
@@ -179,6 +180,7 @@ public class WidgetSettingsMetadata
         /**
          * @return widget class name
          */
+        @Nullable
         public String getWidgetClassName() {
             return className;
         }
@@ -246,7 +248,7 @@ public class WidgetSettingsMetadata
 
         @Override
         public int hashCode() {
-            return className.hashCode();
+            return (className != null ? className.hashCode() : 0);
         }
 
         @Override

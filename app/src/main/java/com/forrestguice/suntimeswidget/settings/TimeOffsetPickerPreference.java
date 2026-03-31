@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.support.preference.DialogPreference;
@@ -42,8 +43,11 @@ public class TimeOffsetPickerPreference extends DialogPreference
     private int value;
     private int param_minMs = 1, param_maxMs = 10000;
 
+    @Nullable
     private String param_zeroText = null;
+    @Nullable
     private String param_resetText = null;
+    @Nullable
     private Integer param_resetValue = null;
 
     private boolean param_showDirection = false;
@@ -130,7 +134,9 @@ public class TimeOffsetPickerPreference extends DialogPreference
             builder.setNeutralButton(param_resetText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    setValue(param_resetValue);
+                    if (param_resetValue != null) {
+                        setValue(param_resetValue);
+                    }
                 }
             });
         }

@@ -800,24 +800,26 @@ public class AppSettings
         pref.apply();
     }
 
+    @Nullable
     public static String loadThemeLightPref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_DEF_APPEARANCE_THEME_LIGHT);
     }
-    public static void saveThemeLightPref(Context context, String themeID)
+    public static void saveThemeLightPref(Context context, @Nullable String themeID)
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putString(PREF_KEY_APPEARANCE_THEME_LIGHT, themeID);
         pref.apply();
     }
 
+    @Nullable
     public static String loadThemeDarkPref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
     }
-    public static void saveThemeDarkPref(Context context, String themeID)
+    public static void saveThemeDarkPref(Context context, @Nullable String themeID)
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
         pref.putString(PREF_KEY_APPEARANCE_THEME_DARK, themeID);

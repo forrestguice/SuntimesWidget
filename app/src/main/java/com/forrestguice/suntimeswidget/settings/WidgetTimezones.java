@@ -181,8 +181,8 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
-    public static TimeZone localMeanTime(Location location) {
-        return new TimeZones.LocalMeanTime(location.getLongitudeAsDouble(), TimeZones.LocalMeanTime.TIMEZONEID);
+    public static TimeZone localMeanTime(@Nullable Location location) {
+        return new TimeZones.LocalMeanTime(location == null ? 0 : location.getLongitudeAsDouble(), TimeZones.LocalMeanTime.TIMEZONEID);
     }
 
     ///////////////////////////////////////

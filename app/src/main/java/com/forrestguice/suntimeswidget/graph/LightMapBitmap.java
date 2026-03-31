@@ -174,8 +174,10 @@ public class LightMapBitmap
             Bitmap b0 = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c0 = new Canvas(b0);
 
+            Location location = (data != null ? data.location() : null);
+            double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
             long zoneOffsetMs = ((data != null) ? data.timezone().getOffset(now.getTimeInMillis()) : 0);
-            long lonOffsetMs = ((data != null) ? Math.round(data.location().getLongitudeAsDouble() * MILLIS_IN_DAY / 360d) : 0);
+            long lonOffsetMs = ((data != null) ? Math.round(longitude * MILLIS_IN_DAY / 360d) : 0);
             long offsetMs = zoneOffsetMs - lonOffsetMs;
 
             float left = (float)(offsetMs * ONE_DIVIDED_MILLIS_IN_DAY * w);
@@ -233,15 +235,15 @@ public class LightMapBitmap
 
     protected void drawSunSymbol(int symbol, Calendar calendar, Canvas c, Paint p, LightMapOptions options)
     {
-        int pointRadius;
-        if (colors.option_drawNow_pointSizePx <= 0)
+        int pointRadius = 0;
+        if (colors != null && colors.option_drawNow_pointSizePx <= 0)
         {
             pointRadius = (int)Math.ceil(c.getWidth() / (48d * 2d));      // a circle that is 1/2 hr wide
             int maxPointRadius = (int)(c.getHeight() / 2d);
             if ((pointRadius + (pointRadius / 3d)) > maxPointRadius) {
                 pointRadius = (maxPointRadius - (pointRadius/3));
             }
-        } else {
+        } else if (colors != null) {
             pointRadius = colors.option_drawNow_pointSizePx;
         }
 
@@ -268,10 +270,10 @@ public class LightMapBitmap
         c.drawRect(0, 0, w, h, p);
     }
 
-    protected void drawVerticalLine(Calendar calendar0, SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
+    protected void drawVerticalLine(@Nullable Calendar calendar0, SuntimesRiseSetData data, int lineWidth, Canvas c, Paint p)
     {
         Location location = data.location();
-        if (location != null)
+        if (location != null && calendar0 != null)
         {
             Calendar calendar = Calendar.getInstance(WidgetTimezones.localMeanTime(location));
             calendar.setTimeInMillis(calendar0.getTimeInMillis());

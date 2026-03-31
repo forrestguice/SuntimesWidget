@@ -1312,11 +1312,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     if (result != null && result.getResult())
                     {
                         File file = result.getExportFile();
-                        String absolutePath = (file != null ? file.getAbsolutePath() : null);
-                        String successMessage = context.getString(R.string.msg_export_success, absolutePath);
-                        Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-                        ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file, result.getMimeType());
+                        if (file != null)
+                        {
+                            String absolutePath = file.getAbsolutePath();
+                            String successMessage = context.getString(R.string.msg_export_success, absolutePath);
+                            Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                            ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file, result.getMimeType());
 
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, "null"), Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         File file = (result != null ? result.getExportFile() : null);
                         String path = ((file != null) ? file.getAbsolutePath() : "<path>");

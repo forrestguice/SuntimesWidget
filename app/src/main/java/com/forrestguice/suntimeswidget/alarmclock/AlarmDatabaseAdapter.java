@@ -859,13 +859,14 @@ public class AlarmDatabaseAdapter
         private boolean flag_add = false;
         private boolean flag_withState = true;
         private AlarmClockItem lastItem;
+        @Nullable
         private final AlarmClockItem[] items;
 
         public AlarmUpdateTask(@NonNull Context context, AlarmClockItem item) {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
             this.items = new AlarmClockItem[] { item } ;
         }
-        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem[] items) {
+        public AlarmUpdateTask(@NonNull Context context, @Nullable AlarmClockItem[] items) {
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
             this.items = items;
         }
@@ -874,7 +875,7 @@ public class AlarmDatabaseAdapter
             this.flag_add = flag_add;
             this.flag_withState = flag_withState;
         }
-        public AlarmUpdateTask(@NonNull Context context, AlarmClockItem[] items, boolean flag_add, boolean flag_withState) {
+        public AlarmUpdateTask(@NonNull Context context, @Nullable AlarmClockItem[] items, boolean flag_add, boolean flag_withState) {
             this(context, items);
             this.flag_add = flag_add;
             this.flag_withState = flag_withState;
@@ -885,7 +886,8 @@ public class AlarmDatabaseAdapter
         {
             db.open();
             boolean updated = true;
-            for (AlarmClockItem item : items)
+            AlarmClockItem[] items0 = (items != null ? items : new AlarmClockItem[0]);
+            for (AlarmClockItem item : items0)
             {
                 lastItem = item;
                 long lastItemID = item.rowID;
@@ -907,7 +909,7 @@ public class AlarmDatabaseAdapter
             }
             db.close();
             //this.items = Arrays.copyOf(items, items.length);
-            return new AlarmItemTaskResult(updated, lastItem, items);
+            return new AlarmItemTaskResult(updated, lastItem, items0);
         }
 
         protected AlarmItemTaskListener listener = null;

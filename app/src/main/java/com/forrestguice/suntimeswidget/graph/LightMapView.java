@@ -258,7 +258,7 @@ public class LightMapView extends ImageView
         }
 
         @Override
-        public void onFinished(Bitmap frame) {
+        public void onFinished(@Nullable Bitmap frame) {
             //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFinished: " + Integer.toHexString(getColors().hashCode()));
             setImageBitmap(frame);
             if (mapListener != null) {
