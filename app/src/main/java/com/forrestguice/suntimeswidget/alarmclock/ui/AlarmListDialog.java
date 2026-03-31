@@ -783,7 +783,7 @@ public class AlarmListDialog extends DialogBase
             } else {
                 if (isAdded() && getContext() != null)
                 {
-                    Uri uri = result.getUri();   // import failed
+                    Uri uri = (result != null ? result.getUri() : null);   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
                     String failureMessage = getString(R.string.themesimport_msg_failure, path);
                     Toast.makeText(getContext(), failureMessage, Toast.LENGTH_LONG).show();

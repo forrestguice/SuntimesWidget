@@ -36,7 +36,7 @@ import java.util.TreeSet;
 
 public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValuesEditViewHolder>
 {
-    public ColorValuesEditViewAdapter(Context context, ColorValues values)
+    public ColorValuesEditViewAdapter(Context context, @Nullable ColorValues values)
     {
         contextRef = new WeakReference<>(context);
         colors = values;
@@ -47,12 +47,14 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
         return contextRef.get();
     }
 
+    @Nullable
     private ColorValues colors = null;
-    public void setColorValues(ColorValues values)
+    public void setColorValues(@Nullable ColorValues values)
     {
         colors = values;
         notifyDataSetChanged();
     }
+    @Nullable
     public ColorValues getColors() {
         return colors;
     }

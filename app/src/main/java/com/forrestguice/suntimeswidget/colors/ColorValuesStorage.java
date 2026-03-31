@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.colors;
 
 import android.content.SharedPreferences;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 
 import java.util.HashMap;
@@ -35,9 +36,11 @@ public abstract class ColorValuesStorage
             colors.setColor(key, prefs.getInt(prefix + key, colors.getFallbackColor()));
         }
     }
+    @Nullable
     public static String loadColorValuesID(SharedPreferences prefs, String prefix) {
         return prefs.getString(prefix + ColorValues.KEY_ID, null);
     }
+    @Nullable
     public static String loadColorValuesLabel(SharedPreferences prefs, String prefix) {
         return prefs.getString(prefix + ColorValues.KEY_LABEL, null);
     }

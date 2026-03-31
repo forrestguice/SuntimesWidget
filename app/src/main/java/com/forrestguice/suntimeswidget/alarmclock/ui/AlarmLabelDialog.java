@@ -38,6 +38,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -68,11 +69,14 @@ public class AlarmLabelDialog extends DialogBase
         getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArgs().getCharSequence("helpContent");
+        CharSequence c = getArgs().getCharSequence("helpContent");
+        return (c != null ? c : "");
     }
+    @Nullable
     public String helpUrl() {
         return getArgs().getString("helpUrl");
     }
+    @Nullable
     public String helpTag() {
         return getArgs().getString("helpTag");
     }

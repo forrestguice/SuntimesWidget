@@ -189,9 +189,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             {
                 @Override
                 public void onFinished(Bitmap result) {
-                    if (getContext() != null) {
-                        updateEarliestLatestText(getContext());
-                    }
+                    updateEarliestLatestText(getContext());
                 }
 
                 @Override
@@ -520,9 +518,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
         updateEarliestLatestText(context);
     }
 
-    protected void updateEarliestLatestText(Context context)
+    protected void updateEarliestLatestText(@Nullable Context context)
     {
-        if (options.earliestLatestData != null)
+        if (context != null && options.earliestLatestData != null)
         {
             if (text_sunrise_early != null) {
                 updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.lightgraph_label_earliest_sunrise);

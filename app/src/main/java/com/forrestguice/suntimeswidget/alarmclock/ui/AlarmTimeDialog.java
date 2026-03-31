@@ -334,10 +334,12 @@ public class AlarmTimeDialog extends DialogBase
         return getArgs().getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
     }
 
+    @Nullable
     public String getTimeZone() {
         return getArgs().getString(PREF_KEY_ALARM_TIME_MODE);
     }
 
+    @Nullable
     public Location getLocation() {
         return (Location)getArgs().getSerializable(PREF_KEY_ALARM_LOCATION);
     }

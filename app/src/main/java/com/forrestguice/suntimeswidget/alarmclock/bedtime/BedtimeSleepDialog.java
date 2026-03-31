@@ -35,6 +35,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -63,11 +64,14 @@ public class BedtimeSleepDialog extends DialogBase
         getArgs().putString("helpTag", helpTag);
     }
     public CharSequence helpContent() {
-        return getArgs().getCharSequence("helpContent");
+        CharSequence c = getArgs().getCharSequence("helpContent");
+        return (c != null ? c : "");
     }
+    @Nullable
     public String helpUrl() {
         return getArgs().getString("helpUrl");
     }
+    @Nullable
     public String helpTag() {
         return getArgs().getString("helpTag");
     }
@@ -165,13 +169,18 @@ public class BedtimeSleepDialog extends DialogBase
         CharSequence helpContent = helpContent();
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent != null ? helpContent : "");
-        helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
-        helpDialog.setNeutralButtonListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl())));
-            }
-        }, helpTag());
+
+        String helpTag = helpTag();
+        if (helpTag != null)
+        {
+            helpDialog.setShowNeutralButton(getString(R.string.action_onlineHelp));
+            helpDialog.setNeutralButtonListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl())));
+                }
+            }, helpTag);
+        }
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 

@@ -237,7 +237,7 @@ public class EventListFragment extends DialogBase
         } else return false;
     }
 
-    public void setPreselected(String value) {
+    public void setPreselected(@Nullable String value) {
         getArgs().putString(EXTRA_SELECTED, value);
     }
 
@@ -261,9 +261,10 @@ public class EventListFragment extends DialogBase
         return getArgs().getBoolean(EXTRA_NOSELECT, false);
     }
 
-    public void setLocation(Location value) {
+    public void setLocation(@Nullable Location value) {
         getArgs().putSerializable(EXTRA_LOCATION, value);
     }
+    @Nullable
     public Location getLocation() {
         return (Location) getArgs().getSerializable(EXTRA_LOCATION);
     }
@@ -297,7 +298,9 @@ public class EventListFragment extends DialogBase
                     Uri uri = result.getUri();   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
                     String failureMessage = getString(R.string.themesimport_msg_failure, path);
-                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    if (getActivity() != null) {
+                        Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    }
 
                 } //else {
                   //  String successMessage = getString(R.string.msg_import_success, result.getUri().toString());

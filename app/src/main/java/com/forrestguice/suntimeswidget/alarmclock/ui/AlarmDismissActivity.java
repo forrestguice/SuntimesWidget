@@ -734,7 +734,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             }
         }
     }
-    private void stopAnimation(ValueAnimator animation)
+    private void stopAnimation(@Nullable ValueAnimator animation)
     {
         if (animation != null) {
             animation.removeAllUpdateListeners();
@@ -823,6 +823,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         }
     };
 
+    @Nullable
     protected Object animateBackground(int[] animColors, long duration, TimeInterpolator interpolator)
     {
         stopAnimateBackground();

@@ -131,8 +131,9 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
     }
 
+    @Nullable
     private String dialogTitle = null;
-    public void setDialogTitle( String title ) {
+    public void setDialogTitle( @Nullable String title ) {
         dialogTitle = title;
     }
 

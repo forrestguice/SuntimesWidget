@@ -153,6 +153,7 @@ public class HelpPreference extends DialogPreference
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink + helpPath)));
         }
     }
+    @Nullable
     public String getHelpLink() {
         return helpLink;
     }

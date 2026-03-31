@@ -409,10 +409,10 @@ public class EquinoxDialog extends BottomSheetDialogBase
         });
     }
 
-    protected void shareItem(Context context, Intent itemData)
+    protected void shareItem(Context context, @Nullable Intent itemData)
     {
         SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
-        long itemMillis = itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L;
+        long itemMillis = (itemData != null ? itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L) : -1L);
         if (itemMode != null && itemMillis != -1L)
         {
             Calendar itemTime = Calendar.getInstance();
@@ -455,7 +455,7 @@ public class EquinoxDialog extends BottomSheetDialogBase
      */
     public static class EquinoxDialogListener
     {
-        public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {}
+        public void onSetAlarm( @Nullable SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowMoonInfo( long suggestDate ) {}

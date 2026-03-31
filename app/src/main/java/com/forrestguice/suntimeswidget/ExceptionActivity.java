@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -99,7 +100,7 @@ public class ExceptionActivity extends AppCompatActivity
         }
     }
 
-    public static void copyToClipboard(Context context, String e)
+    public static void copyToClipboard(Context context, @Nullable String e)
     {
         if (context != null)
         {

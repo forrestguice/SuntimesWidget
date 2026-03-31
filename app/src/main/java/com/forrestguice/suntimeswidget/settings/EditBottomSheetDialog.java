@@ -62,10 +62,10 @@ public abstract class EditBottomSheetDialog extends BottomSheetDialogBase
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(requireContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(getLayoutID(), parent, false);
-        initViews(getContext(), dialogContent, savedState);
-        updateViews(getContext());
+        initViews(requireContext(), dialogContent, savedState);
+        updateViews(requireContext());
         return dialogContent;
     }
 

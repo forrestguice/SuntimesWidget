@@ -213,9 +213,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         updateViews();
     }
 
-    public void setPreviewKeys(String... keys) {
+    public void setPreviewKeys(@Nullable String... keys) {
         getArgs().putStringArray("previewKeys", keys);
     }
+    @Nullable
     public String[] previewKeys() {
         return getArgs().getStringArray("previewKeys");
     }
@@ -379,13 +380,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
 
                     colorCollection.setColors(context, id, values);
                     //colorCollection.setSelectedColorsID(context, id, getAppWidgetID(), getColorTag());
-                    Toast.makeText(getActivity(), context.getString(R.string.colors_msg_imported, id), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.colors_msg_imported, id), Toast.LENGTH_SHORT).show();
                     updateViews();
                     return;
                 }
             }
         }
-        Toast.makeText(getActivity(), context.getString(R.string.colors_msg_import_failed), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.colors_msg_import_failed), Toast.LENGTH_SHORT).show();
     }
 
     private final ColorValuesEditFragment.FragmentListener editDialogListener = new ColorValuesEditFragment.FragmentListener()
@@ -445,7 +446,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
-    public void cancelEdit(Context context)
+    public void cancelEdit(@Nullable Context context)
     {
         if (context != null)
         {

@@ -280,8 +280,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     protected void updateViews() {
     }
 
+    @Nullable
     protected ColorValues colorValues = null;
-    public void setColorValues(ColorValues v)
+    public void setColorValues(@Nullable ColorValues v)
     {
         colorValues = v;
         setID(null);
@@ -292,6 +293,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
         updateViews();
     }
+    @Nullable
     public ColorValues getColorValues() {
          return colorValues;
     }
