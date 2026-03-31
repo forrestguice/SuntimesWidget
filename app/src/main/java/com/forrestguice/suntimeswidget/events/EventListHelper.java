@@ -1400,7 +1400,7 @@ public class EventListHelper
     }*/
 
     @TargetApi(11)
-    private class EventAliasActionMode1 extends EventAliasActionModeBase implements ActionMode.Callback
+    protected class EventAliasActionMode1 extends EventAliasActionModeBase implements ActionMode.Callback
     {
         public EventAliasActionMode1() {
             super();

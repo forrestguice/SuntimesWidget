@@ -768,7 +768,7 @@ public class ActionListHelper
     }*/
 
     @TargetApi(11)
-    private class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback
+    protected class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback
     {
         public ActionDisplayActionMode1() {
             super();

@@ -1084,7 +1084,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     /**
      * AlarmClockItemView
      */
-    private static class AlarmClockItemView
+    protected static class AlarmClockItemView
     {
         public View card;
         public View cardBackdrop;
