@@ -62,7 +62,6 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.support.app.AppCompatActivity;
-import com.forrestguice.support.app.FragmentCompat;
 import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.util.ExecutorUtils;

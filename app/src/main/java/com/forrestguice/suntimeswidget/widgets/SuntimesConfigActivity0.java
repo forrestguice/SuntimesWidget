@@ -72,7 +72,6 @@ import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
-import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.about.AboutDialog;

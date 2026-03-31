@@ -47,7 +47,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.TooltipCompat;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.forrestguice.support.app.AppCompatActivity;
-import com.forrestguice.support.app.FragmentCompat;
 
 public class LocationConfigDialog extends BottomSheetDialogBase
 {

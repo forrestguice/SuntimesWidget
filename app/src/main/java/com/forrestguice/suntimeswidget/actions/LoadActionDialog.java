@@ -26,7 +26,6 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
-import com.forrestguice.support.app.FragmentManagerCompat;
 
 /**
  * LoadActionDialog

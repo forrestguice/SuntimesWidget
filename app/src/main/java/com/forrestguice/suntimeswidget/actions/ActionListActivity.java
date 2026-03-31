@@ -41,7 +41,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.app.AppCompatActivity;
-import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.widget.Toolbar;
 
 public class ActionListActivity extends AppCompatActivity

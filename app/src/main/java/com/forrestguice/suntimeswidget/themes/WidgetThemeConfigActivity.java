@@ -43,7 +43,6 @@ import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
-import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 
 import android.text.Editable;

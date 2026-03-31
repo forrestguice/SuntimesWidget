@@ -32,7 +32,6 @@ import android.widget.TextView;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
-import com.forrestguice.support.app.FragmentManagerCompat;
 
 import java.util.Set;
 
