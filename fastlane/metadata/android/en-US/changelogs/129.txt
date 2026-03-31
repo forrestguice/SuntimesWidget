@@ -1,0 +1,2 @@
+- updates translation to French.
+- updates translation to Norwegian.

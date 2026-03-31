@@ -32,6 +32,11 @@
 * build; adds `legacy` flavor (uses the Android Support Library); assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle.
 * build; adds `production` and `nightly` build flavors (#892).
 
+### v0.16.15 (2026-03-30)
+* fixes crash when updating flippable widget (#926).
+* updates translation to French (fr) (#925, #928 by chfo-bidouille).
+* updates translation to Norwegian (nb) (#929 by FTno).
+
 ### v0.16.14 (2026-03-14)
 * fixes missing Chinese translations (#921) (missing since v0.16.12).
 * fixes missing region-specific default values.
