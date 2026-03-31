@@ -295,8 +295,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
-            isNew = extras.getBoolean(EXTRA_ISNEW, false);
-            editor.initFromItem(item, isNew);
+            if (item != null) {
+                isNew = extras.getBoolean(EXTRA_ISNEW, false);
+                editor.initFromItem(item, isNew);
+            }
         }
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
@@ -487,7 +489,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 finish();
 
             } else {
-                if (editor != null) {
+                if (editor != null && editor.getItem() != null) {
                     AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
                 }
             }
@@ -753,7 +755,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 @Override
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
                     AlarmClockItem item = result.getItem();
-                    sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DISABLE, item.getUri()));
+                    if (item != null) {
+                        sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DISABLE, item.getUri()));
+                    }
                     invalidateOptionsMenu();
                 }
             });

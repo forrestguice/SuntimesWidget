@@ -150,14 +150,16 @@ public class AlarmWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ALARMWIDGET;
-        return prefs.getString(prefs_prefix + key, defaultValue);
+        String s = prefs.getString(prefs_prefix + key, defaultValue);
+        return (s != null ? s : defaultValue);
     }
     public static Set<String> loadAlarmWidgetStringSet(Context context, int appWidgetId, String key, String[] defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ALARMWIDGET;
         Set<String> defValue = new TreeSet<String>(Arrays.asList(defaultValue));
-        return prefs.getStringSet(prefs_prefix + key, defValue);
+        Set<String> s = prefs.getStringSet(prefs_prefix + key, defValue);
+        return (s != null ? s : defValue);
     }
 
     public static void deleteAlarmWidgetValue(Context context, int appWidgetId, String key) {

@@ -123,7 +123,7 @@ public class AlarmTimeDialog extends DialogBase
         getArgs().putString(PREF_KEY_ALARM_TIME_MODE, value);
         updateDate();
     }
-    public void setLocation(Location location) {
+    public void setLocation(@Nullable Location location) {
         getArgs().putSerializable(PREF_KEY_ALARM_LOCATION, location);
         updateDate();
     }
@@ -310,7 +310,7 @@ public class AlarmTimeDialog extends DialogBase
         }
     }
 
-    public static CharSequence displayLocation(Context context, Location location)
+    public static CharSequence displayLocation(Context context, @Nullable Location location)
     {
         if (location == null) {
             return "";

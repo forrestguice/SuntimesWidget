@@ -459,8 +459,12 @@ public class BedtimeDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void configureSleepTime(final Context context, View v, @Nullable final BedtimeItem item)
+    protected void configureSleepTime(final Context context, @Nullable View v, @Nullable final BedtimeItem item)
     {
+        if (v == null) {
+            Log.w("BedtimeDialog", "configureSleepTime: unable to dislay popup; null anchor!");
+            return;
+        }
         PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
             @Override
@@ -502,7 +506,7 @@ public class BedtimeDialog extends DialogBase
         Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();    // TODO
     }
 
-    protected void toggleConfigureBedtimeAutoOff(Context context, BedtimeItem item)
+    protected void toggleConfigureBedtimeAutoOff(Context context, @Nullable BedtimeItem item)
     {
         boolean toggled = !BedtimeSettings.loadPrefBedtimeAutoOff(context);
         BedtimeSettings.savePrefBedtimeAutoOff(context, toggled);
@@ -560,7 +564,7 @@ public class BedtimeDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final String DIALOG_SLEEP_CYCLE = "dialog_sleep_cycle";
-    protected void showConfigureSleepCycleDialog(Context context, final BedtimeItem item)
+    protected void showConfigureSleepCycleDialog(Context context, @Nullable final BedtimeItem item)
     {
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
@@ -573,7 +577,7 @@ public class BedtimeDialog extends DialogBase
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLE);
     }
 
-    private TimeOffsetPickerDialog.DialogListener onSleepCycleDialogListener(final BedtimeItem item)
+    private TimeOffsetPickerDialog.DialogListener onSleepCycleDialogListener(@Nullable final BedtimeItem item)
     {
         return new TimeOffsetPickerDialog.DialogListener()
         {
@@ -581,7 +585,7 @@ public class BedtimeDialog extends DialogBase
             public void onDialogAccepted(long value)
             {
                 Context context = getContext();
-                if (context != null)
+                if (context != null && item != null)
                 {
                     BedtimeSettings.savePrefSleepCycleMs(context, value);
                     onSleepTimeChanged_updateBedtimeOff(context, item);
@@ -600,7 +604,7 @@ public class BedtimeDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static final String DIALOG_SLEEP_CYCLES = "dialog_sleep_cycles";
-    protected void showConfigureSleepCyclesDialog(Context context, final BedtimeItem item)
+    protected void showConfigureSleepCyclesDialog(Context context, @Nullable final BedtimeItem item)
     {
         final BedtimeSleepDialog dialog = new BedtimeSleepDialog();
         dialog.setNumCycles(BedtimeSettings.loadPrefSleepCycleCount(context));
@@ -609,7 +613,7 @@ public class BedtimeDialog extends DialogBase
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_CYCLES);
     }
 
-    private DialogInterface.OnClickListener onSleepCyclesDialogAccepted(final BedtimeItem item)
+    private DialogInterface.OnClickListener onSleepCyclesDialogAccepted(@Nullable final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {
@@ -618,7 +622,7 @@ public class BedtimeDialog extends DialogBase
             {
                 Context context = getContext();
                 final BedtimeSleepDialog dialog = (BedtimeSleepDialog) getChildFragmentManager().findFragmentByTag(DIALOG_SLEEP_CYCLES);
-                if (dialog != null && context != null)
+                if (dialog != null && context != null && item != null)
                 {
                     BedtimeSettings.savePrefSleepCycleCount(context, dialog.getNumCycles());
                     onSleepTimeChanged_updateBedtimeOff(context, item);
@@ -638,7 +642,7 @@ public class BedtimeDialog extends DialogBase
 
     private static final String DIALOG_SLEEP_OFFSET = "dialog_sleep_offset";
 
-    protected void showConfigureSleepOffsetDialog(Context context, final BedtimeItem item)
+    protected void showConfigureSleepOffsetDialog(Context context, @Nullable final BedtimeItem item)
     {
         final TimeOffsetPickerDialog dialog = new TimeOffsetPickerDialog();
         dialog.setFlags(false, true, true, false, false);
@@ -651,7 +655,7 @@ public class BedtimeDialog extends DialogBase
         dialog.show(getChildFragmentManager(), DIALOG_SLEEP_OFFSET);
     }
 
-    private TimeOffsetPickerDialog.DialogListener onSleepOffsetDialogListener(final BedtimeItem item)
+    private TimeOffsetPickerDialog.DialogListener onSleepOffsetDialogListener(@Nullable final BedtimeItem item)
     {
         return new TimeOffsetPickerDialog.DialogListener()
         {
@@ -659,7 +663,7 @@ public class BedtimeDialog extends DialogBase
             public void onDialogAccepted(long value)
             {
                 Context context = getContext();
-                if (context != null)
+                if (context != null && item != null)
                 {
                     BedtimeSettings.savePrefSleepOffsetMs(context, value);
                     onSleepTimeChanged_updateBedtimeOff(context, item);
@@ -697,13 +701,13 @@ public class BedtimeDialog extends DialogBase
         offerModifyWakeupFromBedtime(context);
     }
 
-    protected void configBedtimeToDate(final Context context, BedtimeItem item, Calendar bedtime, Location location, String flags, boolean modifyEnabled, boolean enabled)
+    protected void configBedtimeToDate(final Context context, @Nullable BedtimeItem item, Calendar bedtime, @Nullable Location location, @Nullable String flags, boolean modifyEnabled, boolean enabled)
     {
         final int hour = bedtime.get(Calendar.HOUR_OF_DAY);
         final int minute = bedtime.get(Calendar.MINUTE);
         configBedtimeToDate(context, item, hour, minute, location, flags, modifyEnabled, enabled);
     }
-    protected void configBedtimeToDate(final Context context, BedtimeItem item, int hour, int minute, Location location, String flags, boolean modifyEnabled, boolean enabled)
+    protected void configBedtimeToDate(final Context context, @Nullable BedtimeItem item, int hour, int minute, @Nullable Location location, @Nullable String flags, boolean modifyEnabled, boolean enabled)
     {
         Calendar bedtimeOff = bedtimeOffCalendar(context, hour, minute);
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, null, location, bedtimeOff.get(Calendar.HOUR_OF_DAY), bedtimeOff.get(Calendar.MINUTE), BedtimeSettings.getBedtimeOffOffset(context), flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
@@ -711,7 +715,7 @@ public class BedtimeDialog extends DialogBase
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, location, flags, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
-    protected void configBedtimeOffsetEvent(final Context context, BedtimeItem item, String event, Location location, long offset, String flags, boolean modifyEnabled, boolean enabled)
+    protected void configBedtimeOffsetEvent(final Context context, @Nullable BedtimeItem item, String event, @Nullable Location location, long offset, @Nullable String flags, boolean modifyEnabled, boolean enabled)
     {
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
@@ -795,7 +799,7 @@ public class BedtimeDialog extends DialogBase
     protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, final String event, @Nullable Location location, final long offset, String flags, final boolean modifyEnabled, final boolean enabled) {
         configureBedtimeAt(context, item, slot, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
     }
-    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, @Nullable final String event, @Nullable final Location location, final int hour, final int minute, final long offset, final String flags, final boolean modifyEnabled, final boolean enabled)
+    protected void configureBedtimeAt(final Context context, @Nullable final BedtimeItem item, @NonNull final String slot, @Nullable final String event, @Nullable final Location location, final int hour, final int minute, final long offset, @Nullable final String flags, final boolean modifyEnabled, final boolean enabled)
     {
         final long alarmID = BedtimeSettings.loadAlarmID(context, slot);
         if (alarmID == BedtimeSettings.ID_NONE)
@@ -864,12 +868,14 @@ public class BedtimeDialog extends DialogBase
                     public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                     {
                         AlarmClockItem alarmItem = result.getItem();
-                        BedtimeSettings.saveAlarmID(context, slot, alarmItem.rowID);
-                        //if (!alarmItem.enabled) {
-                        context.sendBroadcast(AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()));
-                        //}
-                        context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()) );
-                        Log.d("DEBUG", "Modified alarm scheduled: " + slot + ", enabled: " + alarmItem.enabled);
+                        if (alarmItem != null) {
+                            BedtimeSettings.saveAlarmID(context, slot, alarmItem.rowID);
+                            //if (!alarmItem.enabled) {
+                            context.sendBroadcast(AlarmNotifications.getFullscreenBroadcast(alarmItem.getUri()));
+                            //}
+                            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_RESCHEDULE, alarmItem.getUri()));
+                            Log.d("DEBUG", "Modified alarm scheduled: " + slot + ", enabled: " + alarmItem.enabled);
+                        }
                     }
                 });
             } else {
@@ -1011,7 +1017,7 @@ public class BedtimeDialog extends DialogBase
             }
         } else {
             if (onSaved != null) {
-                onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(false, null, (AlarmClockItem[])null));
+                onSaved.onFinished(new AlarmDatabaseAdapter.AlarmItemTaskResult(false, null, new AlarmClockItem[0]));
             }
         }
     }
@@ -1063,8 +1069,12 @@ public class BedtimeDialog extends DialogBase
 
     private static final String DIALOG_ADD_BEDTIME = "dialog_add_bedtime";
 
-    protected void showAddBedtimeMenu(final Context context, final View v, final BedtimeItem item)
+    protected void showAddBedtimeMenu(final Context context, @Nullable final View v, final BedtimeItem item)
     {
+        if (v == null) {
+            Log.w("BedtimeDialog", "showAddBedtimeMenu: unable to dislay popup; null anchor!");
+            return;
+        }
         PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
             @Override
@@ -1152,8 +1162,12 @@ public class BedtimeDialog extends DialogBase
 
     private static final String DIALOG_ADD_ALARM = "dialog_add_alarm";
 
-    protected void showAddAlarmMenu(final Context context, final View v, final BedtimeItem item)
+    protected void showAddAlarmMenu(final Context context, @Nullable final View v, final BedtimeItem item)
     {
+        if (v == null) {
+            Log.w("BedtimeDialog", "showAddAlarmMenu: unable to dislay popup; null anchor!");
+            return;
+        }
         PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
             @Override
@@ -1209,7 +1223,7 @@ public class BedtimeDialog extends DialogBase
         dialog.show(getChildFragmentManager(), DIALOG_ADD_ALARM);
     }
 
-    private DialogInterface.OnClickListener onAddAlarmDialogAccept(final String dialogTag, final String slot, final BedtimeItem item)
+    private DialogInterface.OnClickListener onAddAlarmDialogAccept(final String dialogTag, final String slot, @Nullable final BedtimeItem item)
     {
         return new DialogInterface.OnClickListener()
         {
@@ -1223,7 +1237,7 @@ public class BedtimeDialog extends DialogBase
             }
         };
     }
-    protected void onAddAlarmDialogAccept(AlarmCreateDialog dialog, String slot, BedtimeItem item, @Nullable AlarmClockItem alarmItem)
+    protected void onAddAlarmDialogAccept(AlarmCreateDialog dialog, String slot, @Nullable BedtimeItem item, @Nullable AlarmClockItem alarmItem)
     {
         Context context = getContext();
         if (context == null) {
@@ -1260,11 +1274,15 @@ public class BedtimeDialog extends DialogBase
         offerModifyBedtimeFromWakeup(context);
     }
 
-    protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID) {
+    protected void showEditBedtimeMenu(final Context context, @Nullable final View v, @Nullable final View sharedView, final BedtimeItem item, final String slotName, final int requestID) {
         showEditBedtimeMenu(context, v, sharedView, item, slotName, requestID, R.menu.bedtime_edit);
     }
-    protected void showEditBedtimeMenu(final Context context, final View v, final View sharedView, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
+    protected void showEditBedtimeMenu(final Context context, @Nullable final View v, @Nullable final View sharedView, final BedtimeItem item, final String slotName, final int requestID, int menuResID)
     {
+        if (v == null) {
+            Log.w("BedtimeDialog", "showEditBedtimeMenu: unable to dislay popup; null anchor!");
+            return;
+        }
         PopupMenuCompat.PopupMenuListener onMenuItemClickListener = new PopupMenuCompat.PopupMenuListener()
         {
             @Override

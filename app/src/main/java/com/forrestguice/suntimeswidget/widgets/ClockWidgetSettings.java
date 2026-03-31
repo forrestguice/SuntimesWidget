@@ -107,7 +107,8 @@ public class ClockWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE, defaultValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TYPEFACE, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     public static void saveClockTypefaceFlag(Context context, int appWidgetId, String key, boolean value)
@@ -165,7 +166,8 @@ public class ClockWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK + suffix, defaultValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_CLOCK + suffix, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     //////////////////////////////////////////////////

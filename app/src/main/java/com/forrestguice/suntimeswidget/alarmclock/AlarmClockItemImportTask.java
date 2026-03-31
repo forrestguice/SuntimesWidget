@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.forrestguice.annotation.NonNull;
+
 /**
  * AsyncTask that reads AlarmClockItem objects from text file (json array).
  * @see AlarmClockItem
@@ -145,10 +147,10 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
         }
 
         private final AlarmClockItem[] items;
-        @Nullable
+        @NonNull
         public AlarmClockItem[] getItems()
         {
-            return items;
+            return (items != null ? items : new AlarmClockItem[0]);
         }
 
         private final Uri uri;

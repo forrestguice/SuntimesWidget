@@ -847,7 +847,7 @@ public class AppSettings
     {
         return themePrefToStyleId(context, themeName, null);
     }
-    public static int themePrefToStyleId( Context context, String themeName, SuntimesRiseSetData data )
+    public static int themePrefToStyleId( Context context, @Nullable String themeName, @Nullable SuntimesRiseSetData data )
     {
         if (themeName != null) {
             AppThemeInfo themeInfo = loadThemeInfo(themeName);
@@ -1158,7 +1158,7 @@ public class AppSettings
      */
     public abstract static class AppThemeInfo
     {
-        public abstract int getStyleId(Context context, TextSize textSize, SuntimesRiseSetData data);
+        public abstract int getStyleId(Context context, TextSize textSize, @Nullable SuntimesRiseSetData data);
         @NonNull
         public abstract String getThemeName();
 

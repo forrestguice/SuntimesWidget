@@ -61,11 +61,11 @@ public class SpanUtils
     public SpanUtils() {
     }
 
-    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, @Nullable ImageSpan imageSpan)
     {
         return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
     }
-    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan, int alignment)
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, @Nullable ImageSpan imageSpan, int alignment)
     {
         ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
         return createSpan(context, text, tags, alignment);
@@ -422,7 +422,7 @@ public class SpanUtils
         private final ImageSpan span;   // an ImageSpan that should be substituted for the tag
         private String blank;     // a "blank" string the same length as the tag
 
-        public ImageSpanTag(String tag, ImageSpan span)
+        public ImageSpanTag(String tag, @Nullable ImageSpan span)
         {
             this.tag = tag;
             this.span = span;
@@ -443,6 +443,7 @@ public class SpanUtils
             return tag;
         }
 
+        @Nullable
         public ImageSpan getSpan()
         {
             return span;

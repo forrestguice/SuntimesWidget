@@ -33,6 +33,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimes.support.R;
 
 /**
@@ -148,7 +149,7 @@ public class ListPreference extends android.preference.ListPreference
      * @param value the list preference value
      */
     @Override
-    public void setValue(String value)
+    public void setValue(@Nullable String value)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {

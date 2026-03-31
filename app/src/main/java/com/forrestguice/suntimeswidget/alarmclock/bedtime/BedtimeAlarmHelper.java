@@ -162,7 +162,7 @@ public class BedtimeAlarmHelper
         }
     }
 
-    public static void scheduleAlarmItem(@NonNull final Context context, AlarmClockItem item, boolean enabled)
+    public static void scheduleAlarmItem(@NonNull final Context context, @NonNull AlarmClockItem item, boolean enabled)
     {
         context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_RESCHEDULE, item.getUri())
                                        : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
@@ -180,7 +180,7 @@ public class BedtimeAlarmHelper
             {
                 @Override
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
-                    if (result.getResult()) {
+                    if (result.getResult() && result.getItem() != null) {
                         BedtimeAlarmHelper.scheduleAlarmItem(context, result.getItem(), enabled);
                     }
                 }
@@ -207,7 +207,7 @@ public class BedtimeAlarmHelper
         }
     }
 
-    public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, Location location, String flags, final boolean enabled)
+    public static void setBedtimeReminder_withEventInfo(final Context context, final int hour, final int minute, final long offset, @Nullable Location location, @Nullable String flags, final boolean enabled)
     {
         //AlarmClockItem eventItem = (enabled ? BedtimeAlarmHelper.createBedtimeEventItem(context, null, hour, minute, offset) : null);   // to also clear reminder when disabled
         AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, hour, minute, offset);
@@ -216,7 +216,7 @@ public class BedtimeAlarmHelper
         setBedtimeReminder_withEventItem(context, eventItem, enabled);
     }
 
-    public static void setBedtimeReminder_withEventInfo(final Context context, String event, Location location, final long offset, String flags, final boolean enabled)
+    public static void setBedtimeReminder_withEventInfo(final Context context, String event, @Nullable Location location, final long offset, @Nullable String flags, final boolean enabled)
     {
         AlarmClockItem eventItem = BedtimeAlarmHelper.createBedtimeEventItem(context, null, null, -1, -1, offset);
         eventItem.setEvent(event);
@@ -284,8 +284,8 @@ public class BedtimeAlarmHelper
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    Log.d("DEBUG", "saved reminder item " + item.rowID + ": " + result.getResult());
-                    if (result.getResult()) {
+                    Log.d("DEBUG", "saved reminder item " + (item != null ? item.rowID : "null") + ": " + result.getResult());
+                    if (result.getResult() && item != null) {
                         BedtimeSettings.saveAlarmID(context, BedtimeSettings.SLOT_BEDTIME_REMINDER, item.rowID);
                         BedtimeAlarmHelper.scheduleAlarmItem(context, item, enabled);
                     }

@@ -383,7 +383,8 @@ public class WorldMapWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
-        return prefs.getString(prefs_prefix + key + mapTag, defValue);
+        String s = prefs.getString(prefs_prefix + key + mapTag, defValue);
+        return (s != null ? s : defValue);
     }
 
     public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] defCenter) {

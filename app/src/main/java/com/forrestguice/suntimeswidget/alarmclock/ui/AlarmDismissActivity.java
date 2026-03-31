@@ -1031,9 +1031,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         //return ColorUtils.isTextReadable(textColor0, backgroundColor) ? textColor0 : textColor1;
     }
 
-    protected CharSequence formatTimeDisplay(Context context, Calendar calendar)
+    protected CharSequence formatTimeDisplay(Context context, @Nullable Calendar calendar)
     {
-        TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), calendar, false);
+        TimeDisplayText timeText = (calendar != null ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), calendar, false) : new TimeDisplayText());
         if (TimeDateDisplay.is24()) {
             return timeText.getValue();
         } else {

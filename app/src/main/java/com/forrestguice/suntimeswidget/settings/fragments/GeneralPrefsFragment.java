@@ -34,6 +34,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.WelcomeActivity;
@@ -185,7 +186,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
     {
         initPref_calculator(context, calculatorPref, null, defaultCalculator);
     }
-    public static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, int[] requestedFeatures, String defaultCalculator)
+    public static void initPref_calculator(Context context, final SummaryListPreference calculatorPref, @Nullable int[] requestedFeatures, String defaultCalculator)
     {
         String tagDefault = context.getString(R.string.tag_tagDefault);
         String tagPlugin = context.getString(R.string.tag_tagPlugin);

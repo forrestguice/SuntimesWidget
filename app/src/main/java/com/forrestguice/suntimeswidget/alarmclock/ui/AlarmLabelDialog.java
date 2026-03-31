@@ -76,9 +76,9 @@ public class AlarmLabelDialog extends DialogBase
     public String helpUrl() {
         return getArgs().getString("helpUrl");
     }
-    @Nullable
     public String helpTag() {
-        return getArgs().getString("helpTag");
+        String tag = getArgs().getString("helpTag");
+        return (tag != null ? tag : "");
     }
     public boolean showHelp() {
         return getArgs().getBoolean("showHelp", false);
@@ -278,9 +278,9 @@ public class AlarmLabelDialog extends DialogBase
         }
     }
 
-    public void setLabel(String value)
+    public void setLabel(@Nullable String value)
     {
-        this.label = value;
+        this.label = (value != null ? value : PREF_DEF_ALARM_LABEL);
         if (getContext() != null) {
             updateViews(getContext());
         }

@@ -1027,7 +1027,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
                                              ? WidgetSettings.loadLocationPref(getContext(), 0)
                                              : WidgetSettings.loadLocationDefault());
     }
-    public void setEvent( String event, Location location )
+    public void setEvent( String event, @Nullable Location location )
     {
         Bundle args = getArgs();
         args.putString(EXTRA_EVENT, event);

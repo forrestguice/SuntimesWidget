@@ -25,6 +25,7 @@ import android.os.Build;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.util.concurrent.ProgressCallable;
@@ -121,7 +122,7 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
         public TaskResult(boolean result, @Nullable Uri uri, @Nullable EventAlias[] items, @Nullable Exception e)
         {
             this.result = result;
-            this.items = items;
+            this.items = (items != null ? items : new EventAlias[0]);
             this.uri = uri;
             this.e = e;
         }
@@ -133,7 +134,7 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
         }
 
         private final EventAlias[] items;
-        @Nullable
+        @NonNull
         public EventAlias[] getItems()
         {
             return items;
@@ -147,7 +148,7 @@ public class EventImportTask extends ProgressCallable<EventAlias, EventImportTas
         }
 
         public int numResults() {
-            return (items != null ? items.length : 0);
+            return items.length;
         }
 
         private final Exception e;

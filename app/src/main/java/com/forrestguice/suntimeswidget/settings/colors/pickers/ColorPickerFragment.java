@@ -144,7 +144,7 @@ public class ColorPickerFragment extends DialogBase
     }
 
     @Nullable
-    protected String getPreviewText(Context context, int textColor, int backgroundColor)
+    protected String getPreviewText(@Nullable Context context, int textColor, int backgroundColor)
     {
         if (context == null) {
             return "";

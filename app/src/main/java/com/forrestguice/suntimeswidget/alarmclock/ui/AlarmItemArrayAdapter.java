@@ -984,7 +984,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
             {
                 AlarmClockItem item = result.getItem();
-                if (result.getResult()) {
+                if (result.getResult() && item != null) {
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
                     if (!enabled) {

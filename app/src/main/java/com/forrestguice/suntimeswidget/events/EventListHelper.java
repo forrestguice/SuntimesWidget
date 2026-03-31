@@ -182,14 +182,15 @@ public class EventListHelper
         expanded = value;
     }
 
-    public void setSelected( String eventID ) {
+    public void setSelected( @Nullable String eventID ) {
         //Log.d("DEBUG", "setSelected: " + eventID);
-        selectedItem = adapter.findItemByID(eventID);
+        selectedItem = (eventID != null ? adapter.findItemByID(eventID) : null);
         adapter.setSelected(selectedItem);
     }
 
+    @Nullable
     private Location location = null;
-    public void setLocation(Location value) {
+    public void setLocation(@Nullable Location value) {
         location = value;
     }
 
@@ -895,7 +896,7 @@ public class EventListHelper
     {
         EventAlias getSelected();
         int getSelectedChild();
-        void setSelected( EventAlias item );
+        void setSelected( @Nullable EventAlias item );
         void setSelected(int i);
         EventAlias findItemByID(String eventID);
         List<EventAlias> getItems();
@@ -1115,6 +1116,7 @@ public class EventListHelper
     public static class EventDisplayAdapter extends ArrayAdapter<EventAlias> implements EventDisplayAdapterInterface
     {
         private int resourceID, dropDownResourceID;
+        @Nullable
         private EventAlias selectedItem;
 
         public EventDisplayAdapter(@NonNull Context context, int resource) {
@@ -1136,7 +1138,7 @@ public class EventListHelper
             resourceID = dropDownResourceID = resource;
         }
 
-        public void setSelected( EventAlias item ) {
+        public void setSelected( @Nullable EventAlias item ) {
             selectedItem = item;
             notifyDataSetChanged();
         }
@@ -1146,6 +1148,7 @@ public class EventListHelper
             /* EMPTY */
         }
 
+        @Nullable
         public EventAlias getSelected() {
             return selectedItem;
         }
@@ -1244,10 +1247,10 @@ public class EventListHelper
     public boolean triggerActionMode() {
         return triggerActionMode(list, selectedItem, selectedChild);
     }
-    protected boolean triggerActionMode(View view, EventAlias item) {
+    protected boolean triggerActionMode(View view, @Nullable EventAlias item) {
         return triggerActionMode(view, item, -1);
     }
-    protected boolean triggerActionMode(View view, EventAlias item, int i)
+    protected boolean triggerActionMode(View view, @Nullable EventAlias item, int i)
     {
         Context context = getContext();
         if (context == null) {
