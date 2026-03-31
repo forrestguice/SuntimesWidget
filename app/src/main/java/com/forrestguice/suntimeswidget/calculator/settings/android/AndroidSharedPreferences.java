@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.calculator.settings.android;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.forrestguice.annotation.Nullable;
@@ -66,6 +67,7 @@ public class AndroidSharedPreferences implements SharedPreferences
     {
         return new Editor()
         {
+            @SuppressLint("CommitPrefEdits")
             private final android.content.SharedPreferences.Editor edit = prefs.edit();
 
             @Override

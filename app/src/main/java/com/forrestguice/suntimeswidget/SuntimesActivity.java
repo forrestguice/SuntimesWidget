@@ -2802,7 +2802,8 @@ public class SuntimesActivity extends AppCompatActivity
             return (result != null ? result : 0);
 
         } catch (Exception e) {
-            Log.e("getThemeId", "Failed to get theme ID");
+            Log.e("getThemeId", "Failed to get theme ID: " + e);
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
         return 0;
