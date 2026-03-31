@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.graph.LightGraphBitmap;
 import com.forrestguice.suntimeswidget.graph.LightGraphOptions;
 import com.forrestguice.suntimeswidget.graph.colors.LightGraphColorValues;
@@ -114,8 +115,10 @@ public class SunPosLayout_3X2_2 extends SunPosLayout
         views.setViewVisibility(R.id.info_time_lightmap_labels, (showLabels ? View.VISIBLE : View.GONE));
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
+        Location location = dataset.location();
+        Double longitude = (location != null ? location.getLongitudeAsDouble() : null);
         options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? dataset.timezone()
-                : WidgetTimezones.getTimeZone(tzId, dataset.location().getLongitudeAsDouble(), dataset.calculator());
+                : WidgetTimezones.getTimeZone(tzId, longitude, dataset.calculator());
 
         LightGraphBitmap graph = new LightGraphBitmap();
         SuntimesRiseSetDataset[] yearData = LightGraphBitmap.createYearData(context, dataset);

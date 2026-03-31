@@ -92,6 +92,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.support.widget.SnackbarCompat;
 import com.forrestguice.support.widget.Toolbar;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.android.AndroidResources;
@@ -239,13 +240,17 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         {
             notificationWarning.setMessage(AlarmClockLegacyActivity.this, getString(R.string.alarms_warning_notifications));
             notificationWarning.initWarning(this, alarmList, null);
-            notificationWarning.getSnackbar().setAction(getString(R.string.alarms_label_notifications), new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    AlarmPrefsFragment.openNotificationSettings(AlarmClockLegacyActivity.this);
-                }
-            });
+
+            SnackbarCompat snackbar = notificationWarning.getSnackbar();
+            if (snackbar != null) {
+                snackbar.setAction(getString(R.string.alarms_label_notifications), new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view) {
+                        AlarmPrefsFragment.openNotificationSettings(AlarmClockLegacyActivity.this);
+                    }
+                });
+            }
             notificationWarning.show();
             return;
         }
@@ -893,7 +898,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
         {
-            if (result.getResult() && adapter != null) {
+            if (result != null && result.getResult() && adapter != null) {
                 Log.d("DEBUG", "onUpdateItem");
 
                 adapter.notifyDataSetChanged();

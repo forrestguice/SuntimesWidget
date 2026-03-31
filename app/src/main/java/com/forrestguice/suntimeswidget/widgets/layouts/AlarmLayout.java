@@ -29,6 +29,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -101,7 +102,8 @@ public abstract class AlarmLayout extends SuntimesLayout
         Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), timeColor);
         views.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)timeSizeSp, (int)timeSizeSp, false));
         if (Build.VERSION.SDK_INT >= 15) {
-            views.setContentDescription(android.R.id.icon1, item.getType().getDisplayString());
+            AlarmType type = item.getType();
+            views.setContentDescription(android.R.id.icon1, (type != null ? type.getDisplayString() : ""));
         }
         views.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
         views.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));

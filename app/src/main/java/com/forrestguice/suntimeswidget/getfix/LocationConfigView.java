@@ -708,7 +708,7 @@ public class LocationConfigView extends LinearLayout
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));
 
-        if (getFragmentManager() != null) {
+        if (getFragmentManager() != null && getFragmentManager().getFragmentManager() != null) {
             dialog.show(getFragmentManager().getFragmentManager(), DIALOGTAG_MAP);
         } else Log.e("LocationConfig", "showMapCoordinateDialog: Fragment is null!");
     }
@@ -962,11 +962,11 @@ public class LocationConfigView extends LinearLayout
         return true;
     }
 
-    public static Bundle bundleData( Uri data, String label )
+    public static Bundle bundleData( @Nullable Uri data, String label )
     {
         return bundleData(data, label, LocationViewMode.MODE_CUSTOM_ADD);
     }
-    public static Bundle bundleData( Uri data, String label, LocationViewMode viewMode )
+    public static Bundle bundleData( @Nullable Uri data, String label, LocationViewMode viewMode )
     {
         String lat = "";
         String lon = "";
@@ -1043,10 +1043,12 @@ public class LocationConfigView extends LinearLayout
             @Override
             public void onFinished(LocationListTask.LocationListTaskResult r)
             {
-                Cursor result = r.getCursor();
-                int selectedIndex = r.getIndex();
-                getFixAdapter.changeCursor(result);
-                spin_locationName.setSelection(selectedIndex);
+                if (r != null) {
+                    Cursor result = r.getCursor();
+                    int selectedIndex = r.getIndex();
+                    getFixAdapter.changeCursor(result);
+                    spin_locationName.setSelection(selectedIndex);
+                }
             }
         };
         ExecutorUtils.runTask("LocationListTask", task, taskListener);

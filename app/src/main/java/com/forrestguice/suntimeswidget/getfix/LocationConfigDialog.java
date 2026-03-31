@@ -140,11 +140,12 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     /**
      * setLocation
      */
+    @Nullable
     private Location presetLocation = null;
-    public void setLocation(Context context, Location location)
+    public void setLocation(Context context, @Nullable Location location)
     {
         presetLocation = location;
-        if (dialogContent != null) {
+        if (dialogContent != null && presetLocation != null) {
             dialogContent.loadSettings(context, LocationConfigView.bundleData(Uri.parse(presetLocation.getUri()), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
         }
     }

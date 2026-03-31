@@ -158,7 +158,9 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
         if (showLocation) {
             Location location = dataset.location();
-            options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+            if (location != null) {
+                options.locations = new double[][]{{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+            }
         }
 
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);

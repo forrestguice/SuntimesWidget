@@ -154,13 +154,13 @@ public class ActionListHelper
         {
             SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
             if (addDialog != null) {
-                addDialog.setOnAcceptedListener(onActionSaved(getContext(), addDialog));
+                addDialog.setOnAcceptedListener(onActionSaved(addDialog));
                 addDialog.getEdit().setFragmentManager(contextRef.get());
             }
 
             SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
             if (editDialog != null) {
-                editDialog.setOnAcceptedListener(onActionSaved(getContext(), editDialog));
+                editDialog.setOnAcceptedListener(onActionSaved(editDialog));
                 editDialog.getEdit().setFragmentManager(contextRef.get());
             }
         }
@@ -188,7 +188,7 @@ public class ActionListHelper
         return list;
     }
 
-    protected void updateViews(Context context)
+    protected void updateViews(@Nullable Context context)
     {
         if (onUpdateViews != null) {
             onUpdateViews.onClick(list);
@@ -245,7 +245,9 @@ public class ActionListHelper
             public int compare(ActionDisplay o1, ActionDisplay o2)
             {
                 if (o1.title.equals(o2.title)) {
-                    return o1.desc.compareTo(o2.desc);
+                    if (o1.desc != null && o2.desc != null) {
+                        return o1.desc.compareTo(o2.desc);
+                    } else return 0;
                 } else return o1.title.compareTo(o2.title);
             }
         });
@@ -260,7 +262,10 @@ public class ActionListHelper
 
         @Override
         public void onClick(View v) {
-            showOverflowMenu(getContext(), v);
+            Context context = getContext();
+            if (context != null) {
+                showOverflowMenu(context, v);
+            } else Log.e("ActionList", "null context! failed to show menu.");
         }
     };
 
@@ -320,7 +325,6 @@ public class ActionListHelper
 
     public void addAction()
     {
-        final Context context = getContext();
         final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -328,7 +332,7 @@ public class ActionListHelper
                 saveDialog.getEdit().setData(data);
             }
         });
-        saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
+        saveDialog.setOnAcceptedListener(onActionSaved(saveDialog));
 
         FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
@@ -352,7 +356,7 @@ public class ActionListHelper
                 }
             });
 
-            saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
+            saveDialog.setOnAcceptedListener(onActionSaved(saveDialog));
             FragmentManagerCompat fragmentManager = getFragmentManager();
             if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
                 saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
@@ -360,12 +364,19 @@ public class ActionListHelper
         }
     }
 
-    private DialogInterface.OnClickListener onActionSaved(final Context context, final SaveActionDialog saveDialog)
+    private DialogInterface.OnClickListener onActionSaved(final SaveActionDialog saveDialog)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    Log.w("ActionList", "onActionSaved: null context!");
+                    return;
+                }
+
                 String intentID = saveDialog.getIntentID();
                 saveDialog.getEdit().saveIntent(context, 0, intentID, saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
                 Toast.makeText(context, context.getString(R.string.actions_saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
@@ -463,11 +474,13 @@ public class ActionListHelper
      */
     public static class ActionDisplay
     {
-        public final String id, title, desc;
+        public final String id, title;
+        @Nullable
+        public final String desc;
         public final int color;
         public final String[] tags;
 
-        public ActionDisplay(String id, @NonNull String title, String desc, int color, String[] tags)
+        public ActionDisplay(String id, @NonNull String title, @Nullable String desc, int color, String[] tags)
         {
             this.id = id;
             this.title = title;
@@ -497,6 +510,7 @@ public class ActionListHelper
     public static class ActionDisplayAdapter extends ArrayAdapter<ActionDisplay>
     {
         private int resourceID, dropDownResourceID;
+        @Nullable
         private ActionDisplay selectedItem;
         private ActionDisplay[] objects;
 
@@ -519,10 +533,11 @@ public class ActionListHelper
             resourceID = dropDownResourceID = resource;
         }
 
-        public void setSelected( ActionDisplay item ) {
+        public void setSelected( @Nullable ActionDisplay item ) {
             selectedItem = item;
             notifyDataSetChanged();
         }
+        @Nullable
         public ActionDisplay getSelected() {
             return selectedItem;
         }
@@ -637,7 +652,7 @@ public class ActionListHelper
     public boolean triggerActionMode() {
         return triggerActionMode(list, selectedItem);
     }
-    protected boolean triggerActionMode(View view, ActionDisplay item)
+    protected boolean triggerActionMode(View view, @Nullable ActionDisplay item)
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
@@ -660,7 +675,7 @@ public class ActionListHelper
             }
 
         } else {
-            Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
+            Toast.makeText(view.getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
             return false;
         }
     }

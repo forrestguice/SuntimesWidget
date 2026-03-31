@@ -25,6 +25,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.graph.LightMapBitmap;
 import com.forrestguice.suntimeswidget.graph.LightMapDialog;
 import com.forrestguice.suntimeswidget.graph.LightMapOptions;
@@ -116,7 +117,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         }
     }
 
-    public static String buildContentDescription(Context context, Calendar now, SuntimesCalculator.SunPosition sunPosition)
+    public static String buildContentDescription(Context context, Calendar now, @Nullable SuntimesCalculator.SunPosition sunPosition)
     {
         String contentDescription = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), now, false).toString();
         if (sunPosition != null)

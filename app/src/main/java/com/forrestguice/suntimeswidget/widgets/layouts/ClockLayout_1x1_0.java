@@ -27,8 +27,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
@@ -130,7 +132,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
             {
                 stringResID = R.string.timezoneExtraApparentSolar_short;
                 if (WidgetSettings.loadTimeStandardModePref(context, appWidgetId) == TimeStandardMode.APPARENT_SOLAR_TIME) {
-                    offset = (long)data.calculator().equationOfTime(now) * 1000L;  //(long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
+                    SuntimesCalculator calculator = data.calculator();
+                    offset = (calculator != null ? (long) calculator.equationOfTime(now) * 1000L : 0);  //(long)WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis());
                 }
 
             } else {
@@ -158,7 +161,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    protected void scaleViews(Context context, int appWidgetId, RemoteViews views, boolean showDate, String dateString)
+    protected void scaleViews(Context context, int appWidgetId, RemoteViews views, boolean showDate, @Nullable String dateString)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {

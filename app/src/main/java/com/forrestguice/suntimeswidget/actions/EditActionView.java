@@ -129,9 +129,11 @@ public class EditActionView extends LinearLayout
         }
     }
 
-    private void init(final Context context, AttributeSet attrs)
+    private void init(final Context context, @Nullable AttributeSet attrs)
     {
-        applyAttributes(context, attrs);
+        if (attrs != null) {
+            applyAttributes(context, attrs);
+        }
         LayoutInflater.from(context).inflate(R.layout.layout_view_editintent, this, true);
 
         text_desc = (TextView) findViewById(R.id.appwidget_action_desc);
@@ -721,10 +723,11 @@ public class EditActionView extends LinearLayout
     /**
      * setData
      */
+    @Nullable
     protected SuntimesData data = null;
-    public void setData(SuntimesData data) {
+    public void setData(@Nullable SuntimesData data) {
         this.data = data;
-        if (!this.data.isCalculated()) {
+        if (this.data != null && !this.data.isCalculated()) {
             data.calculate(getContext());
         }
     }
@@ -752,7 +755,7 @@ public class EditActionView extends LinearLayout
     {
         return text_launchActivity.getText().toString();
     }
-    public void setIntentClass( String className )
+    public void setIntentClass( @Nullable String className )
     {
         text_launchActivity.setText(className);
     }
@@ -763,7 +766,7 @@ public class EditActionView extends LinearLayout
     public String getIntentPackage() {
         return text_launchPackage.getText().toString();
     }
-    public void setIntentPackage( String packageName )
+    public void setIntentPackage( @Nullable String packageName )
     {
         text_launchPackage.setText(packageName);
     }
@@ -775,7 +778,7 @@ public class EditActionView extends LinearLayout
     public WidgetActions.LaunchType getIntentType() {
         return (WidgetActions.LaunchType)spinner_launchType.getSelectedItem();
     }
-    public void setIntentType( String launchType )
+    public void setIntentType( @Nullable String launchType )
     {
         for (int i=0; i < spinner_launchType.getCount(); i++)
         {
@@ -834,7 +837,7 @@ public class EditActionView extends LinearLayout
     public String getIntentTitle() {
         return edit_label.getText().toString();
     }
-    public void setIntentTitle( String title ) {
+    public void setIntentTitle( @Nullable String title ) {
         text_label.setText(title);
         edit_label.setText(title);
     }
@@ -845,7 +848,7 @@ public class EditActionView extends LinearLayout
     public String getIntentDesc() {
         return edit_desc.getText().toString();
     }
-    public void setIntentDesc( String desc ) {
+    public void setIntentDesc( @Nullable String desc ) {
         text_desc.setText(desc);
         edit_desc.setText(desc);
     }

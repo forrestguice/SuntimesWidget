@@ -67,12 +67,16 @@ public class SuntimesWarning
         return id;
     }
 
+    @Nullable
     protected View parentView = null;
+    @Nullable
     public View getParentView() {
         return parentView;
     }
 
+    @Nullable
     private SnackbarCompat snackbar = null;
+    @Nullable
     public SnackbarCompat getSnackbar() {
         return snackbar;
     }
@@ -124,17 +128,21 @@ public class SuntimesWarning
         actionLabel = value;
     }
 
-    public void initWarning(@NonNull Context context, View view, View.OnClickListener actionListener)
+    public void initWarning(@NonNull Context context, @Nullable View view, @Nullable View.OnClickListener actionListener)
     {
         parentView = view;
         wasDismissed = false;
-        snackbar = SnackbarCompat.from(SnackbarUtils.make(context, parentView, message, duration));
-        snackbar.addCallback(snackbarListener);
         setContentDescription(contentDescription);
-        //themeWarning(context, snackbar);
 
-        if (actionLabel != null && actionListener != null) {
-            snackbar.getSnackbar().setAction(actionLabel, actionListener);
+        if (parentView != null)
+        {
+            snackbar = SnackbarCompat.from(SnackbarUtils.make(context, parentView, message, duration));
+            snackbar.addCallback(snackbarListener);
+            //themeWarning(context, snackbar);
+
+            if (actionLabel != null && actionListener != null) {
+                snackbar.getSnackbar().setAction(actionLabel, actionListener);
+            }
         }
     }
 
@@ -218,7 +226,7 @@ public class SuntimesWarning
 
     public void dismiss()
     {
-        if (isShown()) {
+        if (isShown() && snackbar != null) {
             snackbar.getSnackbar().dismiss();
         }
     }

@@ -120,7 +120,7 @@ public class LightGraphBitmap
     }
 
     @Nullable
-    public Bitmap makeBitmap(SuntimesRiseSetDataset[] yearData, int w, int h, @Nullable LightGraphOptions options)
+    public Bitmap makeBitmap(@Nullable SuntimesRiseSetDataset[] yearData, int w, int h, @Nullable LightGraphOptions options)
     {
         long bench_start = System.nanoTime();
 

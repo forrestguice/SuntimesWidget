@@ -81,8 +81,8 @@ public class AlarmWidget0ConfigFragment extends DialogBase
     {
         super.onCreate(savedState);
         View dialogContent = inflater.inflate(getLayoutResID(), null);
-        initViews(getActivity(), dialogContent);
-        updateViews(getContext());
+        initViews(requireContext(), dialogContent);
+        updateViews(requireContext());
         return dialogContent;
     }
 
@@ -159,7 +159,7 @@ public class AlarmWidget0ConfigFragment extends DialogBase
         public void onClick(View v)
         {
             String[] selectedTypes = getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES);
-            chooseAlarmTypes(getActivity(), AlarmWidgetSettings.ALL_TYPES, selectedTypes, new ChooseAlarmTypesDialogListener()
+            chooseAlarmTypes(v.getContext(), AlarmWidgetSettings.ALL_TYPES, selectedTypes, new ChooseAlarmTypesDialogListener()
             {
                 public void onClick(DialogInterface dialog, int which, String[] types, boolean[] checked)
                 {
@@ -195,9 +195,9 @@ public class AlarmWidget0ConfigFragment extends DialogBase
             @Override
             public int compare(Pair<Integer,CharSequence> o1, Pair<Integer,CharSequence> o2)
             {
-                if (o1 == null) {
+                if (o1 == null || o1.second == null) {
                     return -1;
-                } else if (o2 == null) {
+                } else if (o2 == null || o2.second == null) {
                     return 1;
                 } else return o1.second.toString().compareTo(o2.second.toString());
             }
@@ -243,7 +243,7 @@ public class AlarmWidget0ConfigFragment extends DialogBase
     /**
      * updateViews
      */
-    protected void updateViews(Context context)
+    protected void updateViews(@Nullable Context context)
     {
         if (!isAdded()) {
             return;

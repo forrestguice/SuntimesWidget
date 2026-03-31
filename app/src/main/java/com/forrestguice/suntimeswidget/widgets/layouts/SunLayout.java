@@ -23,6 +23,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.widget.RemoteViews;
+
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -125,27 +127,27 @@ public abstract class SunLayout extends SuntimesLayout
 
     }
 
-    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
+    protected void updateViewsSunriseText(Context context, RemoteViews views, @Nullable Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
-        TimeDisplayText sunriseText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
+        TimeDisplayText sunriseText = (event != null ? time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat) : new TimeDisplayText());
         String sunriseString = sunriseText.getValue();
         CharSequence sunrise = (boldTime ? SpanUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
         views.setTextViewText(R.id.text_time_rise, sunrise);
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
 
-    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
+    protected void updateViewsSunsetText(Context context, RemoteViews views, @Nullable Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
-        TimeDisplayText sunsetText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
+        TimeDisplayText sunsetText = (event != null ? time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat) : new TimeDisplayText());
         String sunsetString = sunsetText.getValue();
         CharSequence sunset = (boldTime ? SpanUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
         views.setTextViewText(R.id.text_time_set, sunset);
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
 
-    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
+    protected void updateViewsNoonText(Context context, RemoteViews views, @Nullable Calendar event, boolean showSeconds, TimeFormatMode timeFormat)
     {
-        TimeDisplayText noonText = time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat);
+        TimeDisplayText noonText = (event != null ? time_utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, showSeconds, timeFormat) : new TimeDisplayText());
         String noonString = noonText.getValue();
         CharSequence noon = (boldTime ? SpanUtils.createBoldSpan(null, noonString, noonString) : noonString);
         views.setTextViewText(R.id.text_time_noon, noon);

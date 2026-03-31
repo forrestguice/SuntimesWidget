@@ -25,6 +25,7 @@ import android.text.SpannableString;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -138,7 +139,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
     }
 
     protected void hideDistant(RemoteViews views,
-                               Pair<Calendar, SuntimesCalculator.MoonPosition> apogee, Pair<Calendar, SuntimesCalculator.MoonPosition> perigee)
+                               @Nullable Pair<Calendar, SuntimesCalculator.MoonPosition> apogee, @Nullable Pair<Calendar, SuntimesCalculator.MoonPosition> perigee)
     {
         if (apogee != null && apogee.first != null && perigee != null)
         {
@@ -156,7 +157,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
     }
 
     protected void updateApogeePerigee(Context context, int appWidgetId, RemoteViews views, Calendar now,
-                                       Pair<Calendar, SuntimesCalculator.MoonPosition> apogee, Pair<Calendar, SuntimesCalculator.MoonPosition> perigee)
+                                       @Nullable Pair<Calendar, SuntimesCalculator.MoonPosition> apogee, @Nullable Pair<Calendar, SuntimesCalculator.MoonPosition> perigee)
     {
         boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
         boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
@@ -167,7 +168,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
 
         AndroidResources res = AndroidResources.wrap(context);
 
-        if (apogee != null)
+        if (apogee != null && apogee.first != null)
         {
             TimeDisplayText apogeeString = time_utils.calendarDateTimeDisplayString(res, apogee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
@@ -179,7 +180,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
             views.setViewVisibility(R.id.moonapsis_apogee_layout, View.GONE);
         }
 
-        if (perigee != null)
+        if (perigee != null && perigee.first != null)
         {
             TimeDisplayText perigeeString = time_utils.calendarDateTimeDisplayString(res, perigee.first, showTimeDate, showSeconds, abbreviate);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());

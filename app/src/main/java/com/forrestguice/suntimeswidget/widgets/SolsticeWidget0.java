@@ -24,6 +24,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -129,6 +130,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
         return getSolsticeEquinoxData(context, appWidgetId);
     }
 
+    @Nullable
     public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, TrackingMode trackingMode) {
         switch (trackingMode) {
             case RECENT: return dataset.findRecent(dataset.now());

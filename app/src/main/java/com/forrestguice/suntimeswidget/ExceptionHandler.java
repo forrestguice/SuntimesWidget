@@ -32,10 +32,11 @@ import java.lang.ref.WeakReference;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler
 {
+    @Nullable
     private final Thread.UncaughtExceptionHandler defaultHandler;
     private final WeakReference<Context> contextRef;
 
-    public ExceptionHandler(Context context, Thread.UncaughtExceptionHandler defaultHandler)
+    public ExceptionHandler(Context context, @Nullable Thread.UncaughtExceptionHandler defaultHandler)
     {
         this.contextRef = new WeakReference<>(context);
         this.defaultHandler = defaultHandler;
@@ -59,7 +60,9 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             }
 
         } finally {
-            defaultHandler.uncaughtException(t, e);
+            if (defaultHandler != null) {
+                defaultHandler.uncaughtException(t, e);
+            }
         }
     }
 

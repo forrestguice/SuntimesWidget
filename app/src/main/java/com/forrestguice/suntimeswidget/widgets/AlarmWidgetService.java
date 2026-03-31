@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
@@ -151,7 +152,8 @@ public class AlarmWidgetService extends RemoteViewsService
                         AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     }
 
-                    if (item.type != null && filterTypes.contains(item.getType().name())) {
+                    AlarmType type = item.getType();
+                    if (type != null && filterTypes.contains(type.name())) {
                         items.add(item);
                     }
                     cursor.moveToNext();
@@ -210,7 +212,7 @@ public class AlarmWidgetService extends RemoteViewsService
             Drawable icon = SuntimesUtils.tintDrawableCompat(ContextCompat.getDrawable(context.getResources(), item.getIcon(), null), theme.getTimeColor());
             view.setImageViewBitmap(android.R.id.icon1, SuntimesUtils.drawableToBitmap(context, icon, (int)theme.getTimeSizeSp(), (int)theme.getTimeSizeSp(), false));
             if (Build.VERSION.SDK_INT >= 15) {
-                view.setContentDescription(android.R.id.icon1, item.type.getDisplayString());
+                view.setContentDescription(android.R.id.icon1, (item.type != null ? item.type.getDisplayString() : ""));
             }
             view.setViewVisibility(android.R.id.icon1, (showIcon ? View.VISIBLE : View.GONE));
             view.setViewVisibility(R.id.icon_layout, (showIcon ? View.VISIBLE : View.GONE));

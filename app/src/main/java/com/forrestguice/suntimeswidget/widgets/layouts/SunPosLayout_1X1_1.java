@@ -112,7 +112,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         }
 
         SuntimesCalculator calculator = dataset.calculator();
-        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
+        SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(dataset.now()) : null);
         updateViewsRightAscDeclinationText(context, views, sunPosition);
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.graph;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.graph.colors.LightMapColorValues;
 import com.forrestguice.util.Resources;
 
@@ -31,7 +32,7 @@ public class LightMapOptions
 {
     public static final String MAPTAG_LIGHTMAP = "_lightmap";
 
-    public void setOption_drawNow(SunSymbol symbol) {
+    public void setOption_drawNow(@Nullable SunSymbol symbol) {
         option_drawNow = SunSymbolBitmap.fromSunSymbol(symbol);
     }
 

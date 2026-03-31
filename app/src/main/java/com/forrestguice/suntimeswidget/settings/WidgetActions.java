@@ -1048,7 +1048,7 @@ public class WidgetActions
             "android.intent.action.SHOW_ALARMS", "android.intent.action.SHOW_TIMERS", "android.intent.action.SET_ALARM", "android.intent.action.SET_TIMER"
     };
 
-    public static String[] getSuggestedActions(String launchString)
+    public static String[] getSuggestedActions(@Nullable String launchString)
     {
         if (SuntimesActivity.class.getName().equals(launchString)) {
             return addAll(SuntimesActivity.SUNTIMES_ACTIONS, ANDROID_ACTION_SUGGESTIONS);

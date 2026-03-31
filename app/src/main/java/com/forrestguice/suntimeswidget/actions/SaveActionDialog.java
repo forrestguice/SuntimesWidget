@@ -60,13 +60,14 @@ public class SaveActionDialog extends EditActionDialog
         } else return null;
     }
 
+    @Nullable
     public String getIntentID()
     {
         if (edit_intentID != null) {
             return edit_intentID.getText().toString();
         } else return intentID;
     }
-    public void setIntentID(String id) {
+    public void setIntentID(@Nullable String id) {
         intentID = id;
         if (edit_intentID != null) {
             edit_intentID.setText(intentID);
@@ -84,7 +85,9 @@ public class SaveActionDialog extends EditActionDialog
     }
     private int suggested_c = 1;
 
-    private String intentID = null, intentTitle = "";
+    @Nullable
+    private String intentID = null;
+    private String intentTitle = "";
     private Set<String> intentIDs;
     private AutoCompleteTextView edit_intentID;
     private TextView text_note;
@@ -112,7 +115,7 @@ public class SaveActionDialog extends EditActionDialog
             edit_intentID.requestFocus();
         }
 
-        if (intentID.trim().isEmpty()) {
+        if (intentID == null || intentID.trim().isEmpty()) {
             button_suggest.setVisibility(View.VISIBLE);
         }
     }
@@ -162,8 +165,8 @@ public class SaveActionDialog extends EditActionDialog
         button_suggest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setIntentID(suggestedIntentID(getContext()));
-                updateViews(getContext());
+                setIntentID(suggestedIntentID(v.getContext()));
+                updateViews(v.getContext());
                 edit_intentID.selectAll();
                 edit_intentID.requestFocus();
             }

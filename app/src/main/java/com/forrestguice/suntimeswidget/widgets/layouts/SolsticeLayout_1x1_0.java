@@ -26,6 +26,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
@@ -184,6 +185,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
+    @Nullable
     public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, TrackingMode trackingMode)
     {
         switch (trackingMode) {
