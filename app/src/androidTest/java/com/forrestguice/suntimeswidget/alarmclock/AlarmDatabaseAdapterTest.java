@@ -377,7 +377,7 @@ public class AlarmDatabaseAdapterTest
             items[i].rowID = i;
             items[i].label = "TEST" + i;
             items[i].note = "NOTE" + i;
-            items[i].type = types[i];
+            items[i].setType(types[i]);
             items[i].setEvent(events[i]);
             items[i].location = locations[i];
             items[i].timezone = timezones[i];

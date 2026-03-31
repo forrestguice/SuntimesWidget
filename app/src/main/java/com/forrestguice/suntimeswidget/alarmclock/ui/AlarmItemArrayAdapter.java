@@ -600,8 +600,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // type button
         if (view.typeButton != null)
         {
-            view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmType.ALARM ? iconAlarm : iconNotification)));
-            view.typeButton.setContentDescription(item.type != null ? item.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
+            view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.getType() == AlarmType.ALARM ? iconAlarm : iconNotification)));
+            view.typeButton.setContentDescription(item.getType().getDisplayString());
 
             if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
@@ -942,7 +942,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
     protected boolean changeAlarmType(AlarmClockItem item, AlarmType type)
     {
-        if (item.type != type)
+        if (item.getType() != type)
         {
             Log.d(AlarmClockActivity.TAG, "alarmTypeMenu: alarm type is changed: " + type);
             if (item.enabled)
@@ -953,7 +953,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
             } else {
                 Log.d(AlarmClockActivity.TAG, "alarmTypeMenu: alarm is disabled, changing its type..");
-                item.type = type;
+                item.setType(type);
                 item.setState(AlarmState.STATE_NONE);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, true);

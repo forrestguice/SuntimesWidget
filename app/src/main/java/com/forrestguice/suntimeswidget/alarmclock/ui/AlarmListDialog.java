@@ -473,7 +473,7 @@ public class AlarmListDialog extends DialogBase
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            String label = (deletedItem.type != null ? deletedItem.type.getDisplayString() : AlarmType.ALARM.getDisplayString());
+            String label = deletedItem.getType().getDisplayString();
             SnackbarUtils.make(context, view, context.getString(R.string.alarmdelete_toast_success1, label), SnackbarUtils.LENGTH_INDEFINITE)
                     .setAction(context.getString(R.string.action_undo), new View.OnClickListener()
             {
@@ -508,7 +508,7 @@ public class AlarmListDialog extends DialogBase
         //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
-        alarm.type = type;
+        alarm.setType(type);
         alarm.label = label;
         alarm.hour = hour;
         alarm.minute = minute;
@@ -1483,7 +1483,7 @@ public class AlarmListDialog extends DialogBase
         protected boolean changeAlarmType(Context context, final long rowId, AlarmType type)
         {
             AlarmClockItem item = getItem(rowId);
-            if (item != null && item.type != type)
+            if (item != null && item.getType() != type)
             {
                 //Log.d("AlarmList", "alarmTypeMenu: alarm type is changed: " + type);
                 if (item.enabled)
@@ -1494,7 +1494,7 @@ public class AlarmListDialog extends DialogBase
 
                 } else {
                     //Log.d("AlarmList", "alarmTypeMenu: alarm is disabled, changing its type..");
-                    item.type = type;
+                    item.setType(type);
                     item.setState(AlarmState.STATE_NONE);
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, item, false, true);
@@ -1827,18 +1827,15 @@ public class AlarmListDialog extends DialogBase
             if (view.typeButton != null)
             {
                 int typeDrawable;
-                if (item.type != null)
-                {
-                    switch (item.type) {
-                        case NOTIFICATION: typeDrawable = res_iconNotification; break;
-                        case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
-                        case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
-                        case ALARM: default: typeDrawable = res_iconAlarm; break;
-                    }
-                } else typeDrawable = res_iconAlarm;
+                switch (item.getType()) {
+                    case NOTIFICATION: typeDrawable = res_iconNotification; break;
+                    case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
+                    case NOTIFICATION2: typeDrawable = res_iconNotification2; break;
+                    case ALARM: default: typeDrawable = res_iconAlarm; break;
+                }
 
                 view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, typeDrawable));
-                view.typeButton.setContentDescription(item.type.getDisplayString());
+                view.typeButton.setContentDescription(item.getType().getDisplayString());
 
                 ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(
                         (!isSelected && !item.enabled ? color_off : (item.enabled ? color_on : color_off)),
@@ -2013,7 +2010,7 @@ public class AlarmListDialog extends DialogBase
             }
 
             // extended controls
-            if (item.type == AlarmType.ALARM)
+            if (item.getType() == AlarmType.ALARM)
             {
                 switch(alarmState)
                 {

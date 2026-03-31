@@ -51,7 +51,7 @@ public class AlarmClockItemTest0
     {
         AlarmClockItem item0 = new AlarmClockItem();
         item0.label = "test0";
-        item0.type = ALARM;
+        item0.setType(ALARM);
         item0.timezone = "test";
         item0.location = new Location("test0", "1", "2", "3");
         item0.rowID = 10;
@@ -77,7 +77,7 @@ public class AlarmClockItemTest0
 
         AlarmClockItem item1 = new AlarmClockItem();
         item1.label = "test1";
-        item1.type = AlarmType.NOTIFICATION;
+        item1.setType(AlarmType.NOTIFICATION);
         item1.rowID = 20;
         item1.repeating = false;
         item1.setRepeatingDays("1,2,3,4,5,6,7");
@@ -95,7 +95,7 @@ public class AlarmClockItemTest0
         AlarmClockItem item2 = new AlarmClockItem();
         item2.label = null;
         item2.repeatingDays = null;
-        item2.type = null;
+        item2.setType(null);
         item2.timezone = null;
         item2.location = null;
         item2.actionID0 = null;
@@ -108,7 +108,7 @@ public class AlarmClockItemTest0
 
         AlarmClockItem item3 = new AlarmClockItem();
         item3.label = "";
-        item3.type = AlarmType.NOTIFICATION;
+        item3.setType(AlarmType.NOTIFICATION);
         item2.timezone = "";
         item3.repeating = true;
         item3.repeatingDays = new ArrayList<>();    // empty repeating days

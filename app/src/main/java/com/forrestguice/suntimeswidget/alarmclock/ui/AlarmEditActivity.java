@@ -306,7 +306,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             AlarmClockItem item = editor.getItem();
-            getSupportActionBar().setTitle(item != null && item.type != null ? item.type.getDisplayString() : "");
+            getSupportActionBar().setTitle(item != null ? item.getType().getDisplayString() : "");
 
             Drawable actionBarBackground = getActionBarBackground(context, item);
             if (actionBarBackground != null) {
@@ -323,10 +323,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     @Nullable
     protected Drawable getActionBarBackground(Context context, @Nullable AlarmClockItem item)
     {
-        if (item == null || item.type == null) {
+        if (item == null) {
             return null;
         }
-        switch (item.type)
+        switch (item.getType())
         {
             case ALARM:
             default:
@@ -431,7 +431,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             {
                 inflater.inflate(R.menu.alarmcontext2, optionsMenu);
                 AlarmClockItem item = (editor != null ? editor.getItem() : null);
-                boolean isAlarm = (item != null && item.type == AlarmType.ALARM);
+                boolean isAlarm = (item != null && item.getType() == AlarmType.ALARM);
 
                 MenuItem item_snoozeLimit = optionsMenu.findItem(R.id.setAlarmSnoozeLimit);
                 if (item_snoozeLimit != null) {
@@ -938,15 +938,15 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         int ringtoneType = RingtoneManager.TYPE_RINGTONE;
         if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmType.ALARM ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
+            ringtoneType = (item.getType() == AlarmType.ALARM ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
         }
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, ringtoneType);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type != null ? item.type.getDisplayString() : null);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.getType().getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type, true));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.getType(), true));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.alarms_action_setAlarmSound)), REQUEST_RINGTONE);
     }
@@ -1180,7 +1180,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         final AlarmCreateDialog dialog = new AlarmCreateDialog();
         dialog.loadSettings(AlarmEditActivity.this);
-        dialog.setAlarmType(item.type);
+        dialog.setAlarmType(item.getType());
         dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
 
         dialog.setEvent(item.getEvent(), item.location);
@@ -1389,7 +1389,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public void onTypeChanged(AlarmClockItem forItem)
     {
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(forItem != null && forItem.type != null ? forItem.type.getDisplayString() : "");
+            getSupportActionBar().setTitle(forItem != null ? forItem.getType().getDisplayString() : "");
         }
         invalidateOptionsMenu();
     }

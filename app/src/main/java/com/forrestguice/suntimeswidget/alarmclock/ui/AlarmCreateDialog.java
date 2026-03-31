@@ -1076,7 +1076,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
     public String getTimeZone() {
         return getArgs().getString(EXTRA_TIMEZONE);
     }
-    public void setAlarmTime( int hour, int minute, String timezone )
+    public void setAlarmTime( int hour, int minute, @Nullable String timezone )
     {
         Bundle args = getArgs();
         args.putLong(EXTRA_DATE, -1L);
@@ -1104,8 +1104,9 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         return getArgs().getInt(EXTRA_MODE, DEF_MODE);
     }
 
-    public void setAlarmType(AlarmType value)
+    public void setAlarmType(@Nullable AlarmType v)
     {
+        AlarmType value = (v != null ? v : DEF_ALARMTYPE);
         getArgs().putSerializable(EXTRA_ALARMTYPE, value);
         if (isAdded())
         {
@@ -1118,9 +1119,10 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             updateViews(getContext());
         }
     }
-    @Nullable
+    @NonNull
     public AlarmType getAlarmType() {
-        return (AlarmType) getArgs().getSerializable(EXTRA_ALARMTYPE);
+        AlarmType type = (AlarmType) getArgs().getSerializable(EXTRA_ALARMTYPE);
+        return (type != null ? type : DEF_ALARMTYPE);
     }
 
     public void setOffset(long offset)
@@ -1181,7 +1183,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)
     {
-        item.type = dialog.getAlarmType();
+        item.setType(dialog.getAlarmType());
         item.location = dialog.getLocation();
         item.offset = dialog.getOffset();
 

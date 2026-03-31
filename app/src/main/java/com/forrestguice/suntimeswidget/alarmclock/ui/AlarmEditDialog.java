@@ -140,8 +140,8 @@ public class AlarmEditDialog extends DialogBase
     {
         Context context = getContext();
         if (item != null && context != null && AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(item.ringtoneURI)) {
-            item.ringtoneURI = (item.type != null ? AlarmSettings.getDefaultRingtoneUri(context, item.type).toString() : null);
-            item.ringtoneName = (item.type != null ? AlarmSettings.getDefaultRingtoneName(context, item.type) : null);
+            item.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(context, item.getType()).toString();
+            item.ringtoneName = AlarmSettings.getDefaultRingtoneName(context, item.getType());
         }
         if (itemView != null && context != null)
         {
@@ -151,7 +151,7 @@ public class AlarmEditDialog extends DialogBase
             attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
-            text_title.setText(item != null && item.type != null ? item.type.getDisplayString() : "");
+            text_title.setText(item != null ? item.getType().getDisplayString() : "");
         }
     }
 
@@ -366,15 +366,15 @@ public class AlarmEditDialog extends DialogBase
             {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.alarmTypeNotification) {
-                    item.type = AlarmType.NOTIFICATION;
+                    item.setType(AlarmType.NOTIFICATION);
                 } else if (itemId == R.id.alarmTypeNotification1) {
-                    item.type = AlarmType.NOTIFICATION1;
+                    item.setType(AlarmType.NOTIFICATION1);
                 } else if (itemId == R.id.alarmTypeNotification2) {
-                    item.type = AlarmType.NOTIFICATION2;
+                    item.setType(AlarmType.NOTIFICATION2);
                 } else {
-                    item.type = AlarmType.ALARM;
+                    item.setType(AlarmType.ALARM);
                 }
-                boolean isAlarm = item.type == AlarmType.ALARM;
+                boolean isAlarm = (item.getType() == AlarmType.ALARM);
                 itemView.tray_beforeAlert.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
                 itemView.chip_dismissChallenge.setVisibility(isAlarm ? View.VISIBLE : View.GONE);
 

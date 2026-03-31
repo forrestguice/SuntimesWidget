@@ -78,7 +78,7 @@ public class AlarmClockItemTest
     public void test_alarmClockItem_new()
     {
         AlarmClockItem item0 = new AlarmClockItem();
-        item0.type = AlarmType.NOTIFICATION;
+        item0.setType(AlarmType.NOTIFICATION);
         item0.label = "label";
         item0.rowID = 0;
         item0.hour = 4;
@@ -102,13 +102,13 @@ public class AlarmClockItemTest
         test_alarmClockItem_new(item0);
 
         AlarmClockItem item1 = new AlarmClockItem();
-        item1.type = AlarmType.NOTIFICATION;
+        item1.setType(AlarmType.NOTIFICATION);
         //item1.setFlag("TEST1", 1);
         //item1.setFlag("TEST2", 2);
         test_alarmClockItem_new(item1);
 
         AlarmClockItem item2 = new AlarmClockItem();
-        item2.type = null;
+        item2.setType(null);
         item2.repeatingDays = null;
         test_alarmClockItem_new(item2);
     }

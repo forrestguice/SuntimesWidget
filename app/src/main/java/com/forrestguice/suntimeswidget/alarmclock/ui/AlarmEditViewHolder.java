@@ -245,17 +245,15 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }*/
 
             int menuDrawable;
-            if (item.type != null) {
-                switch (item.type) {
-                    case NOTIFICATION: menuDrawable = res_icNotification; break;
-                    case NOTIFICATION1: menuDrawable = res_icNotification1; break;
-                    case NOTIFICATION2: menuDrawable = res_icNotification2; break;
-                    case ALARM: default: menuDrawable = res_icAlarm; break;
-                }
-            } else menuDrawable = res_icAlarm;
+            switch (item.getType()) {
+                case NOTIFICATION: menuDrawable = res_icNotification; break;
+                case NOTIFICATION1: menuDrawable = res_icNotification1; break;
+                case NOTIFICATION2: menuDrawable = res_icNotification2; break;
+                case ALARM: default: menuDrawable = res_icAlarm; break;
+            }
 
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
-            menu_type.setContentDescription(item.type.getDisplayString());
+            menu_type.setContentDescription(item.getType().getDisplayString());
             TooltipCompat.setTooltipText(menu_type, menu_type.getContentDescription());
 
             edit_label.setText(item.getLabel(""));
@@ -330,7 +328,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLimitDisplay = snoozeLimitLabel + (snoozeLimit > 0 ? " " : "\n") + snoozeLimitString;
             CharSequence snoozeLimitDisplay1 = (snoozeLimit > 0) ? snoozeLimitDisplay : SpanUtils.createRelativeSpan(null, snoozeLimitDisplay, snoozeLimitString, 0.75f);
             text_snoozeLimit.setText(snoozeLimitDisplay1);
-            text_snoozeLimit.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_snoozeLimit.setVisibility((item.getType() == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             long snoozeMillis = item.getFlag(AlarmClockItem.FLAG_SNOOZE, AlarmSettings.loadPrefAlarmSnooze(context));
             int snoozeMinutes = (int)(snoozeMillis / (1000 * 60));
@@ -339,14 +337,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String snoozeLengthString = snoozeLengthLabel + "\n" + snoozeLength;
             CharSequence snoozeLengthDisplay = SpanUtils.createRelativeSpan(null, snoozeLengthString, snoozeLength, 0.75f);
             text_snoozeLength.setText(snoozeLengthDisplay);
-            text_snoozeLength.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_snoozeLength.setVisibility((item.getType() == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             AlarmSettings.DismissChallenge challenge = item.getDismissChallenge(context, true);
             text_dismissChallenge.setText((challenge == AlarmSettings.DismissChallenge.NONE) ? context.getString(R.string.alarmDismiss_none_long) : challenge.getDisplayString());
-            text_dismissChallenge.setVisibility((item.type == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
+            text_dismissChallenge.setVisibility((item.getType() == AlarmType.ALARM) ? View.VISIBLE : View.GONE);
 
             long defaultReminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
-            tray_beforeAlert.setVisibility((item.type == AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
+            tray_beforeAlert.setVisibility((item.getType() == AlarmType.ALARM && (defaultReminderWithin > 0)) ? View.VISIBLE : View.GONE);
 
             long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, defaultReminderWithin);
             //Log.d("DEBUG", "bindDataToPosition: showReminder: " + reminderWithin);
@@ -426,7 +424,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
     {
-        String emptyLabel = ((item.type == AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+        String emptyLabel = ((item.getType() == AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
         return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
     }
 

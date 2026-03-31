@@ -695,7 +695,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         //Log.d("DEBUG", "addAlarm: type is " + type.toString());
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(this);
-        alarm.type = type;
+        alarm.setType(type);
         alarm.label = label;
 
         alarm.hour = hour;
@@ -1020,7 +1020,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmEventDialog dialog = new AlarmEventDialog();
-        dialog.setDialogTitle(getString((item.type == AlarmType.ALARM) ? R.string.alarms_action_addAlarm : R.string.alarms_action_addNotification));
+        dialog.setDialogTitle(getString((item.getType() == AlarmType.ALARM) ? R.string.alarms_action_addAlarm : R.string.alarms_action_addNotification));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
@@ -1377,15 +1377,15 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         int ringtoneType = RingtoneManager.TYPE_RINGTONE;
         if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
+            ringtoneType = (item.getType() == AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
         }
 
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, ringtoneType);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, (item.type != null ? item.type.getDisplayString() : ""));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.getType().getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, new AlarmSettings().setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, new AlarmSettings().setDefaultRingtone(this, item.getType()));   // setDefaultRingtone may block (potential ANR)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);

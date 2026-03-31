@@ -43,14 +43,16 @@ import java.util.List;
  */
 public class AlarmClockItem implements AlarmItemInterface, Parcelable
 {
+    public static final AlarmType DEF_TYPE = AlarmType.ALARM;
+
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
     public static final int ICON_NOTIFICATION1 = R.drawable.ic_action_notification1;
     public static final int ICON_NOTIFICATION2 = R.drawable.ic_action_notification2;
 
     public long rowID = -1L;
-    @Nullable
-    public AlarmType type = AlarmType.ALARM;
+    @NonNull
+    protected AlarmType type = DEF_TYPE;
     public boolean enabled = false;
     public boolean repeating = false;
     @Nullable
@@ -134,7 +136,8 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     private AlarmClockItem(Parcel in)
     {
         rowID = in.readLong();
-        type = AlarmType.valueOf(in.readString(), null);
+        AlarmType t = AlarmType.valueOf(in.readString(), null);
+        type = (t != null ? t : DEF_TYPE);
         enabled = (in.readInt() == 1);
         label = in.readString();
         note = in.readString();
@@ -222,7 +225,8 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     public void fromContentValues(@Nullable Context context, ContentValues alarm)
     {
         rowID = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ROWID) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID) : -1L);
-        type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
+        AlarmType t = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
+        type = (t != null ? t : DEF_TYPE);
         enabled = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
         note = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_NOTE);
@@ -693,15 +697,14 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
         }
     }
 
-    @Nullable
+    @NonNull
     @Override
     public AlarmType getType() {
         return type;
     }
-
     @Override
-    public void setType(@Nullable AlarmType type) {
-        this.type = type;
+    public void setType(@Nullable AlarmType t) {
+        this.type = (t != null ? t : DEF_TYPE);
     }
 
     @Override

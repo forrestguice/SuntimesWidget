@@ -114,13 +114,18 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     public int getAppWidgetId() { return appWidgetId; }
     public void setAppWidgetId(int value) { appWidgetId = value; }
 
+    @NonNull
     private AlarmType type = DEF_ALARM_TYPE;
+    @NonNull
     public AlarmType getType() {
         return type;
     }
-    public void setType(AlarmType type)
+    /**
+     * @param t AlarmType or null for default type
+     */
+    public void setType(@Nullable AlarmType t)
     {
-        this.type = type;
+        this.type = (t != null ? t : DEF_ALARM_TYPE);
         if (getContext() != null) {
             updateViews(getContext());
         }
@@ -670,10 +675,8 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         }
         setChoice(choice);
 
-        type = (AlarmType) bundle.getSerializable(KEY_ALARM_TYPE);
-        if (type == null) {
-            type = DEF_ALARM_TYPE;
-        }
+        AlarmType type0 = (AlarmType) bundle.getSerializable(KEY_ALARM_TYPE);
+        type = ((type0 != null) ? type0 : DEF_ALARM_TYPE);
     }
 
     /**

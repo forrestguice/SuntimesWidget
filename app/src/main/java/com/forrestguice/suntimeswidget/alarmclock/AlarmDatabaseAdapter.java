@@ -739,7 +739,7 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmItemTaskResult
     {
-        public AlarmItemTaskResult(@NonNull Boolean result, AlarmClockItem item, AlarmClockItem[] items) {
+        public AlarmItemTaskResult(@NonNull Boolean result, @Nullable AlarmClockItem item, @NonNull AlarmClockItem[] items) {
             this.result = result;
             this.item = item;
             this.items = items;
@@ -751,6 +751,7 @@ public class AlarmDatabaseAdapter
         }
 
         private final AlarmClockItem item;
+        @Nullable
         public AlarmClockItem getItem() {
             return item;
         }

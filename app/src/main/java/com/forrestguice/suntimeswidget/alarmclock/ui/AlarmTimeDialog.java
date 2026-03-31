@@ -119,7 +119,7 @@ public class AlarmTimeDialog extends DialogBase
     public void set24Hour(boolean value) {
         getArgs().putBoolean(PREF_KEY_ALARM_TIME_24HR, value);
     }
-    public void setTimeZone(String value) {
+    public void setTimeZone(@Nullable String value) {
         getArgs().putString(PREF_KEY_ALARM_TIME_MODE, value);
         updateDate();
     }

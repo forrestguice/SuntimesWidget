@@ -1235,7 +1235,7 @@ public class BedtimeDialog extends DialogBase
             alarmItem = BedtimeAlarmHelper.createBedtimeAlarmItem(context, item, dialog.getHour(), dialog.getMinute(), dialog.getOffset());
         }
 
-        alarmItem.type = dialog.getAlarmType();
+        alarmItem.setType(dialog.getAlarmType());
         alarmItem.hour = dialog.getHour();
         alarmItem.minute = dialog.getMinute();
         alarmItem.offset = dialog.getOffset();

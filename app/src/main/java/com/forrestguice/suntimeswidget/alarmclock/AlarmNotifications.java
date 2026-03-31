@@ -228,10 +228,10 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      */
-    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
+    public static void showTimeUntilToast(Context context, @Nullable View view, @NonNull AlarmClockItem item) {
         showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
     }
-    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
+    public static void showTimeUntilToast(Context context, @Nullable View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, @Nullable String actionText, @Nullable View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
@@ -253,7 +253,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 default:
                     TimeDisplayText alarmText = delta_utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
-                    String typeDisplay = (item.type != null ? item.type.getDisplayString() : "Alarm");
+                    String typeDisplay = item.getType().getDisplayString();
                     alarmString = context.getString(messageResID, typeDisplay, alarmText.getValue());
                     alarmDisplay = SpanUtils.createBoldSpan(null, alarmString, alarmText.getValue());
                     break;
@@ -668,20 +668,20 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static void startAlert(@NonNull final Context context, @NonNull AlarmClockItem alarm)
     {
-        String channel = (alarm.type != null ? alarm.type.name() : AlarmType.ALARM.name());
+        String channel = alarm.getType().name();
         MediaPlayer player = initPlayer(context, channel, false);
         if (isPlaying(channel)) {
             stopAlert(channel);
         }
         setIsPlaying(channel, true);
 
-        boolean isAlarm = (alarm.type == AlarmType.ALARM);
+        boolean isAlarm = (alarm.getType() == AlarmType.ALARM);
         boolean passesFilter = passesInterruptionFilter(context, alarm);
         if (!passesFilter) {
             Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
-        boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.type);
+        boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.getType());
         if (isMuted) {
             Log.w(TAG, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
         }
@@ -694,7 +694,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (soundUri != null && passesFilter && !isMuted)
         {
             if (AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(alarm.ringtoneURI)) {
-                soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
+                soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.getType(), true);
             }
 
             if (!isValidSoundUri(soundUri)) {
@@ -703,7 +703,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 if (!isValidSoundUri(soundUri)) {
                     Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
-                    soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
+                    soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                 }
             }
 
@@ -718,7 +718,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
                     Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
-                    Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
+                    Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                     try {
                         startAlert(context, player, fallbackUri, isAlarm);  // (2)
 
@@ -845,9 +845,9 @@ public class AlarmNotifications extends BroadcastReceiver
         if (vibrationHandler == null) {
             vibrationHandler = new Handler();
         }
-        int repeatFrom = (alarm.type == AlarmType.ALARM) ? 0 : -1;
-        String channel = (alarm.type != null ? alarm.type.name() : AlarmType.ALARM.name());
-        vibration = vibrate(channel, AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
+        int repeatFrom = (alarm.getType() == AlarmType.ALARM) ? 0 : -1;
+        String channel = alarm.getType().name();
+        vibration = vibrate(channel, AlarmSettings.loadPrefVibratePattern(context, alarm.getType()), repeatFrom);
         vibrationHandler.post(vibration);
     }
     public static void stopVibration()
@@ -998,6 +998,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     protected static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
     {
+        AlarmType type = item.getType();
         if (Build.VERSION.SDK_INT >= 23)
         {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -1006,17 +1007,17 @@ public class AlarmNotifications extends BroadcastReceiver
             switch (filter)
             {
                 case NotificationManager.INTERRUPTION_FILTER_ALARMS:        // (4) alarms only
-                    return (item.type == AlarmType.ALARM);
+                    return (type == AlarmType.ALARM);
 
                 case NotificationManager.INTERRUPTION_FILTER_NONE:          // (3) suppress all
                     return false;
 
                 case NotificationManager.INTERRUPTION_FILTER_PRIORITY:      // (2) allow priority
                     if (Build.VERSION.SDK_INT >= 28) {
-                        return (item.type == AlarmType.ALARM) &&
+                        return (type == AlarmType.ALARM) &&
                                 (isCategorySet(getNotificationPolicy(notificationManager), NotificationManager.Policy.PRIORITY_CATEGORY_ALARMS));
                     } else {
-                        return (item.type == AlarmType.ALARM);
+                        return (type == AlarmType.ALARM);
                     }
 
                 case NotificationManager.INTERRUPTION_FILTER_ALL:           // (1) allow all
@@ -1035,7 +1036,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     case 3: // Settings.Global.ZEN_MODE_ALARMS:
                     case 1: // Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:
-                        return (item.type == AlarmType.ALARM);
+                        return (type == AlarmType.ALARM);
 
                     case 0: // Settings.Global.ZEN_MODE_OFF:
                     default:
@@ -1223,7 +1224,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable AlarmClockItem alarm) {
-        return createNotificationBuilder(context, ((alarm != null) ? getNotificationChannelID(alarm.type) : null));
+        return createNotificationBuilder(context, ((alarm != null) ? getNotificationChannelID(alarm.getType()) : null));
     }
     public static NotificationCompat.Builder createNotificationBuilder(Context context, @Nullable String channelID)
     {
@@ -1285,7 +1286,7 @@ public class AlarmNotifications extends BroadcastReceiver
         PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), flags);
         PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), flags);
 
-        if (alarm.type == AlarmType.ALARM)
+        if (alarm.getType() == AlarmType.ALARM)
         {
             // ALARM
             int alarmState = alarm.getState();
@@ -2237,7 +2238,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 ExecutorUtils.runTask("AlarmUpdateTask", updateItem, updateItem.getTaskListener());    // write state
                             } else notifications.stopSelf(startId);
 
-                        } else if (action.equals(ACTION_SILENT) && item.type == AlarmType.ALARM) {
+                        } else if (action.equals(ACTION_SILENT) && item.getType() == AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Silenced Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -2245,7 +2246,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             cancelAlarmTimeout(context, ACTION_SILENT, item.getUri());    // cancel upcoming silence timeout; if user silenced alarm there may be another silence scheduled
                             notifications.stopSelf(startId);
 
-                        } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmType.ALARM) {
+                        } else if (action.equals(ACTION_TIMEOUT ) && item.getType() == AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Timeout Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -2335,7 +2336,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 int nextState = AlarmState.STATE_SCHEDULED_DISTANT;
                                 AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledState;
-                                if (item.type == AlarmType.ALARM)
+                                if (item.getType() == AlarmType.ALARM)
                                 {
                                     long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, AlarmSettings.loadPrefAlarmUpcoming(context));
                                     boolean verySoon = (((item.alarmtime - now) < reminderWithin) || reminderWithin <= 0);
@@ -2361,7 +2362,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
                             } else notifications.stopSelf(startId);
 
-                        } else if (action.equals(ACTION_SNOOZE) && item.type == AlarmType.ALARM) {
+                        } else if (action.equals(ACTION_SNOOZE) && item.getType() == AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Snooze Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -2408,8 +2409,8 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
                             {
-                                Log.i(TAG, "Show: " + item.rowID + " (" + item.type + ")");
-                                if (item.type == AlarmType.ALARM)
+                                Log.i(TAG, "Show: " + item.rowID + " (" + item.getType() + ")");
+                                if (item.getType() == AlarmType.ALARM)
                                 {
                                     cancelAlarmTimeouts(context, item);
                                     addAlarmTimeouts(context, item.getUri());
@@ -2422,7 +2423,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     AlarmNotifications.startAlert(context, item);
 
                                 } else {
-                                    if (item.type == AlarmType.NOTIFICATION1) {
+                                    if (item.getType() == AlarmType.NOTIFICATION1) {
                                         addNotificationTimeouts(context, item.getUri());
                                     }
                                     notifications.showNotification(context, item, false);
@@ -2468,7 +2469,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
-                    if (item.type != AlarmType.ALARM) {
+                    if (item.getType() != AlarmType.ALARM) {
                         notifications.dismissNotification(context, (int)item.rowID);
                     }
 
@@ -2499,7 +2500,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.ALARM)
+                    if (item != null && item.getType() == AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
                         item.alarmtime = snoozeUntil;
@@ -2521,7 +2522,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.ALARM)
+                    if (item != null && item.getType() == AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onTimeout)");
                         Notification notification = AlarmNotifications.createNotification(context, item);
@@ -2544,7 +2545,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     Log.d(TAG, "State Saved (onShow)");
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.ALARM)
+                    if (item != null && item.getType() == AlarmType.ALARM)
                     {
                         if (!NotificationManagerCompat.from(context).areNotificationsEnabled())
                         {
@@ -2558,7 +2559,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         findUpcomingAlarm(context, null);
 
                     } else {
-                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                        if (item != null) {
+                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
+                        }
                         notifications.stopSelf(startId);
                     }
                 }
@@ -2654,15 +2657,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.NOTIFICATION
-                            || item.type == AlarmType.NOTIFICATION1
-                            || item.type == AlarmType.NOTIFICATION2)
+                    if (item != null)
                     {
-                        Log.d(TAG, "State Saved (onScheduledNotification)");
-                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
-                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
+                        if (item.getType() == AlarmType.NOTIFICATION
+                                || item.getType() == AlarmType.NOTIFICATION1
+                                || item.getType() == AlarmType.NOTIFICATION2)
+                        {
+                            Log.d(TAG, "State Saved (onScheduledNotification)");
+                            addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
+                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));
+                        }
+                        notifications.dismissNotification(context, (int)item.rowID);
                     }
-                    notifications.dismissNotification(context, (int)item.rowID);
+
                     if (chained != null) {
                         chained.onFinished(result);
                     } else notifications.stopSelf(startId);
@@ -2678,7 +2685,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.ALARM)
+                    if (item != null && item.getType() == AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledDistant)");
                         long reminderWithin = item.getFlag(AlarmClockItem.FLAG_REMINDER_WITHIN, AlarmSettings.loadPrefAlarmUpcoming(context));
@@ -2716,7 +2723,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result)
                 {
                     AlarmClockItem item = result.getItem();
-                    if (item.type == AlarmType.ALARM)
+                    if (item != null && item.getType() == AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledSoon)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
