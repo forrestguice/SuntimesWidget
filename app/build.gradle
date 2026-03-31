@@ -98,6 +98,12 @@ android
         //resConfigs "ar", "ca", "cs", "de", "en", "eo", "es", "eu", "fr", "hu", "it", "nb", "nl", "pl", "pt", "ru", "zh-rCN", "zh-rTW"    // breaks region specific defaults
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     buildTypes
     {
         release
