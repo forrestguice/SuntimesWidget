@@ -2910,7 +2910,8 @@ public class WidgetSettings
     public static void addKnownWidgetID(Context context, int appWidgetId)
     {
         SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
-        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids0 = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids = new TreeSet<>(ids0);
         ids.add(appWidgetId + "");
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2921,7 +2922,8 @@ public class WidgetSettings
     public static void forgetKnownWidgetID(Context context, int appWidgetId)
     {
         SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
-        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids0 = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids = new TreeSet<>(ids0);
         ids.remove(appWidgetId + "");
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
