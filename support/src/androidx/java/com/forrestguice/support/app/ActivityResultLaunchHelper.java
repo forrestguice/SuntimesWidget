@@ -5,6 +5,8 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.util.Pair;
 
+import com.forrestguice.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,7 @@ public class ActivityResultLaunchHelper
     /**
      * registerForActivityResultCompat
      */
+    @Nullable
     public ActivityResultLauncherCompat registerForActivityResultCompat(ActivityResultCaller caller, final int requestCode, final OnActivityResultCompat onResult)
     {
         final ActivityResultLauncher<Intent> launcher = caller.registerForActivityResult( new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>()
@@ -68,6 +71,7 @@ public class ActivityResultLaunchHelper
     }
 
     protected Map<Integer, ActivityResultLauncherCompat> launchers = new HashMap<>();
+    @Nullable
     public ActivityResultLauncherCompat getLauncher(int requestCode) {
         return launchers.get(requestCode);
     }
@@ -75,6 +79,7 @@ public class ActivityResultLaunchHelper
     /**
      * registerForPermissionResult
      */
+    @Nullable
     public PermissionResultLauncherCompat registerForPermissionResult(ActivityResultCaller caller, int requestCode, OnPermissionResultCompat onResult)
     {
         ActivityResultLauncher<String[]> launcher = caller.registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>()
@@ -95,6 +100,7 @@ public class ActivityResultLaunchHelper
         return permissionRequests.get(requestCode);
     }
     protected Map<Integer, PermissionResultLauncherCompat> permissionRequests = new HashMap<>();
+    @Nullable
     public PermissionResultLauncherCompat getPermissionRequest(int requestCode) {
         return permissionRequests.get(requestCode);
     }

@@ -23,6 +23,8 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
+import com.forrestguice.annotation.Nullable;
+
 public class EditTextPreference extends android.preference.EditTextPreference
 {
     public EditTextPreference(Context context)
@@ -51,6 +53,7 @@ public class EditTextPreference extends android.preference.EditTextPreference
      * the bug: pref doesn't format %s summary values (pre api 11)
      * @return summary text w/ properly formatted %s values
      */
+    @Nullable
     @Override
     public CharSequence getSummary()
     {

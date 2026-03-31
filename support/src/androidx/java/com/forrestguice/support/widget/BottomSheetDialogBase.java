@@ -90,6 +90,7 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return retValue;
     }
 
+    @Nullable
     protected FrameLayout getBottomSheetFrameLayout(DialogInterface dialog) {
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
         return (FrameLayout) bottomSheet.findViewById(getSheetFrameId());

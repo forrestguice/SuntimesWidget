@@ -154,6 +154,7 @@ public class ActivityOptionsCompat extends androidx.core.app.ActivityOptionsComp
                     mActivityOptions.setLaunchBounds(screenSpacePixelRect));
         }
 
+        @Nullable
         @Override
         public Rect getLaunchBounds() {
             if (Build.VERSION.SDK_INT < 24) {
