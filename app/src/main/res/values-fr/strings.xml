@@ -1074,7 +1074,7 @@
     <string name="alarms_label_bootcompleted_info">Dernière exécution en <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> après démarrage (pris <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
     <string name="alarms_label_bootcompleted_info_never">Jamais</string>
     <string name="alarms_label_bootcompleted_action_confirm">Reprogrammer toutes les alarmes et notifications ?</string>
-    <string name="alarms_label_bootcompleted_action_message">Reprogrammation des alarmes et des notifications...</string>
+    <string name="alarms_label_bootcompleted_action_message">Reprogrammation des alarmes et des notifications…</string>
 
     <string name="alarms_message_background_action">%s effectue des tâches en arrière-plan.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
