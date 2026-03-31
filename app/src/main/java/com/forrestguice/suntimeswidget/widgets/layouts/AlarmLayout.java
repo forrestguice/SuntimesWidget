@@ -113,7 +113,7 @@ public abstract class AlarmLayout extends SuntimesLayout
     {
         Calendar now = data.now();
         Calendar alarmTime = item.getCalendar();
-        long millisUntilAlarm = now.getTimeInMillis() - alarmTime.getTimeInMillis();
+        long millisUntilAlarm = now.getTimeInMillis() - (alarmTime.getTimeInMillis());
         alarmTime.setTimeInMillis(item.alarmtime);
 
         TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);

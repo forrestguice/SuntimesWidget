@@ -293,16 +293,19 @@ public class PlacesEditFragment extends BottomSheetDialogBase
 
     public interface FragmentListener
     {
-        void onCanceled(PlaceItem place);
+        void onCanceled(@Nullable PlaceItem place);
         void onAccepted(PlaceItem place);
     }
 
+    @Nullable
     private PlaceItem item = null;
-    public void setPlace(PlaceItem item)
+    public void setPlace(@Nullable PlaceItem item)
     {
         this.item = item;
-        updateViews(item.location);
-        updateComment(item.comment);
+        if (item != null) {
+            updateViews(item.location);
+            updateComment(item.comment);
+        }
     }
 
     @Deprecated
@@ -869,7 +872,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         }
     }
 
-    protected PlaceItem createPlaceItem(@NonNull Context context, PlaceItem item0)
+    protected PlaceItem createPlaceItem(@NonNull Context context, @Nullable PlaceItem item0)
     {
         PlaceItem item = new PlaceItem();
         if (item0 != null)

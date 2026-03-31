@@ -28,6 +28,7 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.slider.AlphaSlider;
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.quadflask.LightnessSlider;
 
@@ -64,10 +65,10 @@ public class QuadFlaskColorPickerFragment extends ColorPickerFragment
         if (colorPicker != null) {
             colorPicker.setLightnessSlider(lightnessSlider);
         }
-        if (lightnessSlider != null) {
+        if (lightnessSlider != null && colorPicker != null) {
             lightnessSlider.setColorPicker(colorPicker);
         }
-        if (alphaSlider != null) {
+        if (alphaSlider != null && colorPicker != null) {
             alphaSlider.setColorPicker(colorPicker);
         }
     }
@@ -77,8 +78,8 @@ public class QuadFlaskColorPickerFragment extends ColorPickerFragment
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(getLayoutResID(), container, false);
-        initViews(getContext(), view);
-        updateViews(getContext());
+        initViews(requireContext(), view);
+        updateViews(requireContext());
         colorPicker.addOnColorChangedListener(onColorChangedListener);
         return view;
     }
@@ -88,13 +89,13 @@ public class QuadFlaskColorPickerFragment extends ColorPickerFragment
         public void onColorChanged(int color) {
             setColor(color, true);
             clearListeners();
-            updateViews(getActivity());
+            updateViews(getContext());
             setListeners();
         }
     };
 
     @Override
-    public void updateViews(Context context)
+    public void updateViews(@Nullable Context context)
     {
         super.updateViews(context);
         alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);

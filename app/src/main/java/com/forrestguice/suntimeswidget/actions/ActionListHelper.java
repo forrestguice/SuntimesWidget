@@ -118,7 +118,7 @@ public class ActionListHelper
         disallowSelect = value;
     }
 
-    public void setSelected( String actionID ) {
+    public void setSelected( @Nullable String actionID ) {
         adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
     }
 
@@ -543,7 +543,7 @@ public class ActionListHelper
         }
 
         @Nullable
-        public ActionDisplay findItemByID(String actionID)
+        public ActionDisplay findItemByID(@Nullable String actionID)
         {
             for (int i=0; i<getCount(); i++)
             {

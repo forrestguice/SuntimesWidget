@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmTimeZone;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
@@ -226,7 +227,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         a.recycle();
     }
 
-    public void bindDataToPosition(Context context, AlarmClockItem item, AlarmListDialog.AlarmListDialogOptions options, int position)
+    public void bindDataToPosition(Context context, @Nullable AlarmClockItem item, AlarmListDialog.AlarmListDialogOptions options, int position)
     {
         this.position = position;
 

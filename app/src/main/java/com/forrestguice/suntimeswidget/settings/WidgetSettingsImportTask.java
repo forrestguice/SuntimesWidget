@@ -501,13 +501,13 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
         return retValue;
     }
 
-    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, long appWidgetId) {
+    public static void importValues(SharedPreferences.Editor prefs, @Nullable ContentValues values, long appWidgetId) {
         importValues(prefs, values, null, appWidgetId);
     }
-    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId) {
+    public static void importValues(SharedPreferences.Editor prefs, @Nullable ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId) {
         importValues(prefs, values, toPrefix, appWidgetId, false);
     }
-    public static void importValues(SharedPreferences.Editor prefs, ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
+    public static void importValues(SharedPreferences.Editor prefs, @Nullable ContentValues values, @Nullable String toPrefix, @Nullable Long appWidgetId, boolean includeMetadata)
     {
         Map<String,Class<?>> prefTypes = WidgetSettings.getPrefTypes();
         prefTypes.putAll(AlarmWidgetSettings.getPrefTypes());
@@ -522,8 +522,11 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
         importValues(prefs, prefTypes, values, true, toPrefix, appWidgetId, "WidgetSettings");
     }
 
-    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class<?>> prefTypes, ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
+    public static void importValues(SharedPreferences.Editor prefs, Map<String,Class<?>> prefTypes, @Nullable ContentValues values, boolean hasPrefix, @Nullable String toPrefix, @Nullable Long appWidgetId, String tag)
     {
+        if (values == null) {
+            return;
+        }
         Set<Map.Entry<String, Object>> entries = values.valueSet();
         for (Map.Entry<String, Object> entry : entries)
         {

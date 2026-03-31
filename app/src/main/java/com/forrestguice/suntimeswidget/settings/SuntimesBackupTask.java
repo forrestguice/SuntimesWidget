@@ -415,13 +415,17 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         ArrayList<AlarmClockItem> items = new ArrayList<>();
         db.open();
         Cursor cursor = db.getAllAlarms(0, true);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast())
+        if (cursor != null)
         {
-            ContentValues entryValues = new ContentValues();
-            DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
-            items.add(new AlarmClockItem(context, entryValues));
-            cursor.moveToNext();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast())
+            {
+                ContentValues entryValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+                items.add(new AlarmClockItem(context, entryValues));
+                cursor.moveToNext();
+            }
+            cursor.close();
         }
         db.close();
         AlarmClockItemExportTask.writeAlarmItemsJSONArray(context, items.toArray(new AlarmClockItem[0]), out);
@@ -432,15 +436,18 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
         out.write("[".getBytes());
         int c = 0;
         Set<String> themes = WidgetThemes.loadInstalledList(prefs);
-        for (String themeName : themes)
+        if (themes != null)
         {
-            if (c > 0) {
-                out.write(",\n".getBytes());
+            for (String themeName : themes)
+            {
+                if (c > 0) {
+                    out.write(",\n".getBytes());
+                }
+                SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
+                String jsonString = WidgetSettingsImportTask.ContentValuesJson.toJson(theme.toContentValues());
+                out.write(jsonString.getBytes());
+                c++;
             }
-            SuntimesTheme theme = WidgetThemes.loadTheme(context, themeName);
-            String jsonString = WidgetSettingsImportTask.ContentValuesJson.toJson(theme.toContentValues());
-            out.write(jsonString.getBytes());
-            c++;
         }
         out.write("]".getBytes());
         out.flush();
@@ -567,9 +574,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             @Override
             public int compare(Pair<Integer,CharSequence> o1, Pair<Integer,CharSequence> o2)
             {
-                if (o1 == null) {
+                if (o1 == null || o1.second == null) {
                     return -1;
-                } else if (o2 == null) {
+                } else if (o2 == null || o2.second == null) {
                     return 1;
                 } else return o1.second.toString().compareTo(o2.second.toString());
             }

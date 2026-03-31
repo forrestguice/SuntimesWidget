@@ -1381,16 +1381,16 @@ public class SuntimesUtils
         } catch (Exception e) {
             Log.e("createImageSpan", "invalid drawableID " + drawableID + "! ...set to null.");
         }
-
-        if (drawable != null)
-        {
-            drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
-            if (width > 0 && height > 0)
-            {
-                drawable.setBounds(0, 0, width, height);
-            }
-            drawable.setColorFilter(tint, tintMode);
+        if (drawable == null) {
+            throw new IllegalArgumentException("createImageSpan: drawable is null! " + drawableID);
         }
+
+        drawable.mutate();    // don't cache state (or setColorFilter modifies all instances)
+        if (width > 0 && height > 0)
+        {
+            drawable.setBounds(0, 0, width, height);
+        }
+        drawable.setColorFilter(tint, tintMode);
         return new ImageSpan(drawable);
     }
 
@@ -1398,8 +1398,13 @@ public class SuntimesUtils
     public static ImageSpan createImageSpan(ImageSpan other)
     {
         Drawable drawable = null;
-        if (other != null)
+        if (other != null) {
             drawable = other.getDrawable();
+        }
+
+        if (drawable == null) {
+            throw new IllegalArgumentException("createImageSpan: drawable is null!");
+        }
 
         return new ImageSpan(drawable);
     }
@@ -1585,6 +1590,7 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    @Nullable
     public static Drawable tintDrawable(@Nullable Drawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (drawable == null) {
@@ -1630,12 +1636,13 @@ public class SuntimesUtils
      * @param strokeColor the stroke color
      * @return a GradientDrawable with the given fill and stroke
      */
-    public static Drawable tintDrawable(InsetDrawable drawable, int fillColor, int strokeColor, int strokePixels)
+    @Nullable
+    public static Drawable tintDrawable(@Nullable InsetDrawable drawable, int fillColor, int strokeColor, int strokePixels)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             try {
-                GradientDrawable gradient = (GradientDrawable)drawable.getDrawable();
+                GradientDrawable gradient = (drawable != null ? (GradientDrawable)drawable.getDrawable() : null);
                 if (gradient != null)
                 {
                     SuntimesUtils.tintDrawable(gradient, fillColor, strokeColor, strokePixels);

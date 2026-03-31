@@ -499,7 +499,7 @@ public class PlacesListFragment extends DialogBase
         }
     }
 
-    protected PlacesListTask.PlacesListTaskListener listTaskListener(final long... selectedRowID)
+    protected PlacesListTask.PlacesListTaskListener listTaskListener(@Nullable final long... selectedRowID)
     {
         return new PlacesListTask.PlacesListTaskListener() {
             @Override
@@ -839,13 +839,15 @@ public class PlacesListFragment extends DialogBase
                     public void onFinished(DeletePlaceTask.TaskResult result)
                     {
                         List<PlaceItem> deletedItems = new ArrayList<>();
-                        for (long rowID : result.getRowIDs())
-                        {
-                            PlaceItem item = adapter.getItem(rowID);
-                            if (item != null) {
-                                deletedItems.add(item);
+                        if (result != null) {
+                            for (long rowID : result.getRowIDs())
+                            {
+                                PlaceItem item = adapter.getItem(rowID);
+                                if (item != null) {
+                                    deletedItems.add(item);
+                                }
+                                adapter.removeItem(rowID);
                             }
-                            adapter.removeItem(rowID);
                         }
                         setModified(true);
                         offerUndoDeletePlace(context, deletedItems.toArray(new PlaceItem[0]));
@@ -1259,6 +1261,7 @@ public class PlacesListFragment extends DialogBase
         String value = getArgs().getString(KEY_FILTER_TEXT);
         return (value != null ? value : "");
     }
+    @Nullable
     public long[] getFilterExceptions() {
         return getArgs().getLongArray(KEY_FILTER_EXCEPTIONS);
     }
@@ -1480,7 +1483,7 @@ public class PlacesListFragment extends DialogBase
         }
 
         private long[] selectedRowID = new long[] { -1 };
-        public void setSelectedRowID( long... rowID )
+        public void setSelectedRowID( @Nullable long... rowID )
         {
             if (rowID != null)
             {

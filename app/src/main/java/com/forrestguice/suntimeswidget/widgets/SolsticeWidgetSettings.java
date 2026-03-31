@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -107,12 +108,14 @@ public class SolsticeWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_SOLSTICEWIDGET;
         return prefs.getBoolean(prefs_prefix + key, defaultValue);
     }
+    @Nullable
     public static String loadWidgetString(Context context, int appWidgetId, String key, String defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_SOLSTICEWIDGET;
         return prefs.getString(prefs_prefix + key, defaultValue);
     }
+    @Nullable
     public static Set<String> loadWidgetStringSet(Context context, int appWidgetId, String key, String[] defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);

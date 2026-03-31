@@ -117,7 +117,7 @@ public class ColorDialog extends BottomSheetDialogBase
     public String getColorLabel() {
         return colorPagerArgs.getString(KEY_LABEL, null);
     }
-    public void setColorLabel(String value) {
+    public void setColorLabel(@Nullable String value) {
         colorPagerArgs.putString(KEY_LABEL, value);
     }
 

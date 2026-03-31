@@ -969,7 +969,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }
     }
-    protected void onRingtoneResult(final Uri uri, boolean isAudioFile)
+    protected void onRingtoneResult(@Nullable final Uri uri, boolean isAudioFile)
     {
         AlarmClockItem item = (editor != null ? editor.getItem() : null);
         if (item != null)
@@ -994,10 +994,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         private final WeakReference<Context> contextRef;
         private final boolean isAudioFile;
+        @Nullable
         private final Uri uri;
         private final AlarmClockItem item;
 
-        public OnRingtoneResultTask(Context context, Uri uri, boolean isAudioFile, AlarmClockItem item)
+        public OnRingtoneResultTask(Context context, @Nullable Uri uri, boolean isAudioFile, AlarmClockItem item)
         {
             contextRef = new WeakReference<>(context);
             this.uri = uri;

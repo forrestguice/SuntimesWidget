@@ -135,7 +135,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, String report, int numResults, Exception e)
+        public TaskResult(boolean result, String report, int numResults, @Nullable Exception e)
         {
             this.result = result;
             this.report = report;
@@ -159,6 +159,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException() {
             return e;
         }
@@ -510,7 +511,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
     /**
      * importWidgetSettings
      */
-    protected static int importWidgetSettings(Context context, String prefix, boolean includeMetadata, StringBuilder report, @Nullable ContentValues... contentValues)
+    protected static int importWidgetSettings(Context context, @Nullable String prefix, boolean includeMetadata, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         if (contentValues != null)
         {
@@ -521,7 +522,9 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
                 Long id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
                 WidgetSettingsMetadata.WidgetMetadata metadata = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
                 WidgetSettingsImportTask.importValues(prefs, values, prefix, null, includeMetadata);
-                report.append(context.getString(R.string.widgetimport_dialog_report_format, id + "", metadata.getWidgetClassName()));
+                if (metadata != null) {
+                    report.append(context.getString(R.string.widgetimport_dialog_report_format, id + "", metadata.getWidgetClassName()));
+                }
                 report.append("\n");
                 c++;
             }
@@ -533,16 +536,19 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
      * Tries to match contentValues to existing widgetIds based on available metadata.
      * @return suggested appWidget:ContentValues mapping
      */
-    protected static Map<Integer,ContentValues> makeBestGuess(Context context, ContentValues... contentValues)
+    protected static Map<Integer,ContentValues> makeBestGuess(Context context, @Nullable ContentValues... contentValues)
     {
         ArrayList<WidgetSettingsMetadata.WidgetMetadata> unusedKeys = new ArrayList<>();
         ArrayList<ContentValues> unusedValues = new ArrayList<>();
-        for (int i=0; i<contentValues.length; i++)
+        if (contentValues != null)
         {
-            ContentValues values = contentValues[i];
-            WidgetSettingsMetadata.WidgetMetadata key = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
-            unusedKeys.add(key);
-            unusedValues.add(values);
+            for (int i=0; i<contentValues.length; i++)
+            {
+                ContentValues values = contentValues[i];
+                WidgetSettingsMetadata.WidgetMetadata key = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values);
+                unusedKeys.add(key);
+                unusedValues.add(values);
+            }
         }
 
         ArrayList<Integer> widgetIds = new ArrayList<>();
@@ -570,7 +576,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
         return suggested;
     }
 
-    public static int importWidgetSettingsBestGuess(Context context, StringBuilder report, ContentValues... contentValues)
+    public static int importWidgetSettingsBestGuess(Context context, StringBuilder report, @Nullable ContentValues... contentValues)
     {
         WidgetSettingsExportTask.addWidgetMetadata(context);
         Map<Integer, ContentValues> suggested = makeBestGuess(context, contentValues);

@@ -121,8 +121,11 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         }
     }
 
-    protected void expandSheet(final DialogInterface dialog, long afterDelay)
+    protected void expandSheet(@Nullable final DialogInterface dialog, long afterDelay)
     {
+        if (dialog == null) {
+            return;
+        }
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(getSheetFrameId());
         if (layout != null)

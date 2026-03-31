@@ -55,8 +55,8 @@ public class SolsticeWidget0ConfigFragment extends DialogBase
     {
         super.onCreate(savedState);
         View dialogContent = inflater.inflate(getLayoutResID(), null);
-        initViews(getActivity(), dialogContent);
-        updateViews(getContext());
+        initViews(requireContext(), dialogContent);
+        updateViews(requireContext());
         return dialogContent;
     }
 
@@ -68,7 +68,7 @@ public class SolsticeWidget0ConfigFragment extends DialogBase
         }
     }
 
-    protected void updateViews(Context context)
+    protected void updateViews(@Nullable Context context)
     {
         if (!isAdded()) {
             return;
@@ -100,19 +100,19 @@ public class SolsticeWidget0ConfigFragment extends DialogBase
      */
     public void setWidgetValue(String key, String value) {
         getArgs().putString(key, value);
-        updateViews(getActivity());
+        updateViews(getContext());
     }
     public void setWidgetValue(String key, boolean value) {
         getArgs().putBoolean(key, value);
-        updateViews(getActivity());
+        updateViews(getContext());
     }
     public void setWidgetValue(String key, int value) {
         getArgs().putInt(key, value);
-        updateViews(getActivity());
+        updateViews(getContext());
     }
     public void setWidgetValue(String key, String[] value) {
         getArgs().putStringArray(key, value);
-        updateViews(getActivity());
+        updateViews(getContext());
     }
 
     /**

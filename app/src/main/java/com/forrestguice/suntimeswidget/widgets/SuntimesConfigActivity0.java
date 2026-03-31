@@ -1189,12 +1189,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    protected void addOnCheckedChangeListener(CheckBox view, @Nullable CompoundButton.OnCheckedChangeListener listener) {
+    protected void addOnCheckedChangeListener(@Nullable CheckBox view, @Nullable CompoundButton.OnCheckedChangeListener listener) {
         if (view != null) {
             view.setOnCheckedChangeListener(onCheckedChangeListener(listener));
         }
     }
-    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener(final CompoundButton.OnCheckedChangeListener chained)
+    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener(@Nullable final CompoundButton.OnCheckedChangeListener chained)
     {
         return new CompoundButton.OnCheckedChangeListener()
         {
@@ -1209,12 +1209,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         };
     }
 
-    protected void addOnItemSelectedListener(String tag, Spinner view, @Nullable Spinner.OnItemSelectedListener listener) {
+    protected void addOnItemSelectedListener(String tag, @Nullable Spinner view, @Nullable Spinner.OnItemSelectedListener listener) {
         if (view != null) {
             view.setOnItemSelectedListener(onItemSelectedListener(tag, listener));
         }
     }
-    private Spinner.OnItemSelectedListener onItemSelectedListener(final String tag, final Spinner.OnItemSelectedListener chained)
+    private Spinner.OnItemSelectedListener onItemSelectedListener(final String tag, @Nullable final Spinner.OnItemSelectedListener chained)
     {
         return new AdapterView.OnItemSelectedListener()
         {
@@ -1309,14 +1309,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onFinished(ExportTask.ExportResult result)
                 {
                     dismissProgress();
-                    if (result.getResult())
+                    if (result != null && result.getResult())
                     {
-                        String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                        File file = result.getExportFile();
+                        String absolutePath = (file != null ? file.getAbsolutePath() : null);
+                        String successMessage = context.getString(R.string.msg_export_success, absolutePath);
                         Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-                        ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), result.getExportFile(), result.getMimeType());
+                        ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file, result.getMimeType());
 
                     } else {
-                        File file = result.getExportFile();
+                        File file = (result != null ? result.getExportFile() : null);
                         String path = ((file != null) ? file.getAbsolutePath() : "<path>");
                         Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
                     }

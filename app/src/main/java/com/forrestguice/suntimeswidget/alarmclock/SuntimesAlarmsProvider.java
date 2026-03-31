@@ -143,7 +143,9 @@ public class SuntimesAlarmsProvider extends ContentProvider
                     ? db.getAlarm(Long.parseLong(alarmID), columns, selection, selectionArgs)
                     : db.getAllAlarms(0, columns, selection, selectionArgs));
             copyCursorToMatrixCursor(columns, cursor, retValue);
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
             db.close();
         }
         return retValue;
@@ -164,7 +166,9 @@ public class SuntimesAlarmsProvider extends ContentProvider
             db.open();
             Cursor cursor = db.getAlarmState(Long.parseLong(alarmID), selection, selectionArgs);
             copyCursorToMatrixCursor(columns, cursor, retValue);
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
             db.close();
         }
         return retValue;

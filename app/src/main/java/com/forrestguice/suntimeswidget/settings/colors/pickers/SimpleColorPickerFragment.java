@@ -57,8 +57,8 @@ public class SimpleColorPickerFragment extends ColorPickerFragment
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_colors_simple, container, false);
-        initViews(getContext(), view);
-        updateViews(getContext());
+        initViews(requireContext(), view);
+        updateViews(requireContext());
         return view;
     }
 

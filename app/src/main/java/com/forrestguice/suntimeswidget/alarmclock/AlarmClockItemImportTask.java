@@ -131,7 +131,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable AlarmClockItem[] items, Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, @Nullable AlarmClockItem[] items, @Nullable Exception e)
         {
             this.result = result;
             this.items = items;
@@ -146,12 +146,14 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
         }
 
         private final AlarmClockItem[] items;
+        @Nullable
         public AlarmClockItem[] getItems()
         {
             return items;
         }
 
         private final Uri uri;
+        @Nullable
         public Uri getUri()
         {
             return uri;
@@ -162,6 +164,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException()
         {
             return e;

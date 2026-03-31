@@ -1116,7 +1116,7 @@ public class SuntimesTheme
             SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
             String themePrefix = SuntimesTheme.themePrefix(name);
             String themeName = themesPref.getString(themePrefix + THEME_NAME, "");
-            if (themeName.equals(name))
+            if (name.equals(themeName))
             {
                 this.name = name;
                 this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");

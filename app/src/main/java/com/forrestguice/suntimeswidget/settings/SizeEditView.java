@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 public class SizeEditView extends LinearLayout
@@ -62,12 +63,14 @@ public class SizeEditView extends LinearLayout
         }
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         LayoutInflater.from(context).inflate(R.layout.layout_view_sizechooser0, this, true);
         label = (TextView) findViewById(R.id.editLabel_size);
         edit = (EditText) findViewById(R.id.edit_size);
-        applyAttributes(context, attrs);
+        if (attrs != null) {
+            applyAttributes(context, attrs);
+        }
     }
 
     public EditText getEdit() {

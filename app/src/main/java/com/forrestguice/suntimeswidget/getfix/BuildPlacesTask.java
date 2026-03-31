@@ -342,16 +342,21 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
                 } else {                                                             // if already exists
                     if (WidgetSettings.PREF_DEF_LOCATION_LABEL.equals(itemLabel))        // and is the locale default
                     {
-                        cursor.moveToPosition(p);
-                        long rowID = cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID));
-                        String comment = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
-                        if (rowID >= 0 && (comment == null || comment.trim().isEmpty())) {
-                            db.updateComment(rowID, item.comment);    // add missing comment/tags to preexisting locale default
+                        if (cursor != null)
+                        {
+                            cursor.moveToPosition(p);
+                            long rowID = cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID));
+                            String comment = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
+                            if (rowID >= 0 && (comment == null || comment.trim().isEmpty())) {
+                                db.updateComment(rowID, item.comment);    // add missing comment/tags to preexisting locale default
+                            }
                         }
                     }
                 }
             }
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
 
             Log.i("BuildPlacesTask", "buildPlaces: " + result);
             db.close();

@@ -1072,6 +1072,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             }
         }
     }
+    @Nullable
     public String getTimeZone() {
         return getArgs().getString(EXTRA_TIMEZONE);
     }
@@ -1117,6 +1118,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
             updateViews(getContext());
         }
     }
+    @Nullable
     public AlarmType getAlarmType() {
         return (AlarmType) getArgs().getSerializable(EXTRA_ALARMTYPE);
     }

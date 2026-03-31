@@ -142,7 +142,8 @@ public class AlarmWidget0ConfigFragment extends DialogBase
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            int order = spin_sortOrder_adapter.getItem(position).getValue();
+            SortOrder item = spin_sortOrder_adapter.getItem(position);
+            int order = (item != null ? item.getValue() : PREF_DEF_ALARMWIDGET_SORTORDER);
             if (order != sortOrder) {
                 sortOrder = order;
                 setAlarmWidgetValue(PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
@@ -280,7 +281,8 @@ public class AlarmWidget0ConfigFragment extends DialogBase
     protected int findPositionForValue(ArrayAdapter<SortOrder> adapter, int value)
     {
         for (int i=0; i<adapter.getCount(); i++) {
-            if (adapter.getItem(i).getValue() == value) {
+            SortOrder item = adapter.getItem(i);
+            if (item != null && item.getValue() == value) {
                 return i;
             }
         }

@@ -563,8 +563,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 isExporting = false;
                 dismissProgress();
 
-                if (results.getResult())
+                if (results != null && results.getResult())
                 {
+                    File file = results.getExportFile();
+                    if (file == null) {
+                        return;
+                    }
+
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.setType(results.getMimeType());
@@ -572,7 +577,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
                     try {
                         //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(myParent, ExportTask.FILE_PROVIDER_AUTHORITY(), results.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(myParent, ExportTask.FILE_PROVIDER_AUTHORITY(), file);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
@@ -586,7 +591,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     }
                 }
 
-                File file = results.getExportFile();    // export failed
+                File file = (results != null ? results.getExportFile() : null);    // export failed
                 String path = ((file != null) ? file.getAbsolutePath() : "<path>");
                 String failureMessage = myParent.getString(R.string.msg_export_failure, path);
                 Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();

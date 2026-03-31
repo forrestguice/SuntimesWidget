@@ -759,7 +759,7 @@ public class AlarmListDialog extends DialogBase
             importTask = null;
             showProgress(false);
 
-            if (result.getResult() && getContext() != null)
+            if (result != null && result.getResult() && getContext() != null)
             {
                 AlarmClockItem[] items = result.getItems();
                 addAlarm(getContext(), new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -851,9 +851,9 @@ public class AlarmListDialog extends DialogBase
     protected ProgressListener<AlarmClockItem, List<AlarmClockItem>> onItemChanged = new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
     {
         @Override
-        public void onFinished(List<AlarmClockItem> data)
+        public void onFinished(@Nullable List<AlarmClockItem> data)
         {
-            if (data.size() > 0)
+            if (data != null && data.size() > 0)
             {
                 AlarmClockItem item = data.get(0);
                 if (item != null && getContext() != null)
@@ -912,7 +912,7 @@ public class AlarmListDialog extends DialogBase
             Cursor cursor = (rowIds == null || rowIds.length <= 0 || rowIds[0] == null)
                           ? db.getAllAlarms(0, true) : db.getAlarm(rowIds[0]);
 
-            while (!cursor.isAfterLast())
+            while (cursor != null && !cursor.isAfterLast())
             {
                 ContentValues entryValues = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
@@ -941,7 +941,9 @@ public class AlarmListDialog extends DialogBase
 
                 cursor.moveToNext();
             }
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
             db.releaseUnusedUriPermissions(contextRef.get());
             db.close();
             return items;

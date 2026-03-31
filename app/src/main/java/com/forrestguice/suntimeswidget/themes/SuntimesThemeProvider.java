@@ -190,7 +190,9 @@ public class SuntimesThemeProvider extends ContentProvider
     private Cursor queryThemes(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         Context context = getContext();
-        WidgetThemes.initThemes(context);
+        if (context != null) {
+            WidgetThemes.initThemes(context);
+        }
 
         String[] columns = (projection != null ? projection : QUERY_THEMES_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -254,7 +256,9 @@ public class SuntimesThemeProvider extends ContentProvider
     private Cursor queryTheme(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         Context context = getContext();
-        WidgetThemes.initThemes(context);
+        if (context != null) {
+            WidgetThemes.initThemes(context);
+        }
 
         String[] columns = (projection != null ? projection : QUERY_THEME_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -262,8 +266,10 @@ public class SuntimesThemeProvider extends ContentProvider
         if (context != null)
         {
             String themeID = uri.getLastPathSegment();
-            SuntimesTheme theme = WidgetThemes.loadTheme(context, themeID);
-            retValue.addRow(createRow(theme, columns));
+            if (themeID != null) {
+                SuntimesTheme theme = WidgetThemes.loadTheme(context, themeID);
+                retValue.addRow(createRow(theme, columns));
+            }
 
         } else Log.e(getClass().getSimpleName(), "context is null!");
         return retValue;

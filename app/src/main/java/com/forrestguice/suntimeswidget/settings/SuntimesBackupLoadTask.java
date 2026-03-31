@@ -220,7 +220,7 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable Map<String, ContentValues[]> items, Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, @Nullable Map<String, ContentValues[]> items, @Nullable Exception e)
         {
             this.result = result;
             this.items = items;
@@ -234,11 +234,13 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
         }
 
         private final Map<String, ContentValues[]> items;
+        @Nullable
         public Map<String, ContentValues[]> getItems() {
             return items;
         }
 
         private final Uri uri;
+        @Nullable
         public Uri getUri() {
             return uri;
         }
@@ -248,6 +250,7 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException() {
             return e;
         }

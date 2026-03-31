@@ -136,12 +136,12 @@ public class AlarmEditDialog extends DialogBase
         }
     }
 
-    protected void bindItemToHolder(AlarmClockItem item)
+    protected void bindItemToHolder(@Nullable AlarmClockItem item)
     {
         Context context = getContext();
         if (item != null && context != null && AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(item.ringtoneURI)) {
-            item.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(context, item.type).toString();
-            item.ringtoneName = AlarmSettings.getDefaultRingtoneName(context, item.type);
+            item.ringtoneURI = (item.type != null ? AlarmSettings.getDefaultRingtoneUri(context, item.type).toString() : null);
+            item.ringtoneName = (item.type != null ? AlarmSettings.getDefaultRingtoneName(context, item.type) : null);
         }
         if (itemView != null && context != null)
         {
@@ -350,8 +350,11 @@ public class AlarmEditDialog extends DialogBase
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void showAlarmTypeMenu(Context context, final AlarmClockItem item, final View buttonView)
+    protected void showAlarmTypeMenu(Context context, @Nullable final AlarmClockItem item, final View buttonView)
     {
+        if (item == null) {
+            return;
+        }
         PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmtype, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
             @Override
@@ -384,7 +387,7 @@ public class AlarmEditDialog extends DialogBase
         })).show();
     }
 
-    protected void showOverflowMenu(final Context context, final AlarmClockItem item, final View buttonView)
+    protected void showOverflowMenu(final Context context, @Nullable final AlarmClockItem item, final View buttonView)
     {
         PopupMenuCompat.createMenu(context, buttonView, R.menu.alarmcontext1, new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
@@ -411,7 +414,7 @@ public class AlarmEditDialog extends DialogBase
                     return false;
                 }
 
-                if (menuItem.getItemId() == R.id.deleteAlarm) {
+                if (menuItem.getItemId() == R.id.deleteAlarm && item != null) {
                     confirmDeleteAlarm(context, item, onDeleteConfirmed(item));
                     return true;
                 }
@@ -518,7 +521,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestLabel(item);
                 }
             }
@@ -530,7 +533,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestNote(item);
                 }
             }
@@ -542,7 +545,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestOffset(item);
                 }
             }
@@ -554,7 +557,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestSolarEvent(item);
                 }
             }
@@ -566,7 +569,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestLocation(item);
                 }
             }
@@ -578,7 +581,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestRepetition(item);
                 }
             }
@@ -590,7 +593,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestRingtone(item);
                 }
             }
@@ -703,7 +706,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestAction(item, actionNum);
                 }
             }
@@ -715,7 +718,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestDismissChallenge(item);
                 }
             }
@@ -755,7 +758,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestSnoozeLimit(item);
                 }
             }
@@ -767,7 +770,7 @@ public class AlarmEditDialog extends DialogBase
         return new ViewUtils.ThrottledClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
+                if (listener != null && item != null) {
                     listener.onRequestSnoozeLength(item);
                 }
             }

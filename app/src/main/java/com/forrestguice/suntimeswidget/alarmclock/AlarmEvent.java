@@ -305,7 +305,8 @@ public class AlarmEvent
             for (int i=0; i<items.size(); i++)
             {
                 AlarmEventItem item = items.get(i);
-                if (item.getEventID().equals(eventID)) {
+                String eventID0 = item.getEventID();
+                if (eventID0 != null && eventID0.equals(eventID)) {
                     return i;
                 }
             }

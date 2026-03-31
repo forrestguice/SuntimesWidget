@@ -956,7 +956,7 @@ public class AlarmDatabaseAdapter
 
         public static class TaskResult
         {
-            public TaskResult(@NonNull Boolean result, @NonNull Long lastRowID)
+            public TaskResult(@NonNull Boolean result, @Nullable Long lastRowID)
             {
                 this.result = result;
                 this.lastRowID = lastRowID;
@@ -969,7 +969,7 @@ public class AlarmDatabaseAdapter
             }
 
             private final Long lastRowID;
-            @NonNull
+            @Nullable
             public Long getLastRowID() {
                 return lastRowID;
             }
@@ -1124,7 +1124,7 @@ public class AlarmDatabaseAdapter
                         ? db.getAllAlarmsByState(0, param_withAlarmState)
                         : db.getAllAlarms(0, false, param_enabledOnly);
 
-                while (!cursor.isAfterLast())
+                while (cursor != null && !cursor.isAfterLast())
                 {
                     int index = cursor.getColumnIndex((param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID);
                     if (index >= 0) {
@@ -1135,7 +1135,9 @@ public class AlarmDatabaseAdapter
                     }
                     cursor.moveToNext();
                 }
-                cursor.close();
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
 
             db.close();
