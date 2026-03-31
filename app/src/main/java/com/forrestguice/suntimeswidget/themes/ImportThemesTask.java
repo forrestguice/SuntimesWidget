@@ -126,7 +126,7 @@ public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThem
      */
     public static class ImportThemesResult
     {
-        public ImportThemesResult(boolean result, Uri uri, @Nullable SuntimesTheme[] themes, Exception e)
+        public ImportThemesResult(boolean result, @Nullable Uri uri, @Nullable SuntimesTheme[] themes, @Nullable Exception e)
         {
             this.result = result;
             this.themes = themes;
@@ -141,12 +141,14 @@ public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThem
         }
 
         private final SuntimesTheme[] themes;
+        @Nullable
         public SuntimesTheme[] getThemes()
         {
             return themes;
         }
 
         private final Uri uri;
+        @Nullable
         public Uri getUri()
         {
             return uri;
@@ -157,6 +159,7 @@ public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThem
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException()
         {
             return e;

@@ -255,7 +255,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         });
     }
 
-    private boolean triggerActionMode(View view, SuntimesTheme.ThemeDescriptor themeDesc)
+    private boolean triggerActionMode(@Nullable View view, @Nullable SuntimesTheme.ThemeDescriptor themeDesc)
     {
         if (actionMode == null)
         {
@@ -474,25 +474,28 @@ public class WidgetThemeListActivity extends AppCompatActivity
             isImporting = false;
             dismissProgress();
 
-            if (results.getResult())
+            if (results != null && results.getResult())
             {
                 int importCount = 0;
                 SuntimesTheme[] themes = results.getThemes();
-                for (SuntimesTheme theme : themes)
+                if (themes != null)
                 {
-                    if (theme != null)
+                    for (SuntimesTheme theme : themes)
                     {
-                        if (!WidgetThemes.hasValue(theme.themeDescriptor()))
+                        if (theme != null)
                         {
-                            theme.saveTheme(WidgetThemes.getSharedPreferences(WidgetThemeListActivity.this));
-                            WidgetThemes.addValue(WidgetThemeListActivity.this, theme.themeDescriptor());
-                            adapterModified = true;
-                            importCount++;
-                            Log.w("importThemes", "Added " + theme.themeName);
+                            if (!WidgetThemes.hasValue(theme.themeDescriptor()))
+                            {
+                                theme.saveTheme(WidgetThemes.getSharedPreferences(WidgetThemeListActivity.this));
+                                WidgetThemes.addValue(WidgetThemeListActivity.this, theme.themeDescriptor());
+                                adapterModified = true;
+                                importCount++;
+                                Log.w("importThemes", "Added " + theme.themeName);
 
-                        } else {
-                            Log.w("importThemes", "Skipping " + theme.themeName + " :: already installed");
-                            // TODO: allow overwrite?
+                            } else {
+                                Log.w("importThemes", "Skipping " + theme.themeName + " :: already installed");
+                                // TODO: allow overwrite?
+                            }
                         }
                     }
                 }
@@ -512,8 +515,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 }
 
             } else {
-                String failureMessage = getString(R.string.themesimport_msg_failure, results.getUri());
-                Exception error = results.getException();
+                Uri uri = (results != null ? results.getUri() : null);
+                String failureMessage = getString(R.string.themesimport_msg_failure, uri);
+                Exception error = (results != null ? results.getException() : null);
                 if (error != null) {
                     failureMessage += "\n\n" + error.getLocalizedMessage();
                 }
@@ -539,21 +543,22 @@ public class WidgetThemeListActivity extends AppCompatActivity
             isExporting = false;
             dismissProgress();
 
-            File file = results.getExportFile();
-            String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContentResolver(), results.getExportUri()));
+            File file = (results != null ? results.getExportFile() : null);
+            Uri uri = (results != null ? results.getExportUri() : null);
+            String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContentResolver(), uri));
 
-            if (results.getResult())
+            if (results != null && results.getResult())
             {
                 String successMessage = getString(R.string.msg_export_success, path);
                 Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
                 // TODO: use a snackbar instead; offer 'copy path' action
 
                 if (Build.VERSION.SDK_INT >= 19) {
-                    if (results.getExportUri() == null) {
-                        ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
+                    if (uri == null) {
+                        ExportTask.shareResult(WidgetThemeListActivity.this, file, results.getMimeType());
                     }
                 } else {
-                    ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
+                    ExportTask.shareResult(WidgetThemeListActivity.this, file, results.getMimeType());
                 }
                 return;
             }
@@ -802,7 +807,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 int i = adapter.ordinal(themeName);
 
                 SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
-                theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
+                if (theme != null) {
+                    theme.updateDescriptor(this, WidgetThemes.PREFS_THEMES);
+                }
                 triggerActionMode(null, theme);
                 gridView.setSelection(i);
 
@@ -812,7 +819,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
     }
 
-    public static void updateWidgetsMatchingTheme(Context context, String themeName) {
+    public static void updateWidgetsMatchingTheme(Context context, @Nullable String themeName) {
         WidgetListAdapter.updateWidgetsMatchingTheme(context, WidgetListAdapter.createWidgetListAdapter(context), themeName);
     }
 

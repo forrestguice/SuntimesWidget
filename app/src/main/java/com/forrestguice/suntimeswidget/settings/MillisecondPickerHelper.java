@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 @TargetApi(11)
@@ -50,6 +51,7 @@ public class MillisecondPickerHelper
     protected int mode = MODE_MINUTES;
     protected int param_min = 1;
     protected int param_max = MAX_MINUTES;
+    @Nullable
     protected String param_zeroText = null;
 
     public View createDialogView(final Context context)
@@ -224,7 +226,7 @@ public class MillisecondPickerHelper
         }
     }
 
-    public void setParamZeroText(String text) {
+    public void setParamZeroText(@Nullable String text) {
         param_zeroText = text;
     }
     public void setParamMinMax(int min, int max)

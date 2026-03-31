@@ -770,7 +770,7 @@ public class MoonRiseSetView1 extends LinearLayout
             if (positionView.getVisibility() == VISIBLE && data != null)
             {
                 SuntimesCalculator calculator = data.calculator();
-                updateField(context, ((event != null) ? calculator.getMoonPosition(event) : null));
+                updateField(context, ((event != null && calculator != null) ? calculator.getMoonPosition(event) : null));
             }
             layout.setVisibility(event != null ? VISIBLE : INVISIBLE);
         }
@@ -803,13 +803,13 @@ public class MoonRiseSetView1 extends LinearLayout
             }
         }
 
-        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        public void updateField(Context context, @Nullable Calendar dateTime, boolean showSeconds)
         {
-            TimeDisplayText text = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds);
+            TimeDisplayText text = (dateTime != null ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds) : new TimeDisplayText());
             timeView.setText(text.toString());
         }
 
-        public void updateField(Context context, SuntimesCalculator.Position position)
+        public void updateField(Context context, @Nullable SuntimesCalculator.Position position)
         {
             if (position == null)
             {

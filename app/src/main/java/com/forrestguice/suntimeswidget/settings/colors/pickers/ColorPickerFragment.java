@@ -110,11 +110,11 @@ public class ColorPickerFragment extends DialogBase
         }
     };
 
-    public void updateViews(Context context) {
+    public void updateViews(@Nullable Context context) {
         updatePreview(context);
     }
 
-    protected void updatePreview(Context context)
+    protected void updatePreview(@Nullable Context context)
     {
         if (preview != null) {
             preview.setBackgroundColor(getColor());
@@ -146,6 +146,9 @@ public class ColorPickerFragment extends DialogBase
     @Nullable
     protected String getPreviewText(Context context, int textColor, int backgroundColor)
     {
+        if (context == null) {
+            return "";
+        }
         switch (colorViewModel.getPreviewMode())
         {
             case ColorPickerModel.PREVIEW_CONTRAST_RATIO:

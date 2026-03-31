@@ -149,7 +149,9 @@ public class WidgetThemePreview
 
     private SuntimesCalculator.SunPosition sunPosition = null;
     private SuntimesCalculator.MoonPosition moonPosition = null;
+    @Nullable
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
+    @Nullable
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
 
     @NonNull
@@ -655,7 +657,7 @@ public class WidgetThemePreview
         }
     }
 
-    public void updatePreview_clock1(View previewLayout, ClockWidgetSettings.WidgetModeClock1x1 mode, ContentValues values)
+    public void updatePreview_clock1(View previewLayout, @Nullable ClockWidgetSettings.WidgetModeClock1x1 mode, ContentValues values)
     {
         Context context = previewLayout.getContext();
         ImageView previewTime = (ImageView) previewLayout.findViewById(R.id.image_time);
@@ -666,12 +668,14 @@ public class WidgetThemePreview
             options.minTextSizePx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), context.getResources().getDisplayMetrics());
             options.textAlign = AppSettings.isLocaleRtl(context) ? Paint.Align.LEFT : Paint.Align.RIGHT;
 
-            switch (mode)
-            {
-                case CLOCK1: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL; break;
-                case CLOCK2: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0; break;
-                case CLOCK3: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1; break;
-            }
+            if (mode != null) {
+                switch (mode)
+                {
+                    case CLOCK1: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_VERTICAL; break;
+                    case CLOCK2: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0; break;
+                    case CLOCK3: options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL1; break;
+                }
+            } else options.style = ClockLayout_1x1_1.ClockFaceOptions.STYLE_DIGITAL0;
 
             SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
             data.calculate(context);
@@ -1153,7 +1157,7 @@ public class WidgetThemePreview
             if (apogee == null) {
                 apogee = data2.getMoonApogee();
             }
-            if (apogee != null)
+            if (apogee != null && apogee.first != null)
             {
                 TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), apogee.first, showTimeDate, showSeconds);
                 previewMoonApogeeDate.setText(perigeeString.getValue());

@@ -32,8 +32,8 @@ public abstract class LineGraphTaskListener implements ProgressListener<Bitmap, 
     @Override
     public void onStarted() {}
     public void onDataModified(SuntimesRiseSetDataset data) {}
-    public void onFrame(Bitmap frame, long offsetMinutes) {}
-    public void afterFrame(Bitmap frame, long offsetMinutes) {}
+    public void onFrame(@Nullable Bitmap frame, long offsetMinutes) {}
+    public void afterFrame(@Nullable Bitmap frame, long offsetMinutes) {}
     @Override
     public void onFinished(@Nullable Bitmap result) {}
     @Override

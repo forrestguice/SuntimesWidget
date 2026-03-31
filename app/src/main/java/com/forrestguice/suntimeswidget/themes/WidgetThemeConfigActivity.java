@@ -213,7 +213,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         return mode;
     }
 
+    @Nullable
     private UIMode param_mode = null;
+    @Nullable
     private String param_themeName = null;
     private int param_previewID = 0;
     private boolean param_wallpaper = true;
@@ -674,7 +676,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         ImageButton button = (ImageButton)findViewById(buttonID);
         return createColorChooser(context, label, edit, button, id, null);
     }
-    private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id, @Nullable final Integer previewID)
+    private ColorChooser createColorChooser(Context context, @Nullable TextView label, @Nullable EditText edit, @Nullable ImageButton button, String id, @Nullable final Integer previewID)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
         chooser.setColorChangeListener(new ColorChangeListener() {
@@ -710,7 +712,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         SizeEditView sizeEdit = (SizeEditView)findViewById(sizeEditViewID);
         return createSizeChooser(context, sizeEdit.getEdit(), min, max, id);
     }
-    private SizeChooser createSizeChooser(Context context, EditText edit, float min, float max, String id)
+    private SizeChooser createSizeChooser(Context context, @Nullable EditText edit, float min, float max, String id)
     {
         SizeChooser chooser = new SizeChooser(context, edit, min, max, id);
         sizeChoosers.add(chooser);
@@ -1317,14 +1319,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         }
     }
 
-    private static void updateSizeFromChooser(TextView text, SizeChooser chooser)
+    private static void updateSizeFromChooser(@Nullable TextView text, @Nullable SizeChooser chooser)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = chooser.getValue();
-            if (textSize >= chooser.getMin() && textSize <= chooser.getMax())
-            {
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getValue());
+            if (text != null && chooser != null) {
+                float textSize = chooser.getValue();
+                if (textSize >= chooser.getMin() && textSize <= chooser.getMax()) {
+                    text.setTextSize(TypedValue.COMPLEX_UNIT_SP, chooser.getValue());
+                }
             }
         }
     }
@@ -1498,7 +1501,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     /**
      * loads values from an existing theme into ui fields,
      */
-    protected void loadTheme( String themeName )
+    protected void loadTheme( @Nullable String themeName )
     {
         if (themeName != null)
         {
@@ -1980,7 +1983,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     private class SizeChooser extends com.forrestguice.suntimeswidget.settings.SizeChooser
     {
-        public SizeChooser(Context context, EditText editField, float min, float max, String id)
+        public SizeChooser(Context context, @Nullable EditText editField, float min, float max, String id)
         {
             super(context, editField, min, max, id);
         }
@@ -1997,7 +2000,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     private class ColorChooser extends com.forrestguice.suntimeswidget.settings.colors.ColorChooser
     {
-        public ColorChooser(Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
+        public ColorChooser(Context context, @Nullable TextView txtLabel, @Nullable EditText editField, @Nullable ImageButton imgButton, String id)
         {
             super(context, txtLabel, editField, imgButton, id);
         }

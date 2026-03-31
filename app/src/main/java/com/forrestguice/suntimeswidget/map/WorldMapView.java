@@ -71,6 +71,7 @@ public class WorldMapView extends ImageView
     private WorldMapOptions options;
     private WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
 
+    @Nullable
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
@@ -371,7 +372,7 @@ public class WorldMapView extends ImageView
     /**
      * @param data an instance of SuntimesRiseSetDataset
      */
-    public void updateViews(SuntimesRiseSetDataset data, boolean forceUpdate)
+    public void updateViews(@Nullable SuntimesRiseSetDataset data, boolean forceUpdate)
     {
         boolean sameData = (this.data == data);
         this.data = data;

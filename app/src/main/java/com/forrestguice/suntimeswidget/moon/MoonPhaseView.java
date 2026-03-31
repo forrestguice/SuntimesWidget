@@ -385,7 +385,7 @@ public class MoonPhaseView extends LinearLayout
         if (datetime != null && data != null && data.isCalculated())
         {
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.Position position = calculator.getMoonPosition(datetime);
+            SuntimesCalculator.Position position = (calculator != null ? calculator.getMoonPosition(datetime) : null);
             updatePosition(position);
 
         } else {

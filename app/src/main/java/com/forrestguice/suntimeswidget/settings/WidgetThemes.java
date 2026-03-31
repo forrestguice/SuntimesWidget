@@ -103,14 +103,16 @@ public class WidgetThemes
 
         SharedPreferences themePref = getSharedPreferences(context);
         Set<String> themesToProcess = loadInstalledList(themePref);
-        for (String themeName : themesToProcess)
-        {
-            ThemeDescriptor themeDesc = loadDescriptor(context, themeName);
-            if (themeDesc != null)
+        if (themesToProcess != null) {
+            for (String themeName : themesToProcess)
             {
-                addValue(context, themeDesc, false);   // build initial list
-            } else {
-                Log.w("initThemes", themeName + " does not seem to be installed; ignoring...");
+                ThemeDescriptor themeDesc = loadDescriptor(context, themeName);
+                if (themeDesc != null)
+                {
+                    addValue(context, themeDesc, false);   // build initial list
+                } else {
+                    Log.w("initThemes", themeName + " does not seem to be installed; ignoring...");
+                }
             }
         }
 
@@ -163,11 +165,11 @@ public class WidgetThemes
     {
         return addValue(null, theme);
     }
-    public static boolean addValue( Context context, ThemeDescriptor theme )
+    public static boolean addValue( @Nullable Context context, ThemeDescriptor theme )
     {
         return addValue(context, theme, true);
     }
-    public static boolean addValue( Context context, ThemeDescriptor theme, boolean saveList )
+    public static boolean addValue( @Nullable Context context, ThemeDescriptor theme, boolean saveList )
     {
         if (!themes.containsValue(theme))
         {
@@ -228,6 +230,7 @@ public class WidgetThemes
         return themeDefs;
     }
 
+    @Nullable
     public static ThemeDescriptor valueOf(String themeName)
     {
         return themes.get(themeName);
@@ -264,6 +267,7 @@ public class WidgetThemes
         pref.apply();
     }
 
+    @Nullable
     public static Set<String> loadInstalledList(SharedPreferences pref)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -290,7 +294,7 @@ public class WidgetThemes
         }
     }
 
-    private static Set<String> jsonToStringSet( String jsonString )
+    private static Set<String> jsonToStringSet( @Nullable String jsonString )
     {
         Set<String> set = new HashSet<>();
         if (jsonString != null)
@@ -347,14 +351,15 @@ public class WidgetThemes
             setRiseSet(riseTime, setTime, noonTime);
         }
 
+        @Nullable
         private SuntimesTheme.ThemeDescriptor selected;
-        public void setSelected(ThemeDescriptor descriptor)
+        public void setSelected(@Nullable ThemeDescriptor descriptor)
         {
             selected = descriptor;
             notifyDataSetChanged();
         }
-        public ThemeDescriptor getSelected()
-        {
+        @Nullable
+        public ThemeDescriptor getSelected() {
             return selected;
         }
 
@@ -384,7 +389,7 @@ public class WidgetThemes
             noonText = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonTime);
         }
 
-        public int ordinal( String themeName )
+        public int ordinal( @Nullable String themeName )
         {
             for (int i=0; i<themes.length; i++)
             {

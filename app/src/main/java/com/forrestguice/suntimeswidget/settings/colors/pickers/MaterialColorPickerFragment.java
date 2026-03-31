@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorsAdapter;
@@ -51,8 +52,8 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
         materialColorModel = ViewModelProviders.of(requireActivity()).get(MaterialColorPickerModel.class);
 
         View view = inflater.inflate(R.layout.layout_colors_material, container, false);
-        initViews(getContext(), view);
-        updateViews(getContext());
+        initViews(requireContext(), view);
+        updateViews(requireContext());
         return view;
     }
 
@@ -69,14 +70,14 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
             {
                 setColor(color, true);
                 clearListeners();
-                updateViews(getActivity());
+                updateViews(getContext());
                 setListeners();
             }
         });
 
         grid = (RecyclerView) view.findViewById(R.id.color_grid);
         grid.setHasFixedSize(true);
-        grid.setLayoutManager(new GridLayoutManager(getActivity(), 14, GridLayoutManager.HORIZONTAL, false));
+        grid.setLayoutManager(new GridLayoutManager(context, 14, GridLayoutManager.HORIZONTAL, false));
         grid.setAdapter(adapter);
         grid.scrollToPosition(0);
     }
@@ -89,7 +90,7 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void updateViews(Context context)
+    public void updateViews(@Nullable Context context)
     {
         super.updateViews(context);
         adapter.setSelectedColor(getColor());

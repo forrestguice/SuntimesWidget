@@ -283,7 +283,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, Uri exportUri, @Nullable File exportFile, String mimeType )
+        public ExportResult( boolean result, @Nullable Uri exportUri, @Nullable File exportFile, String mimeType )
         {
             this.result = result;
             this.exportUri = exportUri;
@@ -295,6 +295,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
         public boolean getResult() { return result; }
 
         private final Uri exportUri;
+        @Nullable
         public Uri getExportUri() { return exportUri; }
 
         private final File exportFile;
@@ -404,8 +405,12 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
 
     /**
      */
-    public static void shareResult(Context context, File file, String mimeType)
+    public static void shareResult(Context context, @Nullable File file, String mimeType)
     {
+        if (file == null) {
+            return;
+        }
+
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType(mimeType);

@@ -1042,7 +1042,7 @@ public class MoonDialog extends BottomSheetDialogBase
         SuntimesMoonData0 data = adapter.initData(context, position);
         Pair<Calendar, SuntimesCalculator.MoonPosition> event = isRising ? data.getMoonApogee() : data.getMoonPerigee();
 
-        if (event.first != null)
+        if (event != null && event.first != null)
         {
             PopupMenuCompat.createMenu(context, view, R.menu.moonapsis_context, onContextMenuClick_apsis(event)).show();
             return true;
@@ -1148,8 +1148,10 @@ public class MoonDialog extends BottomSheetDialogBase
         {
             @Override
             public void onUpdateMenu(Context context, Menu menu) {
-                updateContextMenu(context, menu, event.first.getTimeInMillis());
-                moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
+                if (event != null && event.first != null) {
+                    updateContextMenu(context, menu, event.first.getTimeInMillis());
+                    moonapsis.lockScrolling();   // prevent the popupmenu from nudging the view
+                }
             }
 
             @Override

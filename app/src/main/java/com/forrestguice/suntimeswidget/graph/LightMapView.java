@@ -25,6 +25,7 @@ import android.util.AttributeSet;
 
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Log;
 import com.forrestguice.annotation.NonNull;
@@ -405,11 +406,14 @@ public class LightMapView extends ImageView
     {
         if (data != null && degrees != null)
         {
-            Calendar calendar = Calendar.getInstance(data.timezone());
-            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
-            Calendar event = rising ? data.calculator().getSunriseCalendarForDate(calendar, degrees)
-                    : data.calculator().getSunsetCalendarForDate(calendar, degrees);
-            return ((event != null) ? event.getTimeInMillis() : null);
+            SuntimesCalculator calculator = data.calculator();
+            if (calculator != null) {
+                Calendar calendar = Calendar.getInstance(data.timezone());
+                calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+                Calendar event = rising ? calculator.getSunriseCalendarForDate(calendar, degrees)
+                        : calculator.getSunsetCalendarForDate(calendar, degrees);
+                return ((event != null) ? event.getTimeInMillis() : null);
+            } else return null;
         } else return null;
     }
 
@@ -418,11 +422,14 @@ public class LightMapView extends ImageView
     {
         if (data != null && shadowLengthMeters != null && objHeightMeters != null)
         {
-            Calendar calendar = Calendar.getInstance(data.timezone());
-            calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
-            Calendar event = rising ? data.calculator().getTimeOfShadowBeforeNoon(calendar, objHeightMeters, shadowLengthMeters)
-                                    : data.calculator().getTimeOfShadowAfterNoon(calendar, objHeightMeters, shadowLengthMeters);
-            return ((event != null) ? event.getTimeInMillis() : null);
+            SuntimesCalculator calculator = data.calculator();
+            if (calculator != null) {
+                Calendar calendar = Calendar.getInstance(data.timezone());
+                calendar.setTimeInMillis(colors.now + (colors.offsetMinutes * 60 * 1000));
+                Calendar event = rising ? calculator.getTimeOfShadowBeforeNoon(calendar, objHeightMeters, shadowLengthMeters)
+                        : calculator.getTimeOfShadowAfterNoon(calendar, objHeightMeters, shadowLengthMeters);
+                return ((event != null) ? event.getTimeInMillis() : null);
+            } else return null;
         } else return null;
     }
 

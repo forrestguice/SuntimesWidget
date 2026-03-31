@@ -793,14 +793,14 @@ public class LineGraphBitmap
         c.drawRect(0, 0, w, h, p);
     }
 
-    protected void drawPoint(Calendar calendar, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(Calendar calendar, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         if (calendar != null) {
             drawPoint(calendar.getTimeInMillis(), calculator, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
         }
     }
 
-    protected void drawPoint(long time, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(long time, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         Calendar lmt = lmt(calculator.getLocation());
         lmt.setTimeInMillis(time);
@@ -810,7 +810,7 @@ public class LineGraphBitmap
         drawPoint(minute, degrees, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
     }
 
-    protected void drawPoint(double minute, double degrees, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
+    protected void drawPoint(double minute, double degrees, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         float x = (float) minutesToBitmapCoords(c, minute, options);
         float y = (float) degreesToBitmapCoords(c, degrees, options);

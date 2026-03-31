@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.support.preference.DialogPreference;
 
@@ -58,6 +59,7 @@ public class MillisecondPickerPreference extends DialogPreference
     private int mode = MODE_MINUTES;
     private int param_min = 1;
     private int param_max = MAX_MINUTES;
+    @Nullable
     private String param_zeroText = null;
 
     @TargetApi(21)

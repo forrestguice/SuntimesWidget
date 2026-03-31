@@ -40,6 +40,7 @@ public class LocationListTask implements Callable<LocationListTask.LocationListT
         this.selected = selected;
     }
 
+    @Nullable
     @Override
     public LocationListTaskResult call() throws Exception
     {
@@ -65,14 +66,16 @@ public class LocationListTask implements Callable<LocationListTask.LocationListT
 
         String selectedLat = selectedPlaceLat, selectedLon = selectedPlaceLon, selectedAlt = selectedPlaceAlt;
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
-        try {
-            selectedLat = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
-            selectedLon = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
-            selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
-        } catch (CursorIndexOutOfBoundsException | IllegalArgumentException e) {
-            Log.w("LocationListTask", "Place not found.. " + e);
-        } finally {
-            closeCursor(selectedCursor);
+        if (selectedCursor != null) {
+            try {
+                selectedLat = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+                selectedLon = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+                selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
+            } catch (CursorIndexOutOfBoundsException | IllegalArgumentException e) {
+                Log.w("LocationListTask", "Place not found.. " + e);
+            } finally {
+                closeCursor(selectedCursor);
+            }
         }
 
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))

@@ -273,11 +273,12 @@ public class GetFixDatabaseAdapter
         database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
     }
 
-    public static int findPlaceByName(String name, Cursor cursor)
+    public static int findPlaceByName(String name, @Nullable Cursor cursor)
     {
         int position = -1;
-        if (cursor == null)
+        if (cursor == null) {
             return position;
+        }
 
         for (int i = 0; i < cursor.getCount(); i++)
         {

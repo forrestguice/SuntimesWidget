@@ -226,13 +226,13 @@ public class MoonRiseSetView extends LinearLayout
             {
                 SuntimesCalculator calculator = data.calculator();
 
-                SuntimesCalculator.MoonPosition moonPositionRising = (risingTime == null ? null : calculator.getMoonPosition(risingTime));
-                SuntimesCalculator.MoonPosition moonPositionSetting = (settingTime == null ? null : calculator.getMoonPosition(settingTime));
+                SuntimesCalculator.MoonPosition moonPositionRising = (risingTime == null || calculator == null ? null : calculator.getMoonPosition(risingTime));
+                SuntimesCalculator.MoonPosition moonPositionSetting = (settingTime == null || calculator == null ? null : calculator.getMoonPosition(settingTime));
                 risingTextField.updateField(context, moonPositionRising);
                 settingTextField.updateField(context, moonPositionSetting);
 
-                SuntimesCalculator.MoonPosition moonPositionRising1 = (risingTime1 == null ? null : calculator.getMoonPosition(risingTime1));
-                SuntimesCalculator.MoonPosition moonPositionSetting1 = (settingTime1 == null ? null : calculator.getMoonPosition(settingTime1));
+                SuntimesCalculator.MoonPosition moonPositionRising1 = (risingTime1 == null || calculator == null ? null : calculator.getMoonPosition(risingTime1));
+                SuntimesCalculator.MoonPosition moonPositionSetting1 = (settingTime1 == null || calculator == null ? null : calculator.getMoonPosition(settingTime1));
                 risingTextField1.updateField(context, moonPositionRising1);
                 settingTextField1.updateField(context, moonPositionSetting1);
 

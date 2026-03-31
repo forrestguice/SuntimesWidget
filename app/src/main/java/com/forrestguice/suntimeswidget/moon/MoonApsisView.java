@@ -91,7 +91,7 @@ public class MoonApsisView extends LinearLayout
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         SuntimesUtils.initDisplayStrings(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_moonapsis, this, true);
@@ -619,7 +619,7 @@ public class MoonApsisView extends LinearLayout
 
         public void updateField(Context context, @Nullable Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, LengthUnit units)
         {
-            if (apsis != null)
+            if (apsis != null && apsis.first != null && apsis.second != null)
             {
                 labelView.setText(context.getString(isRising ? R.string.moon_label_apogee : R.string.moon_label_perigee));
                 timeView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), apsis.first, showTime, showSeconds).getValue());
