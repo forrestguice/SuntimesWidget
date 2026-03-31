@@ -2540,8 +2540,8 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         CharSequence nightLabel = LightMapView.getLabel(context, data);
         Drawable nightDrawable = null;
-        boolean replaceNightLabel;
-        if (replaceNightLabel = (data.nightLength() == 0))
+        boolean replaceNightLabel = (data.nightLength() == 0);
+        if (replaceNightLabel)
         {
             if (data.civilTwilightLength()[1] <= 0) {
                 nightDrawable = field_day.getDefaultIconDrawable();
@@ -2564,8 +2564,8 @@ public class LightMapDialog extends BottomSheetDialogBase
 
         CharSequence dayLabel = null;
         Drawable dayDrawable = null;
-        boolean replaceDayLabel;
-        if (replaceDayLabel = (data.dayLength() <= 0))
+        boolean replaceDayLabel = (data.dayLength() <= 0);
+        if (replaceDayLabel)
         {
             dayDrawable = field_civil.getDefaultIconDrawable();
             dayLabel = context.getString(R.string.timeMode_polarnight);
