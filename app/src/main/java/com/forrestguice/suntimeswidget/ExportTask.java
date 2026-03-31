@@ -370,7 +370,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
 
             int i = 0, deletedSize = 0;
             do {
-                deletedSize += cacheFiles[i].length();
+                deletedSize += (int) cacheFiles[i].length();
                 if (!cacheFiles[i].delete())
                 {
                     Log.w("ExportTask", "Failed to cleanup cache; unable to delete " + cacheFiles[i].getPath());

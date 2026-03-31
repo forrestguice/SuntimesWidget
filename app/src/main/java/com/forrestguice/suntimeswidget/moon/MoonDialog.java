@@ -521,7 +521,7 @@ public class MoonDialog extends BottomSheetDialogBase
     }
     protected long getDialogTime()
     {
-        long offsetMillis = getOffsetMinutes() * 60 * 1000;
+        long offsetMillis = getOffsetMinutes() * 60 * 1000L;
         return (arg_dateTime() != -1 ? arg_dateTime() : getNow()) + offsetMillis;
     }
     protected Calendar getDialogCalendar() {

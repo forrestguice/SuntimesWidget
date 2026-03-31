@@ -611,7 +611,7 @@ public class LightGraphBitmap
             p.setTextSize(textSize);
             String label = ((options.is24 || i == 12) ? i : (i % 12)) + "";
             c.drawText(label, left + (textSize * 0.75f), y + textSize/3 , p);
-            i += options.axisY_labels_interval;
+            i += (int) options.axisY_labels_interval;
         }
     }
 
@@ -685,7 +685,7 @@ public class LightGraphBitmap
             p.setColor(options.colors.getColor(COLOR_LABELS));
             p.setTextSize(textSize);
             c.drawText("" + month, x + textSize/2, h - textSize/4, p);
-            i += options.axisX_labels_interval;
+            i += (int) options.axisX_labels_interval;
         }
     }
 
@@ -746,7 +746,7 @@ public class LightGraphBitmap
         {
             float y = (float) hoursToBitmapCoords(c, i - offsetHours, options);
             c.drawLine(0, y, w, y, p);
-            i += interval;
+            i += (int) interval;
         }
     }
 
@@ -759,7 +759,7 @@ public class LightGraphBitmap
         {
             float x = (float) daysToBitmapCoords(c, i, options);
             c.drawLine(x, 0, x, h, p);
-            i += interval;
+            i += (int) interval;
         }
     }
 

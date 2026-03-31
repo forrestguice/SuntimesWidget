@@ -78,7 +78,7 @@ public class LightMapTask extends ProgressCallable<Bitmap, Bitmap>
             if (params.length > 5) {
                 initialOffset = (long)params[5];
             }
-            frameDuration = options.anim_frameLengthMs * 1000000;   // ms to ns
+            frameDuration = options.anim_frameLengthMs * 1000000L;   // ms to ns
 
         } catch (ClassCastException e) {
             Log.w(LightMapTask.class.getSimpleName(), "Invalid params; using [null, 0, 0]");

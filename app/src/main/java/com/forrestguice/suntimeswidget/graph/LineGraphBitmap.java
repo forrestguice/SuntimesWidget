@@ -705,7 +705,7 @@ public class LineGraphBitmap
             p.setColor(options.getColor(LineGraphColorValues.COLOR_LABELS));
             p.setTextSize((float) textSize);
             c.drawText(hourLabel + "", x - textSize/2, h - textSize/4, p);
-            i += options.axisX_labels_interval;
+            i += (int) options.axisX_labels_interval;
             calendar.add(Calendar.MINUTE, (int) options.axisX_labels_interval);
         }
     }
@@ -719,7 +719,7 @@ public class LineGraphBitmap
             p.setColor(options.getColor(LineGraphColorValues.COLOR_LABELS));
             p.setTextSize((float)textSize);
             c.drawText((i > 0 ? "+" : "") + i + "°", 0 + (float)(1.25 * textSize), y + textSize/3 , p);
-            i += options.axisY_labels_interval;
+            i += (int) options.axisY_labels_interval;
         }
     }
 
@@ -742,7 +742,7 @@ public class LineGraphBitmap
         {
             float y = (float) degreesToBitmapCoords(c, i, options);
             c.drawLine(0, y, w, y, p);
-            i += interval;
+            i += (int) interval;
         }
     }
 
@@ -781,7 +781,7 @@ public class LineGraphBitmap
 
             float x = (float) minutesToBitmapCoords(c, i, options);
             c.drawLine(x, 0, x, h, p);
-            i += interval;
+            i += (int) interval;
             calendar.add(Calendar.MINUTE, (int) interval);
         }
     }
