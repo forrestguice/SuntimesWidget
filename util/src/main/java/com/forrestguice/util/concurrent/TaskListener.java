@@ -18,12 +18,10 @@
 
 package com.forrestguice.util.concurrent;
 
-import com.forrestguice.annotation.Nullable;
-
 /**
  * @param <T> task return type
  */
 public interface TaskListener<T> {
     void onStarted();
-    void onFinished(@Nullable T result);
+    void onFinished(T result);
 }
