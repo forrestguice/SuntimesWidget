@@ -43,13 +43,17 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
         {
             @Override
             public void onScrollStateChanged(@NonNull androidx.recyclerview.widget.RecyclerView recyclerView, int newState) {
-                listener.onScrollStateChanged(RecyclerView.this, newState);
+                if (listener != null) {
+                    listener.onScrollStateChanged(RecyclerView.this, newState);
+                }
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
             public void onScrolled(@NonNull androidx.recyclerview.widget.RecyclerView recyclerView, int dx, int dy) {
-                listener.onScrolled(RecyclerView.this, dx, dy);
+                if (listener != null) {
+                    listener.onScrolled(RecyclerView.this, dx, dy);
+                }
                 super.onScrolled(recyclerView, dx, dy);
             }
         };

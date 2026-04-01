@@ -171,6 +171,7 @@ public class ListPreference extends android.preference.ListPreference
      * @return summary text w/ properly formatted %s values
      */
     @Override
+    @Nullable
     public CharSequence getSummary()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
