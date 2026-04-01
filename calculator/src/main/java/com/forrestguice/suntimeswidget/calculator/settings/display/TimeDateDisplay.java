@@ -140,11 +140,11 @@ public class TimeDateDisplay
      * @param cal     a Calendar representing some point in time
      * @return a display string that describes the time (short format)
      */
-    public TimeDisplayText calendarTimeShortDisplayString(Resources context, Calendar cal)
+    public TimeDisplayText calendarTimeShortDisplayString(Resources context, @Nullable Calendar cal)
     {
         return calendarTimeShortDisplayString(context, cal, false);
     }
-    public TimeDisplayText calendarTimeShortDisplayString(Resources context, Calendar cal, boolean showSeconds)
+    public TimeDisplayText calendarTimeShortDisplayString(Resources context, @Nullable Calendar cal, boolean showSeconds)
     {
         if (!initialized)
         {
@@ -160,7 +160,7 @@ public class TimeDateDisplay
                     : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
     }
-    public TimeDisplayText calendarTimeShortDisplayString(Resources context, Calendar cal, boolean showSeconds, TimeFormatMode format)
+    public TimeDisplayText calendarTimeShortDisplayString(Resources context, @Nullable Calendar cal, boolean showSeconds, TimeFormatMode format)
     {
         if (!initialized) {
             Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
@@ -323,7 +323,7 @@ public class TimeDateDisplay
      * @param abbreviate true abbreviate name, false full name
      * @return day name e.g. Monday (or Mon abbreviated)
      */
-    public TimeDisplayText calendarDayDisplayString(Resources context, Calendar calendar, boolean abbreviate)
+    public TimeDisplayText calendarDayDisplayString(@Nullable Resources context, @Nullable Calendar calendar, boolean abbreviate)
     {
         if (calendar == null || context == null) {
             return new TimeDisplayText(strTimeNone);
@@ -370,7 +370,7 @@ public class TimeDateDisplay
      * @param cal a Calendar representing some year
      * @return a time display string
      */
-    public TimeDisplayText calendarDateYearDisplayString(Resources context, Calendar cal)
+    public TimeDisplayText calendarDateYearDisplayString(Resources context, @Nullable Calendar cal)
     {
         if (cal == null) {
             return new TimeDisplayText(strTimeNone);
@@ -386,13 +386,13 @@ public class TimeDateDisplay
      * @param calendar  a Calendar representing some date
      * @return a time display string
      */
-    public TimeDisplayText calendarDateDisplayString(Resources context, Calendar calendar) {
+    public TimeDisplayText calendarDateDisplayString(@Nullable Resources context, @Nullable Calendar calendar) {
         return calendarDateDisplayString(context, calendar, false);
     }
-    public TimeDisplayText calendarDateDisplayString(Resources context, Calendar calendar, boolean showYear) {
+    public TimeDisplayText calendarDateDisplayString(@Nullable Resources context, @Nullable Calendar calendar, boolean showYear) {
         return calendarDateDisplayString(context, calendar, showYear, false);
     }
-    public TimeDisplayText calendarDateDisplayString(Resources context, Calendar calendar, boolean showYear, boolean abbreviate)
+    public TimeDisplayText calendarDateDisplayString(@Nullable Resources context, @Nullable Calendar calendar, boolean showYear, boolean abbreviate)
     {
         if (calendar == null || context == null)
         {
@@ -417,23 +417,23 @@ public class TimeDateDisplay
     /**
      * calendarDateTime
      */
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal) {
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), true, false, false);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, long timestamp) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, long timestamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
         return calendarDateTimeDisplayString(context, cal, true, true);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showTime, boolean showSeconds) {
         return calendarDateTimeDisplayString(context, cal, showTime, showSeconds, false);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate) {
         Calendar now = Calendar.getInstance();
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != now.get(Calendar.YEAR))), showTime, showSeconds, abbreviate);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate)
     {
         if (cal == null) {
             return new TimeDisplayText(strTimeNone);
@@ -472,13 +472,13 @@ public class TimeDateDisplay
          String value = timeFormat.format(cal.getTime());*/
     }
 
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, false, format);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format) {
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format) {
         return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, abbreviate, format);
     }
-    public TimeDisplayText calendarDateTimeDisplayString(Resources context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format)
+    public TimeDisplayText calendarDateTimeDisplayString(@Nullable Resources context, @Nullable Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, boolean abbreviate, TimeFormatMode format)
     {
         if (cal == null || context == null) {
             return new TimeDisplayText(strTimeNone);

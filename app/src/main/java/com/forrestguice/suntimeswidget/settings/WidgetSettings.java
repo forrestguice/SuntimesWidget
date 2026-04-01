@@ -1684,7 +1684,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+        return (s != null ? s : PREF_DEF_APPEARANCE_THEME);
     }
     public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
     {
@@ -1864,7 +1865,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
+        return (s != null ? s : defValue);
     }
     public static void deleteTitleTextPref(Context context, int appWidgetId)
     {
@@ -1890,6 +1892,9 @@ public class WidgetSettings
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, PREF_DEF_GENERAL_TIMEMODE.name());
+        if (modeString == null) {
+            modeString = PREF_DEF_GENERAL_TIMEMODE.name();
+        }
 
         RiseSetDataMode mode;
         try {
@@ -2409,7 +2414,8 @@ public class WidgetSettings
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String key = keyTimezonePref(appWidgetId, slotName);
         String defaultValue = defaultTimezonePref(context, appWidgetId, slotName);
-        return prefs.getString(key, defaultValue);
+        String s = prefs.getString(key, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     public static void deleteTimezonePref(Context context, int appWidgetId) {
@@ -2780,11 +2786,18 @@ public class WidgetSettings
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String defaultValue = (appWidgetId == 0) ? PREF_DEF_GENERAL_UNITS_LENGTH.name()             // prefer the current app setting [0] as the default value
                 : prefs.getString(PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name());
-        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, defaultValue));
+        if (defaultValue == null) {
+            defaultValue = PREF_DEF_GENERAL_UNITS_LENGTH.name();
+        }
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, defaultValue);
+        return getLengthUnit((s != null ? s : defaultValue));
     }
 
-    public static LengthUnit getLengthUnit(String unitName)
+    public static LengthUnit getLengthUnit(@Nullable String unitName)
     {
+        if (unitName == null) {
+            return PREF_DEF_GENERAL_UNITS_LENGTH;
+        }
         LengthUnit retValue;
         try {
             retValue = LengthUnit.valueOf(unitName);
@@ -2816,7 +2829,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
+        return (s != null ? s : PREF_DEF_GENERAL_TIMENOTE_RISE.name());
     }
     public static void deleteTimeNoteRisePref(Context context, int appWidgetId)
     {
@@ -2840,7 +2854,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
+        return (s != null ? s : PREF_DEF_GENERAL_TIMENOTE_SET.name());
     }
     public static void deleteTimeNoteSetPref(Context context, int appWidgetId)
     {
@@ -2904,7 +2919,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
         Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
-        return ids.contains(appWidgetId + "");
+        return (ids != null && ids.contains(appWidgetId + ""));
     }
 
     public static void addKnownWidgetID(Context context, int appWidgetId)

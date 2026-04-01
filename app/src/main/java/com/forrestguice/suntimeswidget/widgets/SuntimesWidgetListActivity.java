@@ -42,6 +42,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
@@ -557,21 +558,25 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     /**
      * @param widgetItem a WidgetListItem (referencing some widget id)
      */
-    protected void reconfigureWidget(WidgetListAdapter.WidgetListItem widgetItem)
+    protected void reconfigureWidget(@Nullable WidgetListAdapter.WidgetListItem widgetItem)
     {
-        Intent configIntent = new Intent();
-        configIntent.setComponent(new ComponentName(widgetItem.getPackageName(), widgetItem.getConfigClass()));
-        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetItem.getWidgetId());
-        configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        configIntent.putExtra(EXTRA_RECONFIGURE, true);
+        String configClassName = (widgetItem != null ? widgetItem.getConfigClass() : null);
+        if (configClassName != null)
+        {
+            Intent configIntent = new Intent();
+            configIntent.setComponent(new ComponentName(widgetItem.getPackageName(), configClassName));
+            configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetItem.getWidgetId());
+            configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            configIntent.putExtra(EXTRA_RECONFIGURE, true);
 
-        try {
-            Log.i(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.getPackageName() + " :: " + widgetItem.getConfigClass());
-            startActivity(configIntent);
-            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            try {
+                Log.i(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.getPackageName() + " :: " + configClassName);
+                startActivity(configIntent);
+                overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
 
-        } catch (ActivityNotFoundException | SecurityException e) {
-            Log.e(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.getConfigClass() + " :: " + widgetItem.getConfigClass() + " :: " + e);
+            } catch (ActivityNotFoundException | SecurityException e) {
+                Log.e(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.getWidgetClass() + " :: " + configClassName + " :: " + e);
+            }
         }
     }
 

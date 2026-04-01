@@ -231,7 +231,7 @@ public class WidgetThemes
     }
 
     @Nullable
-    public static ThemeDescriptor valueOf(String themeName)
+    public static ThemeDescriptor valueOf(@Nullable String themeName)
     {
         return themes.get(themeName);
     }
@@ -373,9 +373,10 @@ public class WidgetThemes
             return showAddButton;
         }
 
+        @Nullable
         private Calendar riseTime, setTime, noonTime;
         private TimeDisplayText riseText, setText, noonText;
-        public void setRiseSet(Calendar rise, Calendar set, Calendar noon)
+        public void setRiseSet(@Nullable Calendar rise, @Nullable Calendar set, @Nullable Calendar noon)
         {
             riseTime = rise;
             setTime = set;

@@ -89,7 +89,7 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
             } catch (IOException e) {
                 Log.e(TAG, "Failed to import from " + uri + ": " + e);
                 result = false;
-                data = null;
+                data = new HashMap<>();
                 error = e;
             }
         }
@@ -220,7 +220,7 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, @Nullable Uri uri, @Nullable Map<String, ContentValues[]> items, @Nullable Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, Map<String, ContentValues[]> items, @Nullable Exception e)
         {
             this.result = result;
             this.items = items;
@@ -234,7 +234,6 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
         }
 
         private final Map<String, ContentValues[]> items;
-        @Nullable
         public Map<String, ContentValues[]> getItems() {
             return items;
         }

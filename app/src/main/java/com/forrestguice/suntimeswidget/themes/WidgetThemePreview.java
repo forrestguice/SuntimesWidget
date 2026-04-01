@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
@@ -147,7 +148,9 @@ public class WidgetThemePreview
     private SuntimesRiseSetData data1;
     private SuntimesMoonData data2;
 
+    @Nullable
     private SuntimesCalculator.SunPosition sunPosition = null;
+    @Nullable
     private SuntimesCalculator.MoonPosition moonPosition = null;
     @Nullable
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
@@ -433,8 +436,9 @@ public class WidgetThemePreview
 
         if (previewAzimuth != null || previewElevation != null || previewRightAsc != null || previewDeclination != null)
         {
-            if (sunPosition == null) {
-                sunPosition = data0.calculator().getSunPosition(data0.now());
+            SuntimesCalculator calculator = data0.calculator();
+            if (sunPosition == null && calculator != null) {
+                sunPosition = calculator.getSunPosition(data0.now());
             }
             if (sunPosition == null) {
                 return;
@@ -550,8 +554,10 @@ public class WidgetThemePreview
             options.colors = LightGraphColorValues.getColorDefaults(AndroidResources.wrap(context), isNightMode);
 
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
+            Location location = data0.location();
+            double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
             options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone()
-                    : WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+                    : WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
 
             options.graph_width = 365;    // days
             options.graph_height = 24;    // hours
@@ -607,13 +613,15 @@ public class WidgetThemePreview
                     //data.setCalculator(context, com.forrestguice.suntimeswidget.calculator.time4a.Time4ANOAASuntimesCalculator.getDescriptor());
                     data.calculateData(context);
                     drawTask.setData(LightGraphBitmap.createYearData(context, data));
-                    handler.post(new Runnable()
-                    {
-                        @Override
-                        public void run() {
-                            ExecutorUtils.runProgress("WidgetThemePreview1", getExecutor(), handler, drawTask, drawTaskListener);
-                        }
-                    });
+                    if (handler != null) {
+                        handler.post(new Runnable()
+                        {
+                            @Override
+                            public void run() {
+                                ExecutorUtils.runProgress("WidgetThemePreview1", getExecutor(), handler, drawTask, drawTaskListener);
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -1038,8 +1046,9 @@ public class WidgetThemePreview
         TextView previewMoonRightAsc = (TextView)previewLayout.findViewById(R.id.info_moon_rightascension_current);
         if (previewMoonDeclination != null || previewMoonRightAsc != null || previewMoonElevation != null || previewMoonAzimuth != null)
         {
-            if (moonPosition == null) {
-                moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
+            SuntimesCalculator calculator = data2.calculator();
+            if (moonPosition == null && calculator != null) {
+                moonPosition = calculator.getMoonPosition(data2.now());    // lazy init
             }
 
             if (previewMoonDeclination != null) {
@@ -1066,7 +1075,7 @@ public class WidgetThemePreview
                 }
             }
 
-            if (previewMoonAzimuth != null)
+            if (previewMoonAzimuth != null && moonPosition != null)
             {
                 TimeDisplayText azimuthDisplay = angle_utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
                 previewMoonAzimuth.setTextColor(textColor);
@@ -1080,7 +1089,7 @@ public class WidgetThemePreview
                 }
             }
 
-            if (previewMoonElevation != null)
+            if (previewMoonElevation != null && moonPosition != null)
             {
                 previewMoonElevation.setTextColor(textColor);
                 previewMoonElevation.setText(PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
@@ -1097,8 +1106,9 @@ public class WidgetThemePreview
         TextView previewMoonDistance = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current);
         if (previewMoonDistance != null)
         {
-            if (moonPosition == null) {
-                moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
+            SuntimesCalculator calculator = data2.calculator();
+            if (moonPosition == null && calculator != null) {
+                moonPosition = calculator.getMoonPosition(data2.now());    // lazy init
             }
 
             previewMoonDistance.setText(MoonLayout_1x1_7.styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
@@ -1190,7 +1200,7 @@ public class WidgetThemePreview
             if (perigee == null) {
                 perigee = data2.getMoonPerigee();
             }
-            if (perigee != null)
+            if (perigee != null && perigee.first != null)
             {
                 TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), perigee.first, showTimeDate, showSeconds);
                 previewMoonPerigeeDate.setText(perigeeString.getValue());

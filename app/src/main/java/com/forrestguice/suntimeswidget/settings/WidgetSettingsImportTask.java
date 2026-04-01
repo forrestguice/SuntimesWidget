@@ -167,10 +167,10 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable ContentValues[] items, Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, @Nullable ContentValues[] items, @Nullable Exception e)
         {
             this.result = result;
-            this.items = items;
+            this.items = (items != null ? items : new ContentValues[0]);
             this.uri = uri;
             this.e = e;
         }
@@ -188,16 +188,18 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
         }
 
         private final Uri uri;
+        @Nullable
         public Uri getUri()
         {
             return uri;
         }
 
         public int numResults() {
-            return (items != null ? items.length : 0);
+            return items.length;
         }
 
         private final Exception e;
+        @Nullable
         public Exception getException()
         {
             return e;
@@ -407,7 +409,7 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
      * @param appWidgetId appWidgetId; null to delete all ids
      * @return true items were removed, false otherwise
      */
-    public static boolean deleteValues(SharedPreferences prefs, String prefix, Integer appWidgetId)
+    public static boolean deleteValues(SharedPreferences prefs, String prefix, @Nullable Integer appWidgetId)
     {
         Map<String, ?> map = prefs.getAll();
         Set<String> keys = map.keySet();

@@ -280,8 +280,10 @@ public class SuntimesWarning
     {
         if (savedState != null)
         {
-            message = savedState.getCharSequence(id + "_" + KEY_MESSAGE);
-            contentDescription = savedState.getCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION);
+            CharSequence message0 = savedState.getCharSequence(id + "_" + KEY_MESSAGE);
+            message = (message0 != null ? message0 : "");
+            CharSequence contentDescription0 = savedState.getCharSequence(id + "_" + KEY_CONTENT_DESCRIPTION);
+            contentDescription = (contentDescription0 != null ? contentDescription0 : "");
             actionLabel = savedState.getCharSequence(id + "_" + KEY_ACTION_LABEL);
             wasDismissed = savedState.getBoolean(id + "_" + KEY_WASDISMISSED, false);
             shouldShow = savedState.getBoolean(id + "_" + KEY_SHOULD_SHOW, false);

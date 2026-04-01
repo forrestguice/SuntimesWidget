@@ -227,7 +227,9 @@ public class WelcomeTimeZoneView extends WelcomeView
             String location = getLongitudeLabel();
             String note = context.getString(R.string.timezoneWarningNote, tz.getID(), offsetDisplay, location);
             SpannableString noteDisplay = SpanUtils.createBoldColorSpan(null, note, offsetDisplay, highlightColor);
-            noteDisplay = SpanUtils.createBoldColorSpan(noteDisplay, note, location, normalColor);
+            if (location != null) {
+                noteDisplay = SpanUtils.createBoldColorSpan(noteDisplay, note, location, normalColor);
+            }
             timeZoneWarningNote.setText(noteDisplay);
         }
     }

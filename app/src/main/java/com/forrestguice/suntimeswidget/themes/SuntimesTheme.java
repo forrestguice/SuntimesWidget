@@ -369,9 +369,11 @@ public class SuntimesTheme
         String theme = themePrefix(themeName);
 
         this.themeVersion = themes.getInt(theme + THEME_VERSION, defaultTheme.themeVersion);
-        this.themeName = themes.getString(theme + THEME_NAME, defaultTheme.themeName);
+        String themeName0 = themes.getString(theme + THEME_NAME, defaultTheme.themeName);
+        this.themeName = (themeName0 != null ? themeName0 : defaultTheme.themeName);
         this.themeIsDefault = themes.getBoolean(theme + THEME_ISDEFAULT, false);
-        this.themeDisplayString = themes.getString(theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString);
+        String displayString0 = themes.getString(theme + THEME_DISPLAYSTRING, defaultTheme.themeDisplayString);
+        this.themeDisplayString = (displayString0 != null ? displayString0 : defaultTheme.themeDisplayString);
 
         this.themeBackground = defaultTheme.themeBackground;
         String backgroundName;
@@ -1119,7 +1121,8 @@ public class SuntimesTheme
             if (name.equals(themeName))
             {
                 this.name = name;
-                this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+                String displayString0 = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+                this.displayString = (displayString0 != null ? displayString0 : "");
                 this.backgroundName = themesPref.getString(themePrefix + THEME_BACKGROUND, null);
                 this.backgroundColor = themesPref.getInt(themePrefix + THEME_BACKGROUND_COLOR, Color.TRANSPARENT);
                 this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
@@ -1154,7 +1157,8 @@ public class SuntimesTheme
         {
             String themePrefix = SuntimesTheme.themePrefix(name);
             SharedPreferences themesPref = context.getSharedPreferences(themesPrefix, Context.MODE_PRIVATE);
-            this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+            String s = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+            this.displayString = (s != null ? s : "");
         }
 
         public String name() {

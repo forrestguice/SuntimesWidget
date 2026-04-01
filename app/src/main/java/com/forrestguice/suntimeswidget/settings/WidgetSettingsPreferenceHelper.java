@@ -191,8 +191,9 @@ public abstract class WidgetSettingsPreferenceHelper implements SharedPreference
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             try {
+                String s = sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "");
                 WidgetSettings.saveObserverHeightPref(context, 0,
-                        Float.parseFloat(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "")));
+                        (s != null ? Float.parseFloat(s) : WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT));
             } catch (NumberFormatException e) {
                 Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
             }

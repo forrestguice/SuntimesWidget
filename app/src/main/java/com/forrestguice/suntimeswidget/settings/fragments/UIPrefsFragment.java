@@ -356,7 +356,7 @@ public class UIPrefsFragment extends PreferenceFragment
         };
     }
 
-    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final ColorValuesCollection<?> collection, final int requestCode, final int appWidgetID, final String colorTag, final CharSequence title, final CharSequence subtitle, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys)
+    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final ColorValuesCollection<?> collection, final int requestCode, final int appWidgetID, final String colorTag, @Nullable final CharSequence title, final @Nullable CharSequence subtitle, final boolean showAlpha, @Nullable final Integer previewMode, @Nullable final String[] previewKeys)
     {
         return new ActionButtonPreference.ActionButtonPreferenceListener ()
         {
@@ -541,7 +541,7 @@ public class UIPrefsFragment extends PreferenceFragment
         }
     }
 
-    private static ActionButtonPreference.ActionButtonPreferenceListener createTapActionListPreferenceListener(final Activity activity, final String selectedActionID, final int requestCode)
+    private static ActionButtonPreference.ActionButtonPreferenceListener createTapActionListPreferenceListener(final Activity activity, @Nullable final String selectedActionID, final int requestCode)
     {
         return new ActionButtonPreference.ActionButtonPreferenceListener()
         {

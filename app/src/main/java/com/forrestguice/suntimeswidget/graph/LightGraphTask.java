@@ -46,7 +46,7 @@ public class LightGraphTask extends ProgressCallable<Bitmap, Bitmap>
     
     @Nullable
     protected SuntimesRiseSetDataset[] yearData = null;
-    public void setData(SuntimesRiseSetDataset[] data) {
+    public void setData(@Nullable SuntimesRiseSetDataset[] data) {
         yearData = data;
     }
     public void invalidateData() {
