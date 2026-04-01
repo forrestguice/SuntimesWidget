@@ -181,7 +181,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
          * @param location location
          * @return true location was used, false location was discarded
          */
-        public synchronized boolean onLocationChanged(String tag, Location location)
+        public synchronized boolean onLocationChanged(String tag, @Nullable Location location)
         {
             if (location != null)
             {
@@ -588,6 +588,10 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
         {
             int numSatellites = 0;
             GpsStatus status = locationManager.getGpsStatus(null);
+            if (status == null) {
+                return;
+            }
+
             switch (event)
             {
                 case GpsStatus.GPS_EVENT_STARTED:
@@ -595,7 +599,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
                     break;
 
                 case GpsStatus.GPS_EVENT_FIRST_FIX:
-                    int timeToFirstFix = locationManager.getGpsStatus(null).getTimeToFirstFix();
+                    int timeToFirstFix = status.getTimeToFirstFix();
                     numSatellites = GpsDebugDisplay.getSatelliteCount(GpsDebugDisplay.getSatelliteList(status, true), numSatellites);
                     Log_d(TAG, "GPS: timeToFirstFix: " + timeToFirstFix + "; " + numSatellites + " satellites (" + GpsDebugDisplay.getSatelliteReport(GpsDebugDisplay.getSatelliteList(status, true)) + "); t_" + elapsedTime);
                     signalProgress();

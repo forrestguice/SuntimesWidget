@@ -899,7 +899,7 @@ public class LocationConfigView extends LinearLayout
      * @param context a context used to access shared prefs
      * @param data a Uri with geo location data
      */
-    public void loadSettings(@NonNull Context context, Uri data )
+    public void loadSettings(@NonNull Context context, @Nullable Uri data )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
         loadSettings(context, bundleData(data, context.getString(R.string.location_lastfix_title_set)));

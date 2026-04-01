@@ -623,7 +623,7 @@ public class WorldMapView extends ImageView
             Context context = getContext();
             if (context != null)
             {
-                if (result.getResult())
+                if (result.getResult() && result.getExportFile() != null)
                 {
                     String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
                     Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();

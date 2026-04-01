@@ -236,8 +236,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
     /**
      * Preset data (in the form of a geo URI)
      */
+    @Nullable
     private Uri presetData = null;
-    public void setData(Uri data)
+    public void setData(@Nullable Uri data)
     {
         presetData = data;
         if (dialogContent != null && getContext() != null) {
@@ -306,7 +307,9 @@ public class LocationConfigDialog extends BottomSheetDialogBase
                     Intent intent = new Intent(getContext(), PlacesActivity.class);
                     intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
                     //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
-                    startActivityForResult_location.launch(intent);
+                    if (startActivityForResult_location != null) {
+                        startActivityForResult_location.launch(intent);
+                    } else Log.w("LocationConfigDialog", "onListButtonClicked: ActivityResultLauncher is null!");
                 } else Log.w("LocationConfigDialog", "onListButtonClicked: activity is null!");
             }
         });

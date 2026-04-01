@@ -177,7 +177,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
                 return;
             }
-            ColorValues values = colorSheet.editDialog.getColorValues();
+            ColorValues values = (colorSheet.editDialog != null ? colorSheet.editDialog.getColorValues() : null);
             selectColorID((values != null) ? values.getID() : null);
 
         } else {
@@ -206,7 +206,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
                 return null;
             }
-            ColorValues values = colorSheet.editDialog.getColorValues();
+            ColorValues values = (colorSheet.editDialog != null ? colorSheet.editDialog.getColorValues() : null);
             return (values != null) ? values.getID() : null;
 
         } else {
@@ -217,7 +217,7 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     }
 
     public interface PreviewColorsIntentBuilder extends Parcelable {
-        Intent getIntent(Context context, String colorsID);
+        Intent getIntent(Context context, @Nullable String colorsID);
     }
     public void setPreviewIntentBuilder(PreviewColorsIntentBuilder value) {
         previewIntentBuilder = value;

@@ -526,7 +526,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         return (getFilter() != null && getFilter().length > 0);
     }
 
-    public void setFilter(String[] keys) {
+    public void setFilter(@Nullable String[] keys) {
         getArgs().putStringArray("filterValues", keys);
         if (editDialog != null) {
             editDialog.setFilter(keys);

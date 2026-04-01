@@ -463,7 +463,10 @@ public class MoonPhasesView1 extends LinearLayout
                 SuntimesMoonData1 moon0 = initData(context, CENTER_POSITION);
 
                 Calendar date = Calendar.getInstance(moon.timezone());
-                date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
+                Calendar nextPhase = moon0.moonPhaseCalendar(moon0.nextPhase(moon.now()));
+                if (nextPhase != null) {
+                    date.setTimeInMillis(nextPhase.getTimeInMillis());
+                }
                 date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (29.53) may vary ~ +-6 hr
                 date.add(Calendar.HOUR, (int)(-24 * 3.5));                                            // so offset several days to overcome potential drift
                 moon.setTodayIs(date);
@@ -476,7 +479,8 @@ public class MoonPhasesView1 extends LinearLayout
         public int getPositionForDate(Context context, long datetime)
         {
             SuntimesMoonData1 moon0 = initData(context, CENTER_POSITION);
-            long dateCenter = moon0.moonPhaseCalendar(moon0.nextPhase(moon0.now())).getTimeInMillis();
+            Calendar nextPhase = moon0.moonPhaseCalendar(moon0.nextPhase(moon0.now()));
+            long dateCenter = (nextPhase != null ? nextPhase.getTimeInMillis() : datetime);
             long deltaMs = (datetime - dateCenter);
             double deltaHours = deltaMs / (1000d * 60d * 60d);
             double deltaMonth = (deltaHours / (29.53d * 24d));

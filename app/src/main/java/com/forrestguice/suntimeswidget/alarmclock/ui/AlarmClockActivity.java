@@ -1329,7 +1329,7 @@ public class AlarmClockActivity extends AppCompatActivity
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, AlarmType type, String label, String event, Location location, int hour, int minutes, @Nullable String timezone)
+    public static void scheduleAlarm(Activity context, AlarmType type, String label, @Nullable String event, Location location, int hour, int minutes, @Nullable String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);

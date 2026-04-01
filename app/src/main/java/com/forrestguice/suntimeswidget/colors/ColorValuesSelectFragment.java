@@ -494,7 +494,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                     : "null");
         }
 
-        public static ColorValuesItem[] createItems(Context context, ColorValuesCollection<ColorValues> collection, String[] previewKeys)
+        public static ColorValuesItem[] createItems(Context context, ColorValuesCollection<ColorValues> collection, @Nullable String[] previewKeys)
         {
             String[] colorIDs = collection != null ? collection.getCollection() : new String[0];
             ColorValuesItem[] items = new ColorValuesItem[colorIDs.length+1];

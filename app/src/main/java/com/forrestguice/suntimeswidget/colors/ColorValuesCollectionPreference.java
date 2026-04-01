@@ -118,11 +118,13 @@ public class ColorValuesCollectionPreference extends Preference
         previewKeys.addAll(Arrays.asList(keys));
     }
 
+    @Nullable
     protected String colorTag = null;
+    @Nullable
     public String getColorTag() {
         return colorTag;
     }
-    public void setColorTag(String value) {
+    public void setColorTag(@Nullable String value) {
         colorTag = value;
     }
 
@@ -185,9 +187,11 @@ public class ColorValuesCollectionPreference extends Preference
         requestCode = value;
     }
 
+    @Nullable
     protected String getSelectedColorsID(Context context) {
         return (collection != null ? collection.getSelectedColorsID(context, getAppWidgetID(), getColorTag()) : null);
     }
+    @Nullable
     protected String getSelectedColorsLabel(Context context) {
         return (collection != null ? collection.getSelectedColorsLabel(context, getAppWidgetID(), getColorTag()) : null);
     }
@@ -216,7 +220,7 @@ public class ColorValuesCollectionPreference extends Preference
         };
     }
 
-    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, @Nullable final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, @Nullable final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
+    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, @Nullable final String colorTag, @Nullable final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, @Nullable final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
     {
         Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
         intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, title);

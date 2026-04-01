@@ -47,6 +47,7 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
@@ -381,7 +382,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         };
 
         @Override
-        public Intent getIntent(Context context, String colorsID)
+        public Intent getIntent(Context context, @Nullable String colorsID)
         {
             return AlarmNotifications.getFullscreenIntent(context, ContentUris.withAppendedId(AlarmClockItemUri.CONTENT_URI, -1))
                     .setAction(AlarmDismissActivity.ACTION_PREVIEW)

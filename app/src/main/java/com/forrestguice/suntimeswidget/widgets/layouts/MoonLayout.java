@@ -98,7 +98,8 @@ public abstract class MoonLayout extends SuntimesLayout
         } else {
             Calendar now = Calendar.getInstance();
             Calendar[] moon1 = new Calendar[] { data.moonriseCalendarToday(), data.moonsetCalendarToday() };
-            if (moon1[0] == null || moon1[0].before(moon1[1]))
+            Calendar c = moon1[0];
+            if (c == null || c.before(moon1[1]))
             {
                 // today: rising, then setting
                 if (now.before(moon1[0]))
@@ -321,7 +322,8 @@ public abstract class MoonLayout extends SuntimesLayout
         } else {
             Calendar now = Calendar.getInstance();
             Calendar[] moon1 = new Calendar[] { data.moonriseCalendarToday(), data.moonsetCalendarToday() };
-            if (moon1[0] == null || moon1[0].before(moon1[1]))
+            Calendar c = moon1[0];
+            if (c == null || c.before(moon1[1]))
             {
                 // today the moon is.. rising, then setting
                 if (now.before(moon1[0])) {

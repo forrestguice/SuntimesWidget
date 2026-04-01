@@ -531,7 +531,9 @@ public class AlarmNotifications extends BroadcastReceiver
         itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
             public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
-                setPowerOffAlarm(context, result.getItem());
+                if (result.getItem() != null) {
+                    setPowerOffAlarm(context, result.getItem());
+                }
             }
         });
         ExecutorUtils.runTask("AlarmItemTask", itemTask, itemTask.getTaskListeners());
@@ -542,7 +544,9 @@ public class AlarmNotifications extends BroadcastReceiver
         itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
             public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
-                cancelPowerOffAlarm(context, result.getItem());
+                if (result.getItem() != null) {
+                    cancelPowerOffAlarm(context, result.getItem());
+                }
                 if (onFinished != null) {
                     onFinished.onFinished(result);
                 }
@@ -2012,8 +2016,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
                             AlarmClockItem item = result.getItem();
-                            Log.d(TAG, "schedule " + item.rowID + " completed!");
-                            observer.notify(item.rowID);
+                            if (item != null) {
+                                Log.d(TAG, "schedule " + item.rowID + " completed!");
+                                observer.notify(item.rowID);
+                            }
                         }
                     };
                     for (long id : ids)
@@ -2123,7 +2129,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     final AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener() {
                         @Override
                         public void onFinished(AlarmDatabaseAdapter.AlarmItemTaskResult result) {
-                            observer.notify(result.getItem().rowID);
+                            if (result.getItem() != null) {
+                                observer.notify(result.getItem().rowID);
+                            }
                         }
                     };
                     for (long id : ids) {
@@ -2461,6 +2469,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         //noinspection MissingPermission
                         sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));   // dismiss notification tray
                     }
+
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));    // dismiss fullscreen activity
                     if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))           // trigger dismiss action
                     {
@@ -2582,8 +2591,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         public void onFinished(Long[] ids)
                         {
                             //context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
-                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
-                            notifications.dismissNotification(context, (int)item.rowID);
+                            if (item != null) {
+                                context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
+                                notifications.dismissNotification(context, (int) item.rowID);
+                            }
                             notifications.stopSelf(startId);
                         }
                     });

@@ -523,7 +523,9 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-            timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
+            if (dataset.location() != null) {
+                timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
+            }
             timezoneDialog.setCalculator(dataset.calculator());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
             timezoneDialog.setOnCanceledListener(onCancelTimeZone);
@@ -1637,7 +1639,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         configLocation(null);
     }
-    protected void configLocation( Uri data )
+    protected void configLocation( @Nullable Uri data )
     {
         final LocationConfigDialog locationDialog = new LocationConfigDialog();
         locationDialog.setData(data);
@@ -1794,7 +1796,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         scheduleAlarm(null);
     }
-    protected void scheduleAlarm( String eventID )
+    protected void scheduleAlarm( @Nullable String eventID )
     {
         if (dataset.isCalculated())
         {
@@ -2020,7 +2022,8 @@ public class SuntimesActivity extends AppCompatActivity
         // datasource ui
         if (txt_datasource != null)
         {
-            txt_datasource.setText(dataset.dataActual.calculator().name());
+            SuntimesCalculator calculator = dataset.dataActual.calculator();
+            txt_datasource.setText((calculator != null ? calculator.name() : ""));
         }
         if (txt_altitude != null)
         {
@@ -2225,7 +2228,7 @@ public class SuntimesActivity extends AppCompatActivity
         protected void onLightmapAction(CardAdapter adapter, int position)
         {
             Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
-            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null && cardData.first != null) {
                 showSunPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
             } else showLightMapDialog();
         }
@@ -2464,7 +2467,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void showSunPositionAtSelected()
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data = card_adapter.initData(this, card_layout.findFirstVisibleItemPosition());
-        if (data != null) {
+        if (data != null && data.first != null) {
             showSunPositionAt(data.first.dataNoon.calendar().getTimeInMillis());
         }
     }
@@ -2563,7 +2566,10 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onSetAlarm( SolsticeEquinoxMode suggestedEvent ) {
-            scheduleAlarm(SolarEvents.valueOf(suggestedEvent).name());
+            SolarEvents event = SolarEvents.valueOf(suggestedEvent);
+            if (event != null) {
+                scheduleAlarm(event.name());
+            }
         }
         @Override
         public void onShowMap( long suggestDate ) {

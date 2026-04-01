@@ -110,7 +110,7 @@ public class DateDialog extends TimeDialogBase
         }
     }
 
-    public void setMinDate(Long value) {
+    public void setMinDate(@Nullable Long value) {
         if (value != null) {
             getArgs().putLong(KEY_DIALOG_DATE_MIN, value);
             if (datePicker != null) {
@@ -119,7 +119,7 @@ public class DateDialog extends TimeDialogBase
         }
     }
 
-    public void setMaxDate(Long value) {
+    public void setMaxDate(@Nullable Long value) {
         if (value != null) {
             getArgs().putLong(KEY_DIALOG_DATE_MAX, value);
             if (datePicker != null) {

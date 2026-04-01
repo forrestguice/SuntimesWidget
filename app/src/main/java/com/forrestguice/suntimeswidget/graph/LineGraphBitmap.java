@@ -292,6 +292,9 @@ public class LineGraphBitmap
 
         lmt.setTimeInMillis(minMillis + ((maxMillis - minMillis) / 2));
         SuntimesCalculator.SunPosition position = calculator.getSunPosition(lmt);
+        if (position == null) {
+            return null;
+        }
 
         if (Math.abs(position.elevation - degrees) < 0.25) {
             return lmt.getTimeInMillis();
@@ -747,7 +750,7 @@ public class LineGraphBitmap
     }
 
     private Calendar lmt = null;
-    private Calendar lmt(Location location)
+    private Calendar lmt(@Nullable Location location)
     {
         if (lmt == null) {
             lmt = Calendar.getInstance(WidgetTimezones.localMeanTime(location));

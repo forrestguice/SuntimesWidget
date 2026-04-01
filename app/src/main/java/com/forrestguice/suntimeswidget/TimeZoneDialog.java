@@ -226,8 +226,9 @@ public class TimeZoneDialog extends BottomSheetDialogBase
         }
     }
 
+    @Nullable
     private SuntimesCalculator calculator = null;
-    public void setCalculator( SuntimesCalculator calculator )
+    public void setCalculator( @Nullable SuntimesCalculator calculator )
     {
         this.calculator = calculator;
     }

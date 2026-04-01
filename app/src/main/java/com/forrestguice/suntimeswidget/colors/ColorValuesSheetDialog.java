@@ -109,6 +109,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
             colorSheet.setFilter(filter);
         }
     }
+    @Nullable
     public String[] getFilter() {
         return getArgs().getStringArray("filterValues");
     }
