@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.graph.colors.LineGraphColorValues;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -210,7 +211,7 @@ public class LineGraphBitmap
         drawRect(c, p);
     }
 
-    protected void drawNow(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+    protected void drawNow(Calendar now, @Nullable SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
     {
         if (options.option_drawNow > 0)
         {
@@ -240,9 +241,9 @@ public class LineGraphBitmap
         }
     }
 
-    protected void drawSunPathPoints(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+    protected void drawSunPathPoints(Calendar now, @Nullable SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
     {
-        if (options.sunPath_show_points && options.sunPath_points_elevations != null)
+        if (options.sunPath_show_points && options.sunPath_points_elevations != null && calculator != null)
         {
             double pointSize = Math.sqrt(c.getWidth() * c.getHeight()) / options.sunPath_points_width;
             for (double degrees : options.sunPath_points_elevations)
@@ -333,7 +334,7 @@ public class LineGraphBitmap
         return calendar;
     }
 
-    protected void drawPaths(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+    protected void drawPaths(Calendar now, @Nullable SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
     {
         if (options.moonPath_show_line) {
             drawMoonPath(now, calculator, c, paintPath, options);
@@ -348,9 +349,9 @@ public class LineGraphBitmap
     private final ArrayList<Path> sun_paths = new ArrayList<>(), moon_paths = new ArrayList<>();
     private final HashMap<Path, Double> sun_elevations = new HashMap<>(), moon_elevations = new HashMap<>();
 
-    protected void drawMoonPath(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+    protected void drawMoonPath(Calendar now, @Nullable SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
     {
-        if (options.moonPath_show_fill)
+        if (options.moonPath_show_fill && calculator != null)
         {
             HashMap<Path, Double> moonFill = createMoonPath(now, calculator, c, options, true, moon_paths, moon_elevations);
             p.setStyle(Paint.Style.FILL);
@@ -364,7 +365,7 @@ public class LineGraphBitmap
             }
         }
 
-        if (options.moonPath_show_line)
+        if (options.moonPath_show_line && calculator != null)
         {
             double r = Math.sqrt(c.getWidth() * c.getHeight());
             HashMap<Path, Double> moonPath = createMoonPath(now, calculator, c, options, false, moon_paths, moon_elevations);
@@ -456,9 +457,9 @@ public class LineGraphBitmap
     }
 
 
-    protected void drawSunPath(Calendar now, SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
+    protected void drawSunPath(Calendar now, @Nullable SuntimesCalculator calculator, Canvas c, Paint p, LineGraphOptions options)
     {
-        if (options.sunPath_show_fill)
+        if (options.sunPath_show_fill && calculator != null)
         {
             HashMap<Path, Double> sunFill = createSunPath(now, calculator, c, options, true, sun_paths, sun_elevations);
             p.setStyle(Paint.Style.FILL);
@@ -472,7 +473,7 @@ public class LineGraphBitmap
             }
         }
 
-        if (options.sunPath_show_line)
+        if (options.sunPath_show_line && calculator != null)
         {
             double r = Math.sqrt(c.getWidth() * c.getHeight());
             HashMap<Path, Double> sunPath = createSunPath(now, calculator, c, options, false, sun_paths, sun_elevations);
@@ -796,25 +797,29 @@ public class LineGraphBitmap
         c.drawRect(0, 0, w, h, p);
     }
 
-    protected void drawPoint(Calendar calendar, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
+    protected void drawPoint(Calendar calendar, @Nullable SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
         if (calendar != null) {
             drawPoint(calendar.getTimeInMillis(), calculator, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
         }
     }
 
-    protected void drawPoint(long time, SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
+    protected void drawPoint(long time, @Nullable SuntimesCalculator calculator, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
-        Calendar lmt = lmt(calculator.getLocation());
+        Calendar lmt = lmt(calculator != null ? calculator.getLocation() : null);
         lmt.setTimeInMillis(time);
         double minute = lmt.get(Calendar.HOUR_OF_DAY) * 60 + lmt.get(Calendar.MINUTE);
-        SuntimesCalculator.SunPosition position = calculator.getSunPosition(lmt);
+        SuntimesCalculator.SunPosition position = (calculator != null ? calculator.getSunPosition(lmt) : null);
         double degrees = (position != null ? position.elevation : 0);
         drawPoint(minute, degrees, radius, strokeWidth, c, p, fillColor, strokeColor, strokeEffect);
     }
 
     protected void drawPoint(double minute, double degrees, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, @Nullable DashPathEffect strokeEffect)
     {
+        if (options == null) {
+            Log.w("LineGraphBitmap", "drawPoint: null options!");
+            return;
+        }
         float x = (float) minutesToBitmapCoords(c, minute, options);
         float y = (float) degreesToBitmapCoords(c, degrees, options);
 

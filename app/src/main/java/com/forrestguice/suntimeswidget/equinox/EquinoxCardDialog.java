@@ -551,7 +551,7 @@ public class EquinoxCardDialog extends BottomSheetDialogBase
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values)
+        public void onColorValuesSelected(@Nullable ColorValues values)
         {
             if (values != null) {
                 options.colors = new EquinoxColorValues(values);

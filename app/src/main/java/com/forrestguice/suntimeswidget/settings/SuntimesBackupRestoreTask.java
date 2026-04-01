@@ -190,7 +190,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
         if (keys.contains(SuntimesBackupTask.KEY_PLACEITEMS))
         {
             Integer m = (methods.containsKey(SuntimesBackupTask.KEY_PLACEITEMS))
-                    ? methods.get(SuntimesBackupTask.KEY_PLACEITEMS) : IMPORT_PLACES_METHOD_ADDALL;
+                    ? methods.get(SuntimesBackupTask.KEY_PLACEITEMS) : Integer.valueOf(IMPORT_PLACES_METHOD_ADDALL);
             int method = (m != null ? m : IMPORT_PLACES_METHOD_ADDALL);
             c += importPlaceItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_PLACEITEMS));
         }
@@ -214,7 +214,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
         if (keys.contains(SuntimesBackupTask.KEY_ALARMITEMS))
         {
             Integer m = (methods.containsKey(SuntimesBackupTask.KEY_ALARMITEMS))
-                    ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : IMPORT_ALARMS_METHOD_ADDALL;
+                    ? methods.get(SuntimesBackupTask.KEY_ALARMITEMS) : Integer.valueOf(IMPORT_ALARMS_METHOD_ADDALL);
             int method = (m != null ? m : IMPORT_ALARMS_METHOD_ADDALL);
             c += importAlarmItems(context, method, report, allValues.get(SuntimesBackupTask.KEY_ALARMITEMS));
         }
@@ -226,7 +226,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
         if (keys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
         {
             Integer m = (methods.containsKey(SuntimesBackupTask.KEY_WIDGETSETTINGS))
-                    ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : IMPORT_WIDGETS_METHOD_RESTOREBACKUP;
+                    ? methods.get(SuntimesBackupTask.KEY_WIDGETSETTINGS) : Integer.valueOf(IMPORT_WIDGETS_METHOD_RESTOREBACKUP);
             int method = (m != null ? m : IMPORT_WIDGETS_METHOD_RESTOREBACKUP);
             c += importWidgetSettings(context, method, report, allValues.get(SuntimesBackupTask.KEY_WIDGETSETTINGS));
         }

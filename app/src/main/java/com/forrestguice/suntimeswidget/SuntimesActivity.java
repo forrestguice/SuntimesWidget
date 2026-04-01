@@ -456,8 +456,11 @@ public class SuntimesActivity extends AppCompatActivity
         {
             Intent intent = getIntent();
             if (intent != null && intent.hasExtra(EXTRA_APPTHEME)) {
-                appTheme = intent.getStringExtra(EXTRA_APPTHEME);
-                Log.w("DEBUG", "hasExtra, overriding appTheme: " + appTheme);
+                String t = intent.getStringExtra(EXTRA_APPTHEME);
+                if (t != null) {
+                    appTheme = t;
+                    Log.w("DEBUG", "hasExtra, overriding appTheme: " + appTheme);
+                }
             }
         }
         appThemeResID = AppSettings.setTheme(this, appTheme);
@@ -523,8 +526,9 @@ public class SuntimesActivity extends AppCompatActivity
         if (timezoneDialog != null)
         {
             timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-            if (dataset.location() != null) {
-                timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
+            com.forrestguice.suntimeswidget.calculator.core.Location l = dataset.location();
+            if (l != null) {
+                timezoneDialog.setLongitude(l.getLabel(), l.getLongitudeAsDouble());
             }
             timezoneDialog.setCalculator(dataset.calculator());
             timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
@@ -1679,7 +1683,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         TimeZoneDialog timezoneDialog = new TimeZoneDialog();
         timezoneDialog.setNow(dataset.nowThen(dataset.calendar()));
-        timezoneDialog.setLongitude(dataset.location().getLabel(), dataset.location().getLongitudeAsDouble());
+        com.forrestguice.suntimeswidget.calculator.core.Location l = dataset.location();
+        if (l != null) {
+            timezoneDialog.setLongitude(l.getLabel(), l.getLongitudeAsDouble());
+        }
         timezoneDialog.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(SuntimesActivity.this, 0));
         timezoneDialog.setCalculator(dataset.calculator());
         timezoneDialog.setOnAcceptedListener(onConfigTimeZone);
@@ -1895,8 +1902,12 @@ public class SuntimesActivity extends AppCompatActivity
         card_adapter.initData(context);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
         if (cardData != null) {
-            dataset = cardData.first;
-            dataset_moon = cardData.second;
+            if (cardData.first != null) {
+                dataset = cardData.first;
+            }
+            if (cardData.second != null) {
+                dataset_moon = cardData.second;
+            }
         }
 
         initNotes();
@@ -2656,7 +2667,7 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showMoonPositionAt(CardAdapter adapter, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = ((adapter != null) ? adapter.initData(SuntimesActivity.this, position) : null);
-        if (cardData != null) {
+        if (cardData != null && cardData.first != null) {
             showMoonPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
         } else showMoonDialog();
     }

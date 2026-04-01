@@ -47,7 +47,7 @@ public abstract class ColorValuesStorage
     public static int loadColorValuesColor(SharedPreferences prefs, String prefix, String key, int defaultColor) {
         return prefs.getInt(prefix + key, defaultColor);
     }
-    public static int[] loadColorValuesColors(SharedPreferences prefs, String prefix, int defaultColor, String... keys)
+    public static int[] loadColorValuesColors(SharedPreferences prefs, String prefix, int defaultColor, @Nullable String... keys)
     {
         int[] retValue = new int[keys != null ? keys.length : 0];
         if (keys != null) {

@@ -280,7 +280,7 @@ public class LightMapView extends ImageView
         }
     }
 
-    protected void loadSettings(Context context, @NonNull Bundle bundle )
+    protected void loadSettings(@Nullable Context context, @NonNull Bundle bundle )
     {
         //Log.d(LightMapView.class.getSimpleName(), "loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);

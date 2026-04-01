@@ -197,8 +197,10 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         {
             String colorsID = editID.getText().toString();
             String colorsLabel = editLabel.getText().toString();
-            colorValues.setID(colorsID);
-            colorValues.setLabel(colorsLabel);
+            if (colorValues != null) {
+                colorValues.setID(colorsID);
+                colorValues.setLabel(colorsLabel);
+            }
 
             if (listener != null) {
                 listener.onSaveClicked(colorsID, colorValues);
@@ -347,7 +349,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected void setColor(String key, int color)
     {
-        colorValues.setColor(key, color);
+        if (colorValues != null) {
+            colorValues.setColor(key, color);
+        }
         int position = adapter.findPositionForKey(key);
         if (position >= 0) {
             adapter.notifyItemChanged(position);
@@ -369,7 +373,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public void pickColor(String key)
     {
-        int requestCode = colorValues.colorKeyIndex(key);
+        int requestCode = (colorValues != null ? colorValues.colorKeyIndex(key) : -1);
         if (requestCode >= 0)
         {
             Intent intent = pickColorIntent(key, requestCode);
@@ -379,8 +383,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected int[] getColorOverUnder(Context context, String key)
+    @Nullable
+    protected int[] getColorOverUnder(@Nullable Context context, String key)
     {
+        if (context == null) {
+            return null;
+        }
         int[] defaultColors = ColorValuesEditViewHolder.getDefaultColors(context);
         int colorOver = defaultColors[0];
         int colorUnder = defaultColors[1];
@@ -403,15 +411,17 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected Intent pickColorIntent(String key, int requestCode)
     {
-        int color = colorValues.getColor(key);
+        int color = (colorValues != null ? colorValues.getColor(key) : Color.WHITE);
         viewModel.setColor(color);
 
         ArrayList<Integer> recentColors = new ArrayList<>(new LinkedHashSet<>(colorValues.getColors()));
         recentColors.add(0, color);
 
         int[] colorOverUnder = getColorOverUnder(getActivity(), key);
-        viewModel.setColorOver(colorOverUnder[0]);
-        viewModel.setColorUnder(colorOverUnder[1]);
+        if (colorOverUnder != null) {
+            viewModel.setColorOver(colorOverUnder[0]);
+            viewModel.setColorUnder(colorOverUnder[1]);
+        }
 
         Intent intent = new Intent(getActivity(), ColorActivity.class);
         intent.putExtra(ColorDialog.KEY_SHOWALPHA, viewModel.showAlpha());
@@ -430,9 +440,9 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     protected void onPickColorResult(int requestCode, int resultCode, Intent data)
     {
-        String[] keys = colorValues.getColorKeys();
-        if (resultCode == Activity.RESULT_OK && requestCode >= 0 && requestCode <keys.length) {
-            onPickColorResult(keys[requestCode],data);
+        String[] keys = (colorValues != null ? colorValues.getColorKeys() : new String[0]);
+        if (resultCode == Activity.RESULT_OK && requestCode >= 0 && requestCode < keys.length) {
+            onPickColorResult(keys[requestCode], data);
         }
     }
 
@@ -449,7 +459,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected void importColors(final Context context)
+    protected void importColors(@Nullable final Context context)
     {
         if (context != null)
         {
@@ -462,12 +472,12 @@ public class ColorValuesEditFragment extends ColorValuesFragment
             dialog.show();
         }
     }
-    protected void importColors(final Context context, String jsonInput)
+    protected void importColors(@Nullable final Context context, String jsonInput)
     {
         // TODO
     }
 
-    protected void shareColors(Context context)
+    protected void shareColors(@Nullable Context context)
     {
         if (colorValues != null)
         {
@@ -478,7 +488,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
         }
     }
 
-    protected void deleteColors(Context context)
+    protected void deleteColors(@Nullable Context context)
     {
         if (listener != null && allowDelete() && colorValues != null) {
             listener.onDeleteClicked(colorValues.getID());
@@ -493,7 +503,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
 
     public static final int REQUEST_IMPORT_THEME = 1000;
     protected ActivityResultLauncherCompat startActivityForResult_importTheme = registerForActivityResultCompat(REQUEST_IMPORT_THEME);
-    protected void importFromTheme(Context context) {
+    protected void importFromTheme(@Nullable Context context) {
         Intent intent = pickThemeIntent();
         if (intent != null) {
             startActivityForResult_importTheme.launch(intent);
@@ -505,12 +515,13 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     }
     protected void onPickThemeResult(Intent data) { /* EMPTY */ }
 
-    public void showOverflowMenu(Context context, View v)
-    {
-        PopupMenuCompat.createMenu(context, v, R.menu.menu_coloredit, onOverflowMenuItemSelected).show();
+    public void showOverflowMenu(@Nullable Context context, View v) {
+        if (context != null) {
+            PopupMenuCompat.createMenu(context, v, R.menu.menu_coloredit, onOverflowMenuItemSelected).show();
+        }
     }
 
-    protected void onPrepareOverflowMenu(Context context, Menu menu)
+    protected void onPrepareOverflowMenu(@Nullable Context context, Menu menu)
     {
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
@@ -578,7 +589,7 @@ public class ColorValuesEditFragment extends ColorValuesFragment
     public interface FragmentListener
     {
         void onCancelClicked();
-        void onSaveClicked(String colorsID, ColorValues values);
+        void onSaveClicked(String colorsID, @Nullable ColorValues values);
         void onDeleteClicked(String colorsID);
     }
 

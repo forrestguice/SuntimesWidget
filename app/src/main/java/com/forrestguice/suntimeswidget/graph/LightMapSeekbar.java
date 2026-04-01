@@ -130,7 +130,7 @@ public class LightMapSeekbar extends SeekBar
         LightMapView.themeViews(context, theme, options);
     }
 
-    protected void loadSettings(Context context, @NonNull Bundle bundle ) {}
+    protected void loadSettings(@Nullable Context context, @NonNull Bundle bundle ) {}
     protected boolean saveSettings(Bundle bundle) {
         return true;
     }

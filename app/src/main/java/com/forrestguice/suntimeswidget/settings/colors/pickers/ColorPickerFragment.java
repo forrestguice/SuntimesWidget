@@ -89,7 +89,7 @@ public class ColorPickerFragment extends DialogBase
     }
 
     public int getColor() {
-        Integer retValue = (colorViewModel != null ? colorViewModel.color.getValue() : Color.WHITE);
+        Integer retValue = (colorViewModel != null && colorViewModel.color != null ? colorViewModel.color.getValue() : Integer.valueOf(Color.WHITE));
         return (retValue != null ? retValue : Color.WHITE);
     }
 

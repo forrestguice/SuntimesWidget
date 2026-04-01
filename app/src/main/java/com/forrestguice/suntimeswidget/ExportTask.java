@@ -185,7 +185,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
                 Log.d("ExportTask", "saving to external cache");
                 try {
                     cleanupExternalCache(context);
-                    exportFile = File.createTempFile(exportTarget, ext, context.getExternalCacheDir());
+                    exportFile = (exportTarget != null ? File.createTempFile(exportTarget, ext, context.getExternalCacheDir()) : null);
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
@@ -195,9 +195,9 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
             } else {                 // save to: external download dir
                 Log.d("ExportTask", "saving to external download dir");
                 File exportPath = FileProvider.getExternalStorageDownloadDirectory(context);
-                exportFile = new File(exportPath, exportTarget);
+                exportFile = (exportTarget != null ? new File(exportPath, exportTarget) : null);
 
-                boolean targetExists = exportFile.exists();
+                boolean targetExists = (exportFile != null && exportFile.exists());
                 if (targetExists && !overwriteTarget)
                 {
                     Log.w("ExportTask", "Canceling export; the target already exists (and overwrite flag is false). " + exportFile.getAbsolutePath());
@@ -217,7 +217,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
             Log.d("ExportTask", "saving to internal cache");
             try {
                 cleanupInternalCache(context);
-                exportFile = File.createTempFile(exportTarget, ext, context.getCacheDir());
+                exportFile = (exportTarget != null ? File.createTempFile(exportTarget, ext, context.getCacheDir()) : null);
 
             } catch (IOException e) {
                 Log.w("ExportTask", "Canceling export; failed to create internal temp file.");
@@ -350,12 +350,12 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
 
     /**
      */
-    protected void cleanupCache(File cacheDir, long cacheLimit)
+    protected void cleanupCache(@Nullable File cacheDir, long cacheLimit)
     {
         long cacheSize = cacheSize(cacheDir);
         if (cacheSize > cacheLimit)
         {
-            File[] cacheFiles = cacheDir.listFiles();
+            File[] cacheFiles = (cacheDir != null ? cacheDir.listFiles() : null);
             if (cacheFiles == null) {
                 return;
             }
@@ -382,7 +382,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
 
     /**
      */
-    protected static long cacheSize(File dir)
+    protected static long cacheSize(@Nullable File dir)
     {
         long result = 0;
         if (dir != null && dir.exists())

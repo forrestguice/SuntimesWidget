@@ -183,17 +183,19 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
     }
 
     @Nullable
-    public String getSelectedColorsID(Context context) {
+    public String getSelectedColorsID(@Nullable Context context) {
         return getSelectedColorsID(context, 0, null);
     }
     @Nullable
-    public String getSelectedColorsID(Context context, int appWidgetID) {
+    public String getSelectedColorsID(@Nullable Context context, int appWidgetID) {
         return getSelectedColorsID(context, appWidgetID, null);
     }
     @Nullable
-    public String getSelectedColorsID(Context context, int appWidgetID, @Nullable String tag) {
-        SharedPreferences prefs = getSharedPreferences(context);
-        return prefs.getString(getSelectedColorsKey(appWidgetID, tag), null);
+    public String getSelectedColorsID(@Nullable Context context, int appWidgetID, @Nullable String tag) {
+        if (context != null) {
+            SharedPreferences prefs = getSharedPreferences(context);
+            return prefs.getString(getSelectedColorsKey(appWidgetID, tag), null);
+        } else return null;
     }
 
     public void setSelectedColorsID(Context context, @Nullable String colorsID) {
@@ -248,7 +250,7 @@ public abstract class ColorValuesCollection<T extends ColorValues> implements Se
         } else return null;
     }
     @Nullable
-    public int[] getColors(Context context, @Nullable String colorsID, int defaultValue, String... keys)
+    public int[] getColors(Context context, @Nullable String colorsID, int defaultValue, @Nullable String... keys)
     {
         if (colorsID != null)
         {

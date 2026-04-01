@@ -245,11 +245,13 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         } else { return super.onOptionsItemSelected(item); }
     }
 
-    protected void showOverflowMenu(Context context, View v)
+    protected void showOverflowMenu(@Nullable Context context, View v)
     {
-        PopupMenuCompat.createMenu(context, v, R.menu.menu_colorlist, onOverflowMenuItemSelected).show();
+        if (context != null) {
+            PopupMenuCompat.createMenu(context, v, R.menu.menu_colorlist, onOverflowMenuItemSelected).show();
+        }
     }
-    protected void onPrepareOverflowMenu(Context context, Menu menu)
+    protected void onPrepareOverflowMenu(@Nullable Context context, Menu menu)
     {
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
@@ -337,12 +339,15 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
 
         if (selector != null)
         {
-            selector.setAdapter(initAdapter(getActivity()));
+            Context context = getActivity();
+            if (context != null) {
+                selector.setAdapter(initAdapter(context));
+            }
 
             if (colorCollection != null)
             {
                 int selectedIndex = 0;
-                String selectedColorsID0 = colorCollection.getSelectedColorsID(getActivity(), getAppWidgetID(), getColorTag());
+                String selectedColorsID0 = colorCollection.getSelectedColorsID(context, getAppWidgetID(), getColorTag());
                 boolean defaultIsSelected = getArgs().getBoolean(ARG_COLOR_SELECTED_DEFAULT, false);
                 String selectedColorsID = getArgs().getString(ARG_COLOR_SELECTED_ID, (defaultIsSelected ? null : selectedColorsID0));
 
@@ -521,7 +526,8 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
                 return colors;
 
             } else {
-                return collection != null ? collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys) : new int[0];
+                int[] r = collection != null ? collection.getColors(context, colorsID, ContextCompat.getColor(context, R.color.def_app_alarms_bright_color_end), previewKeys) : new int[0];
+                return (r != null ? r : new int[0]);
             }
         }
     }
@@ -660,7 +666,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         void onAddClicked(@Nullable String colorsID);
         void onEditClicked(@Nullable String colorsID);
         void onDeleteClicked(@Nullable String colorsID);
-        void onItemSelected(ColorValuesItem item);
+        void onItemSelected(@Nullable ColorValuesItem item);
     }
 
     protected FragmentListener listener = null;

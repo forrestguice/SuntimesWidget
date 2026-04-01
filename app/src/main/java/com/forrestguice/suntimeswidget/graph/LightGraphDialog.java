@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollection;
 import com.forrestguice.suntimeswidget.colors.ColorValuesSheetDialog;
@@ -391,8 +392,10 @@ public class LightGraphDialog extends BottomSheetDialogBase
         boolean nowIsAfter = false;
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
+        Location location = data.location();
+        double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
         TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                : WidgetTimezones.getTimeZone(tzId, longitude, data.calculator());
         Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);
@@ -442,7 +445,9 @@ public class LightGraphDialog extends BottomSheetDialogBase
             double second = (int)((minute - (int) minute) * 60d);
             double millisecond = (int)((second - (int) second) * 1000d);
 
-            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, data0.location().getLongitudeAsDouble(), data0.calculator()));
+            Location location = data0.location();
+            double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
+            Calendar calendar = Calendar.getInstance(WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, longitude, data0.calculator()));
             calendar.set(Calendar.YEAR, data[0].calendar().get(Calendar.YEAR));
             calendar.set(Calendar.DAY_OF_YEAR, day);
             calendar.set(Calendar.HOUR_OF_DAY, (int) hour);
@@ -452,7 +457,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
 
             String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
             TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
-                    WidgetTimezones.getTimeZone(tzId, data0.location().getLongitudeAsDouble(), data0.calculator());
+                    WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
             Calendar c = Calendar.getInstance(timezone);
             c.setTimeInMillis(calendar.getTimeInMillis());
             return c;
@@ -497,8 +502,10 @@ public class LightGraphDialog extends BottomSheetDialogBase
             if (data != null)
             {
                 String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
+                Location location = data.location();
+                double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
                 options.timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
-                        : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                        : WidgetTimezones.getTimeZone(tzId, longitude, data.calculator());
             }
             options.is24 = TimeDateDisplay.is24();
         }
@@ -989,14 +996,14 @@ public class LightGraphDialog extends BottomSheetDialogBase
                     Context context = getContext();
                     if (context != null)
                     {
-                        if (result.getResult())
+                        File file = result.getExportFile();
+                        if (result.getResult() && file != null)
                         {
-                            String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                            String successMessage = context.getString(R.string.msg_export_success, file.getAbsolutePath());
                             Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-                            ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), result.getExportFile(), result.getMimeType());
+                            ShareUtils.shareFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file, result.getMimeType());
 
                         } else {
-                            File file = result.getExportFile();
                             String path = ((file != null) ? file.getAbsolutePath() : "<path>");
                             Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
                         }
@@ -1024,7 +1031,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values)
+        public void onColorValuesSelected(@Nullable ColorValues values)
         {
             Context context = getContext();
             if (context != null)

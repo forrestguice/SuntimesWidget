@@ -238,7 +238,7 @@ public class LineGraphView extends ImageView
     /**
      * @param context a context used to access shared prefs
      */
-    public void loadSettings(Context context)
+    public void loadSettings(@Nullable Context context)
     {
         //Log.d("DEBUG", "LineGraphView loadSettings (prefs)");
         if (isInEditMode())
@@ -248,7 +248,7 @@ public class LineGraphView extends ImageView
         }
     }
 
-    public void loadSettings(Context context, @NonNull Bundle bundle )
+    public void loadSettings(@Nullable Context context, @NonNull Bundle bundle )
     {
         //Log.d(LineGraphView.class.getSimpleName(), "loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);

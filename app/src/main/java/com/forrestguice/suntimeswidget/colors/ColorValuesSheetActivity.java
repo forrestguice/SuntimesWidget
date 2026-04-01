@@ -219,10 +219,11 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     public interface PreviewColorsIntentBuilder extends Parcelable {
         Intent getIntent(Context context, @Nullable String colorsID);
     }
-    public void setPreviewIntentBuilder(PreviewColorsIntentBuilder value) {
+    public void setPreviewIntentBuilder(@Nullable PreviewColorsIntentBuilder value) {
         previewIntentBuilder = value;
     }
-    protected PreviewColorsIntentBuilder previewIntentBuilder;
+    @Nullable
+    protected PreviewColorsIntentBuilder previewIntentBuilder = null;
 
     protected void previewColors()
     {

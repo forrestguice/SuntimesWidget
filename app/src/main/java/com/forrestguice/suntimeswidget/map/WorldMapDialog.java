@@ -1641,11 +1641,11 @@ public class WorldMapDialog extends BottomSheetDialogBase
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values) {
+        public void onColorValuesSelected(@Nullable ColorValues values) {
             updateColors(values);
         }
 
-        protected void updateColors(ColorValues values)
+        protected void updateColors(@Nullable ColorValues values)
         {
             Context context = getContext();
             if (context != null)

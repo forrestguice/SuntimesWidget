@@ -176,7 +176,10 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     protected void onRestoreInstanceState(@NonNull Bundle savedState) {
         mode = savedState.getInt("mode");
         //noinspection unchecked
-        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
+        ColorValuesCollection<ColorValues> c = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);;
+        if (c != null) {
+            colorCollection = c;
+        }
     }
 
     @Override
@@ -343,11 +346,11 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
 
         @Override
-        public void onItemSelected(ColorValuesSelectFragment.ColorValuesItem item)
+        public void onItemSelected(@Nullable ColorValuesSelectFragment.ColorValuesItem item)
         {
             //Log.d("DEBUG", "onItemSelected " + item.colorsID);
             Context context = getActivity();
-            if (context != null)
+            if (context != null && colorCollection != null && item != null)
             {
                 if (persistSelection()) {
                     colorCollection.setSelectedColorsID(context, item.colorsID, getAppWidgetID(), getColorTag());
@@ -397,13 +400,15 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
 
         @Override
-        public void onSaveClicked(@NonNull String colorsID, ColorValues values)
+        public void onSaveClicked(@NonNull String colorsID, @Nullable ColorValues values)
         {
             Context context = getActivity();
-            if (context != null)
+            if (context != null && colorCollection != null)
             {
                 colorCollection.clearCache();
-                colorCollection.setColors(context, colorsID, values);
+                if (values != null) {
+                    colorCollection.setColors(context, colorsID, values);
+                }
                 colorCollection.setSelectedColorsID(context, colorsID, getAppWidgetID(), getColorTag());
                 onSelectColors(colorCollection.getColors(context, colorsID), "onSaveClicked");
 
@@ -543,10 +548,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         }
     }
 
+    @Nullable
     protected ColorValuesCollection<ColorValues> colorCollection = null;
-    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+    public void setColorCollection(@Nullable ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
     }
+    @Nullable
     public ColorValuesCollection<?> getColorCollection() {
         return colorCollection;
     }
@@ -566,7 +573,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             listener.requestExpandSheet();
         }
     }
-    protected void onSelectColors(ColorValues values, String tag) {
+    protected void onSelectColors(@Nullable ColorValues values, String tag) {
         if (listener != null) {
             listener.onColorValuesSelected(values);
         }
@@ -586,7 +593,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         void requestPeekHeight(int height);
         void requestHideSheet();
         void requestExpandSheet();
-        void onColorValuesSelected(ColorValues values);
+        void onColorValuesSelected(@Nullable ColorValues values);
         void onModeChanged(int mode);
         @Nullable ColorValues getDefaultValues();
     }

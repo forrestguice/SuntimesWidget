@@ -37,6 +37,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
@@ -219,7 +220,10 @@ public class LightMapDialog extends BottomSheetDialogBase
         this.data_timezone = values.timezone();
         this.data = new SuntimesRiseSetDataset(values);
         this.data.invalidateCalculation();
-        this.data.setTimeZone(TimeZones.localMeanTime(values.location()));
+        Location location = values.location();
+        if (location != null) {
+            this.data.setTimeZone(TimeZones.localMeanTime(location));
+        }
         this.data.setTodayIs(Calendar.getInstance(data.timezone()));
         this.data.calculateData(context);
     }
@@ -1063,7 +1067,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         return seekCustomEvent(context, getCustomEventID(context, menuItemID, (dawn ? SEEK_CUSTOM_DAWN_ITEM_ID : SEEK_CUSTOM_DUSK_ITEM_ID)), dawn);
     }
 
-    private PopupMenuCompat.PopupMenuListener onSeekEventMenuClick(final Integer seekItemID)
+    private PopupMenuCompat.PopupMenuListener onSeekEventMenuClick(@Nullable final Integer seekItemID)
     {
         return new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
         {
@@ -1511,7 +1515,8 @@ public class LightMapDialog extends BottomSheetDialogBase
             {
                 Context context = getContext();
                 if (context != null) {
-                    Calendar mapTime = Calendar.getInstance(getSelectedTZ(context, data));
+                    TimeZone tz = getSelectedTZ(context, data);
+                    Calendar mapTime = (tz != null ? Calendar.getInstance(tz) : Calendar.getInstance());
                     mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
                     seekDateTime(context, TimeDialog.getCalendar(dialog.getSelected(), mapTime));
                 }
@@ -1537,7 +1542,8 @@ public class LightMapDialog extends BottomSheetDialogBase
             public void onClick(DialogInterface d, int which) {
                 Context context = getContext();
                 if (context != null) {
-                    Calendar mapTime = Calendar.getInstance(getSelectedTZ(context, data));
+                    TimeZone tz = getSelectedTZ(context, data);
+                    Calendar mapTime = (tz != null ? Calendar.getInstance(tz) : Calendar.getInstance());
                     mapTime.setTimeInMillis(getMapTime(Calendar.getInstance().getTimeInMillis()));
                     seekDateTime(context, TimeDialog.getCalendar(dialog.getSelected(), mapTime));
                 }
@@ -1620,7 +1626,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         return null;
     }
 
-    protected View.OnClickListener onSeekAltitudeClicked(final Context context, final EditText edit, final boolean rising)
+    protected View.OnClickListener onSeekAltitudeClicked(final Context context, @Nullable final EditText edit, final boolean rising)
     {
         return new View.OnClickListener() {
             @Override
@@ -1641,7 +1647,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         };
     }
 
-    protected View.OnClickListener onSeekAltitudeMenuButtonClicked(final Context context, final EditText edit)
+    protected View.OnClickListener onSeekAltitudeMenuButtonClicked(final Context context, @Nullable final EditText edit)
     {
         return new View.OnClickListener() {
             @Override
@@ -1651,10 +1657,12 @@ public class LightMapDialog extends BottomSheetDialogBase
         };
     }
 
-    protected boolean showSeekAltitudeMenu(final Context context, final EditText edit)
+    protected boolean showSeekAltitudeMenu(final Context context, @Nullable final EditText edit)
     {
-        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_altitude, onSeekAltitudeMenuClick(edit)).show();
-        return true;
+        if (edit != null) {
+            PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_altitude, onSeekAltitudeMenuClick(edit)).show();
+            return true;
+        } else return false;
     }
     private PopupMenuCompat.PopupMenuListener onSeekAltitudeMenuClick(final EditText edit)
     {
@@ -1858,7 +1866,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         return datetime;
     }
     @Nullable
-    public Long seekCustomEvent(Context context, String eventID, boolean dawn)
+    public Long seekCustomEvent(Context context, @Nullable String eventID, boolean dawn)
     {
         if (eventID != null)
         {
@@ -1957,14 +1965,16 @@ public class LightMapDialog extends BottomSheetDialogBase
         }
         return null;
     }
-    private void updateShadowObjHeightEditView(Context context, EditText edit, double meters)
+    private void updateShadowObjHeightEditView(Context context, @Nullable EditText edit, double meters)
     {
         LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
         double displayValue = (units == LengthUnit.IMPERIAL) ? LengthUnit.metersToFeet(meters) : meters;
 
-        edit.removeTextChangedListener(shadowObjHeightEditTextWatcher);
-        edit.setText(String.format(Locale.getDefault(), "%.2f", displayValue));
-        edit.addTextChangedListener(shadowObjHeightEditTextWatcher);
+        if (edit != null) {
+            edit.removeTextChangedListener(shadowObjHeightEditTextWatcher);
+            edit.setText(String.format(Locale.getDefault(), "%.2f", displayValue));
+            edit.addTextChangedListener(shadowObjHeightEditTextWatcher);
+        }
     }
     private final TextWatcher shadowObjHeightEditTextWatcher = new TextWatcher()
     {
@@ -1993,7 +2003,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             }
         }
     };
-    private View.OnClickListener onObjectHeightMenuButtonClicked(final EditText edit) {
+    private View.OnClickListener onObjectHeightMenuButtonClicked(@Nullable final EditText edit) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2003,7 +2013,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             }
         };
     }
-    private View.OnClickListener onObjectHeightMoreLess( final boolean more, final EditText edit ) {
+    private View.OnClickListener onObjectHeightMoreLess( final boolean more, @Nullable final EditText edit ) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2018,7 +2028,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             }
         };
     }
-    private SeekBar.OnSeekBarChangeListener onObjectHeightSeek(final EditText edit)
+    private SeekBar.OnSeekBarChangeListener onObjectHeightSeek(@Nullable final EditText edit)
     {
         return new SeekBar.OnSeekBarChangeListener()
         {
@@ -2046,10 +2056,12 @@ public class LightMapDialog extends BottomSheetDialogBase
     private static final int SEEK_CENTIMETERS_MAX = 5 * 100;
     private static final int SEEK_CENTIMETERS_INC = 1;
 
-    protected boolean showObjectHeightMenu(final Context context, final EditText edit)
+    protected boolean showObjectHeightMenu(final Context context, @Nullable final EditText edit)
     {
-        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_objheight, onObjectHeightMenuClick(edit)).show();
-        return true;
+        if (edit != null) {
+            PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_objheight, onObjectHeightMenuClick(edit)).show();
+            return true;
+        } else return false;
     }
     private PopupMenuCompat.PopupMenuListener onObjectHeightMenuClick(final EditText edit)
     {
@@ -2162,7 +2174,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         return null;
     }
 
-    protected View.OnClickListener onSeekShadowClicked(final Context context, final EditText edit, final boolean rising)
+    protected View.OnClickListener onSeekShadowClicked(final Context context, @Nullable final EditText edit, final boolean rising)
     {
         return new View.OnClickListener()
         {
@@ -2191,10 +2203,12 @@ public class LightMapDialog extends BottomSheetDialogBase
         };
     }
 
-    protected boolean showShadowSeekMenu(final Context context, EditText edit)
+    protected boolean showShadowSeekMenu(final Context context, @Nullable EditText edit)
     {
-        PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_shadowlength, onSeekShadowMenuClick(edit)).show();
-        return true;
+        if (edit != null) {
+            PopupMenuCompat.createMenu(context, edit, R.menu.lightmapmenu_seek_shadowlength, onSeekShadowMenuClick(edit)).show();
+            return true;
+        } else return false;
     }
 
     private PopupMenuCompat.PopupMenuListener onSeekShadowMenuClick(final EditText edit)
@@ -2637,7 +2651,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         } else return formatter.format(meters);
     }
 
-    private int getColorForPosition(SuntimesCalculator.SunPosition position, SuntimesCalculator.SunPosition noonPosition)
+    private int getColorForPosition(SuntimesCalculator.SunPosition position, @Nullable SuntimesCalculator.SunPosition noonPosition)
     {
         if (position.elevation >= 0)
             return (SuntimesRiseSetDataset.isRising(position, noonPosition) ? colorRising : colorSetting);
@@ -2702,8 +2716,10 @@ public class LightMapDialog extends BottomSheetDialogBase
             return null;
         }
         String tzId = getSelectedTZID(context);
+        Location location = data.location();
+        double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
         return WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
-                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble(), data.calculator());
+                : WidgetTimezones.getTimeZone(tzId, longitude, data.calculator());
     }
 
     protected static boolean useDST(TimeZone timezone) {
@@ -2732,7 +2748,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         boolean nowIsAfter = false;
 
         TimeZone tz = getSelectedTZ(context, data);
-        Calendar mapTime = Calendar.getInstance(tz);
+        Calendar mapTime = (tz != null ? Calendar.getInstance(tz) : Calendar.getInstance());
 
         mapTime.setTimeInMillis(mapTimeMillis);
         nowIsAfter = now.after(mapTime);
@@ -3196,7 +3212,7 @@ public class LightMapDialog extends BottomSheetDialogBase
     private final ColorValuesSheetDialog.DialogListener colorDialogListener = new ColorValuesSheetDialog.DialogListener()
     {
         @Override
-        public void onColorValuesSelected(ColorValues values)
+        public void onColorValuesSelected(@Nullable ColorValues values)
         {
             Context context = getContext();
             if (context == null) {
@@ -3221,7 +3237,7 @@ public class LightMapDialog extends BottomSheetDialogBase
             themeViews(context);
             updateViews();
 
-            if (dialogListener != null) {
+            if (dialogListener != null && values != null) {
                 dialogListener.onColorsModified(values);
             }
         }

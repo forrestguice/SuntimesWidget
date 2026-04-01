@@ -523,7 +523,7 @@ public class EventListHelper
         return saveDialog;
     }
 
-    protected void editEvent(final String eventID)
+    protected void editEvent(@Nullable final String eventID)
     {
         final Context context = getContext();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
@@ -818,7 +818,7 @@ public class EventListHelper
         }
     }
 
-    protected void deleteEvent(final String eventID)
+    protected void deleteEvent(@Nullable final String eventID)
     {
         final Context context = getContext();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)

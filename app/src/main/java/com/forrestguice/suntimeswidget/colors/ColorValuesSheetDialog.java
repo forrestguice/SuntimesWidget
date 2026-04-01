@@ -271,7 +271,10 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
     }
     protected void onRestoreInstanceState( Bundle savedState ) {
         //noinspection unchecked
-        colorCollection = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
+        ColorValuesCollection<ColorValues> c = (ColorValuesCollection<ColorValues>) savedState.getSerializable(ARG_COLLECTION);
+        if (c != null) {
+            colorCollection = c;
+        }
     }
 
     @Override
@@ -305,7 +308,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
         }
 
         @Override
-        public void onColorValuesSelected(ColorValues values)
+        public void onColorValuesSelected(@Nullable ColorValues values)
         {
             if (dialogListener != null) {
                 dialogListener.onColorValuesSelected(values);

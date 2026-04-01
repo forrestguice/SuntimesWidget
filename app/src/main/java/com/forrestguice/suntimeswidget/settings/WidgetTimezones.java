@@ -66,8 +66,8 @@ public class WidgetTimezones
     public static final String TZID_SUNTIMES = "SUNTIMES";
     public static final String TZID_SYSTEM = "SYSTEM";
 
-    public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate ) {
-        return isProbablyNotLocal(timezone, atLocation.getLongitudeAsDouble(), onDate);
+    public static boolean isProbablyNotLocal(TimeZone timezone, @Nullable Location atLocation, Date onDate ) {
+        return isProbablyNotLocal(timezone, (atLocation != null ? atLocation.getLongitudeAsDouble() : 0), onDate);
     }
     public static boolean isProbablyNotLocal(TimeZone timezone, double longitude, Date onDate )
     {
