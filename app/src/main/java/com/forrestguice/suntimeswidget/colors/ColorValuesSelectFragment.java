@@ -320,9 +320,10 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         return new ColorValuesArrayAdapter(context, R.layout.layout_listitem_colors, items);
     }
 
-    public void setPreviewKeys(String... keys) {
+    public void setPreviewKeys(@Nullable String... keys) {
         getArgs().putStringArray("previewKeys", keys);
     }
+    @Nullable
     public String[] previewKeys() {
         return getArgs().getStringArray("previewKeys");
     }

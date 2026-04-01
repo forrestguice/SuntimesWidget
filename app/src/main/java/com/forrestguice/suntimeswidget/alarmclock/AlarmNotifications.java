@@ -585,7 +585,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getFullscreenBroadcast(Uri data)
+    public static Intent getFullscreenBroadcast(@Nullable Uri data)
     {
         Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.setPackage(BuildConfig.APPLICATION_ID);
@@ -984,7 +984,7 @@ public class AlarmNotifications extends BroadcastReceiver
         setIsPlaying(channel, false);
     }
 
-    public static void stopSound(MediaPlayer player)
+    public static void stopSound(@Nullable MediaPlayer player)
     {
         if (player != null)
         {

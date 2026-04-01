@@ -154,8 +154,11 @@ public class SuntimesUtils
     {
     }
 
-    public static void initDisplayStrings(Context context)
+    public static void initDisplayStrings(@Nullable Context context)
     {
+        if (context == null) {
+            return;
+        }
         //long bench_start = System.nanoTime();
 
         TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);

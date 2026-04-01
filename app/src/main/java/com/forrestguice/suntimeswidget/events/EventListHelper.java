@@ -103,6 +103,7 @@ public class EventListHelper
     private WeakReference<FragmentManagerProvider> contextRef;
 
     private int selectedChild = -1;
+    @Nullable
     private EventAlias selectedItem;
     private ListView list;
     private EventDisplayAdapterInterface adapter;
@@ -222,12 +223,12 @@ public class EventListHelper
         {
             EditEventDialog addDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
             if (addDialog != null) {
-                addDialog.setOnAcceptedListener(onEventSaved(getContext(), addDialog));
+                addDialog.setOnAcceptedListener(onEventSaved(addDialog));
             }
 
             EditEventDialog editDialog = (EditEventDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
             if (editDialog != null) {
-                editDialog.setOnAcceptedListener(onEventSaved(getContext(), editDialog));
+                editDialog.setOnAcceptedListener(onEventSaved(editDialog));
             }
 
             HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
@@ -514,7 +515,7 @@ public class EventListHelper
                 }
             }
         });
-        saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
+        saveDialog.setOnAcceptedListener(onEventSaved(saveDialog));
         FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
             saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
@@ -540,7 +541,7 @@ public class EventListHelper
                 }
             });
 
-            saveDialog.setOnAcceptedListener(onEventSaved(context, saveDialog));
+            saveDialog.setOnAcceptedListener(onEventSaved(saveDialog));
             FragmentManagerCompat fragmentManager = getFragmentManager();
             if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
                 saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
@@ -548,12 +549,14 @@ public class EventListHelper
         }
     }
 
-    private DialogInterface.OnClickListener onEventSaved(final Context context, final EditEventDialog saveDialog)
+    private DialogInterface.OnClickListener onEventSaved(final EditEventDialog saveDialog)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Context context = getContext();
                 String eventID = saveDialog.getEventID();
                 EventSettings.saveEvent(AndroidEventSettings.wrap(context), saveDialog.getEvent());
                 //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());

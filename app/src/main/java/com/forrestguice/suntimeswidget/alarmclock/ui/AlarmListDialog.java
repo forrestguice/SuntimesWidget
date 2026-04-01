@@ -490,7 +490,7 @@ public class AlarmListDialog extends DialogBase
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public AlarmClockItem createAlarm(final Context context, AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays, boolean addToDatabase)
+    public AlarmClockItem createAlarm(final Context context, AlarmType type, @Nullable String label, @Nullable String event, Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, @Nullable Uri ringtoneUri, @Nullable String ringtoneName, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
         final AlarmClockItem alarm = createAlarm(context, type, label, event, location, date, hour, minute, timezone, vibrate, ringtoneUri, ringtoneName, repetitionDays);
         if (addToDatabase) {
@@ -499,11 +499,11 @@ public class AlarmListDialog extends DialogBase
         return alarm;
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, @NonNull String event, @NonNull Location location) {
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, @Nullable String label, @NonNull String event, @NonNull Location location) {
         return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmType type, String label, @Nullable String event, @Nullable Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, @Nullable Uri ringtoneUri, @Nullable String ringtoneName, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmType type, @Nullable String label, @Nullable String event, @Nullable Location location, long date, int hour, int minute, @Nullable String timezone, boolean vibrate, @Nullable Uri ringtoneUri, @Nullable String ringtoneName, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "createAlarm: ringToneURI: " + ringtoneUri + " (" + ringtoneName + ")" );
         final AlarmClockItem alarm = new AlarmClockItem();

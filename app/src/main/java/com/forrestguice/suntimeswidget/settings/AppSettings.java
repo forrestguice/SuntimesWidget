@@ -389,7 +389,8 @@ public class AppSettings
     public static String loadLocalePref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_LOCALE, PREF_DEF_LOCALE);
+        String s = pref.getString(PREF_KEY_LOCALE, PREF_DEF_LOCALE);
+        return (s != null ? s : PREF_DEF_LOCALE);
     }
 
     /**
@@ -508,14 +509,17 @@ public class AppSettings
     public static String loadLauncherModePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
+        String s = pref.getString(PREF_KEY_LAUNCHER_MODE, PREF_DEF_LAUNCHER_MODE);
+        return (s != null ? s : PREF_DEF_LAUNCHER_MODE);
     }
 
     @NonNull
     public static String loadNavModePref(Context context)
     {
+        String defaultValue = context.getString(R.string.def_app_navigation_mode);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_NAVIGATION_MODE, context.getString(R.string.def_app_navigation_mode));
+        String s = pref.getString(PREF_KEY_NAVIGATION_MODE, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     /**
@@ -664,7 +668,8 @@ public class AppSettings
     {
         try {
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            return Integer.parseInt(pref.getString(PREF_KEY_UI_SHOWHEADER_TEXT, "" + PREF_DEF_UI_SHOWHEADER_TEXT));
+            String s = pref.getString(PREF_KEY_UI_SHOWHEADER_TEXT, "" + PREF_DEF_UI_SHOWHEADER_TEXT);
+            return Integer.parseInt((s != null ? s : "" + PREF_DEF_UI_SHOWHEADER_TEXT));
         } catch (NumberFormatException | ClassCastException e) {
             return PREF_DEF_UI_SHOWHEADER_TEXT;
         }
@@ -672,8 +677,10 @@ public class AppSettings
 
     public static String loadEmphasizeFieldPref( Context context )
     {
+        String defaultValue = context.getString(R.string.def_app_ui_emphasizefield);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_UI_EMPHASIZEFIELD, context.getString(R.string.def_app_ui_emphasizefield));
+        String s = pref.getString(PREF_KEY_UI_EMPHASIZEFIELD, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     public static boolean loadDatasourceUIPref( Context context )
@@ -741,7 +748,8 @@ public class AppSettings
     public static String loadClockTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION);
+        String s = pref.getString(PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION);
+        return (s != null ? s : PREF_DEF_UI_CLOCKTAPACTION);
     }
 
     /**
@@ -750,7 +758,8 @@ public class AppSettings
     public static String loadDateTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION);
+        String s = pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION);
+        return (s != null ? s : PREF_DEF_UI_DATETAPACTION);
     }
 
     /**
@@ -759,7 +768,8 @@ public class AppSettings
     public static String loadDateTapAction1Pref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1);
+        String s = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1);
+        return (s != null ? s : PREF_DEF_UI_DATETAPACTION1);
     }
 
     /**
@@ -768,7 +778,8 @@ public class AppSettings
     public static String loadNoteTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION);
+        String s = pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION);
+        return (s != null ? s : PREF_DEF_UI_NOTETAPACTION);
     }
 
     /**
@@ -777,8 +788,10 @@ public class AppSettings
      */
     public static String loadThemePref(Context context)
     {
+        String defaultValue = context.getString(R.string.def_app_appearance_theme);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return AppThemeInfo.getExtendedThemeName(pref.getString(PREF_KEY_APPEARANCE_THEME, context.getString(R.string.def_app_appearance_theme)), loadTextSizePref(context));
+        String s = pref.getString(PREF_KEY_APPEARANCE_THEME, defaultValue);
+        return AppThemeInfo.getExtendedThemeName((s != null ? s : defaultValue), loadTextSizePref(context));
     }
 
     public static void saveTextSizePref(Context context, TextSize value)
@@ -791,7 +804,8 @@ public class AppSettings
     public static String loadTextSizePref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_APPEARANCE_TEXTSIZE, PREF_DEF_APPEARANCE_TEXTSIZE.name());
+        String s = pref.getString(PREF_KEY_APPEARANCE_TEXTSIZE, PREF_DEF_APPEARANCE_TEXTSIZE.name());
+        return (s != null ? s : PREF_DEF_APPEARANCE_TEXTSIZE.name());
     }
 
     public static void setThemePref(Context context, String themeID) {

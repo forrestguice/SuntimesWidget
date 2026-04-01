@@ -382,7 +382,8 @@ public class AlarmTimeDialog extends DialogBase
         public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
             return createView(position, convertView, parent);
         }
-        @NonNull @Override
+        @NonNull
+        @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             return createView(position, convertView, parent);
         }
@@ -390,9 +391,10 @@ public class AlarmTimeDialog extends DialogBase
         @SuppressLint("ResourceType")
         private View createView(int position, View convertView, ViewGroup parent)
         {
+            Context context = getContext();
             View view = convertView;
-            if (view == null && getContext() != null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
+            if (view == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
                 view = inflater.inflate(layout, parent, false);
             }
 
@@ -405,7 +407,7 @@ public class AlarmTimeDialog extends DialogBase
                 text.setText(item != null ? item.displayString() : "");
             }
 
-            if (icon != null && getContext() != null)
+            if (icon != null)
             {
                 int[] iconAttr = { R.attr.icActionTime };
                 TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
@@ -417,6 +419,9 @@ public class AlarmTimeDialog extends DialogBase
                 icon.setBackgroundResource(item != null ? resID : 0);
             }
 
+            if (view == null) {
+                throw new IllegalStateException("AlarmTimeModeAdapter. createView: null!");
+            }
             return view;
         }
     }

@@ -1136,7 +1136,7 @@ public class AlarmCreateDialog extends BottomSheetDialogBase
         return getArgs().getLong(EXTRA_OFFSET, 0);
     }
 
-    private void initEventDialog(Context context, AlarmEventDialog dialog, Location forLocation)
+    private void initEventDialog(Context context, AlarmEventDialog dialog, @Nullable Location forLocation)
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(context, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);

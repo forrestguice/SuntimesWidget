@@ -248,7 +248,7 @@ public class AlarmEvent
     /**
      * isValidEventID
      */
-    public static boolean isValidEventID(Context context, String eventID)
+    public static boolean isValidEventID(Context context, @Nullable String eventID)
     {
         if (eventID == null) {
             return true;

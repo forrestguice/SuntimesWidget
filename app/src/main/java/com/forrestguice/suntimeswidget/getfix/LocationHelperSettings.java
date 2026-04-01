@@ -50,7 +50,7 @@ public class LocationHelperSettings
         int retValue;
         try {
             String maxAgeString = prefs.getString(PREF_KEY_LOCATION_MAX_AGE, defaultValue+"");
-            retValue = Integer.parseInt(maxAgeString);
+            retValue = (maxAgeString != null ? Integer.parseInt(maxAgeString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
             retValue = defaultValue;
@@ -68,7 +68,7 @@ public class LocationHelperSettings
         int retValue;
         try {
             String minAgeString = prefs.getString(PREF_KEY_LOCATION_MIN_ELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(minAgeString);
+            retValue = (minAgeString != null ? Integer.parseInt(minAgeString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
             retValue = defaultValue;
@@ -86,7 +86,7 @@ public class LocationHelperSettings
         int retValue;
         try {
             String maxElapsedString = prefs.getString(PREF_KEY_LOCATION_MAX_ELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(maxElapsedString);
+            retValue = (maxElapsedString != null ? Integer.parseInt(maxElapsedString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
             retValue = defaultValue;
@@ -133,7 +133,8 @@ public class LocationHelperSettings
 
         } catch (ClassCastException e) {
             try {
-                t = Long.parseLong(pref.getString(PREF_KEY_LOCATION_LAST_TIME, "0"));
+                String s = pref.getString(PREF_KEY_LOCATION_LAST_TIME, "0");
+                t = (s != null ? Long.parseLong(s) : 0);
                 Log.w("lastAutoLocationRequest", "lastAutoLocationRequest has the wrong type! found Long as String.");
 
             } catch (NumberFormatException | ClassCastException e1) {
@@ -180,7 +181,8 @@ public class LocationHelperSettings
     }
     public static String lastLocationLog(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_LOCATION_LAST_LOG, "");
+        String s = pref.getString(PREF_KEY_LOCATION_LAST_LOG, "");
+        return (s != null ? s : "");
     }
 
     public static boolean lastLocationResult(Context context) {
@@ -193,7 +195,8 @@ public class LocationHelperSettings
     }
     public static String lastLocationProvider(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_LOCATION_LAST_PROVIDER, "");
+        String s = pref.getString(PREF_KEY_LOCATION_LAST_PROVIDER, "");
+        return (s != null ? s : "");
     }
     public static float lastLocationAccuracy(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

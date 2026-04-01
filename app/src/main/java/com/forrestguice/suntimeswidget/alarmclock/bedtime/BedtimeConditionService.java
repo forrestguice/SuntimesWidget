@@ -150,7 +150,7 @@ public class BedtimeConditionService extends ConditionProviderService
         ComponentName configComponent = new ComponentName(context, BedtimeActivity.class);
 
         AutomaticZenRule rule = new AutomaticZenRule(ruleName, componentName, conditionId, filter, enabled);
-        rule = NotificationManagerHelper.setAutomaticZenRuleConfigurationActivity(rule, configComponent);
+        NotificationManagerHelper.setAutomaticZenRuleConfigurationActivity(rule, configComponent);
         return rule;
     }
 

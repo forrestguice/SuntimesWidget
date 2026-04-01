@@ -136,8 +136,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     private AlarmClockItem(Parcel in)
     {
         rowID = in.readLong();
-        AlarmType t = AlarmType.valueOf(in.readString(), null);
-        type = (t != null ? t : DEF_TYPE);
+        type = AlarmType.valueOf(in.readString(), DEF_TYPE);
         enabled = (in.readInt() == 1);
         label = in.readString();
         note = in.readString();
@@ -225,8 +224,7 @@ public class AlarmClockItem implements AlarmItemInterface, Parcelable
     public void fromContentValues(@Nullable Context context, ContentValues alarm)
     {
         rowID = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ROWID) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID) : -1L);
-        AlarmType t = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
-        type = (t != null ? t : DEF_TYPE);
+        type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), DEF_TYPE);
         enabled = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
         note = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_NOTE);

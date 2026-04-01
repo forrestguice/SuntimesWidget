@@ -965,9 +965,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             backButton.show();
 
             resetAnimateColors(labels, buttons);
-            if (isBrightMode)
+            if (isBrightMode && colors != null)
             {
-                int timeoutBackgroundColor = colors != null ? colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START) : Color.MAGENTA;
+                int timeoutBackgroundColor = colors.getColor(AlarmColorValues.COLOR_BRIGHT_BACKGROUND_START);
                 int timeoutTitleColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_PRIMARY, AlarmColorValues.COLOR_TEXT_PRIMARY_INVERSE);
                 int timeoutTimeColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_TIME, AlarmColorValues.COLOR_TEXT_TIME_INVERSE);
                 int timeoutTextColor = getContrastingTextColor(timeoutBackgroundColor, colors, AlarmColorValues.COLOR_TEXT_SECONDARY, AlarmColorValues.COLOR_TEXT_SECONDARY_INVERSE);

@@ -216,7 +216,7 @@ public class ColorValuesCollectionPreference extends Preference
         };
     }
 
-    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
+    public static Intent createPreferenceOnClickIntent(final Activity activity, final ColorValuesCollection<?> collection, final int appWidgetID, final String colorTag, @Nullable final CharSequence title, final boolean showAlpha, @Nullable final Integer previewMode, @Nullable final String[] previewKeys, @Nullable ColorValuesSheetActivity.PreviewColorsIntentBuilder previewIntentBuilder)
     {
         Intent intent = new Intent(activity, ColorValuesSheetActivity.class);
         intent.putExtra(ColorValuesSheetActivity.EXTRA_TITLE, title);

@@ -190,7 +190,8 @@ public class AlarmWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, defaultValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     //////////////////////////////////////////////////

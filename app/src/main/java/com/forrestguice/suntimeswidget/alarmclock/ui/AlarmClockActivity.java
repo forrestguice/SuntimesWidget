@@ -463,7 +463,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     }
 
-    protected void handleIntent_dismissAlarms(Intent intent, Uri param_data)
+    protected void handleIntent_dismissAlarms(Intent intent, @Nullable Uri param_data)
     {
         Long alarmID;
         try {

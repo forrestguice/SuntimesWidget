@@ -290,13 +290,13 @@ public class AlarmEventProvider extends ContentProvider
     /**
      * calculateEvent
      */
-    private Cursor calculateEvent(String eventID, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs)
+    private Cursor calculateEvent(@Nullable String eventID, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
         String[] columns = (projection != null ? projection : QUERY_EVENT_CALC_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         Context context = getContext();
-        if (context != null) {
+        if (context != null && eventID != null) {
             addRowsToCursor(context, retValue, eventID, columns, selection, selectionArgs);
         }
         return retValue;
@@ -831,7 +831,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_TITLE:
                 case COLUMN_EVENT_PHRASE:
-                    row[i] = utils.calendarDateTimeDisplayString(AndroidResources.wrap(getContext()), eventCalendar, true, false);
+                    row[i] = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), eventCalendar, true, false);
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
                     row[i] = context.getString(R.string.selectformat_date_gender);
@@ -857,7 +857,7 @@ public class AlarmEventProvider extends ContentProvider
         return row;
     }
 
-    public static Calendar getNowCalendar(String nowString)
+    public static Calendar getNowCalendar(@Nullable String nowString)
     {
         long nowMillis = (nowString != null ? Long.parseLong(nowString) : System.currentTimeMillis());
         Calendar now = Calendar.getInstance();
@@ -1096,8 +1096,10 @@ public class AlarmEventProvider extends ContentProvider
         return data;
     }
 
-    public static void initDisplayStrings_EventType(Context context) {
-        EventType.SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
+    public static void initDisplayStrings_EventType(@Nullable Context context) {
+        if (context != null) {
+            EventType.SUN_ELEVATION.setDisplayString(context.getString(R.string.eventType_sun_elevation));
+        }
     }
 
 }

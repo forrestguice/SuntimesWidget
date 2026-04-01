@@ -105,7 +105,7 @@ import java.util.List;
 /**
  * AlarmClockActivity
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "DataFlowIssue"})
 public class AlarmClockLegacyActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";

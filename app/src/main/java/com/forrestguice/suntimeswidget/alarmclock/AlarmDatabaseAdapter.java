@@ -1165,7 +1165,7 @@ public class AlarmDatabaseAdapter
             }
         }
 
-        public void notify(Long alarmId)
+        public void notify(@Nullable Long alarmId)
         {
             items.put(alarmId, true);
             if (observerListener != null)
@@ -1189,7 +1189,7 @@ public class AlarmDatabaseAdapter
         private final AlarmListObserverListener observerListener;
         public static abstract class AlarmListObserverListener
         {
-            public void onObservedItem( Long id ) {}
+            public void onObservedItem( @Nullable Long id ) {}
             public void onObservedAll() {}
         }
     }

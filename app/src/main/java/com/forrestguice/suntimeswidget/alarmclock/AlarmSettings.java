@@ -302,7 +302,8 @@ public class AlarmSettings
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(PREF_KEY_ALARM_HARDAREBUTTON_ACTION, PREF_DEF_ALARM_HARDAREBUTTON_ACTION);
+        String s = prefs.getString(PREF_KEY_ALARM_HARDAREBUTTON_ACTION, PREF_DEF_ALARM_HARDAREBUTTON_ACTION);
+        return (s != null ? s : PREF_DEF_ALARM_HARDAREBUTTON_ACTION);
     }
 
     public static long loadPrefAlarmSilenceAfter(Context context)
@@ -345,7 +346,8 @@ public class AlarmSettings
     public static long loadStringPrefAsLong(SharedPreferences prefs, String key, long defaultValue)
     {
         try {
-            return Long.parseLong(prefs.getString(key, defaultValue + ""));
+            String s = prefs.getString(key, defaultValue + "");
+            return Long.parseLong((s != null ? s : defaultValue + ""));
         } catch (NumberFormatException e) {
             return defaultValue;
         }
@@ -458,10 +460,12 @@ public class AlarmSettings
     }
     public static int loadPrefAlarmFadeInMethod(Context context)
     {
+        String defaultValue = context.getString(R.string.def_app_alarms_fadein_method);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         if (Build.VERSION.SDK_INT >= 11) {
-            return Integer.parseInt(prefs.getString(PREF_KEY_ALARM_FADEIN_METHOD, context.getString(R.string.def_app_alarms_fadein_method)));
-        } else return (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN_METHOD, Long.parseLong(context.getString(R.string.def_app_alarms_fadein_method)));
+            String s = prefs.getString(PREF_KEY_ALARM_FADEIN_METHOD, defaultValue);
+            return Integer.parseInt((s != null ? s : defaultValue));
+        } else return (int) loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN_METHOD, Long.parseLong(defaultValue));
     }
 
     public static void saveSystemTimeZoneInfo(Context context) {
@@ -562,19 +566,22 @@ public class AlarmSettings
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String uriString = prefs.getString((type == AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
         if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
-            return ExecutorUtils.getResult("defaultRingtoneUri", new Callable<Uri>()
+            Uri result = ExecutorUtils.getResult("defaultRingtoneUri", new Callable<Uri>()
             {
                 public Uri call() {
                     Uri result = new AlarmSettings().setDefaultRingtone(context, type);
                     return (result != null ? result : Uri.parse(VALUE_RINGTONE_DEFAULT));
                 }
             }, MAX_WAIT_MS);
+            return (result != null ? result : Uri.parse(VALUE_RINGTONE_DEFAULT));
         } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
     }
     public static String getDefaultRingtoneName(Context context, AlarmType type)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString((type == AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.tag_tagDefault));
+        String defaultValue = context.getString(R.string.tag_tagDefault);
+        String s = prefs.getString((type == AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     @Nullable
@@ -1089,7 +1096,8 @@ public class AlarmSettings
     public static DismissChallenge loadDismissChallengePref(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return DismissChallenge.valueOf(prefs.getString(PREF_KEY_ALARM_DISMISS_CHALLENGE, PREF_DEF_ALARM_DISMISS_CHALLENGE.name()), PREF_DEF_ALARM_DISMISS_CHALLENGE);
+        String s = prefs.getString(PREF_KEY_ALARM_DISMISS_CHALLENGE, PREF_DEF_ALARM_DISMISS_CHALLENGE.name());
+        return (s != null ? DismissChallenge.valueOf(s, PREF_DEF_ALARM_DISMISS_CHALLENGE) : PREF_DEF_ALARM_DISMISS_CHALLENGE);
     }
 
     /**
