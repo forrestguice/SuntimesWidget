@@ -21,7 +21,7 @@ public class ActivityResultLaunchHelper
     public void startActivityForResultCompat(Intent intent, int requestCode) {
         startActivityForResultCompat(intent, requestCode, null);
     }
-    public boolean startActivityForResultCompat(Intent intent, int requestCode, ActivityOptionsCompat options)
+    public boolean startActivityForResultCompat(Intent intent, int requestCode, @Nullable ActivityOptionsCompat options)
     {
         ActivityResultLauncherCompat launcher = launchers.get(requestCode);
         if (launcher == null) {

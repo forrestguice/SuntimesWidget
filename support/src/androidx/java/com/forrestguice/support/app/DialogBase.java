@@ -100,7 +100,7 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
     public void startActivityForResultCompat(Intent intent, int requestCode) {
         startActivityForResultCompat(intent, requestCode, null);
     }
-    public void startActivityForResultCompat(Intent intent, int requestCode, ActivityOptionsCompat options)
+    public void startActivityForResultCompat(Intent intent, int requestCode, @Nullable ActivityOptionsCompat options)
     {
         if (!launchers.startActivityForResultCompat(intent, requestCode, options))
         {
@@ -111,9 +111,11 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
     }
 
     @SuppressWarnings("UnusedReturnValue")
+    @Nullable
     public ActivityResultLauncherCompat registerForActivityResultCompat(int requestCode) {
         return registerForActivityResultCompat(requestCode, this);
     }
+    @Nullable
     public ActivityResultLauncherCompat registerForActivityResultCompat(final int requestCode, final OnActivityResultCompat onResult) {
         return launchers.registerForActivityResultCompat(this, requestCode, onResult);
     }
@@ -145,9 +147,11 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         }
     }
 
+    @Nullable
     public PermissionResultLauncherCompat registerForPermissionResult(int requestCode) {
         return registerForPermissionResult(requestCode, this);
     }
+    @Nullable
     public PermissionResultLauncherCompat registerForPermissionResult(int requestCode, OnPermissionResultCompat onResult) {
         return launchers.registerForPermissionResult(this, requestCode, onResult);
     }

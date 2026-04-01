@@ -21,9 +21,14 @@ public class AppCompatActivity extends androidx.appcompat.app.AppCompatActivity 
     {
         if (activity instanceof androidx.appcompat.app.AppCompatActivity) {
             ActionMode actionMode = ((androidx.appcompat.app.AppCompatActivity) activity).startSupportActionMode(ActionModeCompat.from(callback));
-            ActionModeCompat result = new ActionModeCompat(actionMode);
-            callback.setActionMode(result);
-            return result;
+            if (actionMode != null) {
+                ActionModeCompat result = new ActionModeCompat(actionMode);
+                callback.setActionMode(result);
+                return result;
+            } else {
+                Log.e("AppCompatActivity", "startSupportActionMode failed! actionMode is null!");
+                return null;
+            }
         } else {
             Log.e("AppCompatActivity", "startSupportActionMode failed! supplied activity is not an instance of android.support.v7.app.AppCompatActivity");
             return null;
@@ -42,7 +47,7 @@ public class AppCompatActivity extends androidx.appcompat.app.AppCompatActivity 
     public void startActivityForResultCompat(Intent intent, int requestCode) {
         startActivityForResultCompat(intent, requestCode, null);
     }
-    public void startActivityForResultCompat(Intent intent, int requestCode, ActivityOptionsCompat options)
+    public void startActivityForResultCompat(Intent intent, int requestCode, @Nullable ActivityOptionsCompat options)
     {
         if (!launchers.startActivityForResultCompat(intent, requestCode, options))
         {
@@ -53,9 +58,11 @@ public class AppCompatActivity extends androidx.appcompat.app.AppCompatActivity 
     }
 
     @SuppressWarnings("UnusedReturnValue")
+    @Nullable
     public ActivityResultLauncherCompat registerForActivityResultCompat(int requestCode) {
         return registerForActivityResultCompat(requestCode, this);
     }
+    @Nullable
     public ActivityResultLauncherCompat registerForActivityResultCompat(final int requestCode, final OnActivityResultCompat onResult) {
         return launchers.registerForActivityResultCompat(this, requestCode, onResult);
     }
@@ -87,9 +94,11 @@ public class AppCompatActivity extends androidx.appcompat.app.AppCompatActivity 
         }
     }
 
+    @Nullable
     public PermissionResultLauncherCompat registerForPermissionResult(int requestCode) {
         return registerForPermissionResult(requestCode, this);
     }
+    @Nullable
     public PermissionResultLauncherCompat registerForPermissionResult(int requestCode, OnPermissionResultCompat onResult) {
         return launchers.registerForPermissionResult(this, requestCode, onResult);
     }
