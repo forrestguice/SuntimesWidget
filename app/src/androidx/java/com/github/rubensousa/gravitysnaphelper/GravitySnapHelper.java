@@ -180,7 +180,7 @@ public class GravitySnapHelper extends LinearSnapHelper {
                 break;
         }
         if (snapView != null) {
-            nextSnapPosition = recyclerView.getChildAdapterPosition(snapView);
+            nextSnapPosition = (recyclerView != null ? recyclerView.getChildAdapterPosition(snapView) : RecyclerView.NO_POSITION);
         } else {
             nextSnapPosition = RecyclerView.NO_POSITION;
         }
@@ -490,9 +490,9 @@ public class GravitySnapHelper extends LinearSnapHelper {
 
     private int getFlingDistance() {
         if (maxFlingSizeFraction != FLING_SIZE_FRACTION_DISABLE) {
-            if (verticalHelper != null) {
+            if (verticalHelper != null && recyclerView != null) {
                 return (int) (recyclerView.getHeight() * maxFlingSizeFraction);
-            } else if (horizontalHelper != null) {
+            } else if (horizontalHelper != null && recyclerView != null) {
                 return (int) (recyclerView.getWidth() * maxFlingSizeFraction);
             } else {
                 return Integer.MAX_VALUE;
@@ -508,7 +508,7 @@ public class GravitySnapHelper extends LinearSnapHelper {
      * @return true if the scroll will snap to a view, false otherwise
      */
     private boolean scrollTo(int position, boolean smooth) {
-        if (recyclerView.getLayoutManager() != null) {
+        if (recyclerView != null && recyclerView.getLayoutManager() != null) {
             if (smooth) {
                 RecyclerView.SmoothScroller smoothScroller
                         = createScroller(recyclerView.getLayoutManager());
