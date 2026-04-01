@@ -82,7 +82,9 @@ public class GravitySnapHelper extends LinearSnapHelper {
     private float maxFlingSizeFraction = FLING_SIZE_FRACTION_DISABLE;
     private OrientationHelper verticalHelper;
     private OrientationHelper horizontalHelper;
+    @Nullable
     private GravitySnapHelper.SnapListener listener;
+    @Nullable
     private RecyclerView recyclerView;
     private final RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
