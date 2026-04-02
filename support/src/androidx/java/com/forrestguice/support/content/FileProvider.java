@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 
+import com.forrestguice.annotation.Nullable;
+
 import java.io.File;
 
 public class FileProvider extends androidx.core.content.FileProvider {
 
+    @Nullable
     public static File getExternalStorageDownloadDirectory(Context context)
     {
         if (Build.VERSION.SDK_INT >= 29) {

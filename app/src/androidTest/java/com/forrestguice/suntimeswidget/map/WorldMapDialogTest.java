@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.QuickTest;
@@ -76,6 +77,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withTextAsDate;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
@@ -563,11 +565,12 @@ public class WorldMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
+        public WorldMapDialogRobot assertShowsDate(Context context, @Nullable Calendar date) {
             return assertShowsDate(context, date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
-        public WorldMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)
+        public WorldMapDialogRobot assertShowsDate(Context context, @Nullable Calendar date, TimeFormatMode withMode, boolean withSeconds)
         {
+            assertNotNull(date);
             assertTrue(TimeDateDisplay.isInitialized());
             boolean is24 = (withMode == TimeFormatMode.MODE_SYSTEM || withMode == TimeFormatMode.MODE_SUNTIMES) ? SystemTimeFormat.is24HourFormat()
                     : (withMode == TimeFormatMode.MODE_24HR);

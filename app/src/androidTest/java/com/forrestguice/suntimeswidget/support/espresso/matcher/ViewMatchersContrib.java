@@ -117,7 +117,8 @@ public class ViewMatchersContrib
             } else if (view instanceof ImageButton) {
                 d = ((ImageButton) view).getDrawable();
             }
-            return createBitmap(withDrawable).sameAs(createBitmap(d));
+            Bitmap b = createBitmap(withDrawable);
+            return (b != null && b.sameAs(createBitmap(d)));
         }
 
         @Override

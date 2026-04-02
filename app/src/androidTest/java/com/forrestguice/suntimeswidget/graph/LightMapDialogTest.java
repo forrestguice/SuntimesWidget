@@ -43,6 +43,7 @@ import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.SystemTimeFormat;
 
+import androidx.annotation.Nullable;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -79,6 +80,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @LargeTest
@@ -708,7 +710,8 @@ public class LightMapDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
-        public LightMapDialogRobot assertShowsDate(Context context, @NonNull Calendar date) {
+        public LightMapDialogRobot assertShowsDate(Context context, @Nullable Calendar date) {
+            assertNotNull(date);
             return assertShowsDate(date, WidgetSettings.loadTimeFormatModePref(context, 0), false);
         }
         public LightMapDialogRobot assertShowsDate(@NonNull Calendar date, TimeFormatMode withMode, boolean withSeconds)

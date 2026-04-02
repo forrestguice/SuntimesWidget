@@ -38,11 +38,11 @@ public class NotificationManagerHelper
             try {
                 java.lang.reflect.Method method = object.getClass().getMethod(methodName);
                 try {
-                    boolean result = (boolean) method.invoke(object);
+                    Boolean result = (Boolean) method.invoke(object);
                     Log.e("NotificationManager", methodName + ": successfully invoked: returned: " + result);
-                    return result;
+                    return (result != null ? result : defaultValue);
 
-                } catch (NullPointerException | IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                } catch (IllegalArgumentException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                     Log.e("NotificationManager", methodName + ": false; " + e);
                     return defaultValue;
                 }
