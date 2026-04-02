@@ -224,6 +224,7 @@ public class SuntimesUtilsTest0
     public void testImageSpanTag()
     {
         String tag = "[tag]";
+        //noinspection DataFlowIssue
         ImageSpan imageSpan = new ImageSpan((Drawable)null);
         SpanUtils.ImageSpanTag spanTag = new SpanUtils.ImageSpanTag(tag, imageSpan);
         assertEquals("getTag() must return the same tag set by the constructor!", spanTag.getTag(), tag);

@@ -143,6 +143,7 @@ public class AlarmEventItemTest0
         assertEquals(-1, phrase4.getQuantity());
     }
 
+    /** @noinspection DataFlowIssue*/
     @Test
     public void test_isValidEventID()
     {
