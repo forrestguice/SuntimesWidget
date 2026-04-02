@@ -91,16 +91,12 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
                     Log.d(getClass().getSimpleName(), "doInBackground: reading");
                     AlarmClockItemJson.readAlarmClockItems(context, in, items);
                     result = true;
-                    error = null;
 
                 } else {
                     Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": null input stream!");
-                    result = false;
-                    error = null;
                 }
             } catch (IOException e) {
                 Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": " + e);
-                result = false;
                 items = null;
                 error = e;
             }
@@ -269,7 +265,7 @@ public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, A
                             case BEGIN_ARRAY: skipJsonArray(reader); break;
                             case BEGIN_OBJECT: skipJsonObject(reader); break;
                             case BOOLEAN: value = reader.nextBoolean(); break;
-                            case NULL: value = null; reader.nextNull(); break;
+                            case NULL: reader.nextNull(); break;
                             case NUMBER: case STRING:
                             default: value = reader.nextString(); break;
                         }

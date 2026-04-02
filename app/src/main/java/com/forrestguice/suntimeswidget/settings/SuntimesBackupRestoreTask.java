@@ -108,16 +108,11 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
             try {
                 c = importSettings(context, keys, methods, report, data);
                 result = true;
-                error = null;
 
             } catch (Exception e) {
                 Log.e(TAG, "Failed to restore backup: " + e);
-                result = false;
                 error = e;
             }
-        } else {
-            result = false;
-            error = null;
         }
 
         Log.d(TAG, "doInBackground: waiting");

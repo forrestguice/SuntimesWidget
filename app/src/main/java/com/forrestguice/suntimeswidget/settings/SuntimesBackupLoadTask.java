@@ -79,16 +79,12 @@ public class SuntimesBackupLoadTask implements Callable<SuntimesBackupLoadTask.T
                     Log.d(TAG, "doInBackground: reading");
                     readData(context, in, data);
                     result = true;
-                    error = null;
 
                 } else {
                     Log.e(TAG, "Failed to import from " + uri + ": null input stream!");
-                    result = false;
-                    error = null;
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Failed to import from " + uri + ": " + e);
-                result = false;
                 data = new HashMap<>();
                 error = e;
             }

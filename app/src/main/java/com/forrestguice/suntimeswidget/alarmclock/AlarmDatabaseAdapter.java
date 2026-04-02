@@ -951,7 +951,7 @@ public class AlarmDatabaseAdapter
                 }
             } else {
                 removed = db.clearAlarms();
-                lastRowId = null;
+                // lastRowId = null;
             }
             db.close();
             return new TaskResult(removed, lastRowId);

@@ -88,12 +88,9 @@ public class ImportThemesTask extends ProgressCallable<SuntimesTheme, ImportThem
                     themes = xml.read(context, input);
                     result = true;
                     input.close();
-                    error = null;
 
                 } else {
                     Log.e(TAG, "Failed to import from " + uri + ": null input stream!");
-                    result = false;
-                    error = null;
                 }
 
             } catch (FileNotFoundException e) {
