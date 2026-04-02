@@ -263,11 +263,13 @@ public class LineGraphBitmap
     {
         Calendar lmt = lmt(calculator.getLocation());
         lmt.setTimeInMillis(now.getTimeInMillis());
-        lmt = toStartOfDay(lmt);
+        toStartOfDay(lmt);
         long startMillis = lmt.getTimeInMillis();
-        lmt = toNoon(lmt);
+
+        toNoon(lmt);
         long midMillis = lmt.getTimeInMillis();
-        lmt = toEndOfDay(lmt);
+
+        toEndOfDay(lmt);
         long endMillis = lmt.getTimeInMillis();
 
         ArrayList<Integer> results = new ArrayList<>();

@@ -218,6 +218,7 @@ public class EventListHelper
 
     public void onResume()
     {
+        Context context = getContext();
         FragmentManagerCompat fragmentManager = getFragmentManager();
         if (fragmentManager != null)
         {
@@ -232,8 +233,8 @@ public class EventListHelper
             }
 
             HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
-            if (helpDialog != null) {
-                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(getContext(), HELP_PATH_ID), DIALOGTAG_HELP);
+            if (helpDialog != null && context != null) {
+                helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID), DIALOGTAG_HELP);
             }
         }
     }
@@ -275,7 +276,7 @@ public class EventListHelper
         return list;
     }
 
-    protected void updateViews(Context context)
+    protected void updateViews(@Nullable Context context)
     {
         if (onUpdateViews != null) {
             onUpdateViews.onClick(list);
@@ -415,9 +416,11 @@ public class EventListHelper
         }
     };
 
-    protected void showOverflowMenu(Context context, View parent)
+    protected void showOverflowMenu(@Nullable Context context, View parent)
     {
-        PopupMenuCompat.createMenu(context, parent, R.menu.eventlist, onMenuItemClicked).show();
+        if (context != null) {
+            PopupMenuCompat.createMenu(context, parent, R.menu.eventlist, onMenuItemClicked).show();
+        }
     }
 
     protected void prepareOverflowMenu(Context context, Menu menu)
@@ -486,13 +489,18 @@ public class EventListHelper
         saveDialog.setDialogMode(EditEventDialog.DIALOG_MODE_ADD);
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener()
         {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onShow(DialogInterface dialog)
             {
                 saveDialog.setIsModified(false);
                 if (angle != null && saveDialog.edit_angle != null) {
                     saveDialog.edit_angle.setText(String.format(Locale.getDefault(), "%.2f", angle));
-                    saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), angle.intValue() + ""));
+                    if (context != null) {
+                        saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), angle.intValue() + ""));
+                    } else {
+                        saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + angle.intValue());
+                    }
                     saveDialog.check_shown.setChecked(true);
                     saveDialog.edit_label.selectAll();
                     saveDialog.setIsModified(true);
@@ -506,7 +514,11 @@ public class EventListHelper
                     }
                     if (shadowLength != null && saveDialog.edit_shadowLength != null) {
                         saveDialog.edit_shadowLength.setText(String.format(Locale.getDefault(), "%.2f", shadowLength));
-                        saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), shadowLength.intValue() + ""));
+                        if (context != null) {
+                            saveDialog.edit_label.setText(context.getString(R.string.event_item_label_format, saveDialog.edit_label.getText(), shadowLength.intValue() + ""));
+                        } else {
+                            saveDialog.edit_label.setText(saveDialog.edit_label.getText() + " " + shadowLength.intValue());
+                        }
                     }
                     saveDialog.check_shown.setChecked(true);
                     saveDialog.edit_label.selectAll();
@@ -556,14 +568,17 @@ public class EventListHelper
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                Context context = getContext();
                 String eventID = saveDialog.getEventID();
-                EventSettings.saveEvent(AndroidEventSettings.wrap(context), saveDialog.getEvent());
-                //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
-                //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
-                initAdapter(context);
-                updateViews(context);
-                adapterModified = true;
+                Context context = getContext();
+                if (context != null)
+                {
+                    EventSettings.saveEvent(AndroidEventSettings.wrap(context), saveDialog.getEvent());
+                    //Log.d("DEBUG", "onEventSaved " + saveDialog.getEvent().toString());
+                    //Toast.makeText(context, context.getString(R.string.saveevent_toast, saveDialog.getEventLabel(), eventID), Toast.LENGTH_SHORT).show();  // TODO
+                    initAdapter(context);
+                    updateViews(context);
+                    adapterModified = true;
+                }
 
                 setSelected(eventID);
                 triggerActionMode(list, selectedItem, selectedChild);
@@ -746,12 +761,12 @@ public class EventListHelper
                             EventSettings.saveEvent(contextInterface, items[i]);
                         }
                     }
-                }
 
-                initAdapter(context);
-                updateViews(context);
-                adapterModified = true;
-                offerUndoImport(context, new ArrayList<EventAlias>(Arrays.asList(items)));
+                    initAdapter(context);
+                    updateViews(context);
+                    adapterModified = true;
+                    offerUndoImport(context, new ArrayList<EventAlias>(Arrays.asList(items)));
+                }
             }
         }
     };

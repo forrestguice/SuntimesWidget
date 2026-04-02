@@ -1965,8 +1965,6 @@ public class SuntimesActivity extends AppCompatActivity
             if (AppSettings.loadShowCoordinatesPref(context)) {
                 String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
                 locationSubtitle = new SpannableString(locationString);
-            } else {
-                locationSubtitle = null;
             }
         }
 
@@ -2602,7 +2600,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    protected void onColorsModified(ColorValues values)
+    protected void onColorsModified(@Nullable ColorValues values)
     {
         Log.d("DEBUG", "onColorsModified");
         if (notes != null) {

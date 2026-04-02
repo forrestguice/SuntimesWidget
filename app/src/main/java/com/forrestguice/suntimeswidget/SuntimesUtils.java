@@ -695,12 +695,12 @@ public class SuntimesUtils
      * @return a display string that describes the span between the two calendars
      */
     @Deprecated
-    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2)
+    public TimeDisplayText timeDeltaDisplayString(@Nullable Date c1, @Nullable Date c2)
     {
         return timeDeltaDisplayString(c1, c2, false, true);
     }
     @Deprecated
-    public TimeDisplayText timeDeltaDisplayString(Date c1, Date c2, boolean showWeeks, boolean showHours)
+    public TimeDisplayText timeDeltaDisplayString(@Nullable Date c1, @Nullable Date c2, boolean showWeeks, boolean showHours)
     {
         if (c1 != null && c2 != null)
         {

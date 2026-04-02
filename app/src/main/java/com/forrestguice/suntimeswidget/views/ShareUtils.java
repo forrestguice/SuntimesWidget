@@ -71,7 +71,7 @@ public class ShareUtils
     /**
      * shareFile
      */
-    public static void shareFile(Context context, String authority, File file, String mimetype)
+    public static void shareFile(Context context, String authority, File file, @Nullable String mimetype)
     {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

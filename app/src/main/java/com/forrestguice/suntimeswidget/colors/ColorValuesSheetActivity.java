@@ -263,7 +263,8 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
             if (colorSheet != null) {
-                deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
+                ColorValuesCollection<?> c = colorSheet.getColorCollection();
+                deleteItem.setEnabled(c != null && !c.isDefaultColorID(colorSheet.getSelectedID()));
             } else deleteItem.setEnabled(false);
         }
 

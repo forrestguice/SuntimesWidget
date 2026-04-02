@@ -279,10 +279,12 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             if (context != null)
             {
                 String suggestedID = suggestColorValuesID(context);
-                ColorValues values = (colorsID == null)
-                        ? colorCollection.getDefaultColors(context)
-                        : colorCollection.getColors(context, colorsID);
-                editDialog.setColorValues(values);
+                if (colorCollection != null) {
+                    ColorValues values = (colorsID == null)
+                            ? colorCollection.getDefaultColors(context)
+                            : colorCollection.getColors(context, colorsID);
+                    editDialog.setColorValues(values);
+                }
                 editDialog.setID(suggestedID);
                 editDialog.setLabel(suggestedID);
                 editDialog.setAllowDelete(false);
@@ -301,7 +303,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             //Log.d("DEBUG", "onEditClicked " + colorsID);
             Context context = getActivity();
             if (context != null && colorsID != null) {
-                editDialog.setColorValues(colorCollection.getColors(context, colorsID));
+                if (colorCollection != null) {
+                    editDialog.setColorValues(colorCollection.getColors(context, colorsID));
+                }
                 editDialog.setAllowDelete(true);
                 if (listener != null) {
                     editDialog.setDefaultValues(listener.getDefaultValues());
@@ -316,7 +320,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
         public void onDeleteClicked(@Nullable String colorsID)
         {
             Context context = getActivity();
-            if (context != null && colorsID != null && !colorCollection.isDefaultColorID(colorsID))
+            if (context != null && colorsID != null && colorCollection != null && !colorCollection.isDefaultColorID(colorsID))
             {
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
@@ -334,13 +338,15 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 @Override
                 public void onClick(DialogInterface dialog, int which)
                 {
-                    String selectedID = colorCollection.getSelectedColorsID(context, getAppWidgetID(), getColorTag());
-                    colorCollection.removeColors(context, colorsID);
-                    if (colorsID.equals(selectedID)) {
-                        colorCollection.setSelectedColorsID(context, null, getAppWidgetID(), getColorTag());
+                    if (colorCollection != null) {
+                        String selectedID = colorCollection.getSelectedColorsID(context, getAppWidgetID(), getColorTag());
+                        colorCollection.removeColors(context, colorsID);
+                        if (colorsID.equals(selectedID)) {
+                            colorCollection.setSelectedColorsID(context, null, getAppWidgetID(), getColorTag());
+                        }
+                        Toast.makeText(context, getString(R.string.colors_msg_deleted, colorsID), Toast.LENGTH_SHORT).show();
+                        updateViews();
                     }
-                    Toast.makeText(context, getString(R.string.colors_msg_deleted, colorsID), Toast.LENGTH_SHORT).show();
-                    updateViews();
                 }
             };
         }
@@ -364,7 +370,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     protected void importColors(@NonNull Context context, String jsonString)
     {
         ColorValues values = listener.getDefaultValues();
-        if (values != null)
+        if (colorCollection != null && values != null)
         {
             if (new ColorValuesJSON().loadColorValues(values, jsonString))
             {
@@ -429,7 +435,9 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
             Context context = getActivity();
             if (context != null)
             {
-                colorCollection.removeColors(context, colorsID);
+                if (colorCollection != null) {
+                    colorCollection.removeColors(context, colorsID);
+                }
                 setMode(MODE_SELECT);
                 toggleFragmentVisibility(getMode());
                 requestHideSheet();
@@ -455,10 +463,13 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
     {
         if (context != null)
         {
-            colorCollection.clearCache();    // cached instance may have been modified
+            if (colorCollection != null) {
+                colorCollection.clearCache();    // cached instance may have been modified
+            }
             setMode(MODE_SELECT);
             toggleFragmentVisibility(getMode());
-            onSelectColors(colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()), "cancelEdit");
+            ColorValues v = (colorCollection != null ? colorCollection.getSelectedColors(context, getAppWidgetID(), getColorTag()) : null);
+            onSelectColors(v, "cancelEdit");
         }
     }
 

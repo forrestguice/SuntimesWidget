@@ -1090,6 +1090,6 @@ public class LightGraphDialog extends BottomSheetDialogBase
         public void onShowMoonInfo( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified(boolean closeDialog) {}
-        public void onColorsModified(ColorValues values) {}
+        public void onColorsModified(@Nullable ColorValues values) {}
     }
 }

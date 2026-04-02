@@ -394,7 +394,7 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
             String[] parts = entry.getKey().split("_");
             parts[1] = Integer.toString(replacementId);
             String k = TextUtils.join("_", parts);
-            v = putValueInto(v, k, entry.getValue());
+            putValueInto(v, k, entry.getValue());
         }
         return v;
     }

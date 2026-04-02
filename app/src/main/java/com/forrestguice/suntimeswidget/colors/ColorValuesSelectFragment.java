@@ -255,7 +255,7 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
     {
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
-            deleteItem.setEnabled(!colorCollection.isDefaultColorID(getSelectedID()));
+            deleteItem.setEnabled(colorCollection != null && !colorCollection.isDefaultColorID(getSelectedID()));
         }
     }
     private final PopupMenuCompat.PopupMenuListener onOverflowMenuItemSelected = new PopupMenuCompat.PopupMenuListener()
@@ -409,8 +409,9 @@ public class ColorValuesSelectFragment extends ColorValuesFragment
         }
     }
 
+    @Nullable
     protected ColorValuesCollection<ColorValues> colorCollection = null;
-    public void setColorCollection(ColorValuesCollection<ColorValues> collection) {
+    public void setColorCollection(@Nullable ColorValuesCollection<ColorValues> collection) {
         colorCollection = collection;
         updateViews();
     }

@@ -215,7 +215,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
     }
 
     @Nullable
-    public static PlaceItem csvItemToPlaceItem(String csv_item)
+    public static PlaceItem csvItemToPlaceItem(@Nullable String csv_item)
     {
         if (csv_item == null) {
             return null;

@@ -195,7 +195,10 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
             } else {                 // save to: external download dir
                 Log.d("ExportTask", "saving to external download dir");
                 File exportPath = FileProvider.getExternalStorageDownloadDirectory(context);
-                exportFile = (exportTarget != null ? new File(exportPath, exportTarget) : null);
+                if (exportPath == null) {
+                    Log.w("ExportTask", "external download dir unavailable!");
+                }
+                exportFile = (exportTarget != null && exportPath != null ? new File(exportPath, exportTarget) : null);
 
                 boolean targetExists = (exportFile != null && exportFile.exists());
                 if (targetExists && !overwriteTarget)
@@ -246,7 +249,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
             exported = export(context, out);
 
         } catch (IOException e) {
-            Log.w("ExportTask", "FAILED to write to the export target! " + exportFile.getAbsolutePath() + " :: " + e);
+            Log.w("ExportTask", "FAILED to write to the export target! " + (exportFile != null ? exportFile.getAbsolutePath() : "null") + " :: " + e);
 
         } finally {
             //
@@ -257,7 +260,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
                 try {
                     out.close();
                 } catch (IOException e2) {
-                    Log.w("ExportTask", "FAILED to close the export target! " + exportFile.getAbsolutePath() + " :: " + e2);
+                    Log.w("ExportTask", "FAILED to close the export target! " + (exportFile != null ? exportFile.getAbsolutePath() : "null") + " :: " + e2);
                 }
             }
             cleanup(context);
@@ -283,7 +286,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, @Nullable Uri exportUri, @Nullable File exportFile, String mimeType )
+        public ExportResult( boolean result, @Nullable Uri exportUri, @Nullable File exportFile, @Nullable String mimeType )
         {
             this.result = result;
             this.exportUri = exportUri;
@@ -303,6 +306,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
         public File getExportFile() { return exportFile; }
 
         private final String mimeType;
+        @Nullable
         public String getMimeType() {
             return mimeType;
         }
@@ -405,7 +409,7 @@ public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgr
 
     /**
      */
-    public static void shareResult(Context context, @Nullable File file, String mimeType)
+    public static void shareResult(Context context, @Nullable File file, @Nullable String mimeType)
     {
         if (file == null) {
             return;

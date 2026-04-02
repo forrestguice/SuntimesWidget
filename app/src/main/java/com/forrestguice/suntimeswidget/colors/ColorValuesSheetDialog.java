@@ -241,6 +241,7 @@ public class ColorValuesSheetDialog extends BottomSheetDialogBase
             colorSheet.setColorCollection(getColorCollection());
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
 
+            //noinspection DataFlowIssue (complains colorSheet may be null...)
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer2, colorSheet, DIALOG_SHEET)
                     .commit();

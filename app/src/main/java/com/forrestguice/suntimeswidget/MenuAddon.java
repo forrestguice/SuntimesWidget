@@ -129,9 +129,9 @@ public class MenuAddon
     /**
      * ActivityItemInfo
      */
-    public static final class ActivityItemInfo
+    public static class ActivityItemInfo
     {
-        public ActivityItemInfo(@Nullable Context context, @NonNull String title, ActivityInfo info)
+        public ActivityItemInfo(@Nullable Context context, @NonNull String title, @Nullable ActivityInfo info)
         {
             this.title = title;
             this.info = info;
@@ -144,7 +144,7 @@ public class MenuAddon
             }
         }
 
-        public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)
+        public ActivityItemInfo(@NonNull String title, int iconResId, @Nullable ActivityInfo info)
         {
             this.title = title;
             this.icon = iconResId;
@@ -162,14 +162,18 @@ public class MenuAddon
             return icon;
         }
 
+        @Nullable
         protected final ActivityInfo info;
+        @Nullable
         public ActivityInfo getInfo() {
             return info;
         }
 
         public Intent getIntent() {
             Intent intent = new Intent();
-            intent.setClassName(info.packageName, info.name);
+            if (info != null) {
+                intent.setClassName(info.packageName, info.name);
+            }
             return intent;
         }
 

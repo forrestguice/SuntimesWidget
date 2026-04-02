@@ -1484,6 +1484,6 @@ public class MoonDialog extends BottomSheetDialogBase
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
         public void onShowDate( long suggestedDate ) {}
-        public void onColorsModified(ColorValues values) {}
+        public void onColorsModified(@Nullable ColorValues values) {}
     }
 }
