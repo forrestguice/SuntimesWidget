@@ -200,7 +200,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         } else {
             int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (Build.VERSION.SDK_INT >= 23) {
+            if (Build.VERSION.SDK_INT == 23) {
                 flags = flags | PendingIntent.FLAG_IMMUTABLE;
             }
 

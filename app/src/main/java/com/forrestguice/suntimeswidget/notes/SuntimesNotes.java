@@ -269,8 +269,9 @@ public class SuntimesNotes
      */
     public boolean showNextNote()
     {
-        if (notesList.size() <= 0)
+        if (notesList.isEmpty()) {
             return false;
+        }
 
         if (dataset.isCalculated())
         {
@@ -301,8 +302,9 @@ public class SuntimesNotes
      */
     public boolean showPrevNote()
     {
-        if (notesList.size() <= 0)
+        if (notesList.isEmpty()) {
             return false;
+        }
 
         if (dataset.isCalculated())
         {
@@ -730,8 +732,9 @@ public class SuntimesNotes
 
     public void resetNoteIndex()
     {
-        if (notesList.size() <= 0)
+        if (notesList.isEmpty()) {
             return;
+        }
 
         Calendar now = dataset.now();
         Date time = now.getTime();

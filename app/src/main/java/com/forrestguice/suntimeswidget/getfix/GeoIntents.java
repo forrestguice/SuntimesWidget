@@ -48,7 +48,7 @@ public class GeoIntents
         GeoIntents.buildIntentChooserList(context, geoIntents, geoIntent0);
         GeoIntents.buildIntentChooserList(context, geoIntents, geoIntent1);
 
-        if (geoIntents.size() <= 0) {
+        if (geoIntents.isEmpty()) {
             Toast.makeText(context, context.getString(R.string.action_mapLocation_chooser_noapp), Toast.LENGTH_LONG).show();
             return;
         }

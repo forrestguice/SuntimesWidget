@@ -909,7 +909,7 @@ public class AlarmListDialog extends DialogBase
         {
             ArrayList<AlarmClockItem> items = new ArrayList<>();
             db.open();
-            Cursor cursor = (rowIds == null || rowIds.length <= 0 || rowIds[0] == null)
+            Cursor cursor = (rowIds == null || rowIds.length == 0 || rowIds[0] == null)
                           ? db.getAllAlarms(0, true) : db.getAlarm(rowIds[0]);
 
             while (cursor != null && !cursor.isAfterLast())

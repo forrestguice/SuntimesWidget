@@ -942,7 +942,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                         background.animate().alpha(1f).setDuration(WALLPAPER_DELAY);
                     } else background.setAlpha(1f);
 
-                } else if (Build.VERSION.SDK_INT >= 11) {
+                } else if (Build.VERSION.SDK_INT == 11) {
                     background.setAlpha(1f);
                 }
             }
@@ -961,7 +961,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             } else if (Build.VERSION.SDK_INT >= 12) {
                 background.animate().alpha(0f).setDuration(WALLPAPER_DELAY);
 
-            } else if (Build.VERSION.SDK_INT >= 11) {
+            } else if (Build.VERSION.SDK_INT == 11) {
                 background.setAlpha(0f);
 
             } else {
