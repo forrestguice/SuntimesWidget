@@ -22,7 +22,6 @@ import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 import com.forrestguice.suntimeswidget.events.EventUri;
-import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;

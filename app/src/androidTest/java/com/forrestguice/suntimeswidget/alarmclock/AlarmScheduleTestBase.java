@@ -24,7 +24,6 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -32,7 +31,6 @@ import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
-import com.forrestguice.suntimeswidget.events.EventUri;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.forrestguice.util.android.AndroidResources;

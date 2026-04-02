@@ -39,7 +39,6 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_REQUIRES_LOCATION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS;

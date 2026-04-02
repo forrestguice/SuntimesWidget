@@ -21,7 +21,6 @@ package com.forrestguice.colors;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -31,9 +31,6 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemUri;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -63,7 +60,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
-import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_TEXT_SIZE;

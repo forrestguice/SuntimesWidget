@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.test.RenamingDelegatingContext;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;

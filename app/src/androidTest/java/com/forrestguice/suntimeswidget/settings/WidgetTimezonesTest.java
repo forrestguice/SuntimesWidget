@@ -25,7 +25,6 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
-import com.forrestguice.util.android.AndroidTaskHandler;
 import com.forrestguice.util.concurrent.SimpleTaskListener;
 import com.forrestguice.util.concurrent.TaskListener;
 
@@ -33,8 +32,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.Executors;
 
 import static junit.framework.Assert.assertTrue;
 

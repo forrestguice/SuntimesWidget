@@ -18,11 +18,9 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.UnlistedTest;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
