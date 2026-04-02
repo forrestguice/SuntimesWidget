@@ -30,6 +30,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
@@ -81,6 +82,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.tabLayout;
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -461,8 +463,9 @@ public class AlarmCreateDialogTest extends SuntimesActivityTestBase
                     .inRoot(isPlatformPopup()).perform(click());
             return this;
         }
-        public AlarmDialogRobot assertAlarmDialogEvent(SolarEvents mode)
+        public AlarmDialogRobot assertAlarmDialogEvent(@Nullable SolarEvents mode)
         {
+            assertNotNull(mode);
             spinnerDisplaysText(R.id.appwidget_schedalarm_mode, mode.toString());
             return this;
         }

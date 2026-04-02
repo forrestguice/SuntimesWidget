@@ -76,7 +76,7 @@ public class AlarmScheduleTest0
             assertNotNull(event);
             if (event0 != null) {
                 assertTrue(event.after(event0));
-                assertEquals(event.getTimeInMillis() - event0.getTimeInMillis(), expectedInterval * 24 * 60 * 60 * 1000);
+                assertEquals(event.getTimeInMillis() - event0.getTimeInMillis(), expectedInterval * 24 * 60 * 60 * 1000L);
             }
 
             boolean result = AlarmScheduler.updateAlarmTime((SuntimesDataSettings) null, alarm, now, true);

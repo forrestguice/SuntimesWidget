@@ -1,5 +1,6 @@
 package com.forrestguice.suntimeswidget.calculator;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.UnlistedTest;
 
 import net.time4j.Moment;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @Category(UnlistedTest.class)
@@ -47,6 +49,7 @@ public class SunPositionTest1
         double zenith = 90 + geodeticAngle - elevation0;
         Moment moment1 = calculator.sunset(plainDate, latitude, longitude, zenith);
         Calendar date1 = momentToCalendar(moment1, tz);
+        assertNotNull(date1);
 
         //noinspection PointlessArithmeticExpression
         double toleranceMs = 1 * 60 * 1000;    // 1min
@@ -55,7 +58,8 @@ public class SunPositionTest1
                 Math.abs(difference) < toleranceMs);
     }
 
-    public static Calendar momentToCalendar(Moment moment, TimeZone timezone)
+    @Nullable
+    public static Calendar momentToCalendar(@Nullable Moment moment, TimeZone timezone)
     {
         Calendar retValue = null;
         if (moment != null)

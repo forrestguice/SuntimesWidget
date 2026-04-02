@@ -91,6 +91,7 @@ import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @LargeTest
 @BehaviorTest
@@ -208,6 +209,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         onView(withId(R.id.info_note_flipper)).check(assertShown);
 
         NoteData note = activity.notes.getNote( activity.notes.getNoteIndex() );
+        assertNotNull(note);
         onView(allOf(withId(R.id.text_timenote1), isDisplayed())).check(matches(withText(containsString(note.timeText.getValue()))));
         onView(allOf(withId(R.id.text_timenote2), isDisplayed())).check(matches(withText(containsString(note.timeText.getSuffix()))));
         onView(allOf(withId(R.id.text_timenote3), isDisplayed())).check(matches(withText(containsString(note.noteText))));

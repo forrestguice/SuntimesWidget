@@ -26,6 +26,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import android.content.Intent;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
 import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -224,6 +225,7 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
+        @Nullable
         public static TimezoneMode getTimezoneDialogMode()
         {
             if (spinnerDisplaysText(R.id.appwidget_timezone_mode, TimezoneMode.TIME_STANDARD.toString()))

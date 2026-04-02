@@ -74,6 +74,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelp
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.withIndex;
 
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -524,6 +525,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
             dataSourcePref.get().check(assertEnabled);
 
             SuntimesCalculatorDescriptor dataSource = WidgetSettings.loadCalculatorModePref(context, 0);
+            assertNotNull(dataSource);
             DataInteractionHelper.DataInteractionInterface dataSourcePref_text = DataInteractionHelper.wrap(dataSourcePref.get().onChildView(allOf(withClassName(is(TextView.class.getName())), withText(dataSource.getName()))));
             dataSourcePref_text.get().check(assertShown);
             return this;

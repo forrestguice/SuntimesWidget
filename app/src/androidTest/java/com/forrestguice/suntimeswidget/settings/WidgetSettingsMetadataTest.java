@@ -65,6 +65,7 @@ public class WidgetSettingsMetadataTest
         long appWidgetId0 = 100;
         ContentValues values0 = createContentValues0(appWidgetId0);
         WidgetSettingsMetadata.WidgetMetadata d0 = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values0, appWidgetId0);
+        assertNotNull(d0);
         assertEquals(d0.getWidgetClassName(), className);
         assertEquals(d0.getVersionCode(), versionCode);
         assertEquals(d0.getCategory(), category);
@@ -74,6 +75,7 @@ public class WidgetSettingsMetadataTest
         assertEquals(d0.getMaxDimensions()[1], maxHeight);
 
         WidgetSettingsMetadata.WidgetMetadata d1 = WidgetSettingsMetadata.WidgetMetadata.getMetaDataFromValues(values0);
+        assertNotNull(d1);
         assertEquals(d1.getWidgetClassName(), className);
         assertEquals(d1.getVersionCode(), versionCode);
         assertEquals(d1.getCategory(), category);

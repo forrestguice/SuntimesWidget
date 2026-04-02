@@ -69,6 +69,7 @@ import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatch
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
@@ -185,6 +186,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
+        assertNotNull(cursor);
         int p = GetFixDatabaseAdapter.findPlaceByName(label, cursor);
         if (p >= 0) {
             long id = cursor.getInt(0);
@@ -199,6 +201,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
+        assertNotNull(cursor);
         int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
         if (p < 0) {
             db.addPlace(location, PlaceItem.TAG_DEFAULT);
@@ -212,6 +215,7 @@ public class PlacesActivityTest extends SuntimesActivityTestBase
         GetFixDatabaseAdapter db = new GetFixDatabaseAdapter(context);
         db.open();
         Cursor cursor = db.getAllPlaces(0, false);
+        assertNotNull(cursor);
         int p = GetFixDatabaseAdapter.findPlaceByName(label, cursor);
         boolean retValue = (p >= 0);
         cursor.close();

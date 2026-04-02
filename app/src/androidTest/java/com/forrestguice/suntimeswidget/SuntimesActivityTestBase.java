@@ -37,6 +37,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
@@ -228,7 +229,7 @@ public abstract class SuntimesActivityTestBase
     public static boolean viewIsDisplayed(int viewId, Context context, int textResID) {
         return viewIsDisplayed(viewId, context.getString(textResID));
     }
-    public static boolean viewIsDisplayed(int viewId, String text)
+    public static boolean viewIsDisplayed(int viewId, @Nullable String text)
     {
         final boolean[] isDisplayed = {true};
         Matcher<View> view = (text != null) ? allOf(withId(viewId), withText(containsString(text)))

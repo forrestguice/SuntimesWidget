@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.calculator.TimeZones;
@@ -169,7 +170,7 @@ public class AlarmScheduleTestBase
             }
         };
     }
-    public void test_updateAlarmTime_repeatingAlarm(String eventID, ArrayList<Integer> repeatingDays, Calendar now)
+    public void test_updateAlarmTime_repeatingAlarm(String eventID, @Nullable ArrayList<Integer> repeatingDays, Calendar now)
     {
         AlarmClockItem alarm = AlarmNotificationsTest.createAlarmClockItem(true);
         alarm.location = new Location("Helsinki", "60", "25", "0");

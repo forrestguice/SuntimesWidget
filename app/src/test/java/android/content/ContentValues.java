@@ -1,5 +1,7 @@
 package android.content;
 
+import com.forrestguice.annotation.Nullable;
+
 import java.util.HashMap;
 
 /**
@@ -19,6 +21,7 @@ public class ContentValues
     public void put(String key, String value) {
         stringValues.put(key, value);
     }
+    @Nullable
     public String getAsString(String key) {
         return stringValues.containsKey(key) ? stringValues.get(key) : null;
     }
@@ -26,6 +29,7 @@ public class ContentValues
     public void put(String key, CharSequence value) {
         charSequenceValues.put(key, value);
     }
+    @Nullable
     public CharSequence getAsCharSequence(String key) {
         return charSequenceValues.containsKey(key) ? charSequenceValues.get(key) : null;
     }
@@ -33,6 +37,7 @@ public class ContentValues
     public void put(String key, Boolean value) {
         boolValues.put(key, value);
     }
+    @Nullable
     public Boolean getAsBoolean(String key) {
         return boolValues.containsKey(key) ? boolValues.get(key) : null;
     }
@@ -40,6 +45,7 @@ public class ContentValues
     public void put(String key, Integer value) {
         intValues.put(key, value);
     }
+    @Nullable
     public Integer getAsInteger(String key) {
         return intValues.containsKey(key) ? intValues.get(key) : null;
     }
@@ -47,6 +53,7 @@ public class ContentValues
     public void put(String key, Double value) {
         doubleValues.put(key, value);
     }
+    @Nullable
     public Double getAsDouble(String key) {
         return doubleValues.containsKey(key) ? doubleValues.get(key) : null;
     }
@@ -54,6 +61,7 @@ public class ContentValues
     public void put(String key, Long value) {
         longValues.put(key, value);
     }
+    @Nullable
     public Long getAsLong(String key) {
         return longValues.containsKey(key) ? longValues.get(key) : null;
     }
@@ -61,12 +69,14 @@ public class ContentValues
     public void put(String key, Short value) {
         shortValues.put(key, value);
     }
+    @Nullable
     public Short getAsShort(String key) {
         return shortValues.containsKey(key) ? shortValues.get(key) : null;
     }
 
     public void put(String key, Float value) { floatValues.put(key, value);
     }
+    @Nullable
     public Float getAsFloat(String key) {
         return floatValues.containsKey(key) ? floatValues.get(key) : null;
     }

@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.util.InstrumentationUtils;
@@ -258,8 +259,9 @@ public class GetFixDatabaseAdapterTest
         db.close();
     }
 
-    protected void verifyPlace(Cursor cursor, boolean fullEntry, long rowID, Location location)
+    protected void verifyPlace(@Nullable Cursor cursor, boolean fullEntry, long rowID, Location location)
     {
+        assertNotNull(cursor);
         // KEY_ROWID, KEY_PLACE_NAME, KEY_PLACE_LATITUDE, KEY_PLACE_LONGITUDE, KEY_PLACE_ALTITUDE, KEY_PLACE_COMMENT
         assertTrue("rowID should match", cursor.getLong(0) == rowID);
         assertTrue("label should match", cursor.getString(1).equals(location.getLabel()));
@@ -279,6 +281,7 @@ public class GetFixDatabaseAdapterTest
 
         // testing n=0, fullEntry=false
         Cursor cursor0 = db.getAllPlaces(0, false);
+        assertNotNull(cursor0);
         assertTrue("cursor should be at first", cursor0.getPosition() == 0);
         assertTrue("cursor should have " + rowID.length + " entries (has " + cursor0.getCount() + ")", cursor0.getCount() == rowID.length);
         while (!cursor0.isAfterLast())
@@ -295,6 +298,7 @@ public class GetFixDatabaseAdapterTest
 
         // testing n=0, fullEntry=true
         Cursor cursor1 = db.getAllPlaces(0, true);
+        assertNotNull(cursor1);
         assertTrue("cursor should be at first", cursor1.getPosition() == 0);
         assertTrue("cursor should have " + rowID.length + " entries (has " + cursor1.getCount() + ")", cursor1.getCount() == rowID.length);
         while (!cursor1.isAfterLast())
@@ -311,6 +315,7 @@ public class GetFixDatabaseAdapterTest
 
         // testing n=length-1, fullEntry=false
         Cursor cursor2 = db.getAllPlaces(rowID.length-1, false);   // all entries but last
+        assertNotNull(cursor2);
         assertTrue("cursor should be at first", cursor2.getPosition() == 0);
         assertTrue("cursor should have " + (rowID.length-1) + " entries (has " + cursor2.getCount() + ")", cursor2.getCount() == rowID.length-1);
         while (!cursor2.isAfterLast())
@@ -350,6 +355,7 @@ public class GetFixDatabaseAdapterTest
         long[] rowID = populateDatabase();
 
         Cursor cursor = db.getAllPlaces(0, false);
+        assertNotNull(cursor);
         for (int i=0; i<rowID.length; i++)
         {
             int position = GetFixDatabaseAdapter.findPlaceByName(locations[i].getLabel(), cursor);

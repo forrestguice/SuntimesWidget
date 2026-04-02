@@ -185,6 +185,7 @@ public class SuntimesThemeProviderTest
         SuntimesTheme oracle0 = WidgetThemes.loadTheme(mockContext, themeName0);
         Uri uri0 = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_THEME + "/" + themeName0);
         Cursor cursor0 = resolver.query(uri0, projection, null, null, null);
+        assertNotNull(cursor0);
         test_cursorHasColumns("QUERY_THEME", cursor0, projection);
         test_theme(cursor0, oracle0);
         cursor0.close();
@@ -193,6 +194,7 @@ public class SuntimesThemeProviderTest
         SuntimesTheme oracle1 = WidgetThemes.loadTheme(mockContext, themeName1);
         Uri uri1 = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_THEME + "/" + themeName1);
         Cursor cursor1 = resolver.query(uri1, projection, null, null, null);
+        assertNotNull(cursor1);
         test_cursorHasColumns("QUERY_THEME", cursor1, projection);
         test_theme(cursor1, oracle1);
         cursor1.close();

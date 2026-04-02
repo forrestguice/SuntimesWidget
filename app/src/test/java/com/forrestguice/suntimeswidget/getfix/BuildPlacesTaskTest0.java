@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import com.forrestguice.annotation.Nullable;
+
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;
@@ -56,7 +58,8 @@ public class BuildPlacesTaskTest0
         }
     }
 
-    public PlaceItem test_csvToPlaceItem(String value, boolean isValid)
+    @Nullable
+    public PlaceItem test_csvToPlaceItem(@Nullable String value, boolean isValid)
     {
         PlaceItem item = BuildPlacesTask.csvItemToPlaceItem(value);
         if (isValid) {

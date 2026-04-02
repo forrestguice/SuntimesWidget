@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.util.InstrumentationUtils;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
@@ -104,6 +105,7 @@ public class AlarmDatabaseAdapterTest
 
         // testing n=0, fullEntry=false
         Cursor cursor0 = db.getAllAlarms(0, false);
+        assertNotNull(cursor0);
         assertTrue("cursor should be at first", cursor0.getPosition() == 0);
         assertTrue("cursor should have " + map.size() + " entries (has " + cursor0.getCount() + ")", cursor0.getCount() == map.size());
         while (!cursor0.isAfterLast())
@@ -119,6 +121,7 @@ public class AlarmDatabaseAdapterTest
 
         // testing n=0, fullEntry=true
         Cursor cursor1 = db.getAllAlarms(0, true);
+        assertNotNull(cursor1);
         assertTrue("cursor should be at first", cursor1.getPosition() == 0);
         assertTrue("cursor should have " + map.size() + " entries (has " + cursor1.getCount() + ")", cursor1.getCount() == map.size());
         while (!cursor1.isAfterLast())
@@ -134,6 +137,7 @@ public class AlarmDatabaseAdapterTest
 
         // testing n=length-1, fullEntry=false
         Cursor cursor2 = db.getAllAlarms(map.size()-1, false);   // all entries but last
+        assertNotNull(cursor2);
         assertTrue("cursor should be at first", cursor2.getPosition() == 0);
         assertTrue("cursor should have " + (map.size()-1) + " entries (has " + cursor2.getCount() + ")", cursor2.getCount() == map.size()-1);
         while (!cursor2.isAfterLast())
@@ -158,6 +162,7 @@ public class AlarmDatabaseAdapterTest
         HashMap<Long, AlarmClockItem> map = mapDatabase(rowID);
 
         Cursor cursor0 = db.getAllAlarmsByState(0, AlarmState.STATE_TIMEOUT);       // expected result is 0; all items should be state NONE
+        assertNotNull(cursor0);
         assertTrue("cursor should be at first", cursor0.getPosition() == 0);
         assertTrue("cursor should have 0 entries (has " + cursor0.getCount() + ")", cursor0.getCount() == 0);
 
@@ -170,6 +175,7 @@ public class AlarmDatabaseAdapterTest
         }
 
         Cursor cursor1 = db.getAllAlarmsByState(0, AlarmState.STATE_SOUNDING, AlarmState.STATE_TIMEOUT);    // SOUNDING or TIMEOUT
+        assertNotNull(cursor1);
         assertTrue("cursor should be at first", cursor1.getPosition() == 0);
         assertTrue("cursor should have " + map.size() + " entries (has " + cursor1.getCount() + ")", cursor1.getCount() == map.size());
 
@@ -252,8 +258,9 @@ public class AlarmDatabaseAdapterTest
         db.close();
     }
 
-    protected void verifyAlarm(Cursor cursor, boolean fullEntry, long rowID, ContentValues values)
+    protected void verifyAlarm(@Nullable Cursor cursor, boolean fullEntry, long rowID, ContentValues values)
     {
+        assertNotNull(cursor);
         // KEY_ROWID
         assertTrue("rowID should match", cursor.getLong(0) == rowID);
         assertTrue("type should match", cursor.getString(1).equals(values.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE)));
@@ -261,8 +268,9 @@ public class AlarmDatabaseAdapterTest
         // TODO: more columns
     }
 
-    public static void verifyAlarmState(Cursor cursor, long rowID, ContentValues values)
+    public static void verifyAlarmState(@Nullable Cursor cursor, long rowID, ContentValues values)
     {
+        assertNotNull(cursor);
         assertTrue("alarmID should match", cursor.getInt(0) == rowID);
         assertTrue("alarmID should match", cursor.getInt(0) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE_ALARMID));
         assertTrue("state should match", cursor.getInt(1) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE));

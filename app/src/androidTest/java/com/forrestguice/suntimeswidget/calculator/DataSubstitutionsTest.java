@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
@@ -41,6 +42,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SuntimesJUnitTestRunner.class)
@@ -154,7 +156,9 @@ public class DataSubstitutionsTest
         assertFalse("result should not be empty", result1.isEmpty());
 
         TimeDateDisplay utils = new TimeDateDisplay();
-        Calendar eventTime = data.calculator().getSolarNoonCalendarForDate(calendar);
+        SuntimesCalculator calculator = data.calculator();
+        assertNotNull(calculator);
+        Calendar eventTime = calculator.getSolarNoonCalendarForDate(calendar);
         String displayString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime, true).toString();
         assertEquals("result should be formatted time of solar noon", displayString, result1);
     }
@@ -176,7 +180,9 @@ public class DataSubstitutionsTest
         assertFalse("result should not be empty", result.isEmpty());
 
         TimeDateDisplay utils = new TimeDateDisplay();
-        Calendar eventTime = data.calculator().getSolarNoonCalendarForDate(calendar);
+        SuntimesCalculator calculator = data.calculator();
+        assertNotNull(calculator);
+        Calendar eventTime = calculator.getSolarNoonCalendarForDate(calendar);
         String displayString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), eventTime, true).toString();
         assertEquals("result should be formatted time of solar noon", displayString, result);
     }

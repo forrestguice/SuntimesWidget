@@ -26,6 +26,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import android.content.Intent;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BehaviorTest;
 import com.forrestguice.suntimeswidget.DialogTest;
 import com.forrestguice.suntimeswidget.QuickTest;
@@ -353,6 +354,7 @@ public class LocationDialogTest extends SuntimesActivityTestBase
             return this;
         }
 
+        @Nullable
         public static LocationMode detectLocationMode()
         {
             if (spinnerDisplaysText(R.id.appwidget_location_mode, LocationMode.CURRENT_LOCATION.toString()))
