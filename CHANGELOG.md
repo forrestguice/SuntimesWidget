@@ -24,7 +24,6 @@
 * adds `snooze` and `snooze limit` chips to the alarm edit dialog that allows setting these values per alarm.
 * adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
-* adds permission `android.permission.QUERY_ALL_PACKAGES` (needed by actions functionality to launch user-defined intents) [permission].
 * adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
 * refactor; decouples core data classes from the Android api (#388); moved into `calculator` and `util` Java libraries.
 * refactor; decouples UI classes from the Android Support Library; introduces Suntimes `support` library.

@@ -30,7 +30,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>       <!-- needed by Actions to launch user-defined intents -->
+    <!--<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>-->       <!-- needed by Actions to launch user-defined intents -->
 
 
     <permission-tree android:name="${suntimesPermissionRoot}.permission."
