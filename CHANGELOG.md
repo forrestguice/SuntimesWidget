@@ -3,7 +3,7 @@
 ### DEVELOP
 
 * adds "Material You" app themes (api31+) (#635).
-* adds digital clock widgets with fancy typeface.
+* adds "fancy" digital clock widgets.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
 * adds custom events; `shadow factor`, `day/night percent`, `moon elevation`, and `moon illumination` (#729, #900).
 * adds world map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
@@ -27,9 +27,9 @@
 * adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
 * refactor; decouples core data classes from the Android api (#388); moved into `calculator` and `util` Java libraries.
 * refactor; decouples UI classes from the Android Support Library; introduces Suntimes `support` library.
-* build; updates targetSdkVersion (28 -> 30), migrates the app to AndroidX, and replaces use of deprecated API (api30).
-* build; adds `legacy` flavor (uses the Android Support Library); assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle.
+* build; updates targetSdkVersion (28 -> 30) to Android 11, migrates the app to AndroidX, and replaces use of deprecated API (api30).
 * build; adds `production` and `nightly` build flavors (#892).
+* build; adds `legacy` build flavor; assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle to build against the older Android Support Library.
 
 ### v0.16.15 (2026-03-30)
 * fixes crash when updating flippable widget (#926).
