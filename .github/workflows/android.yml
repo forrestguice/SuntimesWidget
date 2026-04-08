@@ -16,23 +16,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  #v4.3.1
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #6.0.2
       with:
         submodules: recursive
         persist-credentials: false
 
     - name: set up JDK 17
-      uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9  #v4.8.0
+      uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  #5.2.0
       with:
         distribution: 'temurin'
         java-version: '17'
 
     - name: Gradle Wrapper Validation
-      uses: gradle/actions/wrapper-validation@748248ddd2a24f49513d8f472f81c3a07d4d50e1  #v4.4.4
+      uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e  #6.1.0
     - name: Make gradlew executable
       run: chmod +x ./gradlew
     
-    - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830  #v4.3.0
+    - uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  #v5.0.4
       with:
         path: |
             ~/.gradle/caches
@@ -40,28 +40,38 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
             ${{ runner.os }}-gradle-
-    
+
     - name: Build with Gradle
       run: ./gradlew assembleProductionDebug
-    
-    - name: Build with Gradle (Unit tests)
-      run: ./gradlew testProductionRelease
-    
-    - name: Build with Gradle (lintVitalRelease)
-      run: ./gradlew lintVitalProductionRelease
-    
+
     - name: Upload artifacts (debug apk)
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  #v4.6.2
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
       with:
         name: app
-        path: app/build/outputs/apk/production/release/app-production-release-unsigned.apk
+        path: app/build/outputs/apk/production/release/app-production-debug-unsigned.apk
+
+    - name: Build with Gradle (Unit tests)
+      run: ./gradlew testProductionRelease
+
+    - name: Build with Gradle (lintVitalRelease)
+      run: ./gradlew lintProductionRelease || true
+
+    - name: Build with Gradle (lintVitalRelease)
+      run: ./gradlew lintVitalProductionRelease
 
     - name: Upload artifacts (lint results)
       if: success() || failure()
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  #v4.6.2
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
       with:
         name: lint-results
         path: app/build/reports/lint-results-productionRelease-fatal.html
+
+    - name: Upload artifacts (lint results)
+      if: success() || failure()
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
+      with:
+        name: lint-results
+        path: app/build/reports/lint-results-productionRelease.html
 
     - name: Upload artifacts (merge report)
       if: success() || failure()
@@ -72,8 +82,7 @@ jobs:
 
     - name: Upload artifacts (test results)
       if: success() || failure()
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  #v4.6.2
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
       with:
         name: test-results
         path: app/build/reports/tests/testProductionReleaseUnitTest/
-
