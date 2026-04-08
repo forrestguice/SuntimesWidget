@@ -78,8 +78,8 @@ android
             missingDimensionStrategy 'api', 'api28'
         }
 
-        versionCode 129
-        versionName "0.16.15"
+        versionCode 130
+        versionName "0.17.0"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimes",
                                 suntimesAuthorityRoot0:"suntimeswidget",
