@@ -7,17 +7,21 @@ on:
       - master
       - pages
 
+permissions: {}
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  #v4.3.1
       with:
         fetch-depth: 0
-    - uses: yesolutions/mirror-action@master
+        persist-credentials: false
+        
+    - uses: yesolutions/mirror-action@1708f16cdb28634fd3ba10c5c79abc91f5578a14  #0.7.0
       with:
-        REMOTE: 'https://codeberg.org/forrestguice/suntimes.git'
-        GIT_USERNAME: forrestguice
+        REMOTE: ${{ secrets.CB_REMOTE }}
+        GIT_USERNAME: ${{ secrets.CB_GIT_USERNAME }}
         GIT_PASSWORD: ${{ secrets.CB_GIT_PASSWORD }}
     
