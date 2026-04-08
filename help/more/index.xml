@@ -55,6 +55,15 @@ This data is displayed by dialogs in the app, by home screen widgets, and can us
 Data Substitutions Data Sources Data Provider </description>
     </item>
     <item>
+      <title>Nightly Debug</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/help/more/debug/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/help/more/debug/index.html</guid>
+      <description>Nightly debug versions are available for testing untagged commits. These &amp;ldquo;nightly&amp;rdquo; versions can be installed by adding the following repositories to your F-Droid client.
+https://forrestguice.github.io/SuntimesWidget-nightly/fdroid/repo/ https://forrestguice.github.io/NaturalHour-nightly/fdroid/repo/ https://forrestguice.github.io/IntervalMidpoints-nightly/fdroid/repo/ https://forrestguice.github.io/SuntimesNFC-nightly/fdroid/repo/ https://forrestguice.github.io/SolunarPeriods-nightly/fdroid/repo/ https://forrestguice.github.io/SuntimesCalendars-nightly/fdroid/repo/ Notes:
+Each repository contains a single nightly app. The nightly apps can be installed alongside their official versions (there is no need to uninstall one to install the other). These are debug apps for testing purposes. The official release versions should be preferred for everyday use.</description>
+    </item>
+    <item>
       <title>Documentation</title>
       <link>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -62,7 +71,7 @@ Data Substitutions Data Sources Data Provider </description>
       <description>This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.
 You can help improve it by reporting typos, dead links, and other errors.
 Mirrors This user manual is published to:
-https://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.1, 2025-06-03; minor updates; adds pages for Natural Hour and Suntimes Calendars. v0.1.0, 2024-05-01, written for Suntimes v0.15.14. </description>
+https://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.2, 2026-04-08; minor updates; adds nightly debug info; adds past version info; adds pages for SuntimesNFC, Interval Midpoints, and Solunar Periods; updates privacy info to Suntimes v0.17.0. v0.1.1, 2025-06-03; minor updates; adds pages for Natural Hour and Suntimes Calendars.</description>
     </item>
   </channel>
 </rss>

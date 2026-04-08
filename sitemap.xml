@@ -46,6 +46,9 @@
     <loc>https://forrestguice.codeberg.page/Suntimes/help/dialogs/sun/index.html</loc>
   </url>
   <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/download/versions/index.html</loc>
+  </url>
+  <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/configuration/welcome/index.html</loc>
   </url>
   <url>
@@ -173,6 +176,9 @@
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/data/index.html</loc>
     <lastmod>2024-03-16T16:10:53-07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://forrestguice.codeberg.page/Suntimes/help/more/debug/index.html</loc>
   </url>
   <url>
     <loc>https://forrestguice.codeberg.page/Suntimes/help/more/documentation/index.html</loc>

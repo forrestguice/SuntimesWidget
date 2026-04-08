@@ -112,6 +112,14 @@ var relearn_search_index = [
     "uri": "/Suntimes/help/dialogs/sun/index.html"
   },
   {
+    "breadcrumb": "Suntimes \u003e Get Suntimes",
+    "content": "The latest version v0.17.* targets Android 11 (api 30). The minimum supported version is Android 4 (api 14).\nNote F-Droid provides downloads for the last three versions. Older versions are moved to the archive.\nPast Versions v0.16.* targets Android 9 (api 28). The minimum supported version is Android 4 (api 14). v0.5.* - v0.15.* targets Android 7 (api 25). The minimum supported version is Android 2 (api 10). v0.3.* - v0.4.* targets Android 7 (api 24). v0.1.* - v0.2.* targets Android 6 (api 23). v0.0.* targets Android 5 (api 21). Releases Read the changelog for detailed release notes.\nv0.16.15 (2026-03-30) v0.15.14 (2024-04-15) v0.14.12 (2022-12-22) v0.13.19 (2022-01-24) v0.12.11 (2020-06-16) v0.11.10 (2019-09-03) v0.10.3 (2019-01-31) v0.9.5 (2018-11-12) v0.8.6 (2018-07-05) v0.7.4 (2018-03-26) v0.6.2 (2018-02-03) v0.5.2 (2017-12-21) v0.4.1 (2017-10-31) v0.3.1 (2017-04-15) v0.2.3 (2016-11-07) v0.1.1 (2016-07-21) v0.0.2 (2016-03-11) v0.0.1 (2015-02-16) ",
+    "description": "",
+    "tags": "Advanced",
+    "title": "Versions",
+    "uri": "/Suntimes/download/versions/index.html"
+  },
+  {
     "breadcrumb": "Suntimes \u003e Help \u003e Configuration",
     "content": "Suntimes will display a welcome screen to assist with initial configuration.\nAppearance User Interface Location Time Zone Alarms Tip The welcome screen is automatically displayed the first time the app is launched. It can be revisited later from Suntimes -\u003e Settings -\u003e General -\u003e Welcome.\nAppearance Suntimes supports light and dark themes, and can switch between them to match the system. It also includes high contrast versions of these themes.\nSuntimes supports larger text sizes (while also respecting the system’s text size settings). Choose a larger text size to improve readability.\nTip Appearance settings can be changed later from Suntimes -\u003e Settings -\u003e User Interface -\u003e Appearance.\nUser Interface Suntimes can be customized to show or hide information. Choose the fields that should be displayed by the main screen (and hide others).\nTip It is also possible to show custom events that occur when the sun is at a given angle.\nUser Interface settings can be changed later from Suntimes -\u003e Settings -\u003e User Interface.\nLocation Select a place. Suntimes provides a locale specific default (and includes a large list of world places).\nUse Add World Places to add all defaults to the list of places, or Import to import a previously saved list.\nUse Get Location to add the device’s current location to the list.\nNote The location is manually configured by default; Suntimes does not require location permissions (optional).\nTime Zone Select a time zone. Suntimes displays information using the system time zone by default.\nTip Choose a time zone within a couple hours of local mean time for best results.\nVerify the time zone if reported times seem inaccurate or don’t make sense. A mismatch between the time zone and location is a common misconfiguration.\nAlarms Use Import to restore alarms from a previous installation of Suntimes.\nExtra configuration may be required for alarms to work reliably. Please follow all recommendations if you intend to use alarm features.\n",
     "description": "",
@@ -121,7 +129,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes",
-    "content": "Install with F-Droid Suntimes is available from F-Droid, an installable catalog of FOSS (Free and Open Source Software) applications for the Android platform.\nIn addition to being included in the official F-Droid repository, Suntimes related apps can also be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo These repositories can be added to your F-Droid client as an alternate download source. Note: these additional repos are the same and differ only in their hosting.\nPay as you feel Suntimes is available gratis, but if it has proven its value, please pay as you feel.\nPaypal Liberapay ko-fi Buy Me a Coffee Software development and maintenance requires the use of real world resources, and cannot be sustained without them. Your willingness to assign it real world value is greatly appreciated.\nMore information… How will money be spent?\nAll money received from these channels is saved and periodically spent on items necessary for development. It will be used to replace aging devices and other necessary hardware.\nAs an example, my current budget Android phone was purchased using these funds ($100).\nHow much has been collected?\nUnfortunately less than you might think, and much less than hoped for.\nThe current project income isn’t enough to pay for essentials like time or expertise; these resources are all volunteered, but replacing development hardware is a realistic goal. The project has been soliciting donations for ~7 years, and now has enough to purchase a low end Pixel device.\nLicense Suntimes source code is available under GPLv3.\nCopyright © 2014-2024 Forrest Guice\nhttps://github.com/forrestguice/SuntimesWidget\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n",
+    "content": "Install with F-Droid Suntimes is available from F-Droid, an installable catalog of FOSS (Free and Open Source Software) applications for the Android platform.\nIn addition to being included in the official F-Droid repository, Suntimes related apps can also be installed from:\nhttps://forrestguice.codeberg.page/SuntimesApps/repo https://forrestguice.github.io/SuntimesApps/repo These repositories can be added to your F-Droid client as an alternate download source. Note: these additional repos are the same and differ only in their hosting.\nPay as you feel Suntimes is available gratis, but if it has proven its value, please pay as you feel.\nLiberapay Paypal ko-fi Buy Me a Coffee Software development and maintenance requires the use of real world resources, and cannot be sustained without them. Your willingness to assign it real world value is greatly appreciated.\nLicense Suntimes source code is available under GPLv3.\nCopyright © 2014-2026 Forrest Guice\nhttps://github.com/forrestguice/SuntimesWidget\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n",
     "description": "",
     "tags": null,
     "title": "Get Suntimes",
@@ -401,7 +409,7 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help",
-    "content": " Settings Events Places Actions Data Documentation ",
+    "content": " Settings Events Places Actions Data Nightly Debug Documentation ",
     "description": "",
     "tags": null,
     "title": "More",
@@ -425,7 +433,15 @@ var relearn_search_index = [
   },
   {
     "breadcrumb": "Suntimes \u003e Help \u003e More",
-    "content": "This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.\nYou can help improve it by reporting typos, dead links, and other errors.\nMirrors This user manual is published to:\nhttps://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.1, 2025-06-03; minor updates; adds pages for Natural Hour and Suntimes Calendars. v0.1.0, 2024-05-01, written for Suntimes v0.15.14. ",
+    "content": "Nightly debug versions are available for testing untagged commits. These “nightly” versions can be installed by adding the following repositories to your F-Droid client.\nhttps://forrestguice.github.io/SuntimesWidget-nightly/fdroid/repo/ https://forrestguice.github.io/NaturalHour-nightly/fdroid/repo/ https://forrestguice.github.io/IntervalMidpoints-nightly/fdroid/repo/ https://forrestguice.github.io/SuntimesNFC-nightly/fdroid/repo/ https://forrestguice.github.io/SolunarPeriods-nightly/fdroid/repo/ https://forrestguice.github.io/SuntimesCalendars-nightly/fdroid/repo/ Notes:\nEach repository contains a single nightly app. The nightly apps can be installed alongside their official versions (there is no need to uninstall one to install the other). These are debug apps for testing purposes. The official release versions should be preferred for everyday use. ",
+    "description": "",
+    "tags": null,
+    "title": "Nightly Debug",
+    "uri": "/Suntimes/help/more/debug/index.html"
+  },
+  {
+    "breadcrumb": "Suntimes \u003e Help \u003e More",
+    "content": "This user manual (and other documentation) is maintained at https://github.com/forrestguice/Suntimes/issues.\nYou can help improve it by reporting typos, dead links, and other errors.\nMirrors This user manual is published to:\nhttps://forrestguice.codeberg.page/Suntimes/ https://forrestguice.github.io/Suntimes/ Versions v0.1.2, 2026-04-08; minor updates; adds nightly debug info; adds past version info; adds pages for SuntimesNFC, Interval Midpoints, and Solunar Periods; updates privacy info to Suntimes v0.17.0. v0.1.1, 2025-06-03; minor updates; adds pages for Natural Hour and Suntimes Calendars. v0.1.0, 2024-05-01, written for Suntimes v0.15.14. ",
     "description": "",
     "tags": null,
     "title": "Documentation",

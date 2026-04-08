@@ -16,6 +16,15 @@
       <description>Library Description sunrisesunsetlib Not Recommended Somewhat inaccurate. Does not support altitude, seconds-based calculation, solstice, equinox, or sun position. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO. github.com/mikereedell/sunrisesunsetlib-java ca.rmen.sunrisesunset Partially Recommended Similar to sunrisesunsetlib but with reasonable precision. Does not support altitude, solstice, equinox, or sun position. Based on the algorithms published by NOAA. github.com/caarmen/SunriseSunset time4a-simple Not Recommended Somewhat inaccurate. Does not support altitude. Based on &amp;ldquo;Almanac for Computers&amp;rdquo; by the USNO.</description>
     </item>
     <item>
+      <title>Versions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/download/versions/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/download/versions/index.html</guid>
+      <description>The latest version v0.17.* targets Android 11 (api 30). The minimum supported version is Android 4 (api 14).
+Note F-Droid provides downloads for the last three versions. Older versions are moved to the archive.
+Past Versions v0.16.* targets Android 9 (api 28). The minimum supported version is Android 4 (api 14). v0.5.* - v0.15.* targets Android 7 (api 25). The minimum supported version is Android 2 (api 10). v0.3.* - v0.</description>
+    </item>
+    <item>
       <title>Creating Backgrounds</title>
       <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/worldmap/createbackgrounds/index.html</link>
       <pubDate>Sat, 16 Mar 2024 16:15:52 -0700</pubDate>

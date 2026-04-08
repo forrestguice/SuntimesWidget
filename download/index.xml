@@ -8,5 +8,14 @@
     <language>en</language>
     <lastBuildDate>Sat, 16 Mar 2024 18:53:18 -0700</lastBuildDate>
     <atom:link href="https://forrestguice.codeberg.page/Suntimes/download/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Versions</title>
+      <link>https://forrestguice.codeberg.page/Suntimes/download/versions/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://forrestguice.codeberg.page/Suntimes/download/versions/index.html</guid>
+      <description>The latest version v0.17.* targets Android 11 (api 30). The minimum supported version is Android 4 (api 14).
+Note F-Droid provides downloads for the last three versions. Older versions are moved to the archive.
+Past Versions v0.16.* targets Android 9 (api 28). The minimum supported version is Android 4 (api 14). v0.5.* - v0.15.* targets Android 7 (api 25). The minimum supported version is Android 2 (api 10). v0.3.* - v0.</description>
+    </item>
   </channel>
 </rss>
