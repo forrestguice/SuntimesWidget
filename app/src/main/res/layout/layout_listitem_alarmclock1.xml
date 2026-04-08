@@ -32,7 +32,7 @@
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginTop="6dp" android:layout_marginBottom="4dp">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/type_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:src="?attr/icActionAlarm"
@@ -48,10 +48,10 @@
                 android:inputType="text"
                 android:hint="@string/alarmlabel_hint" tools:text="label" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
-                android:contentDescription="@string/configAction_alarmMenu"
+                android:contentDescription="@string/alarms_action_alarmMenu"
                 style="?attr/actionOverflowButtonStyle" />
 
         </LinearLayout>
@@ -64,7 +64,7 @@
             android:layout_marginBottom="12dp" android:drawablePadding="8dp"
             android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
             android:maxLines="3" tools:text="note"
-            android:contentDescription="@string/configAction_setAlarmNote" />
+            android:contentDescription="@string/alarms_action_setAlarmNote" />
 
         <!-- Alarm Time Preview -->
         <include layout="@layout/layout_listitem_alarmtime" />

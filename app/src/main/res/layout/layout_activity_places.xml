@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<com.forrestguice.support.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context=".getfix.PlacesActivity">
 
     <LinearLayout android:orientation="vertical"
         android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
+        <com.forrestguice.support.widget.AppBarLayout
             android:id="@+id/layout_app_menubar"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:animateLayoutChanges="true" android:elevation="50dp">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-                app:title="@string/configLabel_places" />
+            <com.forrestguice.support.widget.Toolbar
+            android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+            app:title="@string/places_label" />
 
-        </android.support.design.widget.AppBarLayout>
+            <ProgressBar android:id="@+id/app_progress" android:visibility="visible"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:indeterminate="true"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="-12dp" android:layout_marginBottom="0dp" />
+        </com.forrestguice.support.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent" android:layout_height="match_parent">
 
-            <fragment android:id="@+id/placesListFragment"
+            <!-- PlacesActivity supplies this fragment via transaction from onCreate -->
+            <!--<fragment android:id="@+id/placesListFragment"
                 android:name="com.forrestguice.suntimeswidget.getfix.PlacesListFragment"
-                android:layout_width="match_parent" android:layout_height="match_parent" />
+                android:layout_width="match_parent" android:layout_height="match_parent" />-->
 
         </FrameLayout>
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</com.forrestguice.support.widget.CoordinatorLayout>

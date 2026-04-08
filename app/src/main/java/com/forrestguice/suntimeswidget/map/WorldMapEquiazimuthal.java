@@ -25,20 +25,18 @@ import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +45,7 @@ import java.util.Calendar;
  * WorldMapEquiazimuthal
  * An azimuthal projection centered on north pole.
  */
-public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
+public class WorldMapEquiazimuthal extends WorldMapProjection
 {
     public double[] getCenter() { return new double[] {90,0}; }
 
@@ -92,7 +90,18 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return r;
     }
 
-    protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
+    /**
+     * @param x image coordinate x
+     * @param y image coordinate y
+     * @return [longitude, latitude]
+     */
+    @Nullable
+    @Override
+    public double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h) {
+        return null;    // TODO: implement for clickable projection
+    }
+
+    protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapOptions options)
     {
         int z = 0;
         int j0, j1, j2;
@@ -100,6 +109,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double sunIntensity, moonIntensity;
         int[] pixels = new int[w * h];
         double[] m = getMatrix();
+        if (m == null) {
+            Log.e(WorldMapView.LOGTAG, "initPixels: null matrix! returning empty pixels.");
+            return pixels;
+        }
 
         if (options.showSunShadow && options.showMoonLight)
         {
@@ -184,7 +197,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     protected Paint paintGrid = null;
 
     @Override
-    public void initPaint(WorldMapTask.WorldMapOptions options)
+    public void initPaint(WorldMapOptions options)
     {
         paintScaled = new Paint(Paint.ANTI_ALIAS_FLAG);         // to scale one bitmap into another
         paintScaled.setDither(true);
@@ -239,8 +252,9 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         paintInitialized = true;
     }
 
+    @Nullable
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0) {
@@ -278,16 +292,16 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         {
             Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
-            SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+            SuntimesCalculator.SunPosition sunPos = (calculator != null ? calculator.getSunPosition(now) : null);
+            SuntimesCalculator.MoonPosition moonPos = (calculator != null ? calculator.getMoonPosition(now) : null);
             Location location = data.location();
 
-            if (sunPos == null || moonPos == null) {
+            if (sunPos == null || moonPos == null || location == null) {
                 Log.e(WorldMapView.LOGTAG, "not supported by this data source");
                 break drawData;
             }
 
-            long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+            long gmtMillis = now.getTimeInMillis() + (long)(TimeZones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
             double gmtArc = gmtHours * 15d;
 
@@ -385,8 +399,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return masked;
     }
 
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
+    @Nullable
     @Override
     public double[] getMatrix() {
         return matrix;
@@ -466,7 +482,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     protected static double r_polar = (66.560833 / 180d);
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;
@@ -496,7 +512,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;
@@ -551,7 +567,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
             initGrid(mid);

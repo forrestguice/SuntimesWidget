@@ -4,11 +4,53 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
+        <item android:id="@+id/action_seek"
+            android:icon="?attr/icActionSearch"
+            android:title="@string/action_seek"
+            app:showAsAction="never">
+            <menu>
+                <item android:id="@+id/action_seekdate"
+                    android:icon="?attr/icActionCalendar"
+                    android:title="@string/action_seekDate"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seektime"
+                    android:icon="?attr/icActionTime"
+                    android:title="@string/action_seekTime"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekaltitude"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/action_seekAltitude"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdawn"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/action_seekDawn"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seekdusk"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/action_seekDusk"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seeknoon"
+                    android:icon="?attr/icActionSearch"
+                    android:title="@string/action_seekNoon"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_seek_shadowlength"
+                    android:icon="?attr/icActionShadow"
+                    android:title="@string/action_seekShadowLength"
+                    app:showAsAction="never" />
+
+            </menu>
+        </item>
+
         <item android:id="@+id/addonSubMenu"
             android:icon="?attr/icActionTimeReset"
-            android:title="@string/configAction_viewDateWith"
-            app:showAsAction="never"
-            android:orderInCategory="0">
+            android:title="@string/action_viewDateWith"
+            app:showAsAction="never">
             <menu>         <!-- submenu is populated at runtime -->
 
                 <item android:id="@+id/action_date"
@@ -17,17 +59,17 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
-                    android:title="@string/configAction_moon"
+                    android:title="@string/action_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"
                     android:icon="?attr/icActionWorldMap"
-                    android:title="@string/configAction_worldMap"
+                    android:title="@string/action_worldMap"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"
-                    android:title="@string/configAction_showCalendar"
+                    android:title="@string/action_showCalendar"
                     android:icon="?attr/icActionCalendar"
                     app:showAsAction="never" />
 
@@ -36,67 +78,99 @@
 
         <item android:id="@+id/optionsSubMenu"
             android:icon="?attr/icActionSettings"
-            android:title="@string/configAction_options"
+            android:title="@string/action_options"
             app:showAsAction="never">
             <menu>
 
                 <item android:id="@+id/graphOption_colors"
-                    android:title="@string/configAction_colors"
+                    android:title="@string/action_colors"
                     android:icon="?attr/icActionAppearance"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/graphOption_sunSymbol"
+                    android:icon="?attr/icActionSettings"
+                    android:title="@string/lightmap_graph_option_symbol"
+                    app:showAsAction="never">
+                    <menu>
+                        <group android:checkableBehavior="single">
+
+                            <item android:id="@+id/graphOption_sunSymbol_circle"
+                                android:title="@string/lightmap_graph_option_symbol_circle"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_cross"
+                                android:title="@string/lightmap_graph_option_symbol_cross"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_circledot"
+                                android:title="@string/lightmap_graph_option_symbol_dot"
+                                app:showAsAction="never" />
+
+                            <item android:id="@+id/graphOption_sunSymbol_line"
+                                android:title="@string/lightmap_graph_option_symbol_line"
+                                app:showAsAction="never" />
+
+                        </group>
+                    </menu>
+                </item>
+
                 <item android:id="@+id/action_showgraph"
                     android:icon="?attr/icActionGraph"
-                    android:title="@string/configAction_lineGraph"
+                    android:title="@string/action_lineGraph"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showGrid"
-                    android:title="@string/graph_option_grid"
+                    android:title="@string/lightmap_graph_option_grid"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showLabels"
-                    android:title="@string/graph_option_labels"
+                    android:title="@string/lightmap_graph_option_labels"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showAxis"
-                    android:title="@string/graph_option_axis"
+                    android:title="@string/lightmap_graph_option_axis"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_fillPath"
-                    android:title="@string/graph_option_filledpath"
+                    android:title="@string/lightmap_graph_option_filledpath"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/graphOption_showMoon"
-                    android:title="@string/graph_option_moon"
+                    android:title="@string/lightmap_graph_option_moon"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/graphOption_showNoon"
+                    android:title="@string/lightmap_graph_option_noon"
                     android:checkable="true"
                     app:showAsAction="never" />
 
             </menu>
         </item>
 
-        <item android:id="@+id/action_seekaltitude"
-            android:icon="?attr/icActionSearch"
-            android:title="@string/configAction_seekAltitude"
+        <item android:id="@+id/action_shadow"
+            android:icon="?attr/icActionShadow"
+            android:title="@string/settings_general_observerheight" android:visible="false"
             app:showAsAction="never" />
 
-        <item android:id="@+id/action_observerheight"
-            android:icon="?attr/icActionShadow"
-            android:title="@string/configLabel_general_observerheight"
+        <item android:id="@+id/action_manage_events"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/events_action_manageEvents"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_timezone"
             android:icon="?attr/icActionTime"
-            android:title="@string/configLabel_timezone"
+            android:title="@string/settings_timezone"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
-            android:title="@string/configAction_help"
+            android:title="@string/action_help"
             app:showAsAction="never" />
 
     </group>

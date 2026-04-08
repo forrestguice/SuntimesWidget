@@ -31,7 +31,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/type_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:src="?attr/icActionAlarm"
@@ -47,22 +47,23 @@
                 android:inputType="text"
                 android:hint="@string/alarmlabel_hint" tools:text="label" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
-                android:contentDescription="@string/configAction_alarmMenu"
+                android:contentDescription="@string/alarms_action_alarmMenu"
                 style="?attr/actionOverflowButtonStyle" />
 
         </LinearLayout>
 
         <ScrollView android:id="@+id/scroll0"
             android:layout_width="match_parent" android:layout_height="wrap_content">
-        <android.support.constraint.ConstraintLayout android:orientation="horizontal"
+        <com.forrestguice.support.constraint.ConstraintLayout android:orientation="horizontal"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:baselineAligned="false">
 
             <LinearLayout android:id="@+id/alarm_time_preview"
                 android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:baselineAligned="false"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tray_schedule">
@@ -111,7 +112,7 @@
 
                 <!-- Tray: On Alert -->
                 <LinearLayout android:id="@+id/tray_onAlert" android:orientation="vertical"
-                    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+                    android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
                     <include layout="@layout/layout_listitem_alarmclock1_tray_onalert" />
                 </LinearLayout>
 
@@ -132,14 +133,14 @@
                         android:layout_marginBottom="12dp" android:drawablePadding="8dp"
                         android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_small"
                         android:maxLines="8" tools:text="note\nlinetwo\nlinethree\nline four\nline 5\nline 6"
-                        android:contentDescription="@string/configAction_setAlarmNote" />
+                        android:contentDescription="@string/alarms_action_setAlarmNote" />
 
                     <!-- empty tray -->
                 </LinearLayout>
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </com.forrestguice.support.constraint.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
 </FrameLayout>

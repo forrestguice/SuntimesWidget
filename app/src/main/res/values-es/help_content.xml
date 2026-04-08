@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+    <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
+
+
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
+
+    <string name="help_appearance_title"><![CDATA[
+        Las siguientes sustituciones están soportadas:<br/>
+        <br/>
+        <b>Todos los widgets:</b> <br />
+                * <b>%d</b> p. ej. (12 de Febrero) <br/>
+                * <b>%dd</b> para el día (corto) (p. ej. Lun) <br/>
+                * <b>%dD</b> para el día (largo) (p. ej. Lunes) <br/>
+                * <b>%dY</b> para el año (p. ej. 2018) <br/>
+                * <b>%dt</b> para la hora (de la última actualización) <br/>
+                * <b>%dT</b> para la hora con segundos (de la última actualización) <br/>
+                <br/>
+                * <b>%loc</b> para etiqueta <br />
+                * <b>%lat</b> para latitud <br />
+                * <b>%lon</b> para longitud <br/>
+                * <b>%lel</b> para elevación (p. ej. 385 metros) <br/>
+                <br/>
+                * <b>%s</b> para fuente de datos (p.ej. sunrisesunsetlib) <br/>
+                * <b>%t</b> para zona horaria (id) (p. ej. Europe/Madrid) <br/>
+                * <b>%id</b> para appWidgetID <br/>
+         <br/>
+         <b>Widget solar:</b> <br/>
+                * <b>%m</b> para el modo de tiempo (corto) (p. ej. «Civil») <br/>
+                * <b>%M</b> para el modo de tiempo (largo) (p. ej. «Crepúsculo Civil») <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <br/>
+         <b>Widget lunar:</b> <br/>
+                * <b>%i</b> para la iluminación de la Luna (p. ej. 25%) <br/>
+                * <b>%M</b> para la fase de la Luna (e.g. Creciente) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <br/>
+         <b>Widgets de solsticios:</b> <br/>
+                * <b>%m</b> para el modo (corto) (p. ej. Solsticio) <br/>
+                * <b>%M</b> para el modo (largo) (p. ej. Solsticio de invierno) <br/>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Date Format:</b> A date format pattern.<br/>
+          <br/>Available elements may differ between calendars, but usually include..<br/>
+          <br/>
+          <b>E</b> : day of week <br/>
+          <b>d</b> : day of month <br/>
+          <b>D</b> : day of year <br/>
+          <b>F</b> : weekday in month <br/>
+          <b>M</b> : month of year <br/>
+          <b>y</b> : year of era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_general_moondialog"><![CDATA[
+          \n[Icon Rising]  moonrise \t\t[Icon Noon]  lunar noon
+          \n[Icon Setting]  moonset \t\t[Icon Midnight]  lunar midnight
+          \n\nShare [Icon Share] will copy text to the clipboard.
+    ]]></string>   <!-- each [Icon LABEL] is replaced with an actual icon at runtime --> <!-- TODO -->
+
+    <string name="help_general_timeMode2_1"><![CDATA[
+          <b>Winter/Spring Cross-Quarter:</b> The midpoint between Winter Solstice and Spring Equinox; <em>February</em> [northern hemisphere], or <em>August</em> [southern hemisphere].<br/><br/>
+          <b>Spring/Summer Cross-Quarter:</b> The midpoint between Spring Equinox and Summer Solstice; <em>May</em> [northern hemisphere], or <em>November</em> [southern hemisphere].<br/><br/>
+          <b>Summer/Autumn Cross-Quarter:</b> The midpoint between Summer Solstice and Autumnal Equinox; <em>August</em> [northern hemisphere], or <em>February</em> [southern hemisphere].<br/><br/>
+          <b>Autumn/Winter Cross-Quarter:</b> The midpoint between Autumnal Equinox and Winter Solstice; <em>November</em> [northern hemisphere], or <em>May</em> [southern hemisphere].<br/>
+    ]]></string>   <!-- help contents: cross-quarter days -->   <!-- TODO -->
+
+    <string name="help_eventlist"><![CDATA[
+          [Icon OK] Choose a custom event.\n
+          [Icon Add] Add, [Icon Edit] edit, or [Icon Delete] delete custom events.\n
+          \nCustom events can be displayed by the app, by home screen widgets, or used to schedule alarms and notifications.\n
+          [Icon View] Marked events are displayed by the app.
+    ]]></string>    <!-- TODO -->
+
+    <string name="help_alarms_bedtime"><![CDATA[
+           [Icon Bedtime] Bedtime mode can be used to schedule <b>Do Not Disturb</b> during sleep hours.<br/>
+           <br/>
+           [Icon Reminder] Show a reminder notification before bedtime.<br/>
+           [Icon Alarm] Schedule a wake up alarm for the next morning.<br/><br/>
+    ]]></string>  <!-- TODO -->
+
+    <string name="help_alarms_edit"><![CDATA[
+          [Icon Back] to cancel without making changes.<br/>
+          [Icon Save] to save, and [Icon Done] to save and enable.<br/>
+          [Icon Cancel] to save and disable.<br/>
+          [Icon Delete] to cancel and delete.<br/>
+          <br/>
+          [Icon Offset] is shown when the scheduled time is offset before or after the event time.
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_dst"><![CDATA[
+          <b>Day Light Saving:</b> [Icon DST] is shown when the current time applies <b>DST</b>, or has been adjusted by a similar rule.<br/><br/>
+    ]]></string>   <!-- TODO -->
+
+    <string name="help_general_actualTime"><![CDATA[
+    <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/>
+]]></string>
+    <string name="help_general_twilight"><![CDATA[
+    <b>Crepúsculo civil:</b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/><br/>
+    <b>Crepúsculo náutico:</b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/><br/>
+    <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Equinoccio de primavera:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Solsticio de verano:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Equinoccio de otoño:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Solsticio de invierno:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
+    <string name="help_general_daylength"><![CDATA[
+    <b>Duración del día:</b> la cantidad de tiempo entre la salida y la puesta del Sol. <br/><br/>
+    <b>Luz usable:</b> la cantidad de tiempo entre el crepúsculo civil diurno y el nocturno. <br/>
+]]>
+    </string>
+    <string name="help_general_moonillum"><![CDATA[
+    <b>Iluminación lunar:</b> Los widgets lunares y la página principal muestran la iluminación de la Luna en la noche lunar (el punto medio entre la salida y puesta de la Luna), mientras que el diálogo lunar muestra la iluminación actual de la Luna. <br/>
+]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+    <b>Hora dorada:</b> El Sol está 6 grados por encima o por debajo del horizonte. En la madrugada de la hora dorada comienza con el amanecer civil y termina poco después de salir el Sol. Por la tarde la hora dorada comienza poco después del atardecer y finaliza con el crepúsculo civil. <br/>
+]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+    <b>Hora azul:</b> El Sol está entre 8 y 4 grados por debajo del horizonte. El inicio y final de la hora azul está entre el crepúsculo náutico y civil. <br/>
+]]></string>
+    <string name="help_action_launch"><![CDATA[
+    El nombre calificado de la clase de la Actividad a ser tirada. <br/>
+]]></string>  <!-- TODO: update from strings.xml -->
+    <string name="help_widgetlist"><![CDATA[
+    Para <b>añadir un widget</b> tienes que ir al escritorio. <br/><br/>
+    Para <b>reconfigurar un widget existente</b> puedes seleccionar uno de la siguiente lista. <br/>
+]]></string>
+    <string name="help_themelist">
+          [Icon Add] Añadir un nuevo tema o [Icon Copy] copiar de un tema existente.\n
+          \n
+          [Icon Edit] Editar o [Icon Delete] borrar temas.\n
+          El [Icon Default] tema por defecto no se puede modificar.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
+
+    <string name="help_calendar"><![CDATA[Proporcionar eventos a la aplicación de Calendario (fases lunares, solsticios y equinoccios).<br />
+        <br />
+        <u><b><font color="#ff9900">Los permisos de Calenadrio se han eliminado.</font></b></u><br />
+        <br />
+        Esta característica está disponible en una <a href="moreInfoLink">aplicación separada</a>.
+    ]]></string>    <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
+
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
+
+</resources>

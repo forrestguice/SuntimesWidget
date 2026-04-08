@@ -19,16 +19,17 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import org.json.JSONObject;
 
@@ -41,15 +42,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.forrestguice.annotation.NonNull;
+
 /**
  * AsyncTask that reads AlarmClockItem objects from text file (json array).
  * @see AlarmClockItem
  */
-public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, AlarmClockItemImportTask.TaskResult>
+public class AlarmClockItemImportTask extends ProgressCallable<AlarmClockItem, AlarmClockItemImportTask.TaskResult>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private WeakReference<Context> contextRef;
+    private final WeakReference<Context> contextRef;
+    private final Uri uri;
 
     protected boolean isPaused = false;
     public void pauseTask() {
@@ -62,29 +66,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return isPaused;
     }
 
-    public AlarmClockItemImportTask(Context context)
+    public AlarmClockItemImportTask(Context context, Uri uri)
     {
         contextRef = new WeakReference<>(context);
+        this.uri = uri;
     }
 
     @Override
-    protected void onPreExecute()
-    {
-        Log.d(getClass().getSimpleName(), "onPreExecute");
-        if (taskListener != null) {
-            taskListener.onStarted();
-        }
-    }
-
-    @Override
-    protected TaskResult doInBackground(Uri... params)
+    public TaskResult call() throws Exception
     {
         Log.d(getClass().getSimpleName(), "doInBackground: starting");
-        Uri uri = null;
-        if (params.length > 0) {
-            uri = params[0];
-        }
-
         long startTime = System.currentTimeMillis();
         boolean result = false;
         ArrayList<AlarmClockItem> items = new ArrayList<>();
@@ -100,28 +91,25 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                     Log.d(getClass().getSimpleName(), "doInBackground: reading");
                     AlarmClockItemJson.readAlarmClockItems(context, in, items);
                     result = true;
-                    error = null;
 
                 } else {
                     Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": null input stream!");
-                    result = false;
-                    error = null;
                 }
             } catch (IOException e) {
                 Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": " + e);
-                result = false;
                 items = null;
                 error = e;
             }
         }
 
-        for (AlarmClockItem item : items)
-        {
-            if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
-            {
-                // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
-                item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
-                item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+        if (items != null) {
+            for (AlarmClockItem item : items) {
+                if (item.ringtoneURI != null)    // don't reset null uris (silent alarms)
+                {
+                    // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+                    item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                    item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+                }
             }
         }
 
@@ -135,26 +123,12 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         return new TaskResult(result, uri, (items != null ? items.toArray(new AlarmClockItem[0]) : null), error);
     }
 
-    @Override
-    protected void onProgressUpdate(AlarmClockItem... progressItems) {
-        super.onProgressUpdate(progressItems);
-    }
-
-    @Override
-    protected void onPostExecute( TaskResult result )
-    {
-        Log.d(getClass().getSimpleName(), "onPostExecute: " + result.getResult());
-        if (taskListener != null) {
-            taskListener.onFinished(result);
-        }
-    }
-
     /**
      * TaskResult
      */
     public static class TaskResult
     {
-        public TaskResult(boolean result, Uri uri, @Nullable AlarmClockItem[] items, Exception e)
+        public TaskResult(boolean result, @Nullable Uri uri, @Nullable AlarmClockItem[] items, @Nullable Exception e)
         {
             this.result = result;
             this.items = items;
@@ -162,19 +136,21 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             this.e = e;
         }
 
-        private boolean result;
+        private final boolean result;
         public boolean getResult()
         {
             return result;
         }
 
-        private AlarmClockItem[] items;
+        private final AlarmClockItem[] items;
+        @NonNull
         public AlarmClockItem[] getItems()
         {
-            return items;
+            return (items != null ? items : new AlarmClockItem[0]);
         }
 
-        private Uri uri;
+        private final Uri uri;
+        @Nullable
         public Uri getUri()
         {
             return uri;
@@ -184,7 +160,8 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             return (items != null ? items.length : 0);
         }
 
-        private Exception e;
+        private final Exception e;
+        @Nullable
         public Exception getException()
         {
             return e;
@@ -194,18 +171,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
     /**
      * TaskListener
      */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( TaskResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
-        taskListener = listener;
-    }
-    public void clearTaskListener() {
-        taskListener = null;
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<AlarmClockItem, TaskResult> {}
 
     /**
      * AlarmClockItemJson
@@ -271,7 +237,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 try {
                     AlarmClockItem item = new AlarmClockItem();
                     item.fromContentValues(context, ExportTask.toContentValues(map));
-                    AlarmNotifications.updateAlarmTime(context, item);
+                    AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item);
                     return item;
 
                 } catch (Exception e) {
@@ -299,7 +265,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                             case BEGIN_ARRAY: skipJsonArray(reader); break;
                             case BEGIN_OBJECT: skipJsonObject(reader); break;
                             case BOOLEAN: value = reader.nextBoolean(); break;
-                            case NULL: value = null; reader.nextNull(); break;
+                            case NULL: reader.nextNull(); break;
                             case NUMBER: case STRING:
                             default: value = reader.nextString(); break;
                         }

@@ -28,9 +28,11 @@ import com.forrestguice.suntimeswidget.QuickTest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,15 +42,14 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
@@ -58,7 +59,7 @@ import static org.hamcrest.Matchers.endsWith;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmEditActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -70,13 +71,13 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -182,15 +183,15 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmEditActivityRobot clickOverflowMenu_options(Context context) {
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public AlarmEditActivityRobot cancelOptionsMenu(Context context) {
-            onView(withText(R.string.configAction_setAlarmType)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.alarms_action_setAlarmType)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public AlarmEditActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -200,15 +201,15 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmEditActivityRobot clickSaveButton() {
-            onView(withText(R.string.configAction_saveAlarm)).check(assertShown);
+            onView(withText(R.string.alarms_action_saveAlarm)).check(assertShown);
             return this;
         }
         public AlarmEditActivityRobot clickSaveAndEnableButton() {
-            onView(withText(R.string.configAction_enableAlarm)).check(assertShown);
+            onView(withText(R.string.alarms_action_enableAlarm)).check(assertShown);
             return this;
         }
         public AlarmEditActivityRobot clickSaveAndDisableButton() {
-            onView(withText(R.string.configAction_disableAlarm)).check(assertShown);
+            onView(withText(R.string.alarms_action_disableAlarm)).check(assertShown);
             return this;
         }
 
@@ -236,20 +237,20 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
             return this;
         }
         public AlarmEditActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_deleteAlarm)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_options)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_deleteAlarm)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_options)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
         public AlarmEditActivityRobot assertOptionsMenuShown(Context context) {
-            onView(withText(R.string.configAction_setAlarmType)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmLabel)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmNote)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmOffset)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmEvent)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmRepeat)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_setAlarmSound)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmType)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmLabel)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmNote)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmOffset)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmLocation)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmRepeat)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.alarms_action_setAlarmSound)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
@@ -263,11 +264,11 @@ public class AlarmEditActivityTest extends SuntimesActivityTestBase
         }
 
         public AlarmEditActivityRobot assertShown_saveAndEnableButton(boolean isShown) {
-            onView(withText(R.string.configAction_enableAlarm)).check(isShown ? assertShown : assertHidden);
+            onView(withText(R.string.alarms_action_enableAlarm)).check(isShown ? assertShown : assertHidden);
             return this;
         }
         public AlarmEditActivityRobot assertShown_saveAndDisableButton(boolean isShown) {
-            onView(withText(R.string.configAction_disableAlarm)).check(isShown ? assertShown : assertHidden);
+            onView(withText(R.string.alarms_action_disableAlarm)).check(isShown ? assertShown : assertHidden);
             return this;
         }
 

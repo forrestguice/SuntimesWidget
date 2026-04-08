@@ -25,14 +25,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.util.concurrent.ProgressCallable;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -45,17 +47,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("Convert2Diamond")
-public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
+public abstract class ExportTask extends ProgressCallable<ExportTask.ExportProgress, ExportTask.ExportResult>
 {
-    public static final String FILE_PROVIDER_AUTHORITY = "com.forrestguice.suntimeswidget.fileprovider";
+    public static String FILE_PROVIDER_AUTHORITY() {
+        return BuildConfig.APPLICATION_ID + ".fileprovider";
+    }
 
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
 
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
 
     protected Uri exportUri = null;
-    protected String exportTarget;
+    @Nullable
+    protected final String exportTarget;
+    @Nullable
     protected File exportFile;
     protected int numEntries;
     public final String newLine = System.getProperty("line.separator");
@@ -74,18 +80,18 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         return isPaused;
     }
 
-    public ExportTask(Context context, String exportTarget)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget)
     {
         this(context, exportTarget, false, false);
     }
-    public ExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
+    public ExportTask(@NonNull Context context, @Nullable String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
     }
-    public ExportTask(Context context, Uri exportUri)
+    public ExportTask(@NonNull Context context, Uri exportUri)
     {
         this.contextRef = new WeakReference<Context>(context);
         this.exportTarget = null;
@@ -145,17 +151,17 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
      * Runs before task begins.
      */
     @Override
-    protected void onPreExecute()
+    public void onPreExecute()
     {
+        super.onPreExecute();
         numEntries = 0;
-        signalStarted();
     }
 
     /**
      * doInBackground
      */
     @Override
-    protected ExportResult doInBackground(Object... params)
+    public ExportResult call() throws Exception
     {
         final Context context = contextRef.get();
         if (context == null)
@@ -179,7 +185,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 Log.d("ExportTask", "saving to external cache");
                 try {
                     cleanupExternalCache(context);
-                    exportFile = File.createTempFile(exportTarget, ext, context.getExternalCacheDir());
+                    exportFile = (exportTarget != null ? File.createTempFile(exportTarget, ext, context.getExternalCacheDir()) : null);
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
@@ -188,10 +194,13 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
             } else {                 // save to: external download dir
                 Log.d("ExportTask", "saving to external download dir");
-                File exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                exportFile = new File(exportPath, exportTarget);
+                File exportPath = FileProvider.getExternalStorageDownloadDirectory(context);
+                if (exportPath == null) {
+                    Log.w("ExportTask", "external download dir unavailable!");
+                }
+                exportFile = (exportTarget != null && exportPath != null ? new File(exportPath, exportTarget) : null);
 
-                boolean targetExists = exportFile.exists();
+                boolean targetExists = (exportFile != null && exportFile.exists());
                 if (targetExists && !overwriteTarget)
                 {
                     Log.w("ExportTask", "Canceling export; the target already exists (and overwrite flag is false). " + exportFile.getAbsolutePath());
@@ -211,7 +220,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             Log.d("ExportTask", "saving to internal cache");
             try {
                 cleanupInternalCache(context);
-                exportFile = File.createTempFile(exportTarget, ext, context.getCacheDir());
+                exportFile = (exportTarget != null ? File.createTempFile(exportTarget, ext, context.getCacheDir()) : null);
 
             } catch (IOException e) {
                 Log.w("ExportTask", "Canceling export; failed to create internal temp file.");
@@ -240,7 +249,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             exported = export(context, out);
 
         } catch (IOException e) {
-            Log.w("ExportTask", "FAILED to write to the export target! " + exportFile.getAbsolutePath() + " :: " + e);
+            Log.w("ExportTask", "FAILED to write to the export target! " + (exportFile != null ? exportFile.getAbsolutePath() : "null") + " :: " + e);
 
         } finally {
             //
@@ -251,7 +260,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 try {
                     out.close();
                 } catch (IOException e2) {
-                    Log.w("ExportTask", "FAILED to close the export target! " + exportFile.getAbsolutePath() + " :: " + e2);
+                    Log.w("ExportTask", "FAILED to close the export target! " + (exportFile != null ? exportFile.getAbsolutePath() : "null") + " :: " + e2);
                 }
             }
             cleanup(context);
@@ -273,21 +282,11 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     protected void cleanup(Context context) {}
 
     /**
-     * Runs after the task completes.
-     * @param results an ExportResult object wrapping the result
-     */
-    @Override
-    protected void onPostExecute(ExportResult results)
-    {
-        signalFinished(results);
-    }
-
-    /**
      * Export Result
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, Uri exportUri, File exportFile, String mimeType )
+        public ExportResult( boolean result, @Nullable Uri exportUri, @Nullable File exportFile, @Nullable String mimeType )
         {
             this.result = result;
             this.exportUri = exportUri;
@@ -299,12 +298,15 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         public boolean getResult() { return result; }
 
         private final Uri exportUri;
+        @Nullable
         public Uri getExportUri() { return exportUri; }
 
         private final File exportFile;
+        @Nullable
         public File getExportFile() { return exportFile; }
 
-        private String mimeType;
+        private final String mimeType;
+        @Nullable
         public String getMimeType() {
             return mimeType;
         }
@@ -352,23 +354,27 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
     /**
      */
-    protected void cleanupCache(File cacheDir, long cacheLimit)
+    protected void cleanupCache(@Nullable File cacheDir, long cacheLimit)
     {
         long cacheSize = cacheSize(cacheDir);
         if (cacheSize > cacheLimit)
         {
-            File[] cacheFiles = cacheDir.listFiles();
+            File[] cacheFiles = (cacheDir != null ? cacheDir.listFiles() : null);
+            if (cacheFiles == null) {
+                return;
+            }
+
             Arrays.sort(cacheFiles, new Comparator<File>()
             {
                 public int compare(File file1, File file2)
                 {
-                    return Long.valueOf(file1.lastModified()).compareTo(file2.lastModified());
+                    return Long.compare(file1.lastModified(), file2.lastModified());
                 }
             });
 
             int i = 0, deletedSize = 0;
             do {
-                deletedSize += cacheFiles[i].length();
+                deletedSize += (int) cacheFiles[i].length();
                 if (!cacheFiles[i].delete())
                 {
                     Log.w("ExportTask", "Failed to cleanup cache; unable to delete " + cacheFiles[i].getPath());
@@ -380,15 +386,17 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
     /**
      */
-    protected static long cacheSize(File dir)
+    protected static long cacheSize(@Nullable File dir)
     {
         long result = 0;
         if (dir != null && dir.exists())
         {
-            for (File file : dir.listFiles())
-            {
-                result += (file.isDirectory()) ? cacheSize(file)
-                        : file.length();
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    result += (file.isDirectory()) ? cacheSize(file)
+                            : file.length();
+                }
             }
         }
         return result;
@@ -397,46 +405,23 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     /**
      * Task Listener
      */
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( ExportResult result ) {}
-    }
-    protected TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
-    }
-    private void signalStarted()
-    {
-        if (taskListener != null)
-        {
-            taskListener.onStarted();
-        }
-    }
-    private void signalFinished( ExportResult result )
-    {
-        if (taskListener != null)
-        {
-            taskListener.onFinished(result);
-        }
-    }
+    public static abstract class TaskListener extends SimpleProgressListener<ExportProgress, ExportResult> {}
 
     /**
      */
-    public static void shareResult(Context context, File file, String mimeType)
+    public static void shareResult(Context context, @Nullable File file, @Nullable String mimeType)
     {
+        if (file == null) {
+            return;
+        }
+
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType(mimeType);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         try {
-            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, file);
+            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY(), file);
             shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
             context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
 

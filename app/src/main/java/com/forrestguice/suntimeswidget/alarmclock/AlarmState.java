@@ -21,8 +21,10 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 /**
  * AlarmState
@@ -77,6 +79,7 @@ public class AlarmState implements Parcelable
     {
         this.rowID = other.rowID;
         this.state = other.state;
+        this.modified = false;
     }
 
     public AlarmState(ContentValues values)
@@ -152,8 +155,6 @@ public class AlarmState implements Parcelable
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED || nextState == STATE_DISMISSED);
 
             case STATE_DISMISSED:
-                return (nextState == STATE_NONE || nextState == STATE_DISABLED);
-
             case STATE_DISABLED:
                 return (nextState == STATE_NONE || nextState == STATE_DISABLED);
 
@@ -185,8 +186,8 @@ public class AlarmState implements Parcelable
         return false;
     }
 
-    public String toString()
-    {
+    @NonNull
+    public String toString() {
         return "" + state;
     }
 

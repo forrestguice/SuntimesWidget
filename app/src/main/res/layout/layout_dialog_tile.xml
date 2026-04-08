@@ -8,13 +8,13 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical|end">
 
-        <ImageButton
+        <com.forrestguice.support.widget.ImageButton
             android:id="@+id/button_settings"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:padding="8dp"
             android:background="?attr/selectableItemBackground"
             android:scaleType="centerInside"
-            android:contentDescription="@string/configAction_settings"
+            android:contentDescription="@string/action_settings"
             android:src="?attr/icActionSettings" />
 
     </LinearLayout>
@@ -30,7 +30,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="4dp" android:layout_marginEnd="56dp" android:layout_marginRight="32dp">
 
-            <ImageView
+            <com.forrestguice.support.widget.ImageView
                 android:id="@android:id/icon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"

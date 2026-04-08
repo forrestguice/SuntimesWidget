@@ -29,9 +29,13 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.RetryRule;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.util.ContextInterface;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,20 +46,20 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Set;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertEnabled;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertHidden;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
@@ -68,7 +72,7 @@ import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class EventListActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -80,13 +84,13 @@ public class EventListActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -136,7 +140,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
     @Test
     public void test_EventListActivity_clear()
     {
-        Set<String> eventList = EventSettingsTest.populateEventListWithTestItems(getContext());
+        Set<String> eventList = EventSettingsTest.populateEventListWithTestItems(InstrumentationUtils.getContext());
         assertFalse(eventList.isEmpty());
 
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
@@ -150,7 +154,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
                 .assertClearDialogShown()
                 .clickConfirmClear();
 
-        Set<String> events = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> events = EventSettings.loadEventList(contextIntf);
         assertTrue(events.isEmpty());
         robot.assertEmptyListShown(activity)
                 .assertListHasItems(activity, 0);
@@ -188,7 +193,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         String angle = "15";
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)
@@ -230,7 +236,8 @@ public class EventListActivityTest extends SuntimesActivityTestBase
     {
         activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
         Activity activity = activityRule.getActivity();
-        Set<String> eventList0 = EventSettings.loadEventList(activity);
+        ContextInterface contextIntf = AndroidEventSettings.wrap(activity);
+        Set<String> eventList0 = EventSettings.loadEventList(contextIntf);
 
         EventListActivityRobot robot = new EventListActivityRobot()
                 .assertActivityShown(activity)
@@ -291,19 +298,19 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickAddButton(Context context) {
-            onView(withContentDescription(R.string.configAction_addEvent)).perform(click());
+            onView(withContentDescription(R.string.events_action_addEvent)).perform(click());
             return this;
         }
         public EventListActivityRobot cancelAddMenu(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
         public EventListActivityRobot clickAddMenu_elevation(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickAddMenu_shadow(Context context) {
-            onView(withText(R.string.configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_addEvent_shadowEvent)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
 
@@ -313,24 +320,24 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot clickOverflowMenu_clear(Context context) {
-            onView(withText(R.string.configAction_clearEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_clearEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_export(Context context) {
-            onView(withText(R.string.configAction_exportEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_exportEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot clickOverflowMenu_import(Context context) {
-            onView(withText(R.string.configAction_importEvents)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.events_action_importEvents)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public EventListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
         public EventListActivityRobot clickConfirmClear() {
-            onView(withText(R.string.configAction_clearEvents)).perform(click());
+            onView(withText(R.string.events_action_clearEvents)).perform(click());
             return this;
         }
 
@@ -343,21 +350,21 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public EventListActivityRobot assertAddMenuIsShown(Context context) {
-            onView(withText(R.string.configAction_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_addEvent_sunEvent)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_addEvent_shadowEvent)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public EventListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_clearEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_exportEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.events_action_importEvents)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
 
         public EventListActivityRobot assertClearDialogShown() {
-            onView(withText(R.string.clearevents_dialog_msg)).check(assertShown);
+            onView(withText(R.string.events_clearevents_dialog_msg)).check(assertShown);
             return this;
         }
 
@@ -413,7 +420,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
 
         @Override
         public T assertDialogShown(Context context) {
-            onView(withText(R.string.editevent_dialog_title)).check(assertShown);
+            onView(withText(R.string.events_editevent_dialog_title)).check(assertShown);
             onView(withId(R.id.edit_event_label)).check(assertShown);
             onView(withId(R.id.edit_event_offset)).check(assertShown);
             onView(withId(R.id.cancel_button)).check(assertShown);
@@ -422,7 +429,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public T assertLabelErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_label_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_label_error)))).check(isShown ? assertShown : doesNotExist());
             return robot;
         }
     }
@@ -444,7 +451,7 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public ElevationEventDialogRobot assertAngleErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_angle_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_angle_error)))).check(isShown ? assertShown : doesNotExist());
             return robot;
         }
 
@@ -484,11 +491,11 @@ public class EventListActivityTest extends SuntimesActivityTestBase
         }
 
         public ShadowEventDialogRobot assertLengthErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_length_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_length_error)))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
         public ShadowEventDialogRobot assertHeightErrorShown(Context context, boolean isShown) {
-            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.editevent_dialog_height_error)))).check(isShown ? assertShown : doesNotExist());
+            onView(allOf(isShowingError(), hasErrorText(context.getString(R.string.events_editevent_dialog_height_error)))).check(isShown ? assertShown : doesNotExist());
             return this;
         }
 

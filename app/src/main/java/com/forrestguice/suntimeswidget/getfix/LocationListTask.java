@@ -21,14 +21,15 @@ package com.forrestguice.suntimeswidget.getfix;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
-public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
+import java.util.concurrent.Callable;
+
+public class LocationListTask implements Callable<LocationListTask.LocationListTaskResult>
 {
     private final GetFixDatabaseAdapter db;
     private final Location selected;
@@ -39,8 +40,9 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         this.selected = selected;
     }
 
+    @Nullable
     @Override
-    protected LocationListTaskResult doInBackground(Object... params)
+    public LocationListTaskResult call() throws Exception
     {
         String selectedPlaceName = selected.getLabel();
         String selectedPlaceLat = selected.getLatitude();
@@ -52,21 +54,28 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         if (GetFixDatabaseAdapter.findPlaceByName(selectedPlaceName, cursor) == -1)
         {
             Log.i("LocationListTask", "Place not found, adding it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
-            db.addPlace(selected);
+            boolean isCurrent = selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_found))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_cached))
+                    || selectedPlaceName.equals(db.getContext().getString(R.string.location_lastfix_title_set));
+            String comment = (isCurrent ? PlaceTags.TAG_GPS : "");
+
+            db.addPlace(selected, comment);
             closeCursor(cursor);
             cursor = db.getAllPlaces(0, true);
         }
 
         String selectedLat = selectedPlaceLat, selectedLon = selectedPlaceLon, selectedAlt = selectedPlaceAlt;
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
-        try {
-            selectedLat = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
-            selectedLon = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
-            selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
-        } catch (CursorIndexOutOfBoundsException | IllegalArgumentException e) {
-            Log.w("LocationListTask", "Place not found.. " + e);
-        } finally {
-            closeCursor(selectedCursor);
+        if (selectedCursor != null) {
+            try {
+                selectedLat = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+                selectedLon = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+                selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
+            } catch (CursorIndexOutOfBoundsException | IllegalArgumentException e) {
+                Log.w("LocationListTask", "Place not found.. " + e);
+            } finally {
+                closeCursor(selectedCursor);
+            }
         }
 
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
@@ -97,44 +106,6 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         }
     }
 
-    @Override
-    protected void onPostExecute(LocationListTaskResult result)
-    {
-        if (result != null)
-        {
-            signalOnLoaded(result);
-        }
-    }
-
-    /**
-     *
-     */
-    public abstract static class LocationListTaskListener
-    {
-        public abstract void onLoaded( @NonNull Cursor result, int selectedIndex );
-    }
-
-    public LocationListTaskListener getTaskListener()
-    {
-        return taskListener;
-    }
-    public void setTaskListener( LocationListTaskListener listener )
-    {
-        taskListener = listener;
-    }
-
-    private LocationListTaskListener taskListener;
-    private void signalOnLoaded( LocationListTaskResult result )
-    {
-        if (taskListener != null)
-        {
-            taskListener.onLoaded(result.getCursor(), result.getIndex());
-        }
-    }
-
-    /**
-     *
-     */
     public static class LocationListTaskResult
     {
         private final Cursor cursor;

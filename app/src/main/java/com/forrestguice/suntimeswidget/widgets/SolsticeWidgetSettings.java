@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.widgets;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -39,15 +40,15 @@ public class SolsticeWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static String[] ALL_KEYS = new String[] {
+    public static final String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_SOLSTICEWIDGET + PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER,
     };
-    public static String[] BOOL_KEYS = new String[] {
+    public static final String[] BOOL_KEYS = new String[] {
             PREF_PREFIX_KEY_SOLSTICEWIDGET + PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -107,12 +108,14 @@ public class SolsticeWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_SOLSTICEWIDGET;
         return prefs.getBoolean(prefs_prefix + key, defaultValue);
     }
+    @Nullable
     public static String loadWidgetString(Context context, int appWidgetId, String key, String defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_SOLSTICEWIDGET;
         return prefs.getString(prefs_prefix + key, defaultValue);
     }
+    @Nullable
     public static Set<String> loadWidgetStringSet(Context context, int appWidgetId, String key, String[] defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
@@ -132,15 +135,15 @@ public class SolsticeWidgetSettings
     //////////////////////////////////////////////////
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context ) {
         /* EMPTY */
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId appWidgetId
      */
     public static void deletePrefs(Context context, int appWidgetId) {
         deleteWidgetValue(context, appWidgetId, PREF_KEY_SOLSTICEWIDGET_SHOWCROSSQUARTER);

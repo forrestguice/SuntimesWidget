@@ -10,7 +10,7 @@
         android:gravity="bottom|center_horizontal"
         android:background="@color/grey_900" android:textColor="@color/teal_500"
         android:textSize="?attr/text_size_small"
-        android:text="@string/configLabel_themeColorText" />
+        android:text="@string/themes_configLabel_themeColorText" />
 
     <View android:id="@+id/preview_color"
         android:layout_width="0dp" android:layout_height="match_parent"  android:layout_weight="1"
@@ -23,6 +23,6 @@
         android:gravity="bottom|center_horizontal"
         android:background="@color/teal_500" android:textColor="@color/grey_900"
         android:textSize="?attr/text_size_small"
-        android:text="@string/configLabel_themeColorText" />
+        android:text="@string/themes_configLabel_themeColorText" />
 
 </LinearLayout>

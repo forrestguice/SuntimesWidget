@@ -31,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 import java.util.Locale;
@@ -46,7 +47,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
     private final EditText edit;
     private final float min, max;
 
-    public SizeChooser(Context context, EditText editField, float min, float max, String id)
+    public SizeChooser(Context context, @Nullable EditText editField, float min, float max, String id)
     {
         this.chooserID = id;
         this.context = context;
@@ -183,10 +184,11 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
         return validateValue(context, edit, min, max, true);
     }
 
-    public boolean validateValue(Context context, EditText editValue, float min, float max, boolean grabFocus)
+    public boolean validateValue(Context context, @Nullable EditText editValue, float min, float max, boolean grabFocus)
     {
-        if (editValue == null)
+        if (editValue == null) {
             return true;
+        }
 
         boolean isValid = true;
         editValue.setError(null);
@@ -196,7 +198,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
             if (textSize < min)
             {
                 isValid = false;       // too small
-                editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+                editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_min, min+""));
                 if (grabFocus)
                     editValue.requestFocus();
             }
@@ -204,14 +206,14 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
             if (textSize > max)
             {
                 isValid = false;       // too large
-                editValue.setError(context.getString(R.string.edittheme_error_textsize_max, max+""));
+                editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_max, max+""));
                 if (grabFocus)
                     editValue.requestFocus();
             }
 
         } catch (NumberFormatException e) {
             isValid = false;          // NaN (too small)
-            editValue.setError(context.getString(R.string.edittheme_error_textsize_min, min+""));
+            editValue.setError(context.getString(R.string.themes_edittheme_error_textsize_min, min+""));
             if (grabFocus)
                 editValue.requestFocus();
         }

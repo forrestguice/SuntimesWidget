@@ -21,14 +21,22 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.FlakyTest;
+import androidx.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +48,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("ALL")
@@ -67,7 +76,7 @@ public class SuntimesUtilsTest
     @Test
     public void test_calendarTimeShortDisplayString()
     {
-        WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(mockContext, 0);
+        TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(mockContext, 0);
         test_calendarTimeShortDisplayString_12hr();
         test_calendarTimeShortDisplayString_24hr();
         WidgetSettings.saveTimeFormatModePref(mockContext, 0, mode);
@@ -77,7 +86,7 @@ public class SuntimesUtilsTest
     public void test_calendarTimeShortDisplayString_12hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_12HR);
         SuntimesUtils.initDisplayStrings(mockContext);
         String[] amPm = new SimpleDateFormat("a", Locale.getDefault()).getDateFormatSymbols().getAmPmStrings();  // am/pm strings
 
@@ -92,7 +101,7 @@ public class SuntimesUtilsTest
     public void test_calendarTimeShortDisplayString_24hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_24HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         long utcMillis = 1493315892762L;                          // april 27
@@ -102,25 +111,25 @@ public class SuntimesUtilsTest
         test_calendarTimeShortDisplayString24hr(tzAz, utcMillis, "10:58");
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString12hr(TimeZone tz, long utcMillis, String expected, String expectedSuffix)
+    protected TimeDisplayText test_calendarTimeShortDisplayString12hr(TimeZone tz, long utcMillis, String expected, String expectedSuffix)
     {
-        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
         assertTrue("suffix should be " + expectedSuffix + ", but was " + text.getSuffix(), text.getSuffix().equals(expectedSuffix));
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString24hr(TimeZone tz, long utcMillis, String expected)
+    protected TimeDisplayText test_calendarTimeShortDisplayString24hr(TimeZone tz, long utcMillis, String expected)
     {
-        SuntimesUtils.TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
+        TimeDisplayText text = test_calendarTimeShortDisplayString(tz, utcMillis, expected);
         assertTrue("suffix should be empty but was " + text.getSuffix(), text.getSuffix().isEmpty());
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarTimeShortDisplayString(TimeZone tz, long utcMillis, String expected)
+    protected TimeDisplayText test_calendarTimeShortDisplayString(TimeZone tz, long utcMillis, String expected)
     {
         Calendar time = new GregorianCalendar(tz);
         time.setTimeInMillis(utcMillis);
-        SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(mockContext, time);
+        TimeDisplayText text = utils.calendarTimeShortDisplayString(mockContext, time);
         assertTrue("raw value should be " + utcMillis + ", but was " + text.getRawValue(), text.getRawValue() == utcMillis);
         assertTrue("value should be " + expected + ", but was " + text.getValue(), text.getValue().equals(expected));
         assertTrue("units should be empty but was " + text.getUnits(), text.getUnits().isEmpty());
@@ -131,7 +140,7 @@ public class SuntimesUtilsTest
     public void test_calendarDateTimeDisplayString_12hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_12HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_12HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
@@ -153,7 +162,7 @@ public class SuntimesUtilsTest
     public void test_calendarDateTimeDisplayString_24hr()
     {
         assertTrue("test precondition: english language", AppSettings.getLocale().getLanguage().equals("en"));
-        WidgetSettings.saveTimeFormatModePref(mockContext, 0, WidgetSettings.TimeFormatMode.MODE_24HR);
+        WidgetSettings.saveTimeFormatModePref(mockContext, 0, TimeFormatMode.MODE_24HR);
         SuntimesUtils.initDisplayStrings(mockContext);
 
         Calendar date0 = new GregorianCalendar(TimeZone.getTimeZone("US/Arizona"));
@@ -171,18 +180,18 @@ public class SuntimesUtilsTest
         test_calendarDateTimeDisplayString(date0, "April 27, 10:58:12", false, true, true);
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
+    protected TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showTime, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
+        TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showTime, showSeconds);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == date.getTimeInMillis());
         assertTrue(text.getSuffix().isEmpty());
         return text;
     }
 
-    protected SuntimesUtils.TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
+    protected TimeDisplayText test_calendarDateTimeDisplayString(Calendar date, String expected, boolean showYear, boolean showTime, boolean showSeconds)
     {
-        SuntimesUtils.TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds, false);
+        TimeDisplayText text = utils.calendarDateTimeDisplayString(mockContext, date, showYear, showTime, showSeconds, false);
         assertTrue("result should be " + expected + " but was " + text.toString(), text.toString().equals(expected));
         assertTrue(text.getRawValue() == date.getTimeInMillis());
         assertTrue(text.getSuffix().isEmpty());
@@ -248,7 +257,7 @@ public class SuntimesUtilsTest
         Calendar now = Calendar.getInstance(tz);
         now.setTimeInMillis(utcMillis);
 
-        SuntimesUtils.TimeDisplayText text;
+        TimeDisplayText text;
         double bench_millis = 0, threshold_millis = 2;
         double bench_fast = Double.POSITIVE_INFINITY, bench_slow = 0;
         long bench_start = 0, bench_end = 0;
@@ -308,6 +317,31 @@ public class SuntimesUtilsTest
         bench_millis /= ((double)n);
         Log.d("SuntimesUtilsTest", "avg SuntimesUtils.calendarDateTimeDisplay in " + bench_millis + ", [" + bench_fast + " .. " + bench_slow + "]");
         assertTrue("calendarDateTimeDisplay takes less than " + threshold_millis + " ms .. took " + bench_millis, bench_millis < threshold_millis);
+    }
+
+    @FlakyTest
+    @Test
+    public void test_formatAsHeight_deprecation()
+    {
+        Context context = InstrumentationUtils.getContext();
+        final LengthUnit units = LengthUnit.IMPERIAL;
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        String oldWay = SuntimesUtils.formatAsHeight(context, observerHeight, units, true, 2);
+        TimeDisplayText newWay = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), observerHeight, units, 2, false);
+        assertEquals(oldWay, newWay.toString());
+    }
+
+    @Test
+    public void test_timeDeltaLongDisplayString_deprecation()
+    {
+        Context context = InstrumentationUtils.getContext();
+        SuntimesUtils utils0 = new SuntimesUtils();
+        TimeDeltaDisplay utils1 = new TimeDeltaDisplay();
+
+        long t = 300000;
+        String oldWay = utils.timeDeltaLongDisplayString(t);
+        TimeDisplayText newWay = utils1.timeDeltaLongDisplayString(t);
+        assertEquals(oldWay, newWay.toString());
     }
 
 }

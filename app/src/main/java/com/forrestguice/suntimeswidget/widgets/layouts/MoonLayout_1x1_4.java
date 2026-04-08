@@ -25,12 +25,15 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
+
+import java.util.Calendar;
 
 /**
  * Moon Primary Phase (1x1)
@@ -79,9 +82,10 @@ public class MoonLayout_1x1_4 extends MoonLayout
             MoonPhaseDisplay nextPhase = SuntimesMoonData.toPhase(majorPhase);
             views.setViewVisibility(nextPhase.getView(), View.VISIBLE);
 
-            SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds, abbreviate);
+            Calendar phaseCalendar = data.moonPhaseCalendar(majorPhase);
+            TimeDisplayText phaseString = (phaseCalendar != null ? time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), phaseCalendar, showTimeDate, showSeconds, abbreviate) : new TimeDisplayText());
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
-            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(context, majorPhase));
+            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));
         }
     }

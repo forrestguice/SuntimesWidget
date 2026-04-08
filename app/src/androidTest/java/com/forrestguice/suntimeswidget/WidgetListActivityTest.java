@@ -25,10 +25,13 @@ import android.widget.ArrayAdapter;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivityTest;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivityTest;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.widgets.WidgetListAdapter;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,20 +41,20 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertEnabled;
 import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
 import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
 
 @LargeTest
 @BehaviorTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class WidgetListActivityTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -63,13 +66,13 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
     @Before
     public void beforeTest() throws IOException {
         setAnimationsEnabled(false);
-        saveConfigState(getContext());
-        overrideConfigState(getContext());
+        saveConfigState(InstrumentationUtils.getContext());
+        overrideConfigState(InstrumentationUtils.getContext());
     }
     @After
     public void afterTest() throws IOException {
         setAnimationsEnabled(true);
-        restoreConfigState(getContext());
+        restoreConfigState(InstrumentationUtils.getContext());
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -147,24 +150,24 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot clickManageThemesButton(Context context) {
-            onView(withContentDescription(R.string.configLabel_widgetThemeList)).perform(click());
+            onView(withContentDescription(R.string.themes_label_widgetThemeList)).perform(click());
             return this;
         }
         public WidgetListActivityRobot clickManageActionsButton(Context context) {
-            onView(withContentDescription(R.string.loadaction_dialog_title)).perform(click());
+            onView(withContentDescription(R.string.actions_loadaction_dialog_title)).perform(click());
             return this;
         }
 
         public WidgetListActivityRobot clickOverflowMenu_createBackup() {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_createBackup)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WidgetListActivityRobot clickOverflowMenu_restoreBackup() {
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).perform(click());
+            onView(withText(R.string.action_restoreBackup)).inRoot(isPlatformPopup()).perform(click());
             return this;
         }
         public WidgetListActivityRobot cancelOverflowMenu(Context context) {
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).perform(pressBack());
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(pressBack());
             return this;
         }
 
@@ -180,9 +183,9 @@ public class WidgetListActivityTest extends SuntimesActivityTestBase
         }
 
         public WidgetListActivityRobot assertOverflowMenuShown(Context context) {
-            onView(withText(R.string.configAction_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
-            onView(withText(R.string.configAction_help)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_createBackup)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_restoreBackup)).inRoot(isPlatformPopup()).check(assertShown);
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).check(assertShown);
             return this;
         }
     }

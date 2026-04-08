@@ -48,12 +48,12 @@ public class GeoIntents
         GeoIntents.buildIntentChooserList(context, geoIntents, geoIntent0);
         GeoIntents.buildIntentChooserList(context, geoIntents, geoIntent1);
 
-        if (geoIntents.size() <= 0) {
-            Toast.makeText(context, context.getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
+        if (geoIntents.isEmpty()) {
+            Toast.makeText(context, context.getString(R.string.action_mapLocation_chooser_noapp), Toast.LENGTH_LONG).show();
             return;
         }
 
-        Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), context.getString(R.string.configAction_mapLocation_chooser));
+        Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), context.getString(R.string.action_mapLocation_chooser));
         if (Build.VERSION.SDK_INT >= 23) {
             chooserIntent.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, geoIntents.toArray(new Parcelable[0]));
         } else {

@@ -18,10 +18,12 @@
 
 package com.forrestguice.suntimeswidget.settings.colors;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import com.forrestguice.support.view.ViewPager;
 
 public class NoSwipeViewPager extends ViewPager
 {
@@ -38,6 +40,7 @@ public class NoSwipeViewPager extends ViewPager
         return false;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return false;

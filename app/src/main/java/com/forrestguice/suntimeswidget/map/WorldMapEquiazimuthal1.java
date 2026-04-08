@@ -24,17 +24,14 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.v4.graphics.ColorUtils;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 
@@ -56,6 +53,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         return polar;
     }
 
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
@@ -127,8 +125,9 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         return v;
     }
 
+    @Nullable
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
         if (w <= 0 || h <= 0)
@@ -167,16 +166,16 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         {
             Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
-            SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
+            SuntimesCalculator.SunPosition sunPos = (calculator != null ? calculator.getSunPosition(now) : null);
+            SuntimesCalculator.MoonPosition moonPos = (calculator != null ? calculator.getMoonPosition(now) : null);
             Location location = data.location();
 
-            if (sunPos == null || moonPos == null) {
+            if (sunPos == null || moonPos == null || location == null) {
                 Log.e(WorldMapView.LOGTAG, "not supported by this data source");
                 break drawData;
             }
 
-            long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
+            long gmtMillis = now.getTimeInMillis() + (long)(TimeZones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
             double gmtArc = gmtHours * 15d;
 
@@ -275,7 +274,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;

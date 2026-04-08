@@ -23,14 +23,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.support.preference.DialogPreference;
 
 /**
  * A version of MillisecondPickerPreference that allows selecting a millisecond value as a
@@ -42,8 +42,11 @@ public class TimeOffsetPickerPreference extends DialogPreference
     private int value;
     private int param_minMs = 1, param_maxMs = 10000;
 
+    @Nullable
     private String param_zeroText = null;
+    @Nullable
     private String param_resetText = null;
+    @Nullable
     private Integer param_resetValue = null;
 
     private boolean param_showDirection = false;
@@ -60,18 +63,21 @@ public class TimeOffsetPickerPreference extends DialogPreference
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     @TargetApi(21)
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     @TargetApi(21)
     public TimeOffsetPickerPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initParams(context, attrs);
+        setDialogLayoutResource(R.layout.layout_dialog_timeoffset);
     }
 
     private TextView label;
@@ -80,10 +86,7 @@ public class TimeOffsetPickerPreference extends DialogPreference
     @Override
     protected View onCreateDialogView()
     {
-        SuntimesUtils.initDisplayStrings(getContext());
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View dialogView = inflater.inflate(R.layout.layout_dialog_timeoffset, null, false);
-
+        View dialogView = super.onCreateDialogView();   // inflates DialogLayoutResource
         label = (TextView) dialogView.findViewById(R.id.text_label);
         pickMillis = (TimeOffsetPicker) dialogView.findViewById(R.id.pick_offset_millis);
         pickMillis.setParams(getContext(), param_minMs, param_maxMs, param_showSeconds, param_showMinutes, param_showHours, param_showDays, param_showDirection);
@@ -130,7 +133,9 @@ public class TimeOffsetPickerPreference extends DialogPreference
             builder.setNeutralButton(param_resetText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    setValue(param_resetValue);
+                    if (param_resetValue != null) {
+                        setValue(param_resetValue);
+                    }
                 }
             });
         }
@@ -200,7 +205,7 @@ public class TimeOffsetPickerPreference extends DialogPreference
         if (value == 0 && param_zeroText != null) {
             return param_zeroText;
         } else {
-            return new SuntimesUtils().timeDeltaLongDisplayString(0, value, true).getValue();
+            return new TimeDeltaDisplay().timeDeltaLongDisplayString(0, value, true).getValue();
         }
     }
 

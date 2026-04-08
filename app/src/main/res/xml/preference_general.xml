@@ -2,78 +2,78 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference
+    <com.forrestguice.support.preference.Preference
         android:key="appwidget_0_intro_screen" android:persistent="false"
         android:title="@string/welcome_pref_title"
         android:summary="@string/welcome_pref_summary" />
 
-    <PreferenceCategory
-        android:title="@string/configLabel_general">
+    <com.forrestguice.support.preference.PreferenceCategory
+        android:title="@string/settings_general">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"
-            android:title="@string/configLabel_timeFormatMode"
-            android:dialogTitle="@string/configLabel_timeFormatMode"
+            android:title="@string/settings_timeFormatMode"
+            android:dialogTitle="@string/settings_timeFormatMode"
             android:summary="%s"
-            android:entries="@array/timeFormatMode_display" android:entryValues="@array/timeFormatMode_values"
+            android:entries="@array/settings_timeFormatMode_display" android:entryValues="@array/settings_timeFormatMode_values"
             android:defaultValue="@string/def_appwidget_0_appearance_timeformatmode" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.support.preference.ListPreference
             android:key="appwidget_0_general_lengthunits"
-            android:title="@string/configLabel_general_lengthUnits"
-            android:dialogTitle="@string/configLabel_general_lengthUnits"
+            android:title="@string/settings_general_lengthUnits"
+            android:dialogTitle="@string/settings_general_lengthUnits"
             android:summary="%s"
-            android:entries="@array/lengthUnits_display" android:entryValues="@array/lengthUnits_values"
+            android:entries="@array/settings_lengthUnits_display" android:entryValues="@array/settings_lengthUnits_values"
             android:defaultValue="@string/default_units_length" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_localize_hemisphere"
-            android:title="@string/configLabel_general_localize_hemisphere"
-            android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@bool/def_appwidget_0_general_localize_hemisphere" />
+            android:title="@string/settings_general_localize_hemisphere"
+            android:summary="@string/settings_general_localize_hemisphere_summary" android:defaultValue="@bool/def_appwidget_0_general_localize_hemisphere" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
-            android:title="@string/configLabel_general_showSeconds"
-            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@bool/def_appwidget_0_general_showseconds" />
+            android:title="@string/settings_general_showSeconds"
+            android:summary="@string/settings_general_showSeconds_summary" android:defaultValue="@bool/def_appwidget_0_general_showseconds" />
 
-        <CheckBoxPreference
+        <com.forrestguice.support.preference.CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
-            android:title="@string/configLabel_general_altitude_enabled"
-            android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@bool/def_appwidget_0_general_altitude_enabled" />
+            android:title="@string/settings_general_altitude_enabled"
+            android:summary="@string/settings_general_altitude_enabled_summary" android:defaultValue="@bool/def_appwidget_0_general_altitude_enabled" />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
-    <PreferenceCategory android:layout="@layout/divider_pref" />
+    <com.forrestguice.support.preference.PreferenceCategory android:layout="@layout/divider_pref" />
 
-    <PreferenceCategory
-        android:title="@string/configLabel_advanced">
+    <com.forrestguice.support.preference.PreferenceCategory
+        android:title="@string/settings_advanced">
 
         <com.forrestguice.suntimeswidget.settings.SummaryListPreference
             android:key="appwidget_0_general_calculator"
-            android:title="@string/configLabel_general_calculator_sun"
-            android:dialogTitle="@string/configLabel_general_calculator_sun"
+            android:title="@string/settings_general_calculator_sun"
+            android:dialogTitle="@string/settings_general_calculator_sun"
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator" />
 
         <com.forrestguice.suntimeswidget.settings.SummaryListPreference
             android:key="appwidget_0_general_calculator_moon"
-            android:title="@string/configLabel_general_calculator_moon"
-            android:dialogTitle="@string/configLabel_general_calculator_moon"
+            android:title="@string/settings_general_calculator_moon"
+            android:dialogTitle="@string/settings_general_calculator_moon"
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
 
         <com.forrestguice.suntimeswidget.settings.HelpPreference
             android:key="appwidget_0_general_calculator_help"
             android:persistent="false"
-            android:title="@string/configLabel_general_calculator_help"
+            android:title="@string/settings_general_calculator_help"
             android:icon="?attr/icActionHelp"
             app:helpText="@string/help_datasources"
             app:helpLink="@string/help_url"
             app:helpPath="@string/help_datasources_path"
-            app:moreHelpButtonText="@string/configAction_onlineHelp"
+            app:moreHelpButtonText="@string/action_onlineHelp"
             />
 
-    </PreferenceCategory>
+    </com.forrestguice.support.preference.PreferenceCategory>
 
     <!--<PreferenceCategory
         android:title="@string/configLabel_experimental">

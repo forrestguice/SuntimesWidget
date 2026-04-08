@@ -19,21 +19,21 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <!-- guidelines -->
-        <android.support.constraint.Guideline
+        <com.forrestguice.support.constraint.Guideline
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/centerLine" app:layout_constraintGuide_percent="0.5"
             android:orientation="vertical" />
 
-        <android.support.constraint.Guideline
+        <com.forrestguice.support.constraint.Guideline
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/centerLineL" app:layout_constraintGuide_percent="0.42"
             android:orientation="vertical" />
 
-        <android.support.constraint.Guideline
+        <com.forrestguice.support.constraint.Guideline
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/centerLineR" app:layout_constraintGuide_percent="0.58"
             android:orientation="vertical" />
@@ -53,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_themeName"
             android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-            android:text="@string/configLabel_themeID" android:textSize="?attr/text_size_small"
+            android:text="@string/themes_configLabel_themeID" android:textSize="?attr/text_size_small"
             tools:layout_editor_absoluteX="0dp"/>
 
         <EditText
@@ -64,7 +64,7 @@
             app:layout_constraintStart_toEndOf="@+id/editLabel_themeName"
             app:layout_constraintEnd_toEndOf="@+id/centerLine"
             android:inputType="textNoSuggestions"
-            android:hint="@string/configHint_themeID" android:text="" />
+            android:hint="@string/themes_configHint_themeID" android:text="" />
 
         <!-- Theme Name (display string) -->
         <TextView android:labelFor="@+id/edit_themeDisplay"
@@ -74,7 +74,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLabel_themeName"
             android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
-            android:text="@string/configLabel_themeName" android:textSize="?attr/text_size_small"
+            android:text="@string/themes_configLabel_themeName" android:textSize="?attr/text_size_small"
             tools:layout_editor_absoluteX="0dp"/>
 
         <EditText
@@ -85,7 +85,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/centerLine"
             android:inputType="text" android:textStyle="bold"
-            android:hint="@string/configHint_themeName" android:text="" android:textSize="?attr/text_size_small"
+            android:hint="@string/themes_configHint_themeName" android:text="" android:textSize="?attr/text_size_small"
             android:layout_marginLeft="8dp" android:layout_marginRight="4dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="4dp"
             android:paddingStart="8dp" android:paddingLeft="8dp" android:paddingEnd="8dp" android:paddingRight="8dp"
@@ -144,6 +144,6 @@
 
         </ViewFlipper>
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

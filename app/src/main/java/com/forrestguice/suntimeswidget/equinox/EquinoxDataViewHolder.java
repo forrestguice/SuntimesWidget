@@ -21,21 +21,26 @@ package com.forrestguice.suntimeswidget.equinox;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -44,7 +49,8 @@ import java.util.Calendar;
  */
 public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
 {
-    protected static SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     public View clickArea;
     public View focusView;
@@ -78,7 +84,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 Calendar now = Calendar.getInstance();
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
+                TimeDisplayText timeText = utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), event, WidgetSettings.loadShowTimeDatePref(context, 0), options.showSeconds);
                 text_datetime.setText(timeText.toString());
                 text_datetime.setVisibility(options.showDate ? View.VISIBLE : View.GONE);
                 text_label.setText(data.timeMode().getLongDisplayString());
@@ -121,19 +127,19 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         Calendar calendar = data.eventCalendarThisYear();
         if (now != null && calendar != null)
         {
-            String noteText = utils.timeDeltaDisplayString(now.getTime(), calendar.getTime(), showWeeks, showHours).toString();
+            String noteText = delta_utils.timeDeltaDisplayString(now.getTime(), calendar.getTime(), showWeeks, showHours).toString();
 
             if (calendar.before(Calendar.getInstance()))
             {
-                String noteString = context.getString(R.string.ago, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
-                        : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                String noteString = context.getString(R.string.delta_ago, noteText);
+                SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, (highlighted ? options.noteColor : options.disabledColor))
+                        : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
 
             } else {
-                String noteString = context.getString(R.string.hence, noteText);
-                SpannableString noteSpan = (text_note.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
-                        : SuntimesUtils.createBoldSpan(null, noteString, noteText));
+                String noteString = context.getString(R.string.delta_hence, noteText);
+                SpannableString noteSpan = (text_note.isEnabled() ? SpanUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
+                        : SpanUtils.createBoldSpan(null, noteString, noteText));
                 text_note.setText(noteSpan);
             }
         } else {
@@ -182,7 +188,7 @@ public class EquinoxDataViewHolder extends RecyclerView.ViewHolder
         text_label.setLayoutParams(layoutParams);
     }
 
-    public static final int suggestedLayoutResID() {
+    public static int suggestedLayoutResID() {
         return R.layout.info_time_solsticequinox2;
     }
 

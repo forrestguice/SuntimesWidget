@@ -4,17 +4,17 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/selectAction"
-            android:title="@string/configAction_editAction"
+            android:title="@string/actions_action_edit"
             android:icon="?attr/icActionAccept"
             app:showAsAction="always" />
 
         <item android:id="@+id/editAction"
-            android:title="@string/configAction_editAction"
+            android:title="@string/actions_action_edit"
             android:icon="?attr/icActionEdit"
             app:showAsAction="ifRoom" />
 
         <item android:id="@+id/deleteAction"
-            android:title="@string/configAction_deleteAction"
+            android:title="@string/actions_action_delete"
             android:icon="?attr/icActionDelete"
             app:showAsAction="ifRoom" />
 

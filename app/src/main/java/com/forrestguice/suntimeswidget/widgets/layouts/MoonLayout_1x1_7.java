@@ -27,12 +27,17 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Calendar;
 
@@ -110,8 +115,8 @@ public class MoonLayout_1x1_7 extends MoonLayout
         }
 
         SuntimesCalculator calculator = data.calculator();
-        SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
-        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
+        SuntimesCalculator.MoonPosition moonPosition = (calculator != null ? calculator.getMoonPosition(data.now()) : null);
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         views.setTextViewText(R.id.info_moon_distance_current, styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
@@ -148,18 +153,22 @@ public class MoonLayout_1x1_7 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 
-    public static SpannableString styleDistanceText(Context context, SuntimesCalculator.MoonPosition moonPosition, WidgetSettings.LengthUnit units, int highlightColor, int suffixColor, boolean boldTime)
+    public static SpannableString styleDistanceText(Context context, @Nullable SuntimesCalculator.MoonPosition moonPosition, LengthUnit units, int highlightColor, int suffixColor, boolean boldTime)
     {
-        SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
+        if (moonPosition == null) {
+            return new SpannableString("");
+        }
+        AndroidResources r = AndroidResources.wrap(context);
+        TimeDisplayText distanceDisplay = LengthUnitDisplay.formatAsDistance(r, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
         String unitsSymbol = distanceDisplay.getUnits();
-        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
-        SpannableString distance = SuntimesUtils.createColorSpan(null, distanceString, distanceString, highlightColor, boldTime);
-        distance = SuntimesUtils.createBoldColorSpan(distance, distanceString, unitsSymbol, suffixColor);
-        distance = SuntimesUtils.createRelativeSpan(distance, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        String distanceString = LengthUnitDisplay.formatAsDistance(r, distanceDisplay);
+        SpannableString distance = SpanUtils.createColorSpan(null, distanceString, distanceString, highlightColor, boldTime);
+        distance = SpanUtils.createBoldColorSpan(distance, distanceString, unitsSymbol, suffixColor);
+        distance = SpanUtils.createRelativeSpan(distance, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         return distance;
     }
 }

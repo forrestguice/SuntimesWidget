@@ -24,9 +24,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class GetFixDatabaseAdapter
@@ -72,6 +72,7 @@ public class GetFixDatabaseAdapter
         return context;
     }
 
+    @Nullable
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 
@@ -79,6 +80,8 @@ public class GetFixDatabaseAdapter
     {
         this.context = context;
     }
+
+    public static final String MSG_ILLEGAL_STATE = "database reference is null; was this method called after close() ?";
 
     /**
      * Open the database
@@ -111,6 +114,9 @@ public class GetFixDatabaseAdapter
      */
     public int getPlaceCount()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM " + TABLE_PLACES, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
@@ -124,8 +130,12 @@ public class GetFixDatabaseAdapter
      * @param fullEntry true get all place data, false get display name only
      * @return a Cursor into the database
      */
+    @Nullable
     public Cursor getAllPlaces(int n, boolean fullEntry)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
         Cursor cursor =  (n > 0) ? database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC", n+"" )
                                  : database.query( TABLE_PLACES, QUERY, null, null, null, null, "_id DESC" );
@@ -142,8 +152,12 @@ public class GetFixDatabaseAdapter
      * @return a Cursor into the database
      * @throws SQLException if query failed
      */
+    @Nullable
     public Cursor getPlace(long row) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         @SuppressWarnings("UnnecessaryLocalVariable")
         String[] QUERY = QUERY_PLACES_FULLENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
@@ -156,8 +170,12 @@ public class GetFixDatabaseAdapter
         return cursor;
     }
 
+    @Nullable
     public Cursor getPlace(String name, boolean fullEntry) throws SQLException
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         String[] QUERY = (fullEntry) ? QUERY_PLACES_FULLENTRY : QUERY_PLACES_MINENTRY;
         Cursor cursor = database.query( true, TABLE_PLACES, QUERY,
                 KEY_PLACE_NAME + " = ?", new String[] { name },
@@ -174,11 +192,11 @@ public class GetFixDatabaseAdapter
      * @param place a Location object describing the place
      * @return the rowID of the newly added place or -1 if an error
      */
-    public long addPlace( Location place ) {
+    public long addPlace( @NonNull Location place ) {
         return addPlace(place, "");
     }
 
-    public long addPlace( Location place, String comment )
+    public long addPlace( @NonNull Location place, String comment )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
@@ -189,7 +207,11 @@ public class GetFixDatabaseAdapter
         return addPlace(values);
     }
 
-    public long addPlace(ContentValues values) {
+    public long addPlace(ContentValues values)
+    {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return (verifyContentValues(values) ? database.insert(TABLE_PLACES, null, values) : -1);
     }
     protected boolean verifyContentValues(@Nullable ContentValues values)
@@ -215,6 +237,9 @@ public class GetFixDatabaseAdapter
 
     public void updatePlace( Location place )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
@@ -225,6 +250,9 @@ public class GetFixDatabaseAdapter
 
     public void updatePlace( long rowID, Location place )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_ROWID, rowID);
         values.put(KEY_PLACE_NAME, place.getLabel());
@@ -236,17 +264,21 @@ public class GetFixDatabaseAdapter
 
     public void updateComment( long rowID, String comment )
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         ContentValues values = new ContentValues();
         values.put(KEY_ROWID, rowID);
         values.put(KEY_PLACE_COMMENT, comment);
         database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
     }
 
-    public static int findPlaceByName(String name, Cursor cursor)
+    public static int findPlaceByName(String name, @Nullable Cursor cursor)
     {
         int position = -1;
-        if (cursor == null)
+        if (cursor == null) {
             return position;
+        }
 
         for (int i = 0; i < cursor.getCount(); i++)
         {
@@ -276,7 +308,6 @@ public class GetFixDatabaseAdapter
     {
         String quote = "\"";
         String separator = ", ";
-        //noinspection UnnecessaryLocalVariable
         String line = quote + place.getAsString(KEY_PLACE_NAME) + quote + separator +
                       place.getAsString(KEY_PLACE_LATITUDE) + separator +
                       place.getAsString(KEY_PLACE_LONGITUDE) + separator +
@@ -296,6 +327,9 @@ public class GetFixDatabaseAdapter
      */
     public boolean removePlace(long row)
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.delete(TABLE_PLACES, KEY_ROWID + "=" + row, null) > 0;
     }
 
@@ -306,6 +340,9 @@ public class GetFixDatabaseAdapter
      */
     public boolean clearPlaces()
     {
+        if (database == null) {
+            throw new IllegalStateException(MSG_ILLEGAL_STATE);
+        }
         return database.delete(TABLE_PLACES, null, null) > 0;
     }
 

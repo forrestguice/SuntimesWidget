@@ -25,22 +25,24 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@SuppressWarnings("Convert2Diamond")
 public class MenuAddon
 {
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    public static String REQUIRED_PERMISSION() {
+      return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String ACTION_ABOUT = "suntimes.action.SHOW_ABOUT";
     public static final String ACTION_MENU_ITEM = "suntimes.action.ADDON_MENU_ITEM";
@@ -113,8 +115,9 @@ public class MenuAddon
     {
         boolean hasPermission = false;
         if (packageInfo.requestedPermissions != null) {
+            String requiredPermission = REQUIRED_PERMISSION();
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(requiredPermission)) {
                     hasPermission = true;
                     break;
                 }
@@ -126,9 +129,9 @@ public class MenuAddon
     /**
      * ActivityItemInfo
      */
-    public static final class ActivityItemInfo
+    public static class ActivityItemInfo
     {
-        public ActivityItemInfo(@Nullable Context context, @NonNull String title, ActivityInfo info)
+        public ActivityItemInfo(@Nullable Context context, @NonNull String title, @Nullable ActivityInfo info)
         {
             this.title = title;
             this.info = info;
@@ -141,14 +144,14 @@ public class MenuAddon
             }
         }
 
-        public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)
+        public ActivityItemInfo(@NonNull String title, int iconResId, @Nullable ActivityInfo info)
         {
             this.title = title;
             this.icon = iconResId;
             this.info = info;
         }
 
-        protected String title;
+        protected final String title;
         @NonNull
         public String getTitle() {
             return title;
@@ -159,17 +162,22 @@ public class MenuAddon
             return icon;
         }
 
-        protected ActivityInfo info;
+        @Nullable
+        protected final ActivityInfo info;
+        @Nullable
         public ActivityInfo getInfo() {
             return info;
         }
 
         public Intent getIntent() {
             Intent intent = new Intent();
-            intent.setClassName(info.packageName, info.name);
+            if (info != null) {
+                intent.setClassName(info.packageName, info.name);
+            }
             return intent;
         }
 
+        @NonNull
         public String toString() {
             return title;
         }

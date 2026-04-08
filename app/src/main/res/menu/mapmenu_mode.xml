@@ -13,6 +13,21 @@
             android:icon="?attr/icActionWorldMap"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_worldmap_simplemercator"
+            android:title="@string/widgetMode_sunPosMap_simplemercator"
+            android:icon="?attr/icActionWorldMap"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_worldmap_simplesinusoidal"
+            android:title="@string/widgetMode_sunPosMap_simplesinusoidal"
+            android:icon="?attr/icActionWorldMap"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_worldmap_simplevandergrinten"
+            android:title="@string/widgetMode_sunPosMap_simplevandergrinten"
+            android:icon="?attr/icActionWorldMap"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_worldmap_simpleazimuthal"
             android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
             android:icon="?attr/icActionWorldMap"

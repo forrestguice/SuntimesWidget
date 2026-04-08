@@ -18,25 +18,28 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.Date;
 
 public class NoteData
 {
     public String noteMode;
-    public SuntimesUtils.TimeDisplayText timeText;
+    public TimeDisplayText timeText;
     public String prefixText;
     public String noteText;
     public String iconDescription;
     public int noteIconResource;
     public int noteIconStroke;
     public int textColor, iconColor, iconColor2;
+    @Nullable
     public Date time;
     public boolean tomorrow = false;
     public boolean squareIcon = false;
 
-    public NoteData(String noteMode, SuntimesUtils.TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, String iconDescription, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
+    public NoteData(String noteMode, TimeDisplayText timeText, String prefixText, String noteText, int noteIconResource, String iconDescription, int textColor, int iconColor, int iconColor2, int noteIconStroke, boolean squareIcon)
     {
         this.noteMode = noteMode;
         this.timeText = timeText;
@@ -61,8 +64,11 @@ public class NoteData
         this.textColor = other.textColor;
         this.iconColor = other.iconColor;
         this.iconColor2 = other.iconColor2;
+        this.iconDescription = other.iconDescription;
         this.noteIconStroke = other.noteIconStroke;
         this.squareIcon = other.squareIcon;
+        this.time = other.time;
+        this.tomorrow = other.tomorrow;
     }
 
     @Override
@@ -90,9 +96,9 @@ public class NoteData
         return hash;
     }
 
+    @NonNull
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "NoteData[" + this.noteMode + " (" + this.time + " in" + timeText + ")" + "]";
     }
 }

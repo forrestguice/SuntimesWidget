@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.actions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -30,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
@@ -40,6 +40,7 @@ import java.util.Set;
  */
 public class SaveActionDialog extends EditActionDialog
 {
+    @Nullable
     @Override
     public String getIntentTitle()
     {
@@ -51,37 +52,41 @@ public class SaveActionDialog extends EditActionDialog
         intentTitle = value;
     }
 
+    @Nullable
     public String getIntentDesc() {
         if (edit.edit_desc != null) {
             return edit.edit_desc.getText().toString();
         } else return null;
     }
 
+    @Nullable
     public String getIntentID()
     {
         if (edit_intentID != null) {
             return edit_intentID.getText().toString();
         } else return intentID;
     }
-    public void setIntentID(String id) {
+    public void setIntentID(@Nullable String id) {
         intentID = id;
         if (edit_intentID != null) {
             edit_intentID.setText(intentID);
         }
     }
-    public String suggestedIntentID(Context context)
+    public String suggestedIntentID(@Nullable Context context)
     {
         suggested_c = 0;
         String suggested;
         do {
-            suggested = context.getString(R.string.addaction_custname, Integer.toString(suggested_c));
+            suggested = ((context != null) ? context.getString(R.string.actions_addaction_custname, Integer.toString(suggested_c)) : suggested_c + "");
             suggested_c++;
         } while (intentIDs != null && intentIDs.contains(suggested));
         return suggested;
     }
     private int suggested_c = 1;
 
-    private String intentID = null, intentTitle = "";
+    @Nullable
+    private String intentID = null;
+    private String intentTitle = "";
     private Set<String> intentIDs;
     private AutoCompleteTextView edit_intentID;
     private TextView text_note;
@@ -109,7 +114,7 @@ public class SaveActionDialog extends EditActionDialog
             edit_intentID.requestFocus();
         }
 
-        if (intentID.trim().isEmpty()) {
+        if (intentID == null || intentID.trim().isEmpty()) {
             button_suggest.setVisibility(View.VISIBLE);
         }
     }
@@ -121,12 +126,12 @@ public class SaveActionDialog extends EditActionDialog
         String title = edit.getIntentTitle();
 
         if (id.trim().isEmpty() || id.contains(" ")) {
-            edit_intentID.setError(getContext().getString(R.string.addaction_error_id));
+            edit_intentID.setError(getString(R.string.actions_addaction_error_id));
             return false;
         } else edit_intentID.setError(null);
 
         if (title.trim().isEmpty()) {
-            edit.edit_label.setError(getContext().getString(R.string.addaction_error_title));
+            edit.edit_label.setError(getString(R.string.actions_addaction_error_title));
             return false;
         } else edit.text_label.setError(null);
 
@@ -140,7 +145,7 @@ public class SaveActionDialog extends EditActionDialog
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, intentIDs.toArray(new String[0]));
 
         edit = (EditActionView) dialogContent.findViewById(R.id.edit_intent);
-        edit.setFragmentManager(getFragmentManager());
+        edit.setFragmentManager(this);
         edit.edit_label.addTextChangedListener(titleWatcher);
 
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);
@@ -159,8 +164,8 @@ public class SaveActionDialog extends EditActionDialog
         button_suggest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setIntentID(suggestedIntentID(getContext()));
-                updateViews(getContext());
+                setIntentID(suggestedIntentID(v.getContext()));
+                updateViews(v.getContext());
                 edit_intentID.selectAll();
                 edit_intentID.requestFocus();
             }
@@ -169,7 +174,7 @@ public class SaveActionDialog extends EditActionDialog
         if (intentID == null) {
             intentID = suggestedIntentID(context);
             if (intentTitle == null || intentTitle.trim().isEmpty()) {
-                intentTitle = context.getString(R.string.addaction_custtitle, Integer.toString(suggested_c - 1));
+                intentTitle = context.getString(R.string.actions_addaction_custtitle, Integer.toString(suggested_c - 1));
             }
         }
 
@@ -177,7 +182,7 @@ public class SaveActionDialog extends EditActionDialog
         super.initViews(context, dialogContent, savedState);
     }
 
-    private TextWatcher titleWatcher = new TextWatcher() {
+    private final TextWatcher titleWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         @Override
@@ -189,7 +194,7 @@ public class SaveActionDialog extends EditActionDialog
         }
     };
 
-    private TextWatcher idWatcher = new TextWatcher()
+    private final TextWatcher idWatcher = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

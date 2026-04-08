@@ -27,7 +27,7 @@
 
             <TextView android:labelFor="@+id/appwidget_date_mode"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_date_mode" />
+                android:layout_height="wrap_content" android:text="@string/settings_date_mode" />
 
             <Spinner android:id="@+id/appwidget_date_mode" android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

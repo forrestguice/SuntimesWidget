@@ -32,7 +32,10 @@ import android.widget.NumberPicker;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+//import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.ArrayList;
 
@@ -202,43 +205,43 @@ public class TimeOffsetPicker extends LinearLayout
 
     protected void initLocale(Context context)
     {
-        SuntimesUtils.initDisplayStrings(context);
-        SuntimesUtils utils = new SuntimesUtils();
+        TimeDeltaDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_TimeDeltaDisplay());
+        TimeDeltaDisplay utils = new TimeDeltaDisplay();
 
         secondsValues = new int[(param_maxSeconds - param_minSeconds) + 1];
         secondsValues[0] = param_minSeconds;
         secondsStrings = new String[secondsValues.length];
-        secondsStrings[0] = (param_minSeconds == 0 ? " " : utils.timeDeltaLongDisplayString(0, secondsValues[0] * 1000, true).getValue());
+        secondsStrings[0] = (param_minSeconds == 0 ? " " : utils.timeDeltaLongDisplayString(0, secondsValues[0] * 1000L, true).getValue());
         for (int i=1; i<secondsValues.length; i++) {
             secondsValues[i] = param_minSeconds + i;
-            secondsStrings[i] = utils.timeDeltaLongDisplayString(0, secondsValues[i] * 1000, true).getValue();
+            secondsStrings[i] = utils.timeDeltaLongDisplayString(0, secondsValues[i] * 1000L, true).getValue();
         }
 
         minuteValues = new int[(param_maxMinutes - param_minMinutes) + 1];
         minuteValues[0] = param_minMinutes;
         minuteStrings = new String[minuteValues.length];
-        minuteStrings[0] = (param_minMinutes == 0 ? " " : utils.timeDeltaLongDisplayString(minuteValues[0] * 1000 * 60));
+        minuteStrings[0] = (param_minMinutes == 0 ? " " : utils.timeDeltaLongDisplayString(minuteValues[0] * 1000 * 60L)).toString();
         for (int i=1; i<minuteValues.length; i++) {
             minuteValues[i] = param_minMinutes + i;
-            minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60);
+            minuteStrings[i] = utils.timeDeltaLongDisplayString(minuteValues[i] * 1000 * 60L).toString();
         }
 
         hourValues = new int[(param_maxHours - param_minHours) + 1];
         hourValues[0] = param_minHours;
         hourStrings = new String[hourValues.length];
-        hourStrings[0] = (param_minHours == 0 ? " " : utils.timeDeltaLongDisplayString(hourValues[0] * 1000 * 60 * 60));
+        hourStrings[0] = (param_minHours == 0 ? " " : utils.timeDeltaLongDisplayString(hourValues[0] * 1000 * 60 * 60L)).toString();
         for (int i=1; i<hourValues.length; i++) {
             hourValues[i] = param_minHours + i;
-            hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60);
+            hourStrings[i] = utils.timeDeltaLongDisplayString(hourValues[i] * 1000 * 60 * 60L).toString();
         }
 
         dayValues = new int[(param_maxDays - param_minDays) + 1];
         dayValues[0] = param_minDays;
         dayStrings = new String[dayValues.length];
-        dayStrings[0] = (param_minDays == 0 ? " " : utils.timeDeltaLongDisplayString(dayValues[0] * 1000 * 60 * 60 * 24));
+        dayStrings[0] = (param_minDays == 0 ? " " : utils.timeDeltaLongDisplayString(dayValues[0] * 1000 * 60 * 60 * 24L)).toString();
         for (int i=1; i<dayValues.length; i++) {
             dayValues[i] = param_minDays + i;
-            dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24);
+            dayStrings[i] = utils.timeDeltaLongDisplayString(dayValues[i] * 1000 * 60 * 60 * 24L).toString();
         }
     }
 

@@ -21,8 +21,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -32,24 +37,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.moon.colors.MoonPhasesColorValues;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.util.text.TimeDisplayText;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonPhaseView extends LinearLayout
 {
-    protected SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final AngleDisplay angle_utils = new AngleDisplay();
     protected boolean isRtl = false;
     protected boolean centered = false;
     protected boolean illumAtNoon = false, illumRange = false;
@@ -59,6 +67,7 @@ public class MoonPhaseView extends LinearLayout
     protected LinearLayout content;
     protected TextView phaseText, illumText, azimuthText, elevationText;
 
+    @Nullable
     protected SuntimesMoonData data = null;  // cached
 
     public MoonPhaseView(Context context)
@@ -90,7 +99,7 @@ public class MoonPhaseView extends LinearLayout
         return R.layout.layout_view_moonphase;
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         themeViews(context);
@@ -121,7 +130,7 @@ public class MoonPhaseView extends LinearLayout
 
     private void themeViews(Context context)
     {
-        colors = new MoonPhasesColorValues(context);
+        colors = new MoonPhasesColorValues(AndroidResources.wrap(context));
         int[] colorAttrs = { android.R.attr.textColorPrimary };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -169,7 +178,7 @@ public class MoonPhaseView extends LinearLayout
         themeIcons(context, theme);
     }
 
-    private void themeIcons(Context context, SuntimesTheme theme)
+    private void themeIcons(Context context, @Nullable SuntimesTheme theme)
     {
         int[] viewID = getIconViewIDs();
         Bitmap[] bitmaps = getThemedBitmaps(context, theme);
@@ -228,13 +237,13 @@ public class MoonPhaseView extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
-        MoonPhaseDisplay.initDisplayStrings(context);
+        MoonPhaseDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_MoonPhaseDisplay());
     }
 
-    public void updateViews(Context context, SuntimesMoonData data) {
+    public void updateViews(Context context, @Nullable SuntimesMoonData data) {
         updateViews(context, data, null);
     }
-    public void updateViews(Context context, SuntimesMoonData data, @Nullable Calendar dateTime)
+    public void updateViews(Context context, @Nullable SuntimesMoonData data, @Nullable Calendar dateTime)
     {
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);
@@ -248,18 +257,20 @@ public class MoonPhaseView extends LinearLayout
         this.data = data;
         if (data != null && data.isCalculated())
         {
-            northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (data.location().getLatitudeAsDouble() < 0);
+            Location location = data.location();
+            double latitude = (location != null ? location.getLatitudeAsDouble() : 0);
+            northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (latitude < 0);
             themeIcons(context, themeOverride);
             hideIcons();
 
-            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(context, dateTime, data)
+            MoonPhaseDisplay phase = (dateTime != null) ? SuntimesMoonData.findCurrentPhaseOf(data.getDataSettings(context), dateTime, data)
                                                         : (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
 
             if (phase != null)
             {
                 if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
                     SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
-                    phaseText.setText(data.getMoonPhaseLabel(context, majorPhase));
+                    phaseText.setText(data.getMoonPhaseLabel(majorPhase));
                 } else phaseText.setText(phase.getLongDisplayString());
 
                 View phaseIcon = findViewById(phase.getView());
@@ -320,16 +331,16 @@ public class MoonPhaseView extends LinearLayout
                 if (tomorrowMode)
                 {
                     illum = formatter.format(data.getMoonIlluminationTomorrow());
-                    illumTime = utils.calendarTimeShortDisplayString(context, noonTomorrow).toString();
+                    illumTime = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonTomorrow).toString();
 
                 } else {
                     illum = formatter.format(data.getMoonIlluminationToday());
                     illumTime = (sharedNoon)
-                            ? utils.calendarDateTimeDisplayString(context, noonToday).toString()
-                            : utils.calendarTimeShortDisplayString(context, noonToday).toString();
+                            ? utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), noonToday).toString()
+                            : utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), noonToday).toString();
                 }
                 String illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
-                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
+                illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum, noteColor));
 
             } else if (illumRange) {
                 datetime = data.calendar();
@@ -349,16 +360,16 @@ public class MoonPhaseView extends LinearLayout
                 String illum2 = formatter.format(data.getMoonIllumination(endDate));
                 if (illum1.equals(illum2)) {
                     String illumNote = (context != null ? context.getString(R.string.moon_illumination_short, illum1) : illum1);
-                    illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor));
+                    illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum1, noteColor));
                 } else {
                     String illumNote = (context != null ? context.getString(R.string.moon_illumination_range, illum1, illum2) : illum1+" "+illum2);
-                    illumText.setText(SuntimesUtils.createColorSpan(SuntimesUtils.createColorSpan(null, illumNote, illum1, noteColor), illumNote, illum2, noteColor));
+                    illumText.setText(SpanUtils.createColorSpan(SpanUtils.createColorSpan(null, illumNote, illum1, noteColor), illumNote, illum2, noteColor));
                 }
 
             } else {
                 String illum = formatter.format(datetime != null ? data.getMoonIllumination(datetime) : data.getMoonIlluminationNow());
                 String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
-                illumText.setText(SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor));
+                illumText.setText(SpanUtils.createColorSpan(null, illumNote, illum, noteColor));
             }
 
         } else {
@@ -374,7 +385,7 @@ public class MoonPhaseView extends LinearLayout
         if (datetime != null && data != null && data.isCalculated())
         {
             SuntimesCalculator calculator = data.calculator();
-            SuntimesCalculator.Position position = calculator.getMoonPosition(datetime);
+            SuntimesCalculator.Position position = (calculator != null ? calculator.getMoonPosition(datetime) : null);
             updatePosition(position);
 
         } else {
@@ -401,22 +412,22 @@ public class MoonPhaseView extends LinearLayout
 
         if (azimuthText != null)
         {
-            SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 2, false);
-            String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-            SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-            azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+            TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 2, false);
+            String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+            SpannableString azimuthSpan = SpanUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+            azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
             this.azimuthText.setText(azimuthSpan);
 
-            SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 2, true);
-            this.azimuthText.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+            TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 2, true);
+            this.azimuthText.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
         }
 
         if (elevationText != null)
         {
             //int elevationColor = Color.WHITE;
-            SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(position.elevation, 2);
-            String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
-            SpannableString elevationSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
+            TimeDisplayText elevationText = angle_utils.formatAsElevation(position.elevation, 2);
+            String elevationString = angle_utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
+            SpannableString elevationSpan = SpanUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
             //elevationSpan = SuntimesUtils.createColorSpan(elevationSpan, elevationString, elevationString, elevationColor);
             this.elevationText.setText(elevationSpan);
         }
@@ -434,12 +445,12 @@ public class MoonPhaseView extends LinearLayout
 
     /**public void loadState(Bundle bundle) {}*/
 
-    public void setOnClickListener( OnClickListener listener )
+    public void setOnClickListener( @Nullable OnClickListener listener )
     {
         content.setOnClickListener(listener);
     }
 
-    public void setOnLongClickListener( OnLongClickListener listener)
+    public void setOnLongClickListener( @Nullable OnLongClickListener listener)
     {
         content.setOnLongClickListener(listener);
     }

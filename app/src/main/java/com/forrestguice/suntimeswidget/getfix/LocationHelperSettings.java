@@ -23,26 +23,34 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-@SuppressWarnings("Convert2Diamond")
 public class LocationHelperSettings
 {
-    public static final String PREF_KEY_LOCATION_MIN_ELAPSED = "getFix_minElapsed";
+    public static final String PREF_KEY_LOCATION_MIN_ELAPSED = "getFix_minElapsed";    // total elapsed time
+    public static final String PREF_KEY_LOCATION_MIN_ELAPSED_FF = "getFix_minElapsedFF";    // elapsed time since first fix
     public static final String PREF_KEY_LOCATION_MAX_ELAPSED = "getFix_maxElapsed";
     public static final String PREF_KEY_LOCATION_MAX_AGE = "getFix_maxAge";
 
-    public static final String PREF_KEY_LOCATION_TIME = "getFix_time";    // time of last automatic request
+    public static final String PREF_KEY_LOCATION_LAST_TIME = "getFix_last_time";    // time of last automatic request (success only)
+    public static final String PREF_KEY_LOCATION_LAST_PROVIDER = "getFix_last_provider";    // location provider of last request
+    public static final String PREF_KEY_LOCATION_LAST_ACCURACY = "getFix_last_accuracy";    // accuracy of last request
+    public static final String PREF_KEY_LOCATION_LAST_ELAPSED = "getFix_last_elapsed";    // time needed to complete last request
+
+    public static final String PREF_KEY_LOCATION_LAST_LOG = "getFix_last_log";    // debug log for last request
+    public static final String PREF_KEY_LOCATION_LAST_LOG_TIME = "getFix_last_log_time";    // time of last automatic request (success or failure)
+    public static final String PREF_KEY_LOCATION_LAST_LOG_FLAG = "getFix_last_log_enabled";
+    public static final String PREF_KEY_LOCATION_LAST_RESULT = "getFix_last_result";    // boolean
 
     public static final String PREF_KEY_LOCATION_PASSIVE = "getFix_passiveMode";
     public static final boolean PREF_DEF_LOCATION_PASSIVE = false;
 
-    public static final String PREF_KEY_LOCATION_PROVIDER_ = "getFix_provider_";
+    public static final String PREF_KEY_LOCATION_PROVIDER_ = "getFix_provider_";    // requested location providers
 
     public static int loadPrefGpsMaxAge(SharedPreferences prefs, int defaultValue)
     {
         int retValue;
         try {
             String maxAgeString = prefs.getString(PREF_KEY_LOCATION_MAX_AGE, defaultValue+"");
-            retValue = Integer.parseInt(maxAgeString);
+            retValue = (maxAgeString != null ? Integer.parseInt(maxAgeString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMaxAge", "Bad setting! " + e);
             retValue = defaultValue;
@@ -60,7 +68,7 @@ public class LocationHelperSettings
         int retValue;
         try {
             String minAgeString = prefs.getString(PREF_KEY_LOCATION_MIN_ELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(minAgeString);
+            retValue = (minAgeString != null ? Integer.parseInt(minAgeString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMinElapsed", "Bad setting! " + e);
             retValue = defaultValue;
@@ -78,12 +86,16 @@ public class LocationHelperSettings
         int retValue;
         try {
             String maxElapsedString = prefs.getString(PREF_KEY_LOCATION_MAX_ELAPSED, defaultValue+"");
-            retValue = Integer.parseInt(maxElapsedString);
+            retValue = (maxElapsedString != null ? Integer.parseInt(maxElapsedString) : defaultValue);
         } catch (NumberFormatException e) {
             Log.e("loadPrefGPSMaxElapsed", "Bad setting! " + e);
             retValue = defaultValue;
         }
         return retValue;
+    }
+
+    public static int loadPrefGpsMinElapsedSinceFirstFix(SharedPreferences prefs, int defaultValue) {
+        return prefs.getInt(PREF_KEY_LOCATION_MIN_ELAPSED_FF, defaultValue);
     }
 
     /**
@@ -117,11 +129,12 @@ public class LocationHelperSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         long t = 0;
         try {
-            t = pref.getLong(PREF_KEY_LOCATION_TIME, 0);
+            t = pref.getLong(PREF_KEY_LOCATION_LAST_TIME, 0);
 
         } catch (ClassCastException e) {
             try {
-                t = Long.parseLong(pref.getString(PREF_KEY_LOCATION_TIME, "0"));
+                String s = pref.getString(PREF_KEY_LOCATION_LAST_TIME, "0");
+                t = (s != null ? Long.parseLong(s) : 0);
                 Log.w("lastAutoLocationRequest", "lastAutoLocationRequest has the wrong type! found Long as String.");
 
             } catch (NumberFormatException | ClassCastException e1) {
@@ -130,11 +143,67 @@ public class LocationHelperSettings
         }
         return t;
     }
-    public static void saveLastAutoLocationRequest(Context context, long value)
+    public static void saveLastAutoLocationRequest(Context context, long atTime, String provider, float accuracy, long elapsed, String log)
     {
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        pref.putLong(PREF_KEY_LOCATION_TIME, value);
+        pref.putLong(PREF_KEY_LOCATION_LAST_TIME, atTime);
+        if (keepLastLocationLog(context)) {
+            saveLastLocationLog(context, true, atTime, provider, accuracy, elapsed, log);
+        }
+        pref.apply();
+    }
+    public static void saveLastLocationLog(Context context, boolean result, long atTime, String provider, float accuracy, long elapsed, String log)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_LOCATION_LAST_LOG, log);
+        pref.putLong(PREF_KEY_LOCATION_LAST_LOG_TIME, atTime);
+        pref.putString(PREF_KEY_LOCATION_LAST_PROVIDER, provider);
+        pref.putFloat(PREF_KEY_LOCATION_LAST_ACCURACY, accuracy);
+        pref.putLong(PREF_KEY_LOCATION_LAST_ELAPSED, elapsed);
+        pref.putBoolean(PREF_KEY_LOCATION_LAST_RESULT, result);
+        pref.apply();
+    }
+    public static void clearLastLocationLog(Context context)
+    {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.remove(PREF_KEY_LOCATION_LAST_LOG);
+        pref.remove(PREF_KEY_LOCATION_LAST_LOG_TIME);
+        pref.remove(PREF_KEY_LOCATION_LAST_PROVIDER);
+        pref.remove(PREF_KEY_LOCATION_LAST_ACCURACY);
+        pref.remove(PREF_KEY_LOCATION_LAST_ELAPSED);
+        pref.remove(PREF_KEY_LOCATION_LAST_RESULT);
         pref.apply();
     }
 
+    public static boolean keepLastLocationLog(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_LOCATION_LAST_LOG_FLAG, false);
+    }
+    public static String lastLocationLog(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String s = pref.getString(PREF_KEY_LOCATION_LAST_LOG, "");
+        return (s != null ? s : "");
+    }
+
+    public static boolean lastLocationResult(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_LOCATION_LAST_RESULT, false);
+    }
+    public static long lastLocationLogTime(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_LOCATION_LAST_LOG_TIME, -1);
+    }
+    public static String lastLocationProvider(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String s = pref.getString(PREF_KEY_LOCATION_LAST_PROVIDER, "");
+        return (s != null ? s : "");
+    }
+    public static float lastLocationAccuracy(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getFloat(PREF_KEY_LOCATION_LAST_ACCURACY, -1);
+    }
+    public static long lastLocationElapsed(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getLong(PREF_KEY_LOCATION_LAST_ELAPSED, 0);
+    }
 }

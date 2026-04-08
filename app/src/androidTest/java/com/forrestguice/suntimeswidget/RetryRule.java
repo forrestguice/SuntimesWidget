@@ -36,7 +36,9 @@ public class RetryRule implements TestRule
                     }
                 }
                 System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
-                throw caughtThrowable;
+                if (caughtThrowable != null) {
+                    throw caughtThrowable;
+                }
             }
         };
     }

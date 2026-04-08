@@ -30,8 +30,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -43,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
@@ -118,7 +118,7 @@ public class AlarmButton extends RelativeLayout
         return activated;
     }
 
-    protected void initLocale(Context context, AttributeSet attrs)
+    protected void initLocale(Context context, @Nullable AttributeSet attrs)
     {
         isRtl = AppSettings.isLocaleRtl(context);
 
@@ -138,7 +138,7 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
-    protected void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    protected void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         initLocale(context, attrs);
         LayoutInflater.from(context).inflate(getLayoutResID(), this, true);
@@ -271,7 +271,9 @@ public class AlarmButton extends RelativeLayout
             }
         });
 
-        applyAttributes(context, attrs);
+        if (attrs != null) {
+            applyAttributes(context, attrs);
+        }
     }
 
     protected void applyAttributes(Context context, AttributeSet attrs)
@@ -334,7 +336,7 @@ public class AlarmButton extends RelativeLayout
         return ((thumb.getX() <= dragHint.getX() + dragHint.getWidth() / 2f));
     }
 
-    protected void animateActivated(boolean value, final AnimatorListenerAdapter listener)
+    protected void animateActivated(boolean value, @Nullable final AnimatorListenerAdapter listener)
     {
         int duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         AnimatorListenerAdapter l = (value ? new AnimatorListenerAdapter()    // to active
@@ -422,7 +424,7 @@ public class AlarmButton extends RelativeLayout
         }
     }
 
-    protected void animateReturnThumb(float x, float y, final AnimatorListenerAdapter listener)
+    protected void animateReturnThumb(float x, float y, @Nullable final AnimatorListenerAdapter listener)
     {
         int duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
         thumb.animate().x(x).y(y).setDuration(duration).setInterpolator(new OvershootInterpolator()).setListener(new AnimatorListenerAdapter()
@@ -475,7 +477,7 @@ public class AlarmButton extends RelativeLayout
         thumbText.setTextColor(color);
     }
 
-    public void setThumbImageDrawable(Drawable d) {
+    public void setThumbImageDrawable(@Nullable Drawable d) {
         thumbIcon.setImageDrawable(d);
     }
 

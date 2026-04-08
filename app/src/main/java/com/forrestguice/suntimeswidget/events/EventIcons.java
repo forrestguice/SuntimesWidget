@@ -26,21 +26,19 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.Log;
+import com.forrestguice.support.content.ContextCompat;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
-@SuppressWarnings("Convert2Diamond")
 public class EventIcons
 {
     @SuppressLint("ResourceType")
@@ -74,14 +72,14 @@ public class EventIcons
             default: return 0;
         }
     }
-    public static int getIconResID(@Nullable Context context, String tag)
+    public static int getIconResID(@Nullable Context context, @Nullable String tag)
     {
         if (tag != null)
         {
             if (tag.startsWith(TAG_TZ))
             {
                 tag = tag.substring(TAG_TZ.length());
-                if (tag.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || tag.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID)) {
+                if (tag.equals(TimeZones.ApparentSolarTime.TIMEZONEID) || tag.equals(TimeZones.LocalMeanTime.TIMEZONEID)) {
                     return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
 
                 } else {
@@ -91,15 +89,15 @@ public class EventIcons
             } else if (tag.startsWith(TAG_ALIAS)) {
                 String suffix = null;
                 String eventID = tag.substring(TAG_ALIAS.length());
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING))
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING))
                 {
                     suffix = eventID.substring(eventID.length()-1);
                     //Log.d("DEBUG", "suffix::" + suffix);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     return (suffix == null ? R.drawable.svg_season
-                            : (AlarmEventProvider.ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
+                            : (ElevationEvent.SUFFIX_RISING.equals(suffix) ? R.drawable.svg_sunrise : R.drawable.svg_sunset));
                 } else {
                     return getResID(context, R.attr.icActionExtension, R.drawable.ic_action_extension);
                 }
@@ -115,11 +113,12 @@ public class EventIcons
     public static float[] getIconScale(SolarEvents event) {
         return new float[] {1f, 1f};
     }
-    public static float[] getIconScale(String tag) {
+    public static float[] getIconScale(@Nullable String tag) {
         return new float[] {1f, 1f};
     }
 
     @SuppressLint("ResourceType")
+    @Nullable
     public static Integer getIconTint(@Nullable Context context, SolarEvents event, ColorValues colors)
     {
         switch (event)
@@ -146,15 +145,16 @@ public class EventIcons
             default: return null;
         }
     }
-    public static Integer getIconTint(@Nullable Context context, String tag) {
+    @Nullable
+    public static Integer getIconTint(@Nullable Context context, @Nullable String tag) {
         if (tag != null)
         {
             if (tag.startsWith(TAG_ALIAS)) {
                 String eventID = tag.substring(TAG_ALIAS.length());
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                return ((context != null && EventSettings.hasEvent(context, eventID)) ? EventSettings.getColor(context, eventID) : null);
+                return ((context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) ? EventSettings.getColor(AndroidEventSettings.wrap(context), eventID) : null);
             }
         }
         return null;
@@ -171,7 +171,7 @@ public class EventIcons
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
         }
     }
-    public static int getIconDrawablePadding(Context context, String tag) {
+    public static int getIconDrawablePadding(Context context, @Nullable String tag) {
         return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
     }
 
@@ -185,25 +185,32 @@ public class EventIcons
                 return 0;
         }
     }
-    public static int getIconDrawableInset(Context context, String tag)
+    public static int getIconDrawableInset(Context context, @Nullable String tag)
     {
-        if (tag != null && (tag.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || tag.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID))) {
+        if (tag != null && (tag.equals(TimeZones.ApparentSolarTime.TIMEZONEID) || tag.equals(TimeZones.LocalMeanTime.TIMEZONEID))) {
             return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
         } else {
             return 0;
         }
     }
 
-    public static Drawable getIconDrawable(Context context, String tag, int width, int height) {
+    @Nullable
+    public static Drawable getIconDrawable(Context context, @Nullable String tag, int width, int height) {
         return getIconDrawable(context, EventIcons.getIconResID(context, tag), width, height, getIconScale(tag), getIconDrawableInset(context, tag), EventIcons.getIconTint(context, tag));
     }
+    @Nullable
     public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward, ColorValues colors) {
         return getIconDrawable(context, EventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), EventIcons.getIconTint(context, event, colors));
     }
-    public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
+    @Nullable
+    public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, @Nullable Integer tint)
     {
-        Drawable eventIcon = ContextCompat.getDrawable(context, resID).mutate();
-        if (tint != null) {
+        Drawable eventIcon = ContextCompat.getDrawable(context, resID);
+        if (eventIcon != null) {
+            eventIcon = eventIcon.mutate();
+        }
+
+        if (eventIcon != null && tint != null) {
             tintDrawable(eventIcon, tint);
         }
 
@@ -211,7 +218,7 @@ public class EventIcons
             eventIcon = new InsetDrawable(eventIcon, inset, inset, inset, inset);
         }
 
-        if (width > 0 && height > 0 && scale[0] > 0 && scale[1] > 0) {
+        if (eventIcon != null && width > 0 && height > 0 && scale[0] > 0 && scale[1] > 0) {
             eventIcon.setBounds(0, 0, (int)(scale[0] * width), (int)(scale[1] * height));
         }
 
@@ -244,19 +251,22 @@ public class EventIcons
         return defColor;
     }
 
-    public static void tintDrawable(Drawable d, int color)
+    public static void tintDrawable(@Nullable Drawable d, int color)
     {
-        if (Build.VERSION.SDK_INT >= 21) {
-            DrawableCompat.setTint(d, color);
-            DrawableCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
-        } else {
-            d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        if (d != null) {
+            if (Build.VERSION.SDK_INT >= 21) {
+                ContextCompat.setTint(d, color);
+                ContextCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
+            } else {
+                d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
         }
     }
 
     public static final String TAG_ALIAS = "alias_";
     public static final String TAG_TZ = "tz_";
 
+    @Nullable
     public static String getIconTag(@Nullable Context context, @Nullable String uriString)
     {
         if (uriString == null) {
@@ -270,11 +280,11 @@ public class EventIcons
             String eventID = uri.getLastPathSegment();
             if (eventID != null)
             {
-                if (eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_RISING) || eventID.endsWith(AlarmEventProvider.ElevationEvent.SUFFIX_SETTING)) {
+                if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
                     suffix = eventID.substring(eventID.length()-1);
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
-                if (context != null && EventSettings.hasEvent(context, eventID)) {
+                if (context != null && EventSettings.hasEvent(AndroidEventSettings.wrap(context), eventID)) {
                     tag = EventIcons.TAG_ALIAS + eventID + suffix;
                 } else tag = null;
             } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
@@ -283,6 +293,7 @@ public class EventIcons
         return tag;
     }
 
+    @Nullable
     public static String getIconTag(@Nullable Context context, AlarmClockItem item)
     {
         return (item.timezone != null)

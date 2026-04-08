@@ -25,11 +25,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
+
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -45,13 +41,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.app.FragmentManagerCompat;
+import com.forrestguice.support.app.FragmentManagerProvider;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -68,12 +69,13 @@ public class ActionListHelper
     public static final String DIALOGTAG_ADD = "add";
     public static final String DIALOGTAG_EDIT = "edit";
 
-    private WeakReference<Context> contextRef;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private WeakReference<FragmentManagerProvider> contextRef;
 
+    @Nullable
     private ActionDisplay selectedItem;
     private ListView list;
     private ActionDisplayAdapter adapter;
+    @Nullable
     protected ActionMode actionMode = null;
     protected ActionDisplayActionMode1 actionModeCallback = new ActionDisplayActionMode1();
 
@@ -82,10 +84,8 @@ public class ActionListHelper
         return adapterModified;
     }
 
-    public ActionListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
-    {
-        contextRef = new WeakReference<>(context);
-        setFragmentManager(fragments);
+    public ActionListHelper(@NonNull FragmentManagerProvider context) {
+        setFragmentManager(context);
     }
 
     private View.OnClickListener onItemSelected = null;
@@ -98,8 +98,19 @@ public class ActionListHelper
         onUpdateViews = listener;
     }
 
-    public void setFragmentManager(android.support.v4.app.FragmentManager fragments) {
-        fragmentManager = fragments;
+    public void setFragmentManager(FragmentManagerProvider fragments) {
+        contextRef = new WeakReference<>(fragments);
+    }
+    @Nullable
+    public FragmentManagerCompat getFragmentManager() {
+        FragmentManagerProvider fragments = contextRef.get();
+        return (fragments != null ? fragments.getFragmentManagerCompat() : null);
+    }
+
+    @Nullable
+    protected Context getContext() {
+        FragmentManagerProvider fragments = contextRef.get();
+        return (fragments != null ? fragments.getContext() : null);
     }
 
     private boolean disallowSelect = false;
@@ -107,10 +118,11 @@ public class ActionListHelper
         disallowSelect = value;
     }
 
-    public void setSelected( String actionID ) {
+    public void setSelected( @Nullable String actionID ) {
         adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
     }
 
+    @Nullable
     protected SuntimesData data = null;
     public void setData(@Nullable SuntimesData data) {
         this.data = data;
@@ -137,21 +149,24 @@ public class ActionListHelper
 
     public void onResume()
     {
-        SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
-        if (addDialog != null)
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null)
         {
-            addDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), addDialog));
-            addDialog.getEdit().setFragmentManager(fragmentManager);
-        }
+            SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+            if (addDialog != null) {
+                addDialog.setOnAcceptedListener(onActionSaved(addDialog));
+                addDialog.getEdit().setFragmentManager(contextRef.get());
+            }
 
-        SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
-        if (editDialog != null)
-        {
-            editDialog.setOnAcceptedListener(onActionSaved(contextRef.get(), editDialog));
-            editDialog.getEdit().setFragmentManager(fragmentManager);
+            SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+            if (editDialog != null) {
+                editDialog.setOnAcceptedListener(onActionSaved(editDialog));
+                editDialog.getEdit().setFragmentManager(contextRef.get());
+            }
         }
     }
 
+    @Nullable
     public String getIntentID()
     {
         if (list != null) {
@@ -160,6 +175,7 @@ public class ActionListHelper
         } else return null;
     }
 
+    @Nullable
     public String getIntentTitle()
     {
         if (list != null) {
@@ -172,7 +188,7 @@ public class ActionListHelper
         return list;
     }
 
-    protected void updateViews(Context context)
+    protected void updateViews(@Nullable Context context)
     {
         if (onUpdateViews != null) {
             onUpdateViews.onClick(list);
@@ -192,7 +208,7 @@ public class ActionListHelper
             {
                 list.setSelection(position);
                 adapter.setSelected(selectedItem = (ActionDisplay) list.getItemAtPosition(position));
-                updateViews(contextRef.get());
+                updateViews(getContext());
                 triggerActionMode(view, selectedItem);
             }
         });
@@ -216,7 +232,8 @@ public class ActionListHelper
         {
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             String desc = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-            Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
+            String color0 = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR);
+            int color = (color0 != null) ? Integer.parseInt(color0) : Color.WHITE;
             String[] tags = WidgetActions.loadActionTags(context, 0, id).toArray(new String[0]);
             if (title != null && !title.trim().isEmpty()) {
                 ids.add(new ActionDisplay(id, title, desc, color, tags));
@@ -228,12 +245,14 @@ public class ActionListHelper
             public int compare(ActionDisplay o1, ActionDisplay o2)
             {
                 if (o1.title.equals(o2.title)) {
-                    return o1.desc.compareTo(o2.desc);
+                    if (o1.desc != null && o2.desc != null) {
+                        return o1.desc.compareTo(o2.desc);
+                    } else return 0;
                 } else return o1.title.compareTo(o2.title);
             }
         });
 
-        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
+        ids.add(0, new ActionDisplay("", context.getString(R.string.actionDesc_doNothing), context.getString(R.string.actionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
@@ -243,19 +262,16 @@ public class ActionListHelper
 
         @Override
         public void onClick(View v) {
-            showOverflowMenu(contextRef.get(), v);
+            Context context = getContext();
+            if (context != null) {
+                showOverflowMenu(context, v);
+            } else Log.e("ActionList", "null context! failed to show menu.");
         }
     };
 
     protected void showOverflowMenu(Context context, View parent)
     {
-        PopupMenu menu = new PopupMenu(context, parent);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.editintent1, menu.getMenu());
-        menu.setOnMenuItemClickListener(onMenuItemClicked);
-        PopupMenuCompat.forceActionBarIcons(menu.getMenu());
-        prepareOverflowMenu(context, menu.getMenu());
-        menu.show();
+        PopupMenuCompat.createMenu(context, parent, R.menu.editintent1, onMenuItemClicked).show();
     }
 
     protected void prepareOverflowMenu(Context context, Menu menu)
@@ -276,38 +292,39 @@ public class ActionListHelper
         }
     }
 
-    protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new ViewUtils.ThrottledMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+    protected PopupMenuCompat.PopupMenuListener onMenuItemClicked = new ViewUtils.ThrottledPopupMenuListener(new PopupMenuCompat.PopupMenuListener()
     {
+        @Override
+        public void onUpdateMenu(Context context, Menu menu) {
+            prepareOverflowMenu(context, menu);
+        }
+
         @Override
         public boolean onMenuItemClick(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
-            {
-                case R.id.addAction:
-                    addAction();
-                    return true;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.addAction) {
+                addAction();
+                return true;
 
-                case R.id.editAction:
-                    editAction();
-                    return true;
+            } else if (itemId == R.id.editAction) {
+                editAction();
+                return true;
 
-                case R.id.clearAction:
-                    clearActions();
-                    return true;
+            } else if (itemId == R.id.clearAction) {
+                clearActions();
+                return true;
 
-                case R.id.deleteAction:
-                    deleteAction();
-                    return true;
-
-                default:
-                    return false;
+            } else if (itemId == R.id.deleteAction) {
+                deleteAction();
+                return true;
             }
+            return false;
         }
     });
 
     public void addAction()
     {
-        final Context context = contextRef.get();
         final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -315,13 +332,17 @@ public class ActionListHelper
                 saveDialog.getEdit().setData(data);
             }
         });
-        saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_ADD);
+        saveDialog.setOnAcceptedListener(onActionSaved(saveDialog));
+
+        FragmentManagerCompat fragmentManager = getFragmentManager();
+        if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
+            saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_ADD);
+        } else Log.w("ActionListHelper", "fragment manager is null!");
     }
 
     protected void editAction()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final String actionID = getIntentID();
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
@@ -335,20 +356,30 @@ public class ActionListHelper
                 }
             });
 
-            saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+            saveDialog.setOnAcceptedListener(onActionSaved(saveDialog));
+            FragmentManagerCompat fragmentManager = getFragmentManager();
+            if (fragmentManager != null && fragmentManager.getFragmentManager() != null) {
+                saveDialog.show(fragmentManager.getFragmentManager(), DIALOGTAG_EDIT);
+            } else Log.w("ActionListHelper", "fragment manager is null!");
         }
     }
 
-    private DialogInterface.OnClickListener onActionSaved(final Context context, final SaveActionDialog saveDialog)
+    private DialogInterface.OnClickListener onActionSaved(final SaveActionDialog saveDialog)
     {
         return new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Context context = getContext();
+                if (context == null) {
+                    Log.w("ActionList", "onActionSaved: null context!");
+                    return;
+                }
+
                 String intentID = saveDialog.getIntentID();
                 saveDialog.getEdit().saveIntent(context, 0, intentID, saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
-                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.actions_saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
                 initAdapter(context);
                 updateViews(context);
                 adapterModified = true;
@@ -370,13 +401,13 @@ public class ActionListHelper
 
     public void clearActions()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         if (context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setMessage(context.getString(R.string.clearactions_dialog_msg))
-                    .setNegativeButton(context.getString(R.string.clearactions_dialog_cancel), null)
-                    .setPositiveButton(context.getString(R.string.clearactions_dialog_ok),
+            dialog.setMessage(context.getString(R.string.actions_clearactions_dialog_msg))
+                    .setNegativeButton(context.getString(R.string.actions_clearactions_dialog_cancel), null)
+                    .setPositiveButton(context.getString(R.string.actions_clearactions_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -384,7 +415,7 @@ public class ActionListHelper
                                 {
                                     WidgetActions.deletePrefs(context);
                                     WidgetActions.initDefaults(context);
-                                    Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getString(R.string.actions_clearactions_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
                                     updateViews(context);
                                     adapterModified = true;
@@ -396,7 +427,7 @@ public class ActionListHelper
 
     protected void deleteAction()
     {
-        final Context context = contextRef.get();
+        final Context context = getContext();
         final String actionID = getIntentID();
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
@@ -405,9 +436,9 @@ public class ActionListHelper
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-            dialog.setMessage(context.getString(isDefault ? R.string.delaction_dialog_msg1 : R.string.delaction_dialog_msg, title, actionID))
-                    .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
-                    .setPositiveButton(context.getString(isDefault ? R.string.delaction_dialog_ok1 : R.string.delaction_dialog_ok),
+            dialog.setMessage(context.getString(isDefault ? R.string.actions_delaction_dialog_msg1 : R.string.actions_delaction_dialog_msg, title, actionID))
+                    .setNegativeButton(context.getString(R.string.actions_delaction_dialog_cancel), null)
+                    .setPositiveButton(context.getString(isDefault ? R.string.actions_delaction_dialog_ok1 : R.string.actions_delaction_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -421,7 +452,7 @@ public class ActionListHelper
                                         @Override
                                         public void run()
                                         {
-                                            Context context = contextRef.get();
+                                            Context context = getContext();
                                             if (context != null)
                                             {
                                                 if (isDefault) {
@@ -443,11 +474,13 @@ public class ActionListHelper
      */
     public static class ActionDisplay
     {
-        public String id, title, desc;
-        public int color;
-        public String[] tags;
+        public final String id, title;
+        @Nullable
+        public final String desc;
+        public final int color;
+        public final String[] tags;
 
-        public ActionDisplay(String id, String title, String desc, int color, String[] tags)
+        public ActionDisplay(String id, @NonNull String title, @Nullable String desc, int color, String[] tags)
         {
             this.id = id;
             this.title = title;
@@ -455,6 +488,7 @@ public class ActionListHelper
             this.color = color;
             this.tags = tags;
         }
+        @NonNull
         public String toString() {
              return title;
         }
@@ -476,6 +510,7 @@ public class ActionListHelper
     public static class ActionDisplayAdapter extends ArrayAdapter<ActionDisplay>
     {
         private int resourceID, dropDownResourceID;
+        @Nullable
         private ActionDisplay selectedItem;
         private ActionDisplay[] objects;
 
@@ -498,15 +533,17 @@ public class ActionListHelper
             resourceID = dropDownResourceID = resource;
         }
 
-        public void setSelected( ActionDisplay item ) {
+        public void setSelected( @Nullable ActionDisplay item ) {
             selectedItem = item;
             notifyDataSetChanged();
         }
+        @Nullable
         public ActionDisplay getSelected() {
             return selectedItem;
         }
 
-        public ActionDisplay findItemByID(String actionID)
+        @Nullable
+        public ActionDisplay findItemByID(@Nullable String actionID)
         {
             for (int i=0; i<getCount(); i++)
             {
@@ -615,7 +652,7 @@ public class ActionListHelper
     public boolean triggerActionMode() {
         return triggerActionMode(list, selectedItem);
     }
-    protected boolean triggerActionMode(View view, ActionDisplay item)
+    protected boolean triggerActionMode(View view, @Nullable ActionDisplay item)
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
@@ -638,7 +675,7 @@ public class ActionListHelper
             }
 
         } else {
-            Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
+            Toast.makeText(view.getContext(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
             return false;
         }
     }
@@ -685,21 +722,20 @@ public class ActionListHelper
         {
             if (action != null)
             {
-                switch (item.getItemId())
-                {
-                    case R.id.selectAction:
-                        if (onItemSelected != null) {
-                            onItemSelected.onClick(list);
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.selectAction) {
+                    if (onItemSelected != null) {
+                        onItemSelected.onClick(list);
+                    }
+                    return true;
 
-                    case R.id.deleteAction:
-                        deleteAction();
-                        return true;
+                } else if (itemId == R.id.deleteAction) {
+                    deleteAction();
+                    return true;
 
-                    case R.id.editAction:
-                        editAction();
-                        return true;
+                } else if (itemId == R.id.editAction) {
+                    editAction();
+                    return true;
                 }
             }
             return false;
@@ -707,7 +743,7 @@ public class ActionListHelper
 
     }
 
-    private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
+    /*private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
     {
         public ActionDisplayActionMode() {
             super();
@@ -729,10 +765,10 @@ public class ActionListHelper
             mode.finish();
             return onActionItemClicked(item);
         }
-    }
+    }*/
 
     @TargetApi(11)
-    private class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback
+    protected class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback
     {
         public ActionDisplayActionMode1() {
             super();

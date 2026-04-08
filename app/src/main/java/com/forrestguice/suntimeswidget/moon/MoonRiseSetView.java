@@ -19,12 +19,9 @@ package com.forrestguice.suntimeswidget.moon;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,23 +31,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.moon.colors.MoonRiseSetColorValues;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.text.TimeDisplayText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-@SuppressWarnings("Convert2Diamond")
 public class MoonRiseSetView extends LinearLayout
 {
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static final TimeDateDisplay utils = new TimeDateDisplay();
+    private static final AngleDisplay angle_utils = new AngleDisplay();
     //private boolean isRtl = false;
     //private boolean centered = false;
     private boolean showPosition = false;
@@ -58,7 +65,7 @@ public class MoonRiseSetView extends LinearLayout
     private LinearLayout content;
     private MoonRiseSetField risingTextField, settingTextField;
     private MoonRiseSetField risingTextField1, settingTextField1;
-    private ArrayList<MoonRiseSetField> f = new ArrayList<>();
+    private final ArrayList<MoonRiseSetField> f = new ArrayList<>();
     private View divider;
 
     protected MoonRiseSetColorValues colors;
@@ -100,7 +107,7 @@ public class MoonRiseSetView extends LinearLayout
 
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
         initLocale(context);
         initColors(context);
@@ -151,7 +158,7 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initColors(Context context)
     {
-        colors = new MoonRiseSetColorValues(context);
+        colors = new MoonRiseSetColorValues(AndroidResources.wrap(context));
         /*int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
@@ -170,6 +177,8 @@ public class MoonRiseSetView extends LinearLayout
 
     public void initLocale(Context context)
     {
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_CardinalDirection());
         SuntimesUtils.initDisplayStrings(context);
         //isRtl = AppSettings.isLocaleRtl(context);
     }
@@ -192,7 +201,7 @@ public class MoonRiseSetView extends LinearLayout
         }
     }
 
-    public void updateViews(Context context, SuntimesMoonData data)
+    public void updateViews(Context context, @Nullable SuntimesMoonData data)
     {
         if (isInEditMode())
         {
@@ -217,13 +226,13 @@ public class MoonRiseSetView extends LinearLayout
             {
                 SuntimesCalculator calculator = data.calculator();
 
-                SuntimesCalculator.MoonPosition moonPositionRising = (risingTime == null ? null : calculator.getMoonPosition(risingTime));
-                SuntimesCalculator.MoonPosition moonPositionSetting = (settingTime == null ? null : calculator.getMoonPosition(settingTime));
+                SuntimesCalculator.MoonPosition moonPositionRising = (risingTime == null || calculator == null ? null : calculator.getMoonPosition(risingTime));
+                SuntimesCalculator.MoonPosition moonPositionSetting = (settingTime == null || calculator == null ? null : calculator.getMoonPosition(settingTime));
                 risingTextField.updateField(context, moonPositionRising);
                 settingTextField.updateField(context, moonPositionSetting);
 
-                SuntimesCalculator.MoonPosition moonPositionRising1 = (risingTime1 == null ? null : calculator.getMoonPosition(risingTime1));
-                SuntimesCalculator.MoonPosition moonPositionSetting1 = (settingTime1 == null ? null : calculator.getMoonPosition(settingTime1));
+                SuntimesCalculator.MoonPosition moonPositionRising1 = (risingTime1 == null || calculator == null ? null : calculator.getMoonPosition(risingTime1));
+                SuntimesCalculator.MoonPosition moonPositionSetting1 = (settingTime1 == null || calculator == null ? null : calculator.getMoonPosition(settingTime1));
                 risingTextField1.updateField(context, moonPositionRising1);
                 settingTextField1.updateField(context, moonPositionSetting1);
 
@@ -292,7 +301,7 @@ public class MoonRiseSetView extends LinearLayout
         return midday;
     }
 
-    private void reorderLayout( Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    private void reorderLayout( @Nullable Calendar rising0, @Nullable Calendar setting0, @Nullable Calendar rising1, @Nullable Calendar setting1 )
     {
         clearLayout();
 
@@ -305,7 +314,7 @@ public class MoonRiseSetView extends LinearLayout
     }
 
     @SuppressWarnings("ConstantConditions")
-    private MoonRiseSetFieldLayoutSet determineLayout(Calendar rising0, Calendar setting0, Calendar rising1, Calendar setting1 )
+    private MoonRiseSetFieldLayoutSet determineLayout(@Nullable Calendar rising0, @Nullable Calendar setting0, @Nullable Calendar rising1, @Nullable Calendar setting1)
     {
         if (tomorrowMode)
         {
@@ -485,9 +494,9 @@ public class MoonRiseSetView extends LinearLayout
             timeView.setText(timeText);
         }
 
-        public void updateField(Context context, Calendar dateTime, boolean showSeconds)
+        public void updateField(Context context, @Nullable Calendar dateTime, boolean showSeconds)
         {
-            SuntimesUtils.TimeDisplayText text = utils.calendarTimeShortDisplayString(context, dateTime, showSeconds);
+            TimeDisplayText text = (dateTime != null ? utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), dateTime, showSeconds) : new TimeDisplayText());
             timeView.setText(text.toString());
         }
 
@@ -496,7 +505,7 @@ public class MoonRiseSetView extends LinearLayout
             return timeView;
         }
 
-        public void updateField(Context context, SuntimesCalculator.Position position)
+        public void updateField(Context context, @Nullable SuntimesCalculator.Position position)
         {
             if (position == null)
             {
@@ -504,14 +513,14 @@ public class MoonRiseSetView extends LinearLayout
                 positionView.setContentDescription("");
 
             } else {
-                SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(position.azimuth, 1, false);
-                String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
-                SpannableString azimuthSpan = SuntimesUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
-                azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+                TimeDisplayText azimuthText = angle_utils.formatAsDirection2(position.azimuth, 1, false);
+                String azimuthString = angle_utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+                SpannableString azimuthSpan = SpanUtils.createRelativeSpan(null, azimuthString, azimuthText.getSuffix(), 0.7f);
+                azimuthSpan = SpanUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
                 positionView.setText(azimuthSpan);
 
-                SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(position.azimuth, 1, true);
-                positionView.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
+                TimeDisplayText azimuthDesc = angle_utils.formatAsDirection2(position.azimuth, 1, true);
+                positionView.setContentDescription(angle_utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
             }
         }
 

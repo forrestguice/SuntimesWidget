@@ -48,7 +48,7 @@
 
             <TextView android:id="@+id/appwidget_schedalarm_mode_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="?attr/text_size_small" android:text="@string/configLabel_schedalarm_mode" />
+                android:textSize="?attr/text_size_small" android:text="@string/schedalarm_label_alarm_mode" />
 
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="match_parent" android:layout_height="match_parent"
@@ -60,8 +60,8 @@
                     android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <ImageButton android:id="@+id/appwidget_schedalarm_more"
-                    style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/configAction_options"
+                <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_schedalarm_more"
+                    style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/action_options"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -77,7 +77,7 @@
             <LinearLayout  android:id="@+id/appwidget_schedalarm_note_layout"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/appwidget_schedalarm_note_icon"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:src="?attr/icActionAbout"

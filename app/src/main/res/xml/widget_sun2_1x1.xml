@@ -11,7 +11,7 @@
 
     android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:widgetFeatures="reconfigurable"
-    android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity2"
+    android:configure="com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity2"
     android:widgetCategory="home_screen|keyguard"
     android:previewImage="@drawable/sunposwidget0_1x1_preview">
 

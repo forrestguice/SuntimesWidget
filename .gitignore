@@ -46,3 +46,13 @@ proguard/
 .idea/shelf/
 *.gz
 *.zip
+/.idea/libraries
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+app/app.iml
+/.idea/modules
+SuntimesWidget.iml
+app/test_location_serializable.txt
+app/production/release/output-metadata.json

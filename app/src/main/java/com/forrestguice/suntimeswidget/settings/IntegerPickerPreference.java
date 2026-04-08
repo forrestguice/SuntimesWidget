@@ -23,7 +23,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -34,6 +33,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.preference.DialogPreference;
+import com.forrestguice.annotation.Nullable;
 
 @TargetApi(11)
 public class IntegerPickerPreference extends DialogPreference
@@ -48,6 +49,7 @@ public class IntegerPickerPreference extends DialogPreference
 
     private int param_min = 1;
     private int param_max = MAX_VALUE;
+    @Nullable
     private String param_zeroText = null;
 
     @TargetApi(21)

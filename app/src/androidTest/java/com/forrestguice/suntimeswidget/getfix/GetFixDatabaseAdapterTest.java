@@ -24,14 +24,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +47,7 @@ import static com.forrestguice.suntimeswidget.getfix.GetFixDatabaseAdapter.KEY_P
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class GetFixDatabaseAdapterTest
 {
     private Context mockContext;
@@ -65,7 +64,7 @@ public class GetFixDatabaseAdapterTest
     @Before
     public void setup()
     {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
         db = new GetFixDatabaseAdapter(mockContext.getApplicationContext());
         db.open();
         db.clearPlaces();
@@ -132,9 +131,9 @@ public class GetFixDatabaseAdapterTest
             String alt = resources.getString(R.string.default_location_altitude);
 
             Location[] locations = new Location[] {
-                    new Location(resources.getString(R.string.gps_lastfix_title_found), lat, lon, alt),
-                    new Location(resources.getString(R.string.gps_lastfix_title_searching), lat, lon, alt),
-                    new Location(resources.getString(R.string.gps_lastfix_title_set), lat, lon, alt)
+                    new Location(resources.getString(R.string.location_lastfix_title_found), lat, lon, alt),
+                    new Location(resources.getString(R.string.location_lastfix_title_searching), lat, lon, alt),
+                    new Location(resources.getString(R.string.location_lastfix_title_set), lat, lon, alt)
             };
 
             for (Location location : locations)
@@ -260,8 +259,9 @@ public class GetFixDatabaseAdapterTest
         db.close();
     }
 
-    protected void verifyPlace(Cursor cursor, boolean fullEntry, long rowID, Location location)
+    protected void verifyPlace(@Nullable Cursor cursor, boolean fullEntry, long rowID, Location location)
     {
+        assertNotNull(cursor);
         // KEY_ROWID, KEY_PLACE_NAME, KEY_PLACE_LATITUDE, KEY_PLACE_LONGITUDE, KEY_PLACE_ALTITUDE, KEY_PLACE_COMMENT
         assertTrue("rowID should match", cursor.getLong(0) == rowID);
         assertTrue("label should match", cursor.getString(1).equals(location.getLabel()));
@@ -281,6 +281,7 @@ public class GetFixDatabaseAdapterTest
 
         // testing n=0, fullEntry=false
         Cursor cursor0 = db.getAllPlaces(0, false);
+        assertNotNull(cursor0);
         assertTrue("cursor should be at first", cursor0.getPosition() == 0);
         assertTrue("cursor should have " + rowID.length + " entries (has " + cursor0.getCount() + ")", cursor0.getCount() == rowID.length);
         while (!cursor0.isAfterLast())
@@ -288,13 +289,16 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor0);
             assertTrue("cursor should not be after last", !cursor0.isAfterLast());
             long id = cursor0.getLong(0);
-            verifyPlace(cursor0, false, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor0, false, id, loc);
             cursor0.moveToNext();
         }
         cursor0.close();
 
         // testing n=0, fullEntry=true
         Cursor cursor1 = db.getAllPlaces(0, true);
+        assertNotNull(cursor1);
         assertTrue("cursor should be at first", cursor1.getPosition() == 0);
         assertTrue("cursor should have " + rowID.length + " entries (has " + cursor1.getCount() + ")", cursor1.getCount() == rowID.length);
         while (!cursor1.isAfterLast())
@@ -302,13 +306,16 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor1);
             assertTrue("cursor should not be after last", !cursor1.isAfterLast());
             long id = cursor1.getLong(0);
-            verifyPlace(cursor1, true, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor1, true, id, loc);
             cursor1.moveToNext();
         }
         cursor1.close();
 
         // testing n=length-1, fullEntry=false
         Cursor cursor2 = db.getAllPlaces(rowID.length-1, false);   // all entries but last
+        assertNotNull(cursor2);
         assertTrue("cursor should be at first", cursor2.getPosition() == 0);
         assertTrue("cursor should have " + (rowID.length-1) + " entries (has " + cursor2.getCount() + ")", cursor2.getCount() == rowID.length-1);
         while (!cursor2.isAfterLast())
@@ -316,7 +323,9 @@ public class GetFixDatabaseAdapterTest
             assertNotNull(cursor2);
             assertTrue("cursor should not be after last", !cursor2.isAfterLast());
             long id = cursor2.getLong(0);
-            verifyPlace(cursor2, false, id, map.get(id));
+            Location loc = map.get(id);
+            assertNotNull(loc);
+            verifyPlace(cursor2, false, id, loc);
             cursor2.moveToNext();
         }
         cursor2.close();
@@ -346,6 +355,7 @@ public class GetFixDatabaseAdapterTest
         long[] rowID = populateDatabase();
 
         Cursor cursor = db.getAllPlaces(0, false);
+        assertNotNull(cursor);
         for (int i=0; i<rowID.length; i++)
         {
             int position = GetFixDatabaseAdapter.findPlaceByName(locations[i].getLabel(), cursor);

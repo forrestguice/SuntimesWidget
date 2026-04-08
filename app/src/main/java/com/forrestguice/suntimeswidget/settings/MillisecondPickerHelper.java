@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 @TargetApi(11)
@@ -50,6 +51,7 @@ public class MillisecondPickerHelper
     protected int mode = MODE_MINUTES;
     protected int param_min = 1;
     protected int param_max = MAX_MINUTES;
+    @Nullable
     protected String param_zeroText = null;
 
     public View createDialogView(final Context context)
@@ -90,9 +92,9 @@ public class MillisecondPickerHelper
         return dialogView;
     }
 
-    public static int SECOND_TO_MS = 1000;
-    public static int MINUTE_TO_MS = 1000 * 60;
-    public static int HOUR_TO_MS = 1000 * 60 * 60;
+    public static final int SECOND_TO_MS = 1000;
+    public static final int MINUTE_TO_MS = 1000 * 60;
+    public static final int HOUR_TO_MS = 1000 * 60 * 60;
 
     public void onBindDialogView(View v)
     {
@@ -224,7 +226,7 @@ public class MillisecondPickerHelper
         }
     }
 
-    public void setParamZeroText(String text) {
+    public void setParamZeroText(@Nullable String text) {
         param_zeroText = text;
     }
     public void setParamMinMax(int min, int max)
@@ -252,14 +254,14 @@ public class MillisecondPickerHelper
                 if (context != null) {
                     if (valueHours == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_hours, valueHours, valueHours);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_hours, valueHours, valueHours);
                 } else return valueHours + "";
 
             case MODE_SECONDS:
                 if (context != null) {
                     if (valueSeconds == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_seconds, valueSeconds, valueSeconds);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_seconds, valueSeconds, valueSeconds);
                 } else return valueSeconds + "";
 
             case MODE_MINUTES:
@@ -267,7 +269,7 @@ public class MillisecondPickerHelper
                 if (context != null) {
                     if (valueMinutes == 0 && param_zeroText != null)
                         return param_zeroText;
-                    else return context.getResources().getQuantityString(R.plurals.units_minutes, valueMinutes, valueMinutes);
+                    else return context.getResources().getQuantityString(R.plurals.time_units_minutes, valueMinutes, valueMinutes);
                 } else return valueMinutes + "";
         }
     }

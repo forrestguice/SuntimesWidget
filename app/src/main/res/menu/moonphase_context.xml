@@ -5,13 +5,13 @@
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
         <item android:id="@+id/action_alarm"
-            android:title="@string/configAction_setAlarm"
+            android:title="@string/action_setAlarm"
             android:icon="?attr/icActionAlarm"
             app:showAsAction="never" />
 
         <item android:id="@+id/addonSubMenu"
             android:icon="?attr/icActionTimeReset"
-            android:title="@string/configAction_viewDateWith"
+            android:title="@string/action_viewDateWith"
             app:showAsAction="never"
             android:orderInCategory="0">
 
@@ -23,22 +23,22 @@
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_sunposition"
-                    android:title="@string/configAction_sunDialog"
+                    android:title="@string/action_sunDialog"
                     android:icon="@drawable/ic_sun"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
-                    android:title="@string/configAction_moon"
+                    android:title="@string/action_moon"
                     android:icon="@drawable/ic_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"
-                    android:title="@string/configAction_worldMap"
+                    android:title="@string/action_worldMap"
                     android:icon="?attr/icActionWorldMap"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"
-                    android:title="@string/configAction_showCalendar"
+                    android:title="@string/action_showCalendar"
                     android:icon="?attr/icActionCalendar"
                     app:showAsAction="never" />
 
@@ -47,7 +47,7 @@
         </item>
 
         <item android:id="@+id/action_share"
-            android:title="@string/configAction_share"
+            android:title="@string/action_share"
             android:icon="?attr/icActionShare"
             app:showAsAction="never" />
 
