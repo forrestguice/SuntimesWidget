@@ -1,9 +1,8 @@
 ### ~
 
-### DEVELOP
-
-* adds "Material You" app themes (api31+) (#635).
-* adds "fancy" digital clock widgets.
+### v0.17.0 (2026-04-08)
+* adds `Material You` app themes (api31+) (#635).
+* adds `fancy digital clock` widgets.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
 * adds custom events; `shadow factor`, `day/night percent`, `moon elevation`, and `moon illumination` (#729, #900).
 * adds world map projections; Mercator, Mercator equal-area, and Van der Grinten world maps (and widgets).
@@ -13,7 +12,7 @@
 * adds `seek`, `seek dawn`, `seek dusk`, and `seek noon` menus to the sun dialog; seek to twilight or custom events.
 * adds `seek altitude` and `seek shadow length` popups to the sun dialog; seek/manage custom events.
 * adds `10min`, `15min`, and `7d` step sizes to the sun dialog, and `7d` step size to the world map dialog.
-* adds `solar noon` and sun `symbol` options to the sun dialog; "circle", "cross", "dot", or "line".
+* adds `solar noon` and sun `symbol` options to the sun dialog; `circle`, `cross`, `dot`, or `line`.
 * adds `sort places` action to the places activity; sort by label (ascending, descending), or nearest (to app location).
 * improves the `search places` action; adds descriptive tags/icons to the default world places.
 * enhances the add places dialog; adds `gps menu`, `gps status` views, `reload agps`, and `average location` actions (#884).
