@@ -48,6 +48,7 @@ import com.forrestguice.util.ExecutorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 /**
@@ -224,7 +225,7 @@ public class GetFixHelper implements LocationHelper
         GetFixUI uiObj = getUI();
         try {
             Location location = lastKnownLocation(context);
-            String logItem = "D/" + "fallback to last location: " + (location != null ? location.getProvider().toUpperCase() : "null");
+            String logItem = "D/" + "fallback to last location: " + (location != null ? location.getProvider().toUpperCase(Locale.ROOT) : "null");
 
             fix = location;
             gotFix = (fix != null);

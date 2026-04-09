@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.GnssStatus;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -222,7 +224,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log_d(TAG, provider.toUpperCase() + ": provider status: " + getStatusDisplay(status));
+            Log_d(TAG, provider.toUpperCase(Locale.ROOT) + ": provider status: " + getStatusDisplay(status));
         }
         protected String getStatusDisplay(int status) {
             switch (status) {
@@ -235,12 +237,12 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
 
         @Override
         public void onProviderEnabled(String provider) {
-            Log_d(TAG, provider.toUpperCase() + ": provider enabled");
+            Log_d(TAG, provider.toUpperCase(Locale.ROOT) + ": provider enabled");
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            Log_d(TAG, provider.toUpperCase() + ": provider disabled");
+            Log_d(TAG, provider.toUpperCase(Locale.ROOT) + ": provider disabled");
         }
     }
 
@@ -248,7 +250,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
         return listenerLogLine(tag, location.getProvider(), message);
     }
     protected String listenerLogLine(String tag, String provider, String message) {
-        return provider.toUpperCase() + ": " + tag + ": " + message;
+        return provider.toUpperCase(Locale.ROOT) + ": " + tag + ": " + message;
     }
     private static final String TAG_LOCATION_CHANGED = "location";
     private static final String TAG_LAST_LOCATION = "lastLocation";
@@ -413,6 +415,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
      * Stops location updates, triggers a final progress update, resets ui, and signals onFinished listeners.
      * @param result the "best fix" that could be obtained (potentially null)
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onPostExecute(Location result)
     {
@@ -442,6 +445,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
      * Same as onPostExecute except onCancelled is signalled instead of onFinished.
      * @param result the "best fix" that could be obtained (potentially null)
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onCancelled(Location result)
     {
