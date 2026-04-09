@@ -59,7 +59,7 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être erroné pour cet emplacement.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> is <xliff:g id="timeSpan">%2$s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%3$s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Heure d\'été</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> équation du temps</string>  <!-- timezone dialog label -->
 
@@ -1952,7 +1952,7 @@
         <a href="%1$s">gestionnaire de ticket</a> pour soumettre une requête.
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        %s est disponible gratuitement, mais s\'il vous a été utile, n\'hésitez pas à faire un
+        %1$s est disponible gratuitement, mais s\'il vous a été utile, n\'hésitez pas à faire un
         <a href="%2$s">don à votre convenance</a>.
     ]]></string>
     <string name="about_app_sourcecode_field"><![CDATA[
