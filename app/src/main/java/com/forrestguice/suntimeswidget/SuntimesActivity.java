@@ -717,6 +717,7 @@ public class SuntimesActivity extends AppCompatActivity
      * @param context context
      * @return PendingIntent
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     protected PendingIntent getFullUpdateIntent(Context context)
     {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -747,6 +748,7 @@ public class SuntimesActivity extends AppCompatActivity
      * @param context context
      * @return PendingIntent
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     protected PendingIntent getPartialUpdateIntent(Context context)
     {
         if (Build.VERSION.SDK_INT >= 23) {
