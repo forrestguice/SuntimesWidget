@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- MAIN ACTIVITY -->
 
@@ -158,7 +158,7 @@
     <string name="delta_until_end">до конца</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one" xliff:ignore="ImpliedQuantity">в</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">в</item>
         <item quantity="other">в</item>
         <item quantity="few">в</item>
         <item quantity="many">в</item>
@@ -246,7 +246,6 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
-    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g>&#160;<xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
