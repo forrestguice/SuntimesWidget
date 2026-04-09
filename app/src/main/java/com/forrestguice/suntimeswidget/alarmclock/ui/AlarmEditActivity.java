@@ -1064,6 +1064,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.alarms_action_setAlarmSound)), REQUEST_RINGTONE1);
     }
 
+    @SuppressLint("WrongConstant")
     protected void onRingtoneResult1(int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK && editor != null && data != null && data.getData() != null)

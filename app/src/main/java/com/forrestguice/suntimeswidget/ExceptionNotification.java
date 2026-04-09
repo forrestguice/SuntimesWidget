@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -58,6 +59,7 @@ public abstract class ExceptionNotification
     @Nullable
     protected abstract Intent getCrashReportActivityIntent(Context context, String report);
 
+    @SuppressLint("WrongConstant")
     public Notification createNotification(Context context, String report)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context);

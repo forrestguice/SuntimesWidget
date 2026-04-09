@@ -1190,6 +1190,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
         updateViews();
     }
 
+    @SuppressLint("WrongConstant")
     protected void onMapBackgroundResult(int requestCode, int resultCode, Intent data)
     {
         Context context = getContext();

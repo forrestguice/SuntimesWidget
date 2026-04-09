@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -1173,6 +1174,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static String createNotificationChannel(Context context, @Nullable AlarmType type) {
         return createNotificationChannel(context, getNotificationChannelID(type));
     }
+    @SuppressLint("WrongConstant")
     @TargetApi(26)
     public static String createNotificationChannel(Context context, @Nullable String channelID)
     {
@@ -1248,6 +1250,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param alarm AlarmClockItem
      * @return a Notification object (or null if a notification shouldn't be shown)
      */
+    @SuppressLint("WrongConstant")
     @Nullable
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
@@ -1430,6 +1433,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    @SuppressLint("WrongConstant")
     public static Notification createBedtimeModeNotification(Context context)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_BEDTIME);
@@ -1476,6 +1480,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
     }
 
+    @SuppressLint("WrongConstant")
     public static Notification createProgressNotification(Context context, @Nullable String title, @NonNull String message)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
@@ -1503,6 +1508,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    @SuppressLint("WrongConstant")
     public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
