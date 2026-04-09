@@ -760,25 +760,22 @@ public class AlarmNotifications extends BroadcastReceiver
         player.setAudioStreamType(streamType);
 
         try {
-            player.setDataSource(context, soundUri);
-            if (BuildConfig.DEBUG)
-            {
-                player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                    @Override
-                    public boolean onError(MediaPlayer mp, int what, int extra)
-                    {
-                        Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
-                        return false;
+            player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra)
+                {
+                    Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
+                    return false;
+                }
+            });
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "onCompletion: MediaPlayer: final volume: " + t_volume);
                     }
-                });
-                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        Log.d(TAG, "onCompletion: MediaPlayer");
-                    }
-                });
-            }
-
+                }
+            });
             player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
@@ -790,16 +787,18 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (audioManager != null) {
                         audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                    }
+                    } else Log.w(TAG, "startAlert: unable to request focus; audioManager is null!");
 
                     if (fadeInMillis > 0) {
                         startFadeIn(context, mediaPlayer, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
-                    mediaPlayer.start();
                     Log.i(TAG, "startAlert: playing " + soundUri);
+                    mediaPlayer.start();
                 }
             });
+
+            player.setDataSource(context, soundUri);
             player.prepareAsync();
 
         } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {
@@ -890,6 +889,9 @@ public class AlarmNotifications extends BroadcastReceiver
                 float x = Math.min(elapsed * oneOverDuration, 1f);    // x[0,1]
                 float volume = f(x, method);                          // y[0,1]
                 player.setVolume(volume, t_volume = volume);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "fadeIn: ....; v=" + volume);
+                }
 
                 //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
@@ -897,6 +899,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 } else {
                     isFadingIn = false;
                     player.setVolume(1f, t_volume = 1f);
+                    Log.d(TAG, "fadeIn: done; v=" + volume);
                 }
             }
 
@@ -915,6 +918,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (player != null)
         {
             int method = AlarmSettings.loadPrefAlarmFadeInMethod(context);
+            float initialVolume = 0f;
 
             if (Build.VERSION.SDK_INT >= 26)
             {
@@ -923,18 +927,44 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     VolumeShaper fadeInVolume = player.createVolumeShaper(fadeInConfig);    // TODO: VolumeShaper sometimes jumps to full volume for no apparent reason...
                     fadeInVolume.apply(VolumeShaper.Operation.PLAY);
+                    Log.d(TAG, "startFadeIn: (VolumeShaper) " + method + ": now fading...");
                     return;    // else fall-through to legacy fadeHandler
                 }
             }
 
-            player.setVolume(0, t_volume = 0);
             if (fadeHandler == null) {
                 fadeHandler = new Handler();
             }
-            fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration, method), FADEIN_STEP_MILLIS);
+
+            Log.d(TAG, "startFadeIn: (Handler) " + method + ": triggering fade...");
+            player.setVolume(1, 1);        // defer player.setVolume(initialVolume) until posted by Handler
+
+            fadeHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    player.setVolume(initialVolume, t_volume = initialVolume);
+                    Log.d(TAG, "startFadeIn: (Handler) " + method + ": now fading... v=" + t_volume);
+                    fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration, method), FADEIN_STEP_MILLIS);
+                }
+            });
+
+            fadeHandler.postDelayed(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "startFadeIn: (Handler) " + method + ": sanity check! v=" + t_volume + "; isFading=" + isFadingIn);
+                    }
+                    if (t_volume < 1) {
+                        Log.e(TAG, "startFadeIn: (Handler) " + method + ": failsafe! restoring full volume... fadeIn completed but v=" + t_volume + "; isFading=" + isFadingIn);
+                        player.setVolume(1, 1);
+                    }
+                }
+            }, duration + 500);
 
         } else {
-            Log.w(TAG, "startFadeIn: null MediaPlayer!");
+            Log.e(TAG, "startFadeIn: null MediaPlayer!");
         }
     }
 
