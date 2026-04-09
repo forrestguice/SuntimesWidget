@@ -433,6 +433,7 @@ public class AlarmListDialog extends DialogBase
     public static void confirmClearAlarms(final Context context)
     {
         int[] attrs = { R.attr.icActionDelete };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
         a.recycle();
@@ -1756,6 +1757,7 @@ public class AlarmListDialog extends DialogBase
             // spannable icons
             int iconColor = (item.enabled ? color_on : color_off);
             int[] attrs = { R.attr.icActionTimeReset };
+            @SuppressLint("ResourceType")
             TypedArray a = context.obtainStyledAttributes(attrs);
             int offsetIconSize = (int)context.getResources().getDimension(R.dimen.offsetIcon_width);
             int offsetIconResID = a.getResourceId(0, R.drawable.ic_action_timereset);

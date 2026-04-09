@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -467,6 +468,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
         }
 
         int[] attrs = { R.attr.icActionWorldMap };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int iconResID = a.getResourceId(0, R.drawable.ic_action_map);
         a.recycle();

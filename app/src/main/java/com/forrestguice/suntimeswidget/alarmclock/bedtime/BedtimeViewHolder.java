@@ -348,6 +348,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             {
                 int[] attrs = { R.attr.alarmColorEnabled, R.attr.colorControlNormal,
                         R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
+                @SuppressLint("ResourceType")
                 TypedArray a = context.obtainStyledAttributes(attrs);
                 @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
                 @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.white));
@@ -863,6 +864,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
         {
             int[] attrs = { R.attr.alarmColorEnabled, R.attr.text_primaryColor,
                     R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
+            @SuppressLint("ResourceType")
             TypedArray a = context.obtainStyledAttributes(attrs);
             @SuppressLint("ResourceType") int colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled));
             @SuppressLint("ResourceType") int colorOff = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_primary_dark));
@@ -1125,6 +1127,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
             if (item != null)
             {
                 int[] attrs = { R.attr.text_disabledColor, R.attr.text_primaryColor };
+                @SuppressLint("ResourceType")
                 TypedArray a = context.obtainStyledAttributes(attrs);
                 @SuppressLint("ResourceType") final int colorOn = ContextCompat.getColor(icon.getContext(), a.getResourceId(0, R.color.text_disabled_dark));
                 @SuppressLint("ResourceType") final int colorOff = ContextCompat.getColor(icon.getContext(), a.getResourceId(1, R.color.text_primary_dark));

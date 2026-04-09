@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.tiles;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -126,6 +127,7 @@ public class ClockTileBase extends SuntimesTileBase
         boolean isLocalTime = SuntimesTileBase.isLocalTime(timezone.getID());
 
         int[] attrs = { R.attr.icActionTime, R.attr.icActionDst };
+        @SuppressLint("ResourceType")
         TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
         int icon = a.getResourceId(isLocalTime ? 1 : 0, R.drawable.ic_action_time);
         a.recycle();

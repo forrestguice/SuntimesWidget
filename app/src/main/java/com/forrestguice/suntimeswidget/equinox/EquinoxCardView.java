@@ -187,6 +187,7 @@ public class EquinoxCardView extends LinearLayout
     protected void themeViews(Context context)
     {
         int[] colorAttrs = {  R.attr.text_accentColor, R.attr.buttonPressColor, R.attr.text_disabledColor };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
         @SuppressLint("ResourceType") int pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.btn_tint_pressed_dark));

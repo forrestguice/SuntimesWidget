@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.tiles;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -124,6 +125,7 @@ public class AlarmTileBase extends SuntimesTileBase
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
         int[] attrs = { R.attr.text_primaryColor };
+        @SuppressLint("ResourceType")
         TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
         int color = a.getResourceId(0, R.color.text_primary_dark);
         a.recycle();

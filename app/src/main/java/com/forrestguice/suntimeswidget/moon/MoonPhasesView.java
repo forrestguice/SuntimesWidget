@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.moon;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -118,6 +119,7 @@ public class MoonPhasesView extends LinearLayout
     private void themeViews(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));

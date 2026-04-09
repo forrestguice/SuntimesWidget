@@ -1037,6 +1037,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         protected TextView initTextView(Context context, LinearLayout.LayoutParams layoutParams)
         {
             int[] attr = { R.attr.text_size_small };
+            @SuppressLint("ResourceType")
             TypedArray typedArray = context.obtainStyledAttributes(attr);
             float textSizePx = context.getResources().getDimension(typedArray.getResourceId(0, R.dimen.tablerow_label_fontsize));
             typedArray.recycle();

@@ -128,6 +128,7 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
     public static float getTextSizePx_medium(Context context)
     {
         int[] attr = { R.attr.text_size_medium };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(attr);
         float textSize = typedArray.getDimension(0, context.getResources().getDimension(R.dimen.text_size_medium));
         typedArray.recycle();

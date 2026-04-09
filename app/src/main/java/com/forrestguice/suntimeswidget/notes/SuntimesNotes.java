@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.notes;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.res.Resources;
@@ -585,6 +586,7 @@ public class SuntimesNotes
                 if (event != null)
                 {
                     int[] iconAttr = { R.attr.sunriseIconLarge, R.attr.sunsetIconLarge };
+                    @SuppressLint("ResourceType")
                     TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
                     noteIcon = typedArray.getResourceId((isRising ? 0 : 1), R.drawable.ic_moon_rise);
                     typedArray.recycle();

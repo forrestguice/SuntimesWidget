@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.tiles;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -182,6 +183,7 @@ public class NextEventTileBase extends SuntimesTileBase
         {
             ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
             int[] attrs = {R.attr.sunriseColor, R.attr.sunsetColor};
+            @SuppressLint("ResourceType")
             TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
             int colorId = a.getResourceId(nextEvent.isRising() ? 0 : 1, R.color.text_primary);
             a.recycle();

@@ -1391,6 +1391,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initColors(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = Color.WHITE;
 

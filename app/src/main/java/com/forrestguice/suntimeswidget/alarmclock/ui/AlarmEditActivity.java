@@ -844,6 +844,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             public void onUpdateMenu(Context context, Menu menu)
             {
                 int[] attrs = { R.attr.icActionExtension, R.attr.icActionDismiss };
+                @SuppressLint("ResourceType")
                 TypedArray a = obtainStyledAttributes(attrs);
                 int icExtensionResId = a.getResourceId(0, R.drawable.ic_action_extension);
                 @SuppressLint("ResourceType") int icDismissResId = a.getResourceId(1, R.drawable.ic_action_cancel);

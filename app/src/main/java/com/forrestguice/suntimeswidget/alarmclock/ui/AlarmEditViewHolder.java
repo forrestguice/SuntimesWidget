@@ -454,6 +454,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         if (isSchedulable)
         {
             int[] attrs = { android.R.attr.textColorPrimary };   // TODO: from SuntimesTheme
+            @SuppressLint("ResourceType")
             TypedArray a = context.obtainStyledAttributes(attrs);
             int noteColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
             a.recycle();
@@ -559,6 +560,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         String label = context.getString(R.string.actions_configLabel_action_item, actionTitle, desc);
 
         int[] attrs = { R.attr.text_disabledColor };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int descColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
         a.recycle();
@@ -578,6 +580,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             if (summary != null)
             {
                 int[] attrs = { R.attr.text_disabledColor };
+                @SuppressLint("ResourceType")
                 TypedArray a = context.obtainStyledAttributes(attrs);
                 int color = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
                 a.recycle();
