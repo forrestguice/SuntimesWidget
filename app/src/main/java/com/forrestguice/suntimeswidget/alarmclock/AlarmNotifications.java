@@ -762,22 +762,14 @@ public class AlarmNotifications extends BroadcastReceiver
         player.setAudioStreamType(streamType);
 
         try {
-            player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra)
-                {
-                    Log.e(TAG_PLAYER, "onError: MediaPlayer: " + what + ", " + extra);
-                    return false;
-                }
-            });
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            /*player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     if (BuildConfig.DEBUG) {
                         Log.d(TAG_PLAYER, "onCompletion: MediaPlayer: final volume: " + t_volume);
                     }
                 }
-            });
+            });*/
             player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
@@ -878,7 +870,6 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             private final float oneOverDuration = 1f / duration;
             private Long startedAt = null;
-            private final float initialVolume = 0.00001f;
 
             @Override
             public void run()
@@ -890,8 +881,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 float elapsed = (float) (System.currentTimeMillis() - startedAt);
                 float x = Math.min(elapsed * oneOverDuration, 1f);    // x[0,1]
-                float y = f(x, method);                               // y[0,1]
-                float volume = Math.max(y + initialVolume, 1f);       // v[i,1]
+                float volume = Math.min(f(x, method), 1f);            // v[0,1]
                 player.setVolume(volume, t_volume = volume);
 
                 if (BuildConfig.DEBUG) {
