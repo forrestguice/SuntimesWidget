@@ -668,6 +668,8 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final String TAG_PLAYER = "AlarmPlayer";
+
     /**
      * Start playing sound / vibration for given alarm.
      */
@@ -683,12 +685,12 @@ public class AlarmNotifications extends BroadcastReceiver
         boolean isAlarm = (alarm.getType() == AlarmType.ALARM);
         boolean passesFilter = passesInterruptionFilter(context, alarm);
         if (!passesFilter) {
-            Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
+            Log.w(TAG_PLAYER, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
         boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.getType());
         if (isMuted) {
-            Log.w(TAG, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
+            Log.w(TAG_PLAYER, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
         }
 
         if (alarm.vibrate && passesFilter && !isMuted) {
@@ -703,11 +705,11 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             if (!isValidSoundUri(soundUri)) {
-                Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
+                Log.w(TAG_PLAYER, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
                 soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
 
                 if (!isValidSoundUri(soundUri)) {
-                    Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
+                    Log.w(TAG_PLAYER, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
                     soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                 }
             }
@@ -716,19 +718,19 @@ public class AlarmNotifications extends BroadcastReceiver
                 startAlert(context, player, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
-                Log.e(TAG, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
+                Log.e(TAG_PLAYER, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
                     startAlert(context, player, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
-                    Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
+                    Log.e(TAG_PLAYER, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                     try {
                         startAlert(context, player, fallbackUri, isAlarm);  // (2)
 
                     } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
-                        Log.e(TAG, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
+                        Log.e(TAG_PLAYER, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
                         Toast.makeText(context, context.getString(R.string.alarmAction_alertFailedMsg), Toast.LENGTH_SHORT).show();
                         setIsPlaying(channel, false);
                     }
@@ -764,7 +766,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra)
                 {
-                    Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
+                    Log.e(TAG_PLAYER, "onError: MediaPlayer: " + what + ", " + extra);
                     return false;
                 }
             });
@@ -772,7 +774,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "onCompletion: MediaPlayer: final volume: " + t_volume);
+                        Log.d(TAG_PLAYER, "onCompletion: MediaPlayer: final volume: " + t_volume);
                     }
                 }
             });
@@ -787,13 +789,13 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (audioManager != null) {
                         audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                    } else Log.w(TAG, "startAlert: unable to request focus; audioManager is null!");
+                    } else Log.w(TAG_PLAYER, "startAlert: unable to request focus; audioManager is null!");
 
                     if (fadeInMillis > 0) {
                         startFadeIn(context, mediaPlayer, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
-                    Log.i(TAG, "startAlert: playing " + soundUri);
+                    Log.i(TAG_PLAYER, "startAlert: playing " + soundUri);
                     mediaPlayer.start();
                 }
             });
@@ -802,7 +804,7 @@ public class AlarmNotifications extends BroadcastReceiver
             player.prepareAsync();
 
         } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
+            Log.e(TAG_PLAYER, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
             throw e;
         }
     }
@@ -893,7 +895,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 player.setVolume(volume, t_volume = volume);
 
                 if (BuildConfig.DEBUG) {
-                    Log.d("DEBUG", "fadeIn: " + elapsed + "; v=" + volume);
+                    Log.d(TAG_PLAYER, "fadeIn: " + elapsed + "; v=" + volume);
                 }
 
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
@@ -902,7 +904,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 } else {
                     isFadingIn = false;
                     player.setVolume(1f, t_volume = 1f);
-                    Log.d(TAG, "fadeIn: done; v=" + volume);
+                    Log.d(TAG_PLAYER, "fadeIn: done; v=" + volume);
                 }
             }
 
@@ -922,10 +924,10 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void run() {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "startFadeIn: (Handler) " + method + ": sanity check! v=" + t_volume + "; isFading=" + isFadingIn);
+                    Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": sanity check! v=" + t_volume + "; isFading=" + isFadingIn);
                 }
                 if (t_volume < 1) {
-                    Log.e(TAG, "startFadeIn: (Handler) " + method + ": failsafe! restoring full volume... fadeIn completed but v=" + t_volume + "; isFading=" + isFadingIn);
+                    Log.e(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": failsafe! restoring full volume... fadeIn completed but v=" + t_volume + "; isFading=" + isFadingIn);
                     player.setVolume(1, 1);
                 }
             }
@@ -946,7 +948,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     VolumeShaper fadeInVolume = player.createVolumeShaper(fadeInConfig);    // TODO: VolumeShaper sometimes jumps to full volume for no apparent reason...
                     fadeInVolume.apply(VolumeShaper.Operation.PLAY);
-                    Log.d(TAG, "startFadeIn: (VolumeShaper) " + method + ": now fading...");
+                    Log.d(TAG_PLAYER, "startFadeIn: (VolumeShaper) " + method + ": now fading...");
                     return null;    // else fall-through to legacy fadeHandler
                 }
             }
@@ -956,14 +958,14 @@ public class AlarmNotifications extends BroadcastReceiver
             }
             Runnable fader = fadeIn(fadeHandler, player, duration, method);
 
-            Log.d(TAG, "startFadeIn: (Handler) " + method + ": triggering fade...");
+            Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": triggering fade...");
             player.setVolume(1, 1);
             fadeHandler.post(fader);
             fadeHandler.postDelayed(verifyFadeIn(player, method), duration + 500);
             return fader;
 
         } else {
-            Log.e(TAG, "startFadeIn: null MediaPlayer!");
+            Log.e(TAG_PLAYER, "startFadeIn: null MediaPlayer!");
             return null;
         }
     }
@@ -998,6 +1000,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void stopAlert(boolean stopVibrate)
     {
+        Log.d(TAG_PLAYER, "stopAlert: all channels");
         if (stopVibrate) {
             stopVibration();
         }
@@ -1012,6 +1015,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void stopAlert(String channel, boolean stopVibrate)
     {
+        Log.d(TAG_PLAYER, "stopAlert: channel: " + channel);
         if (stopVibrate) {
             stopVibration();
         }
@@ -1023,11 +1027,11 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         if (player != null)
         {
-            player.stop();
+            player.stop();    // to stopped state (must call prepare to reuse)
             if (audioManager != null) {
                 audioManager.abandonAudioFocus(null);
             }
-            player.reset();
+            player.reset();    // to idle state (must call setDataSource to reuse)
         }
     }
 
@@ -1079,7 +1083,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
 
             } catch (Settings.SettingNotFoundException e) {
-                Log.e(TAG, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
+                Log.e(TAG_PLAYER, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
                 return true;
             }
 
@@ -1094,11 +1098,11 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             try {
                 NotificationManager.Policy policy = notificationManager.getNotificationPolicy();    // does getting the policy require a permission? conflicting documentation..
-                Log.d(TAG, "getNotificationPolicy: " + policy);
+                Log.d(TAG_PLAYER, "getNotificationPolicy: " + policy);
                 return policy;
 
             } catch (SecurityException e) {
-                Log.e(TAG, "getNotificationPolicy: Access Denied.. " + e);
+                Log.e(TAG_PLAYER, "getNotificationPolicy: Access Denied.. " + e);
                 return null;
             }
         } else return null;
@@ -1140,7 +1144,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     t_player_error = what;
                     t_player_error_extra = extra;
-                    Log.e(TAG, "onError: MediaPlayer error " + what + " (" + extra + ")");
+                    Log.e(TAG_PLAYER, "onError: MediaPlayer error " + what + " (" + extra + ")");
                     return false;
                 }
             });
@@ -1173,7 +1177,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void setIsPlaying(String channel, boolean value) {
         isPlaying.put(channel, value);
         if (BuildConfig.DEBUG) {
-            Log.d("DEBUG", "setIsPlaying: " + channel + ": " + value);
+            Log.d(TAG_PLAYER, "setIsPlaying: " + channel + ": " + value);
         }
     }
 
