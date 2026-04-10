@@ -949,7 +949,6 @@ public class AlarmNotifications extends BroadcastReceiver
             Runnable fader = fadeIn(fadeHandler, player, duration, method);
 
             Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": triggering fade...");
-            player.setVolume(1, 1);
             player.setVolume(0.1f, 0.1f);
             fadeHandler.post(fader);                       // sets volume to 0
             fadeHandler.postDelayed(verifyFadeIn(player, method), duration + 500);
@@ -996,8 +995,7 @@ public class AlarmNotifications extends BroadcastReceiver
             stopVibration();
         }
         for (String channel : players.keySet()) {
-            stopSound(players.get(channel));
-            setIsPlaying(channel, false);
+            stopSound(channel);
         }
     }
 
@@ -1010,20 +1008,23 @@ public class AlarmNotifications extends BroadcastReceiver
         if (stopVibrate) {
             stopVibration();
         }
-        stopSound(players.get(channel));
-        setIsPlaying(channel, false);
+        stopSound(channel);
     }
 
-    public static void stopSound(@Nullable MediaPlayer player)
+    public static void stopSound(@NonNull String channel)
     {
+        MediaPlayer player = players.get(channel);
         if (player != null)
         {
-            player.stop();    // to stopped state (must call prepare to reuse)
+            players.put(channel, null);
+            //player.stop();    // stopped state (must call prepare to reuse)
             if (audioManager != null) {
                 audioManager.abandonAudioFocus(null);
             }
-            player.reset();    // to idle state (must call setDataSource to reuse)
+            //player.reset();    // idle state (must call setDataSource to reuse)
+            player.release();    // end state (must create a new instance)
         }
+        setIsPlaying(channel, false);
     }
 
     protected static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
