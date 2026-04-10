@@ -880,8 +880,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
 
                 float elapsed = (float) (System.currentTimeMillis() - startedAt);
-                float x = Math.min(elapsed * oneOverDuration, 1f);    // x[0,1]
-                float volume = Math.min(f(x, method), 1f);            // v[0,1]
+                float x = Math.min(elapsed * oneOverDuration, 1f);      // x[0,1]
+                float volume = Math.min(f(x, method) + 0.000001f, 1f);  // v[0.000001,1]
                 player.setVolume(volume, t_volume = volume);
 
                 if (BuildConfig.DEBUG) {
@@ -950,7 +950,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
             Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": triggering fade...");
             player.setVolume(1, 1);
-            fadeHandler.post(fader);
+            player.setVolume(0.1f, 0.1f);
+            fadeHandler.post(fader);                       // sets volume to 0
             fadeHandler.postDelayed(verifyFadeIn(player, method), duration + 500);
             return fader;
 
