@@ -715,19 +715,19 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             try {
-                startAlert(context, player, soundUri, isAlarm);  // (0)
+                startAlert(context, channel, player, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
                 Log.e(TAG_PLAYER, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
-                    startAlert(context, player, defaultUri, isAlarm);  // (1)
+                    startAlert(context, channel, player, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
                     Log.e(TAG_PLAYER, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                     try {
-                        startAlert(context, player, fallbackUri, isAlarm);  // (2)
+                        startAlert(context, channel, player, fallbackUri, isAlarm);  // (2)
 
                     } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
                         Log.e(TAG_PLAYER, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
@@ -746,7 +746,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    protected static void startAlert(final Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
+    protected static void startAlert(final Context context, @NonNull String channel, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
         //noinspection ConstantConditions
         if (soundUri == null) {
@@ -784,7 +784,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     } else Log.w(TAG_PLAYER, "startAlert: unable to request focus; audioManager is null!");
 
                     if (fadeInMillis > 0) {
-                        startFadeIn(context, mediaPlayer, fadeInMillis);
+                        startFadeIn(context, channel, mediaPlayer, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
                     Log.i(TAG_PLAYER, "startAlert: playing " + soundUri);
@@ -863,8 +863,25 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static boolean isFadingIn = false;
     protected static float t_volume = 0;
     protected static Handler fadeHandler;
+    protected static final HashMap<String, Fader> faders = new HashMap<>();
 
-    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull final MediaPlayer player, final long duration, final int method)
+    public static final class Fader
+    {
+        public Runnable runner;
+        public Runnable verifier;
+        public Fader(Runnable r, Runnable v) {
+            runner = r;
+            verifier = v;
+        }
+
+        public void removeCallbacks(@NonNull Handler handler) {
+            handler.removeCallbacks(runner);
+            handler.removeCallbacks(verifier);
+        }
+    }
+
+
+    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull String channel, @NonNull final MediaPlayer player, final long duration, final int method)
     {
         return new Runnable()
         {
@@ -881,7 +898,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 float elapsed = (float) (System.currentTimeMillis() - startedAt);
                 float x = Math.min(elapsed * oneOverDuration, 1f);      // x[0,1]
-                float volume = Math.min(f(x, method) + 0.000001f, 1f);  // v[0.000001,1]
+                float volume = Math.min(f(x, method) + 0.00001f, 1f);  // v[0.00001,1]
                 player.setVolume(volume, t_volume = volume);
 
                 if (BuildConfig.DEBUG) {
@@ -893,6 +910,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                 } else {
                     isFadingIn = false;
+                    faders.remove(channel);
                     player.setVolume(1f, t_volume = 1f);
                     Log.d(TAG_PLAYER, "fadeIn: done; v=" + volume);
                 }
@@ -925,7 +943,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Runnable startFadeIn(Context context, @Nullable MediaPlayer player, final long duration)
+    private static void startFadeIn(Context context, String channel, @Nullable MediaPlayer player, final long duration)
     {
         if (player != null)
         {
@@ -939,24 +957,41 @@ public class AlarmNotifications extends BroadcastReceiver
                     VolumeShaper fadeInVolume = player.createVolumeShaper(fadeInConfig);    // TODO: VolumeShaper sometimes jumps to full volume for no apparent reason...
                     fadeInVolume.apply(VolumeShaper.Operation.PLAY);
                     Log.d(TAG_PLAYER, "startFadeIn: (VolumeShaper) " + method + ": now fading...");
-                    return null;    // else fall-through to legacy fadeHandler
                 }
             }
 
             if (fadeHandler == null) {
                 fadeHandler = new Handler();
             }
-            Runnable fader = fadeIn(fadeHandler, player, duration, method);
+            Fader fader = faders.get(channel);
+            if (fader != null) {
+                fader.removeCallbacks(fadeHandler);
+                Log.w(TAG_PLAYER, "startFadeIn: pre-existing fader! has startFadeIn been called multiple times?");
+            }
+            fader = new Fader(
+                    fadeIn(fadeHandler, channel, player, duration, method),
+                    verifyFadeIn(player, method));
+            faders.put(channel, fader);
 
             Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": triggering fade...");
-            player.setVolume(0.1f, 0.1f);
-            fadeHandler.post(fader);                       // sets volume to 0
-            fadeHandler.postDelayed(verifyFadeIn(player, method), duration + 500);
-            return fader;
+            //player.setVolume(0.1f, 0.1f);
+            fadeHandler.post(fader.runner);                       // sets volume to 0
+            fadeHandler.postDelayed(fader.verifier, duration + 500);
 
         } else {
             Log.e(TAG_PLAYER, "startFadeIn: null MediaPlayer!");
-            return null;
+        }
+    }
+
+    private static void stopFadeIn(String channel)
+    {
+        Fader fader = faders.get(channel);
+        if (fader != null)
+        {
+            faders.put(channel, null);
+            if (fadeHandler != null) {
+                fader.removeCallbacks(fadeHandler);
+            }
         }
     }
 
@@ -1021,6 +1056,7 @@ public class AlarmNotifications extends BroadcastReceiver
             if (audioManager != null) {
                 audioManager.abandonAudioFocus(null);
             }
+            stopFadeIn(channel);
             //player.reset();    // idle state (must call setDataSource to reuse)
             player.release();    // end state (must create a new instance)
         }
