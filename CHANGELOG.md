@@ -1,6 +1,6 @@
 ### ~
 
-### v0.17.0 (2026-04-08)
+### v0.17.0 (2026-04-11)
 * adds `Material You` app themes (api31+) (#635).
 * adds `fancy digital clock` widgets.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
@@ -21,6 +21,7 @@
 * adds option to hide the location coordinates in the action bar.
 * adds option `label (alternate)` that displays alternate labels "dawn" and "dusk" in the main table.
 * adds `snooze` and `snooze limit` chips to the alarm edit dialog that allows setting these values per alarm.
+* fixes bug where alarm fade-in continues running after sound has stopped; fixes bug where alarm MediaPlayer resources aren't released.
 * adds permission `android.permission.SCHEDULE_EXACT_ALARM` (needed for alarm functionality) [permission].
 * adds permission `android.permission.POST_NOTIFICATIONS` (needed for alarm functionality) [permission].
 * adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
