@@ -1,0 +1,9 @@
+- adds "Material You" app themes.
+- adds "fancy digital clock" widgets.
+- adds custom events ("shadow factor", "day percent", "moon elevation", and "moon illumination").
+- adds world map projections (Mercator, Mercator equal-area, and Van der Grinten).
+- improves widget configuration (adds "widget preview").
+- improves navigation in sun, moon, and world map dialogs (seek date/time).
+- improves searching places (adds descriptive tags and "sort places" action).
+- enhances the "add places" dialog ("gnss status" and other gps related improvements).
+- updates targetSdk to Android 11 (api30), and migrates app to AndroidX.
