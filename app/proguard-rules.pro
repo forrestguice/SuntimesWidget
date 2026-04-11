@@ -14,8 +14,8 @@
 # name, etc) - to enable obfuscation these classes must be identified and exempted.
 -dontobfuscate
 
-# keep MenuBuilder .. reflection used in SuntimesActivity.forceActionBarIcons
--keepclassmembers class *.MenuBuilder {
+# keep MenuBuilder .. reflection used in forceActionBarIcons
+-keepclassmembers class androidx.appcompat.view.menu.MenuBuilder {
     void setOptionalIconsVisible(boolean);
 }
 

@@ -21,3 +21,9 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
+
+-keep class com.forrestguice.support.widget.SearchView { *; }
+
+-keepclassmembers class androidx.appcompat.view.menu.MenuBuilder {
+    void setOptionalIconsVisible(boolean);
+}
