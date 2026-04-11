@@ -192,6 +192,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
         String tagPlugin = context.getString(R.string.tag_tagPlugin);
 
         int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int colorDefault = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
         @SuppressLint("ResourceType") int colorPlugin = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));

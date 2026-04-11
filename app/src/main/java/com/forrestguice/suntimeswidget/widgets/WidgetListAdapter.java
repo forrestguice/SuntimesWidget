@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.widgets;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
@@ -282,6 +283,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
 
             String title = context.getString(R.string.widgetList_label_itemTitle, widgetTitle);
             String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
+            @SuppressLint("StringFormatMatches")    // second argument may be omitted/ignored intentionally
             String summary = context.getString(widgetSummaryResID, widgetType, source);
             items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
         }

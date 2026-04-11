@@ -17,7 +17,8 @@
 
         <EditText android:id="@+id/edit_height"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="?attr/text_size_small" android:textAlignment="center"
+            android:textSize="?attr/text_size_small"
+            android:textAlignment="center" android:layout_gravity="center_horizontal"
             android:minEms="5" android:maxLines="1"
             android:inputType="numberDecimal" android:hint="@string/events_editevent_dialog_height_hint" />
 

@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -431,6 +432,7 @@ public class AlarmEditDialog extends DialogBase
         }
 
         int[] attrs = { R.attr.icActionDelete };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
         a.recycle();

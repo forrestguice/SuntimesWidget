@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.actions;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -607,30 +608,35 @@ public class ActionListHelper
 
                 } else if (item.hasTag(SuntimesActionsContract.TAG_CALENDAR)) {
                     int[] attrs = { R.attr.icActionCalendar };
+                    @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_calendar)));
                     a.recycle();
 
                 } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {
                     int[] attrs = { R.attr.icActionPlace };
+                    @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_place)));
                     a.recycle();
 
                 } else if (item.hasTag(SuntimesActionsContract.TAG_ALARM)) {
                     int[] attrs = { R.attr.icActionAlarm };
+                    @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_alarms)));
                     a.recycle();
 
                 } else if (item.hasTag(SuntimesActionsContract.TAG_SETTINGS)) {
                     int[] attrs = { R.attr.icActionSettings };
+                    @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_settings)));
                     a.recycle();
 
                 } else {
                     int[] attrs = { R.attr.icActionExtension };
+                    @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_extension)));
                     a.recycle();

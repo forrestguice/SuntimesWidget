@@ -913,7 +913,7 @@ public class AlarmNotificationsTest
         verify_initPlayer(channel);
         AlarmNotifications.t_volume = 0;
         try {
-            AlarmNotifications.startAlert(mockContext, player, uri, true);
+            AlarmNotifications.startAlert(mockContext, channel, player, uri, true);
             assertFalse(AlarmNotifications.isPlaying());    // startAlert(Uri) doesn't toggle isPlaying (or call startVibration)
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
@@ -962,7 +962,7 @@ public class AlarmNotificationsTest
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);    // player must be initialized first
         verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, player, uri, false);
+            AlarmNotifications.startAlert(mockContext, channel, player, uri, false);
         } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
         }
@@ -992,7 +992,7 @@ public class AlarmNotificationsTest
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel,true);
         verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, player, uri, isAlarm);
+            AlarmNotifications.startAlert(mockContext, channel, player, uri, isAlarm);
             Assert.fail("should have failed with IOException or SecurityException.. uri: " + uri);    // this line should be unreachable
         } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException e) { /* EMPTY */ }
         assertFalse(player.isPlaying());
@@ -1005,7 +1005,7 @@ public class AlarmNotificationsTest
         MediaPlayer player = AlarmNotifications.initPlayer(mockContext, channel, true);
         verify_initPlayer(channel);
         try {
-            AlarmNotifications.startAlert(mockContext, player, uri, isAlarm);
+            AlarmNotifications.startAlert(mockContext, channel, player, uri, isAlarm);
         } catch (Exception e) {
             Assert.fail("failed to startAlert: uri: " + uri + ", " + e);
         }

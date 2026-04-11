@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.bedtime;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -1025,6 +1026,7 @@ public class BedtimeDialog extends DialogBase
     protected void offerModifyBedtimeFromWakeup(final Context context)
     {
         int[] attrs = { R.attr.text_accentColor };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
@@ -1046,6 +1048,7 @@ public class BedtimeDialog extends DialogBase
     protected void offerModifyWakeupFromBedtime(final Context context)
     {
         int[] attrs = { R.attr.text_accentColor };
+        @SuppressLint("ResourceType")
         TypedArray a = context.obtainStyledAttributes(attrs);
         int accentColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
         a.recycle();
@@ -1351,6 +1354,7 @@ public class BedtimeDialog extends DialogBase
         if (context != null)
         {
             int[] attrs = { R.attr.icActionDelete };
+            @SuppressLint("ResourceType")
             TypedArray a = context.obtainStyledAttributes(attrs);
             int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
             a.recycle();

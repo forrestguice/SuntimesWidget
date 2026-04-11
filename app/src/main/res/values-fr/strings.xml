@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- MAIN ACTIVITY -->
 
@@ -59,7 +59,7 @@
     -->
     <!-- line commented to use default: <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string> -->
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Le fuseau horaire peut être erroné pour cet emplacement.</string>  <!-- snackbar message -->
-    <string name="timezoneWarningNote"><xliff:g id="tzID">%s</xliff:g> is <xliff:g id="timeSpan">%s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%s</xliff:g>).</string>
+    <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> is <xliff:g id="timeSpan">%2$s</xliff:g> de l\'heure locale moyenne (<xliff:g id="locationName">%3$s</xliff:g>).</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Heure d\'été</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> équation du temps</string>  <!-- timezone dialog label -->
 
@@ -120,7 +120,7 @@
     <string name="delta_until_end">jusqu\'à la fin</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
-        <item quantity="one" xliff:ignore="ImpliedQuantity">à</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">à</item>
         <item quantity="other">à</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. plural applies to time component (next line) -->
@@ -192,7 +192,6 @@
     <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
 
     <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="equinox_format_share">@string/format_share</string>   <!-- Summer solstice on June 20.. -->
 
     <!-- distances (meters, feet, etc) -->
     <string name="settings_lengthUnits_metric">Métriques</string>
@@ -1953,7 +1952,7 @@
         <a href="%1$s">gestionnaire de ticket</a> pour soumettre une requête.
     ]]></string>
     <string name="about_app_donate_field"><![CDATA[
-        %s est disponible gratuitement, mais s\'il vous a été utile, n\'hésitez pas à faire un
+        %1$s est disponible gratuitement, mais s\'il vous a été utile, n\'hésitez pas à faire un
         <a href="%2$s">don à votre convenance</a>.
     ]]></string>
     <string name="about_app_sourcecode_field"><![CDATA[

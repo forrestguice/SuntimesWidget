@@ -717,6 +717,7 @@ public class SuntimesActivity extends AppCompatActivity
      * @param context context
      * @return PendingIntent
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     protected PendingIntent getFullUpdateIntent(Context context)
     {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -747,6 +748,7 @@ public class SuntimesActivity extends AppCompatActivity
      * @param context context
      * @return PendingIntent
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     protected PendingIntent getPartialUpdateIntent(Context context)
     {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -1391,6 +1393,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void initColors(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = Color.WHITE;
 

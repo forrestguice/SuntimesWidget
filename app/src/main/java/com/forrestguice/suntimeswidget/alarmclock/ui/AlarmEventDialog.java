@@ -491,6 +491,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
             }
 
             int[] attr = { R.attr.icActionExtension, R.attr.icActionEvents };
+            @SuppressLint("ResourceType")
             TypedArray typedArray = context.obtainStyledAttributes(attr);
             Drawable icon = ContextCompat.getDrawable(context, typedArray.getResourceId(0, R.drawable.ic_action_extension));
             @SuppressLint("ResourceType")
@@ -643,6 +644,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
     private void initColors(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = Color.WHITE;
 
@@ -785,6 +787,7 @@ public class AlarmEventDialog extends BottomSheetDialogBase
         if (context != null && text_location != null)
         {
             int[] attr = { R.attr.icActionPlace, R.attr.icActionHome };
+            @SuppressLint("ResourceType")
             TypedArray typedArray = context.obtainStyledAttributes(attr);
             Drawable placeIcon = ContextCompat.getDrawable(context, typedArray.getResourceId(0, R.drawable.ic_action_place));
             @SuppressLint("ResourceType")

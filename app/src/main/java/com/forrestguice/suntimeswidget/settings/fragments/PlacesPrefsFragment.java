@@ -148,7 +148,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                         lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_success,
                                 utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
                                 delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
-                                provider.toUpperCase(), String.format(Locale.getDefault(), "%.2f", accuracy),
+                                provider.toUpperCase(Locale.getDefault()), String.format(Locale.getDefault(), "%.2f", accuracy),
                                 (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
                     } else {
                         lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_failed,

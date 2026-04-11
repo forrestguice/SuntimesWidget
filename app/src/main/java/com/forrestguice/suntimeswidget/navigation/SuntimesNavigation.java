@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.navigation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -184,6 +185,7 @@ public class SuntimesNavigation
             }, 500);
         }
     }
+    @SuppressLint("WrongConstant")
     public boolean isNavigationDrawerOpen()
     {
         if (drawer != null) {

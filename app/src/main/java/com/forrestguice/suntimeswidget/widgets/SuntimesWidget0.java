@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.widgets;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -867,6 +868,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param context the context
      * @return a SUNTIMES_WIDGET_UPDATE broadcast intent for widget alarmId (@see getUpdateAlarmId)
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     protected PendingIntent getUpdateIntent(Context context, int appWidgetId)
     {
         String updateFilter = getUpdateIntentFilter();
@@ -902,6 +904,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
      * @param widgetClass the widget class (e.g. SuntimesWidget.class, SuntimesWidget1.class)
      * @return a PendingIntent for the widget (to be triggered when widget is clicked)
      */
+    @SuppressLint("UnspecifiedImmutableFlag")
     public static PendingIntent clickActionIntent(Context context, int appWidgetId, Class<?> widgetClass)
     {
         WidgetSettings.ActionMode actionMode = WidgetSettings.loadActionModePref(context, appWidgetId);

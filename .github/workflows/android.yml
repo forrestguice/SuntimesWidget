@@ -48,7 +48,7 @@ jobs:
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
       with:
         name: app
-        path: app/build/outputs/apk/production/release/app-production-debug-unsigned.apk
+        path: app/build/outputs/apk/production/debug/app-production-debug.apk
 
     - name: Build with Gradle (Unit tests)
       run: ./gradlew testProductionRelease
@@ -75,7 +75,7 @@ jobs:
 
     - name: Upload artifacts (merge report)
       if: success() || failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  #7.0.0
       with:
         name: manifest-merger-report
         path: app/build/outputs/logs/manifest-merger-production-release-report.html

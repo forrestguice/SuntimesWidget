@@ -858,6 +858,7 @@ public class AlarmSettings
         if (AlarmSettings.isAutostartDisabled(context))
         {
             int[] colorAttrs = { R.attr.tagColor_warning };
+            @SuppressLint("ResourceType")
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
             typedArray.recycle();
@@ -874,6 +875,7 @@ public class AlarmSettings
     public static CharSequence batteryOptimizationMessage(Context context)
     {
         int[] colorAttrs = { R.attr.tagColor_warning };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
         typedArray.recycle();

@@ -196,7 +196,7 @@
 
                 <RadioGroup android:id="@+id/radiogroup_event_percent"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="8dp" android:layout_marginLeft="8dp">
 
                     <RadioButton
                         android:id="@+id/radiobutton_event_percent_day"
@@ -241,7 +241,7 @@
 
                 <RadioGroup android:id="@+id/radiogroup_event_factor"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="8dp" android:layout_marginLeft="8dp">
 
                     <RadioButton
                         android:id="@+id/radiobutton_event_factor_absolute"

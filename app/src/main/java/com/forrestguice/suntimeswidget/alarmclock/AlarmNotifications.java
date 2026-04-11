@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -667,6 +668,8 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final String TAG_PLAYER = "AlarmPlayer";
+
     /**
      * Start playing sound / vibration for given alarm.
      */
@@ -682,12 +685,12 @@ public class AlarmNotifications extends BroadcastReceiver
         boolean isAlarm = (alarm.getType() == AlarmType.ALARM);
         boolean passesFilter = passesInterruptionFilter(context, alarm);
         if (!passesFilter) {
-            Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
+            Log.w(TAG_PLAYER, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
         boolean isMuted = AlarmSettings.isChannelMuted(context, alarm.getType());
         if (isMuted) {
-            Log.w(TAG, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
+            Log.w(TAG_PLAYER, "startAlert: blocked by Notification Channel (muted): " + alarm.rowID);
         }
 
         if (alarm.vibrate && passesFilter && !isMuted) {
@@ -702,32 +705,32 @@ public class AlarmNotifications extends BroadcastReceiver
             }
 
             if (!isValidSoundUri(soundUri)) {
-                Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
+                Log.w(TAG_PLAYER, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with default.");
                 soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
 
                 if (!isValidSoundUri(soundUri)) {
-                    Log.w(TAG, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
+                    Log.w(TAG_PLAYER, "startAlert: rejecting sound uri: " + (soundUri != null ? soundUri.toString() : "null") + ".. replacing with fallback.");
                     soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                 }
             }
 
             try {
-                startAlert(context, player, soundUri, isAlarm);  // (0)
+                startAlert(context, channel, player, soundUri, isAlarm);  // (0)
 
             } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
-                Log.e(TAG, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
+                Log.e(TAG_PLAYER, "startAlert: failed to play " + (soundUri != null ? soundUri.toString() : "null") + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
-                    startAlert(context, player, defaultUri, isAlarm);  // (1)
+                    startAlert(context, channel, player, defaultUri, isAlarm);  // (1)
 
                 } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
-                    Log.e(TAG, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
+                    Log.e(TAG_PLAYER, "startAlert: failed to play " + (defaultUri != null ? defaultUri.toString() : "null") + " ..(1) " + e);
                     Uri fallbackUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.getType());
                     try {
-                        startAlert(context, player, fallbackUri, isAlarm);  // (2)
+                        startAlert(context, channel, player, fallbackUri, isAlarm);  // (2)
 
                     } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
-                        Log.e(TAG, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
+                        Log.e(TAG_PLAYER, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
                         Toast.makeText(context, context.getString(R.string.alarmAction_alertFailedMsg), Toast.LENGTH_SHORT).show();
                         setIsPlaying(channel, false);
                     }
@@ -743,7 +746,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    protected static void startAlert(final Context context, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
+    protected static void startAlert(final Context context, @NonNull String channel, @NonNull final MediaPlayer player, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
         //noinspection ConstantConditions
         if (soundUri == null) {
@@ -759,25 +762,14 @@ public class AlarmNotifications extends BroadcastReceiver
         player.setAudioStreamType(streamType);
 
         try {
-            player.setDataSource(context, soundUri);
-            if (BuildConfig.DEBUG)
-            {
-                player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                    @Override
-                    public boolean onError(MediaPlayer mp, int what, int extra)
-                    {
-                        Log.e(TAG, "onError: MediaPlayer: " + what + ", " + extra);
-                        return false;
+            /*player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG_PLAYER, "onCompletion: MediaPlayer: final volume: " + t_volume);
                     }
-                });
-                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        Log.d(TAG, "onCompletion: MediaPlayer");
-                    }
-                });
-            }
-
+                }
+            });*/
             player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
@@ -789,20 +781,22 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (audioManager != null) {
                         audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                    }
+                    } else Log.w(TAG_PLAYER, "startAlert: unable to request focus; audioManager is null!");
 
                     if (fadeInMillis > 0) {
-                        startFadeIn(context, mediaPlayer, fadeInMillis);
+                        startFadeIn(context, channel, mediaPlayer, fadeInMillis);
                     } else player.setVolume(1, t_volume = 1);
 
+                    Log.i(TAG_PLAYER, "startAlert: playing " + soundUri);
                     mediaPlayer.start();
-                    Log.i(TAG, "startAlert: playing " + soundUri);
                 }
             });
+
+            player.setDataSource(context, soundUri);
             player.prepareAsync();
 
         } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
+            Log.e(TAG_PLAYER, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
             throw e;
         }
     }
@@ -865,12 +859,29 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static final int FADEIN_STEP_MILLIS = 25;
+    public static final int FADEIN_STEP_MILLIS = 50;
     protected static boolean isFadingIn = false;
     protected static float t_volume = 0;
     protected static Handler fadeHandler;
+    protected static final HashMap<String, Fader> faders = new HashMap<>();
 
-    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull final MediaPlayer player, final long duration, final int method)
+    public static final class Fader
+    {
+        public Runnable runner;
+        public Runnable verifier;
+        public Fader(Runnable r, Runnable v) {
+            runner = r;
+            verifier = v;
+        }
+
+        public void removeCallbacks(@NonNull Handler handler) {
+            handler.removeCallbacks(runner);
+            handler.removeCallbacks(verifier);
+        }
+    }
+
+
+    private static Runnable fadeIn(@NonNull final Handler handler, @NonNull String channel, @NonNull final MediaPlayer player, final long duration, final int method)
     {
         return new Runnable()
         {
@@ -886,16 +897,22 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
 
                 float elapsed = (float) (System.currentTimeMillis() - startedAt);
-                float x = Math.min(elapsed * oneOverDuration, 1f);    // x[0,1]
-                float volume = f(x, method);                          // y[0,1]
+                float x = Math.min(elapsed * oneOverDuration, 1f);      // x[0,1]
+                float volume = Math.min(f(x, method) + 0.00001f, 1f);  // v[0.00001,1]
                 player.setVolume(volume, t_volume = volume);
 
-                //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG_PLAYER, "fadeIn: " + elapsed + "; v=" + volume);
+                }
+
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
                     handler.postDelayed(this, FADEIN_STEP_MILLIS);
+
                 } else {
                     isFadingIn = false;
+                    faders.remove(channel);
                     player.setVolume(1f, t_volume = 1f);
+                    Log.d(TAG_PLAYER, "fadeIn: done; v=" + volume);
                 }
             }
 
@@ -909,7 +926,24 @@ public class AlarmNotifications extends BroadcastReceiver
         };
     }
 
-    private static void startFadeIn(Context context, @Nullable MediaPlayer player, final long duration)
+    private static Runnable verifyFadeIn(@NonNull final MediaPlayer player, final int method)
+    {
+        return new Runnable() {
+            @Override
+            public void run() {
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": sanity check! v=" + t_volume + "; isFading=" + isFadingIn);
+                }
+                if (t_volume < 1) {
+                    Log.e(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": failsafe! restoring full volume... fadeIn completed but v=" + t_volume + "; isFading=" + isFadingIn);
+                    player.setVolume(1, 1);
+                }
+            }
+        };
+    }
+
+    @Nullable
+    private static void startFadeIn(Context context, String channel, @Nullable MediaPlayer player, final long duration)
     {
         if (player != null)
         {
@@ -922,18 +956,42 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     VolumeShaper fadeInVolume = player.createVolumeShaper(fadeInConfig);    // TODO: VolumeShaper sometimes jumps to full volume for no apparent reason...
                     fadeInVolume.apply(VolumeShaper.Operation.PLAY);
-                    return;    // else fall-through to legacy fadeHandler
+                    Log.d(TAG_PLAYER, "startFadeIn: (VolumeShaper) " + method + ": now fading...");
                 }
             }
 
-            player.setVolume(0, t_volume = 0);
             if (fadeHandler == null) {
                 fadeHandler = new Handler();
             }
-            fadeHandler.postDelayed(fadeIn(fadeHandler, player, duration, method), FADEIN_STEP_MILLIS);
+            Fader fader = faders.get(channel);
+            if (fader != null) {
+                fader.removeCallbacks(fadeHandler);
+                Log.w(TAG_PLAYER, "startFadeIn: pre-existing fader! has startFadeIn been called multiple times?");
+            }
+            fader = new Fader(
+                    fadeIn(fadeHandler, channel, player, duration, method),
+                    verifyFadeIn(player, method));
+            faders.put(channel, fader);
+
+            Log.d(TAG_PLAYER, "startFadeIn: (Handler) " + method + ": triggering fade...");
+            //player.setVolume(0.1f, 0.1f);
+            fadeHandler.post(fader.runner);                       // sets volume to 0
+            fadeHandler.postDelayed(fader.verifier, duration + 500);
 
         } else {
-            Log.w(TAG, "startFadeIn: null MediaPlayer!");
+            Log.e(TAG_PLAYER, "startFadeIn: null MediaPlayer!");
+        }
+    }
+
+    private static void stopFadeIn(String channel)
+    {
+        Fader fader = faders.get(channel);
+        if (fader != null)
+        {
+            faders.put(channel, null);
+            if (fadeHandler != null) {
+                fader.removeCallbacks(fadeHandler);
+            }
         }
     }
 
@@ -967,12 +1025,12 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void stopAlert(boolean stopVibrate)
     {
+        Log.d(TAG_PLAYER, "stopAlert: all channels");
         if (stopVibrate) {
             stopVibration();
         }
         for (String channel : players.keySet()) {
-            stopSound(players.get(channel));
-            setIsPlaying(channel, false);
+            stopSound(channel);
         }
     }
 
@@ -981,23 +1039,28 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void stopAlert(String channel, boolean stopVibrate)
     {
+        Log.d(TAG_PLAYER, "stopAlert: channel: " + channel);
         if (stopVibrate) {
             stopVibration();
         }
-        stopSound(players.get(channel));
-        setIsPlaying(channel, false);
+        stopSound(channel);
     }
 
-    public static void stopSound(@Nullable MediaPlayer player)
+    public static void stopSound(@NonNull String channel)
     {
+        MediaPlayer player = players.get(channel);
         if (player != null)
         {
-            player.stop();
+            players.put(channel, null);
+            //player.stop();    // stopped state (must call prepare to reuse)
             if (audioManager != null) {
                 audioManager.abandonAudioFocus(null);
             }
-            player.reset();
+            stopFadeIn(channel);
+            //player.reset();    // idle state (must call setDataSource to reuse)
+            player.release();    // end state (must create a new instance)
         }
+        setIsPlaying(channel, false);
     }
 
     protected static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
@@ -1048,7 +1111,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 }
 
             } catch (Settings.SettingNotFoundException e) {
-                Log.e(TAG, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
+                Log.e(TAG_PLAYER, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
                 return true;
             }
 
@@ -1063,11 +1126,11 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             try {
                 NotificationManager.Policy policy = notificationManager.getNotificationPolicy();    // does getting the policy require a permission? conflicting documentation..
-                Log.d(TAG, "getNotificationPolicy: " + policy);
+                Log.d(TAG_PLAYER, "getNotificationPolicy: " + policy);
                 return policy;
 
             } catch (SecurityException e) {
-                Log.e(TAG, "getNotificationPolicy: Access Denied.. " + e);
+                Log.e(TAG_PLAYER, "getNotificationPolicy: Access Denied.. " + e);
                 return null;
             }
         } else return null;
@@ -1109,7 +1172,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 {
                     t_player_error = what;
                     t_player_error_extra = extra;
-                    Log.e(TAG, "onError: MediaPlayer error " + what + " (" + extra + ")");
+                    Log.e(TAG_PLAYER, "onError: MediaPlayer error " + what + " (" + extra + ")");
                     return false;
                 }
             });
@@ -1142,7 +1205,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void setIsPlaying(String channel, boolean value) {
         isPlaying.put(channel, value);
         if (BuildConfig.DEBUG) {
-            Log.d("DEBUG", "setIsPlaying: " + channel + ": " + value);
+            Log.d(TAG_PLAYER, "setIsPlaying: " + channel + ": " + value);
         }
     }
 
@@ -1173,6 +1236,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static String createNotificationChannel(Context context, @Nullable AlarmType type) {
         return createNotificationChannel(context, getNotificationChannelID(type));
     }
+    @SuppressLint("WrongConstant")
     @TargetApi(26)
     public static String createNotificationChannel(Context context, @Nullable String channelID)
     {
@@ -1248,6 +1312,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param alarm AlarmClockItem
      * @return a Notification object (or null if a notification shouldn't be shown)
      */
+    @SuppressLint("WrongConstant")
     @Nullable
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
@@ -1430,6 +1495,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    @SuppressLint("WrongConstant")
     public static Notification createBedtimeModeNotification(Context context)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_BEDTIME);
@@ -1476,6 +1542,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return createProgressNotification(context, context.getString(R.string.app_name_alarmclock),  message);
     }
 
+    @SuppressLint("WrongConstant")
     public static Notification createProgressNotification(Context context, @Nullable String title, @NonNull String message)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);
@@ -1503,6 +1570,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
+    @SuppressLint("WrongConstant")
     public static NotificationCompat.Builder warningNotificationBuilder(Context context)
     {
         NotificationCompat.Builder builder = createNotificationBuilder(context, CHANNEL_ID_MISC);

@@ -410,7 +410,8 @@
             <EditText android:id="@+id/appwidget_general_dayOffset" android:inputType="numberSigned"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
                 android:textSize="?attr/text_size_small" android:hint="@string/settings_general_dayOffset_hint"
-                android:singleLine="true" android:maxLines="1" android:textAlignment="center"
+                android:singleLine="true" android:maxLines="1"
+                android:textAlignment="center" android:layout_gravity="center_horizontal"
                 tools:ignore="TextFields" tools:text="5" />
 
         </LinearLayout>

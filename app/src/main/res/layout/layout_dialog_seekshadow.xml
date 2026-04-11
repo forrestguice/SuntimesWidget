@@ -33,7 +33,7 @@
 
     <TextView android:id="@+id/text_title"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="16dp" android:layout_marginLeft="16dp"
         android:textSize="?attr/text_size_small" android:textStyle="bold"
         android:text="@string/events_editevent_dialog_length" />
 

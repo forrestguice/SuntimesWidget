@@ -844,6 +844,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             public void onUpdateMenu(Context context, Menu menu)
             {
                 int[] attrs = { R.attr.icActionExtension, R.attr.icActionDismiss };
+                @SuppressLint("ResourceType")
                 TypedArray a = obtainStyledAttributes(attrs);
                 int icExtensionResId = a.getResourceId(0, R.drawable.ic_action_extension);
                 @SuppressLint("ResourceType") int icDismissResId = a.getResourceId(1, R.drawable.ic_action_cancel);
@@ -1063,6 +1064,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         startActivityForResultCompat(Intent.createChooser(intent, getString(R.string.alarms_action_setAlarmSound)), REQUEST_RINGTONE1);
     }
 
+    @SuppressLint("WrongConstant")
     protected void onRingtoneResult1(int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK && editor != null && data != null && data.getData() != null)
