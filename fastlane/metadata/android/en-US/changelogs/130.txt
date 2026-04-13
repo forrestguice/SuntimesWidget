@@ -1,3 +1,6 @@
+Attention: v0.17.0 breaks existing widget installations (#932).
+When updating from older versions your home screen widgets may be removed and will need to be re-added.
+
 - adds "Material You" app themes.
 - adds "fancy digital clock" widgets.
 - adds custom events ("shadow factor", "day percent", "moon elevation", and "moon illumination").
