@@ -1,5 +1,8 @@
 ### ~
 
+### v0.17.1 (2026-04-18)
+* fixes bug where moon widgets fail to load ("problem loading widget") (#931).
+
 ### v0.17.0 (2026-04-11)
 Attention: v0.17.0 breaks existing widget installations (#932). When updating from older versions your home screen widgets may be removed and will need to be re-added.
 * adds `Material You` app themes (api31+) (#635).
