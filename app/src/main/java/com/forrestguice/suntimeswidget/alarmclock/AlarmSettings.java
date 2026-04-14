@@ -686,6 +686,18 @@ public class AlarmSettings
         return false;
     }
 
+    public static final String PERMISSION_POST_NOTIFICATIONS = "android.permission.POST_NOTIFICATIONS";    // TODO: replace with constant (api33+)
+
+    @TargetApi(33)
+    public static boolean hasPermissionPostNotifications(@Nullable Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (context != null) {
+                return (context.checkSelfPermission(PERMISSION_POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED);
+            } else return false;
+        } else return true;
+    }
+
     /**
      * areNotificationsAllowedOnLockScreen
      * @return true notifications allowed on lock screen

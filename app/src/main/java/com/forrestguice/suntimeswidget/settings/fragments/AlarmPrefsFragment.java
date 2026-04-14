@@ -485,8 +485,23 @@ public class AlarmPrefsFragment extends PreferenceFragment
             @Override
             public void onClick(View view)
             {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                if (Build.VERSION.SDK_INT >= 33)
                 {
+                    if (AlarmSettings.hasPermissionPostNotifications(context)) {
+                        openNotificationSettings(context);
+
+                    } else {
+                        showPermissionRationalDialog(context, context.getString(R.string.alarms_label_notifications), context.getString(R.string.privacy_permission_notifications),
+                                new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                openNotificationSettings(context);
+                            }
+                        });
+                    }
+
+                } else if (Build.VERSION.SDK_INT >= 24) {
                     openNotificationSettings(context);
 
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -501,6 +516,23 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 }
             }
         };
+    }
+
+    public static void showPermissionRationalDialog(Context context, String title, String message, DialogInterface.OnClickListener onAccepted)
+    {
+        int[] attrs = { R.attr.icActionAbout };
+        @SuppressLint("ResourceType")
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int iconResID = a.getResourceId(0, R.drawable.ic_action_about);
+        a.recycle();
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setIcon(iconResID)
+                .setTitle(title)
+                .setMessage(SpanUtils.fromHtml(message + "<br/><br/>" + context.getString(R.string.privacy_permissiondialog_prompt)))
+                .setPositiveButton(context.getString(R.string.dialog_ok), onAccepted)
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+        dialog.show();
     }
 
     /**
