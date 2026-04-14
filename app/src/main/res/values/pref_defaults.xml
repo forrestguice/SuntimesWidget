@@ -48,6 +48,8 @@
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
     <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
     <string name="def_app_appearance_theme" translatable="false">system</string>
+    <string name="def_app_appearance_theme_light" translatable="false">default</string>
+    <string name="def_app_appearance_theme_dark" translatable="false">default</string>
     <bool name="def_app_accessibility_verbose" translatable="false">false</bool>
     <string name="def_app_navigation_mode" translatable="false">SIDEBAR</string>
 

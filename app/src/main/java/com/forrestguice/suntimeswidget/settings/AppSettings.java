@@ -818,7 +818,7 @@ public class AppSettings
     public static String loadThemeLightPref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_APPEARANCE_THEME_LIGHT, PREF_DEF_APPEARANCE_THEME_LIGHT);
+        return pref.getString(PREF_KEY_APPEARANCE_THEME_LIGHT, context.getString(R.string.def_app_appearance_theme_light));
     }
     public static void saveThemeLightPref(Context context, @Nullable String themeID)
     {
@@ -831,7 +831,7 @@ public class AppSettings
     public static String loadThemeDarkPref(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, PREF_DEF_APPEARANCE_THEME_DARK);
+        return pref.getString(PREF_KEY_APPEARANCE_THEME_DARK, context.getString(R.string.def_app_appearance_theme_dark));
     }
     public static void saveThemeDarkPref(Context context, @Nullable String themeID)
     {
@@ -1205,7 +1205,7 @@ public class AppSettings
         }
         public static TextSize getTextSize(String extendedThemeName) {
             String[] parts = extendedThemeName.split("_");
-            return TextSize.valueOf((parts.length > 0 ? parts[1] : TextSize.NORMAL.name()), TextSize.NORMAL);
+            return TextSize.valueOf((parts.length > 0 ? parts[parts.length-1] : TextSize.NORMAL.name()), TextSize.NORMAL);
         }
     }
 
