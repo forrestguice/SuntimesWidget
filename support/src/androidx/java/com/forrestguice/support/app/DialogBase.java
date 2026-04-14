@@ -60,7 +60,9 @@ public abstract class DialogBase extends DialogFragment implements OnActivityRes
         Window window = (dialog != null ? dialog.getWindow() : null);
         if (window != null) {
             View decorView = window.getDecorView().findViewById(getTouchOutsideResourceID());
-            decorView.setOnClickListener(null);
+            if (decorView != null) {
+                decorView.setOnClickListener(null);
+            }
         }
     }
 
