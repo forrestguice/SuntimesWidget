@@ -35,6 +35,7 @@ import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -151,6 +152,14 @@ public class WelcomeView extends FrameLayout
 
     public void onActivityResultCompat(int requestCode, int resultCode, Intent data) {
         /* EMPTY */
+    }
+
+    public void startActivityForResultCompat(Intent intent, int requestCode)
+    {
+        AppCompatActivity activity = activityRef.get();
+        if (activity != null) {
+            activity.startActivityForResultCompat(intent, requestCode);
+        } else Log.w("WelcomeView", "startActivityForResultCompat: activity reference is null!");
     }
 
     protected boolean isAdded() {
