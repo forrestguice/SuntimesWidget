@@ -22,9 +22,7 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.net.Uri;
@@ -51,7 +49,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SuntimesBackupLoadTask;
-import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTask;
+import com.forrestguice.suntimeswidget.settings.SuntimesBackupRestoreTaskListener;
 import com.forrestguice.suntimeswidget.settings.SuntimesBackupTask;
 import com.forrestguice.suntimeswidget.settings.WidgetSettingsExportTask;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
@@ -63,10 +61,6 @@ import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
 
@@ -436,120 +430,21 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void importSettings(final Context context, @NonNull Uri uri)
     {
         Log.i("ImportSettings", "Starting import task: " + uri);
-        TaskListener<SuntimesBackupLoadTask.TaskResult> taskListener = new TaskListener<SuntimesBackupLoadTask.TaskResult>()
+        TaskListener<SuntimesBackupLoadTask.TaskResult> taskListener = new SuntimesBackupRestoreTaskListener(context, getWindow().getDecorView())
         {
             @Override
-            public void onStarted() {
-                showProgress(context, context.getString(R.string.action_restoreBackup), context.getString(R.string.action_restoreBackup));
+            protected void showProgress(Context context, String title, String message) {
+                SuntimesWidgetListActivity.this.showProgress(context, title, message);
             }
 
             @Override
-            public void onFinished(final SuntimesBackupLoadTask.TaskResult result)
-            {
-                dismissProgress();
-                if (result != null && result.getResult() && result.numResults() > 0)
-                {
-                    final Map<String, ContentValues[]> allValues = result.getItems();
-                    SuntimesBackupTask.chooseBackupContent(context, allValues.keySet(), true, new SuntimesBackupTask.ChooseBackupDialogListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, String[] keys, boolean[] checked)
-                        {
-                            final Set<String> includeKeys = new TreeSet<>();
-                            for (int i=0; i<keys.length; i++) {
-                                if (checked[i]) {
-                                    includeKeys.add(keys[i]);
-                                }
-                            }
-
-                            final String[] keysThatWantMethods = new String[] { SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupTask.KEY_PLACEITEMS, SuntimesBackupTask.KEY_ALARMITEMS };
-                            final Map<String, int[]> methodsForKeysThatWantMethods = new HashMap<>();
-                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_ALARMITEMS, SuntimesBackupRestoreTask.IMPORT_ALARMS_METHODS);
-                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_PLACEITEMS, SuntimesBackupRestoreTask.IMPORT_PLACES_METHODS);
-                            methodsForKeysThatWantMethods.put(SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupRestoreTask.IMPORT_WIDGETS_METHODS);
-
-                            final Map<String,Integer> methods = new HashMap<>();   // choose methods for key each; import after observing all
-                            final SuntimesBackupRestoreTask.BackupKeyObserver observer = new SuntimesBackupRestoreTask.BackupKeyObserver(keysThatWantMethods, new SuntimesBackupRestoreTask.BackupKeyObserver.ObserverListener()
-                            {
-                                @Override
-                                public void onObservingItem(final SuntimesBackupRestoreTask.BackupKeyObserver observer, final String key )
-                                {
-                                    if (includeKeys.contains(key))
-                                    {
-                                        int[] m = methodsForKeysThatWantMethods.get(key);
-                                        if (m != null) {
-                                            SuntimesBackupRestoreTask.chooseImportMethod(context, key, m, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int importMethod) {
-                                                    methods.put(key, importMethod);
-                                                    observer.notify(key);    // trigger observeNext
-                                                }
-                                            });
-                                        }
-                                    } else observer.notify(key);
-                                }
-                                public void onObservedAll(SuntimesBackupRestoreTask.BackupKeyObserver observer) {
-                                    importSettings(context, includeKeys, methods, allValues);
-                                }
-                            });
-                            observer.observeNext();
-
-                            /*if (includeKeys.contains(SuntimesBackupTask.KEY_WIDGETSETTINGS))
-                            {
-                                SuntimesBackupRestoreTask.chooseImportMethod(context, SuntimesBackupTask.KEY_WIDGETSETTINGS, SuntimesBackupRestoreTask.IMPORT_WIDGETS_METHODS, new DialogInterface.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int widgetImportMethod) {
-                                        methods.put(SuntimesBackupTask.KEY_WIDGETSETTINGS, widgetImportMethod);
-                                        importSettings(context, includeKeys, methods, allValues);
-                                    }
-                                });
-                            } else {
-                                importSettings(context, includeKeys, methods, allValues);
-                            }*/
-                        }
-                    });
-
-                } else {
-                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, 0, null);
-                }
+            protected void dismissProgress() {
+                SuntimesWidgetListActivity.this.dismissProgress();
             }
         };
-
-        //SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context);
-        //task.setTaskListener(taskListener);
-        //task.execute(uri);
 
         SuntimesBackupLoadTask task = new SuntimesBackupLoadTask(context, uri);
         ExecutorUtils.runTask(SuntimesBackupLoadTask.TAG, task, taskListener);
-    }
-
-    protected void importSettings(final Context context, final Set<String> keys, final Map<String,Integer> methods, final Map<String, ContentValues[]> allValues)
-    {
-        SuntimesBackupRestoreTask task = new SuntimesBackupRestoreTask(context);
-        task.setData(allValues);
-        task.setKeys(keys);
-        task.setMethods(methods);
-        TaskListener<SuntimesBackupRestoreTask.TaskResult> taskListener = new TaskListener<SuntimesBackupRestoreTask.TaskResult>()
-        {
-            @Override
-            public void onStarted() {
-                showProgress(context, context.getString(R.string.action_import), context.getString(R.string.action_import));
-            }
-
-            @Override
-            public void onFinished(SuntimesBackupRestoreTask.TaskResult result)
-            {
-                dismissProgress();
-                if (result != null && result.getResult())
-                {
-                    int c = result.getNumResults();
-                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), (c > 0), c, ((c > 0) ? result.getReport() : null));
-
-                } else if (result != null) {
-                    SuntimesBackupLoadTask.showIOResultSnackbar(context, getWindow().getDecorView(), false, result.getNumResults(), result.getReport());
-                }
-            }
-        };
-        ExecutorUtils.runTask(SuntimesBackupRestoreTask.TAG, task, taskListener);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
