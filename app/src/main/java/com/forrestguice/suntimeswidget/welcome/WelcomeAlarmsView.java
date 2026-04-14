@@ -60,6 +60,7 @@ public class WelcomeAlarmsView extends WelcomeView
         super(activity, R.layout.layout_welcome_alarms);
     }
 
+    protected TextView notificationText;
     protected TextView autostartText;
     protected TextView batteryOptimizationText;
     protected Button importAlarmsButton;
@@ -136,11 +137,28 @@ public class WelcomeAlarmsView extends WelcomeView
         if (importAlarmsButton != null) {
             importAlarmsButton.setOnClickListener(onImportAlarmsClicked());
         }
+
+        notificationText = (TextView) view.findViewById(R.id.text_notifications);
+        Button notificationsButton = (Button) view.findViewById(R.id.button_notifications);
+        if (notificationsButton != null)
+        {
+            notificationsButton.setOnClickListener(new OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    AlarmPrefsFragment.onNotificationButtonClicked(context).onClick(notificationsButton);
+                }
+            });
+        }
     }
 
     @Override
     public void updateViews(Context context)
     {
+        if (notificationText != null) {
+            notificationText.setText(AlarmSettings.notificationMessage(context));
+        }
+
         if (batteryOptimizationText != null)
         {
             batteryOptimizationText.setVisibility((Build.VERSION.SDK_INT >= 23) ? View.VISIBLE : View.GONE);

@@ -45,6 +45,7 @@ import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.View;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
@@ -216,26 +217,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         if (notificationPrefs != null)
         {
             notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
-
-            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
-            {
-                if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.alarms_label_notifications_off);
-                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
-
-                } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM)) {
-                    String warning = context.getString(R.string.alarms_label_notifications_off);
-                    String summaryString = context.getString(R.string.alarms_label_notifications_summary1, warning);
-                    notificationPrefs.setSummary(SpanUtils.createColorSpan(null, summaryString, warning, colorWarning));
-
-                } else {
-                    String message = context.getString(R.string.alarms_label_notifications_on);
-                    notificationPrefs.setSummary(context.getString(R.string.alarms_label_notifications_summary0, message));
-                }
-            } else {
-                String warning = context.getString(R.string.alarms_label_notifications_off);
-                notificationPrefs.setSummary(SpanUtils.createColorSpan(null, warning, warning, colorWarning));
-            }
+            notificationPrefs.setSummary(AlarmSettings.notificationMessage(context));
         }
 
         Preference fullscreenNotificationPrefs = (Preference) fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS_FULLSCREEN);
@@ -490,6 +472,19 @@ public class AlarmPrefsFragment extends PreferenceFragment
             @Override
             public boolean onPreferenceClick(Preference preference)
             {
+                onNotificationButtonClicked(context).onClick(null);
+                return false;
+            }
+        };
+    }
+    public static View.OnClickListener onNotificationButtonClicked(final Context context)
+    {
+        final boolean notificationsOnLockScreen = AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM);
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 {
                     openNotificationSettings(context);
@@ -504,7 +499,6 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 } else {
                     openNotificationSettings(context);
                 }
-                return false;
             }
         };
     }

@@ -46,6 +46,8 @@ import android.provider.OpenableColumns;
 import android.provider.Settings;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.app.NotificationManagerCompat;
+import com.forrestguice.support.app.NotificationManagerHelper;
 import com.forrestguice.support.app.usage.UsageStatsManagerCompat;
 import com.forrestguice.support.content.ContextCompat;
 import android.util.Log;
@@ -869,6 +871,34 @@ public class AlarmSettings
 
         } else {
             return context.getString(R.string.alarms_label_autostart_summary, context.getString(R.string.alarms_label_autostart_on));
+        }
+    }
+
+    public static CharSequence notificationMessage(Context context)
+    {
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        typedArray.recycle();
+
+        if (NotificationManagerCompat.from(context).areNotificationsEnabled())
+        {
+            if (NotificationManagerHelper.areNotificationsPaused(context) || AlarmSettings.isChannelMuted(context, AlarmType.ALARM)) {
+                String warning = context.getString(R.string.alarms_label_notifications_off);
+                return SpanUtils.createColorSpan(null, warning, warning, colorWarning);
+
+            } else if (isDeviceSecure(context) && !AlarmSettings.areNotificationsAllowedOnLockScreen(context, AlarmType.ALARM)) {
+                String warning = context.getString(R.string.alarms_label_notifications_off);
+                String summaryString = context.getString(R.string.alarms_label_notifications_summary1, warning);
+                return SpanUtils.createColorSpan(null, summaryString, warning, colorWarning);
+
+            } else {
+                String message = context.getString(R.string.alarms_label_notifications_on);
+                return context.getString(R.string.alarms_label_notifications_summary0, message);
+            }
+        } else {
+            String warning = context.getString(R.string.alarms_label_notifications_off);
+            return SpanUtils.createColorSpan(null, warning, warning, colorWarning);
         }
     }
 
