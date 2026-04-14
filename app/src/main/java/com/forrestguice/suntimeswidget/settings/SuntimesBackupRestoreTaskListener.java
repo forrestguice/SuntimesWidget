@@ -61,8 +61,6 @@ public abstract class SuntimesBackupRestoreTaskListener implements TaskListener<
     @Override
     public void onFinished(SuntimesBackupLoadTask.TaskResult result)
     {
-        dismissProgress();
-
         Context context = contextRef.get();
         if (context != null && result != null && result.getResult() && result.numResults() > 0)
         {
@@ -100,6 +98,10 @@ public abstract class SuntimesBackupRestoreTaskListener implements TaskListener<
                                             methods.put(key, importMethod);
                                             observer.notify(key);    // trigger observeNext
                                         }
+                                    }, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int importMethod) {
+                                            dismissProgress();
+                                        }
                                     });
                                 }
                             } else observer.notify(key);
@@ -110,9 +112,15 @@ public abstract class SuntimesBackupRestoreTaskListener implements TaskListener<
                     });
                     observer.observeNext();
                 }
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    dismissProgress();
+                }
             });
 
         } else {
+            dismissProgress();
             View v = viewRef.get();
             if (v != null) {
                 SuntimesBackupLoadTask.showIOResultSnackbar(context, v, false, 0, null);    // v = .getWindow().getDecorView()
