@@ -21,8 +21,11 @@ package com.forrestguice.suntimeswidget.welcome;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 
+import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AppCompatActivity;
 
 public class WelcomeFirstPageView extends WelcomeView
@@ -41,7 +44,16 @@ public class WelcomeFirstPageView extends WelcomeView
     }
 
     @Override
-    public void initViews(Context context, View view) {
+    public void initViews(Context context, View view)
+    {
         super.initViews(context, view);
+        Button onlineHelpButton = view.findViewById(R.id.button_online_help);
+        if (onlineHelpButton != null) {
+            onOnlineHelpClicked = HelpDialog.getOnlineHelpClickListener(context, HELP_PATH_ID);
+            onlineHelpButton.setOnClickListener(onOnlineHelpClicked);
+        }
     }
+
+    private static final int HELP_PATH_ID = R.string.help_welcome_path;
+    private OnClickListener onOnlineHelpClicked = null;
 }
