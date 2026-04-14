@@ -1245,41 +1245,41 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             int importance;
             String title, desc;
-            if (channelID == null)
-            {
+            if (channelID == null) {
                 channelID = CHANNEL_ID_MISC;
-                title = context.getString(R.string.notificationChannel_misc_title);
-                desc = context.getString(R.string.notificationChannel_misc_desc);
-                importance = NotificationManagerCompat.IMPORTANCE_LOW;
+            }
+            switch (channelID)
+            {
+                case CHANNEL_ID_BEDTIME:
+                    title = context.getString(R.string.notificationChannel_bedtime_title);
+                    desc = context.getString(R.string.notificationChannel_bedtime_desc);
+                    importance = NotificationManagerCompat.IMPORTANCE_MAX;
+                    break;
 
-            } else {
-                switch (channelID)
-                {
-                    case CHANNEL_ID_BEDTIME:
-                        title = context.getString(R.string.notificationChannel_bedtime_title);
-                        desc = context.getString(R.string.notificationChannel_bedtime_desc);
-                        importance = NotificationManagerCompat.IMPORTANCE_MAX;
-                        break;
+                case CHANNEL_ID_ALARMS:
+                    title = context.getString(R.string.notificationChannel_alarms_title);
+                    desc = context.getString(R.string.notificationChannel_alarms_desc);
+                    importance = NotificationManagerCompat.IMPORTANCE_MAX;
+                    break;
 
-                    case CHANNEL_ID_ALARMS:
-                        title = context.getString(R.string.notificationChannel_alarms_title);
-                        desc = context.getString(R.string.notificationChannel_alarms_desc);
-                        importance = NotificationManagerCompat.IMPORTANCE_MAX;
-                        break;
+                case CHANNEL_ID_NOTIFICATIONS1:
+                    title = context.getString(R.string.notificationChannel_notifications1_title);
+                    desc = context.getString(R.string.notificationChannel_notifications1_desc);
+                    importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                    break;
 
-                    case CHANNEL_ID_NOTIFICATIONS1:
-                        title = context.getString(R.string.notificationChannel_notifications1_title);
-                        desc = context.getString(R.string.notificationChannel_notifications1_desc);
-                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
-                        break;
+                case CHANNEL_ID_NOTIFICATIONS0:
+                    title = context.getString(R.string.notificationChannel_notifications0_title);
+                    desc = context.getString(R.string.notificationChannel_notifications0_desc);
+                    importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
+                    break;
 
-                    case CHANNEL_ID_NOTIFICATIONS0:
-                    default:
-                        title = context.getString(R.string.notificationChannel_notifications0_title);
-                        desc = context.getString(R.string.notificationChannel_notifications0_desc);
-                        importance = NotificationManagerCompat.IMPORTANCE_DEFAULT;
-                        break;
-                }
+                default:
+                case CHANNEL_ID_MISC:
+                    title = context.getString(R.string.notificationChannel_misc_title);
+                    desc = context.getString(R.string.notificationChannel_misc_desc);
+                    importance = NotificationManagerCompat.IMPORTANCE_LOW;
+                    break;
             }
 
             NotificationChannel channel = new NotificationChannel(channelID, title, importance);
