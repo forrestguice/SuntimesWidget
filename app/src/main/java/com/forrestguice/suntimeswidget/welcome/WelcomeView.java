@@ -248,4 +248,9 @@ public class WelcomeView extends FrameLayout
         }
         super.onRestoreInstanceState(BaseSavedState.EMPTY_STATE);
     }
+
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        /* EMPTY */
+    }
+
 }

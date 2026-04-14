@@ -319,4 +319,12 @@ public class WelcomeActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+        if (pagerAdapter != null) {
+            pagerAdapter.onRequestPermissionsResultCompat(pager, requestCode, permissions, grantResults);
+        }
+    }
+
 }
