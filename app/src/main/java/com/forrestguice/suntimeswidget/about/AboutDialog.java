@@ -74,19 +74,20 @@ public class AboutDialog extends BottomSheetDialogBase
             @Override
             public void onShow(DialogInterface dialog)
             {
-                FrameLayout layout = getBottomSheetFrameLayout(dialog);
-                if (layout != null)
+                if (Build.VERSION.SDK_INT < 21)
                 {
-                    layout.post(new Runnable() {
-                        @Override
-                        public void run()
-                        {
-                            Context context = getContext();
-                            if (context != null) {
-                                AppSettings.checkCustomPermissions(context);
+                    FrameLayout layout = getBottomSheetFrameLayout(dialog);
+                    if (layout != null) {
+                        layout.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Context context = getContext();
+                                if (context != null) {
+                                    AppSettings.checkCustomPermissions(context);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
