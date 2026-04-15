@@ -116,4 +116,6 @@
     <drawable name="popupmenu_frame_ref">@drawable/popupmenu_frame_dark</drawable>
     <drawable name="tilecard_bg_ref">@drawable/tilecard_bg_dark</drawable>
     <drawable name="tilecard_bg_ref1">@drawable/tilecard_bg_dark1</drawable>
+
+    <drawable name="contrast_popupmenu_frame_ref">@drawable/contrast_popupmenu_frame_dark</drawable>
 </resources>

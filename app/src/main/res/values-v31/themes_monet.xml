@@ -236,14 +236,4 @@
         <item name="spinnerStyle">@style/MonetSpinnerStyle.Light</item>
     </style>
 
-    <style name="MonetSpinnerStyle.System" parent="Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_ref</item>
-    </style>
-    <style name="MonetSpinnerStyle.Dark" parent="Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_dark</item>
-    </style>
-    <style name="MonetSpinnerStyle.Light" parent="Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@drawable/monet_popupmenu_frame_light</item>
-    </style>
-
 </resources>
