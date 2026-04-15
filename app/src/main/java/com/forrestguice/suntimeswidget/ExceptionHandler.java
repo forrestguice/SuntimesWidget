@@ -25,7 +25,6 @@ import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.support.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
@@ -102,21 +101,22 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
      */
     private static class CrashReportNotification extends ExceptionNotification
     {
+        public static final String CHANNEL_ID = "suntimes.channel.crashreport";
         public static final int NOTIFICATION_ID = -1000000;
 
         @Override
         protected String getChannelID() {
-            return AlarmNotifications.CHANNEL_ID_MISC;
+            return CHANNEL_ID;
         }
 
         @Override
         protected String getChannelTitle(Context context) {
-            return context.getString(R.string.notificationChannel_misc_title);
+            return context.getString(R.string.notificationChannel_crashreport_title);
         }
 
         @Override
         protected String getChannelDesc(Context context) {
-            return context.getString(R.string.notificationChannel_misc_title);
+            return context.getString(R.string.notificationChannel_crashreport_desc);
         }
 
         @Nullable

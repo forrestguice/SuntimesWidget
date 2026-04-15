@@ -1290,6 +1290,8 @@
     <string name="notificationChannel_misc_desc">@string/alarms_label_alarmMisc</string>  <!-- notification channel title -->
     <string name="notificationChannel_bedtime_title">@string/bedtime_label</string>  <!-- notification channel title -->
     <string name="notificationChannel_bedtime_desc">@string/bedtime_label</string>  <!-- notification channel title -->
+    <string name="notificationChannel_crashreport_title">Crash Report</string>  <!-- notification channel title -->   <!-- TODO -->
+    <string name="notificationChannel_crashreport_desc">Crash Report</string>  <!-- notification channel title -->    <!-- TODO -->
 
     <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
     <string name="alarms_warning_notificationChannel">@string/alarms_warning_notifications</string>  <!-- snackbar message -->
