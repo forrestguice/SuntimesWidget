@@ -373,6 +373,10 @@
     <string name="settings_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
     <string name="settings_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
+    <string name="settings_bugreport">Error Reporting</string>    <!-- group title -->    <!-- TODO -->
+    <string name="settings_crashreport_title">@string/crash_dialog_title</string>
+    <string name="settings_crashreport_summary">Application failures will be reported here.\nNothing to report.</string> <!-- TODO -->
+    <string name="settings_crashreport_summary1">A crash report was created on \n%2$s.</string> <!-- TODO -->
     <!-- Widget Setting: appearance -->
     <string name="settings_widgetlayout">Layout</string>           <!-- group title -->
     <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
@@ -2738,6 +2742,8 @@
     ]]></string>    <!-- TODO -->
     <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
     <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
+    <string name="crash_dialog_clear">Clear</string>         <!-- TODO -->
+    <string name="crash_dialog_cleared">Crash report has been cleared.</string>         <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="app_name">Suntimes</string>

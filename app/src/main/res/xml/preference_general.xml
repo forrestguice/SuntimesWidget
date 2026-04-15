@@ -85,4 +85,15 @@
 
     </PreferenceCategory>-->
 
+    <com.forrestguice.support.preference.PreferenceCategory
+        android:title="@string/settings_bugreport">
+
+        <com.forrestguice.support.preference.Preference
+            android:key="appwidget_0_crashreport" android:persistent="false"
+            android:icon="?attr/icActionError"
+            android:title="@string/settings_crashreport_title"
+            android:summary="@string/settings_crashreport_summary" />
+
+    </com.forrestguice.support.preference.PreferenceCategory>
+
 </PreferenceScreen>
