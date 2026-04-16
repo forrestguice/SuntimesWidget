@@ -26,6 +26,7 @@ import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.util.Pair;
 import android.util.Log;
@@ -48,9 +49,13 @@ import java.util.Comparator;
 public class LocalePrefsFragment extends PreferenceFragment
 {
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "LocalePrefsFragment: Arguments: " + getArguments());
 

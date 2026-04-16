@@ -92,9 +92,13 @@ public class AlarmPrefsFragment extends PreferenceFragment
     private static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "AlarmPrefsFragment: Arguments: " + getArguments());
 

@@ -29,9 +29,9 @@ import android.os.Bundle;
 import com.forrestguice.support.preference.CheckBoxPreference;
 import com.forrestguice.support.preference.ListPreference;
 import com.forrestguice.support.preference.Preference;
+import com.forrestguice.support.preference.PreferenceActivity;
 import com.forrestguice.support.preference.PreferenceCategory;
 
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 import android.util.Log;

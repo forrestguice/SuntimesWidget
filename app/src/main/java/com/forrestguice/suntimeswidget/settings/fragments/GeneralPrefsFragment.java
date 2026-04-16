@@ -52,6 +52,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.welcome.WelcomeFirstPageView;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.preference.CheckBoxPreference;
@@ -72,9 +74,13 @@ public class GeneralPrefsFragment extends PreferenceFragment
     private CheckBoxPreference useAltitudePref;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "GeneralPrefsFragment: Arguments: " + getArguments());
 
@@ -182,6 +188,7 @@ public class GeneralPrefsFragment extends PreferenceFragment
             {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    showWelcome(fragment);
                     fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
                     return false;
                 }
@@ -335,6 +342,15 @@ public class GeneralPrefsFragment extends PreferenceFragment
         boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, 0);
         altitudePref.setChecked(useAltitude);
     }
+
+    protected static void showWelcome(PreferenceFragment fragment)
+    {
+        Activity activity = (fragment != null ? fragment.getActivity() : null);
+        if (fragment != null && activity != null) {
+            fragment.startActivityForResult(new Intent(activity, WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
+        }
+    }
+
     protected static void showCrashReportDialog(Context context, Preference preference)
     {
         if (context != null)

@@ -83,9 +83,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
     private PlacesPrefsBase base;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "PlacesPrefsFragment: Arguments: " + getArguments());
         setRetainInstance(true);

@@ -27,6 +27,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.about.AboutDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
@@ -46,10 +47,13 @@ public class CalendarPrefsFragment extends PreferenceFragment
     public static final String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         Intent calendarIntent = new Intent();
         calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
         calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
