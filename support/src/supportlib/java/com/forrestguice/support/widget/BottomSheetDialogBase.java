@@ -165,6 +165,38 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
         return false;
     }
 
+    protected boolean isDismissBlocked() {
+        return getArgs().getBoolean("dismiss_blocked", false);
+    }
+    protected void blockDismiss()
+    {
+        if (isDismissBlocked()) {
+            return;    // already blocked
+        }
+        getArgs().putBoolean("dismiss_blocked", true);
+        getArgs().putBoolean("cancelable", isCancelable());
+
+        setCancelable(false);
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.setCanceledOnTouchOutside(false);
+        }
+    }
+    protected void unblockDismiss()
+    {
+        if (!isDismissBlocked()) {
+            return;   // not blocked
+        }
+        getArgs().putBoolean("dismiss_blocked", false);
+        
+        boolean isCancelable = getArgs().getBoolean("cancelable", true);
+        setCancelable(isCancelable);
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.setCanceledOnTouchOutside(isCancelable);
+        }
+    }
+
     @Nullable
     protected BottomSheetBehavior<?> initSheet(DialogInterface dialog)
     {
