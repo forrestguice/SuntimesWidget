@@ -1,0 +1,4 @@
+Attention: v0.17.0+ breaks existing widget installations (#932).
+When updating from older versions your home screen widgets may be removed and will need to be re-added.
+
+- fixes broken moon widgets (#931).
