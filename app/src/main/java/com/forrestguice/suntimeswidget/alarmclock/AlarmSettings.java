@@ -41,7 +41,7 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.UserManager;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 

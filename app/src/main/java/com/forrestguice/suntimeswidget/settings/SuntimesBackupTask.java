@@ -30,7 +30,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;

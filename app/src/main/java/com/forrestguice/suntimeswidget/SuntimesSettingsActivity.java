@@ -32,7 +32,7 @@ import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.PreferenceActivity;
 import com.forrestguice.support.preference.PreferenceCategory;
 
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 
 import android.util.Log;
 import android.util.TypedValue;
