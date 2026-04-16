@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -640,27 +639,33 @@ public class WorldMapView extends ImageView
         }
     };
 
-    @Nullable
-    private ProgressDialog progressDialog;
-    private void showProgress()
+    protected void showProgress()
     {
         dismissProgress();
-        Context context = getContext();
-        if (context != null)
-        {
-            progressDialog = new ProgressDialog(context);
-            progressDialog.show();
+        if (exportProgressListener != null) {
+            exportProgressListener.showProgress();
         }
     }
-    private void dismissProgress()
+    protected void dismissProgress()
     {
-        if (progressDialog != null)
-        {
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
+        if (exportProgressListener != null) {
+            if (exportProgressListener.isShowing()) {
+                exportProgressListener.dismissProgress();
             }
-            progressDialog = null;
         }
+    }
+
+    @Nullable
+    protected ExportProgressListener exportProgressListener = null;
+    public void setExportProgressListener( @Nullable ExportProgressListener listener ) {
+        exportProgressListener = listener;
+    }
+
+    public interface ExportProgressListener
+    {
+        boolean isShowing();
+        void showProgress();
+        void dismissProgress();
     }
 
     @Override
