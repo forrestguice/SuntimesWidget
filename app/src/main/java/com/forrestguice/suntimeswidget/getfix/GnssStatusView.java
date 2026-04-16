@@ -208,6 +208,7 @@ public abstract class GnssStatusView extends FrameLayout
     {
         return new GpsStatus.Listener()
         {
+            /** @noinspection deprecation*/
             @Override
             public void onGpsStatusChanged(int event) {
                 if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {

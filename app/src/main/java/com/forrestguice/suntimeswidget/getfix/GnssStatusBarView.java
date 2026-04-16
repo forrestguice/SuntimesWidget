@@ -249,6 +249,7 @@ public class GnssStatusBarView extends GnssStatusView
             }
         }
 
+        /** @noinspection deprecation*/
         protected void updateViews(@Nullable GpsStatus status)
         {
             if (status != null)
@@ -283,6 +284,7 @@ public class GnssStatusBarView extends GnssStatusView
             item.isStale = false;
         }
 
+        /** @noinspection deprecation*/
         protected void updateItem(GpsSatellite satellite, SatelliteItem item)
         {
             item.cnr = satellite.getSnr();
