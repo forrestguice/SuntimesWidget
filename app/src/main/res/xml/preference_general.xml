@@ -4,6 +4,7 @@
 
     <com.forrestguice.support.preference.Preference
         android:key="appwidget_0_intro_screen" android:persistent="false"
+        android:icon="?attr/icActionSettings"
         android:title="@string/welcome_pref_title"
         android:summary="@string/welcome_pref_summary" />
 
