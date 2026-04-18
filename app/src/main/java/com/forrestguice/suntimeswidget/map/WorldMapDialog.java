@@ -1580,6 +1580,10 @@ public class WorldMapDialog extends BottomSheetDialogBase
     private final WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
+        public void onCancelled(Bitmap result) {
+        }
+
+        @Override
         public void onFrame(Bitmap result, long offsetMinutes)
         {
             if (seekbar != null)

@@ -518,6 +518,13 @@ public class WorldMapView extends ImageView
                 exportTask.setWaitForFrames(false);
             }
         }
+
+        @Override
+        public void onCancelled(Bitmap frame) {
+            if (mapListener != null) {
+                mapListener.onCancelled(frame);
+            }
+        }
     };
 
     /**
