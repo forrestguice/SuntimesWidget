@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.concurrent.ExecutorProvider;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -762,7 +763,10 @@ public class WorldMapView extends ImageView
     public void setOffsetMinutes( long offsetMinutes )
     {
         options.offsetMinutes = offsetMinutes;
-        updateViews(true);
+
+        if (drawTask == null || drawTask.getStatus() != ProgressCallable.Status.RUNNING) {
+            updateViews(true);
+        }
     }
 
     public long getOffsetMinutes() {
