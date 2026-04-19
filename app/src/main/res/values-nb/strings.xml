@@ -8,19 +8,22 @@
     -->
     <string name="action_refreshLocation">Gjenoppfrisk</string>
     <string name="action_addLocation">Sted</string>
-    <string name="action_mapLocation">Vis kart</string>
+    <string name="action_getLocation">Hent posisjon</string>    <!-- button (contentDescription) -->
+    <string name="action_avgLocation">Snittposisjon</string>    <!-- button (contentDescription) -->
+    <string name="action_mapLocation">Kart</string>
     <string name="action_mapLocation_chooser">Vis sted med</string>
     <string name="action_mapLocation_chooser_noapp">Kan ikke finne kartprogram!</string>
     <string name="action_showCalendar">Kalender</string>
     <string name="action_setAlarm">Alarm</string>
     <string name="action_setTimeZone">Still inn tidssone</string>
-    <string name="action_setDate">Dato</string>
+    <string name="action_setDate">Still inn dato</string>
     <string name="action_viewDate">Vis dato</string>
     <string name="action_viewDateWith">Vis dato</string>
     <string name="action_share">Del</string>
     <string name="action_export">Eksporter</string>
     <string name="action_import">Importer</string>
     <string name="action_info">Mer info</string>
+    <string name="action_sort">Sorter</string>
     <string name="action_sortBy">Sorter etter</string>
     <string name="action_sunDialog">Solens posisjon</string>
     <string name="action_equinoxDialog">Solverv / Jevndøgn</string>
@@ -31,6 +34,15 @@
     <string name="action_lightGraphDialog">Sollys</string>
     <string name="action_lightGraph">Lysgraf</string>
     <string name="action_lineGraph">Høydegraf</string>
+    <string name="action_seek">Søk</string>        <!-- checkbox label -->
+    <string name="action_seekDawn">Søk daggry</string>        <!-- checkbox label -->
+    <string name="action_seekDusk">Søk skumring</string>        <!-- checkbox label -->
+    <string name="action_seekNoon">Søk middag/natt</string>        <!-- checkbox label -->
+    <string name="action_seekShadowLength">Søk skyggelengde</string>        <!-- checkbox label -->
+    <string name="action_seekTime">Søk tid</string>        <!-- checkbox label -->
+    <string name="action_time">Tid</string>        <!-- checkbox label -->
+    <string name="action_date">Dato</string>        <!-- checkbox label -->
+    <string name="action_seekDate">Søk dato</string>        <!-- checkbox label -->
     <string name="action_seekAltitude">Søk høyde</string>        <!-- checkbox label -->
     <string name="action_search">Søk</string>        <!-- button (contentDescription) -->
     <string name="action_deselect">Fjern valg</string>
@@ -171,6 +183,8 @@
     <string name="until_moonnight">månens nedre kulminasjon</string>
 
     <!-- Table -->
+    <string name="table_header_dawn">Daggry</string>                             <!-- table title -->
+    <string name="table_header_dusk">Skumring</string>                             <!-- table title -->
     <string name="table_header_sunrise">Soloppgang</string>                             <!-- contentDescription -->
     <string name="table_header_sunrise_short">Soloppgang</string>                          <!-- table title -->
     <string name="table_header_sunset">Solnedgang</string>                               <!-- contentDescription -->
@@ -413,6 +427,8 @@
     <string name="timeMode_moon_thirdquarter_short">Halvmåne (ne)</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent_short">Månesigd (ne)</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Månesigd (ne)</string>                     <!-- label -->
+    <string name="timeMode_moon_noon">Månens kulminasjon</string>                    <!-- setting -->
+    <string name="timeMode_moon_midnight">Månens nedre kulminasjon</string>                    <!-- setting -->
 
     <string name="timeMode_moon_super">Supermåne</string>               <!-- label -->
     <string name="timeMode_moon_micro">Mikromåne</string>               <!-- label -->
@@ -538,9 +554,9 @@
     <string name="location_hint_name0">Stedsnavn</string>                  <!-- edittext hint -->
     <string name="location_label_fromapp">Bruk sted fra app</string>                  <!-- checkbox text -->
 
-    <string name="action_getLocation">Hent posisjon</string>    <!-- button (contentDescription) -->
     <string name="places_action_editPlace">Rediger</string>         <!-- button (contentDescription) -->
     <string name="places_action_savePlace">Lagre</string>         <!-- button (contentDescription) -->
+    <string name="location_label_comment">Kommentar</string>   <!-- edittext hint -->
 
     <!-- Widget Setting: timezone -->
     <string name="settings_timezoneMode_standard">Tidsstandard</string>                       <!-- setting -->
@@ -575,17 +591,17 @@
     <string name="calendarMode_ethiopian">Etiopisk</string>
     <string name="calendarMode_gregorian">Gregoriansk</string>
     <string name="calendarMode_hebrew">Jødisk</string>
-    <string name="calendarMode_hijri_diyanet">Hijri (Turkish)</string>   <!-- TODO -->
-    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>   <!-- TODO -->
+    <string name="calendarMode_hijri_diyanet">Hijri (Tyrkisk)</string>
+    <string name="calendarMode_hijri_umalqura">Hijri (Umm al-Qura)</string>
     <string name="calendarMode_julian">Juliansk</string>
     <string name="calendarMode_persian">Persisk (Solar Hijri)</string>
     <string name="calendarMode_thaisolar">Thai Solar</string>
-    <string name="calendarMode_chinese">Chinese</string>  <!-- TODO -->
-    <string name="calendarMode_korean">Korean</string>  <!-- TODO -->
-    <string name="calendarMode_vietnamese">Vietnamese</string>  <!-- TODO -->
+    <string name="calendarMode_chinese">Kinesisk</string>
+    <string name="calendarMode_korean">Koreansk</string>
+    <string name="calendarMode_vietnamese">Vietnamesisk</string>
     <string name="calendarMode_minguo">Minguo</string>  <!-- TODO -->
-    <string name="calendarMode_indian">Indian</string>  <!-- TODO -->
-    <string name="calendarMode_japanese">Japanese</string>  <!-- TODO -->
+    <string name="calendarMode_indian">Indisk</string>
+    <string name="calendarMode_japanese">Japansk</string>
 
     <!-- Widget Setting: date mode -->
     <string name="settings_dateMode_current">I dag</string>                  <!-- setting -->
@@ -1455,6 +1471,10 @@
     <string name="settings_ui_showmapbutton">Vis kartknapp</string>
     <string name="settings_ui_showmapbutton_summary">Vis en handlingslinjeknapp som åpner standardappen for kart.</string>
 
+    <!-- App Setting: show location coordinates -->
+    <string name="settings_ui_showcoordinates">Vis koordinater</string>
+    <string name="settings_ui_showcoordinates_summary">Vis posisjonskoordinater i handlingslinjen.</string>
+
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Framhevet felt</string>              <!-- checkbox label -->
     <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
@@ -1576,6 +1596,14 @@
         <item>enhver tid</item>
     </string-array>
 
+    <string name="location_label_lastRequest">Siste oppdatering</string>
+
+    <string name="location_label_gnss">GNSS</string>
+    <string name="location_label_gnss_log">GNSS-logg</string>
+    <string name="location_label_gnss_almanac">Almanakk</string>
+    <string name="location_label_gnss_ephemeris">Efemerider</string>
+    <string name="location_label_gnss_used">Brukt</string>
+
     <!-- App Setting: calendars -->
     <string name="calendars_pref_title">Kalendere</string>   <!-- group title for "calendars" app setting -->
     <string name="calendars_pref_summary">Kalenderintegrasjon</string>
@@ -1583,6 +1611,8 @@
     <!-- App Setting: passive location mode -->
     <string name="location_pref_passiveMode">Passiv posisjon</string>
     <string name="location_pref_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
+
+    <string name="location_label_locationproviders">Posisjonsleverandører</string>
 
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Språk</string>   <!-- group title -->
@@ -1724,6 +1754,13 @@
     <string name="lightmap_graph_option_seasons">Årstider</string>
     <string name="lightmap_graph_option_filledpath">Fylt bane</string>
     <string name="lightmap_graph_option_moon">Vis månen</string>
+    <string name="lightmap_graph_option_noon">Vis middag/natt</string>
+
+    <string name="lightmap_graph_option_symbol">Symbol</string>
+    <string name="lightmap_graph_option_symbol_circle">Sirkel</string>
+    <string name="lightmap_graph_option_symbol_dot">Punkt</string>
+    <string name="lightmap_graph_option_symbol_cross">Kors</string>
+    <string name="lightmap_graph_option_symbol_line">Linje</string>
 
     <string name="lightmap_seekAltitude_configHint">grader</string>
     <string name="lightmap_seekAltitude_suffix">°∠</string>
@@ -1995,7 +2032,6 @@
     <string name="colorsdelete_dialog_cancel">@string/dialog_cancel</string>    <!-- toast -->    <!-- TODO -->
 
     <!-- Dialog: About -->
-    <string name="about_dialog_title">Om</string>
     <string name="app_name">Suntimes</string>
     <string name="app_name_alarmclock">Suntimes Alarms</string>  <!-- TODO -->
     <string name="app_name_widget0">Suntimes Widget</string>
@@ -2025,10 +2061,13 @@
     <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> av <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> og <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="about_dialog_credits">Bidrag</string>
-    
+
     <string name="about_libraries_field"><![CDATA[ <b>Biblioteker:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     <string name="about_media_field"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+
+    <string name="about_dialog_title">Om</string>
+    <string name="about_dialog_credits">Bidrag</string>
+    <string name="about_dialog_privacy">Personvern</string>
 
     <!-- Dialog: Welcome / Initial setup -->
     <string name="welcome_action_skip">Hopp over</string>
@@ -2051,7 +2090,8 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Forespørre tillatelser nå?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorer</string>
     <string name="privacy_permissiondialog_title">Tillatelser</string>
-    <string name="about_dialog_privacy">Personvern</string>
+    <string name="privacy_permissiondialog_granted_label">Tillatelse gitt</string>
+    <string name="privacy_permissiondialog_required_label">Tillatelse kreves</string>
 
     <string name="privacy_securitydialog_title">Sikkerhetsvarsel</string>
     <string name="privacy_securitydialog_duplicate_permissions">En tillatelse som tilhører Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ner også definert av: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
