@@ -30,7 +30,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 
 import android.text.TextUtils;
 import android.util.Log;

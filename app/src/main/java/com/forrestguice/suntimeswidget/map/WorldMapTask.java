@@ -54,6 +54,10 @@ public class WorldMapTask extends ProgressCallable<Bitmap, Bitmap>
     @Override
     public Bitmap call() throws Exception
     {
+        if (isCancelled()) {
+            return null;
+        }
+
         int w, h;
         int numFrames = 1;
         long frameDuration = 250000000;    // nanoseconds (250 ms)

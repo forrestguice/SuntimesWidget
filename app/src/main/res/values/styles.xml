@@ -811,6 +811,7 @@
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_ref1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.System</item>
     </style>
     <style name="AppTheme.System1.Small" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -886,6 +887,7 @@
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_light1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.Light</item>
     </style>
     <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -963,6 +965,7 @@
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
         <item name="tileCardBackground">@drawable/tilecard_bg_dark1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.Dark</item>
     </style>
     <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -1468,5 +1471,14 @@
         <!--<item name="android:progressTint">@color/transparent</item>-->   <!-- api 21+ -->
     </style>
 
+    <style name="ContrastSpinnerStyle.System" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_ref</item>
+    </style>
+    <style name="ContrastSpinnerStyle.Dark" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_dark</item>
+    </style>
+    <style name="ContrastSpinnerStyle.Light" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_light</item>
+    </style>
 
 </resources>

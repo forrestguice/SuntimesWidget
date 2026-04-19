@@ -108,6 +108,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     private View dialogHeader;
     private TextView dialogTitle;
+    private View dialogProgress;
     private WorldMapView worldmap;
     private TextView empty;
     private View dialogContent = null;
@@ -429,6 +430,12 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
         mediaGroup = dialogView.findViewById(R.id.media_actions);
         seekGroup = dialogView.findViewById(R.id.media_seek);
+
+        worldmap.setExportProgressListener(mapViewExportProgressListener);
+        dialogProgress = dialogView.findViewById(R.id.progressLayout);
+        if (dialogProgress != null) {
+            dialogProgress.setVisibility(View.GONE);
+        }
     }
 
     private void updateSeekbarDrawables(@Nullable Context context)
@@ -1065,6 +1072,33 @@ public class WorldMapDialog extends BottomSheetDialogBase
         updateMediaButtons();
     }
 
+    protected WorldMapView.ExportProgressListener mapViewExportProgressListener = new WorldMapView.ExportProgressListener()
+    {
+        @Override
+        public boolean isShowing() {
+            if (dialogProgress != null) {
+                return (dialogProgress.getVisibility() == View.VISIBLE);
+            }
+            return false;
+        }
+
+        @Override
+        public void showProgress() {
+            if (dialogProgress != null) {
+                dialogProgress.setVisibility(View.VISIBLE);
+                blockDismiss();
+            }
+        }
+
+        @Override
+        public void dismissProgress() {
+            if (dialogProgress != null) {
+                dialogProgress.setVisibility(View.GONE);
+                unblockDismiss();
+            }
+        }
+    };
+
     private void setMapCenter(Context context)
     {
         Location location = WidgetSettings.loadLocationPref(context, 0);
@@ -1545,6 +1579,10 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
     private final WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
+        @Override
+        public void onCancelled(Bitmap result) {
+        }
+
         @Override
         public void onFrame(Bitmap result, long offsetMinutes)
         {

@@ -18,7 +18,6 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -52,6 +51,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.support.widget.ImageView;
 import com.forrestguice.util.concurrent.ExecutorProvider;
+import com.forrestguice.util.concurrent.ProgressCallable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -519,6 +519,13 @@ public class WorldMapView extends ImageView
                 exportTask.setWaitForFrames(false);
             }
         }
+
+        @Override
+        public void onCancelled(Bitmap frame) {
+            if (mapListener != null) {
+                mapListener.onCancelled(frame);
+            }
+        }
     };
 
     /**
@@ -640,27 +647,33 @@ public class WorldMapView extends ImageView
         }
     };
 
-    @Nullable
-    private ProgressDialog progressDialog;
-    private void showProgress()
+    protected void showProgress()
     {
         dismissProgress();
-        Context context = getContext();
-        if (context != null)
-        {
-            progressDialog = new ProgressDialog(context);
-            progressDialog.show();
+        if (exportProgressListener != null) {
+            exportProgressListener.showProgress();
         }
     }
-    private void dismissProgress()
+    protected void dismissProgress()
     {
-        if (progressDialog != null)
-        {
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
+        if (exportProgressListener != null) {
+            if (exportProgressListener.isShowing()) {
+                exportProgressListener.dismissProgress();
             }
-            progressDialog = null;
         }
+    }
+
+    @Nullable
+    protected ExportProgressListener exportProgressListener = null;
+    public void setExportProgressListener( @Nullable ExportProgressListener listener ) {
+        exportProgressListener = listener;
+    }
+
+    public interface ExportProgressListener
+    {
+        boolean isShowing();
+        void showProgress();
+        void dismissProgress();
     }
 
     @Override
@@ -750,7 +763,10 @@ public class WorldMapView extends ImageView
     public void setOffsetMinutes( long offsetMinutes )
     {
         options.offsetMinutes = offsetMinutes;
-        updateViews(true);
+
+        if (drawTask == null || drawTask.getStatus() != ProgressCallable.Status.RUNNING) {
+            updateViews(true);
+        }
     }
 
     public long getOffsetMinutes() {

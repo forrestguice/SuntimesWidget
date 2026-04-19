@@ -297,7 +297,6 @@ public class AlarmListDialog extends DialogBase
         int itemId = item.getItemId();
         if (itemId == R.id.sortByAlarmTime) {
             AlarmSettings.savePrefAlarmSort(activity, AlarmSettings.SORT_BY_ALARMTIME);
-            ActivityCompat.invalidateOptionsMenu(activity);
             invalidateOptionsMenu(activity);
             adapter.sortItems();
             return true;

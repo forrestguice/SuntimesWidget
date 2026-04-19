@@ -587,6 +587,7 @@ public class GetFixTask extends ProgressCallable<LocationProgress, Location> // 
      */
     private final GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener()
     {
+        /** @noinspection deprecation*/
         @Override
         public void onGpsStatusChanged(int event)
         {

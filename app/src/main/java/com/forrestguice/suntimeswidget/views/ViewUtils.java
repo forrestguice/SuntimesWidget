@@ -230,6 +230,7 @@ public class ViewUtils
     /**
      * ThrottledPreferenceClickListener
      */
+    @Deprecated
     public static class ThrottledPreferenceClickListener implements Preference.OnPreferenceClickListener
     {
         protected long delayMs;
@@ -250,6 +251,7 @@ public class ViewUtils
             }
         }
 
+        /** @noinspection deprecation*/
         @Override
         public boolean onPreferenceClick(Preference preference)
         {

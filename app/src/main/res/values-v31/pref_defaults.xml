@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="def_app_appearance_theme" translatable="false">monet_system</string>
+    <string name="def_app_appearance_theme" translatable="false">system</string>
+    <string name="def_app_appearance_theme_light" translatable="false">monet_system</string>
+    <string name="def_app_appearance_theme_dark" translatable="false">monet_system</string>
 </resources>

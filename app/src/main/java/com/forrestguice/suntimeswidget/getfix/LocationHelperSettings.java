@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 
 public class LocationHelperSettings

@@ -1007,7 +1007,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     @Override
                     public void onClick(View view) {
-                        AlarmPrefsFragment.openNotificationSettings(AlarmClockActivity.this);
+                        AlarmPrefsFragment.onNotificationButtonClicked(context).onClick(view);
                     }
                 });
 

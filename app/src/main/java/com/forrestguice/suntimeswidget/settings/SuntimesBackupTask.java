@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -29,7 +30,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;
@@ -472,6 +473,9 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                 task.setAppWidgetIds(getAllWidgetIds(context));
                 ExecutorUtils.runProgress("ExportSettingsTask", task, exportListener);
             }
+
+            @Override
+            public void onCancel(DialogInterface dialog) {}
         });
     }
 
@@ -548,6 +552,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
      */
     public interface ChooseBackupDialogListener {
         void onClick(DialogInterface dialog, int which, String[] keys, boolean[] checked);
+        void onCancel(DialogInterface dialog);
     }
 
     /**
@@ -607,8 +612,14 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
                         }*/
                     }
                 })
-                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-        confirm.show();
+                .setNegativeButton(context.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onClickListener.onCancel(dialog);
+                    }
+                });
+        Dialog d = confirm.show();
+        d.setCanceledOnTouchOutside(false);
     }
 
     /**

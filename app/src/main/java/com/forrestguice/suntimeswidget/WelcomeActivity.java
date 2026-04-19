@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.welcome.WelcomeAdapter;
 import com.forrestguice.suntimeswidget.welcome.WelcomeAlarmsView;
+import com.forrestguice.suntimeswidget.welcome.WelcomeFirstPageView;
 import com.forrestguice.suntimeswidget.welcome.WelcomeLocationView;
 import com.forrestguice.suntimeswidget.welcome.WelcomeView;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
@@ -47,6 +48,7 @@ public class WelcomeActivity extends AppCompatActivity
 {
     public static final String EXTRA_PAGE = "page";
 
+    protected ActivityResultLauncherCompat startActivityForResult_importSettings = registerForActivityResultCompat(WelcomeFirstPageView.IMPORT_REQUEST);
     protected ActivityResultLauncherCompat startActivityForResult_importPlaces = registerForActivityResultCompat(WelcomeLocationView.IMPORT_REQUEST);
     protected ActivityResultLauncherCompat startActivityForResult_importAlarms = registerForActivityResultCompat(WelcomeAlarmsView.IMPORT_REQUEST);
 
@@ -316,6 +318,14 @@ public class WelcomeActivity extends AppCompatActivity
         super.onActivityResultCompat(requestCode, resultCode, data);
         if (pagerAdapter != null) {
             pagerAdapter.onActivityResultCompat(pager, requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+        if (pagerAdapter != null) {
+            pagerAdapter.onRequestPermissionsResultCompat(pager, requestCode, permissions, grantResults);
         }
     }
 

@@ -4,6 +4,7 @@
 
     <com.forrestguice.support.preference.Preference
         android:key="appwidget_0_intro_screen" android:persistent="false"
+        android:icon="?attr/icActionSettings"
         android:title="@string/welcome_pref_title"
         android:summary="@string/welcome_pref_summary" />
 
@@ -84,5 +85,16 @@
             android:summary="@string/configLabel_general_scanPlugins_summary" android:defaultValue="@string/def_app_plugins_enabled" />
 
     </PreferenceCategory>-->
+
+    <com.forrestguice.support.preference.PreferenceCategory
+        android:title="@string/settings_bugreport">
+
+        <com.forrestguice.support.preference.Preference
+            android:key="appwidget_0_crashreport" android:persistent="false"
+            android:icon="?attr/icActionError"
+            android:title="@string/settings_crashreport_title"
+            android:summary="@string/settings_crashreport_summary" />
+
+    </com.forrestguice.support.preference.PreferenceCategory>
 
 </PreferenceScreen>

@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -35,23 +36,31 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.ExceptionActivity;
+import com.forrestguice.suntimeswidget.ExceptionHandler;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.WelcomeActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.suntimeswidget.welcome.WelcomeFirstPageView;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.support.preference.CheckBoxPreference;
 import com.forrestguice.support.preference.ListPreference;
 import com.forrestguice.support.preference.Preference;
 import com.forrestguice.support.preference.PreferenceFragment;
+import com.forrestguice.util.android.AndroidResources;
 
 /**
  * General Prefs
@@ -65,9 +74,13 @@ public class GeneralPrefsFragment extends PreferenceFragment
     private CheckBoxPreference useAltitudePref;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "GeneralPrefsFragment: Arguments: " + getArguments());
 
@@ -175,7 +188,20 @@ public class GeneralPrefsFragment extends PreferenceFragment
             {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    showWelcome(fragment);
                     fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
+                    return false;
+                }
+            });
+        }
+        Preference crashReportPref = (Preference) fragment.findPreference("appwidget_0_crashreport");
+        if (crashReportPref != null)
+        {
+            crashReportPref.setSummary(getCrashReportSummary(context));
+            crashReportPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    showCrashReportDialog(fragment.getActivity(), crashReportPref);
                     return false;
                 }
             });
@@ -316,4 +342,75 @@ public class GeneralPrefsFragment extends PreferenceFragment
         boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, 0);
         altitudePref.setChecked(useAltitude);
     }
+
+    protected static void showWelcome(PreferenceFragment fragment)
+    {
+        Activity activity = (fragment != null ? fragment.getActivity() : null);
+        if (fragment != null && activity != null) {
+            fragment.startActivityForResult(new Intent(activity, WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
+        }
+    }
+
+    protected static void showCrashReportDialog(Context context, Preference preference)
+    {
+        if (context != null)
+        {
+            int[] attrs = { R.attr.icActionError };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
+            a.recycle();
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.crash_dialog_title))
+                    .setIcon(iconResID);
+
+            String reportContent = ExceptionHandler.getLastCrashReport(context);
+            if (reportContent != null)
+            {
+                dialog.setMessage(getCrashReportSummary(context));
+                dialog.setPositiveButton(context.getString(R.string.crash_dialog_view), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        context.startActivity(ExceptionHandler.getCrashReportActivityIntent(context, reportContent));
+                    }
+                });
+                dialog.setNeutralButton(context.getString(R.string.crash_dialog_clear), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ExceptionHandler.clearLastCrashReport(context);
+                        preference.setSummary(getCrashReportSummary(context));
+                        Toast.makeText(context, context.getString(R.string.crash_dialog_cleared), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setNegativeButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ExceptionActivity.copyToClipboard(context, reportContent);
+                    }
+                });
+
+            } else {
+                dialog.setMessage(context.getString(R.string.settings_crashreport_summary));
+                dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
+            }
+            dialog.show();
+        }
+    }
+    protected static CharSequence getCrashReportSummary(Context context)
+    {
+        if (ExceptionHandler.hasLastCrashReport(context))
+        {
+            long reportDate = ExceptionHandler.getLastCrashReportDate(context);
+            TimeDateDisplay dateUtils = new TimeDateDisplay();
+            String dateDisplay = (reportDate > 0 ? dateUtils.calendarDateTimeDisplayString(AndroidResources.wrap(context), reportDate).toString() : null);
+            CharSequence reportSummary = (dateDisplay != null
+                    ? context.getString(R.string.settings_crashreport_summary1, context.getString(R.string.app_name), dateDisplay)
+                    : context.getString(R.string.crash_dialog_message, context.getString(R.string.app_name)));
+            return reportSummary;
+        } else return context.getString(R.string.settings_crashreport_summary);
+    }
+
 }

@@ -22,7 +22,7 @@ package com.forrestguice.suntimeswidget.colors;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;

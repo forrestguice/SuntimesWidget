@@ -127,4 +127,17 @@
             android:text="@string/worldmap_dialog_option_all" />
     </RadioGroup>-->
 
+    <FrameLayout android:id="@+id/progressLayout" android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
+        android:background="?attr/colorBackgroundFloating"
+        android:alpha="0.8">
+
+        <ProgressBar android:id="@+id/progressBar" android:visibility="visible"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:indeterminate="true"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
 </com.forrestguice.support.constraint.ConstraintLayout>

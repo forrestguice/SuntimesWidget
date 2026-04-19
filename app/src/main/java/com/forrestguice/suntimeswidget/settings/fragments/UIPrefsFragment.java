@@ -103,9 +103,13 @@ public class UIPrefsFragment extends PreferenceFragment
     public static final String LOG_TAG = "SuntimesSettings";
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "UIPrefsFragment: Arguments: " + getArguments());
 

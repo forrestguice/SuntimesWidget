@@ -26,16 +26,6 @@
 
         </FrameLayout>
 
-        <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <CheckBox android:id="@+id/check_alarms_showlauncher"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/alarms_label_showlauncher_summary"
-            android:textSize="?attr/text_size_small"
-            android:checked="@bool/def_app_alarms_showlauncher" />
-
         <CheckBox android:id="@+id/check_alarms_showreminders"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/alarms_label_upcoming_checkbox"
@@ -47,8 +37,30 @@
             android:layout_width="match_parent"
             android:layout_height="1dp" />
 
-        <LinearLayout android:orientation="vertical"
+        <LinearLayout android:id="@+id/layout_notifications" android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button_notifications"
+                style="@style/Widget.AppCompat.Button" android:textSize="?attr/text_size_small"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:text="@string/alarms_label_notifications" />
+
+            <TextView
+                android:id="@+id/text_notifications"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:gravity="center_vertical" android:layout_margin="4dp"
+                android:textSize="?attr/text_size_small"
+                android:text="@string/alarms_label_notifications_on" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_batteryopt" android:orientation="vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+            <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
 
             <Button
                 android:id="@+id/button_optWhiteList"
@@ -87,6 +99,16 @@
                 android:text="@string/alarms_label_autostart_on" />
 
         </LinearLayout>
+
+        <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <CheckBox android:id="@+id/check_alarms_showlauncher"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/alarms_label_showlauncher_summary"
+            android:textSize="?attr/text_size_small"
+            android:checked="@bool/def_app_alarms_showlauncher" />
 
     </LinearLayout>
 

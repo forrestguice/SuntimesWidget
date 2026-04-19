@@ -19,12 +19,13 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -613,7 +614,7 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
     public static final int IMPORT_ALARMS_METHOD_ADDALL = 200;     // insert all (may result in duplicates)
     public static final int[] IMPORT_ALARMS_METHODS = new int[] { IMPORT_ALARMS_METHOD_CLEAR, IMPORT_ALARMS_METHOD_ADDALL };
 
-    public static void chooseImportMethod(final Context context, final String key, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener)
+    public static void chooseImportMethod(final Context context, final String key, final int[] methods, @NonNull final DialogInterface.OnClickListener onClickListener, @Nullable final DialogInterface.OnClickListener onCancelListener)
     {
         final CharSequence[] items = new CharSequence[methods.length];
         for (int i=0; i<items.length; i++) {
@@ -634,8 +635,9 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
                         onClickListener.onClick(dialog, methods[p]);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-        confirm.show();
+                .setNegativeButton(context.getString(R.string.dialog_cancel), onCancelListener);
+        Dialog d = confirm.show();
+        d.setCanceledOnTouchOutside(false);
     }
     protected static CharSequence dialogTitleForImportKey(Context context, String key) {
         return SuntimesBackupTask.displayStringForBackupKey(context, key);

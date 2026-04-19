@@ -57,7 +57,7 @@ public abstract class ProgressCallable<P, T> implements Callable<T>, ProgressInt
         isCancelled.set(true);
     }
     public boolean isCancelled() {
-        return isCancelled.get();   //return Thread.currentThread().isInterrupted();
+        return isCancelled.get() || Thread.currentThread().isInterrupted();
     }
 
     @Nullable

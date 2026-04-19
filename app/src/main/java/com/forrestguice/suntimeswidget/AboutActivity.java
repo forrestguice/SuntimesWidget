@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -77,12 +78,14 @@ public class AboutActivity extends AppCompatActivity
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                AppSettings.checkCustomPermissions(AboutActivity.this);
-            }
-        });
+        if (Build.VERSION.SDK_INT < 21) {
+            viewPager.post(new Runnable() {
+                @Override
+                public void run() {
+                    AppSettings.checkCustomPermissions(AboutActivity.this);
+                }
+            });
+        }
     }
 
     @Override

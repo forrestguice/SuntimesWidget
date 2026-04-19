@@ -75,20 +75,20 @@ public class AppCompatActivity extends androidx.appcompat.app.AppCompatActivity 
     @CallSuper
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull Map<String, Boolean> results) {
-        Log.d("DEBUG", "onRequestPermissionsResult: (dialog fragment) " + requestCode);
+        Log.d("DEBUG", "onRequestPermissionsResult: (AppCompatActivity) " + requestCode);
     }
 
     @CallSuper
     @Override
     public void onRequestPermissionsResultCompat(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("DEBUG", "onRequestPermissionsResultCompat: (dialog fragment) " + requestCode);
+        Log.d("DEBUG", "onRequestPermissionsResultCompat: (AppCompatActivity) " + requestCode);
     }
 
     public void requestPermissionsCompat(String[] permissions, int requestCode)
     {
         if (!launchers.requestPermissions(permissions, requestCode))
         {
-            Log.e("DialogBase", "requestPermissionCompat: requestCode " + requestCode + " not found! did you remember to call `requestPermissionsCompat` first?");
+            Log.e("AppCompatActivity", "requestPermissionCompat: requestCode " + requestCode + " not found! did you remember to call `requestPermissionsCompat` first?");
             //noinspection deprecation
             ActivityCompat.requestPermissions(this, permissions, requestCode);    // fallback
         }

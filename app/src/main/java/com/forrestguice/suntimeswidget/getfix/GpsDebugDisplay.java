@@ -175,6 +175,7 @@ public class GpsDebugDisplay
     /**
      * api 23-
      */
+    /** @noinspection deprecation */
     public static List<GpsSatellite> getSatelliteList(GpsStatus status, boolean usedInFix)
     {
         ArrayList<SatelliteInfo<GpsSatellite>> satellites = new ArrayList<>();
@@ -196,6 +197,7 @@ public class GpsDebugDisplay
         int i = list.size();
         return (i != 0 ? i : current);
     }
+    /** @noinspection deprecation*/
     public static String getSatelliteReport(List<GpsSatellite> list)
     {
         StringBuilder result = new StringBuilder();

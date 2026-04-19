@@ -17,15 +17,17 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.support.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
@@ -50,13 +52,15 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             Context context = contextRef.get();
             if (context != null)
             {
+                String crashReport = createCrashReport(e);
                 NotificationManagerCompat notifications = NotificationManagerCompat.from(context);
                 //noinspection ConstantConditions
                 if (notifications != null && notifications.areNotificationsEnabled()) {
-                    showCrashReportNotification(context, e);
+                    showCrashReportNotification(context, e, crashReport);
                 } else {
-                    launchCrashReportActivity(context, e);
+                    launchCrashReportActivity(context, e, crashReport);
                 }
+                saveLastCrashReport(context, crashReport);
             }
 
         } finally {
@@ -73,7 +77,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
                 + "\n\n" + Log.getStackTraceString(e);
     }
 
-    private void showCrashReportNotification(Context context, Throwable e)
+    private void showCrashReportNotification(Context context, Throwable e, String crashReport)
     {
         if (context != null)
         {
@@ -82,19 +86,60 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
             {
                 CrashReportNotification builder = new CrashReportNotification();
                 builder.setNotificationMessage(e.toString());
-                Notification notification = builder.createNotification(context, createCrashReport(e));
+                Notification notification = builder.createNotification(context, crashReport);
                 notificationManager.notify("CrashReport", CrashReportNotification.NOTIFICATION_ID, notification);
             }
         }
     }
 
-    private void launchCrashReportActivity(Context context, Throwable e)
+    private void launchCrashReportActivity(Context context, Throwable e, String crashReport)
     {
         if (context != null) {
-            context.startActivity(new CrashReportNotification().getCrashReportActivityIntent(context, createCrashReport(e)));
+            context.startActivity(getCrashReportActivityIntent(context, crashReport));
+
         } else {
             Log.e("CrashReport", "launchCrashReportActivity: null context!");
         }
+    }
+
+    @Nullable
+    public static Intent getCrashReportActivityIntent(Context context, String report) {
+        return new CrashReportNotification().getCrashReportActivityIntent(context, report);
+    }
+
+    /**
+     * Last Crash Report
+     */
+
+    private static final String PREF_KEY_REPORT = "crash_report";
+    private static final String PREF_KEY_DATE = "crash_report_date";
+
+    @SuppressLint("ApplySharedPref")
+    public static void saveLastCrashReport(Context context, String report)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(PREF_KEY_REPORT, report);
+        prefs.putLong(PREF_KEY_DATE, System.currentTimeMillis());
+        prefs.commit();   // wait for completion or report may not be saved
+    }
+    public static void clearLastCrashReport(Context context) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.remove(PREF_KEY_REPORT);
+        prefs.remove(PREF_KEY_DATE);
+        prefs.apply();
+    }
+    @Nullable
+    public static String getLastCrashReport(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREF_KEY_REPORT, null);
+    }
+    public static long getLastCrashReportDate(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(PREF_KEY_DATE, -1);
+    }
+    public static boolean hasLastCrashReport(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.contains(PREF_KEY_REPORT);
     }
 
     /**
@@ -102,21 +147,22 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
      */
     private static class CrashReportNotification extends ExceptionNotification
     {
+        public static final String CHANNEL_ID = "suntimes.channel.crashreport";
         public static final int NOTIFICATION_ID = -1000000;
 
         @Override
         protected String getChannelID() {
-            return AlarmNotifications.CHANNEL_ID_MISC;
+            return CHANNEL_ID;
         }
 
         @Override
         protected String getChannelTitle(Context context) {
-            return context.getString(R.string.notificationChannel_misc_title);
+            return context.getString(R.string.notificationChannel_crashreport_title);
         }
 
         @Override
         protected String getChannelDesc(Context context) {
-            return context.getString(R.string.notificationChannel_misc_title);
+            return context.getString(R.string.notificationChannel_crashreport_desc);
         }
 
         @Nullable

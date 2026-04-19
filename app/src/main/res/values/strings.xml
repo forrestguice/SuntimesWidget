@@ -373,6 +373,10 @@
     <string name="settings_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
     <string name="settings_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
+    <string name="settings_bugreport">Error Reporting</string>    <!-- group title -->    <!-- TODO -->
+    <string name="settings_crashreport_title">@string/crash_dialog_title</string>
+    <string name="settings_crashreport_summary">Application failures will be reported here.\nNothing to report.</string> <!-- TODO -->
+    <string name="settings_crashreport_summary1">A crash report was created on \n%2$s.</string> <!-- TODO -->
     <!-- Widget Setting: appearance -->
     <string name="settings_widgetlayout">Layout</string>           <!-- group title -->
     <string-array name="settings_widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
@@ -1290,6 +1294,8 @@
     <string name="notificationChannel_misc_desc">@string/alarms_label_alarmMisc</string>  <!-- notification channel title -->
     <string name="notificationChannel_bedtime_title">@string/bedtime_label</string>  <!-- notification channel title -->
     <string name="notificationChannel_bedtime_desc">@string/bedtime_label</string>  <!-- notification channel title -->
+    <string name="notificationChannel_crashreport_title">Crash Report</string>  <!-- notification channel title -->   <!-- TODO -->
+    <string name="notificationChannel_crashreport_desc">Crash Report</string>  <!-- notification channel title -->    <!-- TODO -->
 
     <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w]</xliff:g> Autostart is disabled!\nAlarms may fail to work after reboot.</string>  <!-- snackbar message (xiomi devices only) -->
     <string name="alarms_warning_notificationChannel">@string/alarms_warning_notifications</string>  <!-- snackbar message -->
@@ -1795,9 +1801,9 @@
     <string name="themes_appThemes_systemDefault1">Contrast (System Default)</string>
     <string name="themes_appThemes_darkTheme1">Contrast (Dark)</string>
     <string name="themes_appThemes_lightTheme1">Contrast (Light)</string>
-    <string name="themes_appThemes_systemMonet">Monet (System Default)</string>     <!-- TODO -->
-    <string name="themes_appThemes_darkMonet">Monet (Dark)</string>    <!-- TODO -->
-    <string name="themes_appThemes_lightMonet">Monet (Light)</string>     <!-- TODO -->
+    <string name="themes_appThemes_systemMonet">Material You (System Default)</string>     <!-- TODO -->
+    <string name="themes_appThemes_darkMonet">Material You (Dark)</string>    <!-- TODO -->
+    <string name="themes_appThemes_lightMonet">Material You (Light)</string>     <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -2736,6 +2742,8 @@
     ]]></string>    <!-- TODO -->
     <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
     <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
+    <string name="crash_dialog_clear">Clear</string>         <!-- TODO -->
+    <string name="crash_dialog_cleared">Crash report has been cleared.</string>         <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="app_name">Suntimes</string>
@@ -2828,6 +2836,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
+    <string name="privacy_permission_notifications"><![CDATA[Suntimes needs <b>notification</b> permissions to display alarms and notifications.]]></string>    <!-- TODO -->
 
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>

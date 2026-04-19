@@ -149,6 +149,16 @@ public class WelcomeAdapter extends PagerAdapter
         }
     }
 
+    public void onRequestPermissionsResultCompat(View view, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        for (int i=0; i<getCount(); i++) {
+            WelcomeView v = (WelcomeView) view.findViewWithTag(getTag(i));
+            if (v != null) {
+                v.onRequestPermissionsResultCompat(requestCode, permissions, grantResults);
+            }
+        }
+    }
+
     public void onResume(View view)
     {
         for (int i=0; i<getCount(); i++) {

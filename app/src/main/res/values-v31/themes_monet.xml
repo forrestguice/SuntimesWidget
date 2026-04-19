@@ -77,6 +77,7 @@
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_ref</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_ref</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_ref</item>
+        <item name="spinnerStyle">@style/MonetSpinnerStyle.System</item>
     </style>
 
     <!-- Material You (Dark) -->
@@ -154,6 +155,7 @@
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_dark</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_dark</item>
+        <item name="spinnerStyle">@style/MonetSpinnerStyle.Dark</item>
     </style>
 
     <!-- Material You (Light) -->
@@ -231,5 +233,7 @@
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_light</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_light</item>
+        <item name="spinnerStyle">@style/MonetSpinnerStyle.Light</item>
     </style>
+
 </resources>
