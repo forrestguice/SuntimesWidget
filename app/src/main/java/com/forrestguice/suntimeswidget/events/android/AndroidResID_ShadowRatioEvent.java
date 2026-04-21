@@ -40,6 +40,6 @@ public class AndroidResID_ShadowRatioEvent extends AndroidResID_BaseEvent implem
 
     @Override
     public int string_summary_format1() {
-        return R.string.event_shadowevent_summary_format1;
+        return R.string.event_shadowratio_summary_format1;
     }
 }
