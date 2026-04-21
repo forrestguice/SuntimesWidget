@@ -13,9 +13,10 @@
 * fixes title of `Miscellaneous` notification channel (incorrectly labeled "Notification").
 * fixes bug where `restore backup` prompts are cancelled by touching outside the dialog.
 * replaces use of deprecated api (PreferenceManager, ProgressDialog); removes obsolete permission checks (api23+).
+* updates translation to Norwegian (nb) (#939 by FTno).
 
 ### v0.17.0 (2026-04-11)
-Attention: v0.17.0 breaks existing widget installations (#932). When updating from older versions your home screen widgets may be removed and will need to be re-added.
+* Attention: v0.17.0 breaks older widget installations (#932). When updating from previous versions your home screen widgets may be removed and will need to be re-added.
 * adds `Material You` app themes (api31+) (#635).
 * adds `fancy digital clock` widgets.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
