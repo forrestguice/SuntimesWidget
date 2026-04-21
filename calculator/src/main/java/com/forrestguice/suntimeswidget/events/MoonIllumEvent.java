@@ -237,8 +237,11 @@ public class MoonIllumEvent extends BaseEvent
             double illum = calculator.getMoonIlluminationForDate(mid);
 
             //Log.d("DEBUG", "comparing " + illum + " to " + eventPercent);
-            if (almostEquals(illum, eventPercent)) {
-                return mid;
+            if (almostEquals(illum, eventPercent))
+            {
+                Calendar result = Calendar.getInstance();
+                result.setTimeInMillis(mid.getTimeInMillis() + event.getOffset());    // apply offset
+                return result;
 
             } else {
                 boolean isToRight = (isWaxing) ? illum < eventPercent

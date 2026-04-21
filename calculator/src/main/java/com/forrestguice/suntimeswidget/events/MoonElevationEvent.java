@@ -201,8 +201,11 @@ public class MoonElevationEvent extends ElevationEvent
                 break;
             }
 
-            if (almostEquals(position.elevation, eventAngle)) {
-                return mid;
+            if (almostEquals(position.elevation, eventAngle))
+            {
+                Calendar result = Calendar.getInstance();
+                result.setTimeInMillis(mid.getTimeInMillis() + event.getOffset());
+                return result;
 
             } else {
                 boolean isToRight = (isRising) ? position.elevation < eventAngle

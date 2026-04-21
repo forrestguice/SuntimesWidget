@@ -215,7 +215,7 @@ public class DayPercentEvent extends ElevationEvent
                 Calendar eventTime = Calendar.getInstance();
                 eventTime.setTimeInMillis((long) (event.isRising()
                         ? sunrise.getTimeInMillis() + (percent * duration)
-                        : sunset.getTimeInMillis() - (percent * duration)));
+                        : sunset.getTimeInMillis() - (percent * duration)) + event.getOffset());
                 return eventTime;
             } // else // TODO: support edge cases
             return null;
@@ -229,7 +229,7 @@ public class DayPercentEvent extends ElevationEvent
                 Calendar eventTime = Calendar.getInstance();
                 eventTime.setTimeInMillis((long) (event.isRising()
                         ? sunrise.getTimeInMillis() - (-percent * duration)
-                        : sunset.getTimeInMillis() + (-percent * duration)));
+                        : sunset.getTimeInMillis() + (-percent * duration)) + event.getOffset());
                 return eventTime;
             } // else // TODO: support edge cases
             return null;

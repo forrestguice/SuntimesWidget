@@ -173,8 +173,7 @@ public class ShadowLengthEvent extends ElevationEvent
         data.setTodayIs(day);
         data.calculate(context);
 
-        eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+        eventTime = getShadowLengthEventCalendar(day, event, calculator);
         if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
@@ -194,14 +193,26 @@ public class ShadowLengthEvent extends ElevationEvent
             day.add(Calendar.DAY_OF_YEAR, 1);
             data.setTodayIs(day);
             data.calculate(context);
-            eventTime = (event.isRising() ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
-                    : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+            eventTime = getShadowLengthEventCalendar(day, event, calculator);
             if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
             c++;
         }
         return eventTime;
+    }
+
+    public static Calendar getShadowLengthEventCalendar(@NonNull Calendar day, @NonNull ShadowLengthEvent event, @NonNull SuntimesCalculator calculator)
+    {
+        Calendar result = (event.isRising()
+                ? calculator.getTimeOfShadowBeforeNoon(day, event.getObjHeight(), event.getLength())
+                : calculator.getTimeOfShadowAfterNoon(day, event.getObjHeight(), event.getLength()));
+
+        int offset = event.getOffset();
+        if (offset != 0 && result != null) {
+            result.setTimeInMillis(result.getTimeInMillis() + offset);
+        }
+        return result;
     }
 
     private static SuntimesClockData getClockData(Object context, @NonNull Location location)
