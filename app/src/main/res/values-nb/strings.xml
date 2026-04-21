@@ -2099,7 +2099,6 @@
     <string name="app_feature_not_supported_by_source">Denne funksjonen er ikke støttet av gjeldende datakilde.</string>
     <string name="app_reboot_required_message">En omstart kan behøves for at endringer skal tre i kraft.</string>
     <string name="app_restart_required_message">En app-omstart kan behøves for at endringer skal tre i kraft.</string>   <!-- toast; app restart may be required -->
-    <string name="privacy_permissiondialog_granted_label">Tillatelse gitt</string>
 
     <string name="hint_drag">Drag here</string>    <!-- TODO -->
     <string name="hint_label">Label</string>        <!-- edittext hint -->   <!-- TODO -->
