@@ -99,7 +99,7 @@ public class ExecutorUtils
                     postFinished(handler, result, listeners);
 
                 } catch (Exception e) {
-                    Log.e(tag, "runTask: failed! " + e);
+                    Log.e(tag, "runTask: failed!", e);
                 }
             }
         });
@@ -226,7 +226,7 @@ public class ExecutorUtils
                     //Log.d("DEBUG", "runProgress: FINISHED " + callable.toString());
 
                 } catch (Exception e) {
-                    Log.e(tag, "runProgress: failed! " + e);
+                    Log.e(tag, "runProgress: failed!", e);
                 }
             }
         });
@@ -336,7 +336,7 @@ public class ExecutorUtils
             return task.get(timeoutAfter, TimeUnit.MILLISECONDS);
 
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
-            Log.e(tag, "getResult: failed! " + e);
+            Log.e(tag, "getResult: failed!", e);
             return null;
 
         } finally {
@@ -372,7 +372,7 @@ public class ExecutorUtils
             return future.get(timeoutAfter, TimeUnit.MILLISECONDS);
 
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
-            Log.e(tag, "getResult: failed! " + e);
+            Log.e(tag, "getResult: failed!", e);
             return null;
 
         } finally {
