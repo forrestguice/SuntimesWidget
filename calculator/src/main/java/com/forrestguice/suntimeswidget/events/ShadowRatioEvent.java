@@ -172,7 +172,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
         data.setTodayIs(day);
         data.calculate(context);
 
-        eventTime = getShadowRatioEventCalendar(calculator, day, event, offset);
+        eventTime = getShadowRatioEventCalendar(calculator, day, event);
         if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
@@ -193,7 +193,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
             data.setTodayIs(day);
             data.calculate(context);
 
-            eventTime = getShadowRatioEventCalendar(calculator, day, event, offset);
+            eventTime = getShadowRatioEventCalendar(calculator, day, event);
             if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
@@ -203,7 +203,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
     }
 
     @Nullable
-    private static Calendar getShadowRatioEventCalendar(SuntimesCalculator calculator, Calendar day, ShadowRatioEvent event, long offset)
+    private static Calendar getShadowRatioEventCalendar(SuntimesCalculator calculator, Calendar day, ShadowRatioEvent event)
     {
         Calendar noon = calculator.getSolarNoonCalendarForDate(day);
         SuntimesCalculator.SunPosition position = (noon != null ? calculator.getSunPosition(noon) : null);
@@ -217,6 +217,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
                     ? calculator.getTimeOfShadowBeforeNoon(day, 1, shadowLength)
                     : calculator.getTimeOfShadowAfterNoon(day, 1, shadowLength));
 
+            long offset = event.getOffset();
             if (eventTime != null && offset != 0) {
                 eventTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
