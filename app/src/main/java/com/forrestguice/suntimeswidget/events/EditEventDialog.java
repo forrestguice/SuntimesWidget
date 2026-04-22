@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.android.AndroidResources;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 public class EditEventDialog extends EditBottomSheetDialog
@@ -1078,8 +1079,10 @@ public class EditEventDialog extends EditBottomSheetDialog
         Log.d("DEBUG", "setFactorValue: " + value + ", isRelative: " + isRelative);
         factorValue = value;
         Context context = getContext();
-        if (edit_factorValue != null && context != null) {
-            edit_factorValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(factorValue)));
+        if (edit_factorValue != null && context != null)
+        {
+            DecimalFormat formatter = new DecimalFormat("#.##");
+            edit_factorValue.setText(formatter.format(Math.abs(factorValue)));
         }
         if (radio_factorRelative != null && radio_factorAbsolute != null) {
             if (isRelative) {
@@ -1176,10 +1179,13 @@ public class EditEventDialog extends EditBottomSheetDialog
      */
     protected void setPercentValue(double value)
     {
+
         percentValue = value;
         Context context = getContext();
-        if (edit_percentValue != null && context != null) {
-            edit_percentValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(percentValue)));
+        if (edit_percentValue != null && context != null)
+        {
+            DecimalFormat formatter = new DecimalFormat("#.##");
+            edit_percentValue.setText(formatter.format(Math.abs(percentValue)));
         }
         if (radio_percentDay != null && radio_percentNight != null) {
             if (percentValue >= 0) {

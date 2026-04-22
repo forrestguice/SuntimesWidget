@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -69,7 +70,8 @@ public class DayPercentEvent extends ElevationEvent
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
-        String percentDisplay = getPercentValue() + "";   // TODO
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String percentDisplay = formatter.format(getPercentValue());
         String eventTitle = (r != null) ? context.getResources().getString(percent >= 0 ? r.string_title_day() : r.string_title_night()) : "Percent";
         if (offset == 0) {
             return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay)

@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -77,7 +78,8 @@ public class MoonIllumEvent extends BaseEvent
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
-        String percentDisplay = getPercentValue() + "";
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String percentDisplay = formatter.format(getPercentValue());
         String eventTitle = (r != null) ? context.getResources().getString(r.string_title()) : "Moon";
         if (offset == 0) {
             return offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, percentDisplay);

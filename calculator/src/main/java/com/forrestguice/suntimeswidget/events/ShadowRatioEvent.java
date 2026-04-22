@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -71,13 +72,15 @@ public class ShadowRatioEvent extends ShadowLengthEvent
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String eventRatio = formatter.format(ratio);
         String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow Ratio";
         if (offset == 0) {
-            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, ratio)
-                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + ratio + ")";
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, eventRatio)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + eventRatio + ")";
         } else {
-            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, ratio)
-                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + ratio + ")";
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, eventRatio)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + eventRatio + ")";
         }
     }
 
