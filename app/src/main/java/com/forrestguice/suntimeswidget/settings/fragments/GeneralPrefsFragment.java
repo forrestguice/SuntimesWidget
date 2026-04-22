@@ -189,7 +189,6 @@ public class GeneralPrefsFragment extends PreferenceFragment
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     showWelcome(fragment);
-                    fragment.startActivityForResult(new Intent(fragment.getActivity(), WelcomeActivity.class), SettingsActivityInterface.REQUEST_WELCOME_SCREEN);
                     return false;
                 }
             });
