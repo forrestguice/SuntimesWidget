@@ -58,7 +58,7 @@ public class SunElevationEvent extends ElevationEvent
     public String getEventSummary(SuntimesDataSettings context)
     {
         AngleDisplay utils = new AngleDisplay();
-        String angle = utils.formatAsElevation(getAngle(), 1).toString();
+        String angle = utils.formatAsElevation(getAngle(), 0, 1).toString();
         String eventTitle = (r != null) ? context.getString(r.string_title()) : "Sun";
         if (offset == 0) {
             return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, angle)

@@ -270,10 +270,16 @@ public class WelcomeAppearanceView extends WelcomeView
                 break;
 
             case AppSettings.THEME_DARK:
+                onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
+                break;
+
             case AppSettings.THEME_LIGHT:
+                onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
+                break;
+
             case AppSettings.THEME_SYSTEM:
             default:
-                onThemeButtonClicked(themeInfo.getThemeName(), null, null).onClick(view);
+                onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
                 break;
         }
     }

@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.android.AndroidResources;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 public class EditEventDialog extends EditBottomSheetDialog
@@ -730,23 +731,43 @@ public class EditEventDialog extends EditBottomSheetDialog
                     angle = EditEventDialog.this.angle;
                 }
 
+                Double percent = getPercentValue();
+                if (percent == null) {
+                    percent = EditEventDialog.this.percentValue;
+                }
+
+                Double factor = getFactorValue();
+                if (factor == null) {
+                    factor = EditEventDialog.this.factorValue;
+                }
+
+                Double height = getObjHeightMeters();
+                if (height == null) {
+                    height = EditEventDialog.this.objHeight;
+                }
+
+                Double shadow = getShadowLengthMeters();
+                if (shadow == null) {
+                    shadow = EditEventDialog.this.shadowLength;
+                }
+
                 String eventID;
                 switch (type)
                 {
                     case MOONILLUM:
-                        eventID = MoonIllumEvent.getEventName(percentValue, offset, null);
+                        eventID = MoonIllumEvent.getEventName(percent, offset, null);
                         break;
 
                     case DAYPERCENT:
-                        eventID = DayPercentEvent.getEventName(percentValue, offset, null);
+                        eventID = DayPercentEvent.getEventName(percent, offset, null);
                         break;
 
                     case SHADOWLENGTH:
-                        eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
+                        eventID = ShadowLengthEvent.getEventName(height, shadow, offset, null);
                         break;
 
                     case SHADOWRATIO:
-                        eventID = ShadowRatioEvent.getEventName(factorValue, getFactorIsRelative(), offset, null);
+                        eventID = ShadowRatioEvent.getEventName(factor, getFactorIsRelative(), offset, null);
                         break;
 
                     case MOON_ELEVATION:
@@ -764,7 +785,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
-                updateViews(context);
+                updateViews(context, getEventType());
             }
         }
     };
@@ -1058,8 +1079,10 @@ public class EditEventDialog extends EditBottomSheetDialog
         Log.d("DEBUG", "setFactorValue: " + value + ", isRelative: " + isRelative);
         factorValue = value;
         Context context = getContext();
-        if (edit_factorValue != null && context != null) {
-            edit_factorValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(factorValue)));
+        if (edit_factorValue != null && context != null)
+        {
+            DecimalFormat formatter = new DecimalFormat("#.##");
+            edit_factorValue.setText(formatter.format(Math.abs(factorValue)));
         }
         if (radio_factorRelative != null && radio_factorAbsolute != null) {
             if (isRelative) {
@@ -1156,10 +1179,13 @@ public class EditEventDialog extends EditBottomSheetDialog
      */
     protected void setPercentValue(double value)
     {
+
         percentValue = value;
         Context context = getContext();
-        if (edit_percentValue != null && context != null) {
-            edit_percentValue.setText(String.format(Locale.getDefault(), "%.2f", Math.abs(percentValue)));
+        if (edit_percentValue != null && context != null)
+        {
+            DecimalFormat formatter = new DecimalFormat("#.##");
+            edit_percentValue.setText(formatter.format(Math.abs(percentValue)));
         }
         if (radio_percentDay != null && radio_percentNight != null) {
             if (percentValue >= 0) {

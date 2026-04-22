@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.settings.SuntimesDataSettings;
 import com.forrestguice.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -71,13 +72,15 @@ public class ShadowRatioEvent extends ShadowLengthEvent
     @Override
     public String getEventSummary(SuntimesDataSettings context)
     {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        String eventRatio = formatter.format(ratio);
         String eventTitle = (r != null) ? context.getString(r.string_title()) : "Shadow Ratio";
         if (offset == 0) {
-            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, ratio)
-                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + ratio + ")";
+            return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, eventRatio)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + eventRatio + ")";
         } else {
-            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, ratio)
-                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + ratio + ")";
+            return (r != null) ? context.getString(r.string_summary_format1(), offsetDisplay(context.getResources()), eventTitle, eventRatio)
+                    : offsetDisplay(context.getResources()) + " " + eventTitle + " (" + eventRatio + ")";
         }
     }
 
@@ -172,7 +175,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
         data.setTodayIs(day);
         data.calculate(context);
 
-        eventTime = getShadowRatioEventCalendar(calculator, day, event, offset);
+        eventTime = getShadowRatioEventCalendar(calculator, day, event);
         if (eventTime != null) {
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
@@ -193,7 +196,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
             data.setTodayIs(day);
             data.calculate(context);
 
-            eventTime = getShadowRatioEventCalendar(calculator, day, event, offset);
+            eventTime = getShadowRatioEventCalendar(calculator, day, event);
             if (eventTime != null) {
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }
@@ -203,7 +206,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
     }
 
     @Nullable
-    private static Calendar getShadowRatioEventCalendar(SuntimesCalculator calculator, Calendar day, ShadowRatioEvent event, long offset)
+    private static Calendar getShadowRatioEventCalendar(SuntimesCalculator calculator, Calendar day, ShadowRatioEvent event)
     {
         Calendar noon = calculator.getSolarNoonCalendarForDate(day);
         SuntimesCalculator.SunPosition position = (noon != null ? calculator.getSunPosition(noon) : null);
@@ -217,6 +220,7 @@ public class ShadowRatioEvent extends ShadowLengthEvent
                     ? calculator.getTimeOfShadowBeforeNoon(day, 1, shadowLength)
                     : calculator.getTimeOfShadowAfterNoon(day, 1, shadowLength));
 
+            long offset = event.getOffset();
             if (eventTime != null && offset != 0) {
                 eventTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
             }

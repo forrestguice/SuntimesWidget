@@ -58,7 +58,7 @@ public class MoonElevationEvent extends ElevationEvent
     public String getEventSummary(SuntimesDataSettings context)
     {
         AngleDisplay utils = new AngleDisplay();
-        String angle = utils.formatAsElevation(getAngle(), 1).toString();
+        String angle = utils.formatAsElevation(getAngle(), 0, 1).toString();
         String eventTitle = (r != null ? context.getString(r.string_title()) : "Moon");
         if (offset == 0) {
             return (r != null) ? offsetDisplay(context.getResources()) + context.getString(r.string_summary_format(), eventTitle, angle)
@@ -201,8 +201,11 @@ public class MoonElevationEvent extends ElevationEvent
                 break;
             }
 
-            if (almostEquals(position.elevation, eventAngle)) {
-                return mid;
+            if (almostEquals(position.elevation, eventAngle))
+            {
+                Calendar result = Calendar.getInstance();
+                result.setTimeInMillis(mid.getTimeInMillis() + event.getOffset());
+                return result;
 
             } else {
                 boolean isToRight = (isRising) ? position.elevation < eventAngle
