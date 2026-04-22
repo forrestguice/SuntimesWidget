@@ -1,11 +1,13 @@
 ### ~
 
-### v0.17.1 (2026-04-20)
+### v0.17.1 (2026-04-22)
 * fixes broken moon widgets ("problem loading widget") (#931).
 * fixes app crash when dragging world map timeline (#935).
 * fixes bug "map application not found" (api30+) (#937).
 * fixes bug where `text size` setting is not properly applied (api31+) (#936).
 * fixes bug where app theme settings indicate the wrong selection (api31+).
+* fixes bug "wrong alarm time after adding offset" to Shadow Factor events (#940).
+* fixes bug where "custom event offsets are ignored" (#941); fixes bug where "event dialog forgets changes after adding offets".
 * fixes `material you` color issues (readability); fixes spinner drop-down appearance; changes `Monet` labels to `Material You`.
 * adds `restore backup` and `online help` buttons to the welcome screen.
 * adds `notification warning` to alarm welcome; adds `POST_NOTIFICATIONS` permission rational (api33+).
