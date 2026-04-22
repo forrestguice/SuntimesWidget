@@ -730,23 +730,43 @@ public class EditEventDialog extends EditBottomSheetDialog
                     angle = EditEventDialog.this.angle;
                 }
 
+                Double percent = getPercentValue();
+                if (percent == null) {
+                    percent = EditEventDialog.this.percentValue;
+                }
+
+                Double factor = getFactorValue();
+                if (factor == null) {
+                    factor = EditEventDialog.this.factorValue;
+                }
+
+                Double height = getObjHeightMeters();
+                if (height == null) {
+                    height = EditEventDialog.this.objHeight;
+                }
+
+                Double shadow = getShadowLengthMeters();
+                if (shadow == null) {
+                    shadow = EditEventDialog.this.shadowLength;
+                }
+
                 String eventID;
                 switch (type)
                 {
                     case MOONILLUM:
-                        eventID = MoonIllumEvent.getEventName(percentValue, offset, null);
+                        eventID = MoonIllumEvent.getEventName(percent, offset, null);
                         break;
 
                     case DAYPERCENT:
-                        eventID = DayPercentEvent.getEventName(percentValue, offset, null);
+                        eventID = DayPercentEvent.getEventName(percent, offset, null);
                         break;
 
                     case SHADOWLENGTH:
-                        eventID = ShadowLengthEvent.getEventName(objHeight, shadowLength, offset, null);
+                        eventID = ShadowLengthEvent.getEventName(height, shadow, offset, null);
                         break;
 
                     case SHADOWRATIO:
-                        eventID = ShadowRatioEvent.getEventName(factorValue, getFactorIsRelative(), offset, null);
+                        eventID = ShadowRatioEvent.getEventName(factor, getFactorIsRelative(), offset, null);
                         break;
 
                     case MOON_ELEVATION:
@@ -764,7 +784,7 @@ public class EditEventDialog extends EditBottomSheetDialog
                 setOffset(offset);
                 setEventUri(eventUri);
                 setIsModified(true);
-                updateViews(context);
+                updateViews(context, getEventType());
             }
         }
     };
