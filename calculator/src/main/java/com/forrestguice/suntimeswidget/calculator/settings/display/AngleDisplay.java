@@ -50,11 +50,14 @@ public class AngleDisplay
     public String formatAsDegrees(double value) {
         return String.format(strDegreesFormat, NumberFormat.getNumberInstance().format(value));
     }
-    public String formatAsDegrees(double value, int places)
+    public String formatAsDegrees(double value, int places) {
+        return formatAsDegrees(value, places, places);
+    }
+    public String formatAsDegrees(double value, int minPlaces, int maxPlaces)
     {
         NumberFormat formatter = NumberFormat.getInstance();
-        formatter.setMinimumFractionDigits(places);
-        formatter.setMaximumFractionDigits(places);
+        formatter.setMinimumFractionDigits(minPlaces);
+        formatter.setMaximumFractionDigits(maxPlaces);
         return String.format(strDegreesFormat, formatter.format(value));
     }
     public String formatAsDirection(double degreeValue, int places)
@@ -78,6 +81,9 @@ public class AngleDisplay
     }
     public TimeDisplayText formatAsElevation(double degreeValue, int places) {
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strAltSymbol);
+    }
+    public TimeDisplayText formatAsElevation(double degreeValue, int minPlaces, int maxPlaces) {
+        return new TimeDisplayText(formatAsDegrees(degreeValue, minPlaces, maxPlaces), "", strAltSymbol);
     }
 
     public String formatAsRightAscension(String degreeString, String raSymbol) {
