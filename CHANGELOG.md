@@ -1,7 +1,24 @@
 ### ~
 
+### v0.17.1 (2026-04-22)
+* fixes broken moon widgets ("problem loading widget") (#931).
+* fixes app crash when dragging world map timeline (#935).
+* fixes bug "map application not found" (api30+) (#937).
+* fixes bug where `text size` setting is not properly applied (api31+) (#936).
+* fixes bug where app theme settings indicate the wrong selection (api31+).
+* fixes bug "wrong alarm time after adding offset" to Shadow Factor events (#940).
+* fixes bug where "custom event offsets are ignored" (#941); fixes bug where "event dialog forgets changes after adding offsets".
+* fixes `material you` color issues (readability); fixes spinner drop-down appearance; changes `Monet` labels to `Material You`.
+* adds `restore backup` and `online help` buttons to the welcome screen.
+* adds `notification warning` to alarm welcome; adds `POST_NOTIFICATIONS` permission rational (api33+).
+* adds `crash report` action to general settings; crash report notifications are now shown in a dedicated notification channel.
+* fixes title of `Miscellaneous` notification channel (incorrectly labeled "Notification").
+* fixes bug where `restore backup` prompts are cancelled by touching outside the dialog.
+* replaces use of deprecated api (PreferenceManager, ProgressDialog); removes obsolete permission checks (api23+).
+* updates translation to Norwegian (nb) (#939 by FTno).
+
 ### v0.17.0 (2026-04-11)
-Attention: v0.17.0 breaks existing widget installations (#932). When updating from older versions your home screen widgets may be removed and will need to be re-added.
+* Attention: v0.17.0 breaks older widget installations (#932). When updating from previous versions your home screen widgets may be removed and will need to be re-added.
 * adds `Material You` app themes (api31+) (#635).
 * adds `fancy digital clock` widgets.
 * adds `widget preview` (and `share` action) to the widget configuration activity (#6).
@@ -28,7 +45,7 @@ Attention: v0.17.0 breaks existing widget installations (#932). When updating fr
 * adds permission `suntimes.permission.ADDON` (an experimental alternate to `suntimes.permission.READ_CALCULATOR`).
 * refactor; decouples core data classes from the Android api (#388); moved into `calculator` and `util` Java libraries.
 * refactor; decouples UI classes from the Android Support Library; introduces Suntimes `support` library.
-* build; updates targetSdkVersion (28 -> 30) to Android 11, migrates the app to AndroidX, and replaces use of deprecated API (api30).
+* build; updates targetSdkVersion (28 -> 30) to Android 11, migrates the app to AndroidX, and replaces use of deprecated API (api30) (e.g. AsyncTask, and others).
 * build; adds `production` and `nightly` build flavors (#892).
 * build; adds `legacy` build flavor; assign `android.targetVersion = 28` and `android.useAndroidX = false` in settings.gradle to build against the older Android Support Library.
 
