@@ -1547,7 +1547,7 @@
 
     <!-- App Setting: show location coordinates -->
     <string name="settings_ui_showcoordinates">Afficher les coordonnées</string>
-    <string name="settings_ui_showcoordinates_summary">Afficher les coordonnées dans la barre d'action.</string>
+    <string name="settings_ui_showcoordinates_summary">Afficher les coordonnées dans la barre d\'action.</string>
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Mettre en évidence le champ</string>              <!-- checkbox label -->
