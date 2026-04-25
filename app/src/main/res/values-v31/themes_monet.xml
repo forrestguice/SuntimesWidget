@@ -14,6 +14,7 @@
         <item name="timeCardBackground">@color/monet_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="actionModeStyle">@style/MonetActionMode.System</item>
         <item name="hrColor">@color/monet_hr</item>
         <item name="colorAccent">@color/monet_text_accent</item>
         <item name="text_accentColor">@color/monet_text_accent</item>
@@ -94,6 +95,7 @@
         <item name="timeCardBackground">@color/monet_dark_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_dark_card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="actionModeStyle">@style/MonetActionMode.Dark</item>
         <item name="hrColor">@color/monet_dark_hr</item>
         <item name="colorAccent">@color/monet_dark_text_accent</item>
         <item name="text_accentColor">@color/monet_dark_text_accent</item>
@@ -173,6 +175,7 @@
         <item name="timeCardBackground">@color/monet_light_card_bg</item>
         <item name="semiTransparentBackground">@color/monet_light_card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="actionModeStyle">@style/MonetActionMode.Light</item>
         <item name="hrColor">@color/monet_light_hr</item>
         <item name="colorAccent">@color/monet_light_text_accent</item>
         <item name="text_accentColor">@color/monet_light_text_accent</item>

@@ -138,4 +138,14 @@
         <item name="android:popupBackground">@drawable/monet_popupmenu_frame_light</item>
     </style>
 
+    <style name="MonetActionMode.System" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/monet_menu_bg</item>
+    </style>
+    <style name="MonetActionMode.Dark" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/monet_dark_menu_bg</item>
+    </style>
+    <style name="MonetActionMode.Light" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/monet_light_menu_bg</item>
+    </style>
+
 </resources>
