@@ -2,6 +2,7 @@
 <resources>
     <color name="monet_light_window_bg">@android:color/system_neutral1_50</color>
     <color name="monet_light_primaryColor">@android:color/system_neutral2_50</color>
+    <color name="monet_light_primaryColorDark">@android:color/system_neutral1_400</color>
     <color name="monet_light_dialog_frame">@android:color/system_neutral2_10</color>
     <color name="monet_light_dialog_bg">@android:color/system_neutral2_10</color>
     <color name="monet_light_dialog_bg_alt">@android:color/system_neutral1_50</color>

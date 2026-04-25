@@ -6,6 +6,7 @@
         <item name="android:windowBackground">@color/monet_window_bg</item>
         <item name="colorBackgroundFloating">@color/monet_dialog_bg</item>
         <item name="colorPrimary">@color/monet_primaryColor</item>
+        <item name="colorPrimaryDark">@color/monet_primaryColorDark</item>
         <item name="dialogFrame">@color/monet_dialog_frame</item>
         <item name="dialogBackground">@color/monet_dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/monet_dialog_bg_alt</item>
@@ -85,6 +86,7 @@
         <item name="android:windowBackground">@color/monet_dark_window_bg</item>
         <item name="colorBackgroundFloating">@color/monet_dark_dialog_bg</item>
         <item name="colorPrimary">@color/monet_dark_primaryColor</item>
+        <item name="colorPrimaryDark">@color/monet_dark_primaryColorDark</item>
         <item name="dialogFrame">@color/monet_dark_dialog_frame</item>
         <item name="dialogBackground">@color/monet_dark_dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/monet_dark_dialog_bg_alt</item>
@@ -163,6 +165,7 @@
         <item name="android:windowBackground">@color/monet_light_window_bg</item>
         <item name="colorBackgroundFloating">@color/monet_light_dialog_bg</item>
         <item name="colorPrimary">@color/monet_light_primaryColor</item>
+        <item name="colorPrimaryDark">@color/monet_light_primaryColorDark</item>
         <item name="dialogFrame">@color/monet_light_dialog_frame</item>
         <item name="dialogBackground">@color/monet_light_dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/monet_light_dialog_bg_alt</item>

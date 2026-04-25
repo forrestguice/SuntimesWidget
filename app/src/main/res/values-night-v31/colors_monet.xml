@@ -2,6 +2,7 @@
 <resources>
     <color name="monet_window_bg">@color/monet_dark_window_bg</color>
     <color name="monet_primaryColor">@color/monet_dark_primaryColor</color>
+    <color name="monet_primaryColorDark">@color/monet_dark_primaryColorDark</color>
     <color name="monet_dialog_frame">@color/monet_dark_dialog_frame</color>
     <color name="monet_dialog_bg">@color/monet_dark_dialog_bg</color>
     <color name="monet_dialog_bg_alt">@color/monet_dark_dialog_bg_alt</color>
