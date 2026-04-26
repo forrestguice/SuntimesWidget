@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -263,7 +264,7 @@ public class UIPrefsFragment extends PreferenceFragment
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                             .setCancelable(false)
                             .setMessage(context.getString(R.string.events_editevent_dialog_showevent_off))
-                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)

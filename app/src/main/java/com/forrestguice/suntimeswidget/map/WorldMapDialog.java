@@ -37,6 +37,7 @@ import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.AlertDialog;
@@ -1143,7 +1144,8 @@ public class WorldMapDialog extends BottomSheetDialogBase
             String message = context.getString(R.string.help_worldmap_background, modes.getProjectionTitle(), center[0]+"", center[1]+"", modes.getProj4(center));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                    .setTitle(title).setMessage(message).setIcon(R.drawable.ic_action_settings)
+                    .setTitle(title).setMessage(message)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionSettings, R.drawable.ic_action_settings))
                     .setPositiveButton(context.getString(R.string.dialog_ok),
                     new DialogInterface.OnClickListener() {
                         @Override

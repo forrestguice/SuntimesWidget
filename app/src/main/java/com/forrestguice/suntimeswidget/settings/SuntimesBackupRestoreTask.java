@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
+
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ListView;
@@ -646,13 +648,14 @@ public class SuntimesBackupRestoreTask implements Callable<SuntimesBackupRestore
     {
         switch (key)
         {
-            case SuntimesBackupTask.KEY_PLACEITEMS: return R.drawable.ic_action_place;
-            case SuntimesBackupTask.KEY_APPSETTINGS: return R.drawable.ic_action_settings;
-            case SuntimesBackupTask.KEY_WIDGETSETTINGS: return R.drawable.ic_action_widget;
-            case SuntimesBackupTask.KEY_ALARMITEMS: return R.drawable.ic_action_alarms;
-            case SuntimesBackupTask.KEY_EVENTITEMS: default: return R.drawable.ic_action_copy;
+            case SuntimesBackupTask.KEY_PLACEITEMS: return IconUtils.getThemedIcon(context, R.attr.icActionPlace, R.drawable.ic_action_place);
+            case SuntimesBackupTask.KEY_APPSETTINGS: return IconUtils.getThemedIcon(context, R.attr.icActionSettings, R.drawable.ic_action_settings);
+            case SuntimesBackupTask.KEY_WIDGETSETTINGS: return IconUtils.getThemedIcon(context, R.attr.icActionWidgets, R.drawable.ic_action_widget);
+            case SuntimesBackupTask.KEY_ALARMITEMS: return IconUtils.getThemedIcon(context, R.attr.icActionAlarm, R.drawable.ic_action_alarms);
+            case SuntimesBackupTask.KEY_EVENTITEMS: default: return IconUtils.getThemedIcon(context, R.attr.icActionCopy, R.drawable.ic_action_copy);
         }
     }
+
     protected static CharSequence displayStringForImportMethod(Context context, int method)
     {
         switch (method)

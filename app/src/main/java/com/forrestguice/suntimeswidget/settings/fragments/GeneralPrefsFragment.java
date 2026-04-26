@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.suntimeswidget.welcome.WelcomeFirstPageView;
@@ -354,15 +355,9 @@ public class GeneralPrefsFragment extends PreferenceFragment
     {
         if (context != null)
         {
-            int[] attrs = { R.attr.icActionError };
-            @SuppressLint("ResourceType")
-            TypedArray a = context.obtainStyledAttributes(attrs);
-            int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
-            a.recycle();
-
             AlertDialog.Builder dialog = new AlertDialog.Builder(context)
                     .setTitle(context.getString(R.string.crash_dialog_title))
-                    .setIcon(iconResID);
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionError, R.drawable.ic_action_error));
 
             String reportContent = ExceptionHandler.getLastCrashReport(context);
             if (reportContent != null)

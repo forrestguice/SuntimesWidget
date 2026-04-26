@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.content.ContextCompat;
@@ -1033,7 +1034,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.alarmdelete_dialog_title))
                 .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                 .setPositiveButton(context.getString(R.string.alarmdelete_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {

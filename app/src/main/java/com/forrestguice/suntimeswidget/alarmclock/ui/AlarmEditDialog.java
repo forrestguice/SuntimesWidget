@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import com.forrestguice.support.app.AlertDialog;
@@ -431,15 +432,10 @@ public class AlarmEditDialog extends DialogBase
             return;
         }
 
-        int[] attrs = { R.attr.icActionDelete };
-        @SuppressLint("ResourceType")
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
-        a.recycle();
-
         String message = context.getString(R.string.alarmdelete_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.alarmdelete_dialog_title)).setMessage(message).setIcon(iconResID)
+                .setTitle(context.getString(R.string.alarmdelete_dialog_title)).setMessage(message)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                 .setPositiveButton(context.getString(R.string.alarmdelete_dialog_ok), onDeleteConfirmed)
                 .setNegativeButton(context.getString(R.string.alarmdelete_dialog_cancel), null);
         confirm.show();

@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.preference.Preference;
 import android.preference.PreferenceManager;
@@ -614,7 +615,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     AlertDialog.Builder confirm = new AlertDialog.Builder(myParent)
                             .setTitle(myParent.getString(R.string.locationclear_dialog_title))
                             .setMessage(myParent.getString(R.string.locationclear_dialog_message))
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(IconUtils.getThemedIcon(myParent, R.attr.icActionWarning, R.drawable.ic_action_warning))
                             .setPositiveButton(myParent.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)

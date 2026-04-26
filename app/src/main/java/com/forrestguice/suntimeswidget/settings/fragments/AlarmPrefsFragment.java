@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.colors.ColorValuesSheetActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.colors.ColorValuesCollectionPreference;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 
@@ -397,7 +398,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                             .setMessage(context.getString(R.string.alarms_label_bootcompleted_action_confirm))
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
@@ -524,14 +525,8 @@ public class AlarmPrefsFragment extends PreferenceFragment
 
     public static void showPermissionRationalDialog(Context context, String title, String message, DialogInterface.OnClickListener onAccepted)
     {
-        int[] attrs = { R.attr.icActionAbout };
-        @SuppressLint("ResourceType")
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_about);
-        a.recycle();
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(context)
-                .setIcon(iconResID)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                 .setTitle(title)
                 .setMessage(SpanUtils.fromHtml(message + "<br/><br/>" + context.getString(R.string.privacy_permissiondialog_prompt)))
                 .setPositiveButton(context.getString(R.string.dialog_ok), onAccepted)

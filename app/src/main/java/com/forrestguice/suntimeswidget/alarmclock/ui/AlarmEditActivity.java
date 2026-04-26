@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.widget.PopupMenuCompat;
@@ -721,7 +722,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (editor != null && editor.isModified())
         {
             String message = context.getString(R.string.discardchanges_dialog_message);
-            AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+            AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                     .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             AlarmEditActivity.super.onBackPressed();

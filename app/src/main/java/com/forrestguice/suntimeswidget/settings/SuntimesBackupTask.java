@@ -30,6 +30,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
+
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.support.preference.PreferenceManager;
 import android.util.Log;
 
@@ -594,7 +596,8 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(isImport ? R.string.action_restoreBackup : R.string.action_createBackup))
-                .setIcon(isImport ? R.drawable.ic_action_copy : R.drawable.ic_action_save)
+                .setIcon(isImport ? IconUtils.getThemedIcon(context, R.attr.icActionCopy, R.drawable.ic_action_copy)
+                        : IconUtils.getThemedIcon(context, R.attr.icActionSave, R.drawable.ic_action_save))
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -664,7 +667,7 @@ public class SuntimesBackupTask extends WidgetSettingsExportTask
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context).setTitle(message)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                         .setMessage(report);
                 dialog.show();
             }

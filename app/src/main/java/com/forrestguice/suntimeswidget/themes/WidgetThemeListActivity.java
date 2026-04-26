@@ -35,6 +35,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.support.preference.PreferenceManager;
 
 import android.text.SpannableStringBuilder;
@@ -336,7 +338,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             AlertDialog.Builder confirm = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.themes_deletetheme_dialog_title))
                     .setMessage(getString(R.string.themes_deletetheme_dialog_message, theme.themeDisplayString()))
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                     .setPositiveButton(getString(R.string.themes_deletetheme_dialog_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int whichButton)

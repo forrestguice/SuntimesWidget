@@ -53,6 +53,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.util.android.AndroidResources;
@@ -1050,7 +1051,8 @@ public class EditEventDialog extends EditBottomSheetDialog
         if (isModified())
         {
             String message = context.getString(R.string.discardchanges_dialog_message);
-            AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+            AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                     .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             if (getDialog() != null) {

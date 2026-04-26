@@ -30,6 +30,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.support.preference.PreferenceManager;
 
 import android.text.TextUtils;
@@ -814,7 +816,8 @@ public class PlacesListFragment extends DialogBase
             String message = context.getString(R.string.locationdelete_dialog_message, desc);
 
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle(title).setMessage(message)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                     .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), onConfirmDeletePlace(rowIDs))
                     .setNegativeButton(context.getString(R.string.locationdelete_dialog_cancel), null);
             confirm.show();
@@ -893,7 +896,7 @@ public class PlacesListFragment extends DialogBase
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.locationclear_dialog_title))
                 .setMessage(context.getString(R.string.locationclear_dialog_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                 .setPositiveButton(context.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton)

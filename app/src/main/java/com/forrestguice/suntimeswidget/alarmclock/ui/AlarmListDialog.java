@@ -40,6 +40,7 @@ import android.os.Bundle;
 import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityCompat;
@@ -431,16 +432,10 @@ public class AlarmListDialog extends DialogBase
 
     public static void confirmClearAlarms(final Context context)
     {
-        int[] attrs = { R.attr.icActionDelete };
-        @SuppressLint("ResourceType")
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
-        a.recycle();
-
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.alarmsclear_dialog_title))
                 .setMessage(context.getString(R.string.alarmsclear_dialog_message))
-                .setIcon(iconResID)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                 .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onClearAlarmsConfirmed(context))
                 .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
         confirm.show();

@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.alarmclock.android.AndroidResID_AlarmType
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_SolarEvents;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.support.app.ActivityCompat;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.AppCompatActivity;
@@ -861,7 +862,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             if (forItem.getEvent() != null)
             {
                 AlertDialog.Builder confirmOverride = new AlertDialog.Builder(AlarmClockLegacyActivity.this);
-                confirmOverride.setIcon(android.R.drawable.ic_dialog_alert);
+                confirmOverride.setIcon(IconUtils.getThemedIcon(AlarmClockLegacyActivity.this, R.attr.icActionWarning, R.drawable.ic_action_warning));
                 confirmOverride.setMessage(getString(R.string.alarmtime_dialog_message));
                 confirmOverride.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
@@ -1489,7 +1490,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.alarmsclear_dialog_title))
                 .setMessage(context.getString(R.string.alarmsclear_dialog_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                 .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {

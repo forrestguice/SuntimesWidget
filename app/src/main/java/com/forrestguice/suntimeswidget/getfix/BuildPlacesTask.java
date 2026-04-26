@@ -33,6 +33,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.util.ExecutorUtils;
 import com.forrestguice.util.Pair;
 import android.view.View;
@@ -467,12 +468,6 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
             displayStrings[i] = items.get(i).second;
         }
 
-        int[] attrs = { R.attr.icActionWorldMap };
-        @SuppressLint("ResourceType")
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_map);
-        a.recycle();
-
         DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener = new DialogInterface.OnMultiChoiceClickListener()
         {
             @Override
@@ -485,7 +480,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.places_label_build))
-                .setIcon(iconResID)
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWorldMap, R.drawable.ic_action_map))
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
                 .setPositiveButton(context.getString(R.string.places_action_addPlace), new DialogInterface.OnClickListener()
                 {

@@ -31,6 +31,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.Toast;
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.lifecycle.ViewModelProviders;
@@ -325,7 +326,8 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 String title = context.getString(R.string.colorsdelete_dialog_title);
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
                 AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                        .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(title).setMessage(message)
+                        .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                         .setPositiveButton(context.getString(R.string.colorsdelete_dialog_ok), onConfirmDelete(context, colorsID))
                         .setNegativeButton(context.getString(R.string.colorsdelete_dialog_cancel), null);
                 confirm.show();

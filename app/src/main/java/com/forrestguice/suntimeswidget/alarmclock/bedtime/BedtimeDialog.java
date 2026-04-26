@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SnackbarUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityOptionsCompat;
@@ -1353,15 +1354,10 @@ public class BedtimeDialog extends DialogBase
     {
         if (context != null)
         {
-            int[] attrs = { R.attr.icActionDelete };
-            @SuppressLint("ResourceType")
-            TypedArray a = context.obtainStyledAttributes(attrs);
-            int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
-            a.recycle();
-
             String message = context.getString(R.string.alarmsclear_dialog_message);
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.alarmsclear_dialog_title)).setMessage(message).setIcon(iconResID)
+                    .setTitle(context.getString(R.string.alarmsclear_dialog_title)).setMessage(message)
+                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                     .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onDeleteConfirmed)
                     .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
             confirm.show();
