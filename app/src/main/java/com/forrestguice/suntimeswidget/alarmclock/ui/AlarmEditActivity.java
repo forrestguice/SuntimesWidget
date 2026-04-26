@@ -1341,6 +1341,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
         repeatDialog.setColorOverrides(colorOn, colorOff, colorDisabled, colorPressed);
+        repeatDialog.setRepeatMode(item.getEventItem(this).supportsRepeating());
         repeatDialog.setRepetition(item.repeating, item.repeatingDays);
         repeatDialog.setOnAcceptedListener(onRepetitionChanged);
         repeatDialog.show(getSupportFragmentManager(), DIALOGTAG_REPEAT + 1);

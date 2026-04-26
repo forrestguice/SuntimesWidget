@@ -309,6 +309,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             }
 
             text_repeat.setText( displayRepeating(context, item, selected));
+            text_repeat.setVisibility((eventItem.supportsRepeating() != AlarmEventContract.REPEAT_SUPPORT_NONE) ? View.VISIBLE : View.GONE);
+            
             text_event.setText(displayEvent(context, item));
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);

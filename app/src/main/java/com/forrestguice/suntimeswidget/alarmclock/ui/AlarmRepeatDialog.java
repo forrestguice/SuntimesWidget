@@ -40,6 +40,7 @@ import com.forrestguice.colors.ColorUtils;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmItemInterface;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.support.app.AlertDialog;
@@ -67,6 +68,7 @@ public class AlarmRepeatDialog extends DialogBase
     private boolean repeat = PREF_DEF_ALARM_REPEAT;
     private ArrayList<Integer> repeatDays = PREF_DEF_ALARM_REPEATDAYS;
     private SparseArray<ToggleButton> btnDays;
+    private View layoutDays;
 
     private int[] colorOverrides = new int[] {-1, -1, -1, -1};
     public void setColorOverrides(int onColor, int offColor, int disabledColor, int pressedColor)
@@ -184,6 +186,8 @@ public class AlarmRepeatDialog extends DialogBase
                 ViewCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
             }
         }
+
+        layoutDays = dialogContent.findViewById(R.id.layout_repeat_days);
 
         btnDays = new SparseArray<>();
         btnDays.put(Calendar.SUNDAY, (ToggleButton)dialogContent.findViewById(R.id.alarmOption_repeat_sun));
@@ -312,6 +316,14 @@ public class AlarmRepeatDialog extends DialogBase
         }
     }
 
+    public static final String ARG_REPEAT_MODE = "repeatMode";
+    public void setRepeatMode(int mode) {
+        getArgs().putInt(ARG_REPEAT_MODE, mode);
+    }
+    public int getRepeatMode() {
+        return getArgs().getInt(ARG_REPEAT_MODE, AlarmEventContract.REPEAT_SUPPORT_DAILY);
+    }
+
     private void updateViews(@NonNull Context context)
     {
         if (Build.VERSION.SDK_INT >= 14)
@@ -357,6 +369,10 @@ public class AlarmRepeatDialog extends DialogBase
                     } //else Log.d("DEBUG", "updateViews: missing button tag " + i);
                 } //else Log.d("DEBUG", "updateViews: missing button " + i);
             }
+        }
+
+        if (layoutDays != null) {
+            layoutDays.setVisibility(getRepeatMode() == AlarmEventContract.REPEAT_SUPPORT_DAILY ? View.VISIBLE : View.GONE);
         }
     }
 
