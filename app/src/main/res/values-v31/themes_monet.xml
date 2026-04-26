@@ -78,7 +78,7 @@
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.System</item>
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_ref</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_ref</item>
-        <item name="popupControlBackground">@drawable/monet_popupmenu_frame_ref</item>
+        <item name="popupControlBackground">@drawable/monet_popupcontrol_frame_ref</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.System</item>
         <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.System</item>
         <item name="alertDialogTheme">@style/MonetAlertDialogTheme.System</item>
@@ -160,7 +160,7 @@
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.Dark</item>
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_dark</item>
-        <item name="popupControlBackground">@drawable/monet_popupmenu_frame_dark</item>
+        <item name="popupControlBackground">@drawable/monet_popupcontrol_frame_dark</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.Dark</item>
         <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.Dark</item>
         <item name="alertDialogTheme">@style/MonetAlertDialogTheme.Dark</item>
@@ -242,7 +242,7 @@
         <item name="actionOverflowMenuStyle">@style/MonetOverflowMenu.Light</item>
         <item name="tileCardBackground">@drawable/monet_tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_light</item>
-        <item name="popupControlBackground">@drawable/monet_popupmenu_frame_light</item>
+        <item name="popupControlBackground">@drawable/monet_popupcontrol_frame_light</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.Light</item>
         <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.Light</item>
         <item name="alertDialogTheme">@style/MonetAlertDialogTheme.Light</item>
