@@ -140,7 +140,11 @@ public abstract class BottomSheetDialogBase extends BottomSheetDialogFragment im
             layout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    expandSheet(dialog);
+                    try {
+                        expandSheet(dialog);
+                    } catch (IllegalStateException e) {
+                        Log.w("BottomSheetDialog", "failed to expandSheet! " + e);
+                    }
                 }
             }, afterDelay);
         }
