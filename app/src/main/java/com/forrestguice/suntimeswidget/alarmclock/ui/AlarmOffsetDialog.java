@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisp
 import com.forrestguice.support.app.AlertDialog;
 import com.forrestguice.support.app.DialogBase;
 
+@Deprecated
 @TargetApi(11)
 public class AlarmOffsetDialog extends DialogBase
 {

@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.settings.IntegerPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerDialog;
 import com.forrestguice.suntimeswidget.settings.MillisecondPickerHelper;
 import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.settings.TimeOffsetPickerDialog;
 import com.forrestguice.suntimeswidget.views.IconUtils;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
@@ -407,14 +408,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             helpDialog.setNeutralButtonListener(HelpDialog.getOnlineHelpClickListener(AlarmEditActivity.this, HELP_PATH_ID), DIALOGTAG_HELP);
         }
 
-        if (Build.VERSION.SDK_INT >= 11)
-        {
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET);
-            if (offsetDialog != null) {
-                offsetDialog.setOnAcceptedListener(onOffsetChanged);
-            }
-        } // else // TODO
-
+        TimeOffsetPickerDialog offsetDialog = (TimeOffsetPickerDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET + 1);
+        if (offsetDialog != null) {
+            offsetDialog.setDialogListener(onOffsetChanged);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1151,10 +1148,20 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).supportsOffsetDays());
-            offsetDialog.setOffset(item.offset);
-            offsetDialog.setOnAcceptedListener(onOffsetChanged);
+            int maxValue = getResources().getInteger(R.integer.maxAlarmOffsetMillis);
+            boolean showDays = item.getEventItem(AlarmEditActivity.this).supportsOffsetDays();
+            if (showDays) {
+                int maxDays = getResources().getInteger(R.integer.maxAlarmOffsetDays);
+                maxValue += maxDays * 24 * 60 * 60 * 1000;
+            }
+
+            TimeOffsetPickerDialog offsetDialog = new TimeOffsetPickerDialog();
+            offsetDialog.setFlags(false, true, true, showDays, true);
+            offsetDialog.setRange(0, maxValue);
+            offsetDialog.setShowLabel(false);
+            offsetDialog.setValue((int) item.offset);
+            offsetDialog.setZeroText(getString(R.string.alarms_action_clearOffset));
+            offsetDialog.setDialogListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
 
         }  else {
@@ -1162,17 +1169,17 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
     }
 
-    private final DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
+    private final TimeOffsetPickerDialog.DialogListener onOffsetChanged = new TimeOffsetPickerDialog.DialogListener()
+    {
         @Override
-        public void onClick(DialogInterface dialog, int which)
+        public void onDialogAccepted(long value)
         {
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) getSupportFragmentManager().findFragmentByTag(DIALOGTAG_OFFSET + 1);
-            if (editor != null && offsetDialog != null)
+            if (editor != null)
             {
                 AlarmClockItem item = editor.getItem();
                 if (item != null)
                 {
-                    item.offset = offsetDialog.getOffset();
+                    item.offset = value;
                     AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(AlarmEditActivity.this), item);
                     editor.notifyItemChanged();
                     editor.triggerPreviewOffset();
