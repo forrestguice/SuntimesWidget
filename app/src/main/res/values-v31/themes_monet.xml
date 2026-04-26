@@ -80,6 +80,8 @@
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_ref</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_ref</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.System</item>
+        <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.System</item>
+        <item name="alertDialogTheme">@style/MonetAlertDialogTheme.System</item>
     </style>
 
     <!-- Material You (Dark) -->
@@ -160,6 +162,8 @@
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_dark</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_dark</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.Dark</item>
+        <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.Dark</item>
+        <item name="alertDialogTheme">@style/MonetAlertDialogTheme.Dark</item>
     </style>
 
     <!-- Material You (Light) -->
@@ -240,6 +244,8 @@
         <item name="popupMenuBackground">@drawable/monet_popupmenu_frame_light</item>
         <item name="popupControlBackground">@drawable/monet_popupmenu_frame_light</item>
         <item name="spinnerStyle">@style/MonetSpinnerStyle.Light</item>
+        <item name="android:alertDialogTheme">@style/MonetAlertDialogTheme.Light</item>
+        <item name="alertDialogTheme">@style/MonetAlertDialogTheme.Light</item>
     </style>
 
 </resources>

@@ -148,4 +148,14 @@
         <item name="background">@color/monet_light_menu_bg</item>
     </style>
 
+    <style name="MonetAlertDialogTheme.System" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/monet_alertdialog_bg_ref</item>
+    </style>
+    <style name="MonetAlertDialogTheme.Dark" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:background">@drawable/monet_alertdialog_bg_dark</item>
+    </style>
+    <style name="MonetAlertDialogTheme.Light" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:background">@drawable/monet_alertdialog_bg_light</item>
+    </style>
+
 </resources>
