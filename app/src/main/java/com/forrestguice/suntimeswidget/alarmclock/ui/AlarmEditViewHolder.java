@@ -286,6 +286,17 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_location.setText((item.location != null) ? item.location.getLabel() : "");
 
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+            boolean isClockTime = (item.getEvent() == null && item.timezone == null);
+            boolean isSolarTime = (item.getEvent() == null && item.timezone != null);
+            boolean requiresLocation = eventItem.requiresLocation();
+            if (isClockTime) {
+                requiresLocation = false;
+            } else if (isSolarTime) {
+                requiresLocation = true;
+            }
+            text_location.setVisibility(requiresLocation ? View.VISIBLE : View.GONE);
+
             boolean useAppLocation = item.hasFlag(AlarmClockItem.FLAG_LOCATION_FROM_APP) && item.flagIsTrue(AlarmClockItem.FLAG_LOCATION_FROM_APP);
             Drawable locationIcon0 = ContextCompat.getDrawable(context, (useAppLocation ? res_icHome : res_icPlace));
             Drawable locationIcon = (locationIcon0 != null ? locationIcon0.mutate() : null);
