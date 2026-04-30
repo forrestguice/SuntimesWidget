@@ -473,8 +473,7 @@
     <string name="widgetMode_sunPosMap_simplevandergrinten">Van der Grinten</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simplesinusoidal">Mercator à aire égale</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->       <!-- setting -->
     <string name="widgetMode_sunPosMap_simplemollweide">Mollweide</string>     <!-- setting -->
-
-    <string name="widgetMode_sunPosMap_simplerectangular">Basique</string>  <!-- setting -->
+    
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polaire [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polaire [sud]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Bille Bleue</string>    <!-- setting -->
@@ -894,7 +893,6 @@
     <string name="eventType_default_moonphases">Phases de lune</string>
     <string name="eventType_default_seasons">Saisons</string>
 
-    <string name="eventType_sun_elevation">Soleil (élévation)</string>
     <string name="eventlist_dialog_title">Événements personnalisés</string>
 
     <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
@@ -926,7 +924,7 @@
     <string name="event_moonevent_title">Lune</string>                   <!-- (custom) moon event title; e.g. "Moon 6°" -->
     <string name="event_moonevent_phrase_gender">autre</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonevent_label_suggested">Elévation de la lune</string>
-    <string name="event_moonillumevent_title">Lune/string>                   <!-- (custom) moon illum event title; e.g. "Moon 25%" -->
+    <string name="event_moonillumevent_title">Lune</string>                   <!-- (custom) moon illum event title; e.g. "Moon 25%" -->
     <string name="event_moonillumevent_phrase_gender">autre</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonillumevent_label_suggested">Luminosité de la lune</string>
 
