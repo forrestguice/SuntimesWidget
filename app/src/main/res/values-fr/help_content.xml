@@ -36,6 +36,8 @@
                 * <b>%dt</b> pour l\'heure (de la dernière mise à jour) <br/>
                 * <b>%dT</b> pour l\'heure avec les secondes (de la dernière mise à jour) <br/>
                 <br/>
+                * <b>%dm</b> pour les millisecondes (de la dernière mise à jour) <br/>
+                <br/>
                 * <b>%loc</b> pour le libellé (ex. Paris) <br />
                 * <b>%lat</b> pour la latitude <br />
                 * <b>%lon</b> pour la longitude <br/>
@@ -44,6 +46,9 @@
                 * <b>%s</b> pour la source de donnée (ex. sunrisesunsetlib) <br/>
                 * <b>%t</b> pour le fuseau horaire (id) (ex. Europe/Paris) <br/>
                 * <b>%id</b> pour appWidgetID <br/>
+         <br/>
+         <b>Date Widgets:</b> <br/>
+         * <b>%M</b> pour le mode (ex. Gregorian) <br/>
          <br/>
          <b>Widgets du soleil :</b> <br/>
                 * <b>%m</b> pour le mode temporel (court) (ex. Civil) <br/>
@@ -119,10 +124,18 @@
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Crépuscule civil :</b> Le soleil est à 6 degrés sous l\'horizon. Les étoiles les plus brillantes sont visibles. Il y a assez de lumière pour la plupart des activités de plein air sans lumière d\'appoint.<br/><br/>
-          <b>Crépuscule nautique :</b> Le soleil est à 12 degrés au-dessous de l\'horizon. Le contour des objets et l\'horizon sont de plus en plus indistincts. Il n\'y a pas assez de lumière pour la plupart des activités de plein air sans avoir recours à une lumière d\'appoint.<br/><br/>
-          <b>Crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>
+          Les <b>heures de lever</b> indiquent le début de chaque période (<b>aube</b>), et les <b>heures de coucher</b> indiquent leur fin (<b>crépuscule</b>).<br/><br/>
+          <b>Aube / crépuscule civil :</b> Le soleil est à 6 degrés sous l\'horizon. Les étoiles les plus brillantes sont visibles. Il y a assez de lumière pour la plupart des activités de plein air sans lumière d\'appoint.<br/><br/>
+          <b>Aube / crépuscule nautique :</b> Le soleil est à 12 degrés au-dessous de l\'horizon. Le contour des objets et l\'horizon sont de plus en plus indistincts. Il n\'y a pas assez de lumière pour la plupart des activités de plein air sans avoir recours à une lumière d\'appoint.<br/><br/>
+          <b>Aube / crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>
+          <b>Nuit :</b> Le soleil est à plus de 18 degrés sous l\'horizon. On aperçoit les étoiles les plus faibles.<br/><br/>
     ]]></string>
+    <string name="help_general_twilight_more"><![CDATA[
+          <b>Nuit blanche :</b> Le soleil ne descend pas à plus de 6 degrés sous l\'horizon. Il fait suffisamment clair pour pratiquer la plupart des activités de plein air tout au long de la nuit.<br/><br/>
+          <b>Crépuscule de minuit :</b> Le soleil ne descend pas à plus de 18 degrés sous l\'horizon. C\'est le crépuscule toute la nuit et le ciel ne s\'assombrit jamais complètement.<br/><br/>
+          <b>Soleil de minuit :</b> Le soleil ne se couche pas sous l\'horizon (24 heures de lumière du jour). On parle alors de <b>jour polaire</b>.<br/><br/>
+          <b>Nuit polaire :</b> Le soleil ne se lève pas au-dessus de l\'horizon (24 heures d\'obscurité).<br/><br/>
+          ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Aujourd\'hui :</b> Heures de lever et de coucher du soleil pour la date d\'aujourd\'hui.<br/><br/>
           <b>Dernier / Prochain :</b> La date du dernier événement et celle du prochain événement.<br/>
@@ -136,13 +149,35 @@
     <string name="help_general_tropicalyear"><![CDATA[
           <b>Année tropique:</b> Un cycle complet des saisons. La durée de l\'<em>année tropicale</em> est mesurée d\'un <em>équinoxe de printemps<\em> à l\'autre. Elle est en moyenne de environ <em>365,24 jours</em>, sa durée exacte variant d\'une année à l\'autre (jusqu\'à 30 minutes)<br/>
     ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+          <b>Heure solaire apparente :</b> Heure solaire. Heure déterminée en suivant le mouvement du Soleil apparent par rapport à une longitude et une latitude données.
+          <br/><br/>
+          Le mouvement du Soleil apparent n\'est pas constant. Il varie au fil des saisons en raison de l\'inclinaison de l\'écliptique et de l\'excentricité de l\'orbite terrestre.
+          La durée de chaque jour solaire apparent, mesurée d\'un midi à l\'autre, peut être légèrement supérieure ou inférieure à 24 heures (jusqu\'à 30 secondes).
+          Ces légères variations s\'accumulent au fil des jours (et s\'équilibrent en moyenne sur l\'ensemble de l\'année).
+          <br/><br/>
+
+          <b>Heure moyenne locale :</b> Heure solaire. Heure déterminée à partir de la position du Soleil moyen par rapport à une longitude donnée.
+          <br/><br/>
+          Le mouvement du Soleil moyen tient compte de l\'obliquité et de l\'excentricité et est uniforme.
+          La durée de chaque jour solaire moyen est exactement de 24 heures.<br/><br/>
+
+          <b>Écart horaire (EOT) :</b> Différence entre l\'heure moyenne locale et l\'heure solaire apparente.
+          Il s\'agit de la variation cumulée de la durée apparente de la journée solaire.
+          <br/><br/>
+          L\'heure solaire apparente peut différer de l\'heure moyenne locale de 16 minutes maximum, selon la saison.
+          <br/><br/>
+
+          <i>Cette application utilise un algorithme pour calculer l\'écart horaire (et en déduire l\'heure solaire apparente).
+                Votre position géographique sert à déterminer l\'heure moyenne locale.</i>
+          <br/><br/>
+      ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Longueur de jour :</b> espace de temps entre le lever et le coucher du soleil.<br/><br/>
         <b>Lumière utile :</b> espace de temps entre l\'aube civile et le crépuscule civil.<br/>
-    ]]>
-    </string>
+        ]]></string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Illumination de la lune :</b> Le widget de la lune et la page principale affiche l\'illumination de la lune au zénith lunaire (le milieu entre le lever et le coucher de la lune), tandis que la fenêtre de la lune affiche l\'illumination actuelle de la lune.<br/><br/>
+        <b>illumination de la lune :</b> La page principale affiche l\'illumination de la lune à midi lunaire, tandis que la boîte de dialogue « Lune » affiche l\'illumination de la lune actuel.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>Heure dorée :</b> Le soleil est entre 6 degrés en dessous ou au-dessus de l\'horizon. Le matin, l\'heure dorée débute avec l\'aube civile et termine peu de temps après le lever du soleil. Le soir, l\'heure dorée débute peu de temps avant le coucher du soleil et se termine avec le crépuscule civil.<br/>
@@ -151,7 +186,25 @@
         <b>Heure bleue :</b> Le soleil est entre 8 degrés et 4 degrés en dessous de l\'horizon. Le début et la fin de l\'heure bleue se situe entre le crépuscule, respectivement l\'aube nautique et civil.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-        Nom complet de la classe (Activity) à lancer.<br/>
+          Tous les champs sont facultatifs (les valeurs peuvent être laissées vides pour une <em>intention implicite</em>).
+          <br/>
+          <br/>
+          <b>Action :</b> Une chaîne d\'action.<br/><small>e.g. <em>android.intent.action.VIEW</em></small>
+          <br/>
+          <br/>
+          <b>Package :</b> Le nom d\'un paquet.<br/><small>e.g. <em>app.package.name</em></small>
+          <br/>
+          <br/>
+          <b>Class :</b> Un nom de classe pleinement qualifié.<br/><small>e.g. <em>app.package.name.MainActivity</em></small>
+          <br/>
+          <br/>
+          <b>Data :</b> Un URI qui contient ou renvoie vers des données jointes. Prend en charge les <em>&percnt;s</em>ubstitutions. <small>e.g. <em>geo:&percnt;lat,&percnt;lon</em></small>
+          <br/>
+          <br/>
+          <b>Mime :</b> Le type MIME des données jointes.
+          <br/>
+          <br/>
+          <b>Extras :</b> Une <em>&amp;</em> délimitée contenant des valeurs supplémentaires. Prend en charge les <em>&percnt;s</em>ubstitutions.<br/><br/>Les valeurs peuvent être <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> ou String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=&percnt;dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Pour <b>ajouter un nouveau widget</b> vous devez vous rendre sur l\'écran d\'accueil.<br/><br/>
