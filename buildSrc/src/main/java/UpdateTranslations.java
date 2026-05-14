@@ -197,7 +197,7 @@ public abstract class UpdateTranslations extends CleanupTranslations
                 }
             }
 
-            // report number of TODO
+            // report number of todos
             NodeList nodes = node.getChildNodes();
             int todoCount = 0;
             for (int i=0; i<nodes.getLength(); i++)
@@ -210,12 +210,8 @@ public abstract class UpdateTranslations extends CleanupTranslations
                 }
             }
 
-            String report;
-            if (todoCount > 0)
-            {
-                getLogger().warn("{} TODO :: {}", todoCount, (parent + "/" + baseName + ".xml"));
-                report = "TODO: " + todoCount;
-                writeReport(parent, baseName, report);
+            if (todoCount > 0) {
+                appendToReport(String.format("%1$s:\t%2$s", (parent + "/" + baseName + ".xml"), todoCount));
             }
 
             node.normalize();
@@ -345,23 +341,9 @@ public abstract class UpdateTranslations extends CleanupTranslations
         return set;
     }
 
-    private void writeReport(String parent, String baseName, String report)
-    {
-        String path = getOutputDir().get() + "/report/" + parent + "_" +  baseName + ".report";
-        File outputFile = new File(path);
-        File directory = outputFile.getParentFile();
-        if (!directory.exists() && !directory.mkdirs()) {
-            getLogger().error("Failed to create output directory {}", directory.getAbsolutePath());
-            return;
-        }
-
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFile)))
-        {
-            out.write(report);
-
-        } catch (IOException e) {
-            getLogger().error("Failed to write report", e);
-        }
+    @Override
+    protected String getReportFileName() {
+        return "translation-report.txt";
     }
 
 }

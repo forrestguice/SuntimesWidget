@@ -19,6 +19,7 @@
 import org.gradle.api.DefaultTask;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.w3c.dom.Document;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -28,7 +29,9 @@ import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -75,7 +78,9 @@ public abstract class CleanupTranslations extends DefaultTask
         String[] baseNames = getBaseNames().get().split("\\|");
         for (String baseName : baseNames) {
             cleanupTranslations(baseName.trim());
+            appendToReport();
         }
+        writeReport(getReportBuilder().toString());
     }
 
     protected void init() {
@@ -181,6 +186,60 @@ public abstract class CleanupTranslations extends DefaultTask
     {
         String p = path.getFileName().toString().toLowerCase();
         return p.equals(baseName + ".xml");
+    }
+
+    private StringBuilder report = new StringBuilder();
+    @Internal
+    protected StringBuilder getReportBuilder() {
+        return report;
+    }
+    protected void resetReport() {
+        report = new StringBuilder();
+    }
+
+    @Internal
+    protected String getReportFileName() {
+        return null;
+    }
+
+    protected void appendToReport() {
+        appendToReport("");
+    }
+    protected void appendToReport(String line) {
+        getReportBuilder().append(line).append("\n");
+    }
+
+    protected void writeReport(String parent, String baseName, String report)
+    {
+        String path = getOutputDir().get() + "/report/" + parent + "_" +  baseName + ".report";
+        writeReport(path, report);
+    }
+
+    protected void writeReport(String report)
+    {
+        String path = getOutputDir().get() + "/report/" + getReportFileName();
+        writeReport(path, report);
+    }
+
+    protected void writeReport(String path, String report)
+    {
+        if (path == null) {
+            return;
+        }
+
+        File outputFile = new File(path);
+        File directory = outputFile.getParentFile();
+        if (!directory.exists() && !directory.mkdirs()) {
+            getLogger().error("Failed to create output directory {}", directory.getAbsolutePath());
+            return;
+        }
+
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFile))) {
+            out.write(report);
+
+        } catch (IOException e) {
+            getLogger().error("Failed to write report", e);
+        }
     }
 
 }
