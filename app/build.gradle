@@ -290,3 +290,18 @@ if (CleanupTranslations != null) {
         outputDir.set("${buildDir}/generated/res/translations")
     }
 }
+
+def UpdateTranslations
+try {
+    UpdateTranslations = Class.forName("UpdateTranslations")
+} catch (ClassNotFoundException e) {
+    UpdateTranslations = null
+}
+if (UpdateTranslations != null) {
+    tasks.register('updateTranslations', UpdateTranslations) {
+        group = 'Translation'
+        baseNames.set('strings|help_content')
+        inputDir.set(layout.projectDirectory.dir('src/main/res').toString())
+        outputDir.set("${buildDir}/generated/res/translations")
+    }
+}
