@@ -283,6 +283,6 @@ localization_plugin {
     baseNames = 'strings|help_content'
     excludeLocales = 'en|en-rUS|en-rCA'
     inputDir = layout.projectDirectory.dir('src/main/res').toString()
-    outputDir = "${buildDir}/generated/translations"
+    outputDir = "${buildDir}/generated/localization"
 }
 

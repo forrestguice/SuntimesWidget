@@ -19,7 +19,6 @@ package com.forrestguice.suntimes.gradle.localization;/*
 import org.gradle.api.DefaultTask;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.w3c.dom.Document;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -177,7 +176,12 @@ public abstract class ProcessTranslations extends DefaultTask
         if (s.startsWith(prolog + "<"))
         {
             s = s.replaceFirst(Pattern.quote(prolog) + "<",
-                    prolog + "\n" + "<");
+                    prolog.toLowerCase() + "\n" + "<");
+            Files.writeString(file.toPath(), s, StandardCharsets.UTF_8);
+
+        } else if (s.startsWith(prolog)) {
+            s = s.replaceFirst(Pattern.quote(prolog),
+                    prolog.toLowerCase());
             Files.writeString(file.toPath(), s, StandardCharsets.UTF_8);
         }
     }
@@ -206,7 +210,6 @@ public abstract class ProcessTranslations extends DefaultTask
     }
 
     private final Map<String, StringBuilder> report = new HashMap<>();
-    @Internal
     protected StringBuilder getReportBuilder(String reportName)
     {
         if (!report.containsKey(reportName)) {
@@ -218,7 +221,6 @@ public abstract class ProcessTranslations extends DefaultTask
         report.remove(reportName);
     }
 
-    @Internal
     protected String getReportFileName(String reportName) {
         return null;
     }

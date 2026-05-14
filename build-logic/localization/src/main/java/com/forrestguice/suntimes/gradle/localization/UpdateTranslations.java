@@ -225,10 +225,13 @@ public abstract class UpdateTranslations extends ProcessTranslations
         return arrayList;
     }
 
+    public static final String COMMENT_TAG = ":: Update ::";
     protected void appendFirstComment(Node node, Document document)
     {
         node.appendChild(document.createTextNode("\n    "));
-        node.appendChild(document.createComment("\n        Added from default: " + dateFormat.format(new Date(System.currentTimeMillis())) + " \n    "));
+        node.appendChild(document.createComment("\n        " + COMMENT_TAG +
+                                                   "\n        Copied from default on " + dateFormat.format(new Date(System.currentTimeMillis())) +
+                                                   " \n    "));
         node.appendChild(document.createTextNode("\n"));
     }
 
