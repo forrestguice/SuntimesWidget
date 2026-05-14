@@ -23,22 +23,6 @@
       \n\nДля лучшего результата выберите изображение, соответствующее этим параметрам.
     </string>
 
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
-
     <string name="help_general_calendarFormatPattern"><![CDATA[
           <b>Формат даты</b>: шаблон формата даты<br/>
           <br/>Доступные элементы могут отличаться в разных календарях, но обычно включают:<br/>

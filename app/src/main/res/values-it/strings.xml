@@ -2060,5 +2060,6 @@
     <string name="about_calculator_displayString_time4a_simple">Un calcolatore semplice, relativamente veloce, ma impreciso.</string>
     <string name="about_calculator_displayString_time4a_noaa">Segue algoritmi pubblicati dalla National Oceanic and Atmospheric Administration.</string>
     <string name="about_calculator_displayString_time4a_cc">Segue algoritmi pubblicati da Dershowitz/Reingold nel loro libro "Calendrical Calculations" (terza edizione).</string>
+    <string name="about_calculator_displayString_time4a_4j">Basato su calcoli astronomici pubblicati da Jean Meeus nel suo libro "Astronomical Algorithms" (seconda edizione).</string>
 
 </resources>
