@@ -2232,4 +2232,43 @@
     <string name="about_calculator_displayString_time4a_cc">Implémente les algorithmes publiés par Dershowitz/Reingold dans leur livre "Calendrical Calculations" (troisième édition).</string>
     <string name="about_calculator_displayString_time4a_4j">Basé sur les calculs astronomiques publiés par Jean Meeus dans son livre "Astronomical Algorithms" (seconde édition).</string>
 
+
+    <!--
+        :: Update ::
+        Copied from default on 2026-05-14 
+    -->
+    <string name="about_app_license_notice">Suntimes is free and open-source software.</string>    <!-- displayed by welcome dialog -->    <!-- TODO -->
+    <string name="actionDesc_nextCard">Show next card</string>    <!-- TODO -->
+    <string name="actionDesc_prevCard">Show previous card</string>    <!-- TODO -->
+    <string name="action_lightGraph">Light Graph</string>    <!-- TODO -->
+    <string name="actions_hint_actionid">ID</string>    <!-- TODO -->
+    <string name="alarmdelete_toast_success1">%1$s was deleted.</string>    <!-- toast msg -->    <!-- TODO -->
+    <string name="alarmdetails_snack">%1$s in %2$s</string>    <!-- snackbar msg -->    <!-- TODO -->
+    <string name="alarms_label_fadein_method_cubic">Cubic</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method_linear">Linear</string>    <!-- TODO -->
+    <string name="app_name_alarmtile">Alarm Tile</string>    <!-- TODO -->
+    <string name="app_name_alarmwidget0">Alarm Widget</string>    <!-- TODO -->
+    <string name="event_moonevent_summary_format">%1$s at %2$s</string>    <!-- (custom) moon event summary; e.g. "Moon 6°" -->    <!-- TODO -->
+    <string name="event_moonevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->    <!-- TODO -->
+    <string name="event_sunevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->    <!-- TODO -->
+    <string name="events_editevent_dialog_height_suffix">m</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_length_suffix">m</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_noon">Show Noon</string>    <!-- TODO -->
+    <string name="msg_copied_to_clipboard">Copied to clipboard.</string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_required_label">Permission Required</string>    <!-- TODO -->
+    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>    <!-- solarevents_* array value; optional if arrays are overridden by translation -->    <!-- TODO -->
+    <string name="themesexport_dialog_message">Exporting themes to file.</string>    <!-- TODO -->
+    <string name="themesexport_dialog_title">Exporting Themes</string>    <!-- TODO -->
+    <string name="timeMode_cross_midautumnal0">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midspring0">Beltane (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midsummer0">Lughnasadh (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_cross_midwinter0">Imbolc (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timezoneExtraApparentSolar_short">%1$s eot</string>    <!-- timezone dialog label -->    <!-- TODO -->
+    <string name="timezoneExtraDST_short">%1$s dst</string>    <!-- timezone dialog label -->    <!-- TODO -->
+    <string name="widgetLabel_altitude_symbol">∠</string>    <!-- label/suffix -->    <!-- TODO -->
+    <string name="widgetLabel_declination_symbol">δ</string>    <!-- label/suffix -->    <!-- TODO -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1m">× 1m</string>    <!-- menu item; "x 1d"; increments of 1 minute -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_7d">× 7d</string>    <!-- menu item; "x 1d"; increments of 7 day -->    <!-- TODO -->
+
 </resources>

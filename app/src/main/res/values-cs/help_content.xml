@@ -220,4 +220,15 @@
       \n\nPro nejlepší výsledek zvolte obrázek odpovídající těmto proporcím.
     </string>
 
+
+    <!--
+        :: Update ::
+        Copied from default on 2026-05-14 
+    -->
+    <string name="help_general_twilight_more">
+          &lt;b&gt;White Night:&lt;/b&gt; The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Midnight Twilight:&lt;/b&gt; The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Midnight Sun:&lt;/b&gt; The sun does not set below the horizon (24 hours of daylight). This is also called &lt;b&gt;polar day&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Polar night:&lt;/b&gt; The sun does not rise above the horizon (24 hours of darkness).&lt;br/&gt;&lt;br/&gt;
+    </string>    <!-- TODO -->
 </resources>
