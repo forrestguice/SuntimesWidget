@@ -2144,8 +2144,8 @@
     <string name="location_label_gnss_used">Used</string>    <!-- TODO -->
     <string name="location_label_gnss_signal">Signal</string>    <!-- TODO -->
     <string name="location_label_gnss_cnrFormat">%s db</string>    <!-- TODO -->
-    <string name="location_label_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
-    <string name="location_label_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss_positionFormat" tools:common="true">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss_labelFormat" tools:common="true">%1$s %2$s</string>    <!-- TODO -->
 
     <string name="location_label_gnss_agps">AGPS</string>    <!-- TODO -->
     <string name="location_label_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
