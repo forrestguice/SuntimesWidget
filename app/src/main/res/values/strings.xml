@@ -905,9 +905,9 @@
     <string name="themes_configHint_themeColorBorder" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="themes_configLabel_themeBorderWidthRiseSet">Border Width (rise/set)</string>  <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="themes_configHint_themeBorderWidthRiseSet" tools:common="true">2</string>                          <!-- size hint -->
     <string name="themes_configLabel_themeBorderWidthNoon">Border Width (noon)</string>         <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+    <string name="themes_configHint_themeBorderWidthNoon" tools:common="true">3</string>                             <!-- size hint -->
 
     <string name="themes_configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
     <string name="themes_configHint_themeColorSuffix" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
@@ -916,20 +916,20 @@
     <string name="themes_configHint_themeColorTime" tools:common="true">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="themes_configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
-    <string name="themes_configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+    <string name="themes_configHint_themeSizeTitle" tools:common="true">14</string>                 <!-- edit hint -->
 
     <string name="themes_configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->
 
     <string name="themes_configLabel_themeSizeText">Text Size:</string>    <!-- edit label -->
-    <string name="themes_configHint_themeSizeText">10</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeText" tools:common="true">10</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themeSizeTime">Time Size:</string>    <!-- edit label -->
-    <string name="themes_configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeTime" tools:common="true">12</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->
 
     <string name="themes_configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
-    <string name="themes_configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeSuffix" tools:common="true">8</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themePadding">Padding:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
@@ -1070,18 +1070,18 @@
     <string name="events_editevent_dialog_label_suggested">Custom Angle</string>
 
     <string name="events_editevent_dialog_angle">Angle</string>
-    <string name="events_editevent_dialog_angle_hint">-6</string>
+    <string name="events_editevent_dialog_angle_hint" tools:common="true">-6</string>
     <string name="events_editevent_dialog_angle_suffix">°</string>
     <string name="events_editevent_dialog_angle_error">Angle is required!</string>
 
     <string name="events_editevent_dialog_length">Shadow Length</string>
-    <string name="events_editevent_dialog_length_hint">6</string>
+    <string name="events_editevent_dialog_length_hint" tools:common="true">6</string>
     <string name="events_editevent_dialog_length_suffix">m</string>
     <string name="events_editevent_dialog_length_error">Shadow length is required!</string>
     <string name="events_editevent_dialog_label_suggested1">Shadow Length</string>
 
     <string name="events_editevent_dialog_factor">Shadow Factor</string>    <!-- TODO -->
-    <string name="events_editevent_dialog_factor_hint">1</string>
+    <string name="events_editevent_dialog_factor_hint" tools:common="true">1</string>
     <string name="events_editevent_dialog_factor_suffix">x</string>  <!-- TODO -->
     <string name="events_editevent_dialog_factor_absolute">absolute</string>    <!-- TODO -->
     <string name="events_editevent_dialog_factor_relative">relative (noon)</string>    <!-- TODO -->
@@ -1093,7 +1093,7 @@
     <string name="events_editevent_dialog_height_error">Object height is required!</string>
 
     <string name="events_editevent_dialog_percent">Percent</string>  <!-- TODO -->
-    <string name="events_editevent_dialog_percent_hint">25</string>  <!-- TODO -->
+    <string name="events_editevent_dialog_percent_hint" tools:common="true">25</string>  <!-- TODO -->
     <string name="events_editevent_dialog_percent_suffix">%</string>  <!-- TODO -->
     <string name="events_editevent_dialog_percent_error">Percent value is required!</string>  <!-- TODO -->
     <string name="events_editevent_dialog_label_suggested2">Custom Event</string>  <!-- TODO -->
