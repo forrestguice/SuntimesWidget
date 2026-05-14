@@ -275,3 +275,18 @@ tasks.withType(Test)
         showStandardStreams false
     }
 }
+
+def CleanupTranslations
+try {
+    CleanupTranslations = Class.forName("CleanupTranslations")
+} catch (ClassNotFoundException e) {
+    CleanupTranslations = null
+}
+if (CleanupTranslations != null) {
+    tasks.register('cleanupTranslations', CleanupTranslations) {
+        group = 'Translation'
+        baseNames.set('strings|help_content')
+        inputDir.set(layout.projectDirectory.dir('src/main/res').toString())
+        outputDir.set("${buildDir}/generated/res/translations")
+    }
+}
