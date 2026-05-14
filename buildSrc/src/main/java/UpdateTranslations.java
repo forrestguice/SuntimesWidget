@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,43 +86,10 @@ public abstract class UpdateTranslations extends CleanupTranslations
             Document baseDocument = loadDocument(Path.of(getInputDir().get() + "/values/" + baseName + ".xml"));
             checkForIllegalItems(parent, baseName, baseDocument, revised);
 
-            // copy missing strings from base document
-            Set<String> stringNames = collectNames(revised, "string");
-            Map<String, Node> missingStringNodes = new HashMap<>();
-            NodeList stringNodes = baseDocument.getElementsByTagName("string");
-            for (int i=0; i<stringNodes.getLength(); i++)
-            {
-                Element element = (Element) stringNodes.item(i);
-                if (isTranslatable(element) && !isMarkedCommon(element) && !isReference(element))
-                {
-                    String name = element.getAttribute("name");
-                    if (!stringNames.contains(name)) {
-                        missingStringNodes.put(name, element);
-                    }
-                }
-            }
-            ArrayList<String> missingStrings = new ArrayList<>(missingStringNodes.keySet());
-            Collections.sort(missingStrings);
+            // copy missing string values
+            Map<String, Node> missingStringNodes = findMissing(baseDocument, revised, "string");
+            List<String> missingStrings = getSortedKeySet(missingStringNodes);
 
-            // copy missing string-arrays from base document
-            Set<String> stringArrayNames = collectNames(revised, "string-array");
-            Map<String, Node> missingStringArrayNodes = new HashMap<>();
-            NodeList stringArrayNodes = baseDocument.getElementsByTagName("string-array");
-            for (int i=0; i<stringArrayNodes.getLength(); i++)
-            {
-                Element element = (Element) stringArrayNodes.item(i);
-                if (isTranslatable(element) && !isMarkedCommon(element))
-                {
-                    String name = element.getAttribute("name");
-                    if (!stringArrayNames.contains(name)) {
-                        missingStringArrayNodes.put(name, element);
-                    }
-                }
-            }
-            ArrayList<String> missingStringArrays = new ArrayList<>(missingStringArrayNodes.keySet());
-            Collections.sort(missingStringArrays);
-
-            // write missing string values
             boolean first = true;
             for (String name : missingStrings)
             {
@@ -132,7 +100,10 @@ public abstract class UpdateTranslations extends CleanupTranslations
                 }
                 node.appendChild(revised.createTextNode("    "));
 
-                getLogger().warn("{} needs update! missing string: {}", (parent + "/" + baseName + ".xml"), name);
+                String reportTag = (parent + "/" + baseName + ".xml");
+                getLogger().warn("{} needs update! missing string: {}", reportTag, name);
+                appendLineToReport("actions", MessageFormat.format("{0} :: added string {1}", reportTag, name));
+
                 Element missingString = revised.createElement("string");
                 missingString.setAttribute("name", name);
                 missingString.setTextContent(element.getTextContent());
@@ -148,7 +119,10 @@ public abstract class UpdateTranslations extends CleanupTranslations
                 node.appendChild(revised.createTextNode("\n"));
             }
 
-            // write missing string-array values
+            // copy missing string-arrays from base document
+            Map<String, Node> missingStringArrayNodes = findMissing(baseDocument, revised, "string-array");
+            List<String> missingStringArrays = getSortedKeySet(missingStringArrayNodes);
+
             if (!missingStringArrays.isEmpty()) {
                 node.appendChild(revised.createTextNode("\n"));
             }
@@ -167,7 +141,10 @@ public abstract class UpdateTranslations extends CleanupTranslations
 
                 if (!containsOnlyItemReferences(element))
                 {
-                    getLogger().warn("{} needs update! missing string-array: {}", (parent + "/" + baseName + ".xml"), name);
+                    String reportTag = (parent + "/" + baseName + ".xml");
+                    getLogger().warn("{} needs update! missing string-array: {}", reportTag, name);
+                    appendLineToReport("actions", MessageFormat.format("{0} :: added string-array {1}", reportTag, name));
+
                     node.appendChild(revised.createTextNode("    "));
 
                     NodeList children = element.getElementsByTagName("item");
@@ -211,8 +188,9 @@ public abstract class UpdateTranslations extends CleanupTranslations
             }
 
             if (todoCount > 0) {
-                appendToReport(String.format("%1$s:\t%2$s", (parent + "/" + baseName + ".xml"), todoCount));
+                appendLineToReport("todo", String.format("%1$s:\t%2$s", (parent + "/" + baseName + ".xml"), todoCount));
             }
+            appendLineToReport("actions");
 
             node.normalize();
             return revised;
@@ -221,6 +199,31 @@ public abstract class UpdateTranslations extends CleanupTranslations
             getLogger().error("SyncTranslations", e);
         }
         return original;
+    }
+
+    protected Map<String, Node> findMissing(Document baseDocument, Document other, String tag)
+    {
+        Set<String> names = collectNames(other, tag);
+        Map<String, Node> missingNodes = new HashMap<>();
+        NodeList nodes = baseDocument.getElementsByTagName(tag);
+        for (int i=0; i<nodes.getLength(); i++)
+        {
+            Element element = (Element) nodes.item(i);
+            if (isTranslatable(element) && !isMarkedCommon(element) && !isReference(element))
+            {
+                String name = element.getAttribute("name");
+                if (!names.contains(name)) {
+                    missingNodes.put(name, element);
+                }
+            }
+        }
+        return missingNodes;
+    }
+
+    protected List<String> getSortedKeySet(Map<String, Node> map) {
+        ArrayList<String> arrayList = new ArrayList<>(map.keySet());
+        Collections.sort(arrayList);
+        return arrayList;
     }
 
     protected void appendFirstComment(Node node, Document document)
@@ -232,6 +235,7 @@ public abstract class UpdateTranslations extends CleanupTranslations
 
     protected void checkForIllegalItems(String parent, String baseName, Document baseDocument, Document revised)
     {
+        String reportTag = (parent + "/" + baseName + ".xml");
         Set<String> baseStringNames = collectNames(baseDocument, "string");
         Set<String> translatableFalse = collectNames(baseDocument, "string", false);
         NodeList nodes0 = revised.getElementsByTagName("string");
@@ -239,17 +243,24 @@ public abstract class UpdateTranslations extends CleanupTranslations
         {
             Element element = (Element) nodes0.item(i);
             String name = element.getAttribute("name");
-            if (!baseStringNames.contains(name)) {
-                getLogger().error("{} contains string not present in default! {}", (parent + "/" + baseName + ".xml"), name);
+            if (!baseStringNames.contains(name))
+            {
+                String message = MessageFormat.format("{0} contains string not present in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
             }
             if (translatableFalse.contains(name)) {
-                getLogger().error("{} contains string marked translatable=false in default! {}", (parent + "/" + baseName + ".xml"), name);
+                String message = MessageFormat.format("{0} contains string marked translatable=false in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
             }
             if (element.hasAttribute("translatable"))
             {
                 boolean isTranslatable = Boolean.parseBoolean(element.getAttribute("translatable"));
                 if (!isTranslatable) {
-                    getLogger().error("{} contains string marked translatable=false! {}", (parent + "/" + baseName + ".xml"), name);
+                    String message = MessageFormat.format("{0} contains string marked translatable=false! {1}", reportTag, name);
+                    getLogger().error(message);
+                    appendLineToReport("warnings", message);
                 }
             }
         }
@@ -261,7 +272,9 @@ public abstract class UpdateTranslations extends CleanupTranslations
             Element element = (Element) nodes1.item(i);
             String name = element.getAttribute("name");
             if (!baseStringArrayNames.contains(name)) {
-                getLogger().error("{} contains string-array not present in default! {}", (parent + "/" + baseName + ".xml"), name);
+                String message = MessageFormat.format("{0} contains string-array not present in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
             }
         }
     }
@@ -342,8 +355,21 @@ public abstract class UpdateTranslations extends CleanupTranslations
     }
 
     @Override
-    protected String getReportFileName() {
-        return "translation-report.txt";
+    protected String getReportFileName(String reportName) {
+        return "translation-" + reportName + ".txt";
+    }
+
+    @Override
+    protected void writeReport() {
+        writeReport("actions", getReportBuilder("actions").toString());
+        writeReport("todo", getReportBuilder("todo").toString());
+        writeReport("warnings", getReportBuilder("warnings").toString());
+    }
+
+    protected void appendLineToReports() {
+        appendLineToReport("actions");
+        appendLineToReport("todo");
+        appendLineToReport("warnings");
     }
 
 }

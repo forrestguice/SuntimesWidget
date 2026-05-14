@@ -40,8 +40,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,16 +80,17 @@ public abstract class CleanupTranslations extends DefaultTask
         init();
         String[] baseNames = getBaseNames().get().split("\\|");
         for (String baseName : baseNames) {
-            cleanupTranslations(baseName.trim());
-            appendToReport();
+            processTranslations(baseName.trim());
+            appendLineToReports();
         }
-        writeReport(getReportBuilder().toString());
+        writeReport();
     }
 
-    protected void init() {
-    }
+    protected void init() {}
+    protected void writeReport() {}
+    protected void appendLineToReports() {}
 
-    protected void cleanupTranslations(String baseName)
+    protected void processTranslations(String baseName)
     {
         Path directory = Path.of(getInputDir().get());
         List<Path> resources = listXmlFiles(baseName, directory);
@@ -134,7 +138,7 @@ public abstract class CleanupTranslations extends DefaultTask
 
     protected void writeDocument(String baseName, String parent, Document document) throws IOException
     {
-        String path = getOutputDir().get() + "/" + parent + "/" +  baseName + ".xml";
+        String path = getOutputDir().get() + "/res/" + parent + "/" +  baseName + ".xml";
         File outputFile = new File(path);
         File directory = outputFile.getParentFile();
         if (!directory.exists() && !directory.mkdirs()) {
@@ -146,12 +150,13 @@ public abstract class CleanupTranslations extends DefaultTask
             try {
                 DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
                 DOMImplementationLS ls = (DOMImplementationLS) registry.getDOMImplementation("LS");
-                LSSerializer serializer = ls.createLSSerializer();
-
                 LSOutput lsOutput = ls.createLSOutput();
                 lsOutput.setByteStream(out);
                 lsOutput.setEncoding("UTF-8");
+
+                LSSerializer serializer = ls.createLSSerializer();
                 serializer.write(document, lsOutput);
+                rewritePrologNewLine(outputFile);
 
             } catch (ClassNotFoundException e) {
                 getLogger().error("CleanupTranslations: Class not found!", e);
@@ -162,6 +167,18 @@ public abstract class CleanupTranslations extends DefaultTask
             } catch (IllegalAccessException e) {
                 getLogger().error("CleanupTranslations: IllegalAccess!", e);
             }
+        }
+    }
+
+    protected void rewritePrologNewLine(File file) throws IOException
+    {
+        String prolog = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        String s = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+        if (s.startsWith(prolog + "<"))
+        {
+            s = s.replaceFirst(Pattern.quote(prolog) + "<",
+                    prolog + "\n" + "<");
+            Files.writeString(file.toPath(), s, StandardCharsets.UTF_8);
         }
     }
 
@@ -188,46 +205,50 @@ public abstract class CleanupTranslations extends DefaultTask
         return p.equals(baseName + ".xml");
     }
 
-    private StringBuilder report = new StringBuilder();
+    private final Map<String, StringBuilder> report = new HashMap<>();
     @Internal
-    protected StringBuilder getReportBuilder() {
-        return report;
+    protected StringBuilder getReportBuilder(String reportName)
+    {
+        if (!report.containsKey(reportName)) {
+            report.put(reportName, new StringBuilder());
+        }
+        return report.get(reportName);
     }
-    protected void resetReport() {
-        report = new StringBuilder();
+    protected void resetReport(String reportName) {
+        report.remove(reportName);
     }
 
     @Internal
-    protected String getReportFileName() {
+    protected String getReportFileName(String reportName) {
         return null;
     }
 
-    protected void appendToReport() {
-        appendToReport("");
+    protected void appendLineToReport(String reportName) {
+        appendLineToReport(reportName, "");
     }
-    protected void appendToReport(String line) {
-        getReportBuilder().append(line).append("\n");
+    protected void appendLineToReport(String name, String line) {
+        getReportBuilder(name).append(line).append("\n");
     }
 
-    protected void writeReport(String parent, String baseName, String report)
+    protected void writeReport(String parent, String baseName, String reportContent)
     {
         String path = getOutputDir().get() + "/report/" + parent + "_" +  baseName + ".report";
-        writeReport(path, report);
+        writeReport(Path.of(path), reportContent);
     }
 
-    protected void writeReport(String report)
+    protected void writeReport(String reportName, String report)
     {
-        String path = getOutputDir().get() + "/report/" + getReportFileName();
-        writeReport(path, report);
+        String path = getOutputDir().get() + "/report/" + getReportFileName(reportName);
+        writeReport(Path.of(path), report);
     }
 
-    protected void writeReport(String path, String report)
+    protected void writeReport(Path path, String report)
     {
         if (path == null) {
             return;
         }
 
-        File outputFile = new File(path);
+        File outputFile = path.toFile();
         File directory = outputFile.getParentFile();
         if (!directory.exists() && !directory.mkdirs()) {
             getLogger().error("Failed to create output directory {}", directory.getAbsolutePath());
