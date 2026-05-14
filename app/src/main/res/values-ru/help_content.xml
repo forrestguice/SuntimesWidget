@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="help_battery_optimization">В настройках энергопотребления приложения <xliff:g id="appName">%s</xliff:g> нужно выбрать \"без оптимизации\" для эффективной работы.</string>
-    <string name="help_battery_optimization_aggressive">Предупреждение: ваше устройство <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> может потребовать дополнительной настройки, т.к. набор настроек энергопотребления для приложений зависит от типа операционной системы вашего устройства. Проще говоря, одной настройки может быть мало. Исследуйте свойства приложения и настройки операционной системы, а также проверьте будильники в работе перед использованием.</string>
+    <string name="help_battery_optimization_aggressive">Предупреждение: ваше устройство <xliff:g example="Samsung" id="manufacturer">%s</xliff:g> может потребовать дополнительной настройки, т.к. набор настроек энергопотребления для приложений зависит от типа операционной системы вашего устройства. Проще говоря, одной настройки может быть мало. Исследуйте свойства приложения и настройки операционной системы, а также проверьте будильники в работе перед использованием.</string>
     <string name="help_restricted_bucket">Приложение помещено в редкую или ограниченную категорию ожидания. Будильники могут работать нестабильно!</string>
 
     <string name="help_datasources">
@@ -18,8 +18,8 @@
     </string>
 
     <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      <xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">%3$s</xliff:g>)
+      \n\n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>
       \n\nДля лучшего результата выберите изображение, соответствующее этим параметрам.
     </string>
 

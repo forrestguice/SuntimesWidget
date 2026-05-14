@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> must be \"not optimized\" for best results.</string>  <!-- TODO -->
-    <string name="help_battery_optimization_aggressive">This is a <xliff:g id="manufacturer" example="Samsung">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
+    <string name="help_battery_optimization_aggressive">This is a <xliff:g example="Samsung" id="manufacturer">%s</xliff:g> device, which may require additional configuration to work correctly.</string>  <!-- TODO -->
     <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string name="help_datasources">
@@ -174,8 +174,7 @@
           Die [Icon Default] vorgegebenen Themen können nicht geändert werden.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string
-        name="help_calendar"><![CDATA[Ereignisse (Mondphasen, Sonnenwenden und Tagundnachtgleichen) an die Kalender-App übergeben.<br />
+    <string name="help_calendar"><![CDATA[Ereignisse (Mondphasen, Sonnenwenden und Tagundnachtgleichen) an die Kalender-App übergeben.<br />
         <br />
         <u><b><font color="#ff9900">Kalenderberechtigungen wurden entfernt.</font></b></u><br />
         <br />
@@ -183,8 +182,8 @@
     ]]></string>  <!-- TODO: update; 'has been removed' -> 'was removed in v0.10.0' -->
 
     <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      <xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">%3$s</xliff:g>)
+      \n\n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>
       \n\nWählen Sie für beste Ergebnisse ein Bild aus, das diesen Eigenschaften entspricht.
     </string>
 

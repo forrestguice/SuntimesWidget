@@ -90,13 +90,13 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g>المنطقة الزمنية قد تكون غير صحيحة بالنسبة لموقعك.</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> هي <xliff:g id="timeSpan">%2$s</xliff:g> من التوقيت المحلي(<xliff:g id="locationName">%3$s</xliff:g>).</string>
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> بالتوقيت الصيفي</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> معادلة الوقت</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> بالتوقيت الصيفي</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST_short"><xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> معادلة الوقت</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar_short"><xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -104,7 +104,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateField"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> التاريخ مضبوط ليوم غير تاريخ اليوم.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
@@ -123,22 +123,22 @@
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
     -->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> في اليوم</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> من الضياء المستفاد</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
-    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
-    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> في اليوم</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> من الضياء المستفاد</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [+<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [-<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g example="30m" id="timeSpan1">%1$s</xliff:g> | <xliff:g example="30m" id="timeSpan2">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
     <string name="timeMode_tropical_year">سنة استوائية</string>
-    <string name="length_tropical_year"><xliff:g id="timeSpan1" example="365d 5h 41m">%1$s</xliff:g>\n<xliff:g id="fractionalDays" example="365.24">%2$s</xliff:g></string>
+    <string name="length_tropical_year"><xliff:g example="365d 5h 41m" id="timeSpan1">%1$s</xliff:g>\n<xliff:g example="365.24" id="fractionalDays">%2$s</xliff:g></string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
-    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>
+    <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -225,7 +225,7 @@
     <string name="table_header_moonset_short">أفول</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">سنة</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">أسبوع</string>    <!-- e.g. 2w -->
     <string name="delta_days">يوم</string>     <!-- e.g. 1d -->
@@ -249,15 +249,15 @@
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
-    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
-    <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
+    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>] [<xliff:g example="Future" id="suffix">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
     <!--<string name="date_any">Any Date</string>-->   <!-- no particular date; unset date -->
 
     <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
 
     <!-- location display formats -->
-    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g example="m" id="distanceUnit">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
     <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
     <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
@@ -318,7 +318,7 @@
 
     <string name="tag_tagDefault">[افتراضي]</string>
     <string name="tag_tagPlugin">[إضافة]</string>
-    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="widgetConfig_action_addWidget">إضافة ودجة</string>                   <!-- Button: Add -->
@@ -364,7 +364,7 @@
     <string name="settings_general_showHours">أظهر الساعات</string>        <!-- checkbox label -->
     <string name="settings_general_showHours_summary">أظهر الساعات والدقائق في الفترات الزمنية الأطول من يوم.</string>    <!-- checkbox label -->
     <string name="settings_general_observerheight">ظل الأجسام</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">أظهر طول ظل الأجسام ذو الارتفاع <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">أظهر طول ظل الأجسام ذو الارتفاع <xliff:g example="1 meter" id="value">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">تعويض اليوم</string>        <!-- edittext label -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
@@ -617,9 +617,9 @@
     <string name="time_localMean">الوقت المحلي المتوسط</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">الوقت الشمسي الظاهر</string>              <!-- setting / custom timezone id -->
 
-    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="settings_timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
+    <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line2b"><xliff:g example="US/Arizona" id="timezoneID">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
     <string name="action_suggestTimeZone">توصية بتوقيت منطقة زمنية</string>
 
     <string name="settings_timezone">منطقة زمنية</string>             <!-- group title -->
@@ -689,9 +689,9 @@
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">الرقم المعرف:</string>                 <!-- edittext label -->
     <string name="actions_configLabel_action_launch">الفئة:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch" /> <!-- التلميح editText (والافتراضي) -->
+    <string name="actions_configHint_action_launch"/> <!-- التلميح editText (والافتراضي) -->
     <string name="actions_configLabel_action_launch_package">الحزمة:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package"/>               <!-- edittext label -->
     <string name="actions_configHint_action_launch_title">عنوان الإجراء</string>                 <!-- edittext hint -->
     <string name="actions_configHint_action_launch_desc">وصف قصير</string>                 <!-- edittext hint -->
     <string name="actions_configLabel_action_launch_type">النوع:</string>                 <!-- spinner label -->
@@ -956,7 +956,7 @@
     <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
 
     <string name="event_sunevent_title">الشمس</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
@@ -1111,8 +1111,8 @@
     <string name="alarmdelete_dialog_message">هل أنت متأكد من رغبتك في حذف <xliff:g id="type">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)؟</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">حذف</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">إلغاء</string>    <!-- button -->
-    <string name="alarmdelete_toast_success"><xliff:g id="type" example="إشعار">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) تم حذفه.</string> <!-- toast msg -->
-    <string name="alarmdelete_toast_success1"><xliff:g id="type" example="إشعار">%1$s</xliff:g> تم حذفه.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success"><xliff:g example="إشعار" id="type">%1$s</xliff:g> في <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) تم حذفه.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1"><xliff:g example="إشعار" id="type">%1$s</xliff:g> تم حذفه.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">هناك تغييرات غير محفوظة.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">تجاهل</string>                              <!-- button -->
@@ -1166,8 +1166,8 @@
     <string name="alarmoffset_dialog_ok">تطبيق</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">إلغاء</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> ضبط إلى <xliff:g id="duration" example="8h">%2$s</xliff:g> من الآن.</string> <!-- toast msg -->
-    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> في <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
+    <string name="alarmenabled_toast"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> ضبط إلى <xliff:g example="8h" id="duration">%2$s</xliff:g> من الآن.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> في <xliff:g example="8h" id="duration">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="alarms_label_optWhiteList">تحسين البطارية</string>
     <string name="alarms_label_optWhiteList_listed">غير مُحسَّن (مُوصَى به)</string>
@@ -1198,8 +1198,8 @@
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
     <string name="alarms_label_bootcompleted">اكتمال التمهيد</string>
-    <string name="alarms_label_bootcompleted_summary">تُعيد التنبيهات تلقائيًا بعد بضع دقائق من إعادة التشغيل.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="alarms_label_bootcompleted_info">آخر تشغيل في <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> بعد التمهيد (استغرقت <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_summary">تُعيد التنبيهات تلقائيًا بعد بضع دقائق من إعادة التشغيل.\n\n<xliff:g example="last run: never" id="_info">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">آخر تشغيل في <xliff:g example="never" id="timestamp">%1$s</xliff:g>,\n<xliff:g example="30s" id="time">%2$s</xliff:g> بعد التمهيد (استغرقت <xliff:g example="10s" id="time">%3$s</xliff:g>).</string>
     <string name="alarms_label_bootcompleted_info_never">أبدًا</string>
     <string name="alarms_label_bootcompleted_action_confirm">إعادة جدولة جميع التنبيهات والإشعارات؟</string>
     <string name="alarms_label_bootcompleted_action_message">جارٍ إعادة جدولة التنبيهات والإشعارات..</string>
@@ -1207,27 +1207,27 @@
     <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
     <string name="alarms_label_silenceAfter">كتم الصوت بعد</string>
-    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 دقائق" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_timeoutAfter">انتهاء المهلة بعد</string>
-    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g example="10 دقائق" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_autoDismissAfter">التجاوب التلقائي بعد</string>
-    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 ثانية">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g example="30 ثانية" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_snoozeLimit">حد الغفوة</string>
-    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="بلا حدود">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g example="بلا حدود" id="limit">%s</xliff:g></string>
     <string name="alarms_label_snoozeLimit_none">بلا حدود</string>
 
     <string name="alarms_label_snooze">غفوة لمدة</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+    <string name="alarms_label_snooze_summary"><xliff:g example="10 دقائق" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_upcoming">تذكير خلال</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 دقائق">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_summary"><xliff:g example="10 دقائق" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">إظهار إشعارات تذكير بالمنبه.</string>
 
     <string name="alarms_label_fadein">زيادة الصوت تدريجياً</string>
-    <string name="alarms_label_fadein_summary"><xliff:g id="timePeriod" example="30 ثانية">%s</xliff:g></string>
+    <string name="alarms_label_fadein_summary"><xliff:g example="30 ثانية" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_fadein_disabled">إيقاف</string>
 
     <string name="alarms_label_alarmFullscreen">Fullscreen</string>            <!-- group title -->    <!-- TODO -->
@@ -1235,7 +1235,7 @@
     <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g example="60 seconds" id="timePeriod">%s</xliff:g></string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1250,11 +1250,11 @@
     <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>     <!-- TODO -->
 
     <string name="alarms_label_hardwarebuttons">أزرار الأجهزة</string>
-    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="تأجيل">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g example="تأجيل" id="action">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>تجاهل</item>        <!-- dismiss -->
         <item>كتم الصوت</item>    <!-- silent -->
@@ -1268,7 +1268,7 @@
     <string name="alarms_label_allRingtones_summary">عرض جميع الأصوات النظامية أثناء الاختيار (تجاهل نوع النغمة الرنينية).</string>
 
     <string name="alarms_label_reminder_none">أبدًا</string>
-    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> تذكير</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder"><xliff:g example="12h" id="hours">%s</xliff:g> تذكير</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="time_units_hours">
         <item quantity="zero">%d ساعةٍ</item>
@@ -1397,9 +1397,9 @@
     <!--App Setting: WidgetList -->
     <string name="widgetList_label">ودجة</string>               <!-- group title -->
     <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="widgetList_label_itemTitlePattern2" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern1"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern2"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
     <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="widgetList_label_itemSummaryPattern1"><xliff:g id="widgetType">%1$s</xliff:g></string>
     <string name="widgetList_label_help_title">مساعدة</string>               <!-- always the first item in the widgetList -->
@@ -1559,7 +1559,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">تتبع الانقلاب</string>
-    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="حدث قادم">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="حدث قادم" id="modeName">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="settings_ui_showdatasource">عرض مصدر البيانات</string>
@@ -1572,7 +1572,7 @@
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">إبراز الحقول</string>              <!-- checkbox label -->
-    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_summary"><xliff:g example="Actual" id="fieldName">%s</xliff:g></string>
     <string-array name="settings_emphasizefield_display">                      <!-- one-to-one with headerText_values -->
         <item>@string/timeMode_none</item>
         <item>@string/timeMode_golden</item>
@@ -1589,7 +1589,7 @@
     <string name="settings_ui_showheaders">الترويسات</string>              <!-- group title -->
     <string name="settings_ui_showheader_icon">أظهر أيقونة الترويسة</string> <!-- checkbox label -->
     <string name="settings_ui_showheader_text">أظهر نص الترويسة</string> <!-- checkbox label -->
-    <string name="settings_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string name="settings_ui_showheader_text_summary"><xliff:g example="Labels" id="modeName">%s</xliff:g></string>
     <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>بدون</item>     <!-- 0: none -->
         <item>علامات</item>    <!-- 1: labels -->
@@ -1727,7 +1727,7 @@
 
     <!-- App Setting: location fix time limit -->
     <string name="location_pref_maxElapse">الحد الزمني لتحديد الموقع</string>
-    <string name="location_pref_maxElapse_summary">التخلي بعد <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="location_pref_maxElapse_summary">التخلي بعد <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">
         <item>15 ثانية</item>    <!-- 15000 ms-->
         <item>30 ثانية</item>    <!-- 30000 ms-->
@@ -1738,7 +1738,7 @@
 
     <!-- App Setting: location fix max age -->
     <string name="location_pref_maxAge">الحد الأقصى لعمر الموقع الأخير</string>
-    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="دقيقة واحدة">%s</xliff:g> يُعتبر حديثًا</string>
+    <string name="location_pref_maxAge_summary"><xliff:g example="دقيقة واحدة" id="maxAgeDisplay">%s</xliff:g> يُعتبر حديثًا</string>
     <string-array name="location_maxAge_display">
         <item>لا شيء</item>               <!-- 0 -->
         <item>دقيقة واحدة</item>         <!-- 60000 -->
@@ -1766,7 +1766,7 @@
     <string name="locale_pref_title">اللغة</string>
 
     <string name="locale_pref_localeMode">الوضع</string>
-    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="اللغة النظامية">%s</xliff:g></string>
+    <string name="locale_pref_localeMode_summary"><xliff:g example="اللغة النظامية" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">
         <item>النظام</item>            <!-- system locale -->
         <item>معرفة المستخدم</item>    <!-- custom locale -->
@@ -1774,7 +1774,7 @@
 
     <!-- App Setting: custom Locale -->
     <string name="locale_pref_localeSelect">Language</string>
-    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
 		<item>الإنجليزية</item>
 		<item>الإسبرانتو</item>
@@ -1797,12 +1797,12 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
-    <string name="format_elevation"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
-    <string name="format_declination"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
-    <string name="format_rightascension"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
-    <string name="format_direction"><xliff:g id="degrees" example="180°">%1$s</xliff:g>&#160;<xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
-    <string name="format_distance"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+    <string name="format_degrees"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_elevation"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="format_declination"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="format_rightascension"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="format_direction"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <string name="format_distance"><xliff:g example="6" id="value">%1$s</xliff:g> <xliff:g example="ft" id="units_short">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1875,9 +1875,9 @@
     <string name="worldmap_dialog_option_minorgrid">شبكة خطوط الطول والعرض</string>
     <string name="worldmap_dialog_option_debuglines">خطوط تصحيح الأخطاء</string>
     <string name="worldmap_dialog_option_tintmap">تلوين</string>
-       <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
+       <string name="worldmap_dialog_speed_5m">× 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_15m">× 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
+    <string name="worldmap_dialog_speed_1d">× 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="worldmap_action_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
@@ -1927,11 +1927,11 @@
     <string name="schedalarm_dialog_cancel">إلغاء</string>
     <string name="schedalarm_dialog_error">لم يتم تعيين التنبيه…</string>
     <string name="schedalarm_dialog_error2">لا يمكن تعيين التنبيه…</string>
-    <string name="schedalarm_dialog_note">حوالي <xliff:g id="timetext" example="6h 30m">%s</xliff:g> من الآن.</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> من الآن</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="الشفق البحري">%s</xliff:g> لا يحدث.</string>
-   <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
-    <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
+    <string name="schedalarm_dialog_note">حوالي <xliff:g example="6h 30m" id="timetext">%s</xliff:g> من الآن.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g> من الآن</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="الشفق البحري" id="solarevent">%s</xliff:g> لا يحدث.</string>
+   <string name="schedalarm_labelformat"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g> (<xliff:g example="4/6/2018" id="shortDate">%2$s</xliff:g>)</string>
+    <string name="schedalarm_labelformat2"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g></string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>الشفق الفلكي</item>
         <item>الشفق البحري</item>
@@ -2261,7 +2261,7 @@
 <string name="about_dialog_privacy">الخصوصية</string>
 
     <string name="privacy_securitydialog_title">تنبيه أمان</string>
-    <string name="privacy_securitydialog_duplicate_permissions">الإذن الذي ينتمي إلى Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nمعرف أيضًا من خلال: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="privacy_securitydialog_duplicate_permissions">الإذن الذي ينتمي إلى Suntimes:\n\n<xliff:g example="suntimes.permission.READ_CALENDAR" id="permissionName">%1$s</xliff:g>\n\nمعرف أيضًا من خلال: <xliff:g example="some.other.app" id="packageName">%2$s</xliff:g></string>
     <string name="app_feature_not_supported_by_api">هذه الميزة غير مدعومة بواسطة واجهة برمجة التطبيقات %1$s.</string>
     <string name="app_feature_not_supported_by_source">هذه الميزة غير مدعومة بواسطة مصدر البيانات الحالي.</string>
     <string name="app_reboot_required_message">قد يكون هناك حاجة إلى إعادة التشغيل لتفعيل التغييرات.</string>    <!-- toast; device off/on may be required -->

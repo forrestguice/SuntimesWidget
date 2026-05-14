@@ -56,11 +56,11 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Lehetséges, hogy az időzóna nem megfelelő ehhez a helyhez.</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> <xliff:g id="timeSpan">%2$s</xliff:g> eltér a helyi középidőtől (<xliff:g id="locationName">%3$s</xliff:g>).</string>
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Nyári időszámítás</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> idő egyenlete</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> Nyári időszámítás</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> idő egyenlete</string>  <!-- timezone dialog label -->  <!-- TODO -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -68,7 +68,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateField"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> A dátum a mai naptól eltérő napra van beállítva.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
@@ -86,16 +86,16 @@
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)-->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> napkeltétől napnyugtáig</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> nappal hossza</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> napkeltétől napnyugtáig</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> nappal hossza</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <string name="timeMode_tropical_year">Szoláris év</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> megvilágított</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
-    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
+    <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> megvilágított</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>   <!-- TODO: review -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -113,9 +113,9 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="delta_since" />
-    <string name="delta_until" />
-    <string name="delta_until_end" />
+    <string name="delta_since"/>
+    <string name="delta_until"/>
+    <string name="delta_until_end"/>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">at</item>
@@ -170,7 +170,7 @@
     <string name="table_header_moonset_short">Holdnyugta</string>                             <!-- table title -->
     
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">év</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">hét</string>    <!-- e.g. 2w -->
     <string name="delta_days">nap</string>     <!-- e.g. 1d -->
@@ -229,7 +229,7 @@
 
     <string name="tag_tagDefault">[alapértelmezett]</string>
     <string name="tag_tagPlugin">[bővítmény]</string>
-    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->  <!-- TODO -->
 
     <!-- WidgetConfig Activity -->
     <string name="widgetConfig_action_addWidget">Widget hozzáadása</string>                   <!-- Button: Add -->
@@ -274,7 +274,7 @@
     <string name="settings_general_showHours_summary">Mutassa az órákat és a perceket egy napnál hosszabb időintervallumoknál.</string>    <!-- checkbox label -->
 
     <string name="settings_general_observerheight">Objektum árnyékok</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">Egy objektum által vetett árnyékok hosszának megjelenítése <xliff:g id="value" example="1 meter">%1$s</xliff:g> magassággal.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Egy objektum által vetett árnyékok hosszának megjelenítése <xliff:g example="1 meter" id="value">%1$s</xliff:g> magassággal.</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">Nap eltolás</string>        <!-- edittext label -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
@@ -526,8 +526,8 @@
     <string name="time_utc">Egyezményes koordinált világidő</string>            <!-- timezone label --> 
     <string name="time_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
-    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Időzóna ajánlása</string>
 
     <string name="settings_timezone">Időzóna:</string>             <!-- group title -->
@@ -591,9 +591,9 @@
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">Azonosító:</string>                 <!-- edittext label -->
     <string name="actions_configLabel_action_launch">Kategória:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configHint_action_launch"/> <!-- editText hint (and default) -->
     <string name="actions_configLabel_action_launch_package">Csomag:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package"/>               <!-- edittext label -->
     <string name="actions_configHint_action_launch_title">Művelet neve</string>                 <!-- edittext hint -->
     <string name="actions_configHint_action_launch_desc">Rövid leírás</string>                 <!-- edittext hint -->
     <string name="actions_configLabel_action_launch_type">Típus:</string>                 <!-- spinner label -->
@@ -851,7 +851,7 @@
     <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
 
     <string name="event_sunevent_title">Nap</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
@@ -995,7 +995,7 @@
     <string name="alarmdelete_dialog_message">Biztos hogy törölni szeretné ezt?\n<xliff:g id="type">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">Törlés</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">Mégse</string>    <!-- button -->
-    <string name="alarmdelete_toast_success">Az értesítés <xliff:g id="type" example="Notification">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) törölve lett.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success">Az értesítés <xliff:g example="Notification" id="type">%1$s</xliff:g> ekkor: <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) törölve lett.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Nem mentett változtatások vannak.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Elvetés</string>                              <!-- button --> 
@@ -1041,7 +1041,7 @@
     <string name="alarmoffset_dialog_ok">Alkalmaz</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">Mégse</string>    <!-- button -->
 
-    <string name="alarmenabled_toast">Az <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> ennyi idő múlva indul: <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- toast msg -->
+    <string name="alarmenabled_toast">Az <xliff:g example="Notification" id="alarmType">%1$s</xliff:g> ennyi idő múlva indul: <xliff:g example="8h" id="duration">%2$s</xliff:g></string> <!-- toast msg -->
 
     <string name="alarms_label_optWhiteList">Akkumulátor optimalizálás</string>
     <string name="alarms_label_optWhiteList_listed">Nincs optimalizálva (ajánlott)</string>
@@ -1072,8 +1072,8 @@
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
     <string name="alarms_label_bootcompleted">Rendszerindítás befejezve</string>
-    <string name="alarms_label_bootcompleted_summary">A riasztások automatikusan átütemeződnek néhány perccel az újraindítás után.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="alarms_label_bootcompleted_info">Legutóbb futott <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> újraindítás után (időtartam <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_summary">A riasztások automatikusan átütemeződnek néhány perccel az újraindítás után.\n\n<xliff:g example="last run: never" id="_info">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Legutóbb futott <xliff:g example="never" id="timestamp">%1$s</xliff:g>,\n<xliff:g example="30s" id="time">%2$s</xliff:g> újraindítás után (időtartam <xliff:g example="10s" id="time">%3$s</xliff:g>).</string>
     <string name="alarms_label_bootcompleted_info_never">Soha</string>
     <string name="alarms_label_bootcompleted_action_confirm">Átütemezi az összes ébresztést és értesítést?</string>
     <string name="alarms_label_bootcompleted_action_message">Ébresztések és értesítések átütemezése…</string>
@@ -1081,23 +1081,23 @@
     <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
     <string name="alarms_label_silenceAfter">Némítás ennyi idő után</string>
-    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>  <!-- TODO -->
 
     <string name="alarms_label_timeoutAfter">Lejárat ennyi idő után</string>
-    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>  <!-- TODO -->
 
     <string name="alarms_label_autoDismissAfter">Elvetés ennyi idő után</string>
-    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_snoozeLimit">Szundi korlát</string>
-    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g example="No Limit" id="limit">%s</xliff:g></string>
     <string name="alarms_label_snoozeLimit_none">Nincs korlát</string>
 
     <string name="alarms_label_snooze">Szundi ennyi ideig</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_snooze_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>  <!-- TODO -->
 
     <string name="alarms_label_upcoming">Értesítés ennyi időn belül</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_upcoming_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>  <!-- TODO -->
     <string name="alarms_label_upcoming_checkbox">Ébresztési emlékeztető értesítések megjelenítése.</string>
 
     <string name="alarms_label_fadein">Hangerő fokozatos növelése</string>
@@ -1109,7 +1109,7 @@
     <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g example="60 seconds" id="timePeriod">%s</xliff:g></string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1124,11 +1124,11 @@
     <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>     <!-- TODO -->
 
     <string name="alarms_label_hardwarebuttons">Fizikai gombok</string>
-    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g example="Snooze" id="action">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Elvetés</item>
         <item>Némítás</item>
@@ -1142,7 +1142,7 @@
     <string name="alarms_label_allRingtones_summary">Az összes rendszerhang megjelenítése a kiválasztás során (a csengőhang típusának figyelmen kívül hagyása).</string>
 
     <string name="alarms_label_reminder_none">Soha</string>
-    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> emlékeztető</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder"><xliff:g example="12h" id="hours">%s</xliff:g> emlékeztető</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="time_units_hours">
         <item quantity="one">%d óra</item>
@@ -1390,7 +1390,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">Napforduló követése</string>
-    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="settings_ui_showdatasource">Adatforrás megjelenítése</string>
@@ -1402,7 +1402,7 @@
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Kiemelt mező</string>              <!-- checkbox label -->
-    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_summary"><xliff:g example="Actual" id="fieldName">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
     <string name="settings_ui_showheaders">Fejlécek</string>              <!-- group title -->
@@ -1423,7 +1423,7 @@
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Világos színtéma</string>
     <string name="themes_appThemes_darkTheme">Sötét színtéma</string>
-    <string name="themes_appThemes_nightMode">Világos / Sötét színtéma (éjszakai&#160;mód)</string>
+    <string name="themes_appThemes_nightMode">Világos / Sötét színtéma (éjszakai mód)</string>
     <string name="themes_appThemes_systemDefault">Rendszer alapértelmezett</string>
     <string name="themes_appThemes_systemDefault1">Kontraszt (alapértelmezett)</string>
     <string name="themes_appThemes_darkTheme1">Kontraszt (sötét)</string>
@@ -1503,7 +1503,7 @@
 
     <!-- App Setting: GPS fix time limit -->
     <string name="location_pref_maxElapse">Hely idő limit</string>
-    <string name="location_pref_maxElapse_summary">Megszakítás ennyi idő tétlenség után: <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="location_pref_maxElapse_summary">Megszakítás ennyi idő tétlenség után: <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 mp</item>
         <item>30 mp</item>
@@ -1514,7 +1514,7 @@
 
     <!-- App Setting: GPS fix max age -->
     <string name="location_pref_maxAge">Legutóbbi hely maximális életkora</string>
-    <string name="location_pref_maxAge_summary">A legfeljebb <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> óta meghatározott hely aktuálisnak számít</string>
+    <string name="location_pref_maxAge_summary">A legfeljebb <xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> óta meghatározott hely aktuálisnak számít</string>
     <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>nincs</item>
         <item>1 perc</item>
@@ -1542,7 +1542,7 @@
     <string name="locale_pref_title">Nyelv</string>   <!-- group title -->
 
     <string name="locale_pref_localeMode">Mód</string>
-    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Rendszer</item>
         <item>Felhasználó által megadott</item>
@@ -1550,7 +1550,7 @@
 
     <!-- App Setting: custom Locale -->
     <string name="locale_pref_localeSelect">Nyelv</string>
-    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Angol</item>
         <item>Eszperantó</item>
@@ -1573,7 +1573,7 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_degrees"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
     <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
@@ -1651,9 +1651,9 @@
     <string name="worldmap_dialog_option_minorgrid">Rácsháló</string>
     <string name="worldmap_dialog_option_debuglines">Debug vonalak</string>
     <string name="worldmap_dialog_option_tintmap">Színezés</string>
-    <string name="worldmap_dialog_speed_5m">&#215; 5p</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15p</string>  
-    <string name="worldmap_dialog_speed_1d">&#215; 1n</string>
+    <string name="worldmap_dialog_speed_5m">× 5p</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_15m">× 15p</string>  
+    <string name="worldmap_dialog_speed_1d">× 1n</string>
     <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Light Graph -->
@@ -1700,9 +1700,9 @@
     <string name="schedalarm_dialog_cancel">Mégse</string>
     <string name="schedalarm_dialog_error">Az emlékeztetőt nem sikerült beállítani</string>
     <string name="schedalarm_dialog_error2">Az emlékeztetőt nem lehet beállítani…</string>
-    <string name="schedalarm_dialog_note">kb <xliff:g id="timetext" example="6h 30m">%s</xliff:g> van hátra..</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> van hátra..</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> nem lesz.</string>
+    <string name="schedalarm_dialog_note">kb <xliff:g example="6h 30m" id="timetext">%s</xliff:g> van hátra..</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g> van hátra..</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> nem lesz.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>csillagászati szürkület</item>
         <item>navigációs szürkület</item>
@@ -2005,7 +2005,7 @@
     <string name="about_dialog_privacy">Adatvédelem</string>
 
     <string name="privacy_securitydialog_title">Biztonsági értesítés</string>
-    <string name="privacy_securitydialog_duplicate_permissions">A Suntimeshoz tartozó engedély:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nígy is definálva van: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="privacy_securitydialog_duplicate_permissions">A Suntimeshoz tartozó engedély:\n\n<xliff:g example="suntimes.permission.READ_CALENDAR" id="permissionName">%1$s</xliff:g>\n\nígy is definálva van: <xliff:g example="some.other.app" id="packageName">%2$s</xliff:g></string>
     <string name="app_feature_not_supported_by_api">Ezt a funkciót nem támogatja az API %1$s.</string>
     <string name="app_feature_not_supported_by_source">Ezt a funkciót a jelenlegi adatforrás nem támogatja.</string>
     <string name="app_reboot_required_message">A módosítások érvénybe lépéséhez újraindításra lehet szükség.</string>

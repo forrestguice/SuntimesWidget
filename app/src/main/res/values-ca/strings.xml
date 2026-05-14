@@ -56,11 +56,11 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horària pot estar malament per a aquesta ubicació.</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> is <xliff:g id="timeSpan">%2$s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%3$s</xliff:g>).</string>  <!-- TODO -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Horari d\'estiu</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equació del temps</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> Horari d\'estiu</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> equació del temps</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -68,7 +68,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateField"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> La data no es correspon amb la d\'avui.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
@@ -87,16 +87,16 @@
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
     -->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> de dia</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> de llum útil</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> de dia</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de llum útil</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination">Iŀluminada al <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
-    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>   <!-- TODO: review -->
+    <string name="moon_illumination">Iŀluminada al <xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>   <!-- TODO: review -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -171,7 +171,7 @@
     <string name="table_header_moonset_short">Posta de la Lluna</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">se</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
@@ -238,7 +238,7 @@
 
     <string name="tag_tagDefault">[per defecte]</string>
     <string name="tag_tagPlugin">[complement]</string>
-    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="widgetConfig_action_addWidget">Afegir giny</string>                   <!-- Button: Add -->
@@ -283,7 +283,7 @@
     <string name="settings_general_showHours_summary">Inclou hores i minuts en intervals de temps majors a un dia.</string>    <!-- checkbox label -->
 
     <string name="settings_general_observerheight">Ombra de l\'objecte</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">Mostra la longitud de les ombres projectades per un objecte amb una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Mostra la longitud de les ombres projectades per un objecte amb una altura de <xliff:g example="1 meter" id="value">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">Day Offset</string>        <!-- edittext label -->  <!-- TODO -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->  <!-- TODO -->
@@ -530,8 +530,8 @@
     <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Temps solar mitjà</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solar aparent</string>              <!-- setting / custom timezone id -->
-    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">Recommend Time Zone</string>  <!-- TODO -->
 
     <string name="settings_timezone">Opcions de zona horària</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
@@ -595,9 +595,9 @@
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="actions_configLabel_action_launch">Class:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configHint_action_launch"/> <!-- editText hint (and default) -->
     <string name="actions_configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->   <!-- TODO -->
-    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package"/>               <!-- edittext label -->
     <string name="actions_configHint_action_launch_title">Títol de l\'acció</string>                 <!-- edittext hint -->
     <string name="actions_configHint_action_launch_desc">Descripció curta</string>                 <!-- edittext hint -->
     <string name="actions_configLabel_action_launch_type">Tipus:</string>                 <!-- spinner label -->
@@ -856,7 +856,7 @@
     <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
 
     <string name="event_sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
@@ -1000,7 +1000,7 @@
     <string name="alarmdelete_dialog_message">Estàs segur d\'esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">Esborra</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">Canceŀla</string>    <!-- button -->
-    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success"><xliff:g example="Notification" id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Hi ha canvis sense desar.</string>      <!-- dialog message -->  
     <string name="discardchanges_dialog_ok">Descartar</string>                              <!-- button -->  
@@ -1046,7 +1046,7 @@
     <string name="alarmoffset_dialog_ok">Aplica</string>        <!-- button --> 
     <string name="alarmoffset_dialog_cancel">Canceŀla</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> Fixada per a dintre de <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg --> 
+    <string name="alarmenabled_toast"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> Fixada per a dintre de <xliff:g example="8h" id="duration">%2$s</xliff:g>.</string> <!-- toast msg --> 
 
     <string name="alarms_label_optWhiteList">Optimització de bateria</string>
     <string name="alarms_label_optWhiteList_listed">Sense optimitzar (recomanat)</string>
@@ -1077,8 +1077,8 @@
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> Full-screen notifications are off. Alarms may fail to display over the lock screen.</string>  <!-- snackbar message -->   <!-- TODO -->
 
     <string name="alarms_label_bootcompleted">Boot Completed</string>   <!-- TODO -->
-    <string name="alarms_label_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>      <!-- TODO -->
-    <string name="alarms_label_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>      <!-- TODO -->
+    <string name="alarms_label_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g example="last run: never" id="_info">%1$s</xliff:g></string>      <!-- TODO -->
+    <string name="alarms_label_bootcompleted_info">Last run on <xliff:g example="never" id="timestamp">%1$s</xliff:g>,\n<xliff:g example="30s" id="time">%2$s</xliff:g> after boot (took <xliff:g example="10s" id="time">%3$s</xliff:g>).</string>      <!-- TODO -->
     <string name="alarms_label_bootcompleted_info_never">Never</string>   <!-- TODO -->
     <string name="alarms_label_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>   <!-- TODO -->
     <string name="alarms_label_bootcompleted_action_message">Rescheduling alarms and notifications..</string>   <!-- TODO -->
@@ -1086,23 +1086,23 @@
     <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->   <!-- TODO -->
 
     <string name="alarms_label_silenceAfter">Silenciar després de</string>
-    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_timeoutAfter">Expirar després de</string>
-    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_autoDismissAfter">Auto-dismiss after</string>    <!-- TODO -->
-    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_snoozeLimit">Snooze limit</string>    <!-- TODO -->
-    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g example="No Limit" id="limit">%s</xliff:g></string>
     <string name="alarms_label_snoozeLimit_none">No Limit</string>    <!-- TODO -->
 
     <string name="alarms_label_snooze">Posposar durant</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_snooze_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_upcoming">Recordatori previ</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">Show alarm reminder notifications.</string>  <!-- TODO -->
 
     <string name="alarms_label_fadein">Incrementar el volum gradualment</string>
@@ -1114,7 +1114,7 @@
     <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>    <!-- TODO -->
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>     <!-- TODO -->
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g example="60 seconds" id="timePeriod">%s</xliff:g></string>     <!-- TODO -->
 
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>   <!-- TODO -->
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1129,11 +1129,11 @@
     <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->    <!-- TODO -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>    <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>     <!-- TODO -->
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>     <!-- TODO -->
+    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>     <!-- TODO -->
 
     <string name="alarms_label_hardwarebuttons">Botons físics</string>
-    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g example="Snooze" id="action">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Ignorar</item>
         <item>Silenciar</item>
@@ -1147,7 +1147,7 @@
     <string name="alarms_label_allRingtones_summary">Mostra tots els sons del sistema durant la selecció (ignora el tipus de to de trucada).</string>
 
     <string name="alarms_label_reminder_none">Mai</string>
-    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
+    <string name="alarms_label_reminder"><xliff:g example="12h" id="hours">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->   <!-- TODO -->
 
     <plurals name="time_units_hours">
         <item quantity="one">%d hora</item>
@@ -1395,7 +1395,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">Seguiment de solstici</string>
-    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="settings_ui_showdatasource">Mostrar font de dades</string>
@@ -1407,7 +1407,7 @@
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->   <!-- TODO -->
-    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_summary"><xliff:g example="Actual" id="fieldName">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
     <string name="settings_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
@@ -1428,7 +1428,7 @@
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Tema clar</string>
     <string name="themes_appThemes_darkTheme">Tema fosc</string>
-    <string name="themes_appThemes_nightMode">Tema clar / Tema fosc (mode&#160;nit)</string>
+    <string name="themes_appThemes_nightMode">Tema clar / Tema fosc (mode nit)</string>
     <string name="themes_appThemes_systemDefault">System default</string>  <!-- TODO -->
     <string name="themes_appThemes_systemDefault1">Contrast (System Default)</string>  <!-- TODO -->
     <string name="themes_appThemes_darkTheme1">Contrast (fosc)</string>   <!-- TODO -->
@@ -1515,7 +1515,7 @@
 
     <!-- App Setting: GPS fix time limit -->
     <string name="location_pref_maxElapse">Termini per obtenir posició amb GPS</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="location_pref_maxElapse_summary">Intentar durant <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="location_pref_maxElapse_summary">Intentar durant <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segons</item>
         <item>30 segons</item>
@@ -1526,7 +1526,7 @@
 
     <!-- App Setting: GPS fix max age -->
     <string name="location_pref_maxAge">Antiguitat de la posició GPS</string>    <!-- TODO: "GPS" to "Location" -->
-    <string name="location_pref_maxAge_summary">Actualitzar al cap de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string name="location_pref_maxAge_summary">Actualitzar al cap de <xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g></string>
     <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>mai</item>  
         <item>1 minut</item>
@@ -1554,7 +1554,7 @@
     <string name="locale_pref_title">Opcions d\'idioma</string>   <!-- group title -->    <!-- TODO: shortened "Language Settings" to "Language" -->
 
     <string name="locale_pref_localeMode">Mode</string>
-    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Sistema</item>
         <item>Definit per l\'usuari</item>
@@ -1562,7 +1562,7 @@
 
     <!-- App Setting: custom Locale -->
     <string name="locale_pref_localeSelect">Idioma</string>
-    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Anglès</item>
         <item>Esperanto</item>
@@ -1585,7 +1585,7 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_degrees"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
     <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
@@ -1663,9 +1663,9 @@
     <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
     <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
     <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    
+    <string name="worldmap_dialog_speed_5m">× 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">× 15m</string>    
+    <string name="worldmap_dialog_speed_1d">× 1d</string>    
     <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
@@ -1712,9 +1712,9 @@
     <string name="schedalarm_dialog_cancel">Canceŀla</string>
     <string name="schedalarm_dialog_error">No es va establir l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot establir…</string>
-    <string name="schedalarm_dialog_note">En <xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no succeïx.</string>
+    <string name="schedalarm_dialog_note">En <xliff:g example="6h 30m" id="timetext">%s</xliff:g>, aproximadament.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g>, aproximadament.</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> no succeïx.</string>
 
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
@@ -2022,7 +2022,7 @@
     <string name="about_dialog_privacy">Privacitat</string>
 
     <string name="privacy_securitydialog_title">Alerta de seguretat</string>
-    <string name="privacy_securitydialog_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="privacy_securitydialog_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g example="suntimes.permission.READ_CALENDAR" id="permissionName">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g example="some.other.app" id="packageName">%2$s</xliff:g></string>
     <string name="app_feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
     <string name="app_feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="app_reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
