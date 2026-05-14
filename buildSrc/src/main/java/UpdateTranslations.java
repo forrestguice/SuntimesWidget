@@ -157,13 +157,13 @@ public abstract class UpdateTranslations extends CleanupTranslations
                     first = false;
                 }
 
-                getLogger().warn("{} needs update! missing string-array: {}", (parent + "/" + baseName + ".xml"), name);
                 Element missingStringArray = revised.createElement("string-array");
                 missingStringArray.setAttribute("name", name);
                 missingStringArray.appendChild(revised.createTextNode("\n        "));
 
                 if (!containsOnlyItemReferences(element))
                 {
+                    getLogger().warn("{} needs update! missing string-array: {}", (parent + "/" + baseName + ".xml"), name);
                     node.appendChild(revised.createTextNode("    "));
 
                     NodeList children = element.getElementsByTagName("item");
@@ -205,13 +205,14 @@ public abstract class UpdateTranslations extends CleanupTranslations
     protected void appendFirstComment(Node node, Document document)
     {
         node.appendChild(document.createTextNode("\n    "));
-        node.appendChild(document.createComment("\n        Updated from default: " + dateFormat.format(new Date(System.currentTimeMillis())) + " \n    "));
+        node.appendChild(document.createComment("\n        Added from default: " + dateFormat.format(new Date(System.currentTimeMillis())) + " \n    "));
         node.appendChild(document.createTextNode("\n"));
     }
 
     protected void checkForIllegalItems(String parent, String baseName, Document baseDocument, Document revised)
     {
         Set<String> baseStringNames = collectNames(baseDocument, "string");
+        Set<String> translatableFalse = collectNames(baseDocument, "string", false);
         NodeList nodes0 = revised.getElementsByTagName("string");
         for (int i=0; i<nodes0.getLength(); i++)
         {
@@ -219,6 +220,16 @@ public abstract class UpdateTranslations extends CleanupTranslations
             String name = element.getAttribute("name");
             if (!baseStringNames.contains(name)) {
                 getLogger().error("{} contains string not present in default! {}", (parent + "/" + baseName + ".xml"), name);
+            }
+            if (translatableFalse.contains(name)) {
+                getLogger().error("{} contains string marked translatable=false in default! {}", (parent + "/" + baseName + ".xml"), name);
+            }
+            if (element.hasAttribute("translatable"))
+            {
+                boolean isTranslatable = Boolean.parseBoolean(element.getAttribute("translatable"));
+                if (!isTranslatable) {
+                    getLogger().error("{} contains string marked translatable=false! {}", (parent + "/" + baseName + ".xml"), name);
+                }
             }
         }
 
@@ -286,14 +297,25 @@ public abstract class UpdateTranslations extends CleanupTranslations
         return false;
     }
 
-    private Set<String> collectNames(Document document, String tag)
+    private Set<String> collectNames(Document document, String tag) {
+        return collectNames(document, tag, null);
+    }
+    private Set<String> collectNames(Document document, String tag, Boolean translatable)
     {
         Set<String> set = new TreeSet<>();
         NodeList nodes = document.getElementsByTagName(tag);
         for (int i=0; i<nodes.getLength(); i++)
         {
             Element element = (Element) nodes.item(i);
-            set.add(element.getAttribute("name"));
+            if (translatable != null)
+            {
+                if ((translatable && isTranslatable(element)) ||
+                        (!translatable && !isTranslatable(element))) {
+                    set.add(element.getAttribute("name"));
+                }
+            } else {
+                set.add(element.getAttribute("name"));
+            }
         }
         return set;
     }
