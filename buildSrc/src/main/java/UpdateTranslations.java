@@ -24,6 +24,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -193,6 +197,27 @@ public abstract class UpdateTranslations extends CleanupTranslations
                 }
             }
 
+            // report number of TODO
+            NodeList nodes = node.getChildNodes();
+            int todoCount = 0;
+            for (int i=0; i<nodes.getLength(); i++)
+            {
+                Node n = nodes.item(i);
+                if (n.getNodeType() == Node.COMMENT_NODE) {
+                    if (n.getTextContent().contains("TODO")) {
+                        todoCount++;
+                    }
+                }
+            }
+
+            String report;
+            if (todoCount > 0)
+            {
+                getLogger().warn("{} TODO :: {}", todoCount, (parent + "/" + baseName + ".xml"));
+                report = "TODO: " + todoCount;
+                writeReport(parent, baseName, report);
+            }
+
             node.normalize();
             return revised;
 
@@ -318,6 +343,25 @@ public abstract class UpdateTranslations extends CleanupTranslations
             }
         }
         return set;
+    }
+
+    private void writeReport(String parent, String baseName, String report)
+    {
+        String path = getOutputDir().get() + "/report/" + parent + "_" +  baseName + ".report";
+        File outputFile = new File(path);
+        File directory = outputFile.getParentFile();
+        if (!directory.exists() && !directory.mkdirs()) {
+            getLogger().error("Failed to create output directory {}", directory.getAbsolutePath());
+            return;
+        }
+
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFile)))
+        {
+            out.write(report);
+
+        } catch (IOException e) {
+            getLogger().error("Failed to write report", e);
+        }
     }
 
 }
