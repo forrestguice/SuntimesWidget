@@ -18,13 +18,20 @@
 
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,10 +43,18 @@ import javax.xml.parsers.ParserConfigurationException;
 public abstract class UpdateTranslations extends CleanupTranslations
 {
     /**
+     * @return e.g. en-rUS|en-rCA|...
+     */
+    @Input
+    public abstract Property<String> getExcludeLocales();
+
+    /**
      * @return e.g. strings|help_content
      */
     @Input
     public abstract Property<String> getBaseNames();
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ROOT);
 
     @Override
     protected Document reviseDocument(String parent, String baseName, Document original)
@@ -48,54 +63,137 @@ public abstract class UpdateTranslations extends CleanupTranslations
             return original;
         }
 
+        ArrayList<String> excluded = new ArrayList<>(List.of(getExcludeLocales().get().split("\\|")));
+        for (String locale : excluded) {
+            if (parent.endsWith(locale)) {
+                return original;
+            }
+        }
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
             Document revised = builder.newDocument();
-            Node rootNode = revised.importNode(original.getDocumentElement(), true);    // true; deep copy
-            revised.appendChild(rootNode);
+            Node node = revised.importNode(original.getDocumentElement(), true);    // true; deep copy
+            revised.appendChild(node);
 
             Document baseDocument = loadDocument(Path.of(getInputDir().get() + "/values/" + baseName + ".xml"));
-            Set<String> baseStringNames = collectStringNames(baseDocument);
+            checkForIllegalItems(parent, baseName, baseDocument, revised);
 
-            // check for values that are not in the base document
-            NodeList nodes = revised.getElementsByTagName("string");
-            for (int i=0; i<nodes.getLength(); i++)
+            // copy missing strings from base document
+            Set<String> stringNames = collectNames(revised, "string");
+            Map<String, Node> missingStringNodes = new HashMap<>();
+            NodeList stringNodes = baseDocument.getElementsByTagName("string");
+            for (int i=0; i<stringNodes.getLength(); i++)
             {
-                Element element = (Element) nodes.item(i);
-                String name = element.getAttribute("name");
-                if (!baseStringNames.contains(name)) {
-                    getLogger().error("{} contains strings not present in default! {}", (parent + "/" + baseName + ".xml"), name);
-                }
-            }
-
-            // copy missing values from base document
-            Set<String> stringNames = collectStringNames(revised);
-            nodes = baseDocument.getElementsByTagName("string");
-            for (int i=0; i<nodes.getLength(); i++)
-            {
-                Element element = (Element) nodes.item(i);
-                if (!isTranslatable(element) || isMarkedSkip(element) || isReference(element)) {
-                    continue;
-                }
-
-                String name = element.getAttribute("name");
-                if (!stringNames.contains(name))
+                Element element = (Element) stringNodes.item(i);
+                if (isTranslatable(element) && !isMarkedCommon(element) && !isReference(element))
                 {
-                    getLogger().warn("{} needs update! missing: {}", (parent + "/" + baseName + ".xml"), name);
+                    String name = element.getAttribute("name");
+                    if (!stringNames.contains(name)) {
+                        missingStringNodes.put(name, element);
+                    }
+                }
+            }
+            ArrayList<String> missingStrings = new ArrayList<>(missingStringNodes.keySet());
+            Collections.sort(missingStrings);
 
-                    Element missingString = revised.createElement("string");
-                    missingString.setAttribute("name", name);
-                    missingString.setTextContent(element.getTextContent());
+            // copy missing string-arrays from base document
+            Set<String> stringArrayNames = collectNames(revised, "string-array");
+            Map<String, Node> missingStringArrayNodes = new HashMap<>();
+            NodeList stringArrayNodes = baseDocument.getElementsByTagName("string-array");
+            for (int i=0; i<stringArrayNodes.getLength(); i++)
+            {
+                Element element = (Element) stringArrayNodes.item(i);
+                if (isTranslatable(element) && !isMarkedCommon(element))
+                {
+                    String name = element.getAttribute("name");
+                    if (!stringArrayNames.contains(name)) {
+                        missingStringArrayNodes.put(name, element);
+                    }
+                }
+            }
+            ArrayList<String> missingStringArrays = new ArrayList<>(missingStringArrayNodes.keySet());
+            Collections.sort(missingStringArrays);
 
-                    rootNode.appendChild(revised.createTextNode("\n    "));
-                    rootNode.appendChild(missingString);
-                    rootNode.appendChild(revised.createTextNode("    "));
-                    rootNode.appendChild(revised.createComment(" TODO "));
+            // write missing string values
+            boolean first = true;
+            for (String name : missingStrings)
+            {
+                Element element = (Element) missingStringNodes.get(name);
+                if (first) {
+                    appendFirstComment(node, revised);
+                    first = false;
+                }
+                node.appendChild(revised.createTextNode("    "));
+
+                getLogger().warn("{} needs update! missing string: {}", (parent + "/" + baseName + ".xml"), name);
+                Element missingString = revised.createElement("string");
+                missingString.setAttribute("name", name);
+                missingString.setTextContent(element.getTextContent());
+                node.appendChild(missingString);
+
+                String missingComment = getCommentAfter(element);
+                if (missingComment != null && !missingComment.trim().equals("TODO")) {
+                    node.appendChild(revised.createTextNode("    "));
+                    node.appendChild(revised.createComment(missingComment));
+                }
+                node.appendChild(revised.createTextNode("    "));
+                node.appendChild(revised.createComment(" TODO "));
+                node.appendChild(revised.createTextNode("\n"));
+            }
+
+            // write missing string-array values
+            if (!missingStringArrays.isEmpty()) {
+                node.appendChild(revised.createTextNode("\n"));
+            }
+            for (String name : missingStringArrays)
+            {
+                Element element = (Element) missingStringArrayNodes.get(name);
+
+                if (first) {
+                    appendFirstComment(node, revised);
+                    first = false;
+                }
+
+                getLogger().warn("{} needs update! missing string-array: {}", (parent + "/" + baseName + ".xml"), name);
+                Element missingStringArray = revised.createElement("string-array");
+                missingStringArray.setAttribute("name", name);
+                missingStringArray.appendChild(revised.createTextNode("\n        "));
+
+                if (!containsOnlyItemReferences(element))
+                {
+                    node.appendChild(revised.createTextNode("    "));
+
+                    NodeList children = element.getElementsByTagName("item");
+                    for (int j=0; j<children.getLength(); j++)
+                    {
+                        Node child = (Element) children.item(j);
+                        Element item = revised.createElement("item");
+                        item.appendChild(revised.createTextNode("\n        "));
+                        item.setTextContent(child.getTextContent());
+                        missingStringArray.appendChild(item);
+                        missingStringArray.appendChild(revised.createTextNode("\n    "));
+                        if (j != children.getLength() - 1) {
+                            missingStringArray.appendChild(revised.createTextNode("    "));
+                        }
+                    }
+                    node.appendChild(missingStringArray);
+
+                    String missingComment = getCommentAfter(element);
+                    if (missingComment != null && !missingComment.trim().equals("TODO")) {
+                        node.appendChild(revised.createTextNode("    "));
+                        node.appendChild(revised.createComment(missingComment));
+
+                    }
+                    node.appendChild(revised.createTextNode("    "));
+                    node.appendChild(revised.createComment(" TODO "));
+                    node.appendChild(revised.createTextNode("\n\n"));
                 }
             }
 
+            node.normalize();
             return revised;
 
         } catch (ParserConfigurationException e) {
@@ -104,14 +202,52 @@ public abstract class UpdateTranslations extends CleanupTranslations
         return original;
     }
 
-    private Element findElementWithName(NodeList nodes, String name)
+    protected void appendFirstComment(Node node, Document document)
     {
-        for (int i=0; i<nodes.getLength(); i++)
+        node.appendChild(document.createTextNode("\n    "));
+        node.appendChild(document.createComment("\n        Updated from default: " + dateFormat.format(new Date(System.currentTimeMillis())) + " \n    "));
+        node.appendChild(document.createTextNode("\n"));
+    }
+
+    protected void checkForIllegalItems(String parent, String baseName, Document baseDocument, Document revised)
+    {
+        Set<String> baseStringNames = collectNames(baseDocument, "string");
+        NodeList nodes0 = revised.getElementsByTagName("string");
+        for (int i=0; i<nodes0.getLength(); i++)
         {
-            Element element = (Element) nodes.item(i);
-            String name0 = element.getAttribute("name");
-            if (name.equals(name0)) {
-                return element;
+            Element element = (Element) nodes0.item(i);
+            String name = element.getAttribute("name");
+            if (!baseStringNames.contains(name)) {
+                getLogger().error("{} contains string not present in default! {}", (parent + "/" + baseName + ".xml"), name);
+            }
+        }
+
+        Set<String> baseStringArrayNames = collectNames(baseDocument, "string-array");
+        NodeList nodes1 = revised.getElementsByTagName("string-array");
+        for (int i=0; i<nodes1.getLength(); i++)
+        {
+            Element element = (Element) nodes1.item(i);
+            String name = element.getAttribute("name");
+            if (!baseStringArrayNames.contains(name)) {
+                getLogger().error("{} contains string-array not present in default! {}", (parent + "/" + baseName + ".xml"), name);
+            }
+        }
+    }
+
+    private String getCommentAfter(Element element)
+    {
+        Node node = element.getNextSibling();
+        if (node != null)
+        {
+            while (node.getNodeType() == Node.TEXT_NODE)
+            {
+                if (node.getTextContent().contains("\n")) {
+                    return null;
+                }
+                node = node.getNextSibling();
+            }
+            if (node.getNodeType() == Node.COMMENT_NODE) {
+                return ((Comment) node).getData();
             }
         }
         return null;
@@ -125,22 +261,35 @@ public abstract class UpdateTranslations extends CleanupTranslations
         return true;
     }
 
-    private boolean isReference(Element element) {
+    private boolean isReference(Node element) {
         return element.getTextContent().startsWith("@string/");
     }
 
-    private boolean isMarkedSkip(Element element)
+    private boolean containsOnlyItemReferences(Element element)
     {
-        if (element.hasAttribute("tools:exclude")) {
-            return Boolean.parseBoolean(element.getAttribute("tools:exclude"));
+        NodeList children = element.getElementsByTagName("item");
+        for (int j=0; j<children.getLength(); j++)
+        {
+            Node child = (Element) children.item(j);
+            if (!isReference(child)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isMarkedCommon(Element element)
+    {
+        if (element.hasAttribute("tools:common")) {
+            return Boolean.parseBoolean(element.getAttribute("tools:common"));
         }
         return false;
     }
 
-    private Set<String> collectStringNames(Document document)
+    private Set<String> collectNames(Document document, String tag)
     {
         Set<String> set = new TreeSet<>();
-        NodeList nodes = document.getElementsByTagName("string");
+        NodeList nodes = document.getElementsByTagName(tag);
         for (int i=0; i<nodes.getLength(); i++)
         {
             Element element = (Element) nodes.item(i);

@@ -301,6 +301,7 @@ if (UpdateTranslations != null) {
     tasks.register('updateTranslations', UpdateTranslations) {
         group = 'Translation'
         baseNames.set('strings|help_content')
+        excludeLocales = 'en|en-rUS|en-rCA'
         inputDir.set(layout.projectDirectory.dir('src/main/res').toString())
         outputDir.set("${buildDir}/generated/res/translations")
     }
