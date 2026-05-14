@@ -1,4 +1,4 @@
-/*
+package com.forrestguice.suntimes.gradle.localization;/*
     Copyright (C) 2026 Forrest Guice
     This file is part of SuntimesWidget.
 
@@ -52,7 +52,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public abstract class CleanupTranslations extends DefaultTask
+public abstract class ProcessTranslations extends DefaultTask
 {
     /**
      * @return e.g. strings|help_content

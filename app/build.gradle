@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'suntimes.localization.plugin'
+}
 
 android
 {
@@ -276,33 +279,10 @@ tasks.withType(Test)
     }
 }
 
-def CleanupTranslations
-try {
-    CleanupTranslations = Class.forName("CleanupTranslations")
-} catch (ClassNotFoundException e) {
-    CleanupTranslations = null
-}
-if (CleanupTranslations != null) {
-    tasks.register('cleanupTranslations', CleanupTranslations) {
-        group = 'Translation'
-        baseNames.set('strings|help_content')
-        inputDir.set(layout.projectDirectory.dir('src/main/res').toString())
-        outputDir.set("${buildDir}/generated/res/translations")
-    }
+localization_plugin {
+    baseNames = 'strings|help_content'
+    excludeLocales = 'en|en-rUS|en-rCA'
+    inputDir = layout.projectDirectory.dir('src/main/res').toString()
+    outputDir = "${buildDir}/generated/translations"
 }
 
-def UpdateTranslations
-try {
-    UpdateTranslations = Class.forName("UpdateTranslations")
-} catch (ClassNotFoundException e) {
-    UpdateTranslations = null
-}
-if (UpdateTranslations != null) {
-    tasks.register('updateTranslations', UpdateTranslations) {
-        group = 'Translation'
-        baseNames.set('strings|help_content')
-        excludeLocales = 'en|en-rUS|en-rCA'
-        inputDir.set(layout.projectDirectory.dir('src/main/res').toString())
-        outputDir.set("${buildDir}/generated/translations")
-    }
-}

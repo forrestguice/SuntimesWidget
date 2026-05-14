@@ -1,3 +1,5 @@
+includeBuild("build-logic/localization")
+
 include ':lib-ca-rmen-sunrisesunset'
 include ':lib-luckycatlabs-sunrisesunset'
 

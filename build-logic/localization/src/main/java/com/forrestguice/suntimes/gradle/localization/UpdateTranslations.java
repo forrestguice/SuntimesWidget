@@ -1,4 +1,4 @@
-/*
+package com.forrestguice.suntimes.gradle.localization;/*
     Copyright (C) 2026 Forrest Guice
     This file is part of SuntimesWidget.
 
@@ -24,10 +24,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -45,7 +41,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public abstract class UpdateTranslations extends CleanupTranslations
+/**
+ * Copies missing values from default into each translation; reports warnings / number of todos.
+ */
+public abstract class UpdateTranslations extends ProcessTranslations
 {
     /**
      * @return e.g. en-rUS|en-rCA|...
