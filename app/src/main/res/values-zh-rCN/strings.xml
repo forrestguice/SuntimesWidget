@@ -56,11 +56,11 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> 此位置的时区可能是错的。</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> 是 <xliff:g id="timeSpan">%2$s</xliff:g> 采用地方平时（<xliff:g id="locationName">%3$s</xliff:g>）</string>
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> 夏令时</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> 时间等式</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> 夏令时</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> 时间等式</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -68,7 +68,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateField"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> 日期已设置为除今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
@@ -87,21 +87,21 @@
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
     -->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> 日光</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> 天亮时间</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
-    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
-    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> 日光</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> 天亮时间</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [+<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [-<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight2"><xliff:g example="30m" id="timeSpan1">%1$s</xliff:g> | <xliff:g example="30m" id="timeSpan2">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
     <string name="timeMode_tropical_year">回归年</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>饱满度</string>  <!-- used in 2x1 widget -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
-    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>
+    <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>饱满度</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -176,7 +176,7 @@
     <string name="table_header_moonset_short">月落</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">年</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">周</string>    <!-- e.g. 2w -->
     <string name="delta_days">天</string>     <!-- e.g. 1d -->
@@ -200,13 +200,13 @@
     <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
-    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
 
     <!-- location display formats -->
-    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g example="m" id="distanceUnit">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
     <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
     <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
@@ -251,7 +251,7 @@
 
     <string name="tag_tagDefault">[初始值]</string>
     <string name="tag_tagPlugin">[插件]</string>
-    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
     <string name="widgetConfig_action_addWidget">新增小部件</string>                   <!-- Button: Add -->
@@ -296,7 +296,7 @@
     <string name="settings_general_showHours_summary">大于一天的时候包含小时和分钟。</string>    <!-- checkbox label -->
 
     <string name="settings_general_observerheight">物体阴影</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">显示高度为 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物体投射的阴影长度。</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">显示高度为 <xliff:g example="1 meter" id="value">%1$s</xliff:g> 的物体投射的阴影长度。</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">日偏移</string>        <!-- edittext label -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
@@ -548,8 +548,8 @@
     <string name="time_utc">协调世界时</string>            <!-- timezone label -->
     <string name="time_localMean">当地平均时间</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">视太阳时间</string>              <!-- setting / custom timezone id -->
-    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="action_suggestTimeZone">推荐时区</string>
 
     <string name="settings_timezone">时区</string>             <!-- group title -->
@@ -613,9 +613,9 @@
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="actions_configLabel_action_launch">类:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configHint_action_launch"/> <!-- editText hint (and default) -->
     <string name="actions_configLabel_action_launch_package">包:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package"/>               <!-- edittext label -->
     <string name="actions_configHint_action_launch_title">动作标题</string>                 <!-- edittext hint -->
     <string name="actions_configHint_action_launch_desc">简介</string>                 <!-- edittext hint -->
     <string name="actions_configLabel_action_launch_type">类型:</string>                 <!-- spinner label -->
@@ -876,7 +876,7 @@
     <string name="event_label_alarmitem_desc">%1$s</string>
 
     <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
 
     <string name="event_sunevent_title">太阳</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
@@ -1019,7 +1019,7 @@
     <string name="alarmdelete_dialog_message">您确认要删除 <xliff:g id="type">%1$s</xliff:g> 于 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）吗？</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">删除</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">取消</string>    <!-- button -->
-    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> 于 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）已被删除。</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success"><xliff:g example="Notification" id="type">%1$s</xliff:g> 于 <xliff:g id="time">%2$s</xliff:g>（<xliff:g id="event">%3$s</xliff:g>）已被删除。</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">有未保存的变更。</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">丢弃</string>                              <!-- button -->
@@ -1064,7 +1064,7 @@
     <string name="alarmoffset_dialog_ok">应用</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">取消</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> 设置于自现在起 <xliff:g id="duration" example="8h">%2$s</xliff:g>。</string> <!-- toast msg -->
+    <string name="alarmenabled_toast"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> 设置于自现在起 <xliff:g example="8h" id="duration">%2$s</xliff:g>。</string> <!-- toast msg -->
 
     <string name="alarms_label_optWhiteList">电池优化</string>
     <string name="alarms_label_optWhiteList_listed">未优化（推荐）</string>
@@ -1095,8 +1095,8 @@
     <string name="alarms_warning_notifications1"><xliff:g id="warningTag">[w]</xliff:g> 全屏通知已关闭。闹钟可能无法正确在锁定屏幕显示。</string>  <!-- snackbar message -->
 
     <string name="alarms_label_bootcompleted">启动完成</string>
-    <string name="alarms_label_bootcompleted_summary">闹钟在重启几分钟后自动重新安排。\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="alarms_label_bootcompleted_info">上一次运行于 <xliff:g id="timestamp" example="never">%1$s</xliff:g>\n启动后 <xliff:g id="time" example="30s">%2$s</xliff:g>（用时 <xliff:g id="time" example="10s">%3$s</xliff:g>）。</string>
+    <string name="alarms_label_bootcompleted_summary">闹钟在重启几分钟后自动重新安排。\n\n<xliff:g example="last run: never" id="_info">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">上一次运行于 <xliff:g example="never" id="timestamp">%1$s</xliff:g>\n启动后 <xliff:g example="30s" id="time">%2$s</xliff:g>（用时 <xliff:g example="10s" id="time">%3$s</xliff:g>）。</string>
     <string name="alarms_label_bootcompleted_info_never">永不</string>
     <string name="alarms_label_bootcompleted_action_confirm">重新安排所有闹钟和通知？</string>
     <string name="alarms_label_bootcompleted_action_message">重新安排所有闹钟和通知…</string>
@@ -1104,23 +1104,23 @@
     <string name="alarms_message_background_action">%s 正在后台执行任务。</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <string name="alarms_label_silenceAfter">在…后静音</string>
-    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_timeoutAfter">在…后超时</string>
-    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_autoDismissAfter">在…后自动解除</string>
-    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_snoozeLimit">延时限制</string>
-    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g example="No Limit" id="limit">%s</xliff:g></string>
     <string name="alarms_label_snoozeLimit_none">无限制</string>
 
     <string name="alarms_label_snooze">延时</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_snooze_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_upcoming">在…后提醒</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">显示闹钟提醒通知。</string>
 
     <string name="alarms_label_fadein">逐渐增加音量</string>
@@ -1132,7 +1132,7 @@
     <string name="alarms_label_brightMode_summary">全屏闹钟最初是暗的，然后会慢慢改变颜色并增加亮度。</string>
 
     <string name="alarms_label_brightMode_fadein">逐渐增加亮度</string>
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g example="60 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_brightMode_colors">明亮闹钟颜色</string>
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1147,11 +1147,11 @@
     <string name="alarms_widgetLabel_nextAlarm_error">加载失败！</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">没有设定闹钟。</string>
-    <string name="alarmtile_dialogmsg_format0">下一个闹钟在 <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>，<xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>。</string>
-    <string name="alarmtile_dialogmsg_format1">下一个闹钟在 <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>)，<xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>。</string>
+    <string name="alarmtile_dialogmsg_format0">下一个闹钟在 <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>，<xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>。</string>
+    <string name="alarmtile_dialogmsg_format1">下一个闹钟在 <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>)，<xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>。</string>
 
     <string name="alarms_label_hardwarebuttons">硬件按钮</string>
-    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons_summary"><xliff:g example="Snooze" id="action">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>解除</item>
         <item>静音</item>
@@ -1165,7 +1165,7 @@
     <string name="alarms_label_allRingtones_summary">显示所有系统铃声（忽略铃声类型）。</string>
 
     <string name="alarms_label_reminder_none">永不</string>
-    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder"><xliff:g example="12h" id="hours">%s</xliff:g> 提醒</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="time_units_hours">
         <!--<item quantity="one">%d hour</item>-->
@@ -1272,8 +1272,8 @@
     <!--App Setting: WidgetList -->
     <string name="widgetList_label">小部件</string>               <!-- group title -->
     <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern1"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="widgetList_label_help_title">帮助</string>               <!-- always the first item in the widgetList -->
     <string name="widgetlist_label_help_summary">显示小部件帮助</string>
@@ -1410,7 +1410,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">至点追踪</string>
-    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="settings_ui_showdatasource">显示数据源</string>
@@ -1422,7 +1422,7 @@
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">强调字段</string>              <!-- checkbox label -->
-    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_summary"><xliff:g example="Actual" id="fieldName">%s</xliff:g></string>
 
     <!-- App Setting: show headers -->
     <string name="settings_ui_showheaders">列标题</string>              <!-- group title -->
@@ -1530,7 +1530,7 @@
 
     <!-- App Setting: GPS fix time limit -->
     <string name="location_pref_maxElapse">位置时间限制</string>
-    <string name="location_pref_maxElapse_summary">最多等待 <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="location_pref_maxElapse_summary">最多等待 <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 秒</item>
         <item>30 秒</item>
@@ -1541,7 +1541,7 @@
 
     <!-- App Setting: GPS fix max age -->
     <string name="location_pref_maxAge">最近位置有效期</string>
-    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 内算作最近位置</string>
+    <string name="location_pref_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> 内算作最近位置</string>
     <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>无</item>
         <item>1 分</item>
@@ -1569,7 +1569,7 @@
     <string name="locale_pref_title">语言</string>   <!-- group title -->
 
     <string name="locale_pref_localeMode">模式</string>
-    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode_summary"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>系统</item>
         <item>用户自定</item>
@@ -1577,7 +1577,7 @@
 
     <!-- App Setting: custom Locale -->
     <string name="locale_pref_localeSelect">语言</string>
-    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>英语</item>
         <item>世界语</item>
@@ -1600,7 +1600,7 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_degrees"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
     <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
@@ -1678,9 +1678,9 @@
     <string name="worldmap_dialog_option_minorgrid">标线</string>
     <string name="worldmap_dialog_option_debuglines">调试线</string>
     <string name="worldmap_dialog_option_tintmap">着色</string>
-    <string name="worldmap_dialog_speed_5m">&#215; 5分</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15分</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1天</string>
+    <string name="worldmap_dialog_speed_5m">× 5分</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_15m">× 15分</string>
+    <string name="worldmap_dialog_speed_1d">× 1天</string>
     <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Light Graph -->
@@ -1727,10 +1727,10 @@
     <string name="schedalarm_dialog_cancel">取消</string>
     <string name="schedalarm_dialog_error">闹钟没有设置……</string>
     <string name="schedalarm_dialog_error2">闹钟无法设置……</string>
-    <string name="schedalarm_dialog_note">距离现在大约 <xliff:g id="timetext" example="6h 30m">%s</xliff:g>。</string>
+    <string name="schedalarm_dialog_note">距离现在大约 <xliff:g example="6h 30m" id="timetext">%s</xliff:g>。</string>
     <string name="schedalarm_dialog_note1">@string/schedalarm_dialog_note</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> 没有出现。</string>
-    <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g>（<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>）</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> 没有出现。</string>
+    <string name="schedalarm_labelformat"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g>（<xliff:g example="4/6/2018" id="shortDate">%2$s</xliff:g>）</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>天文曙光</item>
         <item>航海曙光</item>
@@ -2035,7 +2035,7 @@
     <string name="about_dialog_privacy">隐私</string>
 
     <string name="privacy_securitydialog_title">安全提醒</string>
-    <string name="privacy_securitydialog_duplicate_permissions">属于 Suntimes 的权限:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\n也被定义为: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="privacy_securitydialog_duplicate_permissions">属于 Suntimes 的权限:\n\n<xliff:g example="suntimes.permission.READ_CALENDAR" id="permissionName">%1$s</xliff:g>\n\n也被定义为: <xliff:g example="some.other.app" id="packageName">%2$s</xliff:g></string>
     <string name="app_feature_not_supported_by_api">API %1$s 不支持此功能。</string>
     <string name="app_feature_not_supported_by_source">当前数据源不支持此功能。</string>
     <string name="app_reboot_required_message">可能需要重启设备以使变更生效。</string>    <!-- toast; device off/on may be required -->
@@ -2056,5 +2056,174 @@
     <string name="about_calculator_displayString_time4a_noaa">遵循美国国家海洋和大气管理局（NOAA）发布的算法。</string>
     <string name="about_calculator_displayString_time4a_cc">遵循 Dershowitz 和 Reingold 在他们的书籍《日历计算》（"Calendrical Calculations"）（第三版）中发布的算法。</string>
     <string name="about_calculator_displayString_time4a_4j">基于 Jean Meeus 在他的书籍《天文算法》（"Astronomical Algorithms"）（第二版）中发布的天文计算。</string>
+
+
+    <!--
+        :: Update ::
+        Copied from default on 2026-05-14 
+    -->
+    <string name="about_app_license_notice">Suntimes is free and open-source software.</string>    <!-- displayed by welcome dialog -->    <!-- TODO -->
+    <string name="actionDesc_nextCard">Show next card</string>    <!-- TODO -->
+    <string name="actionDesc_prevCard">Show previous card</string>    <!-- TODO -->
+    <string name="action_avgLocation">Average Location</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="action_checkAll">All</string>    <!-- TODO -->
+    <string name="action_checkNone">None</string>    <!-- TODO -->
+    <string name="action_date">Date</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_lightGraph">Light Graph</string>    <!-- TODO -->
+    <string name="action_preview">Preview</string>    <!-- TODO -->
+    <string name="action_seek">Seek</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekDate">Seek Date</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekDawn">Seek Dawn</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekDusk">Seek Dusk</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekNoon">Seek Noon</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekShadowLength">Seek Shadow Length</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_seekTime">Seek Time</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="action_sort">Sort</string>    <!-- TODO -->
+    <string name="action_time">Time</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="actions_hint_actionid">ID</string>    <!-- TODO -->
+    <string name="alarmMode_notification2">Notification (persistent)</string>    <!-- alarm type (setting) -->    <!-- TODO -->
+    <string name="alarmdelete_toast_success1">%1$s was deleted.</string>    <!-- toast msg -->    <!-- TODO -->
+    <string name="alarmdetails_snack">%1$s in %2$s</string>    <!-- snackbar msg -->    <!-- TODO -->
+    <string name="alarms_label_bootcompleted_delay">Boot Completed (delay)</string>    <!-- TODO -->
+    <string name="alarms_label_clearall">Clear Alarms</string>    <!-- TODO -->
+    <string name="alarms_label_clearall_summary">Clear the list of alarms and notifications.</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method_cubic">Cubic</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method_linear">Linear</string>    <!-- TODO -->
+    <string name="app_name_alarmtile">Alarm Tile</string>    <!-- TODO -->
+    <string name="app_name_alarmwidget0">Alarm Widget</string>    <!-- TODO -->
+    <string name="crash_dialog_clear">Clear</string>    <!-- TODO -->
+    <string name="crash_dialog_cleared">Crash report has been cleared.</string>    <!-- TODO -->
+    <string name="crash_dialog_copy">Copy Report</string>    <!-- TODO -->
+    <string name="crash_dialog_message">%s has crashed…</string>    <!-- TODO -->
+    <string name="crash_dialog_message1">
+        Help improve this app by reporting this crash:&lt;br/&gt;&lt;br/&gt;
+        &lt;b&gt;%1$s&lt;/b&gt;
+    </string>    <!-- TODO -->
+    <string name="crash_dialog_title">Crash Report</string>    <!-- TODO -->
+    <string name="crash_dialog_view">View Report</string>    <!-- TODO -->
+    <string name="delta_day_same">the same length</string>    <!-- TODO -->
+    <string name="eventType_alias">Alias</string>    <!-- TODO -->
+    <string name="eventType_date">Date</string>    <!-- TODO -->
+    <string name="eventType_default">Default</string>    <!-- TODO -->
+    <string name="eventType_default_moon">Moon</string>    <!-- TODO -->
+    <string name="eventType_default_moonphases">Moon Phases</string>    <!-- TODO -->
+    <string name="eventType_default_seasons">Seasons</string>    <!-- TODO -->
+    <string name="eventType_default_sun">Sun</string>    <!-- TODO -->
+    <string name="eventType_sun_shadowlength">Sun (shadow length)</string>    <!-- TODO -->
+    <string name="event_daypercentevent_title_day">Day Percent</string>    <!-- (custom) day percent event title; e.g. "Day 25%" -->    <!-- TODO -->
+    <string name="event_daypercentevent_title_night">Night Percent</string>    <!-- (custom) night percent event title; e.g. "Night 25%" -->    <!-- TODO -->
+    <string name="event_moonevent_label_suggested">Moon Angle</string>    <!-- TODO -->
+    <string name="event_moonevent_summary_format">%1$s at %2$s</string>    <!-- (custom) moon event summary; e.g. "Moon 6°" -->    <!-- TODO -->
+    <string name="event_moonevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->    <!-- TODO -->
+    <string name="event_moonevent_title">Moon</string>    <!-- (custom) moon event title; e.g. "Moon 6°" -->    <!-- TODO -->
+    <string name="event_moonillumevent_label_suggested">Moon Illumination</string>    <!-- TODO -->
+    <string name="event_moonillumevent_title">Moon</string>    <!-- (custom) moon illum event title; e.g. "Moon 25%" -->    <!-- TODO -->
+    <string name="event_shadowratio_label_suggested">Shadow Ratio</string>    <!-- TODO -->
+    <string name="event_shadowratio_title">Shadow Ratio</string>    <!-- (custom) shadow ratio event title; e.g. "Shadow Ratio x2" -->    <!-- TODO -->
+    <string name="event_sunevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->    <!-- TODO -->
+    <string name="events_action_addEvent_dayPercentEvent">Add (Day/Night Percent)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_moonEvent">Add (Moon Elevation)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_moonIllumEvent">Add (Moon Illumination)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_action_addEvent_shadowRatio">Add (Shadow Ratio)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="events_editevent_dialog_factor">Shadow Factor</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_absolute">absolute</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_error">Shadow factor is required!</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_relative">relative (noon)</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_factor_suffix">x</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_height_suffix">m</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_label_suggested2">Custom Event</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_length_suffix">m</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_percent">Percent</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_percent_error">Percent value is required!</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_percent_ofday">of day</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_percent_ofnight">of night</string>    <!-- TODO -->
+    <string name="events_editevent_dialog_percent_suffix">%</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_noon">Show Noon</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_symbol">Symbol</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_symbol_circle">Circle</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_symbol_cross">Cross</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_symbol_dot">Dot</string>    <!-- TODO -->
+    <string name="lightmap_graph_option_symbol_line">Line</string>    <!-- TODO -->
+    <string name="location_label_comment">Comment</string>    <!-- edittext hint -->    <!-- TODO -->
+    <string name="location_label_gnss">GNSS</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps">AGPS</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_delete">Delete AGPS data</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
+    <string name="location_label_gnss_agps_reload_warning">Reloading AGPS data requires network connectivity.\n\nVerify your connection before proceeding…</string>    <!-- TODO -->
+    <string name="location_label_gnss_almanac">Almanac</string>    <!-- TODO -->
+    <string name="location_label_gnss_cnrFormat">%s db</string>    <!-- TODO -->
+    <string name="location_label_gnss_ephemeris">Ephemeris</string>    <!-- TODO -->
+    <string name="location_label_gnss_log">GNSS Log</string>    <!-- TODO -->
+    <string name="location_label_gnss_signal">Signal</string>    <!-- TODO -->
+    <string name="location_label_gnss_used">Used</string>    <!-- TODO -->
+    <string name="location_label_lastRequest">Last Update</string>    <!-- TODO -->
+    <string name="location_label_lastRequest_noreport">Nothing to report.</string>    <!-- TODO -->
+    <string name="location_label_lastRequest_report0">%1$s
+        \n~%2$s ago
+    </string>    <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->    <!-- TODO -->
+    <string name="location_label_lastRequest_report_failed">%1$s
+        \n~%2$s ago (not found)
+        \nElapsed: %3$s
+    </string>    <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="location_label_lastRequest_report_success">%1$s
+        \n~%2$s ago
+        \n\n%3$s ±%4$sm
+        \nElapsed: %5$s
+    </string>    <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
+    <string name="location_label_locationproviders">Location Providers</string>    <!-- TODO -->
+    <string name="msg_copied_to_clipboard">Copied to clipboard.</string>    <!-- TODO -->
+    <string name="notificationChannel_crashreport_desc">Crash Report</string>    <!-- notification channel title -->    <!-- TODO -->
+    <string name="notificationChannel_crashreport_title">Crash Report</string>    <!-- notification channel title -->    <!-- TODO -->
+    <string name="places_action_sortPlaces_by_label_ascending">Label (ascending)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="places_action_sortPlaces_by_label_descending">Label (descending)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="places_action_sortPlaces_by_proximity">Nearest (last known)</string>    <!-- button (contentDescription) -->    <!-- TODO -->
+    <string name="privacy_permission_calculator_desc">Allows the app to integrate with Suntimes as an addon. The app will gain access to configuration data provided by Suntimes (such as private location data and other settings), and will be permitted access to interfaces designed to extend Suntimes.</string>    <!-- TODO -->
+    <string name="privacy_permission_calculator_label">Integrate as an addon app</string>    <!-- TODO -->
+    <string name="privacy_permission_notifications">Suntimes needs &lt;b&gt;notification&lt;/b&gt; permissions to display alarms and notifications.</string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_required_label">Permission Required</string>    <!-- TODO -->
+    <string name="settings_bugreport">Error Reporting</string>    <!-- group title -->    <!-- TODO -->
+    <string name="settings_crashreport_summary">Application failures will be reported here.\nNothing to report.</string>    <!-- TODO -->
+    <string name="settings_crashreport_summary1">A crash report was created on \n%2$s.</string>    <!-- TODO -->
+    <string name="settings_ui_showEquinoxDate">Solstice Date</string>    <!-- TODO -->
+    <string name="settings_ui_showEquinoxDate_summary">Include the date when showing time until next solstice or equinox.</string>    <!-- TODO -->
+    <string name="settings_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
+    <string name="settings_ui_showMoonPhaseDate_summary">Include the date when showing moon phases.</string>    <!-- TODO -->
+    <string name="settings_ui_showcoordinates">Show Coordinates</string>    <!-- TODO -->
+    <string name="settings_ui_showcoordinates_summary">Show location coordinates in the action bar.</string>    <!-- TODO -->
+    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>    <!-- solarevents_* array value; optional if arrays are overridden by translation -->    <!-- TODO -->
+    <string name="table_header_dawn">Dawn</string>    <!-- table title -->    <!-- TODO -->
+    <string name="table_header_dusk">Dusk</string>    <!-- table title -->    <!-- TODO -->
+    <string name="themes_appThemes_darkMonet">Material You (Dark)</string>    <!-- TODO -->
+    <string name="themes_appThemes_lightMonet">Material You (Light)</string>    <!-- TODO -->
+    <string name="themes_appThemes_systemMonet">Material You (System Default)</string>    <!-- TODO -->
+    <string name="themes_configLabel_themeColorGraphMidnightFill">Midnight (Fill)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_themeColorGraphMidnightStroke">Midnight (Stroke)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="themes_configLabel_themeColorGraphMidnightText">Midnight (Text)</string>    <!-- color label -->    <!-- TODO -->
+    <string name="timeMode_midnight">Solar Midnight</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_midnight_short">Midnight</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_midnightsun">Midnight Sun</string>    <!-- a label (not an actual timeMode setting) -->    <!-- TODO -->
+    <string name="timeMode_midnighttwilight">Midnight Twilight</string>    <!-- a label (not an actual timeMode setting) -->    <!-- TODO -->
+    <string name="timeMode_midnighttwilight_whitenight">White Night</string>    <!-- a label (not an actual timeMode setting) -->    <!-- TODO -->
+    <string name="timeMode_moon_midnight">Lunar Midnight</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_noon">Lunar Noon</string>    <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_polarnight">Polar Night</string>    <!-- a label (not an actual timeMode setting) -->    <!-- TODO -->
+    <string name="timedialog_action_addTime_days">days</string>    <!-- + days -->    <!-- TODO -->
+    <string name="timedialog_action_addTime_hours">hours</string>    <!-- + hours -->    <!-- TODO -->
+    <string name="timedialog_action_addTime_minutes">minutes</string>    <!-- + minutes -->    <!-- TODO -->
+    <string name="timedialog_action_addTime_seconds">seconds</string>    <!-- + seconds -->    <!-- TODO -->
+    <string name="timezoneExtraApparentSolar_short">%1$s eot</string>    <!-- timezone dialog label -->    <!-- TODO -->
+    <string name="timezoneExtraDST_short">%1$s dst</string>    <!-- timezone dialog label -->    <!-- TODO -->
+    <string name="until_midnight">solar midnight</string>    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplemercator">Mercator</string>    <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplemollweide">Mollweide</string>    <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplesinusoidal">Mercator equal-area</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->    <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simplevandergrinten">Van der Grinten</string>    <!-- setting -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_10m">× 10m</string>    <!-- menu item; "x 10m"; increments of 10 minutes -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1m">× 1m</string>    <!-- menu item; "x 1d"; increments of 1 minute -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_7d">× 7d</string>    <!-- menu item; "x 1d"; increments of 7 day -->    <!-- TODO -->
+    <string name="worldmap_projection_mercator">Mercator</string>    <!-- TODO -->
+    <string name="worldmap_projection_sinusoidal">Mercator equal-area</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->    <!-- TODO -->
+    <string name="worldmap_projection_vandergrinten">Van der Grinten</string>    <!-- TODO -->
 
 </resources>

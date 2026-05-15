@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'suntimes.localization.plugin'
+}
 
 android
 {
@@ -275,3 +278,11 @@ tasks.withType(Test)
         showStandardStreams false
     }
 }
+
+localization_plugin {
+    baseNames = 'strings|help_content'
+    excludeLocales = 'en|en-rUS|en-rCA'
+    inputDir = layout.projectDirectory.dir('src/main/res').toString()
+    outputDir = "${buildDir}/generated/localization"
+}
+

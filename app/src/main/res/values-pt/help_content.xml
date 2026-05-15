@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> deve ser \"não otimizado\" para melhores resultados.</string>
-    <string name="help_battery_optimization_aggressive">Este é um dispositivo <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, que pode exigir configuração adicional para funcionar corretamente.</string>
+    <string name="help_battery_optimization_aggressive">Este é um dispositivo <xliff:g example="Samsung" id="manufacturer">%s</xliff:g>, que pode exigir configuração adicional para funcionar corretamente.</string>
     <string name="help_restricted_bucket">The application has been placed in the rare or restricted app standby bucket. Alarms may fail to work reliably.</string>    <!-- TODO -->
 
     <string name="help_datasources">
@@ -215,9 +215,20 @@
     ]]></string>
 
     <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      <xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">%3$s</xliff:g>)
+      \n\n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>
       \n\nPara melhores resultados, selecione uma imagem que corresponda a estas características.
     </string>
 
+
+    <!--
+        :: Update ::
+        Copied from default on 2026-05-14 
+    -->
+    <string name="help_general_twilight_more">
+          &lt;b&gt;White Night:&lt;/b&gt; The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Midnight Twilight:&lt;/b&gt; The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Midnight Sun:&lt;/b&gt; The sun does not set below the horizon (24 hours of daylight). This is also called &lt;b&gt;polar day&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;Polar night:&lt;/b&gt; The sun does not rise above the horizon (24 hours of darkness).&lt;br/&gt;&lt;br/&gt;
+    </string>    <!-- TODO -->
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- MAIN ACTIVITY -->
 
@@ -113,13 +113,13 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneField" tools:common="true"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> is <xliff:g id="timeSpan">%2$s</xliff:g> from Local Mean Time (<xliff:g id="locationName">%3$s</xliff:g>).</string>
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST_short"><xliff:g example="+1h" id="dstOffset">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar_short"><xliff:g example="+8m" id="dstOffset">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -127,7 +127,7 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="card_dateField" tools:common="true"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
 
     <string name="cardlabel_past_today">Past</string>
@@ -141,16 +141,16 @@
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
     -->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
-    <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
-    <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
-    <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
-    <string name="length_delimiter">|</string>
+    <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_twilight1" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g></string>
+    <string name="length_twilight1e_pos" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [+<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight1e_neg" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [-<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
+    <string name="length_twilight2" tools:common="true"><xliff:g example="30m" id="timeSpan1">%1$s</xliff:g> | <xliff:g example="30m" id="timeSpan2">%2$s</xliff:g></string>
+    <string name="length_delimiter" tools:common="true">|</string>
 
     <string name="timeMode_tropical_year">Tropical Year</string>
-    <string name="length_tropical_year"><xliff:g id="timeSpan1" example="365d 5h 41m">%1$s</xliff:g>\n<xliff:g id="fractionalDays" example="365.24">%2$s</xliff:g></string>
+    <string name="length_tropical_year" tools:common="true"><xliff:g example="365d 5h 41m" id="timeSpan1">%1$s</xliff:g>\n<xliff:g example="365.24" id="fractionalDays">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -229,7 +229,7 @@
     <string name="table_header_moonset_short">Moonset</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g example="3" id="value">%1$s</xliff:g><xliff:g example="m" id="units">%2$s</xliff:g></string>
     <string name="delta_years">y</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">w</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
@@ -243,28 +243,28 @@
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">none</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
-    <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
-    <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
-    <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
-    <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
-    <string name="time_format_12hr_short"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
-    <string name="date_format_veryshort"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
-    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
-    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
-    <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
-    <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
-    <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
-    <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
-    <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+    <string name="time_format_12hr_veryshort" tools:common="true"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
+    <string name="time_format_12hr_veryshort_withseconds" tools:common="true"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
+    <string name="time_format_24hr_veryshort" tools:common="true"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
+    <string name="time_format_24hr_veryshort_withseconds" tools:common="true"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
+    <string name="time_format_12hr_short" tools:common="true"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
+    <string name="date_format_veryshort" tools:common="true"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMM d ... e.g. Dec 3 -->
+    <string name="date_format_short" tools:common="true"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long" tools:common="true"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="datetime_format_short" tools:common="true"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
+    <string name="datetime_format_long" tools:common="true"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
+    <string name="datetime_format_verylong" tools:common="true"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="datetime_format_verylong1" tools:common="true"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>] [<xliff:g example="Future" id="suffix">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
+    <string name="dateyear_format_short" tools:common="true"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
     <!--<string name="date_any">Any Date</string>-->   <!-- no particular date; unset date -->
 
-    <string name="format_share"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
+    <string name="format_share" tools:common="true"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
 
     <!-- location display formats -->
-    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
-    <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
-    <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
-    <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
+    <string name="location_format_alt" tools:common="true"><xliff:g id="altitude">%1$s</xliff:g><xliff:g example="m" id="distanceUnit">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alttag" tools:common="true">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
+    <string name="location_format_latlon" tools:common="true"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
+    <string name="location_format_latlonalt" tools:common="true"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
     <string name="settings_lengthUnits_metric">Metric</string>
@@ -278,7 +278,7 @@
         <item>@string/settings_lengthUnits_imperial</item>
     </string-array>
 
-    <string name="units_format_short">%1$s %2$s</string>   <!-- e.g. 6 ft -->
+    <string name="units_format_short" tools:common="true">%1$s %2$s</string>   <!-- e.g. 6 ft -->
 
     <string name="units_feet">feet</string>
     <string name="units_feet_short">ft</string>
@@ -314,7 +314,7 @@
 
     <string name="tag_tagDefault">[default]</string>
     <string name="tag_tagPlugin">[plugin]</string>
-    <string name="tag_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
+    <string name="tag_prefSummaryTagged" tools:common="true"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
     <string name="tag_warning_contentDescription">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- WidgetConfig Activity -->
@@ -362,7 +362,7 @@
     <string name="settings_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
 
     <string name="settings_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
-    <string name="settings_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="settings_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g example="1 meter" id="value">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <string name="settings_general_dayOffset">Day Offset</string>        <!-- edittext label -->
     <string name="settings_general_dayOffset_hint">0</string>             <!-- edittext hint -->
@@ -405,8 +405,8 @@
     <string name="settings_appearance_showEnabledOnly">Show enabled items only</string>          <!-- checkbox label -->
     <string name="settings_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="settings_appearance_titleText">Title:</string>              <!-- edittext label -->
-    <string name="settings_appearance_titleText_hint">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
-    <string name="button_label_addSymbol"> +</string>   <!-- "+", add symbol / simple buttons -->
+    <string name="settings_appearance_titleText_hint" tools:common="true">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+    <string name="button_label_addSymbol" tools:common="true"> +</string>   <!-- "+", add symbol / simple buttons -->
 
     <!-- Setting: navigation -->
     <string name="settings_navigation">Navigation</string>           <!-- group title -->
@@ -635,9 +635,9 @@
     <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->
     <string name="time_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
-    <string name="settings_timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="settings_timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
+    <string name="settings_timezoneCustom_line1" tools:common="true"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
+    <string name="settings_timezoneCustom_line2" tools:common="true">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="settings_timezoneCustom_line2b" tools:common="true"><xliff:g example="US/Arizona" id="timezoneID">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
     <string name="settings_timezone">Time Zone</string>             <!-- group title -->
     <string name="settings_timezone_mode">Mode:</string>                     <!-- spinner label -->
@@ -652,7 +652,7 @@
     <string name="settings_timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->
 
     <string name="settings_timeFormatMode">Time Format</string>             <!-- preference label -->
-    <string name="settings_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
+    <string name="settings_timeFormatMode_systemsummary" tools:common="true"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">Coptic</string>
@@ -710,9 +710,9 @@
     <!-- Widget Setting: Launch App -->
     <string name="actions_configLabel_action_id">ID:</string>                 <!-- edittext label -->
     <string name="actions_configLabel_action_launch">Class:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch" /> <!-- editText hint (and default) -->
+    <string name="actions_configHint_action_launch"/> <!-- editText hint (and default) -->
     <string name="actions_configLabel_action_launch_package">Package:</string>                 <!-- edittext label -->
-    <string name="actions_configHint_action_launch_package" />               <!-- edittext label -->
+    <string name="actions_configHint_action_launch_package"/>               <!-- edittext label -->
     <string name="actions_configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->
     <string name="actions_configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->
     <string name="actions_configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
@@ -787,8 +787,8 @@
     <string name="themes_widgetThemes_dark1">Dark (legacy)</string>                                <!-- default widget theme name -->
     <string name="themes_widgetThemes_light1">Light (legacy)</string>                              <!-- default widget theme name -->
 
-    <string name="themes_addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
-    <string name="themes_addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
+    <string name="themes_addtheme_custname" tools:common="true">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
+    <string name="themes_addtheme_copyname" tools:common="true"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
     <string name="themes_addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
 
     <string name="themes_addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
@@ -820,10 +820,10 @@
     <string name="themes_configLabel_themeColorBackground">Colour</string>      <!-- color label -->
 
     <string name="themes_configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
-    <string name="themes_configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configHint_themeColorTitle" tools:common="true">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="themes_configLabel_themeColorText">Text Colour</string>       <!-- color label -->
-    <string name="themes_configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configHint_themeColorText" tools:common="true">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="themes_configLabel_themeColorSpring">Spring</string> <!-- color label -->
     <string name="themes_configLabel_themeColorSummer">Summer</string> <!-- color label -->
@@ -860,14 +860,14 @@
 
     <string name="themes_configLabel_themeColorSunrise_text">Sunrise (text)</string> <!-- color label -->
     <string name="themes_configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
-    <string name="themes_configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
+    <string name="themes_configHint_themeColorSunrise" tools:common="true">#FFFFFFFF</string>       <!-- color hint -->
 
     <string name="themes_configLabel_themeColorSunset_text">Sunset (text)</string> <!-- color label -->
     <string name="themes_configLabel_themeColorSunset">Sunset</string>   <!-- color label -->
-    <string name="themes_configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configHint_themeColorSunset" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="themes_configLabel_themeColorNoon">Noon</string>      <!-- color label -->
-    <string name="themes_configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
+    <string name="themes_configHint_themeColorNoon" tools:common="true">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="themes_configLabel_themeColorGraphSunFill">Sun (Fill)</string>         <!-- color label -->
     <string name="themes_configLabel_themeColorGraphSunStroke">Sun (Stroke)</string>         <!-- color label -->
@@ -899,37 +899,37 @@
     <string name="themes_configLabel_themeColorGraphGridMinor">Grid (minor)</string>         <!-- color label -->
 
     <string name="themes_configLabel_themeColorFill">Fill</string>         <!-- color label -->
-    <string name="themes_configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configHint_themeColorFill" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="themes_configLabel_themeColorBorder">Border</string>         <!-- color label -->
-    <string name="themes_configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configHint_themeColorBorder" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="themes_configLabel_themeBorderWidthRiseSet">Border Width (rise/set)</string>  <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
+    <string name="themes_configHint_themeBorderWidthRiseSet" tools:common="true">2</string>                          <!-- size hint -->
     <string name="themes_configLabel_themeBorderWidthNoon">Border Width (noon)</string>         <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
+    <string name="themes_configHint_themeBorderWidthNoon" tools:common="true">3</string>                             <!-- size hint -->
 
     <string name="themes_configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
-    <string name="themes_configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
+    <string name="themes_configHint_themeColorSuffix" tools:common="true">#FFFFFFFF</string>        <!-- color hint -->
 
     <string name="themes_configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
-    <string name="themes_configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
+    <string name="themes_configHint_themeColorTime" tools:common="true">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="themes_configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
-    <string name="themes_configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
+    <string name="themes_configHint_themeSizeTitle" tools:common="true">14</string>                 <!-- edit hint -->
 
     <string name="themes_configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->
 
     <string name="themes_configLabel_themeSizeText">Text Size:</string>    <!-- edit label -->
-    <string name="themes_configHint_themeSizeText">10</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeText" tools:common="true">10</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themeSizeTime">Time Size:</string>    <!-- edit label -->
-    <string name="themes_configHint_themeSizeTime">12</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeTime" tools:common="true">12</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->
 
     <string name="themes_configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
-    <string name="themes_configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
+    <string name="themes_configHint_themeSizeSuffix" tools:common="true">8</string>                  <!-- edit hint -->
 
     <string name="themes_configLabel_themePadding">Padding:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
@@ -984,49 +984,49 @@
     <string name="eventlist_dialog_title">Custom Events</string>
     <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
 
-    <string name="event_label_alarmitem">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_label_alarmitem_desc">%1$s</string>
+    <string name="event_label_alarmitem" tools:common="true">%1$s\n%2$s</string>   <!-- alarm (custom) event chip; e.g. title \n summary -->
+    <string name="event_label_alarmitem_desc" tools:common="true">%1$s</string>
 
-    <string name="event_eventalias_title_format"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
-    <string name="event_eventalias_title_tag_rising" >↑</string>
+    <string name="event_eventalias_title_format" tools:common="true"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>   <!-- (custom) event title; e.g. "Custom [rising]" -->
+    <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
 
     <string name="event_sunevent_title">Sun</string>                   <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="event_sunevent_title_format">%1$s %2$s</string>      <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="event_sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="event_sunevent_title_format1">%1$s %2$s %3$s</string>      <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->
+    <string name="event_sunevent_title_format1" tools:common="true">%1$s %2$s %3$s</string>      <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->
     <string name="event_sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->
-    <string name="event_sunevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_sunevent_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
     <string name="event_shadowevent_title">Shadow</string>                   <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
-    <string name="event_shadowevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="objHeight">%2$s</xliff:g> : <xliff:g id="length">%3$s</xliff:g>)</string>    <!-- (custom) shadow event summary -->
-    <string name="event_shadowevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="objHeight">%3$s</xliff:g> : <xliff:g id="length">%4$s</xliff:g>)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow 6m" -->
-    <string name="event_shadowevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_shadowevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="objHeight">%2$s</xliff:g> : <xliff:g id="length">%3$s</xliff:g>)</string>    <!-- (custom) shadow event summary -->
+    <string name="event_shadowevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="objHeight">%3$s</xliff:g> : <xliff:g id="length">%4$s</xliff:g>)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow 6m" -->
+    <string name="event_shadowevent_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
     <string name="event_shadowratio_title">Shadow Ratio</string>                   <!-- (custom) shadow ratio event title; e.g. "Shadow Ratio x2" -->
-    <string name="event_shadowratio_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="factor">%2$s</xliff:g>x)</string>    <!-- (custom) shadow event summary -->
-    <string name="event_shadowratio_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="factor">%3$s</xliff:g>x)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow Ratio x1" -->
-    <string name="event_shadowratio_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_shadowratio_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="factor">%2$s</xliff:g>x)</string>    <!-- (custom) shadow event summary -->
+    <string name="event_shadowratio_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="factor">%3$s</xliff:g>x)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Shadow Ratio x1" -->
+    <string name="event_shadowratio_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_shadowratio_label_suggested">Shadow Ratio</string>    <!-- TODO -->
 
     <string name="event_daypercentevent_title_day">Day Percent</string>                   <!-- (custom) day percent event title; e.g. "Day 25%" -->    <!-- TODO -->
     <string name="event_daypercentevent_title_night">Night Percent</string>               <!-- (custom) night percent event title; e.g. "Night 25%" -->      <!-- TODO -->
-    <string name="event_daypercentevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) day percent event summary -->
-    <string name="event_daypercentevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Day Duration 25%" -->
-    <string name="event_daypercentevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_daypercentevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) day percent event summary -->
+    <string name="event_daypercentevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>    <!-- (custom) sun event summary; e.g. "5m before/after Day Duration 25%" -->
+    <string name="event_daypercentevent_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
 
     <string name="event_moonevent_title">Moon</string>                   <!-- (custom) moon event title; e.g. "Moon 6°" --> <!-- TODO -->
-    <string name="event_moonevent_title_format">%1$s %2$s</string>      <!-- (custom) moon event title; e.g. "Moon 6°" -->
+    <string name="event_moonevent_title_format" tools:common="true">%1$s %2$s</string>      <!-- (custom) moon event title; e.g. "Moon 6°" -->
     <string name="event_moonevent_summary_format"><xliff:g id="title">%1$s</xliff:g> at <xliff:g id="angle">%2$s</xliff:g></string>    <!-- (custom) moon event summary; e.g. "Moon 6°" -->
-    <string name="event_moonevent_title_format1">%1$s %2$s %3$s</string>      <!-- (custom) moon event title; e.g. "5m before Moon 6°" -->
+    <string name="event_moonevent_title_format1" tools:common="true">%1$s %2$s %3$s</string>      <!-- (custom) moon event title; e.g. "5m before Moon 6°" -->
     <string name="event_moonevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> at <xliff:g id="angle">%3$s</xliff:g></string>    <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->
-    <string name="event_moonevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_moonevent_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonevent_label_suggested">Moon Angle</string>  <!-- TODO -->
 
     <string name="event_moonillumevent_title">Moon</string>                   <!-- (custom) moon illum event title; e.g. "Moon 25%" -->      <!-- TODO -->
-    <string name="event_moonillumevent_summary_format"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) moon illum event summary -->
-    <string name="event_moonillumevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>    <!-- (custom) moon illum summary; e.g. "5m before/after Moon (25%)" -->
-    <string name="event_moonillumevent_phrase_gender">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
+    <string name="event_moonillumevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>    <!-- (custom) moon illum event summary -->
+    <string name="event_moonillumevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>    <!-- (custom) moon illum summary; e.g. "5m before/after Moon (25%)" -->
+    <string name="event_moonillumevent_phrase_gender" tools:common="true">other</string>         <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonillumevent_label_suggested">Moon Illumination</string>  <!-- TODO -->
 
     <string name="events_pref_manageEvents">Manage Events</string>  <!-- settings activity / pref -->
@@ -1070,18 +1070,18 @@
     <string name="events_editevent_dialog_label_suggested">Custom Angle</string>
 
     <string name="events_editevent_dialog_angle">Angle</string>
-    <string name="events_editevent_dialog_angle_hint">-6</string>
+    <string name="events_editevent_dialog_angle_hint" tools:common="true">-6</string>
     <string name="events_editevent_dialog_angle_suffix">°</string>
     <string name="events_editevent_dialog_angle_error">Angle is required!</string>
 
     <string name="events_editevent_dialog_length">Shadow Length</string>
-    <string name="events_editevent_dialog_length_hint">6</string>
+    <string name="events_editevent_dialog_length_hint" tools:common="true">6</string>
     <string name="events_editevent_dialog_length_suffix">m</string>
     <string name="events_editevent_dialog_length_error">Shadow length is required!</string>
     <string name="events_editevent_dialog_label_suggested1">Shadow Length</string>
 
     <string name="events_editevent_dialog_factor">Shadow Factor</string>    <!-- TODO -->
-    <string name="events_editevent_dialog_factor_hint">1</string>
+    <string name="events_editevent_dialog_factor_hint" tools:common="true">1</string>
     <string name="events_editevent_dialog_factor_suffix">x</string>  <!-- TODO -->
     <string name="events_editevent_dialog_factor_absolute">absolute</string>    <!-- TODO -->
     <string name="events_editevent_dialog_factor_relative">relative (noon)</string>    <!-- TODO -->
@@ -1093,7 +1093,7 @@
     <string name="events_editevent_dialog_height_error">Object height is required!</string>
 
     <string name="events_editevent_dialog_percent">Percent</string>  <!-- TODO -->
-    <string name="events_editevent_dialog_percent_hint">25</string>  <!-- TODO -->
+    <string name="events_editevent_dialog_percent_hint" tools:common="true">25</string>  <!-- TODO -->
     <string name="events_editevent_dialog_percent_suffix">%</string>  <!-- TODO -->
     <string name="events_editevent_dialog_percent_error">Percent value is required!</string>  <!-- TODO -->
     <string name="events_editevent_dialog_label_suggested2">Custom Event</string>  <!-- TODO -->
@@ -1152,7 +1152,7 @@
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->
 
-    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
+    <string name="alarmAction_playingMsg" tools:common="true"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Missed alarm</string>     <!-- notification msg -->
@@ -1174,8 +1174,8 @@
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->
     <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->
     <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->
-    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
-    <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
+    <string name="alarmOption_ringtone_label" tools:common="true"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_action_label" tools:common="true"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
 
     <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->
@@ -1186,8 +1186,8 @@
     <string name="alarmdelete_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="alarmdelete_dialog_ok">Delete</string>        <!-- button -->
     <string name="alarmdelete_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmdelete_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg -->
-    <string name="alarmdelete_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success"><xliff:g example="Notification" id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg -->
+    <string name="alarmdelete_toast_success1"><xliff:g example="Notification" id="type">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->
@@ -1241,8 +1241,8 @@
     <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->
-    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> in <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
+    <string name="alarmenabled_toast"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> set for <xliff:g example="8h" id="duration">%2$s</xliff:g> from now.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g example="Notification" id="alarmType">%1$s</xliff:g> in <xliff:g example="8h" id="duration">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="alarms_label_optWhiteList">Battery optimization</string>
     <string name="alarms_label_optWhiteList_listed">Not optimized (recommended)</string>
@@ -1252,7 +1252,7 @@
     <string name="alarms_label_autostart">Autostart</string>
     <string name="alarms_label_autostart_on">On</string>
     <string name="alarms_label_autostart_off">Off.\nAlarms may fail to work after reboot.</string>
-    <string name="alarms_label_autostart_summary">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_autostart_summary" tools:common="true">%1$s</string>                    <!-- "On", "Off" -->
 
     <string-array name="alarms_aggressive_battery_known_offenders" translatable="false">    <!-- device manufacturer id; a warning will be displayed for these devices -->
         <item>Samsung</item>
@@ -1275,13 +1275,13 @@
     <string name="alarms_label_notifications">Notifications</string>
     <string name="alarms_label_notifications_on">On</string>
     <string name="alarms_label_notifications_off">Off.\nAlarms may fail to display correctly.</string>
-    <string name="alarms_label_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_summary0" tools:common="true">%1$s</string>                    <!-- "On", "Off" -->
     <string name="alarms_label_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
 
     <string name="alarms_label_notifications_fullscreen">Full-screen Notifications</string>
     <string name="alarms_label_notifications_fullscreen_on">On</string>
     <string name="alarms_label_notifications_fullscreen_off">Off.\nAlarms may fail to display over the lock screen.</string>
-    <string name="alarms_label_notifications_fullscreen_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="alarms_label_notifications_fullscreen_summary0" tools:common="true">%1$s</string>                    <!-- "On", "Off" -->
     <string name="alarms_label_notifications_fullscreen_summary1">Manages full-screen notification permissions.</string>
 
     <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>  <!-- notification channel title -->
@@ -1305,47 +1305,49 @@
     <string name="alarms_warning_sonyStaminaMode"><xliff:g id="warningTag">[w]</xliff:g> Sony STAMINA mode is enabled.\nAlarms may fail to work reliably.</string>  <!-- snackbar message (sony devices only) -->
 
     <string name="alarms_label_bootcompleted">Boot Completed</string>
-    <string name="alarms_label_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g id="_info" example="last run: never">%1$s</xliff:g></string>
-    <string name="alarms_label_bootcompleted_info">Last run on <xliff:g id="timestamp" example="never">%1$s</xliff:g>,\n<xliff:g id="time" example="30s">%2$s</xliff:g> after boot (took <xliff:g id="time" example="10s">%3$s</xliff:g>).</string>
+    <string name="alarms_label_bootcompleted_summary">Alarms are automatically rescheduled a few minutes after reboot.\n\n<xliff:g example="last run: never" id="_info">%1$s</xliff:g></string>
+    <string name="alarms_label_bootcompleted_info">Last run on <xliff:g example="never" id="timestamp">%1$s</xliff:g>,\n<xliff:g example="30s" id="time">%2$s</xliff:g> after boot (took <xliff:g example="10s" id="time">%3$s</xliff:g>).</string>
     <string name="alarms_label_bootcompleted_info_never">Never</string>
     <string name="alarms_label_bootcompleted_action_confirm">Reschedule all alarms and notifications?</string>
     <string name="alarms_label_bootcompleted_action_message">Rescheduling alarms and notifications..</string>
 
     <string name="alarms_label_bootcompleted_delay">Boot Completed (delay)</string>  <!-- TODO -->
-    <string name="alarms_label_bootcompleted_delay_summary">%s</string>  <!-- TODO -->
+    <string name="alarms_label_bootcompleted_delay_summary" tools:common="true">%s</string>  <!-- TODO -->
 
     <string name="alarms_message_background_action">%s is performing work in the background.</string>    <!-- message shown whenever alarm foreground service does periodic work -->
 
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="alarms_label_silenceAfter">Go silent after</string>
-    <string name="alarms_label_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_timeoutAfter">Timeout after</string>
-    <string name="alarms_label_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_timeoutAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_autoDismissAfter">Auto-dismiss after</string>
-    <string name="alarms_label_autoDismissAfter_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_autoDismissAfter_summary"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_snoozeLimit">Snooze limit</string>
-    <string name="alarms_label_snoozeLimit_summary"><xliff:g id="limit" example="No Limit">%s</xliff:g></string>
+    <string name="alarms_label_snoozeLimit_summary"><xliff:g example="No Limit" id="limit">%s</xliff:g></string>
     <string name="alarms_label_snoozeLimit_none">No Limit</string>
 
     <string name="alarms_label_snooze">Snooze for</string>
-    <string name="alarms_label_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_snooze_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_upcoming">Reminder within</string>
-    <string name="alarms_label_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="alarms_label_upcoming_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">Show alarm reminder notifications.</string>
 
     <string name="alarms_label_fadein">Gradually increase volume</string>
-    <string name="alarms_label_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="alarms_label_fadein_summary" tools:common="true"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_fadein_disabled">Off</string>
 
     <string name="alarms_label_fadein_method">Gradually increase volume (curve)</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method_linear">Linear</string>    <!-- TODO -->
+    <string name="alarms_label_fadein_method_cubic">Cubic</string>    <!-- TODO -->
     <string-array name="alarms_fadeInMethod_display">      <!-- one-to-one with fadeInMethod_values -->
-        <item>Linear</item>
-        <item>Cubic</item>
-    </string-array>    <!-- TODO -->
+        <item>@string/alarms_label_fadein_method_linear</item>
+        <item>@string/alarms_label_fadein_method_cubic</item>
+    </string-array>
     <string-array name="alarms_fadeInMethod_values" translatable="false">
         <item>0</item>    <!-- handler (linear) -->
         <item>1</item>    <!-- handler (cubic) -->
@@ -1356,7 +1358,7 @@
     <string name="alarms_label_brightMode_summary">Fullscreen alarms are initially dark, then slowly change color and increase in brightness.</string>
 
     <string name="alarms_label_brightMode_fadein">Gradually increase brightness</string>
-    <string name="alarms_label_brightMode_fadein_summary"><xliff:g id="timePeriod" example="60 seconds">%s</xliff:g></string>
+    <string name="alarms_label_brightMode_fadein_summary"><xliff:g example="60 seconds" id="timePeriod">%s</xliff:g></string>
 
     <string name="alarms_label_brightMode_colors">Bright Alarm Colors</string>
     <string name="alarms_label_brightMode_colors_summary">%s</string>
@@ -1381,11 +1383,11 @@
     <string name="alarms_widgetLabel_nextAlarm_error">Failed to load!</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">No alarm set.</string>
-    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g id="time" example="7:00 AM">%1$s</xliff:g>, <xliff:g id="timeUntil" example="7h 30m from now">%2$s</xliff:g>.</string>
-    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g id="time" example="6:30 AM">%1$s</xliff:g> (<xliff:g id="eventPhrase" example="30m before sunrise">%2$s</xliff:g>), <xliff:g id="timeUntil" example="7h 30m from now">%3$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format0">The next alarm is at <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format1">The next alarm is at <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>
 
     <string name="alarms_label_hardwarebuttons">Hardware Buttons</string>
-    <string name="alarms_label_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
+    <string name="alarms_label_hardwarebuttons_summary" tools:common="true"><xliff:g example="Snooze" id="action">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Dismiss</item>
         <item>Silence</item>
@@ -1405,7 +1407,7 @@
     <string name="alarms_label_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>
 
     <string name="alarms_label_reminder_none">Never</string>
-    <string name="alarms_label_reminder"><xliff:g id="hours" example="12h">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->
+    <string name="alarms_label_reminder"><xliff:g example="12h" id="hours">%s</xliff:g> reminder</string>   <!-- chip label; e.g. "12h reminder" -->
 
     <plurals name="time_units_hours">
         <item quantity="one">%d hour</item>
@@ -1522,13 +1524,13 @@
 
     <!--App Setting: WidgetList -->
     <string name="widgetList_label">Widgets</string>               <!-- group title -->
-    <string name="widgetList_label_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string name="widgetList_label_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="widgetList_label_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
-    <string name="widgetList_label_itemTitlePattern2" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
-    <string name="widgetList_label_itemTitlePattern3" formatted="false">@string/app_name</string> <!-- the pattern used when generating alarm widget titles -->
-    <string name="widgetList_label_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="widgetList_label_itemSummaryPattern1"><xliff:g id="widgetType">%1$s</xliff:g></string>
+    <string name="widgetList_label_itemTitle" tools:common="true"><xliff:g id="widgetTitle">%s</xliff:g></string>
+    <string formatted="false" name="widgetList_label_itemTitlePattern" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern1" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern2" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string> <!-- the pattern used when generating date widget titles -->
+    <string formatted="false" name="widgetList_label_itemTitlePattern3" tools:common="true">@string/app_name</string> <!-- the pattern used when generating alarm widget titles -->
+    <string name="widgetList_label_itemSummaryPattern" tools:common="true"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
+    <string name="widgetList_label_itemSummaryPattern1" tools:common="true"><xliff:g id="widgetType">%1$s</xliff:g></string>
     <string name="widgetList_label_help_title">Help</string>               <!-- always the first item in the widgetList -->
     <string name="widgetlist_label_help_summary">Show widget help</string>
     <string name="widgetList_label_empty">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
@@ -1544,8 +1546,8 @@
     <string name="restorebackup_dialog_item_placeitems">Places</string>
     <string name="restorebackup_dialog_item_eventitems">Events</string>
     <string name="restorebackup_dialog_item_actions">Actions</string>
-    <string name="restorebackup_dialog_report_format"><xliff:g id="item">%1$s</xliff:g></string>
-    <string name="restorebackup_dialog_report_format1"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
+    <string name="restorebackup_dialog_report_format" tools:common="true"><xliff:g id="item">%1$s</xliff:g></string>
+    <string name="restorebackup_dialog_report_format1" tools:common="true"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
 
     <string name="widgetlist_action_exportWidget">@string/action_export</string>    <!-- button (contentDescription) -->   <!-- export single widget config -->
     <string name="widgetlist_action_importWidget">@string/action_import</string>    <!-- button (contentDescription) -->   <!-- import single widget -->
@@ -1555,12 +1557,12 @@
     <string name="widgetimport_dialog_message">Importing widget settings from file.</string>
     <string name="widgetimport_dialog_title1">Settings found,\nbut they are for other widgets…</string>
     <string name="widgetimport_dialog_title2">Found multiple settings…</string>
-    <string name="widgetimport_dialog_item"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
+    <string name="widgetimport_dialog_item" tools:common="true"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
     <string name="widgetimport_dialog_item_unknown">(unknown)</string>   <!-- shown as item when widgetClassName is missing -->
     <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Restore Backup</b>. Imported settings will be cached for now and restored later when requested by the launcher.<br/>]]></string>
     <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Best Guess</b>. Imported settings will be applied to existing widgets by type.<br/>]]></string>
     <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Direct Import</b>. Imported settings will be applied directly. This only works correctly if the widget ids are unchanged.<br/>]]></string>
-    <string name="widgetimport_dialog_report_format"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
+    <string name="widgetimport_dialog_report_format" tools:common="true"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
     <string name="widgetreset_dialog_message">Are you sure you want to reset to defaults?</string>
 
     <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Clear</b>. Alarms will be cleared before importing from backup.<br/>]]></string>
@@ -1614,58 +1616,58 @@
     <string name="places_action_sortPlaces_by_label_descending">Label (descending)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
     <string name="places_action_sortPlaces_by_proximity">Nearest (last known)</string>       <!-- button (contentDescription) -->    <!-- TODO -->
 
-    <string name="place_item_label_format">%1$s\n%2$s</string>
-    <string name="event_item_label_format">%1$s %2$s</string>
+    <string name="place_item_label_format" tools:common="true">%1$s\n%2$s</string>
+    <string name="event_item_label_format" tools:common="true">%1$s %2$s</string>
 
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egypt)</string>
     <string name="place_label_AS">Asia</string>
-    <string name="place_label_AS_CN">Asia (China)</string>
-    <string name="place_label_AS_IN">Asia (India)</string>
-    <string name="place_label_AS_IR">Asia (Iran)</string>    <!-- TODO -->
-    <string name="place_label_AS_IQ">Asia (Iraq)</string>    <!-- TODO -->
-    <string name="place_label_AS_JP">Asia (Japan)</string>
-    <string name="place_label_AS_PK">Asia (Pakistan)</string>    <!-- TODO -->
-    <string name="place_label_AS_SA">Asia (Saudi Arabia)</string>
-    <string name="place_label_AS_RU">Asia (Russia)</string>    <!-- TODO -->
-    <string name="place_label_AS_VN">Asia (Vietnam)</string>
+    <string name="place_label_AS_CN" tools:common="true">Asia (China)</string>
+    <string name="place_label_AS_IN" tools:common="true">Asia (India)</string>
+    <string name="place_label_AS_IR" tools:common="true">Asia (Iran)</string>
+    <string name="place_label_AS_IQ" tools:common="true">Asia (Iraq)</string>
+    <string name="place_label_AS_JP" tools:common="true">Asia (Japan)</string>
+    <string name="place_label_AS_PK" tools:common="true">Asia (Pakistan)</string>
+    <string name="place_label_AS_SA" tools:common="true">Asia (Saudi Arabia)</string>
+    <string name="place_label_AS_RU" tools:common="true">Asia (Russia)</string>
+    <string name="place_label_AS_VN" tools:common="true">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
-    <string name="place_label_EU_BE">Europe (Belgium)</string>   <!-- TODO -->
-    <string name="place_label_EU_DE">Europe (Germany)</string>   <!-- TODO -->
-    <string name="place_label_EU_DK">Europe (Denmark)</string>   <!-- TODO -->
-    <string name="place_label_EU_ES">Europe (Spain)</string>
-    <string name="place_label_EU_FI">Europe (Finland)</string>    <!-- TODO -->
-    <string name="place_label_EU_FR">Europe (France)</string>    <!-- TODO -->
-    <string name="place_label_EU_GB">Europe (United Kingdom)</string>    <!-- TODO -->
-    <string name="place_label_EU_GR">Europe (Greece)</string>    <!-- TODO -->
-    <string name="place_label_EU_UK">Europe (United Kingdom)</string>   <!-- deprecated; use _GB instead; TODO: remove all references -->
-    <string name="place_label_EU_IT">Europe (Italy)</string>    <!-- TODO -->
-    <string name="place_label_EU_NL">Europe (Netherlands)</string>   <!-- TODO -->
-    <string name="place_label_EU_NO">Europe (Norway)</string>   <!-- TODO -->
-    <string name="place_label_EU_PL">Europe (Poland)</string>   <!-- TODO -->
-    <string name="place_label_EU_PT">Europe (Portugal)</string>   <!-- TODO -->
-    <string name="place_label_EU_RU">Europe (Russia)</string>    <!-- TODO -->
-    <string name="place_label_EU_SE">Europe (Sweden)</string>    <!-- TODO -->
+    <string name="place_label_EU_BE" tools:common="true">Europe (Belgium)</string>
+    <string name="place_label_EU_DE" tools:common="true">Europe (Germany)</string>
+    <string name="place_label_EU_DK" tools:common="true">Europe (Denmark)</string>
+    <string name="place_label_EU_ES" tools:common="true">Europe (Spain)</string>
+    <string name="place_label_EU_FI" tools:common="true">Europe (Finland)</string>
+    <string name="place_label_EU_FR" tools:common="true">Europe (France)</string>
+    <string name="place_label_EU_GB" tools:common="true">Europe (United Kingdom)</string>
+    <string name="place_label_EU_GR" tools:common="true">Europe (Greece)</string>
+    <string name="place_label_EU_UK" tools:common="true">Europe (United Kingdom)</string>   <!-- deprecated; use _GB instead; TODO: remove all references -->
+    <string name="place_label_EU_IT" tools:common="true">Europe (Italy)</string>
+    <string name="place_label_EU_NL" tools:common="true">Europe (Netherlands)</string>
+    <string name="place_label_EU_NO" tools:common="true">Europe (Norway)</string>
+    <string name="place_label_EU_PL" tools:common="true">Europe (Poland)</string>
+    <string name="place_label_EU_PT" tools:common="true">Europe (Portugal)</string>
+    <string name="place_label_EU_RU" tools:common="true">Europe (Russia)</string>
+    <string name="place_label_EU_SE" tools:common="true">Europe (Sweden)</string>
     <string name="place_label_NA">North America</string>
-    <string name="place_label_NA_CA">North America (Canada)</string>
-    <string name="place_label_NA_MX">North America (Mexico)</string>    <!-- TODO -->
-    <string name="place_label_NA_US">North America (US)</string>
-    <string name="place_label_NA_US_W">North America (US, West)</string>    <!-- TODO -->
-    <string name="place_label_NA_US_S">North America (US, South)</string>    <!-- TODO -->
-    <string name="place_label_NA_US_NE">North America (US, North East)</string>    <!-- TODO -->
-    <string name="place_label_NA_US_MW">North America (US, Midwest)</string>    <!-- TODO -->
+    <string name="place_label_NA_CA" tools:common="true">North America (Canada)</string>
+    <string name="place_label_NA_MX" tools:common="true">North America (Mexico)</string>
+    <string name="place_label_NA_US" tools:common="true">North America (US)</string>
+    <string name="place_label_NA_US_W" tools:common="true">North America (US, West)</string>
+    <string name="place_label_NA_US_S" tools:common="true">North America (US, South)</string>
+    <string name="place_label_NA_US_NE" tools:common="true">North America (US, North East)</string>
+    <string name="place_label_NA_US_MW" tools:common="true">North America (US, Midwest)</string>
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
-    <string name="place_label_SA_AR">Argentina</string>   <!-- TODO -->
-    <string name="place_label_SA_BR">Brazil</string>   <!-- TODO -->
-    <string name="place_label_SA_BO">Bolivia</string>   <!-- TODO -->
-    <string name="place_label_SA_CO">Colombia</string>   <!-- TODO -->
-    <string name="place_label_SA_CL">Chile</string>   <!-- TODO -->
-    <string name="place_label_SA_EC">Ecuador</string>   <!-- TODO -->
-    <string name="place_label_SA_PE">Peru</string>   <!-- TODO -->
-    <string name="place_label_SA_VE">Venezuela</string>   <!-- TODO -->
+    <string name="place_label_SA_AR" tools:common="true">Argentina</string>
+    <string name="place_label_SA_BR" tools:common="true">Brazil</string>
+    <string name="place_label_SA_BO" tools:common="true">Bolivia</string>
+    <string name="place_label_SA_CO" tools:common="true">Colombia</string>
+    <string name="place_label_SA_CL" tools:common="true">Chile</string>
+    <string name="place_label_SA_EC" tools:common="true">Ecuador</string>
+    <string name="place_label_SA_PE" tools:common="true">Peru</string>
+    <string name="place_label_SA_VE" tools:common="true">Venezuela</string>
     <string name="place_label_other">Other</string>
 
     <!-- App Setting: Launch Activity -->
@@ -1707,9 +1709,9 @@
 
     <!-- App Setting: Moon Phase Columns -->
     <string name="settings_ui_showmoon_phase_columns">Columns (phases)</string>
-    <string name="settings_ui_showmoon_phase_columns_2">2</string>
-    <string name="settings_ui_showmoon_phase_columns_3">3</string>
-    <string name="settings_ui_showmoon_phase_columns_4">4</string>
+    <string name="settings_ui_showmoon_phase_columns_2" tools:common="true">2</string>
+    <string name="settings_ui_showmoon_phase_columns_3" tools:common="true">3</string>
+    <string name="settings_ui_showmoon_phase_columns_4" tools:common="true">4</string>
 
     <!-- App Setting: Moon Phase Date -->
     <string name="settings_ui_showMoonPhaseDate">Show Phase Dates</string>    <!-- TODO -->
@@ -1729,7 +1731,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">Solstice Tracking</string>
-    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="settings_ui_showdatasource">Show Data Source</string>
@@ -1745,7 +1747,7 @@
 
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Emphasize Field</string>              <!-- checkbox label -->
-    <string name="settings_ui_emphasizefield_summary"><xliff:g id="fieldName" example="Actual">%s</xliff:g></string>
+    <string name="settings_ui_emphasizefield_summary"><xliff:g example="Actual" id="fieldName">%s</xliff:g></string>
     <string-array name="settings_emphasizefield_display">                      <!-- one-to-one with headerText_values -->
         <item>@string/timeMode_none</item>
         <item>@string/timeMode_golden</item>
@@ -1773,7 +1775,7 @@
     <string name="settings_ui_showheaders">Headers</string>              <!-- group title -->
     <string name="settings_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
     <string name="settings_ui_showheader_text">Show Header Text</string> <!-- checkbox label -->
-    <string name="settings_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string name="settings_ui_showheader_text_summary" tools:common="true"><xliff:g example="Labels" id="modeName">%s</xliff:g></string>
     <string-array name="settings_headerText_display">                      <!-- one-to-one with headerText_values -->
         <item>None</item>
         <item>Labels</item>
@@ -1796,7 +1798,7 @@
     <!-- App Setting: UI Theme -->
     <string name="themes_appThemes_lightTheme">Light Theme</string>
     <string name="themes_appThemes_darkTheme">Dark Theme</string>
-    <string name="themes_appThemes_nightMode">Light Theme / Dark Theme (Night&#160;Mode)</string>  <!-- TODO -->
+    <string name="themes_appThemes_nightMode">Light Theme / Dark Theme (Night Mode)</string>  <!-- TODO -->
     <string name="themes_appThemes_systemDefault">System default</string>
     <string name="themes_appThemes_systemDefault1">Contrast (System Default)</string>
     <string name="themes_appThemes_darkTheme1">Contrast (Dark)</string>
@@ -1819,7 +1821,7 @@
 
     <!-- App Setting: text size -->
     <string name="textSize_pref_title">Text Size</string>
-    <string name="textSize_pref_summary">%s</string>
+    <string name="textSize_pref_summary" tools:common="true">%s</string>
 
     <string name="textSize_small">Small</string>
     <string name="textSize_normal">Normal</string>
@@ -2070,7 +2072,7 @@
 
     <!-- App Setting: location fix time limit -->
     <string name="location_pref_maxElapse">Location time limit</string>
-    <string name="location_pref_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="location_pref_maxElapse_summary">Give up after <xliff:g example="15 seconds" id="maxElapseDisplay">%s</xliff:g></string>
     <string-array name="location_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 seconds</item>
         <item>30 seconds</item>
@@ -2080,7 +2082,7 @@
     </string-array>
     <string-array name="location_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
         <item>15000</item>
-        <item>30000></item>
+        <item>30000</item>
         <item>60000</item>
         <item>300000</item>
         <item>600000</item>
@@ -2088,7 +2090,7 @@
 
     <!-- App Setting: location fix max age -->
     <string name="location_pref_maxAge">Location recent max age</string>
-    <string name="location_pref_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string name="location_pref_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considered recent</string>
     <string-array name="location_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>none</item>
         <item>1 minute</item>
@@ -2133,7 +2135,7 @@
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago (not found)
         \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
     </string>   <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->    <!-- TODO -->
-    <string name="location_label_num_satellites">%1$s/%2$s</string>    <!-- TODO -->
+    <string name="location_label_num_satellites" tools:common="true">%1$s/%2$s</string>    <!-- TODO -->
 
     <string name="location_label_gnss">GNSS</string>    <!-- TODO -->
     <string name="location_label_gnss_log">GNSS Log</string>    <!-- TODO -->
@@ -2142,8 +2144,8 @@
     <string name="location_label_gnss_used">Used</string>    <!-- TODO -->
     <string name="location_label_gnss_signal">Signal</string>    <!-- TODO -->
     <string name="location_label_gnss_cnrFormat">%s db</string>    <!-- TODO -->
-    <string name="location_label_gnss_positionFormat">%1$s %2$s</string>    <!-- TODO -->
-    <string name="location_label_gnss_labelFormat">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss_positionFormat" tools:common="true">%1$s %2$s</string>    <!-- TODO -->
+    <string name="location_label_gnss_labelFormat" tools:common="true">%1$s %2$s</string>    <!-- TODO -->
 
     <string name="location_label_gnss_agps">AGPS</string>    <!-- TODO -->
     <string name="location_label_gnss_agps_reload">Reload AGPS data</string>    <!-- TODO -->
@@ -2164,7 +2166,7 @@
     <string name="locale_pref_title">Language</string>   <!-- group title -->
 
     <string name="locale_pref_localeMode">Mode</string>
-    <string name="locale_pref_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
+    <string name="locale_pref_localeMode_summary" tools:common="true"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>System</item>
         <item>User Defined</item>
@@ -2176,7 +2178,7 @@
 
     <!-- App Setting: custom Locale -->
     <string name="locale_pref_localeSelect">Language</string>
-    <string name="locale_pref_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
+    <string name="locale_pref_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>English</item>
         <item>Esperanto</item>
@@ -2238,7 +2240,7 @@
         <item>ar</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
-        <item />
+        <item/>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>|<a href=https://github.com/grenagit>grenagit</a>|<a href=https://github.com/chfo-bidouille>chfo-bidouille</a>]]></item>
         <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>|<a href=https://github.com/cstrsk>CSTRSK</a>]]></item>
@@ -2259,12 +2261,12 @@
     </string-array>
 
     <!-- position formats -->
-    <string name="format_degrees"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
-    <string name="format_elevation"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
-    <string name="format_declination"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
-    <string name="format_rightascension"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
-    <string name="format_direction"><xliff:g id="degrees" example="180°">%1$s</xliff:g>&#160;<xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
-    <string name="format_distance"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+    <string name="format_degrees" tools:common="true"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
+    <string name="format_elevation" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
+    <string name="format_declination" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="format_rightascension" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="format_direction" tools:common="true"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <string name="format_distance" tools:common="true"><xliff:g example="6" id="value">%1$s</xliff:g> <xliff:g example="ft" id="units_short">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -2337,12 +2339,12 @@
     <string name="worldmap_dialog_option_minorgrid">Graticule</string>
     <string name="worldmap_dialog_option_debuglines">Debug Lines</string>
     <string name="worldmap_dialog_option_tintmap">Tint</string>
-    <string name="worldmap_dialog_speed_1m">&#215; 1m</string>      <!-- menu item; "x 1d"; increments of 1 minute -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
-    <string name="worldmap_dialog_speed_10m">&#215; 10m</string>      <!-- menu item; "x 10m"; increments of 10 minutes -->    <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="worldmap_dialog_speed_7d">&#215; 7d</string>      <!-- menu item; "x 1d"; increments of 7 day -->
+    <string name="worldmap_dialog_speed_1m">× 1m</string>      <!-- menu item; "x 1d"; increments of 1 minute -->
+    <string name="worldmap_dialog_speed_5m">× 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
+    <string name="worldmap_dialog_speed_10m">× 10m</string>      <!-- menu item; "x 10m"; increments of 10 minutes -->    <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">× 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
+    <string name="worldmap_dialog_speed_1d">× 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
+    <string name="worldmap_dialog_speed_7d">× 7d</string>      <!-- menu item; "x 1d"; increments of 7 day -->
     <string name="worldmap_action_shareMap">@string/action_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
     <string name="worldmap_action_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
@@ -2392,10 +2394,10 @@
     <string name="moon_label_apogee">Apogee</string>
     <string name="moon_label_perigee">Perigee</string>
 
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
-    <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
-    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
-    <string name="moon_illumination_range"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>–<xliff:g id="illuminationPercent" example="60%">%2$s</xliff:g></string>
+    <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination_short" tools:common="true"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
+    <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>
 
     <!-- Dialog: Set Alarm -->
     <string name="schedalarm_label_alarm_mode">Schedule an alarm for</string>
@@ -2407,11 +2409,11 @@
     <string name="schedalarm_dialog_cancel">Cancel</string>
     <string name="schedalarm_dialog_error">Alarm was not set…</string>
     <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
-    <string name="schedalarm_dialog_note">about <xliff:g id="timetext" example="6h 30m">%s</xliff:g> from now.</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> from&#160;now</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> does not occur.</string>
-    <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
-    <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
+    <string name="schedalarm_dialog_note">about <xliff:g example="6h 30m" id="timetext">%s</xliff:g> from now.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g> from now</string>
+    <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> does not occur.</string>
+    <string name="schedalarm_labelformat" tools:common="true"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g> (<xliff:g example="4/6/2018" id="shortDate">%2$s</xliff:g>)</string>
+    <string name="schedalarm_labelformat2" tools:common="true"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g></string>
 
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomical twilight</item>
@@ -2517,7 +2519,7 @@
     </string-array>
     <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
-    <string-array name="solarevents_gender">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
+    <string-array name="solarevents_gender" tools:common="true">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
         <item>other</item>    <!-- start of astronomical twilight -->
         <item>other</item>    <!-- start of nautical twilight -->
         <item>other</item>    <!-- start of morning blue hour -->
@@ -2585,8 +2587,8 @@
         <item>1</item>    <!-- cross winter -->
         <item>1</item>    <!-- midnight -->
     </integer-array>
-    <string name="selectformat_time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
-    <string name="selectformat_date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+    <string name="selectformat_time_gender" tools:common="true">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="selectformat_date_gender" tools:common="true">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable Location? -->
     <string name="location_enable_dialog_msg">Location is disabled. Enable it?</string>
@@ -2693,16 +2695,16 @@
     <string name="color_dialog_cancel">Cancel</string>
     <string name="color_dialog_suggest">Suggest</string>
     <string name="color_dialog_recent">Recent</string>    <!-- recent color list label -->
-    <string name="color_dialog_tab1">1</string>
-    <string name="color_dialog_tab2">2</string>
-    <string name="color_dialog_tab3">3</string>
-    <string name="color_dialog_tab4">4</string>
+    <string name="color_dialog_tab1" tools:common="true">1</string>
+    <string name="color_dialog_tab2" tools:common="true">2</string>
+    <string name="color_dialog_tab3" tools:common="true">3</string>
+    <string name="color_dialog_tab4" tools:common="true">4</string>
     <string name="color_dialog_label_r">R</string>
     <string name="color_dialog_label_g">G</string>
     <string name="color_dialog_label_b">B</string>
     <string name="color_dialog_label_a">A</string>
-    <string name="color_dialog_hint_rgba">0–255</string>
-    <string name="color_dialog_hint_hex">#FFFFFF</string>
+    <string name="color_dialog_hint_rgba" tools:common="true">0–255</string>
+    <string name="color_dialog_hint_hex" tools:common="true">#FFFFFF</string>
 
     <string name="colors_action_filterColors">Filter</string>    <!-- checkbox label -->
     <string name="colors_action_addColors">Add</string>
@@ -2779,12 +2781,12 @@
 
     <string name="about_translations_field"><![CDATA[<b>Translations to:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="about_authorListFormat_i" tools:common="true"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
 
     <string name="about_libraries_field"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="about_libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="about_libraries">
+    <string name="about_libraryCreditsFormat" tools:common="true"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="about_libraries" tools:common="true">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
         <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
         <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
@@ -2792,8 +2794,9 @@
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
     <string name="about_media_field"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
+    <string name="about_media_bluemarble" tools:common="true"><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></string>
     <string-array name="about_media">
-        <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
+        <item>@string/about_media_bluemarble</item>
     </string-array>
 
     <string name="about_dialog_title">About</string>
@@ -2811,16 +2814,16 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
-    <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
+    <string name="help_general2" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic2">%2$s</xliff:g>
     </string>
-    <string name="help_general3">  <!-- general app help; composites a couple help topics together. -->
+    <string name="help_general3" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic3">%3$s</xliff:g>
     </string>
-    <string name="help_general4">  <!-- general app help; composites a couple help topics together. -->
+    <string name="help_general4" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
@@ -2845,7 +2848,7 @@
     <string name="privacy_permissiondialog_required_label">Permission Required</string>
 
     <string name="privacy_securitydialog_title">Security Alert</string>
-    <string name="privacy_securitydialog_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="privacy_securitydialog_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g example="suntimes.permission.READ_CALENDAR" id="permissionName">%1$s</xliff:g>\n\nis also defined by: <xliff:g example="some.other.app" id="packageName">%2$s</xliff:g></string>
 
     <string name="app_feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
     <string name="app_feature_not_supported_by_source">This feature is not supported by the current data source.</string>

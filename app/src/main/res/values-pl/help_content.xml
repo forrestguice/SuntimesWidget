@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="help_battery_optimization">Ustaw aplikację <xliff:g id="appName">%s</xliff:g> jako „nie zoptymalizowaną” dla jej poprawnego działania.</string>
-    <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g id="manufacturer" example="Samsung">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
+    <string name="help_battery_optimization_aggressive">To jest urządzenie <xliff:g example="Samsung" id="manufacturer">%s</xliff:g>, które może wymagać dodatkowej konfiguracji dla bezawaryjnego działania.</string>
     <string name="help_restricted_bucket">Aplikacja została włączona do zbioru rzadko używanych lub ograniczonych aplikacji. Alarmy mogą nie działać bezawaryjnie.</string>
 
     <string name="help_datasources">
@@ -216,8 +216,8 @@
     ]]></string>
 
     <string name="help_worldmap_background">
-      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
-      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      <xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">%3$s</xliff:g>)
+      \n\n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>
       \n\nDla najleepszego rezultatu, wybierz zdjęcie o powyższych parametrach.
     </string>
 
