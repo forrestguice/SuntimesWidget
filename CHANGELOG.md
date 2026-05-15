@@ -1,5 +1,14 @@
 ### ~
 
+### v0.17.2 (2026-05-18)
+* fixes misc `Material You` style issues (alert-dialog, action-mode, and status-bar colors).
+* fixes bug where "dialog icons are unreadable when using light themes".
+* fixes "app crash when dialog is dismissed before fully shown".
+* enhances alarm offset picker to allow finer control (no longer limited to 5m intervals).
+* enhances alarm edit UI; hides chips when options aren't supported; show simplified dialogs when options have limited support.
+* build: adds `suntimes.localization.plugin`; adds gradle tasks (`processTranslations`, `updateTranslations`).
+* updates translation to French (fr) (#944 by chfo-bidouille).
+
 ### v0.17.1 (2026-04-22)
 * fixes broken moon widgets ("problem loading widget") (#931).
 * fixes app crash when dragging world map timeline (#935).
