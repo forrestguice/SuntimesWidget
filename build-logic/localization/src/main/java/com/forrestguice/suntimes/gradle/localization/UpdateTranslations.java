@@ -129,17 +129,17 @@ public abstract class UpdateTranslations extends ProcessTranslations
             {
                 Element element = (Element) missingStringArrayNodes.get(name);
 
-                if (first) {
-                    appendFirstComment(node, revised);
-                    first = false;
-                }
-
                 Element missingStringArray = revised.createElement("string-array");
                 missingStringArray.setAttribute("name", name);
                 missingStringArray.appendChild(revised.createTextNode("\n        "));
 
                 if (!containsOnlyItemReferences(element))
                 {
+                    if (first) {
+                        appendFirstComment(node, revised);
+                        first = false;
+                    }
+
                     String reportTag = (parent + "/" + baseName + ".xml");
                     getLogger().warn("{} needs update! missing string-array: {}", reportTag, name);
                     appendLineToReport("actions", MessageFormat.format("{0} :: added string-array {1}", reportTag, name));
