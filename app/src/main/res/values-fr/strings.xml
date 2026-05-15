@@ -1620,7 +1620,7 @@
     <string name="actionDesc_nextSunrise">Afficher le prochain lever de soleil</string>
     <string name="actionDesc_nextSunset">Afficher le prochain coucher de soleil</string>
     <string name="actionDesc_updateWidgets">@string/actionMode_update_all</string>
-    <string name="actionDesc_timerList">Timer List</string>   <!-- TODO -->
+    <string name="actionDesc_timerList">Liste des minuteries</string>
     <string name="actionDesc_dateSettings">Paramètres de date</string>
     <string name="actionDesc_displaySettings">Paramètres d\'affichage</string>
     <string name="actionDesc_localeSettings">Paramètres régionaux</string>
@@ -1855,7 +1855,7 @@
     <string name="lightmap_graph_option_points">Points</string>
     <string name="lightmap_graph_option_twilights">Crépuscule</string>
     <string name="lightmap_graph_option_seasons">Saisons</string>
-    <string name="lightmap_graph_option_filledpath">Remplissage de la trajectoire</string> <!-- TODO confirm Filled Path = Remplissage de la trajectoire -->
+    <string name="lightmap_graph_option_filledpath">Remplissage de la trajectoire</string>
     <string name="lightmap_graph_option_moon">Montrer la lune</string>
 
     <string name="lightmap_graph_option_symbol">Symbole</string>
@@ -2237,38 +2237,38 @@
         :: Update ::
         Copied from default on 2026-05-14 
     -->
-    <string name="about_app_license_notice">Suntimes is free and open-source software.</string>    <!-- displayed by welcome dialog -->    <!-- TODO -->
-    <string name="actionDesc_nextCard">Show next card</string>    <!-- TODO -->
-    <string name="actionDesc_prevCard">Show previous card</string>    <!-- TODO -->
-    <string name="action_lightGraph">Light Graph</string>    <!-- TODO -->
-    <string name="actions_hint_actionid">ID</string>    <!-- TODO -->
-    <string name="alarmdelete_toast_success1">%1$s was deleted.</string>    <!-- toast msg -->    <!-- TODO -->
-    <string name="alarmdetails_snack">%1$s in %2$s</string>    <!-- snackbar msg -->    <!-- TODO -->
-    <string name="alarms_label_fadein_method_cubic">Cubic</string>    <!-- TODO -->
-    <string name="alarms_label_fadein_method_linear">Linear</string>    <!-- TODO -->
-    <string name="app_name_alarmtile">Alarm Tile</string>    <!-- TODO -->
-    <string name="app_name_alarmwidget0">Alarm Widget</string>    <!-- TODO -->
-    <string name="event_moonevent_summary_format">%1$s at %2$s</string>    <!-- (custom) moon event summary; e.g. "Moon 6°" -->    <!-- TODO -->
-    <string name="event_moonevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->    <!-- TODO -->
-    <string name="event_sunevent_summary_format1">%1$s %2$s at %3$s</string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->    <!-- TODO -->
-    <string name="events_editevent_dialog_height_suffix">m</string>    <!-- TODO -->
-    <string name="events_editevent_dialog_length_suffix">m</string>    <!-- TODO -->
-    <string name="lightmap_graph_option_noon">Show Noon</string>    <!-- TODO -->
-    <string name="msg_copied_to_clipboard">Copied to clipboard.</string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_required_label">Permission Required</string>    <!-- TODO -->
-    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>    <!-- solarevents_* array value; optional if arrays are overridden by translation -->    <!-- TODO -->
-    <string name="themesexport_dialog_message">Exporting themes to file.</string>    <!-- TODO -->
-    <string name="themesexport_dialog_title">Exporting Themes</string>    <!-- TODO -->
-    <string name="timeMode_cross_midautumnal0">Samhain (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midspring0">Beltane (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midsummer0">Lughnasadh (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
-    <string name="timeMode_cross_midwinter0">Imbolc (Cross-Quarter)</string>    <!-- setting -->    <!-- TODO -->
+    <string name="about_app_license_notice">Suntimes est un logiciel libre et open source.</string>    <!-- displayed by welcome dialog -->
+    <string name="actionDesc_nextCard">Afficher la carte suivante</string>
+    <string name="actionDesc_prevCard">Afficher la carte précédente</string>
+    <string name="action_lightGraph">Graphique simplifié</string>
+    <string name="actions_hint_actionid">ID</string>
+    <string name="alarmdelete_toast_success1">%1$s à été supprimée.</string>    <!-- toast msg -->
+    <string name="alarmdetails_snack">%1$s de %2$s</string>    <!-- snackbar msg -->
+    <string name="alarms_label_fadein_method_cubic">Cubique</string>
+    <string name="alarms_label_fadein_method_linear">Linéaire</string>
+    <string name="app_name_alarmtile">Tuile d\'alarme</string>
+    <string name="app_name_alarmwidget0">Widget d\'alarme</string>
+    <string name="event_moonevent_summary_format">%1$s à %2$s</string>    <!-- (custom) moon event summary; e.g. "Moon 6°" -->
+    <string name="event_moonevent_summary_format1">%1$s %2$s à %3$s</string>    <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->
+    <string name="event_sunevent_summary_format1">%1$s %2$s à %3$s</string>    <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->
+    <string name="events_editevent_dialog_height_suffix">m</string>
+    <string name="events_editevent_dialog_length_suffix">m</string>
+    <string name="lightmap_graph_option_noon">Montrer le midi</string>
+    <string name="msg_copied_to_clipboard">Copié dans le presse-papier.</string>
+    <string name="privacy_permissiondialog_required_label">Permission nécessaire</string>
+    <string name="solarevents_event_equinox_autumnal">équinoxe d\'automne</string>    <!-- solarevents_* array value; optional if arrays are overridden by translation -->
+    <string name="themesexport_dialog_message">Exporter les thèmes dans un fichier.</string>
+    <string name="themesexport_dialog_title">Exportation des thèmes</string>
+    <string name="timeMode_cross_midautumnal0">Samhain (Cross-Quarter)</string>    <!-- setting -->
+    <string name="timeMode_cross_midspring0">Beltane (Cross-Quarter)</string>    <!-- setting -->
+    <string name="timeMode_cross_midsummer0">Lugnasad (Cross-Quarter)</string>    <!-- setting -->
+    <string name="timeMode_cross_midwinter0">Imbolc (Cross-Quarter)</string>    <!-- setting -->
     <string name="timezoneExtraApparentSolar_short">%1$s eot</string>    <!-- timezone dialog label -->    <!-- TODO -->
     <string name="timezoneExtraDST_short">%1$s dst</string>    <!-- timezone dialog label -->    <!-- TODO -->
-    <string name="widgetLabel_altitude_symbol">∠</string>    <!-- label/suffix -->    <!-- TODO -->
-    <string name="widgetLabel_declination_symbol">δ</string>    <!-- label/suffix -->    <!-- TODO -->
-    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1m">× 1m</string>    <!-- menu item; "x 1d"; increments of 1 minute -->    <!-- TODO -->
-    <string name="worldmap_dialog_speed_7d">× 7d</string>    <!-- menu item; "x 1d"; increments of 7 day -->    <!-- TODO -->
+    <string name="widgetLabel_altitude_symbol">∠</string>    <!-- label/suffix -->
+    <string name="widgetLabel_declination_symbol">δ</string>    <!-- label/suffix -->
+    <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
+    <string name="worldmap_dialog_speed_1m">× 1 m</string>    <!-- menu item; "x 1d"; increments of 1 minute -->
+    <string name="worldmap_dialog_speed_7d">× 7 j</string>    <!-- menu item; "x 1d"; increments of 7 day -->
 
 </resources>
