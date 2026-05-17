@@ -147,8 +147,8 @@
 
     <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
     <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
-    <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
-    <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {la} other {le}}} other {{2, select, female {les} other {les}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {la} other {le}}} other {{2, select, female {les} other {les}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->
 
     <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->
