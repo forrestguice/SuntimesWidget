@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2024 Forrest Guice
+    Copyright (C) 2024-2026 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,33 +20,35 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.util.Log;
+
+import com.forrestguice.colors.Color;
 
 /**
  * Hammer equal-area
  */
 public class WorldMapHammer extends WorldMapVanDerGrinten
 {
-    private static final double PI_OVER_2 = Math.PI / 2d;
     private static final double SQRT2 = Math.sqrt(2);
+    private static final double ONE_OVER_SQRT2 = 1d / SQRT2;
+    private static final double ONE_OVER_2SQRT2 = 1d / (2d * SQRT2);
 
     @Override
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
-
         double radLat = Math.toRadians(lat);
         double radLon = Math.toRadians(lon);
 
         double cosLat = Math.cos(radLat);
-        double D = Math.sqrt(1d + cosLat + Math.sin(0.5d * radLon));
-
-        double x = 2 * SQRT2 * D * cosLat * Math.sin(0.5d * radLon);
-        double y = SQRT2 * D * Math.sin(radLat);
+        double D = 1d / Math.sqrt(1d + (cosLat * Math.cos(0.5d * radLon)));
+        double x = (2 * SQRT2 * cosLat * Math.sin(0.5d * radLon)) * D;
+        double y = (SQRT2 * Math.sin(radLat)) * D;
         //Log.d("DEBUG", "x: " + x + ", y: " + y);
 
         int[] p = new int[2];
-        p[0] = (int) (mid[0] + (x / Math.PI * mid[0]));
-        p[1] = (int) (mid[1] - (y / Math.PI * mid[1]));
+        p[0] = (int)(mid[0] + ((x * mid[0]) * ONE_OVER_2SQRT2));
+        p[1] = (int)(mid[1] - ((y * mid[1]) * ONE_OVER_SQRT2));
         return p;
     }
 
@@ -58,22 +60,20 @@ public class WorldMapHammer extends WorldMapVanDerGrinten
         int[] size = matrixSize();
         int w = size[0];
         int h = size[1];
+        double[] m = new double[] { w/2d, h/2d };
         double[] v = new double[w * h * 3];
-
-        double iw0 = (1d / w) * 360d;
-        double ih0 = (1d / h) * 180d;
 
         double radX, radY, z;
         double radLon, cosLon, sinLon;
         double radLat, cosLat;
 
-        for (int j = 0; j < h; j++)    // for each pixel(i,j) transform into point(x,y) to find coordinate(lon,lat)
+        for (int j=0; j<h; j++)    // for each pixel(i,j) transform into point(x,y) to find coordinate(lon,lat)
         {
-            radY = Math.toRadians(-1 * (((double) j * ih0) - 90d));      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas); every Y is 1 degrees
+            radY = ((m[1] - j) * SQRT2) / m[1];
 
-            for (int i = 0; i < w; i++)
+            for (int i=0; i<w; i++)
             {
-                radX = Math.toRadians(((double) i * iw0) - 180d);  // i in [0,w] to [0,360] to [-180,180]; every x is 1 degree
+                radX = ((i - m[0]) * 2 * SQRT2) / m[0];
                 z = Math.sqrt(1d - Math.pow(0.25d * radX, 2) - Math.pow(0.5d * radY, 2));
 
                 radLat = Math.asin(radY * z);
@@ -120,8 +120,20 @@ public class WorldMapHammer extends WorldMapVanDerGrinten
     }
 
     @Override
-    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b) {
-        return b;
+    protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)
+    {
+        Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within an ellipse
+        Canvas maskedCanvas = new Canvas(masked);
+        if (Build.VERSION.SDK_INT >= 21) {
+            maskedCanvas.drawOval(0, 0, w, h, paintMask_srcOver);
+        } else {
+            maskedCanvas.drawColor(Color.WHITE);
+        }
+
+
+        maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
+        b.recycle();
+        return masked;
     }
 
 }
