@@ -29,7 +29,6 @@ import android.util.Log;
  */
 public class WorldMapMollweide extends WorldMapVanDerGrinten
 {
-    private static final double PI_OVER_2 = Math.PI / 2d;
     private static final double SQRT2 = Math.sqrt(2);
 
     @Override
@@ -38,10 +37,19 @@ public class WorldMapMollweide extends WorldMapVanDerGrinten
         double radLon = Math.toRadians(lon);
         double radLat = Math.toRadians(lat);
 
-        double theta = radLat;       // solve `2θ + sin(2θ) = PI * sin(lat)` with newtons method
-        for (int i=0; i<5; i++) {
-            theta -= (2 * theta + Math.sin(2 * theta) - (Math.PI * Math.sin(radLat)))
-                    / (2 + 2 * Math.cos(2 * theta));
+        double theta;
+        if (lat <= -90) {
+            theta = -Math.PI / 2;
+
+        } else if (lat >= 90) {
+            theta = Math.PI / 2;
+
+        } else {
+            theta = radLat;       // solve `2θ + sin(2θ) = PI * sin(lat)` with newtons method
+            for (int i=0; i<5; i++) {
+                theta -= (2 * theta + Math.sin(2 * theta) - (Math.PI * Math.sin(radLat)))
+                        / (2 + 2 * Math.cos(2 * theta));
+            }
         }
 
         double radX = (2 * SQRT2 / Math.PI) * radLon * Math.cos(theta);
