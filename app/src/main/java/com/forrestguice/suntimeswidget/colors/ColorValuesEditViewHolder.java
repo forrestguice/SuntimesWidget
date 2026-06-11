@@ -22,17 +22,19 @@ package com.forrestguice.suntimeswidget.colors;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.colors.ColorUtils;
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.support.widget.RecyclerView;
 
 public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
 {
@@ -48,9 +50,9 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
         text1 = (TextView) itemView.findViewById(android.R.id.text1);
     }
 
-    public void bindColorToView(Context context, ColorValues values, String key)
+    public void bindColorToView(Context context, @Nullable ColorValues values, @Nullable String key)
     {
-        if (key != null)
+        if (key != null && values != null)
         {
             boolean bold = true;
             Integer textColor;
@@ -86,12 +88,14 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
 
             if (backgroundColor != null && textColor != null)
             {
-                float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);
-                colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
+                //float cornerRadiusPx = context.getResources().getDimension(R.dimen.chip_radius);  // TODO: fix.. looks nice, but it fails to render if the text becomes ellipsized
+                //colorLabel = SuntimesUtils.createRoundedBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, textColor, bold, backgroundColor, cornerRadiusPx, cornerRadiusPx);
+                colorLabel = SpanUtils.createColorSpan(colorLabel, " " + labelText + " ", labelText, textColor);
+                colorLabel = SpanUtils.createBackgroundColorSpan(colorLabel, " " + labelText + " ", labelText, backgroundColor);
 
             } else if (textColor != null) {
-                colorLabel = (bold ? SuntimesUtils.createBoldColorSpan(colorLabel, labelText, labelText, textColor)
-                        : SuntimesUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
+                colorLabel = (bold ? SpanUtils.createBoldColorSpan(null, labelText, labelText, textColor)
+                        : SpanUtils.createColorSpan(colorLabel, labelText, labelText, textColor));
 
             } else {
                 colorLabel = new SpannableString(" ");
@@ -124,6 +128,7 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
     public static float getTextSizePx_medium(Context context)
     {
         int[] attr = { R.attr.text_size_medium };
+        @SuppressLint("ResourceType")
         TypedArray typedArray = context.obtainStyledAttributes(attr);
         float textSize = typedArray.getDimension(0, context.getResources().getDimension(R.dimen.text_size_medium));
         typedArray.recycle();
@@ -131,8 +136,11 @@ public class ColorValuesEditViewHolder extends RecyclerView.ViewHolder
     }
 
     @Nullable
-    public static Integer getContrastingColor(ColorValues colorValues, String key, Integer defaultValue)
+    public static Integer getContrastingColor(@Nullable ColorValues colorValues, String key, @Nullable Integer defaultValue)
     {
+        if (colorValues == null) {
+            return null;
+        }
         String k;
         switch (colorValues.getRole(key))
         {

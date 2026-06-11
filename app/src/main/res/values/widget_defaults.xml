@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="def_appwidget_0_appearance_theme" tools:translatable="false">dark</string>
+    <string name="def_appwidget_0_appearance_widgetmode_clock" tools:translatable="false">CLOCK0</string>
+
+    <dimen name="widget_clock_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+    <dimen name="widget_date0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+
+    <dimen name="widget_alarms0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+    <dimen name="widget_alarms0_2x2_minWidth">@dimen/widget_size_minWidth2x1</dimen>
+
+    <dimen name="widget_sun0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+    <dimen name="widget_sun0_2x1_minWidth">@dimen/widget_size_minWidth2x1</dimen>
+    <dimen name="widget_sun0_3x1_minWidth">@dimen/widget_size_minWidth3x1</dimen>
+
+    <dimen name="widget_sun1_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+    <dimen name="widget_sun2_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+
+    <dimen name="widget_moon0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+    <dimen name="widget_moon0_2x1_minWidth">@dimen/widget_size_minWidth2x1</dimen>
+    <dimen name="widget_moon0_3x1_minWidth">@dimen/widget_size_minWidth4x1</dimen>
+
+    <dimen name="widget_solstice0_1x1_minWidth">@dimen/widget_size_minWidth</dimen>
+
+</resources>

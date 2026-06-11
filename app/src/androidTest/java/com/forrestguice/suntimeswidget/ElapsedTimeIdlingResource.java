@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget;
  * copied from https://github.com/chiuki/espresso-samples
  */
 
-import android.support.test.espresso.IdlingResource;
+import androidx.test.espresso.IdlingResource;
 
 public class ElapsedTimeIdlingResource implements IdlingResource
 {

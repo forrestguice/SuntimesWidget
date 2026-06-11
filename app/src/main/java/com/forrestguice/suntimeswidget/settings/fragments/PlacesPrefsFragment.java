@@ -18,32 +18,62 @@
 
 package com.forrestguice.suntimeswidget.settings.fragments;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.views.IconUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.preference.Preference;
+import android.preference.PreferenceManager;
+
+import android.text.style.ImageSpan;
+import android.util.Log;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.GetFixTask;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.views.Toast;
+import com.forrestguice.support.content.FileProvider;
+import com.forrestguice.support.preference.PreferenceFragment;
+import com.forrestguice.support.preference.CheckBoxPreference;
+import com.forrestguice.support.preference.PreferenceCategory;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.File;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Places Prefs
@@ -54,9 +84,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
     private PlacesPrefsBase base;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey)
+    {
         AppSettings.initLocale(getActivity());
         Log.i(SuntimesSettingsActivity.LOG_TAG, "PlacesPrefsFragment: Arguments: " + getArguments());
         setRetainInstance(true);
@@ -64,11 +98,278 @@ public class PlacesPrefsFragment extends PreferenceFragment
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
         addPreferencesFromResource(R.xml.preference_places);
 
-        Preference managePlacesPref = findPreference("places_manage");
-        Preference clearPlacesPref = findPreference("places_clear");
-        Preference exportPlacesPref = findPreference("places_export");
-        Preference buildPlacesPref = findPreference("places_build");
+        Preference managePlacesPref = (Preference) findPreference("places_manage");
+        Preference clearPlacesPref = (Preference) findPreference("places_clear");
+        Preference exportPlacesPref = (Preference) findPreference("places_export");
+        Preference buildPlacesPref =  (Preference) findPreference("places_build");
         base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
+        updateLocationProviderPrefs();
+        updateLocationLastRequestInfo(getActivity());
+    }
+
+    protected void updateLocationLastRequestInfo(final Context context)
+    {
+        CheckBoxPreference debugPref = (CheckBoxPreference) findPreference("getFix_last_log_enabled");
+        if (debugPref != null)
+        {
+            debugPref.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(CheckBoxPreference preference, Object newValue)
+                {
+                    if (!(Boolean) newValue) {
+                        LocationHelperSettings.clearLastLocationLog(preference.getContext());
+                    }
+
+                    Preference lastRequestPref = (Preference) findPreference("places_location_last_info");
+                    if (lastRequestPref != null) {
+                        lastRequestPref.setEnabled((Boolean) newValue);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        Preference lastRequestPref = (Preference) findPreference("places_location_last_info");
+        if (lastRequestPref != null)
+        {
+            lastRequestPref.setEnabled(LocationHelperSettings.keepLastLocationLog(context));
+            lastRequestPref.setOnPreferenceClickListener(onLastRequestPrefClicked);
+
+            boolean hasLog = (!LocationHelperSettings.lastLocationLog(context).isEmpty());
+            long time = LocationHelperSettings.lastLocationLogTime(context);
+            if (time != 0)
+            {
+                long timeAgo = System.currentTimeMillis() - time;
+                if (hasLog)
+                {
+                    String provider = LocationHelperSettings.lastLocationProvider(context);
+                    float accuracy = LocationHelperSettings.lastLocationAccuracy(context);
+                    long elapsed = LocationHelperSettings.lastLocationElapsed(context);
+
+                    CharSequence lastRequestDisplay;
+                    if (LocationHelperSettings.lastLocationResult(context))
+                    {
+                        lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_success,
+                                utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
+                                delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                provider.toUpperCase(Locale.getDefault()), String.format(Locale.getDefault(), "%.2f", accuracy),
+                                (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    } else {
+                        lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report_failed,
+                                utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time).getValue(),
+                                delta_utils.timeDeltaLongDisplayString(0, timeAgo).getValue(),
+                                (elapsed > 0 ? delta_utils.timeDeltaLongDisplayString(0, elapsed, false, true, true).getValue() : ""));
+                    }
+                    lastRequestPref.setSummary(lastRequestDisplay);
+
+                } else {
+                    long time0 = LocationHelperSettings.lastAutoLocationRequest(context);
+                    long timeAgo0 = System.currentTimeMillis() - time0;
+                    CharSequence lastRequestDisplay = context.getString(R.string.location_label_lastRequest_report0,
+                            utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), time0).getValue(),
+                            delta_utils.timeDeltaLongDisplayString(0, timeAgo0).getValue());
+                    lastRequestPref.setSummary(lastRequestDisplay);
+                }
+            } else lastRequestPref.setSummary(context.getString(R.string.timeMode_none));
+        }
+    }
+
+    private final Preference.OnPreferenceClickListener onLastRequestPrefClicked = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference)
+        {
+            Context context = preference.getContext();
+            if (context != null && !LocationHelperSettings.lastLocationLog(context).isEmpty()) {
+                showLocationLastRequestReport(context, LocationHelperSettings.lastLocationLog(context));
+            } else if (context != null) {
+                Toast.makeText(context, context.getString(R.string.location_label_lastRequest_noreport), Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        }
+    };
+    protected void showLocationLastRequestReport(final Context context, final String report)
+    {
+        TextView text = new TextView(context);
+        text.setTextIsSelectable(true);
+        text.setTextSize(12);
+        text.setText(report);
+        text.setVerticalScrollBarEnabled(true);
+        text.setHorizontalScrollBarEnabled(true);
+        text.setHorizontallyScrolling(true);
+
+        int padding = (int) context.getResources().getDimension(R.dimen.dialog_margin);
+        ScrollView vScroll = new ScrollView(context);
+        vScroll.addView(text);
+
+        HorizontalScrollView hScroll = new HorizontalScrollView(context);
+        hScroll.setPadding(padding, padding, padding, padding);
+        hScroll.addView(vScroll);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(context.getString(R.string.location_label_lastRequest));
+        dialog.setView(hScroll);
+        dialog.setPositiveButton(context.getString(R.string.dialog_ok), null);
+        dialog.setNeutralButton(context.getString(R.string.crash_dialog_copy), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                copyToClipboard(context, report);
+            }
+        });
+        dialog.show();
+    }
+    private void copyToClipboard(Context context, String message) {
+        if (context != null && message != null) {
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.location_label_lastRequest), message));
+                Toast.makeText(context, context.getString(R.string.msg_copied_to_clipboard), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    protected void updateLocationProviderPrefs()
+    {
+        PreferenceCategory group = (PreferenceCategory) findPreference("getFix_providers");
+        if (group != null) {
+            group.removeAll();
+        }
+
+        final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null && group != null)
+        {
+            List<String> providers = locationManager.getAllProviders();
+            for (int i=0; i<providers.size(); i++)
+            {
+                final String provider = providers.get(i);
+                if (provider != null && !provider.equals(LocationManager.PASSIVE_PROVIDER))
+                {
+                    boolean isEnabled = false;
+                    try {
+                        isEnabled = locationManager.isProviderEnabled(provider);
+                    } catch (IllegalArgumentException | SecurityException e) {
+                        Log.w(SuntimesSettingsActivity.LOG_TAG, "updateLocationProviderPrefs: " + e);
+                    }
+
+                    final CheckBoxPreference preference = new CheckBoxPreference(getActivity());
+                    preference.setKey(LocationHelperSettings.PREF_KEY_LOCATION_PROVIDER_ + provider);
+                    preference.setTitle(provider.toUpperCase(Locale.getDefault()));
+                    preference.setEnabled(isEnabled);
+                    preference.setChecked(LocationHelperSettings.isProviderRequested(getActivity(), provider));
+
+                    preference.setOnPreferenceClickListener(new CheckBoxPreference.OnPreferenceClickListener()
+                    {
+                        @Override
+                        public boolean onPreferenceClick(CheckBoxPreference preference)
+                        {
+                            if (!hasLocationPermission(getActivity())) {
+                                requestLocationPermissions();
+                            }
+                            return false;
+                        }
+                    });
+
+                    try {
+                        LocationProvider locationProvider = locationManager.getProvider(provider);
+                        if (locationProvider != null) {
+                            preference.setSummary(getLocationProviderSummary(getActivity(), locationManager, locationProvider));
+                        }
+                    } catch (SecurityException e) {
+                        preference.setSummary(getString(R.string.privacy_permissiondialog_required_label));
+                    } catch (IllegalArgumentException e) {
+                        preference.setSummary(e.getLocalizedMessage());
+                    }
+
+                    group.addPreference(preference);
+                }
+            }
+        }
+    }
+
+    protected CharSequence getLocationProviderSummary(Context context, LocationManager locationManager, LocationProvider locationProvider)
+    {
+        String summary = "";
+        if (locationProvider != null)
+        {
+            if (locationProvider.requiresCell()) {
+                summary += " [IconCell] ";
+            }
+            if (locationProvider.requiresNetwork()) {
+                summary += " [IconNetwork] ";
+            }
+            if (locationProvider.requiresSatellite()) {
+                summary += " [IconSatellite] ";
+            }
+            if (locationProvider.hasMonetaryCost()) {
+                summary += " $ ";
+            }
+            if (locationProvider.supportsAltitude()) {
+                summary += " [IconAltitude] ";
+            }
+
+            try {
+                android.location.Location location = locationManager.getLastKnownLocation(locationProvider.getName());
+                if (location != null)
+                {
+                    SuntimesUtils.initDisplayStrings(getActivity());
+                    long locationAge = GetFixTask.calculateLocationAge(location);
+                    summary += "~" + context.getString(R.string.delta_ago, delta_utils.timeDeltaLongDisplayString(0, locationAge).getValue());
+                    summary += " (±" + String.format(Locale.getDefault(), "%.2f", location.getAccuracy()) + "m)";
+                }
+            } catch (SecurityException | IllegalArgumentException e) {
+                Log.w(SuntimesSettingsActivity.LOG_TAG, "getLocationProviderSummary: " + e);
+                summary += e.getLocalizedMessage();
+            }
+        }
+        summary = summary.trim();
+
+        int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.LocationProviderStatus);
+        ImageSpan altitudeIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionAltitude, R.drawable.check_altitude_dark), iconSize, iconSize, 0);
+        ImageSpan cellIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_cell, R.drawable.ic_celltower_dark), iconSize, iconSize, 0);
+        ImageSpan networkIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_network, R.drawable.ic_network_dark), iconSize, iconSize, 0);
+        ImageSpan gpsIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(R.styleable.LocationProviderStatus_icActionGPS_satellite, R.drawable.ic_satellite_dark), iconSize, iconSize, 0);
+        typedArray.recycle();
+
+        CharSequence summaryDisplay = summary;
+        SpanUtils.ImageSpanTag[] summaryTags = {
+                new SpanUtils.ImageSpanTag("[IconAltitude]", altitudeIcon),
+                new SpanUtils.ImageSpanTag("[IconCell]", cellIcon),
+                new SpanUtils.ImageSpanTag("[IconNetwork]", networkIcon),
+                new SpanUtils.ImageSpanTag("[IconSatellite]", gpsIcon),
+        };
+        return SpanUtils.createSpan(context, summaryDisplay, summaryTags);
+    }
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+
+    public static final int LOCATION_PERMISSION_REQUEST = 100;
+    protected void requestLocationPermissions()
+    {
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+            //ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_PERMISSION_REQUEST);
+        }
+    }
+
+    protected boolean hasLocationPermission(Activity activity) {
+        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("DEBUG", "onRequestPermissionsResult: fragment: " + requestCode);
+        switch (requestCode)
+        {
+            case PlacesPrefsFragment.LOCATION_PERMISSION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("DEBUG", "onRequestPermissionsResult: fragment: granted");
+                    updateLocationProviderPrefs();
+                }
+                break;
+        }
     }
 
     @Override
@@ -116,12 +417,15 @@ public class PlacesPrefsFragment extends PreferenceFragment
         private Activity myParent;
         private ProgressDialog progress;
 
+        @Nullable
         private BuildPlacesTask buildPlacesTask = null;
         private boolean isBuilding = false;
 
+        @Nullable
         private BuildPlacesTask clearPlacesTask = null;
         private boolean isClearing = false;
 
+        @Nullable
         private ExportPlacesTask exportPlacesTask = null;
         private boolean isExporting = false;
 
@@ -207,7 +511,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         /**
          * Build Places (task handler)
          */
-        private final BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> buildPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted()
@@ -238,8 +542,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 if (myParent != null)
                 {
                     exportPlacesTask = new ExportPlacesTask(myParent, "SuntimesPlaces", true, true);  // export to external cache
-                    exportPlacesTask.setTaskListener(exportPlacesListener);
-                    exportPlacesTask.execute();
+                    ExecutorUtils.runProgress("ExportPlacesTask", exportPlacesTask, exportPlacesListener);
                     return true;
                 }
                 return false;
@@ -265,8 +568,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
                 isExporting = false;
                 dismissProgress();
 
-                if (results.getResult())
+                if (results != null && results.getResult())
                 {
+                    File file = results.getExportFile();
+                    if (file == null) {
+                        return;
+                    }
+
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.setType(results.getMimeType());
@@ -274,7 +582,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
                     try {
                         //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(myParent, ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(myParent, ExportTask.FILE_PROVIDER_AUTHORITY(), file);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
@@ -288,7 +596,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     }
                 }
 
-                File file = results.getExportFile();    // export failed
+                File file = (results != null ? results.getExportFile() : null);    // export failed
                 String path = ((file != null) ? file.getAbsolutePath() : "<path>");
                 String failureMessage = myParent.getString(R.string.msg_export_failure, path);
                 Toast.makeText(myParent.getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
@@ -307,14 +615,13 @@ public class PlacesPrefsFragment extends PreferenceFragment
                     AlertDialog.Builder confirm = new AlertDialog.Builder(myParent)
                             .setTitle(myParent.getString(R.string.locationclear_dialog_title))
                             .setMessage(myParent.getString(R.string.locationclear_dialog_message))
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(IconUtils.getThemedIcon(myParent, R.attr.icActionWarning, R.drawable.ic_action_warning))
                             .setPositiveButton(myParent.getString(R.string.locationclear_dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
                                 {
-                                    clearPlacesTask = new BuildPlacesTask(myParent);
-                                    clearPlacesTask.setTaskListener(clearPlacesListener);
-                                    clearPlacesTask.execute(true);   // clearFlag set to true
+                                    clearPlacesTask = new BuildPlacesTask(myParent, new Object[] { true });    // clearFlag set to true
+                                    ExecutorUtils.runTask("ClearPlacesTask", clearPlacesTask, clearPlacesListener);
                                 }
                             })
                             .setNegativeButton(myParent.getString(R.string.locationclear_dialog_cancel), null);
@@ -329,7 +636,7 @@ public class PlacesPrefsFragment extends PreferenceFragment
         /**
          * Clear Places (task handler)
          */
-        private final BuildPlacesTask.TaskListener clearPlacesListener = new BuildPlacesTask.TaskListener()
+        private final TaskListener<Integer> clearPlacesListener = new TaskListener<Integer>()
         {
             @Override
             public void onStarted()
@@ -353,19 +660,19 @@ public class PlacesPrefsFragment extends PreferenceFragment
             if (isClearing && clearPlacesTask != null)
             {
                 clearPlacesTask.pauseTask();
-                clearPlacesTask.clearTaskListener();
+                //clearPlacesTask.clearTaskListener();
             }
 
             if (isExporting && exportPlacesTask != null)
             {
                 exportPlacesTask.pauseTask();
-                exportPlacesTask.clearTaskListener();
+                //exportPlacesTask.clearTaskListener();
             }
 
             if (isBuilding && buildPlacesTask != null)
             {
                 buildPlacesTask.pauseTask();
-                buildPlacesTask.clearTaskListener();
+                //buildPlacesTask.clearTaskListener();
             }
 
             dismissProgress();
@@ -376,21 +683,21 @@ public class PlacesPrefsFragment extends PreferenceFragment
 
             if (isClearing && clearPlacesTask != null && clearPlacesTask.isPaused())
             {
-                clearPlacesTask.setTaskListener(clearPlacesListener);
+                //clearPlacesTask.setTaskListener(clearPlacesListener);
                 showProgressClearing();
                 clearPlacesTask.resumeTask();
             }
 
             if (isExporting && exportPlacesTask != null)
             {
-                exportPlacesTask.setTaskListener(exportPlacesListener);
+                //exportPlacesTask.setTaskListener(exportPlacesListener);
                 showProgressExporting();
                 exportPlacesTask.resumeTask();
             }
 
             if (isBuilding && buildPlacesTask != null)
             {
-                buildPlacesTask.setTaskListener(buildPlacesListener);
+                //buildPlacesTask.setTaskListener(buildPlacesListener);
                 showProgressBuilding();
                 buildPlacesTask.resumeTask();
             }

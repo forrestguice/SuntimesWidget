@@ -20,8 +20,6 @@ package com.forrestguice.suntimeswidget.events;
 
 import android.graphics.Color;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -31,23 +29,23 @@ public class EventSettingsTest0
     @Test
     public void test_eventAlias()
     {
-        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
+        EventType type0 = EventType.SUN_ELEVATION;
         String id0 = "TEST0";
         String label0 = "label0";
         String uri0 = "uri0";
         Integer color0 = Color.GREEN;
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
+        EventAlias alias0 = new EventAlias(EventType.SUN_ELEVATION, id0, label0, color0, uri0, false);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
-        EventSettings.EventAlias alias1 = new EventSettings.EventAlias(alias0);
+        EventAlias alias1 = new EventAlias(alias0);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias1);
 
-        EventSettings.EventAlias alias2 = new EventSettings.EventAlias(alias0.toContentValues());
+        EventAlias alias2 = EventAliasValues.createEventAlias(EventAliasValues.toContentValues(alias0));
         verify_eventAlias(type0, id0, label0, color0, uri0, alias2);
     }
 
-    protected void verify_eventAlias(AlarmEventProvider.EventType type, String id, String label, Integer color, String uri, EventSettings.EventAlias alias)
+    protected void verify_eventAlias(EventType type, String id, String label, Integer color, String uri, EventAlias alias)
     {
         assertEquals(type, alias.getType());
         assertEquals(id, alias.getID());

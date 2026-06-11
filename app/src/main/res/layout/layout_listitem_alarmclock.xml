@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/layout_alarmcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:background="?attr/alarmCardEnabled"
         android:orientation="horizontal" android:descendantFocusability="blocksDescendants">
 
-        <android.support.constraint.Guideline
+        <com.forrestguice.support.constraint.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@android:id/text2"
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="6dp" android:layout_marginBottom="0dp">
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/type_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:src="?attr/icActionAlarm"
@@ -65,10 +65,10 @@
                 android:textStyle="bold" android:maxLines="1"
                 tools:text="label" />
 
-            <ImageButton
+            <com.forrestguice.support.widget.ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
-                android:contentDescription="@string/configAction_alarmMenu"
+                android:contentDescription="@string/alarms_action_alarmMenu"
                 style="?attr/actionOverflowButtonStyle" />
 
             <include layout="@layout/layout_listitem_alarmclock_switch" />
@@ -90,7 +90,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
             android:transitionName="transition_alarmitem" />
 
-        <ImageView
+        <com.forrestguice.support.widget.ImageView
             android:id="@android:id/icon1"
             android:layout_width="24dp"
             android:layout_height="12dp"
@@ -231,6 +231,6 @@
         </LinearLayout>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </FrameLayout>

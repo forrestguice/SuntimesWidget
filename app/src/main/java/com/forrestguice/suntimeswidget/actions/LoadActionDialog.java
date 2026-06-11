@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget.actions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 
@@ -34,7 +35,7 @@ public class LoadActionDialog extends EditActionDialog
     private ActionListHelper listHelper;
 
     @Override
-    public void onSaveInstanceState( Bundle outState )
+    public void onSaveInstanceState( @NonNull Bundle outState )
     {
         super.onSaveInstanceState(outState);
         listHelper.onSaveInstanceState(outState);
@@ -44,36 +45,40 @@ public class LoadActionDialog extends EditActionDialog
     public void onResume()
     {
         super.onResume();
-        listHelper.setFragmentManager(getFragmentManager());
+        listHelper.setFragmentManager(this);
         listHelper.setData(data);
         listHelper.setOnItemAcceptedListener(onItemAccepted);
         listHelper.setOnUpdateViews(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateViews(getContext());
+                if (getContext() != null) {
+                    updateViews(getContext());
+                }
             }
         });
         listHelper.onResume();
     }
 
+    @Nullable
     protected SuntimesData data = null;
     public void setData(@Nullable SuntimesData data) {
         this.data = data;
     }
 
-
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             btn_accept.performClick();
         }
     };
-
+    
+    @Nullable
     @Override
     public String getIntentID() {
         return listHelper.getIntentID();
     }
 
+    @Nullable
     @Override
     public String getIntentTitle() {
         return listHelper.getIntentTitle();
@@ -90,7 +95,7 @@ public class LoadActionDialog extends EditActionDialog
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         super.initViews(context, dialogContent, savedState);
-        listHelper = new ActionListHelper(context, getFragmentManager());
+        listHelper = new ActionListHelper(this);
         listHelper.initViews(context, dialogContent, savedState);
         listHelper.setDisallowSelect(true);
     }
@@ -103,7 +108,9 @@ public class LoadActionDialog extends EditActionDialog
     public void setSelected(String actionID) {
         listHelper.setSelected(actionID);
         listHelper.triggerActionMode();
-        updateViews(getActivity());
+        if (getContext() != null) {
+            updateViews(getContext());
+        }
     }
 
 }

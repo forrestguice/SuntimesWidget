@@ -24,7 +24,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -32,15 +31,21 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SuntimesLayout
 {
     public static final int MAX_SP = 72;
-    protected static final SuntimesUtils utils = new SuntimesUtils();
+    protected static final TimeDateDisplay time_utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+    protected static final AngleDisplay angle_utils = new AngleDisplay();
 
     protected int layoutID;
 
@@ -196,6 +201,7 @@ public abstract class SuntimesLayout
         int limit = 1000;
 
         while ((timeBounds.width() + suffixBounds.width() + adjustedIconWidthPx) < maxWidthPixels                         // scale up to fill width
+                && timeBounds.height() < maxHeightPixels
                 && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
         {
             adjustedTimeSizeSp += stepSizeSp;
@@ -212,6 +218,19 @@ public abstract class SuntimesLayout
         }
 
         c = 0;
+        while ((timeBounds.width() + suffixBounds.width() + adjustedIconWidthPx) < maxWidthPixels                         // again, this time icon only
+                && timeBounds.height() < maxHeightPixels)
+        {
+            adjustedIconWidthDp += stepSizeSp * iconRatio;
+            adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
+
+            if (c > limit) {
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [0]");
+                break;
+            } else c++;
+        }
+
+        /*c = 0;
         while (timeBounds.height() > maxHeightPixels)
         {
             adjustedTimeSizeSp -= stepSizeSp;
@@ -219,19 +238,20 @@ public abstract class SuntimesLayout
             adjustedIconWidthDp -= (stepSizeSp * iconRatio);
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+            Log.d("DEBUG", "decreasing size: " + timeBounds.height() + " <? " + maxHeightPixels + " (" + maxHeightDp + ")");
 
             if (c > limit) {
                 Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [1] .. " + timeBounds.height() + "px > " + maxHeightPixels + "px [" + maxHeightDp + "dp]");
                 break;
             } else c++;
-        }
+        }*/
 
         float[] retValue = new float[3];
         retValue[0] = adjustedTimeSizeSp;
         retValue[1] = adjustedSuffixSizeSp;
         retValue[2] = adjustedIconWidthDp;
 
-        //Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
+        Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
         return retValue;
     }
 
@@ -319,6 +339,7 @@ public abstract class SuntimesLayout
             return builder.build();
 
         } else {
+            //noinspection deprecation
             return new StaticLayout(text, textPaint, maxWidth, Layout.Alignment.ALIGN_CENTER, 1f, 0f, true);
         }
     }

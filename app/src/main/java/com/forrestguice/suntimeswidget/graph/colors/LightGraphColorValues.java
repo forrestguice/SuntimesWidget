@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.graph.colors;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class LightGraphColorValues extends ResourceColorValues implements Parcelable
+public class LightGraphColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     public static final String COLOR_DAY = AppColorKeys.COLOR_DAY;
     public static final String COLOR_NIGHT = AppColorKeys.COLOR_NIGHT;
@@ -100,11 +100,11 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
     public static final int[] LABELS_RESID = new int[]
     {
             R.string.timeMode_day, R.string.timeMode_civil, R.string.timeMode_nautical, R.string.timeMode_astronomical, R.string.timeMode_night,
-            R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke,
-            R.string.configLabel_themeColorGraphPointFill, R.string.configLabel_themeColorGraphPointStroke,
-            R.string.configLabel_themeColorGraphAxis, R.string.configLabel_themeColorGraphGridMajor, R.string.configLabel_themeColorGraphGridMinor,
-            R.string.configLabel_themeColorGraphLabels, R.string.configLabel_themeColorGraphLabelsBG,
-            R.string.configLabel_themeColorSpring, R.string.configLabel_themeColorSummer, R.string.configLabel_themeColorFall, R.string.configLabel_themeColorWinter
+            R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+            R.string.themes_configLabel_themeColorGraphPointFill, R.string.themes_configLabel_themeColorGraphPointStroke,
+            R.string.themes_configLabel_themeColorGraphAxis, R.string.themes_configLabel_themeColorGraphGridMajor, R.string.themes_configLabel_themeColorGraphGridMinor,
+            R.string.themes_configLabel_themeColorGraphLabels, R.string.themes_configLabel_themeColorGraphLabelsBG,
+            R.string.themes_configLabel_themeColorSpring, R.string.themes_configLabel_themeColorSummer, R.string.themes_configLabel_themeColorFall, R.string.themes_configLabel_themeColorWinter
     };
     public static final int[] COLOR_ROLES = new int[] {
             ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND, ROLE_BACKGROUND,
@@ -157,26 +157,25 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
     public LightGraphColorValues(ColorValues other) {
         super(other);
     }
-    public LightGraphColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private LightGraphColorValues(Parcel in) {
+    /*private LightGraphColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public LightGraphColorValues() {
         super();
     }
-    public LightGraphColorValues(Context context) {
+    public LightGraphColorValues(Resources context) {
         this(context, true);
     }
-    public LightGraphColorValues(Context context, boolean darkTheme) {
+    public LightGraphColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public LightGraphColorValues(String jsonString) {
-        super(jsonString);
+
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
     }
 
-    public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
+    /*public static final Creator<LightGraphColorValues> CREATOR = new Creator<LightGraphColorValues>()
     {
         public LightGraphColorValues createFromParcel(Parcel in) {
             return new LightGraphColorValues(in);
@@ -184,9 +183,9 @@ public class LightGraphColorValues extends ResourceColorValues implements Parcel
         public LightGraphColorValues[] newArray(int size) {
             return new LightGraphColorValues[size];
         }
-    };
+    };*/
 
-    public static LightGraphColorValues getColorDefaults(Context context, boolean darkTheme) {
+    public static LightGraphColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new LightGraphColorValues(new LightGraphColorValues().getDefaultValues(context, darkTheme));
     }
 }

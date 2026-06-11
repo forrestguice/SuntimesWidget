@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+
+    <string name="default_location_label">Budapest</string>
+    <string name="default_location_latitude">47.4811</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">18.9902</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">225</string>         <!-- meters -->
+    <string name="default_timezone">Europe/Budapest</string>         <!-- tzid -->
+
+    <string name="def_app_ui_showheader_text">0</string>  <!-- 0: none -->
+
+</resources>

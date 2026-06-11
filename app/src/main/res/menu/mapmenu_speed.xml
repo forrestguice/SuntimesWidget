@@ -12,6 +12,10 @@
             android:title="@string/worldmap_dialog_speed_1d"
             app:showAsAction="never" />
 
+        <item android:id="@+id/mapSpeed_7d"
+            android:title="@string/worldmap_dialog_speed_7d"
+            app:showAsAction="never" />
+
     </group>
 
 </menu>

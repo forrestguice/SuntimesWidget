@@ -22,13 +22,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.filters.LargeTest;
+
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -42,7 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.test.MoreAsserts.assertNotEqual;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -51,14 +54,14 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class ImportAlarmsTest extends SuntimesActivityTestBase
 {
     private Context mockContext;
 
     @Before
     public void setup() {
-        mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        mockContext = new RenamingDelegatingContext(InstrumentationUtils.getContext(), "test_");
     }
 
     @Test
@@ -106,7 +109,9 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_getFileName()
     {
+        //noinspection ConstantConditions
         String filename0 = ExportTask.getFileName(null, null);
+        //noinspection ConstantConditions
         assertNull(filename0);
     }
 
@@ -127,7 +132,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         s.append("]");
 
         for (AlarmClockItem item : items0) {
-            AlarmNotifications.updateAlarmTime(mockContext, item);
+            AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), item);
         }
 
         // and back again
@@ -155,8 +160,8 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         AlarmClockItem item1 = items[1];
         String json1 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item1);
 
-        AlarmNotifications.updateAlarmTime(mockContext, items[0]);
-        AlarmNotifications.updateAlarmTime(mockContext, items[1]);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), items[0]);
+        AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(mockContext), items[1]);
 
         test_import(json0, items[0]);                                                   // valid (single obj)
         test_import("[" + json0 + "]", items[0]);                             // valid (array; single obj)

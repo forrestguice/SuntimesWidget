@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,57 +19,81 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
+import android.app.UiAutomation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
-//import android.os.Environment;
+import android.os.Build;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 import com.jraska.falcon.Falcon;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
-import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
-import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressBack;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.forrestguice.suntimeswidget.support.espresso.ViewAssertionHelper.assertShown;
+import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.hasDrawable;
+import static com.forrestguice.suntimeswidget.support.espresso.matcher.ViewMatchersContrib.navigationButton;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.Matchers.not;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public abstract class SuntimesActivityTestBase
 {
     public static final String TESTLOC_0_LABEL = "Test Location 0";
@@ -92,21 +116,17 @@ public abstract class SuntimesActivityTestBase
 
     public static final String SCREENSHOT_DIR = "test-screenshots";
 
-    protected static ViewAssertion assertShown = matches(isDisplayed());
-    protected static ViewAssertion assertShownCompletely = matches(isDisplayingAtLeast(90));
-    protected static ViewAssertion assertHidden = matches(not(isDisplayed()));
-    protected static ViewAssertion assertEnabled = matches(allOf(isEnabled(), isDisplayed()));
-    protected static ViewAssertion assertDisabled = matches(allOf(not(isEnabled()), isDisplayed()));
-    protected static ViewAssertion assertFocused = matches(allOf(isEnabled(), isDisplayed(), hasFocus()));
-    protected static ViewAssertion assertClickable = matches(isClickable());
-    protected static ViewAssertion assertSelected = matches(isSelected());
-    protected static ViewAssertion assertChecked = matches(isChecked());
-    protected static ViewAssertion assertNotChecked = matches(isNotChecked());
+    protected SharedPreferences config(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+    protected SharedPreferences widgetConfig(Context context) {
+        return context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+    }
 
     /**
      * Rotate the device to landscape and back.
      */
-    public void rotateDevice(ActivityTestRule activityRule)
+    public void rotateDevice(ActivityTestRule<?> activityRule)
     {
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -116,7 +136,7 @@ public abstract class SuntimesActivityTestBase
      * Rotate to given orientation.
      * @param orientation ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE | ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      */
-    public void rotateDevice(ActivityTestRule activityRule, int orientation )
+    public void rotateDevice(ActivityTestRule<?> activityRule, int orientation )
     {
         activityRule.getActivity().setRequestedOrientation(orientation);
     }
@@ -206,7 +226,10 @@ public abstract class SuntimesActivityTestBase
     public static boolean viewIsDisplayed(int viewId) {
         return viewIsDisplayed(viewId, null);
     }
-    public static boolean viewIsDisplayed(int viewId, String text)
+    public static boolean viewIsDisplayed(int viewId, Context context, int textResID) {
+        return viewIsDisplayed(viewId, context.getString(textResID));
+    }
+    public static boolean viewIsDisplayed(int viewId, @Nullable String text)
     {
         final boolean[] isDisplayed = {true};
         Matcher<View> view = (text != null) ? allOf(withId(viewId), withText(containsString(text)))
@@ -260,6 +283,10 @@ public abstract class SuntimesActivityTestBase
         return displaysText[0];
     }
 
+    public static boolean spinnerDisplaysText(Context context, int spinnerId, int stringResID) {
+        return spinnerDisplaysText(spinnerId, context.getString(stringResID));
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -270,15 +297,15 @@ public abstract class SuntimesActivityTestBase
     {
         public Location location;
         public String timezoneID;
-        public WidgetSettings.TimeFormatMode timeformat;
-        public WidgetSettings.LengthUnit lengthUnits;
+        public TimeFormatMode timeformat;
+        public LengthUnit lengthUnits;
 
         public SuntimesTestConfig(Location location, String timezoneID, boolean format24, String units)
         {
             this.location = location;
             this.timezoneID = timezoneID;
-            this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
-            this.lengthUnits = WidgetSettings.LengthUnit.valueOf(units);
+            this.timeformat = (format24 ? TimeFormatMode.MODE_24HR : TimeFormatMode.MODE_12HR);
+            this.lengthUnits = LengthUnit.valueOf(units);
         }
     }
 
@@ -311,8 +338,8 @@ public abstract class SuntimesActivityTestBase
 
     protected void configureAppForTesting(Activity context)
     {
-        WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
-        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.RECENT);
+        WidgetSettings.saveDateModePref(context, 0, DateMode.CURRENT_DATE);
+        WidgetSettings.saveTrackingModePref(context, 0, TrackingMode.RECENT);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
         WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
         WidgetSettings.saveLocalizeHemispherePref(context, 0, true);
@@ -324,8 +351,10 @@ public abstract class SuntimesActivityTestBase
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCOORDINATES, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
-        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOXDATE, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWCROSSQUARTER, false);
         prefs.putInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
         prefs.apply();
     }
@@ -341,12 +370,267 @@ public abstract class SuntimesActivityTestBase
         WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
         WidgetSettings.saveLengthUnitsPref(context, 0, configuration.lengthUnits);
 
-        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationModePref(context, 0, LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);
 
-        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezoneModePref(context, 0, TimezoneMode.CUSTOM_TIMEZONE);
         WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
     }
 
+    public static SimpleDateFormat[] timeDateFormats12 = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm\u00A0a")
+    };
+    public static SimpleDateFormat[] timeDateFormats12s = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, h:mm:ss\u00A0a"),
+            new SimpleDateFormat("MMMM d, yyyy, h:mm:ss\u00A0a")
+    };
+    public static SimpleDateFormat[] timeDateFormats24 = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, HH:mm"),
+            new SimpleDateFormat("MMMM d, HH:mm"),
+            new SimpleDateFormat("MMMM d, yyyy, HH:mm")
+    };
+    public static SimpleDateFormat[] timeDateFormats24s = new SimpleDateFormat[] {
+            new SimpleDateFormat("MMM d, HH:mm:ss"),
+            new SimpleDateFormat("MMMM d, HH:mm:ss"),
+            new SimpleDateFormat("MMMM d, yyyy, HH:mm:ss")
+    };
+
+    public static void setAnimationsEnabled(boolean enabled) throws IOException
+    {
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            UiAutomation automation = InstrumentationRegistry.getInstrumentation().getUiAutomation();
+            automation.executeShellCommand("settings put global transition_animation_scale " + (enabled ? "1" : "0")).close();
+            automation.executeShellCommand("settings put global window_animation_scale " + (enabled ? "1" : "0")).close();
+            automation.executeShellCommand("settings put global animator_duration_scale " + (enabled ? "1" : "0")).close();
+        } // else // TODO
+    }
+
+    ///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
+
+    protected void overrideConfigState(Context context)
+    {
+        config(context).edit().putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, false).apply();
+        config(context).edit().remove(AppSettings.PREF_KEY_LOCALE);
+        config(context).edit().putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.SYSTEM_LOCALE.name()).apply();
+    }
+    protected void saveConfigState(Context context) {
+        //savedState_localeMode = AppSettings.loadLocaleModePref(activity);
+        savedState_dateTapAction = AppSettings.loadDateTapActionPref(context);
+        savedState_clockTapAction = AppSettings.loadClockTapActionPref(context);
+        savedState_showDataSource = AppSettings.loadDatasourceUIPref(context);
+        savedState_showMapButton = AppSettings.loadShowMapButtonPref(context);
+        savedState_firstLaunch = AppSettings.isFirstLaunch(context);
+        savedState_navMode = AppSettings.loadNavModePref(context);
+        savedState_launcherMode = AppSettings.loadLauncherModePref(context);
+        savedState_locationMode = WidgetSettings.loadLocationModePref(context, 0);
+    }
+    protected void restoreConfigState(Context context) {
+        SharedPreferences.Editor config = config(context).edit();
+        //config.putString(AppSettings.PREF_KEY_LOCALE_MODE, savedState_localeMode.name()).apply();
+        config.putString(AppSettings.PREF_KEY_UI_DATETAPACTION, savedState_dateTapAction).apply();
+        config.putString(AppSettings.PREF_KEY_UI_CLOCKTAPACTION, savedState_clockTapAction).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, savedState_showDataSource).apply();
+        config.putBoolean(AppSettings.PREF_KEY_UI_SHOWMAPBUTTON, savedState_showMapButton).apply();
+        config.putBoolean(AppSettings.PREF_KEY_FIRST_LAUNCH, savedState_firstLaunch).apply();
+        config.putString(AppSettings.PREF_KEY_NAVIGATION_MODE, savedState_launcherMode).apply();
+        config.putString(AppSettings.PREF_KEY_LAUNCHER_MODE, savedState_navMode).apply();
+        if (savedState_locationMode != null) {
+            WidgetSettings.saveLocationModePref(context, 0, savedState_locationMode);
+        }
+    }
+    protected String savedState_navMode;
+    protected String savedState_launcherMode;
+    protected String savedState_dateTapAction;
+    protected String savedState_clockTapAction;
+    protected boolean savedState_showDataSource;
+    protected boolean savedState_showMapButton;
+    protected boolean savedState_firstLaunch;
+    protected LocationMode savedState_locationMode;
+    //protected AppSettings.LocaleMode savedState_localeMode;
+
+    public static abstract class Robot<T>
+    {
+        protected T robot;
+        public void setRobot(T robot) {
+            this.robot = robot;
+        }
+
+        public T sleep(long ms) {
+            SystemClock.sleep(ms);
+            return robot;
+        }
+
+        public T doubleRotateDevice(Activity activity)
+        {
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            sleep(1000);
+            rotateDevice(activity, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return robot;
+        }
+        public T rotateDevice(Activity activity, int orientation) {
+            activity.setRequestedOrientation(orientation);
+            return robot;
+        }
+
+        public T captureScreenshot(Activity activity, String name) {
+            captureScreenshot(activity, "", name);
+            return robot;
+        }
+        public T captureScreenshot(Activity activity, String subdir, String name) {
+            SuntimesActivityTestBase.captureScreenshot(activity, subdir, name);
+            return robot;
+        }
+    }
+
+    /**
+     * ActivityRobot
+     * @param <T> robot method return type
+     */
+    public static abstract class ActivityRobot<T> extends Robot<T>
+    {
+        public ActivityRobot() {}
+        public ActivityRobot(T robot) {
+            this.robot = robot;
+        }
+
+        public T recreateActivity(final Activity activity)
+        {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    activity.recreate();
+                }
+            });
+            return robot;
+        }
+
+        public T finishActivity(final Activity activity)
+        {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    activity.finish();
+                }
+            });
+            return robot;
+        }
+
+        public T clickHomeButton(Context context) {
+            onView(navigationButton()).perform(click());
+            return robot;
+        }
+        public T showSidebarMenu(Context context) {
+            onView(navigationButton()).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_clock(Context context) {
+            onView(allOf(withText(R.string.action_clock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_alarms(Context context) {
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_settings(Context context) {
+            onView(allOf(withText(R.string.action_settings),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T clickSidebarMenu_about(Context context) {
+            onView(allOf(withText(R.string.action_about),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).perform(click());
+            return robot;
+        }
+        public T cancelSidebarMenu(Context context) {
+            onView(withText(R.string.action_about)).perform(pressBack());
+            return robot;
+        }
+
+        public T showOverflowMenu(Context context) {
+            openActionBarOverflowOrOptionsMenu(context);
+            return robot;
+        }
+        public T clickOverflowMenu_help() {
+            onView(withText(R.string.action_help)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+        public T clickOverflowMenu_settings() {
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+        public T clickOverflowMenu_about() {
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).perform(click());
+            return robot;
+        }
+
+        public T assertOverflowMenu_hasSimpleNavigation(boolean isSimple)
+        {
+            onView(withText(R.string.action_about)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            onView(withText(R.string.action_settings)).inRoot(isPlatformPopup()).check(isSimple ? assertShown : doesNotExist());
+            return robot;
+        }
+
+        public T assertActionBar_homeButtonShown(boolean shown) {
+            onView(allOf(navigationButton(), hasDrawable(R.drawable.ic_action_suntimes))).check(shown ? assertShown : doesNotExist());
+            return robot;
+        }
+        public T assertActionBar_navButtonShown(boolean shown) {
+            onView(navigationButton()).check(shown ? assertShown : doesNotExist());
+            return robot;
+        }
+
+        public T assertSideBarMenuShown(Activity context) {
+            onView(allOf(withText(R.string.action_clock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.alarms_label_alarmClock),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.action_settings),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            onView(allOf(withText(R.string.action_about),
+                    not(withParent(withClassName(endsWith("Toolbar")))))).check(assertShown);
+            return robot;
+        }
+
+        //////////////////////////////////////////////////////////
+
+        public static SuntimesCalculator appCalculator(Context context) {
+            SuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+            calculator.init(appLocation(context), appTimeZone(context));
+            return calculator;
+        }
+        public static Location appLocation(Context context) {
+            return WidgetSettings.loadLocationPref(context, 0);
+        }
+        public static TimeZone appTimeZone(Context context) {
+            return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, 0));
+        }
+
+        public static TimeZone timeZone_UTC() {
+            return TimeZone.getTimeZone("UTC");
+        }
+        public static TimeZone timeZone_ApparentSolar(Context context) {
+            return WidgetTimezones.getTimeZone(TimeZones.ApparentSolarTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public static TimeZone timeZone_LocalMean(Context context) {
+            return WidgetTimezones.getTimeZone(TimeZones.LocalMeanTime.TIMEZONEID, appLocation(context).getLongitudeAsDouble(), appCalculator(context));
+        }
+        public static TimeZone timeZone_Suntimes(Context context) {
+            return appTimeZone(context);
+        }
+    }
+
+    public static boolean registerIdlingResources(IdlingResource... resources) {
+        //return Espresso.registerIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().register(resources);
+    }
+    public static boolean unregisterIdlingResources(IdlingResource... resources) {
+        //return Espresso.unregisterIdlingResources(resources);    // deprecated Espresso 3+
+        return IdlingRegistry.getInstance().unregister(resources);
+    }
 
 }

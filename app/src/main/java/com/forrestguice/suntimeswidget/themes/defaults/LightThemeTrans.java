@@ -40,7 +40,7 @@ public class LightThemeTrans extends LightTheme1
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = context.getString(R.string.widgetThemes_light_transparent);
+        this.themeDisplayString = context.getString(R.string.themes_widgetThemes_light_transparent);
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = Color.TRANSPARENT;
         this.themeTitleBold = THEMEDEF_TITLEBOLD;
@@ -50,7 +50,7 @@ public class LightThemeTrans extends LightTheme1
     public static ThemeDescriptor themeDescriptor(Context context)
     {
         if (THEMEDEF_DESCRIPTOR == null) {
-            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light_transparent), THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.themes_widgetThemes_light_transparent), THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
         }
         return THEMEDEF_DESCRIPTOR;
     }

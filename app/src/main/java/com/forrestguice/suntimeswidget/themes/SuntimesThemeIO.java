@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 

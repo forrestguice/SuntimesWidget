@@ -24,13 +24,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.pickers.ColorPickerFragment;
+import com.forrestguice.support.app.AppCompatActivity;
 
 /**
  * This activity can be used to pick a color:
@@ -125,6 +125,7 @@ public class ColorActivity extends AppCompatActivity
                 color = Color.parseColor("#" + data.getFragment());
 
             } catch (IllegalArgumentException e) {
+                //noinspection ConstantConditions
                 color = Color.WHITE;
                 Log.e("ColorActivity", e.toString());
             }
@@ -136,15 +137,15 @@ public class ColorActivity extends AppCompatActivity
         }
 
         if (intent.hasExtra(ColorDialog.KEY_COLOR_UNDER)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_UNDER,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_COLOR_UNDER,
                     intent.getIntExtra(ColorDialog.KEY_COLOR_UNDER, color));
         }
         if (intent.hasExtra(ColorDialog.KEY_COLOR_OVER)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_COLOR_OVER,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_COLOR_OVER,
                     intent.getIntExtra(ColorDialog.KEY_COLOR_OVER, color));
         }
         if (intent.hasExtra(ColorDialog.KEY_PREVIEW_MODE)) {
-            colorDialog.getArguments().putInt(ColorDialog.KEY_PREVIEW_MODE,
+            colorDialog.getArgs().putInt(ColorDialog.KEY_PREVIEW_MODE,
                     intent.getIntExtra(ColorDialog.KEY_PREVIEW_MODE, ColorPickerFragment.ColorPickerModel.PREVIEW_TEXT));
         }
 

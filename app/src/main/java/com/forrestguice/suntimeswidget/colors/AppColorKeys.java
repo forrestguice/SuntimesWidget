@@ -40,6 +40,10 @@ public class AppColorKeys
     public static final String COLOR_SUN_FILL = "color_sunFill";
     public static final String COLOR_SUN_STROKE = "color_sunStroke";
 
+    public static final String COLOR_MIDNIGHT_TEXT = "color_midnightText";
+    public static final String COLOR_MIDNIGHT_FILL = "color_midnightFill";
+    public static final String COLOR_MIDNIGHT_STROKE = "color_midnightStroke";
+
     public static final String COLOR_MOON_FILL = "color_moonFill";
     public static final String COLOR_MOON_STROKE = "color_moonStroke";
 

@@ -16,30 +16,30 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.forrestguice.support.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent" android:layout_height="match_parent">
 
-	<android.support.constraint.ConstraintLayout
+	<com.forrestguice.support.constraint.ConstraintLayout
 		android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<android.support.design.widget.AppBarLayout
+		<com.forrestguice.support.widget.AppBarLayout
 			android:id="@+id/layout_app_menubar"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent">
 
-			<android.support.v7.widget.Toolbar
+			<com.forrestguice.support.widget.Toolbar
 				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
-				app:title="@string/configLabel_alarmClock"
+				app:title="@string/alarms_label_alarmClock"
             	app:layout_constraintStart_toStartOf="parent"
             	app:layout_constraintEnd_toEndOf="parent"
             	app:layout_constraintTop_toTopOf="parent" />
 
-		</android.support.design.widget.AppBarLayout>
+		</com.forrestguice.support.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="0dp"
@@ -69,22 +69,22 @@
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_gravity="end" android:layout_marginTop="8dp">
 
-				<android.support.v7.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content"
+				<com.forrestguice.support.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content"
 					app:cardElevation="8dp" app:cardUseCompatPadding="true" android:layout_gravity="center_vertical">
 
 					<TextView
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
 						android:layout_margin="4dp"
-						android:text="@string/configAction_addAlarm" />
+						android:text="@string/alarms_action_addAlarm" />
 
-				</android.support.v7.widget.CardView>
+				</com.forrestguice.support.widget.CardView>
 
-				<android.support.design.widget.FloatingActionButton
+				<com.forrestguice.support.widget.FloatingActionButton
 					android:id="@+id/btn_addAlarm"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
 					android:src="?attr/icActionNewAlarm" android:scaleType="center"
-					android:contentDescription="@string/configAction_addAlarm"
+					android:contentDescription="@string/alarms_action_addAlarm"
 					android:tint="?attr/fab_foregroundColor"
 					app:backgroundTint="?attr/fab_backgroundColor"
 					app:rippleColor="?attr/fab_rippleColor"
@@ -96,22 +96,22 @@
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_gravity="end" android:layout_marginTop="8dp">
 
-				<android.support.v7.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content"
+				<com.forrestguice.support.widget.CardView android:layout_width="wrap_content" android:layout_height="wrap_content"
 					app:cardElevation="8dp" app:cardUseCompatPadding="true" android:layout_gravity="center_vertical">
 
 					<TextView
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
 						android:layout_margin="4dp"
-						android:text="@string/configAction_addNotification" />
+						android:text="@string/alarms_action_addNotification" />
 
-				</android.support.v7.widget.CardView>
+				</com.forrestguice.support.widget.CardView>
 
-				<android.support.design.widget.FloatingActionButton
+				<com.forrestguice.support.widget.FloatingActionButton
 					android:id="@+id/btn_addNotification"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
 					android:src="?attr/icActionNewNotification" android:scaleType="center"
-					android:contentDescription="@string/configAction_addNotification"
+					android:contentDescription="@string/alarms_action_addNotification"
 					android:tint="?attr/fab_foregroundColor"
 					app:backgroundTint="?attr/fab_backgroundColor"
 					app:rippleColor="?attr/fab_rippleColor"
@@ -119,17 +119,17 @@
 
 			</LinearLayout>
 
-			<android.support.design.widget.FloatingActionButton
+			<com.forrestguice.support.widget.FloatingActionButton
 				android:id="@+id/btn_add"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_gravity="end" android:layout_marginTop="12dp"
 				android:src="?attr/icActionNew" android:scaleType="center"
-				android:contentDescription="@string/configAction_addAlarm"
+				android:contentDescription="@string/alarms_action_addAlarm"
 				android:tint="?attr/fab_foregroundColor"
 				app:backgroundTint="?attr/fab_backgroundColor"
 				app:rippleColor="?attr/fab_rippleColor" />
 
 		</LinearLayout>
 
-	</android.support.constraint.ConstraintLayout>
-</android.support.design.widget.CoordinatorLayout>
+	</com.forrestguice.support.constraint.ConstraintLayout>
+</com.forrestguice.support.widget.CoordinatorLayout>

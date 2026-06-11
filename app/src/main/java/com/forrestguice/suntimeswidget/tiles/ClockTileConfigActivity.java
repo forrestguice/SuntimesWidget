@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2024 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,11 +20,11 @@ package com.forrestguice.suntimeswidget.tiles;
 
 import android.content.Context;
 
-import com.forrestguice.suntimeswidget.ClockWidget0ConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.ClockWidget0ConfigActivity;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-@SuppressWarnings("Convert2Diamond")
 public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
 {
     public ClockTileConfigActivity()
@@ -40,6 +40,7 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
         showOptionLabels(false);
         showOptionTitle(false);
         showOptionShowDate(false);
+        hideLayoutSettings();
         setConfigActivityTitle(getString(R.string.app_name_clocktile));
         moveSectionToTop(R.id.appwidget_timezone_layout);
     }
@@ -49,12 +50,29 @@ public class ClockTileConfigActivity extends ClockWidget0ConfigActivity
         return new WidgetSettings.ActionMode[] { WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY };
     }
 
+    @Override
     protected WidgetSettings.ActionMode defaultActionMode() {
-        return WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+        return ClockTileBase.DEF_ACTION_MODE;
     }
 
+    @Override
     public boolean getDefaultLocationFromApp() {
-        return ClockTileService.DEF_LOCATION_FROM_APP;
+        return ClockTileBase.DEF_LOCATION_FROM_APP;
+    }
+
+    @Override
+    protected TimezoneMode getDefaultTimezoneMode() {
+        return ClockTileBase.DEF_TIMEZONE_MODE;
+    }
+
+    @Override
+    protected void onResetWidget() {
+        new ClockTileBase(this).initDefaults(this);
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return false;
     }
 
 }

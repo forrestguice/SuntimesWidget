@@ -13,7 +13,7 @@
         <intent
             android:action="suntimes.action.VIEW_MOON"
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />       <!-- TODO: targetPackage and targetClass must be hardcoded; shortcuts are broken for nightly build flavor without providing alternate resources -->
     </shortcut>
 
     <shortcut
@@ -70,7 +70,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.widgets.SuntimesWidgetListActivity" />
     </shortcut>
 
 </shortcuts>

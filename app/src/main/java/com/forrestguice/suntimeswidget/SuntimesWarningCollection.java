@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -179,6 +180,11 @@ public abstract class SuntimesWarningCollection
             warning.setWarningListener(warningListener);
         }
     }
+    public void restoreWarningListener() {
+        for (SuntimesWarning warning : warnings) {
+            warning.setWarningListener(warningListener);
+        }
+    }
 
     /**
      * resetWarnings
@@ -263,6 +269,7 @@ public abstract class SuntimesWarningCollection
                 showWarnings(contextRef.get());
             }
         };
+        restoreWarningListener();
     }
 
 }

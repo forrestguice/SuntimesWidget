@@ -20,12 +20,14 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
@@ -34,23 +36,25 @@ import java.util.TreeSet;
 
 public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValuesEditViewHolder>
 {
-    public ColorValuesEditViewAdapter(Context context, ColorValues values)
+    public ColorValuesEditViewAdapter(Context context, @Nullable ColorValues values)
     {
         contextRef = new WeakReference<>(context);
         colors = values;
     }
 
-    protected WeakReference<Context> contextRef;
+    protected final WeakReference<Context> contextRef;
     public Context getContext() {
         return contextRef.get();
     }
 
+    @Nullable
     private ColorValues colors = null;
-    public void setColorValues(ColorValues values)
+    public void setColorValues(@Nullable ColorValues values)
     {
         colors = values;
         notifyDataSetChanged();
     }
+    @Nullable
     public ColorValues getColors() {
         return colors;
     }
@@ -65,6 +69,7 @@ public class ColorValuesEditViewAdapter extends RecyclerView.Adapter<ColorValues
                 : (colors != null ? colors.getColorKeys() : new String[0]);
     }
 
+    @Nullable
     public String getKey(int position)
     {
         String[] keys = getKeys();

@@ -21,37 +21,29 @@
     <LinearLayout style="@style/SunsetTimeLayout"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:visibility="gone"
             style="@style/WidgetTimeTextView2"
             android:id="@+id/text_delta_day_prefix"
             android:gravity="start"
             android:layout_weight="0"
             android:maxLines="1"
-            tools:text="Tomorrow will be" />
+            tools:text="deprecated" />    <!-- TODO: remove -->
 
         <TextView
             style="@style/WidgetTimeTextView2"
             android:id="@+id/text_delta_day_value"
             android:gravity="start"
             android:layout_weight="0"
-            android:maxLines="1"
-            tools:text="2" />
+            android:maxLines="1"  android:ellipsize="end"
+            tools:text="Tomorrow will be 1min 3s longer" />
 
-        <TextView
-            style="@style/WidgetTimeTextView2"
-            android:id="@+id/text_delta_day_units"
-            android:gravity="start"
-            android:layout_weight="0"
-            android:maxLines="1"
-            tools:text="min" />
-
-        <TextView
+        <TextView android:visibility="gone"
             style="@style/WidgetTimeTextView2"
             android:id="@+id/text_delta_day_suffix"
             android:gravity="start"
             android:layout_weight="1"
             android:maxLines="1" android:ellipsize="end"
-            tools:text="shorter" />
+            tools:text="deprecated" />    <!-- TODO: remove -->
 
     </LinearLayout>
 </merge>

@@ -22,8 +22,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
 /**
@@ -106,6 +107,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
@@ -114,7 +116,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
     }
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
@@ -141,7 +143,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
     }
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
@@ -175,7 +177,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         Paint p = paintGrid;
         float strokeWidth = 1.5f * sunStroke(c, options) * options.latitudeLineScale;

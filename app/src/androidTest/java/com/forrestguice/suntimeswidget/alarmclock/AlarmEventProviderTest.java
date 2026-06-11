@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2024 Forrest Guice
+    Copyright (C) 2024-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,35 +18,176 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.content.ContentResolver;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import android.database.Cursor;
+import android.net.Uri;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
+import com.forrestguice.suntimeswidget.events.EventUri;
+import com.forrestguice.util.InstrumentationUtils;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.assertEquals;
+import java.util.HashMap;
 
-@RunWith(AndroidJUnit4.class)
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_REQUIRES_LOCATION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TYPE;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TYPE_LABEL;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO_PROJECTION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_TYPES;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_TYPES_PROJECTION;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(SuntimesJUnitTestRunner.class)
 public class AlarmEventProviderTest
 {
+    public static String AUTHORITY() {
+        return EventUri.AUTHORITY();    // AlarmEventContract.AUTHORITY;
+    }
+
     public Context context;
 
     @Before
     public void init() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationUtils.getContext();
+    }
+
+    @Test
+    public void test_query_eventTypes()
+    {
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_TYPES);
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(uri, QUERY_EVENT_TYPES_PROJECTION, null, null, null);
+        assertNotNull(cursor);
+        test_cursorHasColumns("QUERY_EVENT_TYPES", cursor, QUERY_EVENT_TYPES_PROJECTION);
+
+        HashMap<String, String> types = new HashMap<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            types.put(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TYPE)),
+                      cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TYPE_LABEL)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        for (EventType type : EventType.values())
+        {
+            if (type == EventType.SOLAREVENT) {
+                for (int t : SolarEvents.types()) {
+                    String k = EventType.SOLAREVENT.getSubtypeID(t + "");
+                    assertTrue("eventTypes is missing " + k, types.containsKey(k));
+                }
+            } else {
+                assertTrue("eventTypes is missing " + type.name(), types.containsKey(type.name()));
+            }
+        }
+    }
+
+    @Test
+    public void test_query_eventInfo()
+    {
+        Uri uri = Uri.parse("content://" + AUTHORITY() + "/" + QUERY_EVENT_INFO);
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(uri, QUERY_EVENT_INFO_PROJECTION, null, null, null);
+        assertNotNull(cursor);
+        test_cursorHasColumns("QUERY_EVENT_INFO", cursor, QUERY_EVENT_INFO_PROJECTION);
+        cursor.close();
+
+        HashMap<String, String> types = new HashMap<>();
+        HashMap<String, Integer> supportsRepeating = new HashMap<>();
+        HashMap<String, String> requiresLocation = new HashMap<>();
+        HashMap<String, String> supportsOffsetDays = new HashMap<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            types.put(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_TYPE)));
+            supportsRepeating.put(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EVENT_SUPPORTS_REPEATING)));
+            requiresLocation.put(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_REQUIRES_LOCATION)));
+            supportsOffsetDays.put(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_SUPPORTS_OFFSETDAYS)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SUN)) {
+            assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SUN + "");
+            assertEquals("wrong typeID!", typeID, types.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
+            assertEquals("true", requiresLocation.get(event.name()));
+            assertEquals("false", supportsOffsetDays.get(event.name()));
+        }
+        for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOON)) {
+            assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOON + "");
+            assertEquals("wrong typeID!", typeID, types.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_DAILY, (int) v);
+            assertEquals("true", requiresLocation.get(event.name()));
+            assertEquals("false", supportsOffsetDays.get(event.name()));
+        }
+        for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_SEASON)) {
+            assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_SEASON + "");
+            assertEquals("wrong typeID!", typeID, types.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
+            assertEquals("true", requiresLocation.get(event.name()));
+            assertEquals("true", supportsOffsetDays.get(event.name()));
+        }
+        for (SolarEvents event : SolarEvents.values(SolarEvents.TYPE_MOONPHASE)) {
+            assertTrue("eventInfo does not include " + event.name(), types.containsKey(event.name()));
+            String typeID = EventType.SOLAREVENT.getSubtypeID(SolarEvents.TYPE_MOONPHASE + "");
+            assertEquals("wrong typeID!", typeID, types.get(event.name()));
+            Integer v = supportsRepeating.get(event.name());
+            assertNotNull(v);
+            assertEquals(AlarmEventContract.REPEAT_SUPPORT_BASIC, (int) v);
+            assertEquals("false", requiresLocation.get(event.name()));
+            assertEquals("true", supportsOffsetDays.get(event.name()));
+        }
     }
 
     @Test
     public void test_EventType_resolveEventType()
     {
-        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "123456789", "SUNSET" };
-        AlarmEventProvider.EventType[] expected = new AlarmEventProvider.EventType[] {
-                AlarmEventProvider.EventType.SUN_ELEVATION, AlarmEventProvider.EventType.SHADOWLENGTH, AlarmEventProvider.EventType.DATE, AlarmEventProvider.EventType.SOLAREVENT };
+        String[] events = new String[] { "SUN_-6.0|5r", "SHADOW_1:1|5r", "SHADOWRATIO_X:2.0|5r", "DAYPERCENT_25.5|5r", "MOON_-10|5r", "MOONILLUM_25|5r", "123456789", "SUNSET" };
+        EventType[] expected = new EventType[] {
+                EventType.SUN_ELEVATION, EventType.SHADOWLENGTH, EventType.SHADOWRATIO, EventType.DAYPERCENT, EventType.MOON_ELEVATION, EventType.MOONILLUM, EventType.DATE, EventType.SOLAREVENT };
 
         for (int i=0; i<events.length; i++) {
-            assertEquals(expected[i], AlarmEventProvider.EventType.resolveEventType(context, events[i]));
+            assertEquals(expected[i], EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), events[i]));
+        }
+    }
+
+    private void test_cursorHasColumns(@NonNull String tag, @Nullable Cursor cursor, @NonNull String[] projection)
+    {
+        assertTrue(tag + " should return non-null cursor.", cursor != null);
+        assertTrue(tag + " should have same number of columns as the projection", cursor.getColumnCount() == projection.length);
+        assertTrue(tag + " should return one or more rows.", cursor.getCount() >= 1);
+        cursor.moveToFirst();
+        for (String column : projection) {
+            assertTrue(tag + " results should contain " + column, cursor.getColumnIndex(column) >= 0);
         }
     }
 

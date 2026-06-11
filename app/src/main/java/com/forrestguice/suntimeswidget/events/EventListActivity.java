@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,19 +22,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.Toolbar;
 
 public class EventListActivity extends AppCompatActivity
 {
@@ -47,6 +49,19 @@ public class EventListActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED = EventListFragment.EXTRA_SELECTED;
     public static final String EXTRA_NOSELECT = EventListFragment.EXTRA_NOSELECT;
     public static final String EXTRA_EXPANDED = EventListFragment.EXTRA_EXPANDED;
+
+    public static final String EXTRA_LOCATION = EventListFragment.EXTRA_LOCATION;    // supply a Location (serializable) or ...
+    public static final String EXTRA_LOCATION_LABEL = "location_label";                  // provide latitude, longitude, and altitude separately
+    public static final String EXTRA_LOCATION_LATITUDE = "location_latitude";
+    public static final String EXTRA_LOCATION_LONGITUDE = "location_longitude";
+    public static final String EXTRA_LOCATION_ALTITUDE = "location_altitude";
+
+    public static final String EXTRA_TYPEFILTER = EventListFragment.EXTRA_TYPEFILTER;
+    public static final String EXTRA_SELECTFILTER = EventListFragment.EXTRA_SELECTFILTER;
+
+    public static final String EXTRA_ADD_ANGLE = "addEventWithAngle";                  // degrees
+    public static final String EXTRA_ADD_SHADOWLENGTH = "addEventWithShadowLength";    // meters
+    public static final String EXTRA_ADD_OBJECTHEIGHT = "addEventWithObjectHeight";    // meters
 
     protected EventListFragment list;
 
@@ -61,6 +76,7 @@ public class EventListActivity extends AppCompatActivity
         super.attachBaseContext(context);
     }
 
+    @SuppressWarnings("RedundantCast")
     @Override
     public void onCreate(Bundle savedState)
     {
@@ -76,21 +92,66 @@ public class EventListActivity extends AppCompatActivity
         list = new EventListFragment();
         list.setDisallowSelect(intent.getBooleanExtra(EXTRA_NOSELECT, false));
         list.setExpanded(intent.getBooleanExtra(EXTRA_EXPANDED, false));
+        list.setTypeFilter(intent.getStringArrayExtra(EXTRA_TYPEFILTER));
+        list.setSelectFilter(intent.getStringArrayExtra(EXTRA_SELECTFILTER));
         list.setPreselected(intent.getStringExtra(EXTRA_SELECTED));
 
-        FragmentManager fragments = getSupportFragmentManager();
-        FragmentTransaction transaction = fragments.beginTransaction();
-        transaction.replace(R.id.fragmentContainer, list, "EventList");
-        transaction.commit();
+        if (intent.hasExtra(EXTRA_LOCATION))
+        {
+            Location location = (Location) intent.getSerializableExtra(EXTRA_LOCATION);
+            list.setLocation(location);
+
+        } else if (intent.hasExtra(EXTRA_LOCATION_LATITUDE) && intent.hasExtra(EXTRA_LOCATION_LONGITUDE)) {
+            try {
+                String label = intent.getStringExtra(EXTRA_LOCATION_LABEL);
+                double latitude = intent.getDoubleExtra(EXTRA_LOCATION_LATITUDE, 0);
+                double longitude = intent.getDoubleExtra(EXTRA_LOCATION_LONGITUDE, 0);
+                double altitude = intent.getDoubleExtra(EXTRA_LOCATION_ALTITUDE, 0);
+
+                Location.verifyLatitude(latitude);
+                Location.verifyLongitude(longitude);
+                list.setLocation(new Location(label, "" + latitude, "" + longitude, "" + altitude));
+
+            } catch (Exception e) {
+                Log.w("EventListActivity", "Ignoring invalid EXTRA_LOCATION_ values: " + e);
+            }
+        }
+        
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, "EventList")
+                .commit();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        final double extra_addEventWithAngle = intent.getDoubleExtra(EXTRA_ADD_ANGLE, -1);
+        intent.removeExtra(EXTRA_ADD_ANGLE);
+
+        final double extra_addEventWithShadowLength = intent.getDoubleExtra(EXTRA_ADD_SHADOWLENGTH, -1);
+        intent.removeExtra(EXTRA_ADD_SHADOWLENGTH);
+
+        final double extra_addEventWithObjectHeight = intent.getDoubleExtra(EXTRA_ADD_OBJECTHEIGHT, -1);
+        intent.removeExtra(EXTRA_ADD_OBJECTHEIGHT);
+
+        menuBar.post(new Runnable() {
+            @Override
+            public void run()
+            {
+                if (extra_addEventWithAngle != -1) {
+                    list.showAddEventDialog(EventType.SUN_ELEVATION, extra_addEventWithAngle, null, null);
+
+                } else if (extra_addEventWithShadowLength != -1 || extra_addEventWithObjectHeight != -1) {
+                    Double shadowLength = ((extra_addEventWithShadowLength != -1) ? extra_addEventWithShadowLength : null);
+                    Double objHeight = ((extra_addEventWithObjectHeight != -1) ? extra_addEventWithObjectHeight : null);
+                    list.showAddEventDialog(EventType.SHADOWLENGTH, null, shadowLength, objHeight);
+                }
+            }
+        });
     }
 
     @Override
@@ -100,7 +161,7 @@ public class EventListActivity extends AppCompatActivity
         list.setFragmentListener(listFragmentListener);
     }
 
-    private EventListFragment.FragmentListener listFragmentListener = new EventListFragment.FragmentListener()
+    private final EventListFragment.FragmentListener listFragmentListener = new EventListFragment.FragmentListener()
     {
         @Override
         public void onItemPicked(String eventID, String eventUri) {
@@ -136,22 +197,34 @@ public class EventListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
+    }
+
+    /**
+     * @return true adapter modified
+     */
+    public static boolean onEventListActivityResult(@NonNull Context context, int requestCode, int resultCode, @Nullable Intent data)
+    {
+        boolean adapterModified = ((data != null) && data.getBooleanExtra(EventListActivity.ADAPTER_MODIFIED, false));
+        if (resultCode == RESULT_OK)
+        {
+            String eventID = ((data != null) ? data.getStringExtra(EventListActivity.SELECTED_EVENTID) : null);
+            if (eventID != null) {
+                EventSettings.setShown(AndroidEventSettings.wrap(context), eventID, true);
+                adapterModified = true;
+            }
+        }
+        return adapterModified;
     }
 }

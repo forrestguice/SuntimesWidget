@@ -24,11 +24,12 @@ import android.util.AttributeSet;
 import android.widget.ListAdapter;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.preference.ListPreference;
 
 /**
  * A ListPreference where each list item shows two lines; a title and summary.
  */
-public class SummaryListPreference extends com.forrestguice.suntimeswidget.settings.ListPreference
+public class SummaryListPreference extends ListPreference
 {
     private CharSequence[] summaries;
 

@@ -24,6 +24,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -52,7 +53,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
     }
 
     @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, @Nullable int[] widgetSize)
     {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
         int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
@@ -112,7 +113,7 @@ public class SunPosLayout_1X1_1 extends SunPosLayout
         }
 
         SuntimesCalculator calculator = dataset.calculator();
-        SuntimesCalculator.SunPosition sunPosition = calculator.getSunPosition(dataset.now());
+        SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(dataset.now()) : null);
         updateViewsRightAscDeclinationText(context, views, sunPosition);
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);

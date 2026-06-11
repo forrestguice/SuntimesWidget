@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.preference.ListPreference;
 
 /**
  * A preference with an "action" button; should be provided with a `widgetLayout` containing
@@ -69,7 +71,9 @@ public class ActionButtonPreference extends ListPreference
         }
     }
 
+    @Nullable
     private String actionButtonContentDescription = null;
+    @Nullable
     public String getActionButtonContentDescription() {
         return actionButtonContentDescription;
     }
@@ -85,6 +89,7 @@ public class ActionButtonPreference extends ListPreference
             boolean enabled = isEnabled();
             actionButton.setEnabled(enabled);
             actionButton.setContentDescription(actionButtonContentDescription);
+            actionButton.setTag(getKey());
 
             if (Build.VERSION.SDK_INT >= 11) {
                 actionButton.setAlpha(enabled ? 1f : 0f);

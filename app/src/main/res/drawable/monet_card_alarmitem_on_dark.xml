@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true"
+        android:drawable="@drawable/monet_card_alarmitem_enabled_dark" />
+
+    <item android:state_pressed="true" android:state_enabled="true"
+        android:drawable="@drawable/monet_card_alarmitem_pressed_dark" />
+
+    <item android:state_pressed="true" android:state_enabled="false"
+        android:drawable="@drawable/monet_card_alarmitem_pressed_dark" />
+
+    <item android:state_enabled="false"
+        android:drawable="@drawable/monet_card_alarmitem_disabled_dark" />
+
+    <item android:drawable="@drawable/monet_card_alarmitem_enabled_dark" />
+</selector>

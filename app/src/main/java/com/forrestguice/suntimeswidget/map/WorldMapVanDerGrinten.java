@@ -22,12 +22,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.util.Log;
 
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
@@ -162,6 +160,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
@@ -170,8 +169,9 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options) {
-        return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
+    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options) {
+        Bitmap b = super.makeBitmap(data, w, h, options);
+        return (b != null ? makeMaskedBitmap(w, h, b) : null);
     }
 
     protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)
@@ -234,7 +234,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!grid_initialized) {
             initGrid(w, h, mid);
@@ -280,7 +280,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!majorline_initialized) {
             initMajorLines(w, h, mid);
@@ -311,7 +311,7 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
     }
 
     @Override
-    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapOptions options)
     {
         if (!majorline_initialized) {
             initMajorLines(w, h, mid);

@@ -20,9 +20,10 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Path;
-import android.util.Log;
+
+import com.forrestguice.util.Log;
+import com.forrestguice.annotation.Nullable;
 
 /**
  * Sinusoidal
@@ -94,6 +95,7 @@ public class WorldMapSinusoidal extends WorldMapVanDerGrinten
         }
         return matrix;
     }
+    @Nullable
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override

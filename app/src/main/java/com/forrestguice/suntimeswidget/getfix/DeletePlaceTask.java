@@ -19,24 +19,24 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-public class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
+import com.forrestguice.annotation.NonNull;
+
+import java.util.concurrent.Callable;
+
+public class DeletePlaceTask implements Callable<DeletePlaceTask.TaskResult>
 {
     private final GetFixDatabaseAdapter database;
-    private Long[] rowIDs = new Long[] { -1L };
+    private final Long[] rowIDs;
 
-    public DeletePlaceTask(Context context) {
+    public DeletePlaceTask(Context context, Long[] rowIDs) {
         database = new GetFixDatabaseAdapter(context.getApplicationContext());
+        this.rowIDs = rowIDs;
     }
 
     @Override
-    protected Boolean doInBackground(Long... params)
+    public TaskResult call() throws Exception
     {
-        if (params.length > 0) {
-            rowIDs = params;
-        }
-
         boolean result = false;
         database.open();
         for (long rowID : rowIDs)
@@ -46,22 +46,27 @@ public class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
             }
         }
         database.close();
-        return result;
+        return new TaskResult(result, rowIDs);
     }
 
-    @Override
-    protected void onPostExecute(Boolean result)
+    public static class TaskResult
     {
-        if (taskListener != null)
-            taskListener.onFinished(result, rowIDs);
-    }
+        public TaskResult(@NonNull Boolean result, @NonNull Long[] rowIDs)
+        {
+            this.result = result;
+            this.rowIDs = rowIDs;
+        }
 
-    private TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener ) {
-        taskListener = listener;
-    }
-    public static abstract class TaskListener
-    {
-        public void onFinished( boolean result, Long... rowIDs ) {}
+        private final Boolean result;
+        @NonNull
+        public Boolean getResult() {
+            return result;
+        }
+
+        private final Long[] rowIDs;
+        @NonNull
+        public Long[] getRowIDs() {
+            return rowIDs;
+        }
     }
 }

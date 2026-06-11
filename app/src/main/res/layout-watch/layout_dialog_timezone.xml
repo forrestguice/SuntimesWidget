@@ -10,7 +10,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
-        <ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
             android:layout_width="wrap_content" android:layout_height="48dp"
             android:src="?attr/icActionBack" android:scaleType="centerInside"
             android:contentDescription="@string/dialog_cancel" />
@@ -24,7 +24,7 @@
             style="@style/Base.DialogWindowTitle.AppCompat"
             android:text="@string/timezone_dialog_title" />
 
-        <ImageButton android:id="@+id/dialog_button_accept"
+        <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_accept"
             style="@style/ActionButton" android:contentDescription="@string/timezone_dialog_ok"
             android:layout_width="wrap_content" android:layout_height="48dp"
             android:src="?attr/icActionAccept"

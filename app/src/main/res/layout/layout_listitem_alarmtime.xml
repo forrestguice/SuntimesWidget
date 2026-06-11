@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_datetime" android:clipChildren="false"
@@ -39,7 +39,8 @@
 
     <TextSwitcher
         android:id="@+id/text_datetime"
-        android:layout_width="wrap_content" android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:minHeight="67dp"
         android:layout_marginTop="8dp" android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,12 +59,12 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="match_parent"
             android:ellipsize="end" android:gravity="center" android:maxLines="1"
-            android:textColor="?attr/text_buttonSelector" android:textSize="52dp" android:textStyle="bold"
+            android:textColor="?attr/text_buttonSelector" android:textSize="?attr/text_size_enormous" android:textStyle="bold"
             tools:ignore="SpUsage" tools:text="11:22 am" />
 
     </TextSwitcher>
 
-    <ImageView android:id="@+id/icon_datetime_offset" android:visibility="invisible"
+    <com.forrestguice.support.widget.ImageView android:id="@+id/icon_datetime_offset" android:visibility="invisible"
         android:layout_width="16dp" android:layout_height="16dp"
         android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/text_datetime"
@@ -97,4 +98,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

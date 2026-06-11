@@ -21,17 +21,19 @@ package com.forrestguice.suntimeswidget.settings.colors;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.widget.RecyclerView;
 
 /**
  * ColorViewHolder
  */
 public class ColorViewHolder extends RecyclerView.ViewHolder
 {
+    @Nullable
     public Integer color;
     public ImageButton colorButton;
     public View colorButtonFrame;
@@ -46,7 +48,7 @@ public class ColorViewHolder extends RecyclerView.ViewHolder
         return R.layout.layout_listitem_color;
     }
 
-    public void bindColorToView(Integer color, boolean isSelected)
+    public void bindColorToView(@Nullable Integer color, boolean isSelected)
     {
         this.color = color;
         if (color != null)

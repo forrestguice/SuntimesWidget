@@ -27,7 +27,7 @@
 
     <include layout="@layout/layout_dialog_alarmrepeat_switch" />
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/layout_repeat_days"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="horizontal">
 

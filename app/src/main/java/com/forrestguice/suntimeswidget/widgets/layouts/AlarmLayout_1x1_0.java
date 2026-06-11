@@ -25,12 +25,10 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
 
@@ -74,7 +72,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
         Set<String> types = AlarmWidgetSettings.loadAlarmWidgetStringSet(context, appWidgetId, AlarmWidgetSettings.PREF_KEY_ALARMWIDGET_TYPES, AlarmWidgetSettings.PREF_DEF_ALARMWIDGET_TYPES);
         Long upcomingAlarmId = AlarmWidget0.findUpcomingAlarmId(context, data.now().getTimeInMillis(), types.toArray(new String[0]));
         if (upcomingAlarmId == null || upcomingAlarmId == -1) {
-            displayString = context.getString(R.string.configLabel_alarms_nextAlarm_none);
+            displayString = context.getString(R.string.alarms_widgetLabel_nextAlarm_none);
 
         } else {
             AlarmClockItem item = AlarmWidget0.loadAlarmClockItem(context, upcomingAlarmId);
@@ -87,7 +85,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
                 updateNoteView(context, views, item);
 
             } else {
-                displayString = context.getString(R.string.configLabel_alarms_nextAlarm_error);
+                displayString = context.getString(R.string.alarms_widgetLabel_nextAlarm_error);
             }
         }
 
@@ -109,7 +107,7 @@ public class AlarmLayout_1x1_0 extends AlarmLayout
 
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_label, (showLabels ? View.VISIBLE : View.GONE));
-        views.setTextViewText(android.R.id.text2, (boldTime ? SuntimesUtils.createBoldSpan(null, displayString, displayString) : displayString));
+        views.setTextViewText(android.R.id.text2, (boldTime ? SpanUtils.createBoldSpan(null, displayString, displayString) : displayString));
     }
 
 }

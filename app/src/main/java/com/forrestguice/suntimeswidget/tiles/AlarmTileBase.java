@@ -1,0 +1,224 @@
+/**
+    Copyright (C) 2024 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.forrestguice.suntimeswidget.tiles;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmScheduler;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.view.ContextThemeWrapper;
+
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0;
+import com.forrestguice.util.android.AndroidResources;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+
+@TargetApi(24)
+public class AlarmTileBase extends SuntimesTileBase
+{
+    public static final WidgetSettings.ActionMode DEF_ACTION_MODE = WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY;
+    public static final ContentValues DEF_ACTION_VALUES =  WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
+    public static final boolean DEF_SHOW_LABELS = true;    // show alarm label and note as part of dialog
+
+    protected static final TimeDateDisplay utils = new TimeDateDisplay();
+    protected static final TimeDeltaDisplay delta_utils = new TimeDeltaDisplay();
+
+    public AlarmTileBase(@Nullable Activity activity) {
+        super(activity);
+    }
+
+    @Override
+    protected int appWidgetId() {
+        return AlarmTileService.ALARMTILE_APPWIDGET_ID;
+    }
+
+    @Override
+    public Intent getConfigIntent(@NonNull Context context) {
+        return getConfigIntent(context, appWidgetId(), AlarmTileConfigActivity.class);
+    }
+
+    @Override
+    public Intent getLaunchIntent(@NonNull Context context) {
+        return getLaunchIntent(context, appWidgetId(), initData(context));
+    }
+
+    @Override
+    @Nullable
+    protected Intent getLockScreenIntent(@NonNull Context context) {
+        return new Intent(context, TileLockScreenActivity.class);
+    }
+
+    @Override
+    protected void initDefaults(@NonNull Context context)
+    {
+        super.initDefaults(context);
+        WidgetSettings.saveShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS);
+        WidgetSettings.saveActionModePref(context, appWidgetId(), DEF_ACTION_MODE);
+        WidgetActions.saveActionLaunchPref(context, DEF_ACTION_VALUES, appWidgetId());
+    }
+
+    @Nullable
+    protected AlarmClockItem initAlarmItem(@NonNull Context context)
+    {
+        Long rowID = AlarmSettings.loadUpcomingAlarmId(context);
+        if (rowID != null && (alarmItem == null || alarmItem.rowID != rowID)) {
+            alarmItem = AlarmWidget0.loadAlarmClockItem(context, rowID);
+        }
+        return alarmItem;
+    }
+    protected void clearAlarmItem() {
+        alarmItem = null;
+    }
+    @Nullable
+    protected AlarmClockItem alarmItem = null;
+
+    @Override
+    public int updateTaskRateMs() {
+        return UPDATE_RATE;
+    }
+    public static final int UPDATE_RATE = 12000;     // dialog update rate: 12s
+
+    protected Drawable getDialogIcon(@NonNull Context context)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(context, AppSettings.loadTheme(context));
+        int[] attrs = { R.attr.text_primaryColor };
+        @SuppressLint("ResourceType")
+        TypedArray a = contextWrapper.obtainStyledAttributes(attrs);
+        int color = a.getResourceId(0, R.color.text_primary_dark);
+        a.recycle();
+
+        AlarmClockItem alarm = initAlarmItem(context);
+        Drawable d = ContextCompat.getDrawable(context, ((alarm != null) ? alarm.getIcon() : R.drawable.ic_action_alarms));
+        if (d != null) {
+            d.setTint(ContextCompat.getColor(contextWrapper, color));
+        }
+        return d;
+    }
+
+    protected SpannableStringBuilder formatDialogTitle(@NonNull Context context)
+    {
+        SpannableStringBuilder title = new SpannableStringBuilder();
+        AlarmClockItem item = initAlarmItem(context);
+        if (item != null)
+        {
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            Calendar event = Calendar.getInstance(TimeZone.getDefault());
+            event.setTimeInMillis(item.alarmtime);
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
+            SpannableString timeDisplay = SpanUtils.createBoldSpan(null, timeString, timeString);
+            timeDisplay = SpanUtils.createRelativeSpan(timeDisplay, timeString, timeString, 1.25f);
+            title.append(timeDisplay);
+
+        } else {
+            title.append(context.getString(R.string.alarms_widgetLabel_nextAlarm));
+        }
+        return title;
+    }
+
+    protected SpannableStringBuilder formatDialogMessage(@NonNull Context context)
+    {
+        SpannableStringBuilder msg = new SpannableStringBuilder();
+        AlarmClockItem item = initAlarmItem(context);
+        if (item != null)
+        {
+            // formatted alarm time
+            TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId());
+            Calendar event = Calendar.getInstance(TimeZone.getDefault());
+            event.setTimeInMillis(item.alarmtime);
+            String timeString = utils.calendarTimeShortDisplayString(AndroidResources.wrap(context), event, false, timeFormat).toString();
+
+            // formatted "time until"
+            long timeUntilMs = item.alarmtime - Calendar.getInstance().getTimeInMillis();
+            String timeUntilString = delta_utils.timeDeltaLongDisplayString(timeUntilMs).toString();
+            String timeUntilPhrase = context.getString(((timeUntilMs >= 0) ? R.string.delta_hence : R.string.delta_ago), timeUntilString);
+
+            String eventDisplay = formatEventDisplay(context, item);    // formatted event label
+
+            String dialogMessage = (eventDisplay != null ? context.getString(R.string.alarmtile_dialogmsg_format1, timeString, eventDisplay, timeUntilPhrase)
+                                                         : context.getString(R.string.alarmtile_dialogmsg_format0, timeString, timeUntilPhrase));
+            SpannableString dialogDisplay = SpanUtils.createBoldSpan(null, dialogMessage, timeString);
+            dialogDisplay = SpanUtils.createBoldSpan(dialogDisplay, dialogMessage, timeUntilString);
+            msg.append(dialogDisplay);
+
+            // show alarm label note too
+            if (WidgetSettings.loadShowLabelsPref(context, appWidgetId(), DEF_SHOW_LABELS))
+            {
+                SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), item);
+                data.calculate(context);
+
+                if (item.label != null || item.note != null) {
+                    msg.append("\n");
+                }
+                if (item.label != null && !item.label.isEmpty()) {
+                    msg.append("\n");
+                    msg.append(SpanUtils.createBoldSpan(null, item.label, item.label));
+                }
+                if (item.note != null) {
+                    msg.append("\n");
+                    msg.append(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), item.note, data));
+                }
+            }
+
+        } else {
+            msg.append(context.getString(R.string.alarmtile_dialogmsg_none));
+        }
+        return msg;
+    }
+
+    @Nullable
+    public static String formatEventDisplay(@NonNull Context context, @NonNull AlarmClockItem item)
+    {
+        String eventString = item.getEvent();
+        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+        String eventDisplay = (eventString != null) ? eventItem.getTitle() : null;
+        if (item.offset != 0) {
+            eventDisplay = (eventString != null) ? AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp, eventItem)
+                                                 : AlarmNotifications.formatOffsetMessage(context, item.offset, item.timestamp);
+        }
+        return eventDisplay;
+    }
+
+}

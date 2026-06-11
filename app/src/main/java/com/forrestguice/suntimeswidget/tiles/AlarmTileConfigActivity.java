@@ -22,9 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
-@SuppressWarnings("Convert2Diamond")
 public class AlarmTileConfigActivity extends ClockTileConfigActivity
 {
     public AlarmTileConfigActivity()
@@ -45,7 +43,11 @@ public class AlarmTileConfigActivity extends ClockTileConfigActivity
 
     @Override
     protected ContentValues launchActionIntentDefaults() {
-        return WidgetActions.SuntimesAction.OPEN_ALARM_LIST.toContentValues();
+        return AlarmTileBase.DEF_ACTION_VALUES;
     }
 
+    @Override
+    protected void onResetWidget() {
+        new AlarmTileBase(this).initDefaults(this);
+    }
 }
