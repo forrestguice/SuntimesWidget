@@ -194,11 +194,6 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         return masked;
     }
 
-    @Override
-    public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options) {
-        return makeMaskedBitmap(w, h, super.makeBitmap(data, w, h, options));
-    }
-
     protected Path createPolarMaskPath(int w, int h, double[] mid, boolean northward)
     {
         Path path = new Path();

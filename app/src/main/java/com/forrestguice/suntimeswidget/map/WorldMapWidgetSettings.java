@@ -193,7 +193,7 @@ public class WorldMapWidgetSettings
         MERCATOR_SIMPLE("Mercator", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_3,  new SunPosLayout_3X3_0(),false, 0, 0, "Mercator", PROJ4_MERC),   // TODO: layout
         VANDERGRINTEN_SIMPLE("Van der Grinten", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_4, new SunPosLayout_3X3_0(), false, 0, 0, "Van der Grinten", PROJ4_VANDG),
         SINUSOIDAL_SIMPLE("Sinusoidal", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x3_5,  new SunPosLayout_3X3_0(),false, 0, 0, "Sinuisoidal", PROJ4_SINU),
-        MOLLWEIDE_SIMPLE("Mollweide", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, false, 0, 0, "Mollweide", PROJ4_MOLL),
+        MOLLWEIDE_SIMPLE("Mollweide", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, new SunPosLayout_3X2_0(), false, 0, 0, "Mollweide", PROJ4_MOLL),
         ;
 
         private final SunPosLayout layout;

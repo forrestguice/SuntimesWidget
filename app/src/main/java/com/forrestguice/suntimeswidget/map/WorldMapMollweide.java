@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 
 /**
@@ -35,13 +36,20 @@ public class WorldMapMollweide extends WorldMapVanDerGrinten
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
         double radLon = Math.toRadians(lon);
-        double theta = 0;    // TODO
-        double radX = (2 * SQRT2 * (radLon - 0) * Math.cos(theta)) / Math.PI;   // - center_longitude
+        double radLat = Math.toRadians(lat);
+
+        double theta = radLat;       // solve `2θ + sin(2θ) = PI * sin(lat)` with newtons method
+        for (int i=0; i<5; i++) {
+            theta -= (2 * theta + Math.sin(2 * theta) - (Math.PI * Math.sin(radLat)))
+                    / (2 + 2 * Math.cos(2 * theta));
+        }
+
+        double radX = (2 * SQRT2 / Math.PI) * radLon * Math.cos(theta);
         double radY = SQRT2 * Math.sin(theta);
 
         int[] p = new int[2];
-        p[0] = (int) (mid[0] + ((radX / Math.PI) * mid[0]));
-        p[1] = (int) (mid[1] - ((radY / PI_OVER_2) * mid[1]));
+        p[0] = (int) (mid[0] + ((radX / (2 * SQRT2)) * mid[0]));
+        p[1] = (int) (mid[1] - ((radY / SQRT2) * mid[1]));
         return p;
     }
 
@@ -53,48 +61,28 @@ public class WorldMapMollweide extends WorldMapVanDerGrinten
         int[] size = matrixSize();
         int w = size[0];
         int h = size[1];
-        double[] v = new double[w * h * 3];
+        double[] m = new double[] { w/2d, h/2d };
 
-        double iw0 = (1d / w) * 360d;
-        double ih0 = (1d / h) * 180d;
+        double[] v = new double[w * h * 3];
 
         double theta;
         double radX, radY;
         double radLon, cosLon, sinLon;
         double radLat, cosLat;
 
-        for (int j = 0; j < h; j++)    // for each pixel(i,j) transform into point(x,y) to find coordinate(lon,lat)
+        for (int j=0; j<h; j++)
         {
-            radY = Math.toRadians(-1 * (((double) j * ih0) - 90d));      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas); every Y is 1 degrees
+            radY = SQRT2 * ((m[1] - j) / m[1]);
             theta = Math.asin(radY / SQRT2);
             radLat = Math.asin((2d * theta + Math.sin(2d * theta)) / Math.PI);
-            while (radLat > PI_OVER_2) {
-                radLat -= Math.PI;
-            }
-            while (radLat < -PI_OVER_2) {
-                radLat += Math.PI;
-            }
-
             cosLat = Math.cos(radLat);
 
-            for (int i = 0; i < w; i++)
+            for (int i=0; i<w; i++)
             {
-                radX = Math.toRadians(((double) i * iw0) - 180d);  // i in [0,w] to [0,360] to [-180,180]; every x is 1 degree
-
-                radLon = 0 + ((Math.PI * radX) / (2d * SQRT2 * Math.cos(theta)));   // + center_longitude
-                while (radLon > Math.PI) {
-                    radLon -= Math.PI;
-                }
-                while (radLon < -Math.PI) {
-                    radLon += Math.PI;
-                }
-
+                radX = 2 * SQRT2 * ((i - m[0]) / m[0]);
+                radLon = ((Math.PI * radX) / (2d * SQRT2 * Math.cos(theta)));
                 cosLon = Math.cos(radLon);
                 sinLon = Math.sin(radLon);
-
-                if (j == 5) {
-                    Log.d("DEBUG", "radX: " + radX + ", radY: " + radY + ", radLon: " + radLon + ", radLat: " + radLat);
-                }
 
                 v[i + (size[0] * j)] = cosLon * cosLat;
                 v[i + (size[0] * (size[1] + j))] = sinLon * cosLat;
@@ -135,9 +123,13 @@ public class WorldMapMollweide extends WorldMapVanDerGrinten
     @Override
     protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b)
     {
-        Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within a circle
+        Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);    // mask final image to fit within an ellipse
         Canvas maskedCanvas = new Canvas(masked);
-        maskedCanvas.drawOval(0, 0, w, h, paintMask_srcOver);
+        if (Build.VERSION.SDK_INT >= 21) {
+            maskedCanvas.drawOval(0, 0, w, h, paintMask_srcOver);
+        } else {
+            maskedCanvas.drawColor(Color.WHITE);
+        }
 
         paintMask_srcIn.setColor(Color.WHITE);
         maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
