@@ -20,7 +20,7 @@
                 android:drawableLeft="?attr/icActionAlarm" android:drawableStart="?attr/icActionAlarm" android:gravity="center_vertical"
                 android:drawablePadding="8dp"
                 android:textSize="?attr/text_size_small"
-                android:text="@string/msg_bedtime_wakeup_set" />
+                android:text="@string/bedtime_msg_wakeup_set" />
 
             <LinearLayout
                 android:id="@+id/text_time_layout"
@@ -66,14 +66,14 @@
                             android:maxEms="9" android:maxLines="2" android:ellipsize="end"
                             android:textSize="?attr/text_size_small" tools:text="Pixie Dust" />
 
-                        <ImageView android:id="@+id/status_silent"
+                        <com.forrestguice.support.widget.ImageView android:id="@+id/status_silent"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                             android:src="?attr/icActionSoundDisabled"
                             android:contentDescription="@string/alarmOption_ringtone_none" />
 
-                        <ImageView android:id="@+id/status_vibrate"
+                        <com.forrestguice.support.widget.ImageView android:id="@+id/status_vibrate"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
@@ -96,29 +96,31 @@
             android:paddingTop="8dp" android:paddingBottom="8dp"
             android:clipToPadding="false">
 
-            <Switch android:id="@+id/switch_enabled"
+            <com.forrestguice.support.widget.SwitchCompat android:id="@+id/switch_enabled"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
                 />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_add"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_add"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionNew" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:contentDescription="@string/configAction_setWakeUp" />
+                android:contentDescription="@string/bedtime_action_setWakeUp" />
 
-            <android.support.design.widget.FloatingActionButton android:id="@+id/button_edit"
+            <com.forrestguice.support.widget.FloatingActionButton
+                android:id="@+id/button_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:tint="?attr/fab_foregroundColorAlt"
                 app:backgroundTint="?attr/fab_backgroundColorAlt" app:rippleColor="?attr/fab_rippleColorAlt"
                 android:scaleType="center"
                 android:src="?attr/icActionEdit" app:fabSize="mini" android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:contentDescription="@string/configAction_editAlarm" />
+                android:contentDescription="@string/alarms_action_editAlarm" />
 
         </FrameLayout>
 

@@ -25,7 +25,7 @@
         android:orientation="vertical" android:gravity="center" android:layout_margin="8dp"
         android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
 
-        <ImageView android:id="@android:id/icon1"
+        <com.forrestguice.support.widget.ImageView android:id="@android:id/icon1"
             android:layout_width="32dp" android:layout_height="32dp"
             android:src="?attr/icActionExtension" tools:ignore="contentDescription" />
 

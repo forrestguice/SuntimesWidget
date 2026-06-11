@@ -18,6 +18,8 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,20 +28,25 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.views.IconUtils;
+import com.forrestguice.util.ExecutorUtils;
+import com.forrestguice.util.Pair;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.support.app.AlertDialog;
+import com.forrestguice.util.concurrent.TaskListener;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -53,13 +60,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
-public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
+public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Object, Void, Integer>
 {
     public static final long MIN_WAIT_TIME = 2000;
 
-    private GetFixDatabaseAdapter db;
-    private WeakReference<Context> contextRef;
+    private final GetFixDatabaseAdapter db;
+    private final WeakReference<Context> contextRef;
+    private final Object[] params;
 
     private boolean isPaused = false;
     public void pauseTask()
@@ -77,10 +86,11 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return isPaused;
     }
 
-    public BuildPlacesTask(Context context)
+    public BuildPlacesTask(Context context, Object[] params)
     {
         this.contextRef = new WeakReference<Context>(context);
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
+        this.params = params;
     }
 
     private int clearPlaces()
@@ -122,7 +132,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromGroup(Context context, @NonNull String[] groups, @NonNull ArrayList<Location> locations)
+    private void addPlacesFromGroup(Context context, @NonNull String[] groups, @NonNull ArrayList<PlaceItem> locations)
     {
         if (groups.length == 0) {
             addPlacesFromGroup(context, (String) null, locations);
@@ -135,7 +145,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromGroup(Context context, @Nullable String fromGroup, @NonNull ArrayList<Location> locations)
+    private void addPlacesFromGroup(Context context, @Nullable String fromGroup, @NonNull ArrayList<PlaceItem> locations)
     {
         Resources r = context.getResources();
         int groupID = (fromGroup == null) ? 0
@@ -161,8 +171,11 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             {
                 for (String item : items)
                 {
-                    Location location = csvItemToLocation(item);
-                    if (location != null) {
+                    PlaceItem location = csvItemToPlaceItem(item);
+                    if (location != null)
+                    {
+                        location.comment = (location.comment == null) ? getDefaultComment(fromGroup)
+                                : location.comment.concat(getDefaultComment(fromGroup));
                         locations.add(location);
                     }
                 }
@@ -170,7 +183,11 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         }
     }
 
-    private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<Location> locations)
+    private String getDefaultComment(String fromGroup) {
+        return PlaceItem.TAG_DEFAULT; // + "[" + fromGroup + "]";
+    }
+
+    private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<PlaceItem> locations)
     {
         try {
             InputStream in = context.getContentResolver().openInputStream(uri);
@@ -182,7 +199,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 String line = reader.readLine();
                 while (line != null)
                 {
-                    Location location = csvItemToLocation(line);
+                    PlaceItem location = csvItemToPlaceItem(line);
                     if (location != null && !locations.contains(location)) {
                         locations.add(location);
                     }
@@ -200,7 +217,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Nullable
-    public static Location csvItemToLocation(String csv_item)
+    public static PlaceItem csvItemToPlaceItem(@Nullable String csv_item)
     {
         if (csv_item == null) {
             return null;
@@ -222,18 +239,22 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
 
         String lat, lon;
         String alt = "0";
+        String comment = null;
         try {
             lat = "" + Double.parseDouble(parts[1]);
             lon = "" + Double.parseDouble(parts[2]);
             if (parts.length >= 4) {
                 alt = "" + Double.parseDouble(parts[3]);
             }
+            if (parts.length >= 5) {
+                comment = parts[4];
+            }
         } catch (NumberFormatException e) {
             Log.e("BuildPlacesTask", "Ignoring line " + csv_item + " .. " + e);
             return null;
         }
 
-        return new Location(label, lat, lon, alt);
+        return new PlaceItem(-1, new Location(label, lat, lon, alt), comment);
     }
 
     public static String[] splitCSV(String value, Character delimiter)
@@ -267,7 +288,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     private int buildPlaces(@Nullable Uri uri, @Nullable String[] groups)
     {
         int result = 0;
-        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<PlaceItem> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
             db.open();
@@ -277,30 +298,67 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             } else if (groups != null) {
                 addPlacesFromGroup(context, groups, locations);
             } else {
-                addPlacesFromRes(context, locations);
+                ArrayList<Location> locations0 = new ArrayList<>();
+                addPlacesFromRes(context, locations0);
+                for (Location location : locations0) {
+                    locations.add(new PlaceItem(-1, location));
+                }
             }
 
-            Collections.sort(locations, new Comparator<Location>()
+            Collections.sort(locations, new Comparator<PlaceItem>()
             {
                 @Override
-                public int compare(Location o1, Location o2)
-                {
-                    return o2.getLabel().compareTo(o1.getLabel());  // descending
+                public int compare(PlaceItem o1, PlaceItem o2) {
+                    if (o1.location == null && o2.location == null) {
+                        return 0;
+                    } else if (o1.location != null && o2.location == null) {
+                        return 1;
+                    } else if (o1.location == null) {
+                        return -1;
+                    } else {
+                        return o2.location.getLabel().compareTo(o1.location.getLabel());  // descending
+                    }
                 }
             });
 
-            Cursor cursor = db.getAllPlaces(0, false);
+            Cursor cursor = db.getAllPlaces(0, true);
             for (int i=0; i<locations.size(); i++)
             {
-                Location location = locations.get(i);
-                int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
+                PlaceItem item = locations.get(i);
+                if (item == null || item.location == null) {
+                    continue;
+                }
+                if (item.comment == null) {
+                    item.comment = PlaceItem.TAG_DEFAULT;
+                } else if (!item.comment.contains(PlaceItem.TAG_DEFAULT)) {
+                    item.comment = item.comment.concat(PlaceItem.TAG_DEFAULT);
+                }
+
+                String itemLabel = item.location.getLabel();
+                int p = GetFixDatabaseAdapter.findPlaceByName(itemLabel, cursor);
                 if (p < 0)    // if not found
                 {                 // then add new place
-                    db.addPlace(location, PlaceItem.TAG_DEFAULT);
+                    db.addPlace(item.location, item.comment);
                     result++;
+
+                } else {                                                             // if already exists
+                    if (WidgetSettings.PREF_DEF_LOCATION_LABEL.equals(itemLabel))        // and is the locale default
+                    {
+                        if (cursor != null)
+                        {
+                            cursor.moveToPosition(p);
+                            long rowID = cursor.getLong(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_ROWID));
+                            String comment = cursor.getString(cursor.getColumnIndexOrThrow(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
+                            if (rowID >= 0 && (comment == null || comment.trim().isEmpty())) {
+                                db.updateComment(rowID, item.comment);    // add missing comment/tags to preexisting locale default
+                            }
+                        }
+                    }
                 }
             }
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
 
             Log.i("BuildPlacesTask", "buildPlaces: " + result);
             db.close();
@@ -313,7 +371,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     }
 
     @Override
-    protected Integer doInBackground(Object... params)
+    public Integer call() throws Exception
     {
         long startTime = System.currentTimeMillis();
 
@@ -343,48 +401,6 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return result;
     }
 
-    @Override
-    protected void onPreExecute()
-    {
-        signalStarted();
-    }
-
-    @Override
-    protected void onPostExecute(Integer result)
-    {
-        signalFinished(result);
-    }
-
-
-    /**
-     * Event Listener
-     */
-    private TaskListener taskListener = null;
-    public void setTaskListener( TaskListener listener )
-    {
-        taskListener = listener;
-    }
-    public void clearTaskListener()
-    {
-        taskListener = null;
-    }
-    public static abstract class TaskListener
-    {
-        public void onStarted() {}
-        public void onFinished( Integer result ) {}
-    }
-
-    private void signalStarted()
-    {
-        if (taskListener != null)
-            taskListener.onStarted();
-    }
-    private void signalFinished( Integer result )
-    {
-        if (taskListener != null)
-            taskListener.onFinished(result);
-    }
-
     /**
      * OpenFileIntent
      */
@@ -395,24 +411,35 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
     /**
      * promptAddWorldPlaces
      */
-    public static void promptAddWorldPlaces(final Context context, final BuildPlacesTask.TaskListener l)
+    public static void promptAddWorldPlaces(@NonNull final Context context, final TaskListener<Integer> taskListener)
     {
         BuildPlacesTask.chooseGroups(context, new BuildPlacesTask.ChooseGroupsDialogListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int which, String[] groups, boolean[] checked)
             {
-                ArrayList<String> items = new ArrayList<>();
-                for (int i=0; i<groups.length; i++) {
-                    if (checked[i]) {
-                        items.add(groups[i]);
+                if (hasChecked(checked))
+                {
+                    ArrayList<String> items = new ArrayList<>();
+                    for (int i=0; i<groups.length; i++) {
+                        if (checked[i]) {
+                            items.add(groups[i]);
+                        }
                     }
+                    BuildPlacesTask task = new BuildPlacesTask(context, new Object[] { false, null, items.toArray(new String[0]) });
+                    ExecutorUtils.runTask("BuildPlacesTask", task, taskListener);
                 }
-                BuildPlacesTask task = new BuildPlacesTask(context);
-                task.setTaskListener(l);
-                task.execute(false, null, items.toArray(new String[0]));
             }
         });
+    }
+
+    protected static boolean hasChecked(boolean[] values) {
+        for (boolean v : values) {
+            if (v) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -429,7 +456,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         final boolean[] checked = new boolean[groups.length];
         for (int i=0; i<groups.length; i++)
         {
-            checked[i] = true;
+            checked[i] = false;
             String[] itemParts = (groups[i] != null) ? groups[i].split(",") : new String[] {""};
             int labelID = (itemParts.length > 1) ? context.getResources().getIdentifier(itemParts[1].trim(), "string", context.getPackageName()) : 0;
             String label = (labelID != 0 ? context.getString(labelID) : "");
@@ -441,29 +468,58 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             displayStrings[i] = items.get(i).second;
         }
 
-        int[] attrs = { R.attr.icActionWorldMap };
-        TypedArray a = context.obtainStyledAttributes(attrs);
-        int iconResID = a.getResourceId(0, R.drawable.ic_action_map);
-        a.recycle();
+        DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener = new DialogInterface.OnMultiChoiceClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                Pair<Integer,CharSequence> pair = items.get(which);
+                int i = (pair.first != null ? pair.first : 0);
+                checked[i] = isChecked;
+            }
+        };
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.configLabel_places_build))
-                .setIcon(iconResID)
-                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        int i = items.get(which).first;
-                        checked[i] = isChecked;
-                    }
-                })
-                .setPositiveButton(context.getString(R.string.configLabel_places_build), new DialogInterface.OnClickListener()
+                .setTitle(context.getString(R.string.places_label_build))
+                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWorldMap, R.drawable.ic_action_map))
+                .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
+                .setPositiveButton(context.getString(R.string.places_action_addPlace), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         onClickListener.onClick(dialog, AlertDialog.BUTTON_POSITIVE, groups, checked);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-        confirm.show();
+                .setNegativeButton(context.getString(R.string.dialog_cancel), null)
+                .setNeutralButton(context.getString(R.string.action_checkAll), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { /* EMPTY; must be non-null */ }
+                });
+
+        final Dialog d = confirm.create();
+        d.setOnShowListener(new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow(final DialogInterface dialog)
+            {
+                final View.OnClickListener toggleListener = new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        ListView list = AlertDialog.getListView(dialog);
+                        int n = (list != null ? list.getCount() : 0);
+                        for (int i=0; i<n; i++)
+                        {
+                            list.setItemChecked(i, true);
+                            checked[i] = true;
+                        }
+                    }
+                };
+                Button button = AlertDialog.getButton(dialog, DialogInterface.BUTTON_NEUTRAL);
+                if (button != null) {
+                    button.setOnClickListener(toggleListener);
+                }
+            }
+        });
+        d.show();
     }
 
     public interface ChooseGroupsDialogListener {

@@ -19,22 +19,22 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.colors.AppColorKeys;
-import com.forrestguice.suntimeswidget.colors.ColorValues;
-import com.forrestguice.suntimeswidget.colors.ResourceColorValues;
+import com.forrestguice.colors.Color;
+import com.forrestguice.colors.ColorValues;
+import com.forrestguice.colors.ResourceColorValues;
+import com.forrestguice.util.Resources;
+
+import java.io.Serializable;
 
 /**
  * ColorValues
  */
-public class CardColorValues extends ResourceColorValues implements Parcelable
+public class CardColorValues extends ResourceColorValues implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     public static final String COLOR_RISING_SUN = AppColorKeys.COLOR_RISING_SUN;
     public static final String COLOR_RISING_SUN_TEXT = AppColorKeys.COLOR_RISING_SUN_TEXT;
 
@@ -50,13 +50,18 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
     public static final String COLOR_SUN_FILL = AppColorKeys.COLOR_SUN_FILL;
     public static final String COLOR_SUN_STROKE = AppColorKeys.COLOR_SUN_STROKE;
 
+    public static final String COLOR_MIDNIGHT_TEXT = AppColorKeys.COLOR_MIDNIGHT_TEXT;
+    public static final String COLOR_MIDNIGHT_FILL = AppColorKeys.COLOR_MIDNIGHT_FILL;
+    public static final String COLOR_MIDNIGHT_STROKE = AppColorKeys.COLOR_MIDNIGHT_STROKE;
+
     public String[] getColorKeys() {
         return new String[] {
                 COLOR_RISING_SUN, COLOR_RISING_SUN_TEXT,
                 COLOR_SETTING_SUN, COLOR_SETTING_SUN_TEXT,
                 COLOR_RISING_MOON, COLOR_RISING_MOON_TEXT,
                 COLOR_SETTING_MOON, COLOR_SETTING_MOON_TEXT,
-                COLOR_SUN_FILL, COLOR_SUN_STROKE
+                COLOR_SUN_FILL, COLOR_SUN_STROKE,
+                COLOR_MIDNIGHT_TEXT, COLOR_MIDNIGHT_FILL, COLOR_MIDNIGHT_STROKE
         };
     }
     public int[] getColorAttrs() {
@@ -66,15 +71,17 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.attr.moonriseColor, R.attr.table_moonRisingColor,
                 R.attr.moonsetColor, R.attr.table_moonSettingColor,
                 R.attr.graphColor_pointFill, R.attr.graphColor_pointStroke,
+                R.attr.table_nightColor, R.attr.sunnightColor0, R.attr.sunnightColor1
         };
     }
     public int[] getColorLabelsRes() {
         return new int[] {
-                R.string.configLabel_themeColorSunrise, R.string.configLabel_themeColorSunrise_text,
-                R.string.configLabel_themeColorSunset, R.string.configLabel_themeColorSunset_text,
-                R.string.configLabel_themeColorMoonrise, R.string.configLabel_themeColorMoonrise_text,
-                R.string.configLabel_themeColorMoonset, R.string.configLabel_themeColorMoonset_text,
-                R.string.configLabel_themeColorGraphSunFill, R.string.configLabel_themeColorGraphSunStroke
+                R.string.themes_configLabel_themeColorSunrise, R.string.themes_configLabel_themeColorSunrise_text,
+                R.string.themes_configLabel_themeColorSunset, R.string.themes_configLabel_themeColorSunset_text,
+                R.string.themes_configLabel_themeColorMoonrise, R.string.themes_configLabel_themeColorMoonrise_text,
+                R.string.themes_configLabel_themeColorMoonset, R.string.themes_configLabel_themeColorMoonset_text,
+                R.string.themes_configLabel_themeColorGraphSunFill, R.string.themes_configLabel_themeColorGraphSunStroke,
+                R.string.themes_configLabel_themeColorGraphMidnightText, R.string.themes_configLabel_themeColorGraphMidnightFill, R.string.themes_configLabel_themeColorGraphMidnightStroke
         };
     }
     public int[] getColorRoles() {
@@ -83,7 +90,8 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 ROLE_FOREGROUND, ROLE_TEXT,
                 ROLE_FOREGROUND, ROLE_TEXT,
                 ROLE_FOREGROUND, ROLE_TEXT,
-                ROLE_FOREGROUND, ROLE_FOREGROUND
+                ROLE_FOREGROUND, ROLE_FOREGROUND,
+                ROLE_TEXT, ROLE_FOREGROUND, ROLE_FOREGROUND
         };
     }
     public int[] getColorsResDark() {
@@ -93,6 +101,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.moonIcon_color_rising_dark, R.color.table_moon_rising_dark,
                 R.color.moonIcon_color_setting_dark, R.color.table_moon_setting_dark,
                 R.color.graphColor_pointFill_dark, R.color.graphColor_pointStroke_dark,
+                R.color.sunIcon_color_midnight_dark, R.color.sunIcon_color_midnight_dark, R.color.sunIcon_color_midnightBorder_dark
         };
     }
     public int[] getColorsResLight() {
@@ -102,6 +111,7 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 R.color.moonIcon_color_rising_light, R.color.table_moon_rising_light,
                 R.color.moonIcon_color_setting_light, R.color.table_moon_setting_light,
                 R.color.graphColor_pointFill_light, R.color.graphColor_pointStroke_light,
+                R.color.sunIcon_color_midnight_light, R.color.sunIcon_color_midnight_light, R.color.sunIcon_color_midnightBorder_light
         };
     }
     public int[] getColorsFallback() {
@@ -111,32 +121,27 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
                 Color.LTGRAY, Color.LTGRAY,
                 Color.DKGRAY, Color.DKGRAY,
                 Color.YELLOW, Color.BLACK,
+                Color.WHITE, Color.BLACK, Color.YELLOW
         };
     }
 
     public CardColorValues(ColorValues other) {
         super(other);
     }
-    public CardColorValues(SharedPreferences prefs, String prefix) {
-        super(prefs, prefix);
-    }
-    private CardColorValues(Parcel in) {
+    /*private CardColorValues(Parcel in) {
         super(in);
-    }
+    }*/
     public CardColorValues() {
         super();
     }
-    public CardColorValues(Context context) {
+    public CardColorValues(Resources context) {
         this(context, true);
     }
-    public CardColorValues(Context context, boolean darkTheme) {
+    public CardColorValues(Resources context, boolean darkTheme) {
         super(context, darkTheme);
     }
-    public CardColorValues(String jsonString) {
-        super(jsonString);
-    }
 
-    public static final Creator<CardColorValues> CREATOR = new Creator<CardColorValues>()
+    /*public static final Creator<CardColorValues> CREATOR = new Creator<CardColorValues>()
     {
         public CardColorValues createFromParcel(Parcel in) {
             return new CardColorValues(in);
@@ -144,9 +149,14 @@ public class CardColorValues extends ResourceColorValues implements Parcelable
         public CardColorValues[] newArray(int size) {
             return new CardColorValues[size];
         }
-    };
+    };*/
 
-    public static CardColorValues getColorDefaults(Context context, boolean darkTheme) {
+    @Override
+    protected int getLocalizedDefaultResID(Resources context, boolean darkTheme) {
+        return (darkTheme ? R.string.themes_widgetThemes_dark : R.string.themes_widgetThemes_light);
+    }
+
+    public static CardColorValues getColorDefaults(Resources context, boolean darkTheme) {
         return new CardColorValues(new CardColorValues().getDefaultValues(context, darkTheme));
     }
 }

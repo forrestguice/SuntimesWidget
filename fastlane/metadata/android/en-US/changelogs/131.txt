@@ -1,0 +1,11 @@
+Attention: v0.17.0+ breaks older widget installations (#932).
+When updating from previous versions your home screen widgets may be removed and will need to be re-added.
+
+- fixes broken moon widgets (#931).
+- fixes app crash when dragging world map timeline (#935).
+- fixes bug where "custom event offsets are ignored or applied incorrectly" (#940, #941).
+- fixes bug "map application not found" (#937).
+- fixes bug where `text size` setting is not properly applied (#936).
+- fixes miscellaneous `material you` issues (readability).
+- adds `crash report` action to general settings.
+- updates translation to Norwegian.

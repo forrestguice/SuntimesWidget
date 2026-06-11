@@ -19,21 +19,22 @@
 package com.forrestguice.suntimeswidget.settings.colors.pickers;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChangeListener;
 import com.forrestguice.suntimeswidget.settings.colors.ColorsAdapter;
+import com.forrestguice.support.lifecycle.ViewModel;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.GridLayoutManager;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -44,15 +45,15 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
     protected MaterialColorPickerModel materialColorModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
         setRetainInstance(true);
-        materialColorModel = ViewModelProviders.of(getActivity()).get(MaterialColorPickerModel.class);
+        materialColorModel = ViewModelProviders.of(requireActivity()).get(MaterialColorPickerModel.class);
 
         View view = inflater.inflate(R.layout.layout_colors_material, container, false);
-        initViews(getContext(), view);
-        updateViews(getContext());
+        initViews(requireContext(), view);
+        updateViews(requireContext());
         return view;
     }
 
@@ -69,14 +70,14 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
             {
                 setColor(color, true);
                 clearListeners();
-                updateViews(getActivity());
+                updateViews(getContext());
                 setListeners();
             }
         });
 
         grid = (RecyclerView) view.findViewById(R.id.color_grid);
         grid.setHasFixedSize(true);
-        grid.setLayoutManager(new GridLayoutManager(getActivity(), 14, GridLayoutManager.HORIZONTAL, false));
+        grid.setLayoutManager(new GridLayoutManager(context, 14, GridLayoutManager.HORIZONTAL, false));
         grid.setAdapter(adapter);
         grid.scrollToPosition(0);
     }
@@ -89,7 +90,7 @@ public class MaterialColorPickerFragment extends ColorPickerFragment
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void updateViews(Context context)
+    public void updateViews(@Nullable Context context)
     {
         super.updateViews(context);
         adapter.setSelectedColor(getColor());

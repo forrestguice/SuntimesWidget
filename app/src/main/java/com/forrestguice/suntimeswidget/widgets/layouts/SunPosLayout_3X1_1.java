@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.os.Build;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 
 public class SunPosLayout_3X1_1 extends SunPosLayout_3X1_0
@@ -30,7 +31,7 @@ public class SunPosLayout_3X1_1 extends SunPosLayout_3X1_0
     }
 
     @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize) {
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, @Nullable int[] widgetSize) {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
         if (Build.VERSION.SDK_INT >= 16) {
             this.dpHeight = HEIGHT_MEDIUM;

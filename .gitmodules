@@ -1,0 +1,3 @@
+[submodule "lib-quadflask-colorpicker"]
+	path = lib-quadflask-colorpicker
+	url = https://github.com/forrestguice/colorpicker

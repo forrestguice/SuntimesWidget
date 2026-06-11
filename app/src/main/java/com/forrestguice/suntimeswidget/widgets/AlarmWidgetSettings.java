@@ -21,15 +21,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_2x2_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout_3x2_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -38,6 +40,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static com.forrestguice.suntimeswidget.settings.WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettings.SIZE_1x1;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettings.SIZE_2x2;
+import static com.forrestguice.suntimeswidget.settings.WidgetSettings.SIZE_3x2;
 
 public class AlarmWidgetSettings
 {
@@ -52,8 +57,8 @@ public class AlarmWidgetSettings
     public static final String PREF_PREFIX_KEY_ALARMWIDGET = "_alarmwidget_";
 
     public static final String PREF_KEY_ALARMWIDGET_TYPES = "alarmtypes";
-    public static final String[] PREF_DEF_ALARMWIDGET_TYPES = new String[] { AlarmClockItem.AlarmType.ALARM.name() };
-    public static final String[] ALL_TYPES = new String[] { AlarmClockItem.AlarmType.ALARM.name(), AlarmClockItem.AlarmType.NOTIFICATION.name(), AlarmClockItem.AlarmType.NOTIFICATION1.name() };
+    public static final String[] PREF_DEF_ALARMWIDGET_TYPES = new String[] { AlarmType.ALARM.name() };
+    public static final String[] ALL_TYPES = new String[] { AlarmType.ALARM.name(), AlarmType.NOTIFICATION.name(), AlarmType.NOTIFICATION1.name() };
 
     public static final String PREF_KEY_ALARMWIDGET_ENABLEDONLY = "enabledonly";
     public static final boolean PREF_DEF_ALARMWIDGET_ENABLEDONLY = true;
@@ -67,7 +72,7 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
-    public static String[] ALL_KEYS = new String[] {
+    public static final String[] ALL_KEYS = new String[] {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_1x1,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_2x2,
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + MODE_3x2,
@@ -75,16 +80,16 @@ public class AlarmWidgetSettings
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_ENABLEDONLY,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
     };
-    public static String[] BOOL_KEYS = new String[] {
+    public static final String[] BOOL_KEYS = new String[] {
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_ENABLEDONLY,
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SHOWICONS,
     };
-    public static String[] INT_KEYS = new String[] {
+    public static final String[] INT_KEYS = new String[] {
             PREF_PREFIX_KEY_ALARMWIDGET + PREF_KEY_ALARMWIDGET_SORTORDER,
     };
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -149,14 +154,16 @@ public class AlarmWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ALARMWIDGET;
-        return prefs.getString(prefs_prefix + key, defaultValue);
+        String s = prefs.getString(prefs_prefix + key, defaultValue);
+        return (s != null ? s : defaultValue);
     }
     public static Set<String> loadAlarmWidgetStringSet(Context context, int appWidgetId, String key, String[] defaultValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ALARMWIDGET;
         Set<String> defValue = new TreeSet<String>(Arrays.asList(defaultValue));
-        return prefs.getStringSet(prefs_prefix + key, defValue);
+        Set<String> s = prefs.getStringSet(prefs_prefix + key, defValue);
+        return (s != null ? s : defValue);
     }
 
     public static void deleteAlarmWidgetValue(Context context, int appWidgetId, String key) {
@@ -187,7 +194,8 @@ public class AlarmWidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, defaultValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_ALARM + suffix, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     //////////////////////////////////////////////////
@@ -280,30 +288,49 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm1x1 implements WidgetSettings.WidgetModeDisplay
     {
-        NEXTALARM("Next Alarm", R.layout.layout_widget_alarm_1x1_0);
+        NEXTALARM("Next Alarm", R.layout.layout_widget_alarm_1x1_0, new AlarmLayout_1x1_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm1x1(String displayString, int layoutID)
+        private WidgetModeAlarm1x1(@NonNull String displayString, int layoutID, AlarmLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_1x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return AlarmWidget0.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID() {
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -327,31 +354,50 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm2x2 implements WidgetSettings.WidgetModeDisplay
     {
-        ALARMLIST("Alarm List", R.layout.layout_widget_alarm_2x2_0),
-        NEXTALARM_DETAILED("Next Alarm (detailed)", R.layout.layout_widget_alarm_2x2_1);
+        ALARMLIST("Alarm List", R.layout.layout_widget_alarm_2x2_0, new AlarmLayout_2x2_0()),
+        NEXTALARM_DETAILED("Next Alarm (detailed)", R.layout.layout_widget_alarm_2x2_1, new AlarmLayout_2x2_1());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm2x2(String displayString, int layoutID)
+        private WidgetModeAlarm2x2(@NonNull String displayString, int layoutID, AlarmLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_2x2;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return AlarmWidget0_2x2.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID() {
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -376,28 +422,47 @@ public class AlarmWidgetSettings
      */
     public static enum WidgetModeAlarm3x2 implements WidgetSettings.WidgetModeDisplay
     {
-        ALARMLIST_DETAILED("Alarm List (detailed)", R.layout.layout_widget_alarm_2x2_0);    // 3x2 alarmlist uses same layout as 2x2
+        ALARMLIST_DETAILED("Alarm List (detailed)", R.layout.layout_widget_alarm_2x2_0, new AlarmLayout_2x2_0());    // 3x2 alarmlist uses same layout as 2x2
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeAlarm3x2(String displayString, int layoutID)
+        private WidgetModeAlarm3x2(@NonNull String displayString, int layoutID, AlarmLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_3x2;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return AlarmWidget0_3x2.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID() {
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
         public static void initDisplayStrings( Context context ) {
@@ -419,7 +484,7 @@ public class AlarmWidgetSettings
     //////////////////////////////////////////////////
 
     /**
-     * @param context
+     * @param context context
      */
     public static void initDisplayStrings( Context context )
     {
@@ -429,8 +494,8 @@ public class AlarmWidgetSettings
     }
 
     /**
-     * @param context
-     * @param appWidgetId
+     * @param context context
+     * @param appWidgetId widget id
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {

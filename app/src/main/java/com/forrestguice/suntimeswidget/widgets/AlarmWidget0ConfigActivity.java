@@ -22,23 +22,18 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesConfigActivity0;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
+import com.forrestguice.suntimeswidget.widgets.layouts.AlarmLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
@@ -65,7 +60,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected Class getWidgetClass() {
+    protected Class<?> getWidgetClass() {
         return AlarmWidget0.class;
     }
 
@@ -117,46 +112,36 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void initMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
-        {
-            FragmentTransaction transaction = fragments.beginTransaction();
-            AlarmWidget0ConfigFragment fragment = new AlarmWidget0ConfigFragment();
-            loadMoreGeneralSettings(context, fragment);
-            transaction.replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS);
-            transaction.commit();
-        }
+        AlarmWidget0ConfigFragment fragment = new AlarmWidget0ConfigFragment();
+        loadMoreGeneralSettings(context, fragment);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.appwidget_general_moreOptions_fragmentContainer, fragment, TAG_FRAGMENT_MOREGENERALSETTINGS)
+                .commit();
     }
 
     @Override
-    protected void saveMoreGeneralSettings(final Context context)
+    protected void saveMoreGeneralSettings(final Context context, int appWidgetId)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
+        AlarmWidget0ConfigFragment fragment = (AlarmWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
+        if (fragment != null)
         {
-            AlarmWidget0ConfigFragment fragment = (AlarmWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS);
-            if (fragment != null)
-            {
-                int sortOrder = fragment.getAlarmWidgetInt(PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER);
-                boolean enabledOnly = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_ENABLEDONLY, PREF_DEF_ALARMWIDGET_ENABLEDONLY);
-                boolean showIcons = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
-                Set<String> filterTypes = new TreeSet<String>(Arrays.asList(fragment.getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES)));
+            int sortOrder = fragment.getAlarmWidgetInt(PREF_KEY_ALARMWIDGET_SORTORDER, PREF_DEF_ALARMWIDGET_SORTORDER);
+            boolean enabledOnly = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_ENABLEDONLY, PREF_DEF_ALARMWIDGET_ENABLEDONLY);
+            boolean showIcons = fragment.getAlarmWidgetBool(PREF_KEY_ALARMWIDGET_SHOWICONS, PREF_DEF_ALARMWIDGET_SHOWICONS);
+            Set<String> filterTypes = new TreeSet<String>(Arrays.asList(fragment.getAlarmWidgetStringSet(PREF_KEY_ALARMWIDGET_TYPES, PREF_DEF_ALARMWIDGET_TYPES)));
 
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY, enabledOnly);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, showIcons);
-                AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES, filterTypes);
-            }
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SORTORDER, sortOrder);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_ENABLEDONLY, enabledOnly);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_SHOWICONS, showIcons);
+            AlarmWidgetSettings.saveAlarmWidgetValue(context, appWidgetId, PREF_KEY_ALARMWIDGET_TYPES, filterTypes);
         }
     }
 
     @Override
     protected void loadMoreGeneralSettings(final Context context)
     {
-        FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null) {
-            loadMoreGeneralSettings(context, (AlarmWidget0ConfigFragment) fragments.findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
-        }
+        loadMoreGeneralSettings(context, (AlarmWidget0ConfigFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_MOREGENERALSETTINGS));
     }
 
     protected void loadMoreGeneralSettings(final Context context, @Nullable AlarmWidget0ConfigFragment fragment)
@@ -195,10 +180,11 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_1x1mode != null) {
             spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
+            addOnItemSelectedListener("WidgetMode1x1", spinner_1x1mode, null);
         }
     }
     @Override
-    protected void saveWidgetMode1x1(Context context)
+    protected void saveWidgetMode1x1(Context context, int appWidgetId)
     {
         if (spinner_1x1mode != null)
         {
@@ -236,10 +222,11 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_2x2mode != null) {
             spinner_2x2mode.setAdapter(createAdapter_widgetMode2x2());
+            addOnItemSelectedListener("WidgetMode2x2", spinner_2x2mode, null);
         }
     }
     @Override
-    protected void saveWidgetMode2x2(Context context)
+    protected void saveWidgetMode2x2(Context context, int appWidgetId)
     {
         if (spinner_2x2mode != null)
         {
@@ -277,6 +264,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null) {
             spinner_3x2mode.setAdapter(createAdapter_widgetMode3x2());
+            addOnItemSelectedListener("WidgetMode3x2", spinner_3x2mode, null);
         }
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x2()
@@ -287,7 +275,7 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
         return adapter;
     }
     @Override
-    protected void saveWidgetMode3x2(Context context)
+    protected void saveWidgetMode3x2(Context context, int appWidgetId)
     {
         if (spinner_3x2mode != null)
         {
@@ -339,9 +327,9 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
 
     @Override
     protected SuntimesCalculatorDescriptor[] supportingCalculators() {
-        return SuntimesCalculatorDescriptor.values(this, requiredFeatures);
+        return SuntimesCalculatorDescriptor.values(requiredFeatures);
     }
-    private static int[] requiredFeatures = new int[] {};
+    private static final int[] requiredFeatures = new int[] {};
 
     @Override
     protected boolean getDefaultScaleText() {
@@ -369,6 +357,23 @@ public class AlarmWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x2mode, spinner_2x2mode, label_3x2mode, spinner_3x2mode };
+    }
+
+    @Override
+    protected boolean supportsPreview() {
+        return true;
+    }
+
+    @Override
+    protected View createPreview(final Context context, int appWidgetId, SuntimesWidget0.AppWidgetManagerView appWidgetManager)
+    {
+        int[] defaultSizePx = getWidgetSizeConstraints(context, getPrimaryWidgetModeSize());
+        AlarmWidget0.updateAppWidget(context, appWidgetManager, appWidgetId, getWidgetClass(), defaultSizePx, defaultAlarmLayout(context, appWidgetId));
+        return appWidgetManager.getView();
+    }
+
+    protected AlarmLayout defaultAlarmLayout(Context context, int appWidgetId) {
+        return AlarmWidgetSettings.loadAlarm1x1ModePref_asLayout(context, appWidgetId);
     }
 
 }

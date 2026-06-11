@@ -25,8 +25,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.tiles.AlarmTileService;
@@ -141,26 +141,31 @@ public class WidgetSettingsExportTask extends ExportTask
                 continue;
             }
 
-            if (map.get(key).getClass().equals(String.class))
+            Object object = map.get(key);
+            if (object != null)
             {
-                //Log.d("DEBUG", key + " is String");
-                values.put(key, prefs.getString(key, null));
+                Class<?> clazz = object.getClass();
+                if (clazz.equals(String.class))
+                {
+                    //Log.d("DEBUG", key + " is String");
+                    values.put(key, prefs.getString(key, null));
 
-            } else if (map.get(key).getClass().equals(Integer.class)) {
-                //Log.d("DEBUG", key + " is Integer");
-                values.put(key, prefs.getInt(key, -1));
+                } else if (clazz.equals(Integer.class)) {
+                    //Log.d("DEBUG", key + " is Integer");
+                    values.put(key, prefs.getInt(key, -1));
 
-            } else if (map.get(key).getClass().equals(Long.class)) {
-                //Log.d("DEBUG", key + " is Long");
-                values.put(key, prefs.getLong(key, -1));
+                } else if (clazz.equals(Long.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getLong(key, -1));
 
-            } else if (map.get(key).getClass().equals(Float.class)) {
-                //Log.d("DEBUG", key + " is Long");
-                values.put(key, prefs.getFloat(key, -1));
+                } else if (clazz.equals(Float.class)) {
+                    //Log.d("DEBUG", key + " is Long");
+                    values.put(key, prefs.getFloat(key, -1));
 
-            } else if (map.get(key).getClass().equals(Boolean.class)) {
-                //Log.d("DEBUG", key + " is boolean");
-                values.put(key, prefs.getBoolean(key, false));
+                } else if (clazz.equals(Boolean.class)) {
+                    //Log.d("DEBUG", key + " is boolean");
+                    values.put(key, prefs.getBoolean(key, false));
+                }
             }
         }
         return values;
@@ -170,7 +175,7 @@ public class WidgetSettingsExportTask extends ExportTask
     {
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
         String packageName = context.getPackageName();
-        for (Class widgetClass : WidgetListAdapter.ALL_WIDGETS)
+        for (Class<?> widgetClass : WidgetListAdapter.ALL_WIDGETS)
         {
             Bundle bundle = new Bundle();
             bundle.putString(WidgetSettingsMetadata.PREF_KEY_META_CLASSNAME, widgetClass.getSimpleName());

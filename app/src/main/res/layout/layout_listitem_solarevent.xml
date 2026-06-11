@@ -20,7 +20,7 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:padding="10dp">
 
-    <ImageView android:id="@android:id/icon1"
+    <com.forrestguice.support.widget.ImageView android:id="@android:id/icon1"
         android:layout_width="@dimen/sunIconLarge_width" android:layout_height="@dimen/sunIconLarge_height"
         android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
         android:layout_margin="8dp"

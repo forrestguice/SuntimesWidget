@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="monet_card_bg">@color/card_bg_dark</color>
+    <color name="monet_card_bg_trans">@color/card_bg_darktrans</color>
+
+    <color name="monet_widget_bg">@color/card_bg_contrast_dark</color>
+    <color name="monet_widget_focused">@color/text_accent_dark</color>
+    <color name="monet_widget_pressed">@color/monet_dark_alarm_pressed</color>
+
+    <color name="monet_text_accent">@color/text_accent_dark</color>
+</resources>

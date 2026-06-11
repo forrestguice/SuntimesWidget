@@ -1,0 +1,4 @@
+- fixes app crash when configuring quick settings tiles.
+- fixes miscellaneous bugs in the color picker.
+- enhances quick settings tiles to support displaying their content over the lock screen.
+- enhances bedtime mode to support Direct Boot (restores DND after a reboot before unlock).

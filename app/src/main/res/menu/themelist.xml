@@ -4,28 +4,28 @@
     <group android:checkableBehavior="none">
 
         <item android:id="@+id/addTheme"
-              android:title="@string/configAction_addTheme"
+              android:title="@string/themes_action_addTheme"
               android:icon="?attr/icActionNew"
               app:showAsAction="ifRoom" />
 
         <item android:id="@+id/exportThemes"
-              android:title="@string/configAction_exportThemes"
+              android:title="@string/themes_action_exportThemes"
               android:icon="?attr/icActionSave"
               app:showAsAction="never" />
 
         <item android:id="@+id/importThemes"
-              android:title="@string/configAction_importThemes"
+              android:title="@string/themes_action_importThemes"
               android:icon="?attr/icActionCopy"
               app:showAsAction="never" />
 
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
-            android:title="@string/configAction_help"
+            android:title="@string/action_help"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"
-            android:title="@string/configAction_aboutWidget"
+            android:title="@string/action_about"
             app:showAsAction="never" />
 
     </group>

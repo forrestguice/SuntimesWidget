@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-[![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml)
+[![Android CI](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml/badge.svg)](https://github.com/forrestguice/SuntimesWidget/actions/workflows/android.yml)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
@@ -138,13 +138,16 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
+|ACCESS_LOCATION_EXTRA_COMMANDS|To reload agps data.|v0.17.0|
 |ACCESS_NOTIFICATION_POLICY|To enable do-not-disturb at bedtime.|v0.16.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
 |FOREGROUND_SERVICE|To display alarms and notifications.|v0.16.0|
 |POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
+|POST_NOTIFICATIONS|To display alarms and notifications.|v0.17.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
 |REQUEST_IGNORE_BATTERY_OPTIMIZATIONS|To help ensure reliable delivery of alarms.|v0.14.11|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
+|SCHEDULE_EXACT_ALARM|To display alarms and notifications.|v0.17.0|
 |USE_FULL_SCREEN_INTENT|To display alarms over the lock screen.|v0.16.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
@@ -177,7 +180,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2024 Forrest Guice<br/>
+Copyright &#169; 2014-2026 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -199,21 +202,21 @@ Libraries used:
 
 ## Project Contributions
 
-German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, and <u>CSTRSK</u>.<br/>
+German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, <u>xnumad</u>, <u>CSTRSK</u> and <u>Wuzzy</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
-French translation by <u>Jej</u>, <u>Aloha</u>, <u>ldmpub</u>, and <u>grenagit</u>.<br/>
+French translation by <u>Jej</u>, <u>Aloha</u>, <u>ldmpub</u>, <u>grenagit</u>, and <u>chfo-bidouille</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
-Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
+Italian translation by <u>Matteo Caoduro</u>, <u>GiovaGa</u>, and <u>McCio</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>, and <u><a href=https://github.com/Adelechka>Adelechka</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
 Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
-Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>.<br />
+Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>, and <u><a href=https://github.com/islam2hamy>islam2hamy</a></u>.<br />
 
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.

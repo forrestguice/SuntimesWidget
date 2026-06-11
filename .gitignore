@@ -43,5 +43,16 @@ proguard/
 .idea/assetWizardSettings.xml
 .idea/codeStyles/Project.xml
 .idea/caches/build_file_checksums.ser
+.idea/shelf/
 *.gz
 *.zip
+/.idea/libraries
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+app/app.iml
+/.idea/modules
+SuntimesWidget.iml
+app/test_location_serializable.txt
+app/production/release/output-metadata.json

@@ -12,8 +12,10 @@
         <item name="dialogBackground">@color/dialog_bg</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_ref</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_ref</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref</item>
         <item name="widgetBackground">@drawable/widget_bg_ref</item>
-        <item name="settingsCardBackground">@color/card_bg</item>
+        <item name="settingsCardBackground">@drawable/settings_card_bg_ref</item>
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -78,6 +80,9 @@
         <item name="sunsetIconSmall">@drawable/ic_sunset_ref</item>
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_ref</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_ref</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_ref</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_ref</item>
         <item name="moonriseColor">@color/moonIcon_color_rising</item>
@@ -122,6 +127,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found_ref</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_ref</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_ref</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_ref</item>
+        <item name="icActionGPS_network">@drawable/ic_network_ref</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_ref</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_ref</item>
         <item name="icActionMap">@drawable/ic_action_map1_ref</item>
@@ -175,6 +183,14 @@
         <item name="icActionAddLabel">@drawable/ic_action_addlabel_ref</item>
         <item name="icActionDeselect">@drawable/ic_action_deselect_ref</item>
 
+        <item name="icPlaceUser">@drawable/ic_action_place_ref</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale_ref</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_ref</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_ref</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_ref</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_ref</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_ref</item>
+
         <item name="icActionPlay">@drawable/ic_action_play_ref</item>
         <item name="icActionPause">@drawable/ic_action_pause_ref</item>
         <item name="icActionRecord">@drawable/ic_action_record_ref</item>
@@ -183,6 +199,7 @@
         <item name="icActionExpand">@drawable/ic_action_expand_ref</item>
         <item name="icActionVisibilityOn">@drawable/ic_action_visibility_on_ref</item>
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_ref</item>
+        <item name="checkExpand">@drawable/check_expand_ref</item>
         <item name="checkFavorite">@drawable/check_favorite_ref</item>
         <item name="checkAltitude">@drawable/check_altitude_ref</item>
         <item name="checkVibrate">@drawable/check_vibrate_ref</item>
@@ -248,7 +265,7 @@
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_light</item>
         <item name="widgetBackground">@drawable/bg_widget</item>
-        <item name="settingsCardBackground">@color/card_bg_light</item>
+        <item name="settingsCardBackground">@drawable/card_alarmitem_controls_light</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
@@ -313,6 +330,9 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_light</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_light</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_light</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise_light</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
@@ -357,6 +377,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_light</item>
+        <item name="icActionGPS_network">@drawable/ic_network_light</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_light</item>
 
         <item name="icActionPlace">@drawable/ic_action_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map1_light</item>
@@ -410,6 +433,14 @@
         <item name="icActionAddLabel">@drawable/ic_action_addlabel_light</item>
         <item name="icActionDeselect">@drawable/baseline_deselect_light_24</item>
 
+        <item name="icPlaceUser">@drawable/ic_action_place_light</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale_light</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_light</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_light</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_light</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_light</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_light</item>
+
         <item name="icActionPlay">@drawable/ic_action_play_light</item>
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
         <item name="icActionRecord">@drawable/ic_action_record_light</item>
@@ -418,6 +449,7 @@
         <item name="icActionExpand">@drawable/ic_action_expand_light</item>
         <item name="icActionVisibilityOn">@drawable/ic_action_visibility_light</item>
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_light</item>
+        <item name="checkExpand">@drawable/check_expand_light</item>
         <item name="checkFavorite">@drawable/check_favorite_light</item>
         <item name="checkAltitude">@drawable/check_altitude_light</item>
         <item name="checkVibrate">@drawable/check_vibrate_light</item>
@@ -437,7 +469,9 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_light</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_light</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
@@ -486,7 +520,7 @@
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="dialogBackgroundAlt">@color/dialog_bg_alt_dark</item>
         <item name="widgetBackground">@drawable/bg_widget_dark</item>
-        <item name="settingsCardBackground">@color/card_bg_dark</item>
+        <item name="settingsCardBackground">@drawable/card_alarmitem_controls_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
@@ -551,6 +585,9 @@
         <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
         <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
         <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_dark</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_dark</item>
 
         <item name="moonriseIcon">@drawable/ic_moon_rise</item>
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
@@ -595,6 +632,9 @@
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
+        <item name="icActionGPS_satellite">@drawable/ic_satellite_dark</item>
+        <item name="icActionGPS_network">@drawable/ic_network_dark</item>
+        <item name="icActionGPS_cell">@drawable/ic_celltower_dark</item>
 
         <item name="icActionPlace">@drawable/ic_action_place</item>
         <item name="icActionMap">@drawable/ic_action_map1</item>
@@ -648,6 +688,14 @@
         <item name="icActionAddLabel">@drawable/ic_action_addlabel</item>
         <item name="icActionDeselect">@drawable/baseline_deselect_dark_24</item>
 
+        <item name="icPlaceUser">@drawable/ic_action_place</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_dark</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_dark</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about</item>
+        <item name="icPlaceHome">@drawable/ic_action_home</item>
+
         <item name="icActionPlay">@drawable/ic_action_play</item>
         <item name="icActionPause">@drawable/ic_action_pause</item>
         <item name="icActionRecord">@drawable/ic_action_record</item>
@@ -656,6 +704,7 @@
         <item name="icActionExpand">@drawable/ic_action_expand</item>
         <item name="icActionVisibilityOn">@drawable/ic_action_visibility</item>
         <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off</item>
+        <item name="checkExpand">@drawable/check_expand_dark</item>
         <item name="checkFavorite">@drawable/check_favorite_dark</item>
         <item name="checkAltitude">@drawable/check_altitude_dark</item>
         <item name="checkVibrate">@drawable/check_vibrate_dark</item>
@@ -675,7 +724,9 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark</item>
         <item name="popupMenuBackground">@drawable/popupmenu_frame_dark</item>
+        <item name="popupControlBackground">@drawable/popupmenu_frame_dark</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
@@ -759,6 +810,8 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_ref1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.System</item>
     </style>
     <style name="AppTheme.System1.Small" parent="AppTheme.System1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -833,6 +886,8 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_light1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.Light</item>
     </style>
     <style name="AppTheme.Light1.Small" parent="AppTheme.Light1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -909,6 +964,8 @@
         <item name="text_size_huge">@dimen/text_size_huge</item>
         <item name="text_size_enormous">@dimen/text_size_enormous</item>
         <item name="actionBarSize">@dimen/normal_actionbar_size</item>
+        <item name="tileCardBackground">@drawable/tilecard_bg_dark1</item>
+        <item name="spinnerStyle">@style/ContrastSpinnerStyle.Dark</item>
     </style>
     <style name="AppTheme.Dark1.Small" parent="AppTheme.Dark1">
         <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
@@ -971,7 +1028,7 @@
 
     <!-- The inner frame around the widget -->
     <style name="SunsetTimeWidgetBase">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="SunsetTimeWidget" parent="SunsetTimeWidgetBase">
@@ -981,6 +1038,7 @@
         <item name="android:paddingRight">@dimen/widget_padding_right</item>
         <item name="android:paddingTop">@dimen/widget_padding_top</item>
         <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
+        <item name="android:layout_gravity">center</item>
     </style>
     <style name="SunsetTimeWidget_dark" parent="SunsetTimeWidget">
         <item name="android:background">@null</item>
@@ -1114,9 +1172,43 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="SunsetTimeSettingsGroupTray">
+        <!--<item name="android:background">?android:attr/windowBackground</item>-->
+        <item name="android:background">@color/card_bg_trans</item>
+        <item name="android:animateLayoutChanges">true</item>
+    </style>
+    <style name="SunsetTimeSettingsGroupLayout" parent="SunsetTimeWidget_dark">
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:animateLayoutChanges">true</item>
+    </style>
+    <style name="SunsetTimeSettingsGroupLayout1" parent="SunsetTimeSettingsGroupLayout">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:background">?attr/settingsCardBackground</item>
+    </style>
+    <style name="SunsetTimeSettingsGroupHeader">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <!--<item name="android:background">?attr/selectableItemBackground</item>-->
+    </style>
+    <style name="SunsetTimeSettingsExpandCheckBox">
+        <item name="android:button">?attr/checkExpand</item>
+    </style>
+    <style name="SunsetTimeSettingsGroupContentArea">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
     <style name="SunsetTimeSettingsGroupTitle">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">?attr/text_size_small</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">?attr/text_size_medium</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="SunsetTimeHorizontalRule">
@@ -1151,7 +1243,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">false</item>
-        <item name="android:contentDescription">@string/configAction_chooseColor</item>
+        <item name="android:contentDescription">@string/themes_action_chooseColor</item>
         <item name="android:layout_marginRight">4dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/ic_colortab</item>
@@ -1348,6 +1440,49 @@
         <item name="android:maxLines">3</item>
         <item name="android:ellipsize">end</item>
         <item name="android:antialias">true</item>
+    </style>
+
+    <style name="LockScreenActivityStyleBase" parent="AppTheme.System">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+    </style>
+    <style name="LockScreenActivityStyle" parent="LockScreenActivityStyleBase">
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+    </style>
+
+    <style name="LockScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/LockScreenDialogAnimation</item>
+        <item name="android:windowBackground">?attr/tileCardBackground</item>
+        <item name="colorAccent">?attr/text_accentColor</item>
+    </style>
+
+    <style name="LockScreenDialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="LightMapSeekBar" parent="Widget.AppCompat.SeekBar">
+        <!--<item name="android:progressBackgroundTint">@color/transparent</item>-->  <!-- api 21+ -->
+        <!--<item name="android:progressTint">@color/transparent</item>-->   <!-- api 21+ -->
+    </style>
+
+    <style name="ContrastSpinnerStyle.System" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_ref</item>
+    </style>
+    <style name="ContrastSpinnerStyle.Dark" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_dark</item>
+    </style>
+    <style name="ContrastSpinnerStyle.Light" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_light</item>
     </style>
 
 </resources>

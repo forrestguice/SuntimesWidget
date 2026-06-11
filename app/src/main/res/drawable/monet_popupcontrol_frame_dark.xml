@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/monet_dark_dialog_bg_alt" />
+    <corners android:radius="@dimen/popupcontrol_radius" />
+</shape>

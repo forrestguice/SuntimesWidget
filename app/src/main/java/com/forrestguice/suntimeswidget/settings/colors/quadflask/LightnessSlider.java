@@ -12,21 +12,21 @@ import android.util.AttributeSet;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.Utils;
 import com.flask.colorpicker.builder.PaintBuilder;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 
 /**
  * this file contains a modified copy of `com.flask.colorpicker.slider.LightnessSlider`
  */
 
-@SuppressWarnings("Convert2Diamond")
 public class LightnessSlider extends com.flask.colorpicker.slider.LightnessSlider
 {
     private boolean inVerticalOrientation;
 
     private int color;
-    private Paint barPaint = PaintBuilder.newPaint().build();
-    private Paint solid = PaintBuilder.newPaint().build();
-    private Paint clearingStroke = PaintBuilder.newPaint().color(0xffffffff).xPerMode(PorterDuff.Mode.CLEAR).build();
+    private final Paint barPaint = PaintBuilder.newPaint().build();
+    private final Paint solid = PaintBuilder.newPaint().build();
+    private final Paint clearingStroke = PaintBuilder.newPaint().color(0xffffffff).xPerMode(PorterDuff.Mode.CLEAR).build();
 
     private ColorPickerView colorPicker;
 
@@ -45,15 +45,17 @@ public class LightnessSlider extends com.flask.colorpicker.slider.LightnessSlide
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs)
+    private void init(Context context, @Nullable AttributeSet attrs)
     {
-        TypedArray styledAttrs = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.AbsCustomSlider, 0, 0);
-        try {
-            inVerticalOrientation = styledAttrs.getBoolean(
-                    R.styleable.AbsCustomSlider_inVerticalOrientation, inVerticalOrientation);
-        } finally {
-            styledAttrs.recycle();
+        if (attrs != null) {
+            TypedArray styledAttrs = context.getTheme().obtainStyledAttributes(
+                    attrs, R.styleable.AbsCustomSlider, 0, 0);
+            try {
+                inVerticalOrientation = styledAttrs.getBoolean(
+                        R.styleable.AbsCustomSlider_inVerticalOrientation, inVerticalOrientation);
+            } finally {
+                styledAttrs.recycle();
+            }
         }
     }
 

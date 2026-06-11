@@ -22,10 +22,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -96,8 +97,8 @@ public class WidgetSettingsMetadata
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -115,7 +116,7 @@ public class WidgetSettingsMetadata
         }
         return types;
     }
-    private static void putType(Map<String,Class> map, Class type, String... keys) {
+    private static void putType(Map<String,Class<?>> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
@@ -129,11 +130,12 @@ public class WidgetSettingsMetadata
      */
     public static class WidgetMetadata
     {
+        @Nullable
         private String className = null;
         private int versionCode = -1;
         private int category = -1;
-        private int[] minDimens = new int[] {-1, -1};
-        private int[] maxDimens = new int[] {-1, -1};
+        private final int[] minDimens = new int[] {-1, -1};
+        private final int[] maxDimens = new int[] {-1, -1};
 
         public WidgetMetadata(WidgetMetadata other)
         {
@@ -146,13 +148,13 @@ public class WidgetSettingsMetadata
             this.maxDimens[1] = other.maxDimens[1];
         }
 
-        public WidgetMetadata(String widgetClassName)
+        public WidgetMetadata(@Nullable String widgetClassName)
         {
             this.className = widgetClassName;
             this.versionCode = BuildConfig.VERSION_CODE;
         }
 
-        public WidgetMetadata(String widgetClassName, int versionCode, int category,
+        public WidgetMetadata(@Nullable String widgetClassName, int versionCode, int category,
                               int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
             this.className = widgetClassName;
@@ -164,7 +166,7 @@ public class WidgetSettingsMetadata
             this.maxDimens[1] = maxHeight;
         }
 
-        public WidgetMetadata(String widgetClassName, int versionCode, WidgetMetadata other)
+        public WidgetMetadata(@Nullable String widgetClassName, int versionCode, WidgetMetadata other)
         {
             this.className = widgetClassName;
             this.versionCode = versionCode;
@@ -178,6 +180,7 @@ public class WidgetSettingsMetadata
         /**
          * @return widget class name
          */
+        @Nullable
         public String getWidgetClassName() {
             return className;
         }
@@ -209,12 +212,14 @@ public class WidgetSettingsMetadata
             return maxDimens;
         }
 
+        @Nullable
         public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values)
         {
             Long values_id = WidgetSettingsImportTask.findAppWidgetIdFromFirstKey(values);
             return WidgetMetadata.getMetaDataFromValues(values, values_id);
         }
 
+        @Nullable
         public static WidgetMetadata getMetaDataFromValues(@NonNull ContentValues values, @Nullable Long appWidgetId)
         {
             if (appWidgetId != null)
@@ -243,7 +248,7 @@ public class WidgetSettingsMetadata
 
         @Override
         public int hashCode() {
-            return className.hashCode();
+            return (className != null ? className.hashCode() : 0);
         }
 
         @Override

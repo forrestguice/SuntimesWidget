@@ -23,8 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.preference.DialogPreference;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -33,8 +31,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.views.SpanUtils;
+import com.forrestguice.support.preference.DialogPreference;
 
 /**
  * A "preference" (non-persistent) that displays help content in a dialog.
@@ -43,6 +43,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 public class HelpPreference extends DialogPreference
 {
     private CharSequence helpText = "";
+    @Nullable
     private String helpLink = null;
     private String helpPath = "";
     private TextView helpView;
@@ -130,9 +131,11 @@ public class HelpPreference extends DialogPreference
             String buttonText = null;
             TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HelpPreference, 0, 0);
             try {
-                this.helpText = SuntimesUtils.fromHtml(a.getString(R.styleable.HelpPreference_helpText));
+                String helpText0 = a.getString(R.styleable.HelpPreference_helpText);
+                this.helpText = (helpText0 != null ? SpanUtils.fromHtml(helpText0) : "");
                 helpLink = a.getString(R.styleable.HelpPreference_helpLink);
-                helpPath = a.getString(R.styleable.HelpPreference_helpPath);
+                String helpPath0 = a.getString(R.styleable.HelpPreference_helpPath);
+                helpPath = (helpPath0 != null ? helpPath0 : "");
                 buttonText = a.getString(R.styleable.HelpPreference_moreHelpButtonText);
             } finally {
                 a.recycle();
@@ -150,6 +153,7 @@ public class HelpPreference extends DialogPreference
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(helpLink + helpPath)));
         }
     }
+    @Nullable
     public String getHelpLink() {
         return helpLink;
     }

@@ -1,0 +1,58 @@
+name: Publish nightly build
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - nightly-build
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  #6.0.2
+      with:
+        submodules: recursive
+        ref: nightly-build
+        persist-credentials: false
+
+    - name: set up JDK 17
+      uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  #5.2.0
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Gradle Wrapper Validation
+      uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e  #6.1.0
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+    
+    - uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  #v5.0.4
+      with:
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+    
+    - name: Build nightly debug
+      run: ./gradlew assembleNightlyDebug
+
+    #- name: Setup F-Droid Server (apt-get)
+    #  run: |
+    #    sudo add-apt-repository ppa:fdroid/fdroidserver
+    #    sudo apt-get update
+    #    sudo apt-get install apksigner fdroidserver --no-install-recommends
+      
+    - name: Publish nightly debug
+      run: |
+        python -m venv fdroidserver-env 
+        . fdroidserver-env/bin/activate
+        pip install git+https://github.com/forrestguice/fdroidserver.git
+        fdroid nightly --archive-older 10
+      env:
+        DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}

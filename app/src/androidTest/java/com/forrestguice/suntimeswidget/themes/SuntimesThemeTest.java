@@ -21,15 +21,16 @@ package com.forrestguice.suntimeswidget.themes;
 import android.content.Context;
 //import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
+import androidx.test.rule.ActivityTestRule;
+
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,7 +38,7 @@ import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesThemeTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -112,7 +113,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
     public static final String TESTDEF_NAME = "test";
     public static final String TESTDEF_DISPLAYSTRING = "Test";
     public static final int TESTDEF_VERSION = 1;
-    public static final SuntimesTheme.ThemeBackground TESTDEF_BACKGROUND = SuntimesTheme.ThemeBackground.DARK;
+    public static final SuntimesTheme.ThemeBackground TESTDEF_BACKGROUND = SuntimesTheme.ThemeBackground.DARK_HOLO;
     public static final int[] TESTDEF_PADDING = {1, 2, 3, 4};
     public static final float TESTDEF_TITLESIZE = 10;
     public static final float TESTDEF_TEXTSIZE = 10;
@@ -169,7 +170,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         @Override
         public ThemeDescriptor themeDescriptor()
         {
-            return new ThemeDescriptor(TESTDEF_NAME, TESTDEF_DISPLAYSTRING, TESTDEF_VERSION, SuntimesTheme.ThemeBackground.DARK.name(), Color.RED);
+            return new ThemeDescriptor(TESTDEF_NAME, TESTDEF_DISPLAYSTRING, TESTDEF_VERSION, SuntimesTheme.ThemeBackground.DARK_HOLO.name(), Color.RED);
         }
     }
 

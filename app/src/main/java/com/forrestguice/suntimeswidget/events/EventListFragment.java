@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2022 Forrest Guice
+    Copyright (C) 2022-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,8 +24,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,31 +31,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.views.Toast;
-
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.DialogBase;
+import com.forrestguice.util.concurrent.ProgressListener;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.io.File;
 
-public class EventListFragment extends Fragment
+public class EventListFragment extends DialogBase
 {
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String EXTRA_SELECTED = "selected";
     public static final String EXTRA_NOSELECT = "noselect";
     public static final String EXTRA_EXPANDED = "expanded";
+    public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_TYPEFILTER = "typefilter";       // filter list by event type
+    public static final String EXTRA_SELECTFILTER = "selectfilter";   // allow "select and return" for given types
 
     private EventListHelper helper;
+    protected ActivityResultLauncherCompat startActivityForResult_export = registerForActivityResultCompat(EventListHelper.REQUEST_EXPORT_URI);
+    protected ActivityResultLauncherCompat startActivityForResult_import = registerForActivityResultCompat(EventListHelper.REQUEST_IMPORT_URI);
 
     public EventListFragment()
     {
         super();
-        Bundle args = new Bundle();
-        args.putString(EXTRA_SELECTED, null);
-        args.putBoolean(EXTRA_NOSELECT, false);
-        args.putBoolean(EXTRA_EXPANDED, false);
-        setArguments(args);
+        initArgs();
     }
 
     @Override
@@ -72,12 +76,15 @@ public class EventListFragment extends Fragment
     {
         View v = inflater.inflate(R.layout.layout_dialog_eventlist, parent, false);
 
-        helper = new EventListHelper(getActivity(), getChildFragmentManager());
-        helper.setExpanded(getArguments().getBoolean(EXTRA_EXPANDED, false));
-        helper.setDisallowSelect(getArguments().getBoolean(EXTRA_NOSELECT, false));
-        helper.initViews(getActivity(), v, savedState);
+        helper = new EventListHelper(this);
+        helper.setLocation(getLocation());
+        helper.setExpanded(getArgs().getBoolean(EXTRA_EXPANDED, false));
+        helper.setDisallowSelect(getArgs().getBoolean(EXTRA_NOSELECT, false));
+        helper.setTypeFilter(getArgs().getStringArray(EXTRA_TYPEFILTER));
+        helper.setSelectFilter(getArgs().getStringArray(EXTRA_SELECTFILTER));
+        helper.initViews(v.getContext(), v, savedState);
 
-        String preselectedEvent = getArguments().getString(EXTRA_SELECTED);
+        String preselectedEvent = getArgs().getString(EXTRA_SELECTED);
         if (preselectedEvent != null && !preselectedEvent.trim().isEmpty()) {
             helper.setSelected(preselectedEvent);
             helper.triggerActionMode();
@@ -87,10 +94,32 @@ public class EventListFragment extends Fragment
     }
 
     @Override
+    @NonNull
+    public Bundle getArgs()
+    {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = initArgs();
+        }
+        return args;
+    }
+    protected Bundle initArgs()
+    {
+        Bundle args = new Bundle();
+        args.putString(EXTRA_SELECTED, null);
+        args.putBoolean(EXTRA_NOSELECT, false);
+        args.putBoolean(EXTRA_EXPANDED, false);
+        args.putStringArray(EXTRA_TYPEFILTER, null);
+        args.putStringArray(EXTRA_SELECTFILTER, null);
+        setArguments(args);
+        return args;
+    }
+
+    @Override
     public void onResume()
     {
         super.onResume();
-        helper.setFragmentManager(getChildFragmentManager());
+        helper.setFragmentManager(this);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.setExportTaskListener(exportListener);
         helper.setImportTaskListener(importListener);
@@ -98,23 +127,24 @@ public class EventListFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle state) {
+    public void onSaveInstanceState(@NonNull Bundle state) {
         super.onSaveInstanceState(state);
         helper.onSaveInstanceState(state);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         switch (requestCode)
         {
             case EventListHelper.REQUEST_EXPORT_URI:
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.exportEvents(getActivity(), uri);
+                    Context context = getActivity();
+                    if (uri != null && context != null) {
+                        helper.exportEvents(context, uri);
                     }
                 }
                 break;
@@ -123,8 +153,9 @@ public class EventListFragment extends Fragment
                 if (resultCode == Activity.RESULT_OK)
                 {
                     Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        helper.importEvents(getActivity(), uri);
+                    Context context = getActivity();
+                    if (uri != null && context != null) {
+                        helper.importEvents(context, uri);
                     }
                 }
                 break;
@@ -132,49 +163,65 @@ public class EventListFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.eventlist, menu);
+    }
+
+    public void showAddEventDialog(EventType type, @Nullable Double angle, @Nullable Double shadowLength, @Nullable Double objectHeight) {
+        helper.addEvent(type, angle, shadowLength, objectHeight);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            //case R.id.addEvent:
-            //    helper.addEvent();
-            //    return true;
+        int itemId = item.getItemId();
+        //case R.id.addEvent:
+        //    helper.addEvent();
+        //    return true;
+        if (itemId == R.id.addEvent_sunEvent) {
+            helper.addEvent(EventType.SUN_ELEVATION);
+            return true;
 
-            case R.id.addEvent_sunEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SUN_ELEVATION);
-                return true;
+        } else if (itemId == R.id.addEvent_shadowEvent) {
+            helper.addEvent(EventType.SHADOWLENGTH);
+            return true;
 
-            case R.id.addEvent_shadowEvent:
-                helper.addEvent(AlarmEventProvider.EventType.SHADOWLENGTH);
-                return true;
+        } else if (itemId == R.id.addEvent_shadowRatioEvent) {
+            helper.addEvent(EventType.SHADOWRATIO);
+            return true;
 
-            case R.id.clearEvents:
-                helper.clearEvents();
-                return true;
+        } else if (itemId == R.id.addEvent_dayPercentEvent) {
+            helper.addEvent(EventType.DAYPERCENT);
+            return true;
 
-            case R.id.exportEvents:
-                helper.exportEvents(EventListFragment.this);
-                return true;
+        } else if (itemId == R.id.addEvent_moonIllumEvent) {
+            helper.addEvent(EventType.MOONILLUM);
+            return true;
 
-            case R.id.importEvents:
-                helper.importEvents(EventListFragment.this);
-                return true;
+        } else if (itemId == R.id.addEvent_moonEvent) {
+            helper.addEvent(EventType.MOON_ELEVATION);
+            return true;
 
-            case R.id.helpEvents:
-                helper.showHelp();
-                return true;
+        } else if (itemId == R.id.clearEvents) {
+            helper.clearEvents();
+            return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.exportEvents) {
+            helper.exportEvents(this);
+            return true;
+
+        } else if (itemId == R.id.importEvents) {
+            helper.importEvents(this);
+            return true;
+
+        } else if (itemId == R.id.helpEvents) {
+            helper.showHelp();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    private View.OnClickListener onItemAccepted = new View.OnClickListener() {
+    private final View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (listener != null) {
@@ -189,34 +236,50 @@ public class EventListFragment extends Fragment
         } else return false;
     }
 
-    public void setPreselected(String value) {
-        getArguments().putString(EXTRA_SELECTED, value);
+    public void setPreselected(@Nullable String value) {
+        getArgs().putString(EXTRA_SELECTED, value);
     }
 
     public void setExpanded(boolean value) {
-        getArguments().putBoolean(EXTRA_EXPANDED, value);
+        getArgs().putBoolean(EXTRA_EXPANDED, value);
         if (helper != null) {
             helper.setExpanded(value);
         }
     }
     public boolean isExpanded() {
-        return getArguments().getBoolean(EXTRA_EXPANDED, false);
+        return getArgs().getBoolean(EXTRA_EXPANDED, false);
     }
 
     public void setDisallowSelect(boolean value) {
-        getArguments().putBoolean(EXTRA_NOSELECT, value);
+        getArgs().putBoolean(EXTRA_NOSELECT, value);
         if (helper != null) {
             helper.setDisallowSelect(value);
         }
     }
     public boolean disallowSelect() {
-        return getArguments().getBoolean(EXTRA_NOSELECT, false);
+        return getArgs().getBoolean(EXTRA_NOSELECT, false);
+    }
+
+    public void setLocation(@Nullable Location value) {
+        getArgs().putSerializable(EXTRA_LOCATION, value);
+    }
+    @Nullable
+    public Location getLocation() {
+        return (Location) getArgs().getSerializable(EXTRA_LOCATION);
+    }
+
+    public void setTypeFilter(@Nullable String[] filter) {
+        getArgs().putStringArray(EXTRA_TYPEFILTER, filter);
+    }
+    public void setSelectFilter(@Nullable String[] filter) {
+        getArgs().putStringArray(EXTRA_SELECTFILTER, filter);
     }
 
     /**
      * ImportListener
      */
-    private EventImportTask.TaskListener importListener = new EventImportTask.TaskListener() {
+    private final ProgressListener<EventAlias, EventImportTask.TaskResult> importListener = new SimpleProgressListener<EventAlias, EventImportTask.TaskResult>()
+    {
         @Override
         public void onStarted() {
             setRetainInstance(true);
@@ -233,8 +296,10 @@ public class EventListFragment extends Fragment
                 {
                     Uri uri = result.getUri();   // import failed
                     String path = ((uri != null) ? uri.toString() : "<path>");
-                    String failureMessage = getString(R.string.msg_import_failure, path);
-                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    String failureMessage = getString(R.string.themesimport_msg_failure, path);
+                    if (getActivity() != null) {
+                        Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                    }
 
                 } //else {
                   //  String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
@@ -247,7 +312,7 @@ public class EventListFragment extends Fragment
     /**
      * ExportListener
      */
-    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    private final ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         @Override
         public void onStarted() {
@@ -296,7 +361,7 @@ public class EventListFragment extends Fragment
      */
     public interface FragmentListener
     {
-        void onItemPicked(String eventID, String eventUri);
+        void onItemPicked(@Nullable String eventID, @Nullable String eventUri);
     }
 
     protected FragmentListener listener;

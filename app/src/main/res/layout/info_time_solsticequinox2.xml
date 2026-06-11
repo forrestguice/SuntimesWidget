@@ -44,13 +44,13 @@
 
             </LinearLayout>
 
-            <ImageButton style="?attr/actionOverflowButtonStyle" android:visibility="visible"
+            <com.forrestguice.support.widget.ImageButton style="?attr/actionOverflowButtonStyle" android:visibility="visible"
                 android:id="@+id/menu_button"
                 android:layout_marginLeft="8dp" android:layout_marginRight="0dp"
                 android:layout_marginStart="8dp" android:layout_marginEnd="0dp"
                 android:layout_width="wrap_content" android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"
-                android:contentDescription="@string/configAction_overflow" />
+                android:contentDescription="@string/action_overflow" />
         </LinearLayout>
 
     </LinearLayout>

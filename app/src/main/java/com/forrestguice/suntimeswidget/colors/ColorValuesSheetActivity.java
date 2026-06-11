@@ -19,26 +19,25 @@
 package com.forrestguice.suntimeswidget.colors;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.colors.ColorValues;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.lifecycle.ViewModelProviders;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.Toolbar;
 
 public class ColorValuesSheetActivity extends AppCompatActivity
 {
@@ -51,10 +50,12 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     public static final String EXTRA_SUBTITLE = "activitySubtitle";
     public static final String EXTRA_PREVIEW_KEYS = "previewKeys";
     public static final String EXTRA_PREVIEW_MODE = "previewMode";
+    public static final String EXTRA_PREVIEW_INTENTBUILDER = "previewIntentBuilder";
 
     public static final String EXTRA_SHOW_ALPHA = ColorDialog.KEY_SHOWALPHA;
 
     public static final String DIALOG_SHEET = "ColorSheet";
+    @Nullable
     protected ColorValuesSheetFragment colorSheet;
 
     public ColorValuesSheetActivity() {
@@ -75,19 +76,23 @@ public class ColorValuesSheetActivity extends AppCompatActivity
         setContentView(R.layout.layout_activity_colorsheet);
 
         Intent intent = getIntent();
-        FragmentManager fragments = getSupportFragmentManager();
 
         ColorValuesEditFragment.ColorValuesEditViewModel editViewModel = ViewModelProviders.of(this).get(ColorValuesEditFragment.ColorValuesEditViewModel .class);
         editViewModel.setShowAlpha(intent.getBooleanExtra(EXTRA_SHOW_ALPHA, false));
         editViewModel.setPreviewMode(intent.getIntExtra(EXTRA_PREVIEW_MODE, ColorValuesEditFragment.ColorValuesEditViewModel.PREVIEW_TEXT));
 
-        colorSheet = (ColorValuesSheetFragment) fragments.findFragmentByTag(DIALOG_SHEET);
+        if (intent.hasExtra(EXTRA_PREVIEW_INTENTBUILDER)) {
+            previewIntentBuilder = intent.getParcelableExtra(EXTRA_PREVIEW_INTENTBUILDER);
+        }
+
+        colorSheet = (ColorValuesSheetFragment) getSupportFragmentManager().findFragmentByTag(DIALOG_SHEET);
         if (colorSheet == null)
         {
             colorSheet = new ColorValuesSheetFragment();
             colorSheet.setAppWidgetID(intent.getIntExtra(EXTRA_APPWIDGET_ID, 0));
             colorSheet.setColorTag(intent.getStringExtra(EXTRA_COLORTAG));
-            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getParcelableExtra(EXTRA_COLLECTION));
+            //noinspection unchecked
+            colorSheet.setColorCollection((ColorValuesCollection<ColorValues>) intent.getSerializableExtra(EXTRA_COLLECTION));
             colorSheet.setPreviewKeys(intent.getStringArrayExtra(EXTRA_PREVIEW_KEYS));
             colorSheet.setMode(ColorValuesSheetFragment.MODE_SELECT);
             colorSheet.setShowBack(false);
@@ -98,24 +103,23 @@ public class ColorValuesSheetActivity extends AppCompatActivity
             colorSheet.setFragmentListener(sheetListener);
         }
 
-        FragmentTransaction transaction = fragments.beginTransaction();
-        transaction.replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET);
-        transaction.commit();
-        fragments.executePendingTransactions();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, colorSheet, DIALOG_SHEET)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             CharSequence title = intent.getCharSequenceExtra(EXTRA_TITLE);
             if (title != null) {
-                actionBar.setTitle(title);
+                getSupportActionBar().setTitle(title);
             }
-            actionBar.setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
+            getSupportActionBar().setSubtitle(intent.getCharSequenceExtra(EXTRA_SUBTITLE));
         }
     }
 
@@ -164,25 +168,72 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
     protected void selectColorID()
     {
+        if (colorSheet == null) {
+            return;
+        }
+
         if (colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT)
         {
-            if (!colorSheet.editDialog.onSaveColorValues()) {
+            if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
                 return;
             }
-            ColorValues values = colorSheet.editDialog.getColorValues();
+            ColorValues values = (colorSheet.editDialog != null ? colorSheet.editDialog.getColorValues() : null);
             selectColorID((values != null) ? values.getID() : null);
 
         } else {
-            selectColorID(colorSheet.listDialog.getSelectedID());
+            if (colorSheet.listDialog != null) {
+                selectColorID(colorSheet.listDialog.getSelectedID());
+            }
         }
     }
 
-    protected void selectColorID( String colorID )
+    protected void selectColorID( @Nullable String colorID )
     {
         Intent intent = createReturnIntent();
         intent.putExtra(EXTRA_SELECTED_COLORS_ID, colorID);
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    @Nullable
+    protected String getSelectedColorID()
+    {
+        if (colorSheet == null) {
+            return null;
+        }
+        if (colorSheet.getMode() == ColorValuesSheetFragment.MODE_EDIT)
+        {
+            if (colorSheet.editDialog != null && !colorSheet.editDialog.onSaveColorValues()) {
+                return null;
+            }
+            ColorValues values = (colorSheet.editDialog != null ? colorSheet.editDialog.getColorValues() : null);
+            return (values != null) ? values.getID() : null;
+
+        } else {
+            if (colorSheet.listDialog != null) {
+                return colorSheet.listDialog.getSelectedID();
+            } else return null;
+        }
+    }
+
+    public interface PreviewColorsIntentBuilder extends Parcelable {
+        Intent getIntent(Context context, @Nullable String colorsID);
+    }
+    public void setPreviewIntentBuilder(@Nullable PreviewColorsIntentBuilder value) {
+        previewIntentBuilder = value;
+    }
+    @Nullable
+    protected PreviewColorsIntentBuilder previewIntentBuilder = null;
+
+    protected void previewColors()
+    {
+        if (previewIntentBuilder != null)
+        {
+            Intent intent = previewIntentBuilder.getIntent(this, getSelectedColorID());
+            if (intent != null) {
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -195,9 +246,11 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     protected Intent createReturnIntent()
     {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_APPWIDGET_ID, colorSheet.getAppWidgetID());
-        intent.putExtra(EXTRA_COLORTAG, colorSheet.getColorTag());
-        intent.putExtra(EXTRA_COLLECTION, colorSheet.colorCollection);
+        if (colorSheet != null) {
+            intent.putExtra(EXTRA_APPWIDGET_ID, colorSheet.getAppWidgetID());
+            intent.putExtra(EXTRA_COLORTAG, colorSheet.getColorTag());
+            intent.putExtra(EXTRA_COLLECTION, colorSheet.colorCollection);
+        }
         return intent;
     }
 
@@ -209,7 +262,15 @@ public class ColorValuesSheetActivity extends AppCompatActivity
 
         MenuItem deleteItem = menu.findItem(R.id.action_colors_delete);
         if (deleteItem != null) {
-            deleteItem.setEnabled(!colorSheet.getColorCollection().isDefaultColorID(colorSheet.getSelectedID()));
+            if (colorSheet != null) {
+                ColorValuesCollection<?> c = colorSheet.getColorCollection();
+                deleteItem.setEnabled(c != null && !c.isDefaultColorID(colorSheet.getSelectedID()));
+            } else deleteItem.setEnabled(false);
+        }
+
+        MenuItem previewItem = menu.findItem(R.id.action_colors_preview);
+        if (previewItem != null) {
+            previewItem.setVisible(previewIntentBuilder != null);
         }
 
         return true;
@@ -218,43 +279,51 @@ public class ColorValuesSheetActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_colors_select:
-                selectColorID();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_colors_preview) {
+            previewColors();
+            return true;
 
-            case R.id.action_colors_add:
+        } else if (itemId == R.id.action_colors_select) {
+            selectColorID();
+            return true;
+
+        } else if (itemId == R.id.action_colors_add) {
+            if (colorSheet != null && colorSheet.listDialog != null) {
                 colorSheet.listDialog.onAddItem();
-                return true;
+            }
+            return true;
 
-            case R.id.action_colors_delete:
+        } else if (itemId == R.id.action_colors_delete) {
+            if (colorSheet != null && colorSheet.listDialog != null) {
                 colorSheet.listDialog.onDeleteItem();
-                return true;
+            }
+            return true;
 
-            case R.id.action_colors_share:
+        } else if (itemId == R.id.action_colors_share) {
+            if (colorSheet != null && colorSheet.listDialog != null) {
                 colorSheet.listDialog.onShareColors();
-                return true;
+            }
+            return true;
 
-            case R.id.action_colors_import:
+        } else if (itemId == R.id.action_colors_import) {
+            if (colorSheet != null && colorSheet.listDialog != null) {
                 colorSheet.listDialog.onImportColors();
-                return true;
+            }
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
 }

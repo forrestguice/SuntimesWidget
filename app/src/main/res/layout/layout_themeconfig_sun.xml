@@ -28,8 +28,8 @@
             android:id="@+id/chooser_sunriseColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorSunrise"
+            app:hintText="@string/themes_configHint_themeColorSunrise"
+            app:labelText="@string/themes_configLabel_themeColorSunrise"
             app:reverse="true" />
 
         <!-- Sunrise Fill Color -->
@@ -40,8 +40,8 @@
             <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_sunriseFillColor"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:hintText="@string/configHint_themeColorSunrise"
-                app:labelText="@string/configLabel_themeColorFill"
+                app:hintText="@string/themes_configHint_themeColorSunrise"
+                app:labelText="@string/themes_configLabel_themeColorFill"
                 app:reverse="true" />
 
             <CheckBox
@@ -59,8 +59,8 @@
             <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_sunriseStrokeColor"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                app:hintText="@string/configHint_themeColorSunrise"
-                app:labelText="@string/configLabel_themeColorBorder"
+                app:hintText="@string/themes_configHint_themeColorSunrise"
+                app:labelText="@string/themes_configLabel_themeColorBorder"
                 app:reverse="true" />
 
             <CheckBox
@@ -74,7 +74,7 @@
         <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_sunsetColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:hintText="@string/configHint_themeColorSunrise" app:labelText="@string/configLabel_themeColorSunset"
+            app:hintText="@string/themes_configHint_themeColorSunrise" app:labelText="@string/themes_configLabel_themeColorSunset"
             app:reverse="true" />
 
         <!-- Sunset Fill Color -->
@@ -82,8 +82,8 @@
             android:id="@+id/chooser_sunsetFillColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorFill"
+            app:hintText="@string/themes_configHint_themeColorSunrise"
+            app:labelText="@string/themes_configLabel_themeColorFill"
             app:reverse="true" />
 
         <!-- Sunset Stroke Color -->
@@ -91,16 +91,16 @@
             android:id="@+id/chooser_sunsetStrokeColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorBorder"
+            app:hintText="@string/themes_configHint_themeColorSunrise"
+            app:labelText="@string/themes_configLabel_themeColorBorder"
             app:reverse="true" />
 
         <!-- Icon Stroke -->
         <com.forrestguice.suntimeswidget.settings.SizeEditView
             android:id="@+id/chooser_iconStroke"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:labelText="@string/configLabel_themeBorderWidthRiseSet"
-            app:hintText="@string/configHint_themeSizeTime" />
+            app:labelText="@string/themes_configLabel_themeBorderWidthRiseSet"
+            app:hintText="@string/themes_configHint_themeSizeTime" />
 
         <!-- Noon Color -->
         <LinearLayout android:orientation="horizontal" android:gravity="center_vertical"
@@ -111,8 +111,8 @@
                 android:id="@+id/chooser_noonColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hintText="@string/configHint_themeColorSunrise"
-                app:labelText="@string/configLabel_themeColorNoon"
+                app:hintText="@string/themes_configHint_themeColorSunrise"
+                app:labelText="@string/themes_configLabel_themeColorNoon"
                 app:reverse="true" />
 
             <CheckBox
@@ -127,8 +127,8 @@
             android:id="@+id/chooser_noonFillColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="@string/configLabel_themeColorFill"
+            app:hintText="@string/themes_configHint_themeColorSunrise"
+            app:labelText="@string/themes_configLabel_themeColorFill"
             app:reverse="true" />
 
         <!-- Noon Stroke Color -->
@@ -140,8 +140,8 @@
                 android:id="@+id/chooser_noonStrokeColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:hintText="@string/configHint_themeColorSunrise"
-                app:labelText="@string/configLabel_themeColorBorder"
+                app:hintText="@string/themes_configHint_themeColorSunrise"
+                app:labelText="@string/themes_configLabel_themeColorBorder"
                 app:reverse="true" />
 
             <CheckBox
@@ -156,8 +156,8 @@
         <com.forrestguice.suntimeswidget.settings.SizeEditView
             android:id="@+id/chooser_noonIconStroke"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            app:labelText="@string/configLabel_themeBorderWidthNoon"
-            app:hintText="@string/configHint_themeSizeTime" />
+            app:labelText="@string/themes_configLabel_themeBorderWidthNoon"
+            app:hintText="@string/themes_configHint_themeSizeTime" />
 
     </LinearLayout>
 

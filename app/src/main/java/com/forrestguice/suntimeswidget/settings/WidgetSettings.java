@@ -18,23 +18,52 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.LocationMode;
+import com.forrestguice.suntimeswidget.calculator.settings.MoonPhaseMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetDataMode;
+import com.forrestguice.suntimeswidget.calculator.settings.RiseSetOrder;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeStandardMode;
+import com.forrestguice.suntimeswidget.calculator.settings.SolsticeEquinoxMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TimezoneMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidCalendarSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.getfix.LocationHelperSettings;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme1;
+import com.forrestguice.suntimeswidget.widgets.AlarmWidget0_2x2;
 import com.forrestguice.suntimeswidget.widgets.AlarmWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.ClockWidgetSettings;
+import com.forrestguice.suntimeswidget.widgets.MoonWidget0;
+import com.forrestguice.suntimeswidget.widgets.MoonWidget0_2x1;
+import com.forrestguice.suntimeswidget.widgets.MoonWidget0_3x1;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0_2x1;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget0_3x1;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget2;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget2_3x1;
+import com.forrestguice.suntimeswidget.widgets.SuntimesWidget2_3x2;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_1;
@@ -46,10 +75,15 @@ import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_1x1_9;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.MoonLayout_3x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_1;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_1x1_4;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_2x1_0;
+import com.forrestguice.suntimeswidget.widgets.layouts.SunLayout_3x1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_1X1_1;
@@ -62,13 +96,15 @@ import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.widgets.layouts.SunPosLayout_3X2_2;
+import com.forrestguice.suntimeswidget.widgets.layouts.SuntimesLayout;
+import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.prefs.PrefTypeInfo;
 
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
@@ -93,7 +129,7 @@ public class WidgetSettings
                                                                                    new String[] {"moon", PREF_DEF_GENERAL_CALCULATOR_MOON} };
 
     public static final String PREF_KEY_APPEARANCE_THEME = "theme";
-    public static final String PREF_DEF_APPEARANCE_THEME = DarkTheme.THEMEDEF_NAME;
+    public static final String PREF_DEF_APPEARANCE_THEME = DarkTheme1.THEMEDEF_NAME;   // overriden by `def_appwidget_0_appearance_theme`
 
     public static final String PREF_KEY_APPEARANCE_SHOWTITLE = "showtitle";
     public static final boolean PREF_DEF_APPEARANCE_SHOWTITLE = false;
@@ -230,8 +266,8 @@ public class WidgetSettings
     public static String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // reassigned later by initDefaults
     public static final String[][] PREF_DEF_TIMEZONES = new String[][] { };  // e.g. new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
-    public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
-    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
+    public static final String PREF_KEY_TIMEZONE_TIMESTANDARDMODE = "solarmode";
+    public static final TimeStandardMode PREF_DEF_TIMEZONE_TIMESTANDARDMODE = TimeStandardMode.LOCAL_MEAN_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
@@ -248,8 +284,17 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_OFFSET = "dateOffset";    // offset in days
     public static final int PREF_DEF_DATE_OFFSET = 0;
 
+    public static final String PREF_KEY_LASTUPDATE = "lastUpdate";
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
+
+    public static final String PREF_KEY_SETTINGS_GROUP_SHOW = "showSettingsGroup";
+
+    public static final String PREF_KEY_PREVIEW_GRID_WIDTH = "gridWidth";
+    public static final String PREF_KEY_PREVIEW_GRID_HEIGHT = "gridHeight";
+    public static final int[] PREF_DEF_PREVIEW_GRID = new int[] {5, 5};
+
+    public static final String PREF_KEY_KNOWNIDS = "knownAppWidgetIDs";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,7 +348,7 @@ public class WidgetSettings
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_MODE,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
             PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_CUSTOM,
-            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_SOLARMODE,    // in _general
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_TIMEZONE_TIMESTANDARDMODE,    // in _general
 
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_MODE,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_YEAR,
@@ -314,7 +359,13 @@ public class WidgetSettings
 
             PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_MODE,
 
-            PREF_KEY_NEXTUPDATE
+            PREF_KEY_NEXTUPDATE,
+            PREF_KEY_LASTUPDATE,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
+
     };
     public static String[] BOOL_KEYS = new String[]
     {
@@ -336,10 +387,12 @@ public class WidgetSettings
 
             PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_ALTITUDE_ENABLED,
             PREF_PREFIX_KEY_LOCATION + PREF_KEY_LOCATION_FROMAPP,
-            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP
+            PREF_PREFIX_KEY_TIMEZONE + PREF_KEY_TIMEZONE_FROMAPP,
+
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_SETTINGS_GROUP_SHOW,
     };
     public static String[] FLOAT_KEYS = new String[] { PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_OBSERVERHEIGHT };
-    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE };
+    public static String[] LONG_KEYS = new String[] { PREF_KEY_NEXTUPDATE, PREF_KEY_LASTUPDATE };
     public static String[] INT_KEYS = new String[]
     {
             PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_APPEARANCE_GRAVITY,   // enum as ordinal
@@ -348,6 +401,8 @@ public class WidgetSettings
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_DAY,
             PREF_PREFIX_KEY_DATE + PREF_KEY_DATE_OFFSET,
             PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_TRACKINGLEVEL,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_WIDTH,
+            PREF_PREFIX_KEY_GENERAL + PREF_KEY_PREVIEW_GRID_HEIGHT,
     };
 
     public static PrefTypeInfo getPrefTypeInfo()
@@ -371,8 +426,8 @@ public class WidgetSettings
         };
     }
 
-    private static Map<String,Class> types = null;
-    public static Map<String,Class> getPrefTypes()
+    private static Map<String,Class<?>> types = null;
+    public static Map<String,Class<?>> getPrefTypes()
     {
         if (types == null)
         {
@@ -394,7 +449,7 @@ public class WidgetSettings
         }
         return types;
     }
-    public static void putType(Map<String,Class> map, Class type, String... keys) {
+    public static void putType(Map<String,Class<?>> map, Class<?> type, String... keys) {
         for (String key : keys) {
             map.put(key, type);
         }
@@ -403,49 +458,6 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * LengthUnit
-     */
-    public static enum LengthUnit
-    {
-        METRIC("Metric"),
-        IMPERIAL("Imperial");
-
-        private LengthUnit(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        private String displayString;
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-        public void setDisplayString(String value)
-        {
-            displayString = value;
-        }
-        public static void initDisplayStrings(Context context)
-        {
-            METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
-            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
-        }
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public static double metersToFeet(double meters) {
-            return 3.28084d * meters;
-        }
-        public static double feetToMeters(double feet) {
-            return (feet * (1d / 3.28084d) );
-        }
-
-        public static double kilometersToMiles(double kilometers) {
-            return 0.62137 * kilometers;
-        }
-    }
 
     /**
      * WidgetOnTap
@@ -461,34 +473,26 @@ public class WidgetSettings
 
         private String displayString;
 
-        private ActionMode(String displayString)
+        private ActionMode(@NonNull String displayString)
         {
             this.displayString = displayString;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
-            ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
-            ONTAP_UPDATE_ALL.setDisplayString(context.getString(R.string.actionMode_update_all));
-            ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
-            ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
-            ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
         }
 
         public int ordinal( ActionMode[] array )
@@ -503,9 +507,32 @@ public class WidgetSettings
             return -1;
         }
     }
+    public static void initDisplayStrings_ActionMode( Context context )
+    {
+        ActionMode.ONTAP_DONOTHING.setDisplayString(context.getString(R.string.actionMode_doNothing));
+        ActionMode.ONTAP_UPDATE.setDisplayString(context.getString(R.string.actionMode_update));
+        ActionMode.ONTAP_UPDATE_ALL.setDisplayString(context.getString(R.string.actionMode_update_all));
+        ActionMode.ONTAP_LAUNCH_CONFIG.setDisplayString(context.getString(R.string.actionMode_config));
+        ActionMode.ONTAP_LAUNCH_ACTIVITY.setDisplayString(context.getString(R.string.actionMode_launchActivity));
+        ActionMode.ONTAP_FLIPTO_NEXTITEM.setDisplayString(context.getString(R.string.actionMode_flipToNextItem));
+    }
+
+    public static final String SIZE_1x1 = "1x1";
+    public static final String SIZE_1x2 = "1x2";
+    public static final String SIZE_1x3 = "1x3";
+    public static final String SIZE_2x1 = "2x1";
+    public static final String SIZE_2x2 = "2x2";
+    public static final String SIZE_2x3 = "2x3";
+    public static final String SIZE_3x1 = "3x1";
+    public static final String SIZE_3x2 = "3x2";
+    public static final String SIZE_3x3 = "3x3";
 
     public interface WidgetModeDisplay
     {
+        String getWidgetSize();
+        Class<?> getWidgetClass();
+        SuntimesLayout getWidgetLayout();
+
         int getLayoutID();
         String getDisplayString();
         String name();
@@ -516,18 +543,34 @@ public class WidgetSettings
      */
     public static enum WidgetModeSun1x1 implements WidgetModeDisplay
     {
-        WIDGETMODE1x1_SUNRISE("Sunrise only", R.layout.layout_widget_1x1_1),
-        WIDGETMODE1x1_SUNSET("Sunset only", R.layout.layout_widget_1x1_2),
-        WIDGETMODE1x1_BOTH_1("Sunrise & Sunset (1)", R.layout.layout_widget_1x1_0),
-        WIDGETMODE1x1_BOTH_2("Sunrise & Sunset (2)", R.layout.layout_widget_1x1_3);
+        WIDGETMODE1x1_SUNRISE("Sunrise only", R.layout.layout_widget_1x1_1, new SunLayout_1x1_1()),
+        WIDGETMODE1x1_SUNSET("Sunset only", R.layout.layout_widget_1x1_2, new SunLayout_1x1_2()),
+        WIDGETMODE1x1_BOTH_1("Sunrise & Sunset", R.layout.layout_widget_1x1_0, new SunLayout_1x1_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSun1x1(String displayString, int layoutID)
+        private WidgetModeSun1x1(@NonNull String displayString, int layoutID, SunLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_1x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget0.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -535,17 +578,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -555,7 +600,6 @@ public class WidgetSettings
             WIDGETMODE1x1_SUNRISE.setDisplayString(context.getString(R.string.widgetMode1x1_sunrise));
             WIDGETMODE1x1_SUNSET.setDisplayString(context.getString(R.string.widgetMode1x1_sunset));
             WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
-            WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
         }
 
         public static boolean supportsLayout(int layoutID)
@@ -574,15 +618,32 @@ public class WidgetSettings
      */
     public static enum WidgetModeSun2x1 implements WidgetModeDisplay
     {
-        WIDGETMODE2x1_BOTH_1("Sunrise & Sunset", R.layout.layout_widget_2x1_0);
+        WIDGETMODE2x1_BOTH_1("Sunrise & Sunset", R.layout.layout_widget_2x1_0, new SunLayout_2x1_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSun2x1(String displayString, int layoutID)
+        private WidgetModeSun2x1(@NonNull String displayString, int layoutID, SunLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_2x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget0_2x1.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -590,17 +651,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -625,29 +688,49 @@ public class WidgetSettings
      */
     public static enum WidgetModeSun3x1 implements WidgetModeDisplay
     {
-        WIDGETMODE3x1_BOTH_1("Sunrise, Noon, and Sunset", R.layout.layout_widget_3x1_0);
+        WIDGETMODE3x1_BOTH_1("Sunrise, Noon, and Sunset", R.layout.layout_widget_3x1_0, new SunLayout_3x1_0());
 
-        private WidgetModeSun3x1(String displayString, int layoutID)
+        private WidgetModeSun3x1(@NonNull String displayString, int layoutID, SunLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
         }
 
+        private final SuntimesLayout layout;
         private final int layoutID;
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_3x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget0_3x1.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
+        }
+
         public int getLayoutID() {
             return layoutID;
         }
 
         private String displayString;
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
         public static void initDisplayStrings( Context context ) {
             WIDGETMODE3x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode3x1_sunrise_sunset_noon));
         }
+        @NonNull
         public String toString() {
             return displayString;
         }
@@ -668,16 +751,33 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos1x1 implements WidgetModeDisplay
     {
-        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_sunpos_1x1_5),
-        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_sunpos_1x1_6);
+        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_sunpos_1x1_5, new SunPosLayout_1X1_0()),
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_sunpos_1x1_6, new SunPosLayout_1X1_1());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos1x1(String displayString, int layoutID)
+        private WidgetModeSunPos1x1(@NonNull String displayString, int layoutID, SunPosLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_1x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget2.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -685,17 +785,18 @@ public class WidgetSettings
             return layoutID;
         }
 
-        public String toString()
-        {
+        @NonNull
+        public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -722,17 +823,34 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos3x1 implements WidgetModeDisplay
     {
-        MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0),
-        MODE3x1_LIGHTMAP_MEDIUM("Lightmap (medium)", R.layout.layout_widget_sunpos_3x1_0),
-        MODE3x1_LIGHTMAP_SMALL("Lightmap (small)", R.layout.layout_widget_sunpos_3x1_0);
+        MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0, new SunPosLayout_3X1_0()),
+        MODE3x1_LIGHTMAP_MEDIUM("Lightmap (medium)", R.layout.layout_widget_sunpos_3x1_0, new SunPosLayout_3X1_1()),
+        MODE3x1_LIGHTMAP_SMALL("Lightmap (small)", R.layout.layout_widget_sunpos_3x1_0, new SunPosLayout_3X1_2());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos3x1(String displayString, int layoutID)
+        private WidgetModeSunPos3x1(@NonNull String displayString, int layoutID, SunPosLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_3x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget2_3x1.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -740,17 +858,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -778,32 +898,51 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos3x2 implements WidgetModeDisplay
     {
-        MODE3x2_LIGHTGRAPH("Light Graph", R.layout.layout_widget_sunpos_3x2_2),
-        MODE3x2_LINEGRAPH("Altitude Graph", R.layout.layout_widget_sunpos_3x2_1),
-        MODE3x2_WORLDMAP("World Map", R.layout.layout_widget_sunpos_3x2_0);
+        MODE3x2_LIGHTGRAPH("Light Graph", R.layout.layout_widget_sunpos_3x2_2, new SunPosLayout_3X2_2()),
+        MODE3x2_LINEGRAPH("Altitude Graph", R.layout.layout_widget_sunpos_3x2_1, new SunPosLayout_3X2_1()),
+        MODE3x2_WORLDMAP("World Map", R.layout.layout_widget_sunpos_3x2_0, new SunPosLayout_3X2_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeSunPos3x2(String displayString, int layoutID)
+        private WidgetModeSunPos3x2(@NonNull String displayString, int layoutID, SunPosLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_3x2;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return SuntimesWidget2_3x2.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID() {
             return layoutID;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
 
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
         }
 
@@ -830,24 +969,41 @@ public class WidgetSettings
      */
     public static enum WidgetModeMoon1x1 implements WidgetModeDisplay
     {
-        MODE1x1_RISESET("Moonrise & moonset", R.layout.layout_widget_moon_1x1_0),
-        MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
-        MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2),
-        MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3),
-        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4),
-        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_moon_1x1_5),
-        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_moon_1x1_6),
-        MODE1x1_DISTANCE("Current distance", R.layout.layout_widget_moon_1x1_7),
-        MODE1x1_APSIS("Next apogee / perigee", R.layout.layout_widget_moon_1x1_8),
-        MODE1x1_MOONDAY("Moon Day", R.layout.layout_widget_moon_1x1_9);
+        MODE1x1_RISESET("Moonrise & moonset", R.layout.layout_widget_moon_1x1_0, new MoonLayout_1x1_0()),
+        MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1, new MoonLayout_1x1_1()),
+        MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2, new MoonLayout_1x1_2()),
+        MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3, new MoonLayout_1x1_3()),
+        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4, new MoonLayout_1x1_4()),
+        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_moon_1x1_5, new MoonLayout_1x1_5()),
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_moon_1x1_6, new MoonLayout_1x1_6()),
+        MODE1x1_DISTANCE("Current distance", R.layout.layout_widget_moon_1x1_7, new MoonLayout_1x1_7()),
+        MODE1x1_APSIS("Next apogee / perigee", R.layout.layout_widget_moon_1x1_8, new MoonLayout_1x1_8()),
+        MODE1x1_MOONDAY("Moon Day", R.layout.layout_widget_moon_1x1_9, new MoonLayout_1x1_9());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon1x1(String displayString, int layoutID)
+        private WidgetModeMoon1x1(@NonNull String displayString, int layoutID, MoonLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_1x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return MoonWidget0.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -855,17 +1011,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -900,15 +1058,32 @@ public class WidgetSettings
      */
     public static enum WidgetModeMoon2x1 implements WidgetModeDisplay
     {
-        WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_moon_2x1_0);
+        WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_moon_2x1_0, new MoonLayout_2x1_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon2x1(String displayString, int layoutID)
+        private WidgetModeMoon2x1(@NonNull String displayString, int layoutID, MoonLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_2x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return MoonWidget0_2x1.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -916,17 +1091,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -951,15 +1128,32 @@ public class WidgetSettings
      */
     public static enum WidgetModeMoon3x1 implements WidgetModeDisplay
     {
-        WIDGETMODE3x1_BOTH_1("Major Phases", R.layout.layout_widget_moon_3x1_0);
+        WIDGETMODE3x1_BOTH_1("Major Phases", R.layout.layout_widget_moon_3x1_0, new MoonLayout_3x1_0());
 
+        private final SuntimesLayout layout;
         private final int layoutID;
         private String displayString;
 
-        private WidgetModeMoon3x1(String displayString, int layoutID)
+        private WidgetModeMoon3x1(@NonNull String displayString, int layoutID, MoonLayout layout)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
+            this.layout = layout;
+        }
+
+        @Override
+        public String getWidgetSize() {
+            return SIZE_3x1;
+        }
+
+        @Override
+        public Class<?> getWidgetClass() {
+            return MoonWidget0_3x1.class;
+        }
+
+        @Override
+        public SuntimesLayout getWidgetLayout() {
+            return layout;
         }
 
         public int getLayoutID()
@@ -967,17 +1161,19 @@ public class WidgetSettings
             return layoutID;
         }
 
+        @NonNull
         public String toString()
         {
             return displayString;
         }
 
+        @NonNull
         public String getDisplayString()
         {
             return displayString;
         }
 
-        public void setDisplayString( String displayString )
+        public void setDisplayString( @NonNull String displayString )
         {
             this.displayString = displayString;
         }
@@ -1014,9 +1210,9 @@ public class WidgetSettings
         BOTTOM_RIGHT("bottom-right", 9);
 
         private String displayString;
-        private int position;
+        private final int position;
 
-        private WidgetGravity(String displayString, int position)
+        private WidgetGravity(@NonNull String displayString, int position)
         {
             this.displayString = displayString;
             this.position = position;
@@ -1026,25 +1222,16 @@ public class WidgetSettings
             return position;
         }
 
+        @NonNull
         public String toString() {
             return displayString;
         }
+        @NonNull
         public String getDisplayString() {
             return displayString;
         }
-        public void setDisplayString( String displayString ) {
+        public void setDisplayString( @NonNull String displayString ) {
             this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            WidgetGravity[] values = WidgetGravity.values();
-            String[] display = context.getResources().getStringArray(R.array.widgetgravity);
-            for (int i=0; i<values.length; i++) {
-                if (i < display.length) {
-                    values[i].setDisplayString(display[i]);
-                } else break;
-            }
         }
 
         @Nullable
@@ -1059,660 +1246,139 @@ public class WidgetSettings
             return null;
         }
     }
-
-    /**
-     * DateMode
-     */
-    public static enum DateMode
+    public static void initDisplayStrings_WidgetGravity( Context context )
     {
-        CURRENT_DATE("Today"),
-        CUSTOM_DATE("User Defined");
-
-        private String displayString;
-
-        private DateMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CURRENT_DATE.setDisplayString(context.getString(R.string.dateMode_current));
-            CUSTOM_DATE.setDisplayString(context.getString(R.string.dateMode_custom));
+        WidgetGravity[] values = WidgetGravity.values();
+        String[] display = context.getResources().getStringArray(R.array.settings_widgetgravity);
+        for (int i=0; i<values.length; i++) {
+            if (i < display.length) {
+                values[i].setDisplayString(display[i]);
+            } else break;
         }
     }
 
-    /**
-     * DateInfo
-     */
-    public static class DateInfo
+    public static void initDisplayStrings_DateMode( Context context )
     {
-        private int year = -1, month = -1, day = -1;
-
-        public DateInfo(Calendar date)
-        {
-            this(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-        }
-        public DateInfo( int year, int month, int day )
-        {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-        public DateInfo(long timestamp)
-        {
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(timestamp);
-            this.year = date.get(Calendar.YEAR);
-            this.month = date.get(Calendar.MONTH);
-            this.day = date.get(Calendar.DAY_OF_MONTH);
-        }
-
-        public int getYear() { return year; }
-        public int getMonth() { return month; }
-        public int getDay() { return day; }
-
-        public Calendar getCalendar(TimeZone timezone, int hour, int minute) {
-            Calendar calendar = Calendar.getInstance(timezone);
-            calendar.set(getYear(), getMonth(), getDay(), hour, minute, 0);
-            return calendar;
-        }
-
-        public boolean isSet()
-        {
-            return (year != -1 && month != -1 && day != -1);
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (!(obj instanceof DateInfo))
-            {
-                return false;
-            } else {
-                DateInfo that = (DateInfo)obj;
-                return (this.getYear() == that.getYear()) && (this.getMonth() == that.getMonth()) && (this.getDay() == that.getDay());
-            }
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = Integer.valueOf(year).hashCode();
-            hash = hash * 37 + (Integer.valueOf(month).hashCode());
-            hash = hash * 37 + (Integer.valueOf(day).hashCode());
-            return hash;
-        }
-
-        public static boolean isToday(WidgetSettings.DateInfo date)
-        {
-            WidgetSettings.DateInfo now = new WidgetSettings.DateInfo(Calendar.getInstance());
-            return now.equals(date);
-        }
+        DateMode.CURRENT_DATE.setDisplayString(context.getString(R.string.settings_dateMode_current));
+        DateMode.CUSTOM_DATE.setDisplayString(context.getString(R.string.settings_dateMode_custom));
     }
 
-    /**
-     * TimezoneMode
-     */
-    public static enum TimezoneMode
+    public static void initDisplayStrings_TimezoneMode( Context context )
     {
-        SOLAR_TIME("Time Standards"),   // TODO: misnomer (no longer accurate); rename this value
-        CURRENT_TIMEZONE("Current"),
-        CUSTOM_TIMEZONE("Custom");
-
-        private String displayString;
-
-        private TimezoneMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
-            CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
-            CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
-        }
-    }
-
-    /**
-     * SolarTimeMode
-     */
-    public static enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
-    {
-        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, "Apparent Solar Time"),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, "Local Mean Time"),
-        LMST(WidgetTimezones.SiderealTime.TZID_LMST, "Local Sidereal Time"),
-        GMST(WidgetTimezones.SiderealTime.TZID_GMST, "Greenwich Sidereal Time"),
-        UTC(WidgetTimezones.TZID_UTC, "Coordinated Universal Time");
-
-        private String id;
-        private String displayString;
-
-        private SolarTimeMode(String id, String displayString)
-        {
-            this.id = id;
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getID()
-        {
-            return id;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
-            LMST.setDisplayString(context.getString(R.string.time_lmst));
-            GMST.setDisplayString(context.getString(R.string.time_gmst));
-            UTC.setDisplayString(context.getString(R.string.time_utc));
-        }
-    }
-
-    /**
-     * TimeFormatMode
-     */
-    public static enum TimeFormatMode
-    {
-        MODE_SYSTEM("System"),
-        MODE_12HR("12 hr"),
-        MODE_24HR("24 hr"),
-        MODE_SUNTIMES("Suntimes");
-
-        private String displayString;
-
-        private TimeFormatMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
-            MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
-            MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
-            MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-    }
-
-    /**
-     * LocationMode
-     */
-    public static enum LocationMode
-    {
-        CURRENT_LOCATION("Current Location"),
-        CUSTOM_LOCATION("Custom Location");
-
-        private String displayString;
-
-        private LocationMode(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
-            CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
-        }
-    }
-
-    /**
-     * CompareMode
-     */
-    public static enum CompareMode
-    {
-        YESTERDAY("Yesterday"),
-        TOMORROW("Tomorrow");
-
-        private String displayString;
-
-        private CompareMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            YESTERDAY.setDisplayString( context.getString(R.string.compareMode_yesterday) );
-            TOMORROW.setDisplayString(context.getString(R.string.compareMode_tomorrow));
-        }
-    }
-
-    /**
-     * TrackingMode
-     */
-    public static enum TrackingMode
-    {
-        RECENT("Recent Event"),
-        CLOSEST("Closest Event"),
-        SOONEST("Upcoming Event");
-
-        private String displayString;
-
-        private TrackingMode( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
-            CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
-            SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
-        }
-    }
-
-    /**
-     * SolsticeEquinoxMode
-     */
-    public static enum SolsticeEquinoxMode
-    {
-        CROSS_SPRING("Midpoint", "Spring cross-quarter"),
-        EQUINOX_SPRING("Equinox", "Spring Equinox"),
-
-        CROSS_SUMMER("Midpoint", "Summer cross-quarter"),
-        SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
-
-        CROSS_AUTUMN("Midpoint", "Autumn cross-quarter"),
-        EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
-
-        CROSS_WINTER("Midpoint", "Winter cross-quarter"),
-        SOLSTICE_WINTER("Solstice", "Winter Solstice");
-
-        public static boolean shortDisplayStrings = false;
-
-        private String shortDisplayString;
-        private String longDisplayString;
-
-        private SolsticeEquinoxMode(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-                return shortDisplayString;
-            else return longDisplayString;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
-                    context.getString(R.string.timeMode_cross_midwinter));
-            EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
-                    context.getString(R.string.timeMode_equinox_vernal));
-
-            CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
-                    context.getString(R.string.timeMode_cross_midspring));
-            SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
-                    context.getString(R.string.timeMode_solstice_summer));
-
-            CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
-                    context.getString(R.string.timeMode_cross_midsummer) );
-            EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
-                    context.getString(R.string.timeMode_equinox_autumnal) );
-
-            CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
-                    context.getString(R.string.timeMode_cross_midautumnal));
-            SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
-                    context.getString(R.string.timeMode_solstice_winter));
-        }
-
-        public static SolsticeEquinoxMode[] values(boolean southernHemisphere) {
-            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { CROSS_AUTUMN, EQUINOX_AUTUMNAL, CROSS_WINTER, SOLSTICE_WINTER, CROSS_SPRING, EQUINOX_SPRING, CROSS_SUMMER, SOLSTICE_SUMMER } : values();
-        }
-
-        public static SolsticeEquinoxMode[] partialValues(boolean southernHemisphere) {
-            return (southernHemisphere) ? new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_AUTUMNAL, SOLSTICE_WINTER, EQUINOX_SPRING, SOLSTICE_SUMMER }
-                                        : new WidgetSettings.SolsticeEquinoxMode[] { EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER };
-        }
-    }
-
-    /**
-     * MoonPhaseMode
-     */
-    public static enum MoonPhaseMode
-    {
-        NEW_MOON("New", "New Moon"),
-        FIRST_QUARTER("First Quarter", "First Quarter Moon"),
-        FULL_MOON("Full", "Full Moon"),
-        THIRD_QUARTER("Third Quarter", "Third Quarter Moon");
-
-        private String shortDisplayString;
-        private String longDisplayString;
-
-        public static boolean shortDisplayStrings = false;
-
-        private MoonPhaseMode( String shortDisplayString, String longDisplayString )
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-                return shortDisplayString;
-            else return longDisplayString;
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
-                    context.getString(R.string.timeMode_moon_new));
-
-            FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
-                    context.getString(R.string.timeMode_moon_firstquarter));
-
-            FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
-                    context.getString(R.string.timeMode_moon_full) );
-
-            THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
-                    context.getString(R.string.timeMode_moon_thirdquarter));
-        }
-    }
-
-    /**
-     * TimeMode
-     */
-
-    public interface RiseSetDataMode
-    {
-        @Nullable
-        TimeMode getTimeMode();
-        String name();
-        String toString();
-    }
-
-    public static class EventAliasTimeMode implements RiseSetDataMode
-    {
-        private EventSettings.EventAlias event;
-        public EventAliasTimeMode(EventSettings.EventAlias event) {
-            this.event = event;
-        }
-
-        @Nullable
-        @Override
-        public TimeMode getTimeMode() {
-            return null;
-        }
-
-        public EventSettings.EventAlias getEvent() {
-            return event;
-        }
-
-        @Override
-        public String name() {
-            return event.getID();
-        }
-
-        @Override
-        public String toString() {
-            return event.getLabel();
-        }
-    }
-
-    public static enum TimeMode implements RiseSetDataMode
-    {
-        OFFICIAL("Actual", "Actual Time", null),
-        CIVIL("Civil", "Civil Twilight", -6d),
-        NAUTICAL("Nautical", "Nautical Twilight", -12d),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight", -18d),
-        NOON("Noon", "Solar Noon", null),
-        GOLD("Golden", "Golden Hour", 6d),
-        BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
-
-        public static boolean shortDisplayStrings = false;
-        private String longDisplayString;
-        private String shortDisplayString;
-
-        private TimeMode(String shortDisplayString, String longDisplayString, Double angle)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-            this.angle = angle;
-        }
-
-        public String toString()
-        {
-            if (shortDisplayStrings)
-            {
-                return shortDisplayString;
-
-            } else {
-                return longDisplayString;
-            }
-        }
-
-        public String getShortDisplayString()
-        {
-            return shortDisplayString;
-        }
-
-        public String getLongDisplayString()
-        {
-            return longDisplayString;
-        }
-
-        public void setDisplayStrings(String shortDisplayString, String longDisplayString)
-        {
-            this.shortDisplayString = shortDisplayString;
-            this.longDisplayString = longDisplayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
-                    context.getString(R.string.timeMode_official) );
-
-            NAUTICAL.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
-                    context.getString(R.string.timeMode_nautical));
-
-            CIVIL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
-                    context.getString(R.string.timeMode_civil) );
-
-            ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
-                    context.getString(R.string.timeMode_astronomical) );
-
-            NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
-                    context.getString(R.string.timeMode_noon) );
-
-            GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
-                    context.getString(R.string.timeMode_golden) );
-
-            BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
-                    context.getString(R.string.timeMode_blue8) );
-
-            BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
-                    context.getString(R.string.timeMode_blue4) );
-        }
-
-
-        private Double angle;
-        @Nullable
-        public Double angle() {
-            return angle;
-        }
-
-        @Nullable @Override
-        public TimeMode getTimeMode() {
-            return this;
-        }
+        TimezoneMode.TIME_STANDARD.setDisplayString(context.getString(R.string.settings_timezoneMode_standard));
+        TimezoneMode.CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.settings_timezoneMode_current));
+        TimezoneMode.CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.settings_timezoneMode_custom));
     }
 
 
-    /**
-     * RiseSetOrder
-     */
-    public static enum RiseSetOrder
+    public static void initDisplayStrings_TimeStandardMode(Context context )
     {
-        TODAY("Today"),
-        LASTNEXT("Last / Next");
+        TimeStandardMode.LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+        TimeStandardMode.APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+        TimeStandardMode.LMST.setDisplayString(context.getString(R.string.time_lmst));
+        TimeStandardMode.GMST.setDisplayString(context.getString(R.string.time_gmst));
+        TimeStandardMode.UTC.setDisplayString(context.getString(R.string.time_utc));
+    }
 
-        private String displayString;
+    public static void initDisplayStrings_TimeFormatMode( Context context )
+    {
+        TimeFormatMode.MODE_SYSTEM.setDisplayString(context.getString(R.string.settings_timeFormatMode_system));
+        TimeFormatMode.MODE_12HR.setDisplayString(context.getString(R.string.settings_timeFormatMode_12hr));
+        TimeFormatMode.MODE_24HR.setDisplayString(context.getString(R.string.settings_timeFormatMode_24hr));
+        TimeFormatMode.MODE_SUNTIMES.setDisplayString(context.getString(R.string.settings_timeFormatMode_suntimes));
+    }
 
-        private RiseSetOrder(String displayString)
-        {
-            this.displayString = displayString;
-        }
+    public static void initDisplayStrings_LocationMode( Context context )
+    {
+        LocationMode.CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
+        LocationMode.CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
+    }
 
-        public String toString()
-        {
-            return displayString;
-        }
+    public static void initDisplayStrings_CompareMode( Context context )
+    {
+        CompareMode.YESTERDAY.setDisplayString( context.getString(R.string.settings_general_compareMode_yesterday) );
+        CompareMode.TOMORROW.setDisplayString(context.getString(R.string.settings_general_compareMode_tomorrow));
+    }
 
-        public void setDisplayString(String displayString)
-        {
-            this.displayString = displayString;
-        }
+    public static void initDisplayStrings_TrackingMode( Context context )
+    {
+        TrackingMode.RECENT.setDisplayString( context.getString(R.string.settings_trackingMode_recent) );
+        TrackingMode.CLOSEST.setDisplayString( context.getString(R.string.settings_trackingMode_closest) );
+        TrackingMode.SOONEST.setDisplayString( context.getString(R.string.settings_trackingMode_soonest) );
+    }
 
-        public static void initDisplayStrings( Context context )
-        {
-            TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
-            LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
-        }
+    public static void initDisplayStrings_SolsticeEquinoxMode( Context context )
+    {
+        SolsticeEquinoxMode.CROSS_SPRING.setDisplayStrings(context.getString(R.string.timeMode_cross_midwinter_short),
+                context.getString(R.string.timeMode_cross_midwinter));
+        SolsticeEquinoxMode.EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+                context.getString(R.string.timeMode_equinox_vernal));
+
+        SolsticeEquinoxMode.CROSS_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_cross_midspring_short),
+                context.getString(R.string.timeMode_cross_midspring));
+        SolsticeEquinoxMode.SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
+                context.getString(R.string.timeMode_solstice_summer));
+
+        SolsticeEquinoxMode.CROSS_AUTUMN.setDisplayStrings( context.getString(R.string.timeMode_cross_midsummer_short),
+                context.getString(R.string.timeMode_cross_midsummer) );
+        SolsticeEquinoxMode.EQUINOX_AUTUMNAL.setDisplayStrings( context.getString(R.string.timeMode_equinox_autumnal_short),
+                context.getString(R.string.timeMode_equinox_autumnal) );
+
+        SolsticeEquinoxMode.CROSS_WINTER.setDisplayStrings(context.getString(R.string.timeMode_cross_midautumnal_short),
+                context.getString(R.string.timeMode_cross_midautumnal));
+        SolsticeEquinoxMode.SOLSTICE_WINTER.setDisplayStrings(context.getString(R.string.timeMode_solstice_winter_short),
+                context.getString(R.string.timeMode_solstice_winter));
+    }
+
+    public static void initDisplayStrings_MoonPhaseMode( Context context )
+    {
+        MoonPhaseMode.NEW_MOON.setDisplayStrings(context.getString(R.string.timeMode_moon_new_short),
+                context.getString(R.string.timeMode_moon_new));
+
+        MoonPhaseMode.FIRST_QUARTER.setDisplayStrings( context.getString(R.string.timeMode_moon_firstquarter_short),
+                context.getString(R.string.timeMode_moon_firstquarter));
+
+        MoonPhaseMode.FULL_MOON.setDisplayStrings( context.getString(R.string.timeMode_moon_full_short),
+                context.getString(R.string.timeMode_moon_full) );
+
+        MoonPhaseMode.THIRD_QUARTER.setDisplayStrings(context.getString(R.string.timeMode_moon_thirdquarter_short),
+                context.getString(R.string.timeMode_moon_thirdquarter));
+    }
+
+    public static void initDisplayStrings_TimeMode( Context context )
+    {
+        TimeMode.OFFICIAL.setDisplayStrings( context.getString(R.string.timeMode_official_short),
+                context.getString(R.string.timeMode_official) );
+
+        TimeMode.NAUTICAL.setDisplayStrings( context.getString(R.string.timeMode_nautical_short),
+                context.getString(R.string.timeMode_nautical));
+
+        TimeMode.CIVIL.setDisplayStrings( context.getString(R.string.timeMode_civil_short),
+                context.getString(R.string.timeMode_civil) );
+
+        TimeMode.ASTRONOMICAL.setDisplayStrings( context.getString(R.string.timeMode_astronomical_short),
+                context.getString(R.string.timeMode_astronomical) );
+
+        TimeMode.NOON.setDisplayStrings( context.getString(R.string.timeMode_noon_short),
+                context.getString(R.string.timeMode_noon) );
+
+        TimeMode.MIDNIGHT.setDisplayStrings( context.getString(R.string.timeMode_midnight_short),
+                context.getString(R.string.timeMode_midnight) );
+
+        TimeMode.GOLD.setDisplayStrings( context.getString(R.string.timeMode_golden_short),
+                context.getString(R.string.timeMode_golden) );
+
+        TimeMode.BLUE8.setDisplayStrings( context.getString(R.string.timeMode_blue8_short),
+                context.getString(R.string.timeMode_blue8) );
+
+        TimeMode.BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
+                context.getString(R.string.timeMode_blue4) );
+    }
+
+    public static void initDisplayStrings_RiseSetOrder( Context context )
+    {
+        RiseSetOrder.TODAY.setDisplayString( context.getString(R.string.settings_general_risesetorder_today) );
+        RiseSetOrder.LASTNEXT.setDisplayString( context.getString(R.string.settings_general_risesetorder_lastnext) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1736,6 +1402,30 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
         prefs.remove(prefs_prefix + PREF_KEY_NEXTUPDATE);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long getTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        return prefs.getLong(prefs_prefix + PREF_KEY_LASTUPDATE, -1);
+    }
+    public static void saveTimeLastUpdate(Context context, int appWidgetId, long value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.putLong(prefs_prefix + PREF_KEY_LASTUPDATE, value);
+        prefs.apply();
+    }
+    public static void deleteTimeLastUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.remove(prefs_prefix + PREF_KEY_LASTUPDATE);
         prefs.apply();
     }
 
@@ -1908,20 +1598,12 @@ public class WidgetSettings
     {
         SunLayout layout;
         WidgetModeSun1x1 mode = loadSun1x1ModePref(context, appWidgetId);
-        switch (mode.getLayoutID())
-        {
-            case R.layout.layout_widget_1x1_1:
-                layout = new SunLayout_1x1_1();
-                break;
-
-            case R.layout.layout_widget_1x1_2:
-                layout = new SunLayout_1x1_2();
-                break;
-
-            case R.layout.layout_widget_1x1_0:
-            default:
-                layout = new SunLayout_1x1_0(mode.getLayoutID());
-                break;
+        if (mode.getLayoutID() == R.layout.layout_widget_1x1_1) {
+            layout = new SunLayout_1x1_1();
+        } else if (mode.getLayoutID() == R.layout.layout_widget_1x1_2) {
+            layout = new SunLayout_1x1_2();
+        } else {
+            layout = new SunLayout_1x1_0(mode.getLayoutID());
         }
         return layout;
     }
@@ -2185,7 +1867,11 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_THEME, getThemeDefault(context));
+        return (s != null ? s : getThemeDefault(context));
+    }
+    public static String getThemeDefault(Context context) {
+        return (context != null ? context.getString(R.string.def_appwidget_0_appearance_theme) : PREF_DEF_APPEARANCE_THEME);
     }
     public static SuntimesTheme loadThemePref(Context context, int appWidgetId)
     {
@@ -2256,10 +1942,12 @@ public class WidgetSettings
         return PREF_DEF_GENERAL_CALCULATOR;
     }
 
+    @Nullable
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId)
     {
         return loadCalculatorModePref(context, appWidgetId, "");
     }
+    @Nullable
     public static SuntimesCalculatorDescriptor loadCalculatorModePref(Context context, int appWidgetId, @NonNull String calculatorName)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
@@ -2270,7 +1958,7 @@ public class WidgetSettings
         //noinspection UnusedAssignment
         SuntimesCalculatorDescriptor calculatorMode = null;
         try {
-            calculatorMode = SuntimesCalculatorDescriptor.valueOf(context, modeString);
+            calculatorMode = SuntimesCalculatorDescriptor.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             Log.e("loadCalculatorModePref", e.toString() + " ... It looks like " + modeString + " isn't in our list of calculators.");
@@ -2363,7 +2051,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
+        String s = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_TITLETEXT, defValue);
+        return (s != null ? s : defValue);
     }
     public static void deleteTitleTextPref(Context context, int appWidgetId)
     {
@@ -2389,14 +2078,17 @@ public class WidgetSettings
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE, PREF_DEF_GENERAL_TIMEMODE.name());
+        if (modeString == null) {
+            modeString = PREF_DEF_GENERAL_TIMEMODE.name();
+        }
 
         RiseSetDataMode mode;
         try {
-            mode = WidgetSettings.TimeMode.valueOf(modeString);
+            mode = TimeMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            if (EventSettings.hasEvent(context, modeString)) {
-                mode = new EventAliasTimeMode(EventSettings.loadEvent(context, modeString));
+            if (EventSettings.hasEvent(AndroidEventSettings.wrap(context), modeString)) {
+                mode = new EventAliasTimeMode(EventSettings.loadEvent(AndroidEventSettings.wrap(context), modeString));
             } else {
                 mode = PREF_DEF_GENERAL_TIMEMODE;
             }
@@ -2446,7 +2138,7 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
+    public static SolsticeEquinoxMode loadTimeMode2Pref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2455,7 +2147,7 @@ public class WidgetSettings
         SolsticeEquinoxMode timeMode;
         try
         {
-            timeMode = WidgetSettings.SolsticeEquinoxMode.valueOf(modeString);
+            timeMode = SolsticeEquinoxMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timeMode = PREF_DEF_GENERAL_TIMEMODE2;
@@ -2480,7 +2172,7 @@ public class WidgetSettings
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
+    public static MoonPhaseMode loadTimeMode3Pref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2489,7 +2181,7 @@ public class WidgetSettings
         MoonPhaseMode timeMode;
         try
         {
-            timeMode = WidgetSettings.MoonPhaseMode.valueOf(modeString);
+            timeMode = MoonPhaseMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timeMode = PREF_DEF_GENERAL_TIMEMODE3;
@@ -2507,48 +2199,48 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveSolarTimeModePref(Context context, int appWidgetId, WidgetSettings.SolarTimeMode mode)
+    public static void saveTimeStandardModePref(Context context, int appWidgetId, TimeStandardMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.SolarTimeMode loadSolarTimeModePref(Context context, int appWidgetId)
+    public static TimeStandardMode loadTimeStandardModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE, PREF_DEF_TIMEZONE_SOLARMODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE, PREF_DEF_TIMEZONE_TIMESTANDARDMODE.name());
 
-        SolarTimeMode timeMode;
+        TimeStandardMode timeMode;
         try
         {
-            timeMode = WidgetSettings.SolarTimeMode.valueOf(modeString);
+            timeMode = TimeStandardMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timeMode = PREF_DEF_TIMEZONE_SOLARMODE;
+            timeMode = PREF_DEF_TIMEZONE_TIMESTANDARDMODE;
         }
         return timeMode;
     }
-    public static void deleteSolarTimeModePref(Context context, int appWidgetId)
+    public static void deleteTimeStandardModePref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_SOLARMODE);
+        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_TIMESTANDARDMODE);
         prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimeFormatModePref(Context context, int appWidgetId, WidgetSettings.TimeFormatMode mode)
+    public static void saveTimeFormatModePref(Context context, int appWidgetId, TimeFormatMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
         prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_TIMEFORMATMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
+    public static TimeFormatMode loadTimeFormatModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
@@ -2557,7 +2249,7 @@ public class WidgetSettings
         TimeFormatMode formatMode;
         try
         {
-            formatMode = WidgetSettings.TimeFormatMode.valueOf(modeString);
+            formatMode = TimeFormatMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             formatMode = PREF_DEF_APPEARANCE_TIMEFORMATMODE;
@@ -2613,14 +2305,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
+    public static void saveLocationModePref(Context context, int appWidgetId, LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.putString(prefs_prefix + PREF_KEY_LOCATION_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.LocationMode loadLocationModePref(Context context, int appWidgetId)
+    public static LocationMode loadLocationModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
@@ -2629,7 +2321,7 @@ public class WidgetSettings
         LocationMode locationMode;
         try
         {
-            locationMode = WidgetSettings.LocationMode.valueOf(modeString);
+            locationMode = LocationMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             locationMode = PREF_DEF_LOCATION_MODE;
@@ -2647,14 +2339,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveDateModePref(Context context, int appWidgetId, WidgetSettings.DateMode mode)
+    public static void saveDateModePref(Context context, int appWidgetId, DateMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
         prefs.putString(prefs_prefix + PREF_KEY_DATE_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.DateMode loadDateModePref(Context context, int appWidgetId)
+    public static DateMode loadDateModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
@@ -2663,7 +2355,7 @@ public class WidgetSettings
         DateMode dateMode;
         try
         {
-            dateMode = WidgetSettings.DateMode.valueOf(modeString);
+            dateMode = DateMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             dateMode = PREF_DEF_DATE_MODE;
@@ -2687,7 +2379,7 @@ public class WidgetSettings
         prefs.putInt(prefs_prefix + PREF_KEY_DATE_DAY, info.getDay());
         prefs.apply();
     }
-    public static WidgetSettings.DateInfo loadDatePref(Context context, int appWidgetId)
+    public static DateInfo loadDatePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_DATE;
@@ -2709,18 +2401,18 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimezoneModePref(Context context, int appWidgetId, WidgetSettings.TimezoneMode mode)
+    public static void saveTimezoneModePref(Context context, int appWidgetId, TimezoneMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
         prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
+    public static TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
         return loadTimezoneModePref(context, appWidgetId, PREF_DEF_TIMEZONE_MODE);
     }
-    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
+    public static TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
@@ -2729,7 +2421,7 @@ public class WidgetSettings
         TimezoneMode timezoneMode;
         try
         {
-            timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
+            timezoneMode = TimezoneMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             timezoneMode = defaultMode;
@@ -2908,7 +2600,8 @@ public class WidgetSettings
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String key = keyTimezonePref(appWidgetId, slotName);
         String defaultValue = defaultTimezonePref(context, appWidgetId, slotName);
-        return prefs.getString(key, defaultValue);
+        String s = prefs.getString(key, defaultValue);
+        return (s != null ? s : defaultValue);
     }
 
     public static void deleteTimezonePref(Context context, int appWidgetId) {
@@ -2930,6 +2623,7 @@ public class WidgetSettings
             return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM;
         else return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM + "_" + slotName;
     }
+    @SuppressWarnings("UnnecessaryContinue")
     public static String defaultTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         slotName = slotName.toLowerCase(Locale.US).trim();
@@ -2955,14 +2649,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTrackingModePref(Context context, int appWidgetId, WidgetSettings.TrackingMode mode)
+    public static void saveTrackingModePref(Context context, int appWidgetId, TrackingMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_TRACKINGMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.TrackingMode loadTrackingModePref(Context context, int appWidgetId)
+    public static TrackingMode loadTrackingModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -2971,7 +2665,7 @@ public class WidgetSettings
         TrackingMode trackingMode;
         try
         {
-            trackingMode = WidgetSettings.TrackingMode.valueOf(modeString);
+            trackingMode = TrackingMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             trackingMode = PREF_DEF_GENERAL_TRACKINGMODE;
@@ -3013,14 +2707,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveCompareModePref(Context context, int appWidgetId, WidgetSettings.CompareMode mode)
+    public static void saveCompareModePref(Context context, int appWidgetId, CompareMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         prefs.putString(prefs_prefix + PREF_KEY_GENERAL_COMPAREMODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.CompareMode loadCompareModePref(Context context, int appWidgetId)
+    public static CompareMode loadCompareModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
@@ -3029,7 +2723,7 @@ public class WidgetSettings
         CompareMode compareMode;
         try
         {
-            compareMode = WidgetSettings.CompareMode.valueOf(modeString);
+            compareMode = CompareMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             compareMode = PREF_DEF_GENERAL_COMPAREMODE;
@@ -3278,11 +2972,18 @@ public class WidgetSettings
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
         String defaultValue = (appWidgetId == 0) ? PREF_DEF_GENERAL_UNITS_LENGTH.name()             // prefer the current app setting [0] as the default value
                 : prefs.getString(PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name());
-        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, defaultValue));
+        if (defaultValue == null) {
+            defaultValue = PREF_DEF_GENERAL_UNITS_LENGTH.name();
+        }
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, defaultValue);
+        return getLengthUnit((s != null ? s : defaultValue));
     }
 
-    public static LengthUnit getLengthUnit(String unitName)
+    public static LengthUnit getLengthUnit(@Nullable String unitName)
     {
+        if (unitName == null) {
+            return PREF_DEF_GENERAL_UNITS_LENGTH;
+        }
         LengthUnit retValue;
         try {
             retValue = LengthUnit.valueOf(unitName);
@@ -3314,7 +3015,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_RISE, PREF_DEF_GENERAL_TIMENOTE_RISE.name());
+        return (s != null ? s : PREF_DEF_GENERAL_TIMENOTE_RISE.name());
     }
     public static void deleteTimeNoteRisePref(Context context, int appWidgetId)
     {
@@ -3338,7 +3040,8 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
+        String s = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMENOTE_SET, PREF_DEF_GENERAL_TIMENOTE_SET.name());
+        return (s != null ? s : PREF_DEF_GENERAL_TIMENOTE_SET.name());
     }
     public static void deleteTimeNoteSetPref(Context context, int appWidgetId)
     {
@@ -3349,10 +3052,98 @@ public class WidgetSettings
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, value);
+        prefs.apply();
+    }
+    public static boolean loadShowSettingsGroup(Context context, int appWidgetId, String groupID, boolean defaultValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID, defaultValue);
+    }
+    public static void deleteShowSettingsGroup(Context context, int appWidgetId, String groupID)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_SETTINGS_GROUP_SHOW + "_" + groupID);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void savePreviewGridSize(Context context, int[] size)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.putInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, size[0]);
+        prefs.putInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_HEIGHT, size[1]);
+        prefs.apply();
+    }
+    public static int[] loadPreviewGridSize(Context context)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        int width = prefs.getInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, PREF_DEF_PREVIEW_GRID[0]);
+        int height = prefs.getInt(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH, PREF_DEF_PREVIEW_GRID[1]);
+        return new int[] {width, height};
+    }
+    public static void deletePreviewGridSize(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_WIDTH);
+        prefs.remove(prefs_prefix + PREF_KEY_PREVIEW_GRID_HEIGHT);
+        prefs.apply();
+    }
+
+    public static boolean isKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        return (ids != null && ids.contains(appWidgetId + ""));
+    }
+
+    public static void addKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids0 = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids = new TreeSet<>(ids0);
+        ids.add(appWidgetId + "");
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.putStringSet(PREF_KEY_KNOWNIDS, ids);
+        prefs.apply();
+    }
+
+    public static void forgetKnownWidgetID(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs0 = context.getSharedPreferences(PREFS_WIDGET, 0);
+        Set<String> ids0 = prefs0.getStringSet(PREF_KEY_KNOWNIDS, new TreeSet<String>());
+        Set<String> ids = new TreeSet<>(ids0);
+        ids.remove(appWidgetId + "");
+
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.putStringSet(PREF_KEY_KNOWNIDS, ids);
+        prefs.apply();
+    }
+
+    public static void clearKnownWidgetIDs(Context context) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        prefs.remove(PREF_KEY_KNOWNIDS);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        deleteTimeLastUpdate(context, appWidgetId);
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
 
@@ -3403,10 +3194,10 @@ public class WidgetSettings
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
-        deleteSolarTimeModePref(context, appWidgetId);
+        deleteTimeStandardModePref(context, appWidgetId);
         deleteTimezonePref(context, appWidgetId);
 
-        CalendarSettings.deletePrefs(context, appWidgetId);
+        CalendarSettings.deletePrefs(AndroidCalendarSettings.wrap(context), appWidgetId);
 
         deleteDateModePref(context, appWidgetId);
         deleteDatePref(context, appWidgetId);
@@ -3418,6 +3209,20 @@ public class WidgetSettings
         WidgetActions.deletePrefs(context, appWidgetId);
         WidgetSettingsMetadata.deleteMetaData(context, appWidgetId);
         AlarmWidgetSettings.deletePrefs(context, appWidgetId);
+        ClockWidgetSettings.deletePrefs(context, appWidgetId);
+
+        deletePreviewGridSize(context);
+        deleteShowSettingsGroup(context, appWidgetId, "preview");
+        deleteShowSettingsGroup(context, appWidgetId, "appearance");
+        deleteShowSettingsGroup(context, appWidgetId, "general");
+        deleteShowSettingsGroup(context, appWidgetId, "timezone");
+        deleteShowSettingsGroup(context, appWidgetId, "location");
+        deleteShowSettingsGroup(context, appWidgetId, "layout");
+        deleteShowSettingsGroup(context, appWidgetId, "action");
+
+        if (appWidgetId == 0) {
+            LocationHelperSettings.clearLastLocationLog(context);
+        }
     }
 
     public static void initDefaults( Context context )
@@ -3434,8 +3239,8 @@ public class WidgetSettings
 
     public static void initDisplayStrings( Context context )
     {
-        LengthUnit.initDisplayStrings(context);
-        ActionMode.initDisplayStrings(context);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(AndroidResources.wrap(context), new AndroidResID_LengthUnitDisplay());
+        initDisplayStrings_ActionMode(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);
         WidgetModeSun3x1.initDisplayStrings(context);
@@ -3445,19 +3250,18 @@ public class WidgetSettings
         WidgetModeMoon1x1.initDisplayStrings(context);
         WidgetModeMoon2x1.initDisplayStrings(context);
         WidgetModeMoon3x1.initDisplayStrings(context);
-        WidgetGravity.initDisplayStrings(context);
-        TrackingMode.initDisplayStrings(context);
-        CompareMode.initDisplayStrings(context);
-        TimeMode.initDisplayStrings(context);
-        MoonPhaseMode.initDisplayStrings(context);
-        SolsticeEquinoxMode.initDisplayStrings(context);
-        LocationMode.initDisplayStrings(context);
-        TimezoneMode.initDisplayStrings(context);
-        SolarTimeMode.initDisplayStrings(context);
-        DateMode.initDisplayStrings(context);
-        TimeFormatMode.initDisplayStrings(context);
-        RiseSetOrder.initDisplayStrings(context);
-        CalendarSettings.initDisplayStrings(context);
+        initDisplayStrings_WidgetGravity(context);
+        initDisplayStrings_TrackingMode(context);
+        initDisplayStrings_CompareMode(context);
+        initDisplayStrings_TimeMode(context);
+        initDisplayStrings_MoonPhaseMode(context);
+        initDisplayStrings_SolsticeEquinoxMode(context);
+        initDisplayStrings_LocationMode(context);
+        initDisplayStrings_TimezoneMode(context);
+        initDisplayStrings_TimeStandardMode(context);
+        initDisplayStrings_DateMode(context);
+        initDisplayStrings_TimeFormatMode(context);
+        initDisplayStrings_RiseSetOrder(context);
         WidgetActions.initDisplayStrings(context);
         AlarmWidgetSettings.initDisplayStrings(context);
     }

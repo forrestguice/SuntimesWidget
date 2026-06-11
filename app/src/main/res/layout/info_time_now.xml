@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content">
 
         <LinearLayout
@@ -60,6 +60,6 @@
                   app:layout_constraintStart_toStartOf="@+id/text_time_layout"
                   tools:text="A very long string that is wider than the clock" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

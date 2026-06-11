@@ -16,19 +16,28 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/itemLayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
-                android:padding="4dp" android:background="?attr/selectableItemBackground">
+<com.forrestguice.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemLayout"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="4dp"
+    android:background="?attr/selectableItemBackground">
 
     <TextView android:id="@android:id/text1" style="?android:attr/dropDownItemStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/preview_area"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:layout_weight="1"
-        android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:layout_margin="4dp"
+        android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:layout_margin="8dp"
         android:maxLines="3" android:ellipsize="end" android:gravity="center"
         android:textStyle="normal" android:duplicateParentState="true"
         tools:text="one line two line three line or more" />
 
-    <LinearLayout android:id="@+id/preview_area" android:minWidth="80dp" android:minHeight="40dp"
+    <FrameLayout android:id="@+id/preview_area" android:minWidth="80dp"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_min="100dp"
         android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
         android:orientation="vertical" android:gravity="center" android:layout_margin="4dp" />
 
-</LinearLayout>
+</com.forrestguice.support.constraint.ConstraintLayout>

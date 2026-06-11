@@ -25,27 +25,26 @@ import android.service.quicksettings.Tile;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeAlarmHelper;
 import com.forrestguice.suntimeswidget.alarmclock.bedtime.BedtimeSettings;
 import com.forrestguice.suntimeswidget.navigation.SuntimesNavigation;
+import com.forrestguice.util.concurrent.SimpleProgressListener;
 
 import java.util.List;
 
 @TargetApi(24)
 public class BedtimeTileService extends SuntimesTileService
 {
-    public static final int BEDTIMETILE_APPWIDGET_ID = -3;
+    public static final int BEDTIMETILE_APPWIDGET_ID = -4;
+
+    @Override
+    protected SuntimesTileBase initTileBase() {
+        return new BedtimeTileBase(null);
+    }
 
     @Override
     protected int appWidgetId() {
         return BEDTIMETILE_APPWIDGET_ID;
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
-    protected Class getConfigActivityClass(Context context) {
-        return null;
     }
 
     @Override
@@ -60,13 +59,13 @@ public class BedtimeTileService extends SuntimesTileService
         switch (BedtimeSettings.getBedtimeState(context))
         {
             case BedtimeSettings.STATE_BEDTIME_ACTIVE:
-                label = context.getString(R.string.configLabel_bedtime_tile_active);
+                label = context.getString(R.string.bedtime_label_tile_active);
                 break;
             case BedtimeSettings.STATE_BEDTIME_PAUSED:
-                label = context.getString(R.string.configLabel_bedtime_tile_paused);
+                label = context.getString(R.string.bedtime_label_tile_paused);
                 break;
             default:
-                label = context.getString(R.string.configLabel_bedtime_tile_normal);
+                label = context.getString(R.string.bedtime_label_tile_normal);
                 break;
         }
 
@@ -88,10 +87,10 @@ public class BedtimeTileService extends SuntimesTileService
         long rowID = BedtimeSettings.loadAlarmID(context, BedtimeSettings.SLOT_BEDTIME_NOTIFY);
         if (rowID != BedtimeSettings.ID_NONE)
         {
-            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new AlarmListDialog.AlarmListTask.AlarmListTaskListener()
+            BedtimeAlarmHelper.loadAlarmItem(context, rowID, new SimpleProgressListener<AlarmClockItem, List<AlarmClockItem>>()
             {
                 @Override
-                public void onLoadFinished(List<AlarmClockItem> result)
+                public void onFinished(List<AlarmClockItem> result)
                 {
                     AlarmClockItem item = ((result != null && result.size() > 0) ? result.get(0) : null);
                     tile.setState((item != null && item.enabled) ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);

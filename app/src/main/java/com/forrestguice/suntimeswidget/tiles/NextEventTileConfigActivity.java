@@ -22,7 +22,6 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 
-@SuppressWarnings("Convert2Diamond")
 public class NextEventTileConfigActivity extends ClockTileConfigActivity
 {
     public NextEventTileConfigActivity()
@@ -36,6 +35,11 @@ public class NextEventTileConfigActivity extends ClockTileConfigActivity
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.app_name_eventtile));
         hideTimeZoneSettings();
+    }
+
+    @Override
+    protected void onResetWidget() {
+        new NextEventTileBase(this).initDefaults(this);
     }
 
 }

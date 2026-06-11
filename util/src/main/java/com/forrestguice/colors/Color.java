@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+/*
+    Copyright (C) 2020-2024 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.forrestguice.colors;
+
+import com.forrestguice.util.Log;
+
+public class Color
+{
+    public static final int BLACK = -16777216;
+    public static final int BLUE = -16776961;
+    public static final int CYAN = -16711681;
+    public static final int DKGRAY = -12303292;
+    public static final int LTGRAY = -3355444;
+    public static final int MAGENTA = -65281;
+    public static final int TRANSPARENT = 0;
+    public static final int WHITE = -1;
+    public static final int YELLOW = -256;
+
+    private static ColorInterface utils;
+    public static void init(ColorInterface i) {
+        utils = i;
+    }
+
+    public static int parseColor(String color)
+    {
+        if (utils != null) {
+            return utils.parseColor(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int red(int color) {
+        if (utils != null) {
+            return utils.red(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int green(int color) {
+        if (utils != null) {
+            return utils.green(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int blue(int color) {
+        if (utils != null) {
+            return utils.blue(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 0;
+        }
+    }
+
+    public static int alpha(int color) {
+        if (utils != null) {
+            return utils.alpha(color);
+        } else {
+            Log.e("Color", "ColorUtilsInterface is uninitialized!! call `init` first.");
+            return 255;
+        }
+    }
+}

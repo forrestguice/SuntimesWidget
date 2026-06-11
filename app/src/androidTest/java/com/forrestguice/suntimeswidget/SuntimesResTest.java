@@ -20,18 +20,24 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.LengthUnit;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.TrackingMode;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +53,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesResTest extends SuntimesActivityTestBase
 {
     @Rule
@@ -61,10 +67,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String languageTag : locales)
         {
             AppSettings.loadLocale(context, languageTag);
-            verify_selectFormatGender("time_gender", R.string.time_gender);
-            verify_selectFormatGender("date_gender", R.string.date_gender);
-            verify_selectFormatGender("sunevent_phrase_gender", R.string.sunevent_phrase_gender);
-            verify_selectFormatGender("shadowevent_phrase_gender", R.string.shadowevent_phrase_gender);
+            verify_selectFormatGender("time_gender", R.string.selectformat_time_gender);
+            verify_selectFormatGender("date_gender", R.string.selectformat_date_gender);
+            verify_selectFormatGender("sunevent_phrase_gender", R.string.event_sunevent_phrase_gender);
+            verify_selectFormatGender("shadowevent_phrase_gender", R.string.event_shadowevent_phrase_gender);
         }
     }
 
@@ -106,57 +112,59 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_quantity", R.array.solarevents_quantity);
 
             verify_stringArrayLength("directions_short", R.array.directions_short, "directions_long", R.array.directions_long);
-            verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", SuntimesUtils.CardinalDirection.values());
+            verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", CardinalDirection.values());
 
             verify_stringArrayValuesOfEnum("timezoneSort_values", R.array.timezoneSort_values, WidgetTimezones.TimeZoneSort.class);
             verify_stringArrayLength("timezoneSort_values", R.array.timezoneSort_values, "timezoneSort_display", R.array.timezoneSort_display);
             verify_stringArrayLength("timezoneSort_display", R.array.timezoneSort_display, "TimeZoneSort (ENUM)", WidgetTimezones.TimeZoneSort.values());
 
-            verify_stringArrayLength("widgetgravity", R.array.widgetgravity, "WidgetGravity (ENUM)", WidgetSettings.WidgetGravity.values());
+            verify_stringArrayLength("widgetgravity", R.array.settings_widgetgravity, "WidgetGravity (ENUM)", WidgetSettings.WidgetGravity.values());
 
-            verify_stringArrayLength("navMode_values", R.array.navMode_values, "navMode_display", R.array.navMode_display);
+            verify_stringArrayLength("navMode_values", R.array.settings_navMode_values, "navMode_display", R.array.settings_navMode_display);
 
-            verify_stringArrayLength("compareMode_values", R.array.compareMode_values, "compareMode_display", R.array.compareMode_display);
-            verify_stringArrayValuesOfEnum("compareMode_values", R.array.compareMode_values, WidgetSettings.CompareMode.class);
+            verify_stringArrayLength("compareMode_values", R.array.settings_compareMode_values, "compareMode_display", R.array.settings_compareMode_display);
+            verify_stringArrayValuesOfEnum("compareMode_values", R.array.settings_compareMode_values, CompareMode.class);
 
-            verify_stringArrayLength("tapActions_titles", R.array.tapActions_titles, "tapActions_display", R.array.tapActions_display);
-            verify_stringArrayLength("tapActions_display", R.array.tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
+            verify_stringArrayLength("tapActions_titles", R.array.actions_tapActions_titles, "tapActions_display", R.array.actions_tapActions_display);
+            verify_stringArrayLength("tapActions_display", R.array.actions_tapActions_display, "SuntimesAction (ENUM)", WidgetActions.SuntimesAction.values());
 
-            verify_stringArrayLength("clockTapActions_values", R.array.clockTapActions_values, "clockTapActions_display", R.array.clockTapActions_display);
-            verify_enumTapActions("clockTapActions_values", R.array.clockTapActions_values);
+            verify_stringArrayLength("clockTapActions_values", R.array.actions_clockTapActions_values, "clockTapActions_display", R.array.actions_clockTapActions_display);
+            verify_enumTapActions("clockTapActions_values", R.array.actions_clockTapActions_values);
 
-            verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
-            verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
+            verify_stringArrayLength("dateTapActions_values", R.array.actions_dateTapActions_values, "dateTapActions_display", R.array.actions_dateTapActions_display);
+            verify_enumTapActions("dateTapActions_values", R.array.actions_dateTapActions_values);
 
-            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, WidgetSettings.TimeFormatMode.class);
-            verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
+            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.settings_timeFormatMode_values, TimeFormatMode.class);
+            verify_stringArrayLength("timeFormatMode_values", R.array.settings_timeFormatMode_values, "timeFormatMode_display", R.array.settings_timeFormatMode_display);
 
-            verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.lengthUnits_values, WidgetSettings.LengthUnit.class);
-            verify_stringArrayLength("lengthUnits_values", R.array.lengthUnits_values, "lengthUnits_display", R.array.lengthUnits_display);
+            verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.settings_lengthUnits_values, LengthUnit.class);
+            verify_stringArrayLength("lengthUnits_values", R.array.settings_lengthUnits_values, "lengthUnits_display", R.array.settings_lengthUnits_display);
 
             verify_stringArrayLength("alarm_hardwarebutton_actions_values", R.array.alarm_hardwarebutton_actions_values, "alarm_hardwarebutton_actions_display", R.array.alarm_hardwarebutton_actions_display);
-            verify_stringArrayLength("getFix_maxAge_values", R.array.getFix_maxAge_values, "getFix_maxAge_display", R.array.getFix_maxAge_display);
-            verify_stringArrayLength("getFix_maxElapse_values", R.array.getFix_maxElapse_values, "getFix_maxElapse_display", R.array.getFix_maxElapse_display);
-            verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
+            verify_stringArrayLength("getFix_maxAge_values", R.array.location_maxAge_values, "getFix_maxAge_display", R.array.location_maxAge_display);
+            verify_stringArrayLength("getFix_maxElapse_values", R.array.location_maxElapse_values, "getFix_maxElapse_display", R.array.location_maxElapse_display);
+            verify_stringArrayLength("noteTapActions_values", R.array.actions_noteTapActions_values, "noteTapActions_display", R.array.actions_noteTapActions_display);
 
-            verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, WidgetSettings.TrackingMode.class);
-            verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
+            verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.settings_solsticeTrackingMode_values, TrackingMode.class);
+            verify_stringArrayLength("solsticeTrackingMode_values", R.array.settings_solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.settings_solsticeTrackingMode_display);
 
-            verify_stringArrayLength("launcherMode_values", R.array.launcherMode_values, "launcherMode_display", R.array.launcherMode_display);
-            verify_stringArrayLength("emphasizefield_values", R.array.emphasizefield_values, "emphasizefield_display", R.array.emphasizefield_display);
-            verify_stringArrayLength("headerText_values", R.array.headerText_values, "headerText_display", R.array.headerText_display);
+            verify_stringArrayLength("launcherMode_values", R.array.settings_launcherMode_values, "launcherMode_display", R.array.settings_launcherMode_display);
+            verify_stringArrayLength("emphasizefield_values", R.array.settings_emphasizefield_values, "emphasizefield_display", R.array.settings_emphasizefield_display);
+            verify_stringArrayLength("headerText_values", R.array.settings_headerText_values, "headerText_display", R.array.settings_headerText_display);
 
-            verify_stringArrayLength("dismissChallenge_values", R.array.dismissChallenge_values, "dismissChallenge_display", R.array.dismissChallenge_display);
-            verify_stringArrayValuesOfEnum("dismissChallenge_values", R.array.dismissChallenge_values, AlarmSettings.DismissChallenge.class);
+            verify_stringArrayLength("dismissChallenge_values", R.array.alarmDismissChallenge_values, "dismissChallenge_display", R.array.alarmDismissChallenge_display);
+            verify_stringArrayValuesOfEnum("dismissChallenge_values", R.array.alarmDismissChallenge_values, AlarmSettings.DismissChallenge.class);
         }
     }
 
+    @SuppressWarnings({"rawtypes", "unused"})
     public void verify_stringArrayValuesOfEnum(String tag1, int array1Id, Class enumClass)
     {
         Context context = activityRule.getActivity();
         String[] values = context.getResources().getStringArray(array1Id);
         for (String value : values) {
-            Enum e = Enum.valueOf(enumClass, value);
+            //noinspection unchecked
+            Enum<?> e = Enum.valueOf(enumClass, value);
         }
     }
 
@@ -170,6 +178,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String value : values)
         {
             try {
+                @SuppressWarnings("unused")
                 WidgetActions.SuntimesAction action = WidgetActions.SuntimesAction.valueOf(value);
 
             } catch (IllegalArgumentException e) {
@@ -179,8 +188,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             }
         }
 
-        assertTrue("The array + (" + tag1 + ") contains invalid enum values: " + badValuesString,
-                badValues.size() == 0);
+        assertEquals("The array + (" + tag1 + ") contains invalid enum values: " + badValuesString, 0, badValues.size());
     }
 
     public void verify_stringArrayLength(String tag1, int array1Id, String tag2, int array2Id)
@@ -207,8 +215,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
 
     public void verify_arrayLength(String tag1, Object[] a1, String tag2, Object[] a2)
     {
-        assertTrue("The size of " + tag1 + " (" + a1.length + ") and " + tag2 + " (" + a2.length + ") DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
-                a1.length == a2.length);
+        assertEquals("The size of " + tag1 + " (" + a1.length + ") and " + tag2 + " (" + a2.length + ") DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(), a1.length, a2.length);
     }
 
     @Test
@@ -253,15 +260,15 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
             verify_pluralFormat("units_kilometers_long", R.plurals.units_kilometers_long, values, displayValues);
 
-            verify_pluralFormatI("units_days", R.plurals.units_days, values);
-            verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
-            verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
-            verify_pluralFormatI("units_seconds", R.plurals.units_seconds, values);
+            verify_pluralFormatI("units_days", R.plurals.time_units_days, values);
+            verify_pluralFormatI("units_hours", R.plurals.time_units_hours, values);
+            verify_pluralFormatI("units_minutes", R.plurals.time_units_minutes, values);
+            verify_pluralFormatI("units_seconds", R.plurals.time_units_seconds, values);
 
             verify_pluralFormatI("alarmPlural", R.plurals.alarmPlural, values);
             verify_pluralFormatI("eventPlural", R.plurals.eventPlural, values);
             verify_pluralFormatI("placePlural", R.plurals.placePlural, values);
-            verify_pluralFormatI("cyclePlural", R.plurals.cyclePlural, values);
+            verify_pluralFormatI("cyclePlural", R.plurals.bedtime_cyclePlural, values);
             verify_pluralFormatI("itemsPlural", R.plurals.itemsPlural, values);
             verify_pluralFormatI("widgetPlural", R.plurals.widgetPlural, values);
             verify_pluralFormatI("locationdelete_dialog_success", R.plurals.locationdelete_dialog_success, values);
@@ -273,10 +280,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         }
     }
 
-    public void verify_pluralFormat(String tag1, int pluralID, double value[], String displayValue[])
+    public void verify_pluralFormat(String tag1, int pluralID, double[] value, String[] displayValue)
     {
         Context context = activityRule.getActivity();
-        assertTrue("value[] and displayValue[] must have the same dimension!", value.length == displayValue.length);
+        assertEquals("value[] and displayValue[] must have the same dimension!", value.length, displayValue.length);
 
         boolean[] r = new boolean[value.length];
         for (int i=0; i<value.length; i++)
@@ -297,7 +304,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
     }
 
-    public void verify_pluralFormatI(String tag1, int pluralID, double value[])
+    public void verify_pluralFormatI(String tag1, int pluralID, double[] value)
     {
         Context context = activityRule.getActivity();
         boolean[] r = new boolean[value.length];
@@ -367,7 +374,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             {
                 assertNotNull(item);
                 String[] itemParts = BuildPlacesTask.splitCSV(item, ','); //item.split(",");
-                assertEquals(item + " should have 4 parts but has " + itemParts.length, 4, itemParts.length);
+                assertTrue(item + " should have at least 4 parts but has " + itemParts.length, itemParts.length >= 4);
+                assertTrue(item + " should have no more than 5 parts but has " + itemParts.length, itemParts.length <= 5);   // may contain optional comment
                 assertNotNull(itemParts[0]);
                 assertNotNull(itemParts[1]);
                 assertNotNull(itemParts[2]);
@@ -390,6 +398,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
     protected void verifyStringIsDouble(String message, String value)
     {
         try {
+            @SuppressWarnings("unused")
             double d = Double.parseDouble(value);
         } catch (NumberFormatException e) {
             fail(message);

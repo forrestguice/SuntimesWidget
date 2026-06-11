@@ -9,7 +9,7 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:labelFor="@+id/pick_numCycles"
-        android:text="@string/configLabel_numSleepCycles" />
+        android:text="@string/bedtime_label_numSleepCycles" />
 
     <NumberPicker
         android:id="@+id/pick_numCycles"

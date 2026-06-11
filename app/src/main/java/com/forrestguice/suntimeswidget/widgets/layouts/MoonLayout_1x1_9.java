@@ -28,11 +28,10 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-
-import net.time4j.SystemClock;
-import net.time4j.calendar.HijriCalendar;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.util.Calendar;
 
@@ -41,6 +40,8 @@ import java.util.Calendar;
  */
 public class MoonLayout_1x1_9 extends MoonLayout
 {
+    public static final int MAX_SP = 144;
+
     public MoonLayout_1x1_9()
     {
         super();
@@ -89,7 +90,9 @@ public class MoonLayout_1x1_9 extends MoonLayout
             {
                 int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 2 : 1))};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0:00", timeSizeSp, SuntimesLayout.MAX_SP, "", suffixSizeSp);
+                String labelText = context.getString(R.string.widgetMode1x1_moonday);
+                String scaleToText = (showLabels ? "_" + labelText + "_" : "_00_");
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, scaleToText, timeSizeSp, MAX_SP, "", suffixSizeSp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
@@ -106,8 +109,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
             }
         }
 
-        HijriCalendar today = SystemClock.inLocalView().today().transform(HijriCalendar.class, HijriCalendar.VARIANT_UMALQURA);
-        int dayNum = today.getDayOfMonth();
+        int dayNum = AndroidCalendarDisplayFactory.create().hijriLunarDayNumber();
         int dayOffset = WidgetSettings.loadDateOffsetPref(context, appWidgetId);
         int moonDay = dayNum + dayOffset;
         String moonDayDisplay = moonDay + "";
@@ -146,7 +148,7 @@ public class MoonLayout_1x1_9 extends MoonLayout
         long updateInterval = (5 * 60 * 1000);                 // update every 5 min    // TODO: daily interval
         long nextUpdate = Calendar.getInstance().getTimeInMillis() + updateInterval;
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
-        Log.d("MoonLayout9", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
+        Log.d("MoonLayout9", "saveNextSuggestedUpdate: " + time_utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), nextUpdate).toString());
         return true;
     }
 }

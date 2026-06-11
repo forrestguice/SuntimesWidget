@@ -22,33 +22,42 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
+
+import com.forrestguice.colors.ColorUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.support.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.Pair;
+import com.forrestguice.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.settings.CompareMode;
+import com.forrestguice.suntimeswidget.calculator.settings.DateInfo;
+import com.forrestguice.suntimeswidget.calculator.settings.DateMode;
+import com.forrestguice.suntimeswidget.calculator.settings.EventAliasTimeMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
 import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.events.EventSettingsInterface;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.calculator.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.ViewUtils;
+import com.forrestguice.support.widget.LinearSmoothScroller;
+import com.forrestguice.support.widget.RecyclerView;
+import com.forrestguice.util.android.AndroidResources;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -58,17 +67,16 @@ import java.util.TimeZone;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 {
-    private static SuntimesUtils utils = new SuntimesUtils();
-
-    private WeakReference<Context> contextRef;
-    private CardAdapterOptions options = new CardAdapterOptions();
+    private final WeakReference<Context> contextRef;
+    private final CardAdapterOptions options = new CardAdapterOptions();
 
     public CardAdapter(Context context)
     {
         contextRef = new WeakReference<>(context);
         initTheme(context);
         SuntimesUtils.initDisplayStrings(context);
-        CardViewHolder.utils = utils;
+        AngleDisplay.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(AndroidResources.wrap(context), new AndroidResID_CardinalDirection());
     }
 
     private void initTheme(Context context)
@@ -88,7 +96,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public static final int MAX_POSITIONS = 400000;    // +-550 years (400000 / 365 / 2)
     public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
     @SuppressLint("UseSparseArrays")
-    private HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
+    private final HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
 
     @Override
     public int getItemCount() {
@@ -99,6 +107,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         options.init(context);
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
@@ -113,6 +122,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return retValue;
     }
 
+    @Nullable
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
@@ -125,37 +135,39 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> createData(Context context, int position)
     {
         Calendar date = Calendar.getInstance(options.timezone);
-        if (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE) {
+        if (options.dateMode != DateMode.CURRENT_DATE) {
             date.set(options.dateInfo.getYear(), options.dateInfo.getMonth(), options.dateInfo.getDay());
         }
         date.add(Calendar.DATE, position - TODAY_POSITION);
 
+        EventSettingsInterface contextInterface = AndroidEventSettings.wrap(context);
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
-        Set<String> eventIDs = EventSettings.loadVisibleEvents(context);
+        Set<String> eventIDs = EventSettings.loadVisibleEvents(contextInterface);
         for (String eventID : eventIDs)
         {
             SuntimesRiseSetData d = new SuntimesRiseSetData(context, 0);
-            d.setDataMode(new WidgetSettings.EventAliasTimeMode(EventSettings.loadEvent(context, eventID)));
+            d.setDataMode(new EventAliasTimeMode(EventSettings.loadEvent(contextInterface, eventID)));
             sun.putData(eventID, d);
         }
         sun.setTodayIs(date);
         for (String id : sun.getDataModes()) {
             sun.getData(id).setCompareMode(options.comparisonMode);
         }
-        sun.calculateData();
+        sun.calculateData(context);
 
         SuntimesMoonData moon = null;
         if (options.showMoon)
         {
             moon = new SuntimesMoonData(context, 0, "moon");
             moon.setTodayIs(date);
-            moon.calculate();
+            moon.calculate(context);
         }
 
         return new Pair<>(sun, moon);
     }
 
-    public long findDateForPosition(Context context, int position)
+    @Nullable
+    public Long findDateForPosition(Context context, int position)
     {
         if (position < 0) {
             position = 0;     // clamp invalid positions
@@ -175,6 +187,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
+        if (data_today == null || data_today.first == null) {
+            return TODAY_POSITION;
+        }
+
         Calendar today = Calendar.getInstance(data_today.first.timezone());
         today.setTimeInMillis(data_today.first.calendar().getTimeInMillis());
         today.set(Calendar.HOUR_OF_DAY, 12);
@@ -194,10 +210,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onViewRecycled
-     * @param holder
+     * @param holder CardViewHolder
      */
     @Override
-    public void onViewRecycled(CardViewHolder holder)
+    public void onViewRecycled(@NonNull CardViewHolder holder)
     {
         detachClickListeners(holder);
         if (holder.position >= 0 && (holder.position < TODAY_POSITION - 1 || holder.position > TODAY_POSITION + 2)) {
@@ -208,10 +224,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onCreateViewHolder
-     * @param parent
-     * @param viewType
-     * @return
+     * @param parent ViewGroup
+     * @param viewType type
+     * @return CardViewHolder
      */
+    @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -222,17 +239,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     /**
      * onBindViewHolder
-     * @param holder
-     * @param position
+     * @param holder CardViewHolder
+     * @param position position
      */
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull CardViewHolder holder, int position)
     {
         Context context = (contextRef != null ? contextRef.get() : null);
         if (context == null) {
             Log.w("CardAdapter", "onBindViewHolder: null context!");
             return;
         }
+        //noinspection ConstantConditions
         if (holder == null) {
             Log.w("CardAdapter", "onBindViewHolder: null view holder!");
             return;
@@ -242,14 +260,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     @Override
-    public void onViewAttachedToWindow(CardViewHolder holder)
+    public void onViewAttachedToWindow(@NonNull CardViewHolder holder)
     {
         super.onViewAttachedToWindow(holder);
         holder.startUpdateTask();
     }
 
     @Override
-    public void onViewDetachedFromWindow(CardViewHolder holder)
+    public void onViewDetachedFromWindow(@NonNull CardViewHolder holder)
     {
         super.onViewDetachedFromWindow(holder);
         holder.stopUpdateTask();
@@ -282,7 +300,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
                     found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
                 }
 
-            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) ||
+            } else if (SolarEvents.SUNRISE.name().equals(eventID) || SolarEvents.SUNSET.name().equals(eventID) || SolarEvents.NOON.name().equals(eventID) || SolarEvents.MIDNIGHT.name().equals(eventID) ||
                     SolarEvents.MORNING_CIVIL.name().equals(eventID) || SolarEvents.EVENING_CIVIL.name().equals(eventID) || SolarEvents.MORNING_NAUTICAL.name().equals(eventID) ||
                     SolarEvents.EVENING_NAUTICAL.name().equals(eventID) || SolarEvents.MORNING_ASTRONOMICAL.name().equals(eventID) || SolarEvents.EVENING_ASTRONOMICAL.name().equals(eventID) ||
                     SolarEvents.MORNING_BLUE4.name().equals(eventID) || SolarEvents.EVENING_BLUE4.name().equals(eventID) || SolarEvents.MORNING_BLUE8.name().equals(eventID) ||
@@ -324,16 +342,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     /**
-     * setThemeOverride
-     * @param theme SuntimesTheme
-     */
-    public void setThemeOverride(@NonNull SuntimesTheme theme) {
-        options.themeOverride = theme;
-    }
-
-    /**
      * setCardAdapterListener
-     * @param listener
+     * @param listener CardAdapterListener
      */
     public void setCardAdapterListener( @NonNull CardAdapterListener listener ) {
         adapterListener = listener;
@@ -551,25 +561,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     }
 
     /**
-     * CardViewDecorator
-     */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
-    {
-        private int marginPx;
-
-        public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-        {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
-        }
-    }
-
-    /**
      * CardViewScroller
      */
     public static class CardViewScroller extends LinearSmoothScroller
@@ -591,8 +582,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      */
     public static class CardAdapterOptions
     {
-        private WidgetSettings.DateInfo dateInfo = null;
-        public WidgetSettings.DateMode dateMode = WidgetSettings.DateMode.CURRENT_DATE;
+        private DateInfo dateInfo = null;
+        public DateMode dateMode = DateMode.CURRENT_DATE;
         public TimeZone timezone = null;
 
         public boolean supportsGoldBlue = false;
@@ -601,7 +592,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
         public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
         public boolean showComparison = WidgetSettings.PREF_DEF_GENERAL_SHOWCOMPARE;
-        public WidgetSettings.CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
+        public CompareMode comparisonMode = WidgetSettings.PREF_DEF_GENERAL_COMPAREMODE;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -611,14 +602,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showNoon = true;
         public boolean showGold = false;
         public boolean showBlue = false;
+        public boolean showMidnight = false;
 
         public int showHeaderText = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
         public boolean showHeaderIcon = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
 
-        public SuntimesTheme themeOverride = null;
         public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;
 
         public int highlightPosition = -1;
+        @Nullable
         public String highlightEventID = null;
 
         public void init(Context context)
@@ -627,8 +619,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             dateInfo = WidgetSettings.loadDatePref(context, 0);
 
             SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, 0);
-            data0.initCalculator(context);
-            data0.initTimezone(context);
+            data0.initCalculator();
+            data0.initTimezone(data0.getDataSettings(context));
             timezone = data0.timezone();
 
             supportsGoldBlue = data0.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
@@ -647,6 +639,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showNoon = showFields[AppSettings.FIELD_NOON];
             showGold = showFields[AppSettings.FIELD_GOLD] && supportsGoldBlue;
             showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
+            showMidnight = showFields[AppSettings.FIELD_MIDNIGHT];
 
             showHeaderText = AppSettings.loadShowHeaderTextPref(context);
             showHeaderIcon = AppSettings.loadShowHeaderIconPref(context);

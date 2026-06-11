@@ -18,16 +18,14 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.support.app.ActivityResultLauncherCompat;
+import com.forrestguice.support.app.AppCompatActivity;
 
-@SuppressWarnings("Convert2Diamond")
 public class SuntimesLaunchActivity extends AppCompatActivity
 {
     @Override
@@ -36,7 +34,7 @@ public class SuntimesLaunchActivity extends AppCompatActivity
         super.onCreate(savedState);
 
         if (AppSettings.isFirstLaunch(this)) {
-            showWelcome(this);
+            showWelcome();
 
         } else {
             showMain();
@@ -44,17 +42,19 @@ public class SuntimesLaunchActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResultCompat(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResultCompat(requestCode, resultCode, data);
         showMain();
     }
 
     public static final int WELCOME_REQUEST = 2300;
-    public static void showWelcome(@NonNull Activity activity)
+    private final ActivityResultLauncherCompat startActivityForResult_welcome = registerForActivityResultCompat(WELCOME_REQUEST);
+
+    public void showWelcome()
     {
-        Intent intent = new Intent(activity, WelcomeActivity.class);
-        activity.startActivityForResult(intent, WELCOME_REQUEST);
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivityForResult_welcome.launch(intent);
     }
 
     protected void showMain()

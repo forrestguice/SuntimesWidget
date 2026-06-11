@@ -20,42 +20,47 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.util.SuntimesJUnitTestRunner;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.junit.Assert.assertNotNull;
 
 @Category(UnlistedTest.class)
-@SuppressWarnings("Convert2Diamond")
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(SuntimesJUnitTestRunner.class)
 public class SuntimesScreenshots1 extends SuntimesActivityTestBase
 {
     @Rule
     public ActivityTestRule<AlarmClockActivity> activityRule = new ActivityTestRule<>(AlarmClockActivity.class);
 
     @Before
-    public void initScreenshots() {
+    public void initScreenshots() throws IOException {
         initConfigurations();
+        setAnimationsEnabled(false);
+    }
+
+    @After
+    public void afterTest() throws IOException {
+        setAnimationsEnabled(true);
     }
 
     /**
@@ -81,6 +86,7 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
         if (config.containsKey(languageTag)) {
             configuration = config.get(languageTag);
         }
+        assertNotNull(configuration);
         configureAppForTesting(context, languageTag, configuration, theme);
 
         activityRule.getActivity().finish();
@@ -95,6 +101,7 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
 
         long t0 = SystemClock.elapsedRealtime();
         long t1 = t0 + 3000;
+        //noinspection StatementWithEmptyBody
         while (SystemClock.elapsedRealtime() < t1) {
             // busy wait
         }

@@ -9,12 +9,13 @@
 
 ## Donations
 
-Does this app provide value? Please consider a monetary contribution if your disposable income allows it. Putting a price on the binary is a great way to show support for software you care about.
+Does this app provide value? Suntimes is available gratis, but if it has proven its value, please pay as you feel.
 
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NZJ5FJBCKY6K2"><img src="/SuntimesWidget/assets/images/PP_logo_h_150x38.png" alt="paypal" /></a>
+* <a href="https://liberapay.com/forrestguice">Liberapay</a>
+* <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NZJ5FJBCKY6K2"><img src="/SuntimesWidget/assets/images/PP_logo_h_150x38.png" alt="paypal" /></a>
 
 ## Bug Reports and Feature Requests
-Use the issue tracker to submit a bug report or a feature request.
+Use the issue tracker to submit a bug report or feature request.
 
 When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
 

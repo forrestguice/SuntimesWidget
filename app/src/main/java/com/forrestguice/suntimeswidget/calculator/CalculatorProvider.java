@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2022 Forrest Guice
+    Copyright (C) 2018-2025 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,10 +27,18 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import com.forrestguice.support.preference.PreferenceManager;
+
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.settings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidEventSettings;
+import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.events.ElevationEvent;
+import com.forrestguice.suntimeswidget.events.EventAlias;
+import com.forrestguice.suntimeswidget.events.EventType;
+import com.forrestguice.suntimeswidget.events.EventTypeResolver;
+import com.forrestguice.util.Log;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
@@ -41,11 +49,17 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.SuntimesApplication;
+
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.util.android.AndroidResources;
 
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.*;
 
@@ -79,43 +93,58 @@ public class CalculatorProvider extends ContentProvider
     private static final int URIMATCH_SEASONS_FOR_YEAR = 150;
     private static final int URIMATCH_SEASONS_FOR_RANGE = 160;
 
-    private static UriMatcher uriMatcher;
-    private static UriMatcher uriMatcher()
+    @Nullable
+    private UriMatcher uriMatcher = null;
+    @NonNull
+    protected UriMatcher uriMatcher()
     {
-        if (CalculatorProvider.uriMatcher != null) {
-            return CalculatorProvider.uriMatcher;
+        if (uriMatcher != null) {
+            return uriMatcher;
         }
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_CONFIG, URIMATCH_CONFIG);
+        uriMatcher.addURI(AUTHORITY(), QUERY_CONFIG, URIMATCH_CONFIG);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN, URIMATCH_SUN);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUN + "/*", URIMATCH_SUN_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN, URIMATCH_SUN);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN + "/#", URIMATCH_SUN_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUN + "/*", URIMATCH_SUN_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS, URIMATCH_SUNPOS);
-        uriMatcher.addURI(AUTHORITY, QUERY_SUNPOS + "/#", URIMATCH_SUNPOS_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUNPOS, URIMATCH_SUNPOS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SUNPOS + "/#", URIMATCH_SUNPOS_FOR_DATE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON, URIMATCH_MOON);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/#", URIMATCH_MOON_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOON + "/*", URIMATCH_MOON_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON, URIMATCH_MOON);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON + "/#", URIMATCH_MOON_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOON + "/*", URIMATCH_MOON_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS, URIMATCH_MOONPOS);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPOS + "/#", URIMATCH_MOONPOS_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPOS, URIMATCH_MOONPOS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPOS + "/#", URIMATCH_MOONPOS_FOR_DATE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE, URIMATCH_MOONPHASE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
-        uriMatcher.addURI(AUTHORITY, QUERY_MOONPHASE + "/*", URIMATCH_MOONPHASE_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE, URIMATCH_MOONPHASE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE + "/#", URIMATCH_MOONPHASE_FOR_DATE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_MOONPHASE + "/*", URIMATCH_MOONPHASE_FOR_RANGE);
 
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS, URIMATCH_SEASONS);
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
-        uriMatcher.addURI(AUTHORITY, QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS, URIMATCH_SEASONS);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS + "/#", URIMATCH_SEASONS_FOR_YEAR);
+        uriMatcher.addURI(AUTHORITY(), QUERY_SEASONS + "/*", URIMATCH_SEASONS_FOR_RANGE);
         return uriMatcher;
+    }
+
+    public static String AUTHORITY_SUFFIX = ".calculator.provider";
+    protected String AUTHORITY() {
+        return BuildConfig.SUNTIMES_AUTHORITY_ROOT + AUTHORITY_SUFFIX;
     }
 
     @Override
     public boolean onCreate()
     {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "CalculatorProvider.onCreate:");
+        }
+        Context context = getContext();
+        if (context == null) {
+            throw new NullPointerException("CalculatorProvider; encountered null context in onCreate!");
+        }
+        SuntimesApplication.init(context);    // ContentProvider.onCreate always runs before Application.onCreate; initialize here instead to avoid potential race conditions (e.g. a query to the content provider crashes because Application.onCreate is still pending).
         return true;
     }
 
@@ -152,6 +181,10 @@ public class CalculatorProvider extends ContentProvider
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
+        if (BuildConfig.DEBUG) {
+            Log.d("DEBUG", "CalculatorProvider.query: " + uri + ", ready? " + SuntimesApplication.isInitialized());
+        }
+
         HashMap<String, String> selectionMap = processSelection(processSelectionArgs(selection, selectionArgs));
         long now = Calendar.getInstance().getTimeInMillis();
         long date;
@@ -271,7 +304,7 @@ public class CalculatorProvider extends ContentProvider
                 appWidgetID = Integer.parseInt(id != null ? id : "0");
             }
 
-            SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
+            SuntimesCalculator calculator = initSunCalculator(context, selection);
             if (calculator != null)
             {
                 Location location = null;
@@ -351,7 +384,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_SOLARTIMEMODE:
-                            row[i] = WidgetSettings.loadSolarTimeModePref(context, appWidgetID).name();
+                            row[i] = WidgetSettings.loadTimeStandardModePref(context, appWidgetID).name();
                             break;
 
                         case COLUMN_CONFIG_APPWIDGETID:
@@ -367,9 +400,9 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_OPTION_TIME_IS24:
-                            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || mode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
-                                    : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
+                            TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+                            boolean is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
+                                    : (mode == TimeFormatMode.MODE_24HR);
                             row[i] = (is24 ? 1 : 0);
                             break;
 
@@ -391,6 +424,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_OPTION_ALTITUDE:
                             row[i] = (WidgetSettings.loadLocationAltitudeEnabledPref(context, 0) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_COORDINATES:
+                            row[i] = (AppSettings.loadShowCoordinatesPref(context) ? 1 : 0);
                             break;
 
                         case COLUMN_CONFIG_OPTION_WARNINGS:
@@ -495,6 +532,11 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
                             break;
 
+                        case COLUMN_SUN_MIDNIGHT:
+                            calendar = calculator.getSolarMidnightCalendarForDate(day);
+                            row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
+                            break;
+
                         case COLUMN_SUN_GOLDEN_EVENING:
                             calendar = calculator.getEveningGoldenHourForDate(day);
                             row[i] = (calendar != null) ? calendar.getTimeInMillis() : null;
@@ -534,6 +576,12 @@ public class CalculatorProvider extends ContentProvider
                         case COLUMN_SUN_NOON_RA: case COLUMN_SUN_NOON_DEC:
                             calendar = calculator.getSolarNoonCalendarForDate(day);
                             row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_NOON, columns[i], positions);
+                            break;
+
+                        case COLUMN_SUN_MIDNIGHT_AZ: case COLUMN_SUN_MIDNIGHT_ALT:
+                        case COLUMN_SUN_MIDNIGHT_RA: case COLUMN_SUN_MIDNIGHT_DEC:
+                            calendar = calculator.getSolarMidnightCalendarForDate(day);
+                            row[i] = getPositionValueForSunKey(calculator, calendar, COLUMN_SUN_MIDNIGHT, columns[i], positions);
                             break;
 
                         case COLUMN_SUN_ACTUAL_RISE_AZ: case COLUMN_SUN_ACTUAL_RISE_ALT:
@@ -614,7 +662,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         default:
-                            row[i] = null;
+                            row[i] = getCustomEventValueForSunKey(getContext(), calculator, columns[i], day, positions);
                             break;
                     }
                 }
@@ -626,6 +674,102 @@ public class CalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    @Nullable
+    protected static Object getCustomEventValueForSunKey(Context context, SuntimesCalculator calculator, String column, Calendar day, Map<String,SuntimesCalculator.SunPosition> positions)
+    {
+        String eventID = column;     // e.g CUSTOM0r, CUSTOM0s, CUSTOM0r_azimuth, etc
+        String positionSuffix = null;    // e.g. _azimuth, _altitude, _ra, _dec
+
+        if (column.endsWith(_POSITION_AZ)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_AZ));
+            positionSuffix = _POSITION_AZ;
+
+        } else if (column.endsWith(_POSITION_ALT)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_ALT));
+            positionSuffix = _POSITION_ALT;
+
+        } else if (column.endsWith(_POSITION_RA)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_RA));
+            positionSuffix = _POSITION_RA;
+
+        } else if (column.endsWith(_POSITION_DEC)) {
+            eventID = eventID.substring(0, eventID.lastIndexOf(_POSITION_DEC));
+            positionSuffix = _POSITION_DEC;
+        }
+
+        if (EventTypeResolver.resolveEventType(AndroidEventSettings.wrap(context), column) == EventType.EVENTALIAS)
+        {
+            String aliasID = eventID;   // e.g. CUSTOM0
+            String aliasSuffix = "";    // e.g. r, s
+            if (eventID.endsWith(ElevationEvent.SUFFIX_RISING) || eventID.endsWith(ElevationEvent.SUFFIX_SETTING)) {
+                aliasID = aliasID.substring(0, eventID.length() - 1);
+                aliasSuffix = eventID.substring(eventID.length() - 1);
+            }
+
+            EventAlias alias = EventSettings.loadEvent(AndroidEventSettings.wrap(context), aliasID);
+            EventType aliasType = alias.getType();
+            if (aliasType == EventType.SUN_ELEVATION || aliasType == EventType.SHADOWLENGTH || aliasType == EventType.SHADOWRATIO || aliasType == EventType.DAYPERCENT)
+            {
+                Calendar now = Calendar.getInstance();
+                now.setTimeInMillis(day.getTimeInMillis());
+                now.set(Calendar.HOUR_OF_DAY, 0);
+                now.set(Calendar.MINUTE, 0);
+                now.set(Calendar.SECOND, 0);
+                now.set(Calendar.MILLISECOND, 0);
+
+                boolean isRising = (aliasSuffix.endsWith(ElevationEvent.SUFFIX_RISING));
+                Object[] aliasValues = AlarmEventProvider.createRow(context, alias, isRising, new String[] { AlarmEventContract.COLUMN_EVENT_TIMEMILLIS },
+                        AlarmEventContract.EXTRA_ALARM_NOW + "=?", new String[] { Long.toString(now.getTimeInMillis()) });
+
+                if (aliasValues != null && aliasValues.length > 0 && aliasValues[0] != null)
+                {
+                    Long eventTime = (Long) aliasValues[0];
+                    if (positionSuffix == null)
+                    {
+                        if (BuildConfig.DEBUG) {
+                            Log.d("DEBUG", eventID + " is a " + aliasType + " that occurs at " + eventTime + " (" + new TimeDateDisplay().calendarDateTimeDisplayString(AndroidResources.wrap(context), eventTime) + ")");
+                        }
+                        return eventTime;
+                    }
+
+                    switch (positionSuffix)
+                    {
+                        case _POSITION_AZ: case _POSITION_ALT:
+                        case _POSITION_RA: case _POSITION_DEC:
+                            Object positionValue  = getPositionValueForSunKey(calculator, eventTime, eventID, column, positions);
+                            if (BuildConfig.DEBUG) {
+                                Log.d("DEBUG", eventID + " is a " + aliasType + " with " + positionSuffix + " of " + positionValue);
+                            }
+                            return positionValue;
+
+                        default:
+                            Log.w("CalculatorProvider", "Unrecognized column (position suffix not supported): " + column + " (" + positionSuffix + ")");
+                            return null;
+                    }
+                } else {
+                    Log.w("CalculatorProvider", "Failed to retrieve values for custom event: " + column);
+                    return null;
+                }
+            } else {
+                Log.w("CalculatorProvider", "Unrecognized column (type not supported): " + column + " (" + aliasType +")");
+                return null;
+            }
+        } else {
+            Log.w("CalculatorProvider", "Unrecognized column (not a custom event): " + column);
+            return null;
+        }
+    }
+
+    @Nullable
+    protected static Double getPositionValueForSunKey(@NonNull SuntimesCalculator calculator, @Nullable Long eventTime, String rootKey, String fullKey, Map<String, SuntimesCalculator.SunPosition> positions)
+    {
+        if (eventTime != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(eventTime);
+            return getPositionValueForSunKey(calculator, calendar, rootKey, fullKey, positions);
+        } else return null;
+    }
+    @Nullable
     protected static Double getPositionValueForSunKey(@NonNull SuntimesCalculator calculator, @Nullable Calendar calendar, String rootKey, String fullKey, Map<String, SuntimesCalculator.SunPosition> positions)
     {
         if (!positions.containsKey(rootKey)) {
@@ -661,6 +805,11 @@ public class CalculatorProvider extends ContentProvider
     public static final String COLUMN_SUN_NOON_ALT = COLUMN_SUN_NOON + _POSITION_ALT;
     public static final String COLUMN_SUN_NOON_RA = COLUMN_SUN_NOON + _POSITION_RA;
     public static final String COLUMN_SUN_NOON_DEC = COLUMN_SUN_NOON + _POSITION_DEC;
+
+    public static final String COLUMN_SUN_MIDNIGHT_AZ = COLUMN_SUN_MIDNIGHT + _POSITION_AZ;
+    public static final String COLUMN_SUN_MIDNIGHT_ALT = COLUMN_SUN_MIDNIGHT + _POSITION_ALT;
+    public static final String COLUMN_SUN_MIDNIGHT_RA = COLUMN_SUN_MIDNIGHT + _POSITION_RA;
+    public static final String COLUMN_SUN_MIDNIGHT_DEC = COLUMN_SUN_MIDNIGHT + _POSITION_DEC;
 
     public static final String COLUMN_SUN_ACTUAL_RISE_AZ = COLUMN_SUN_ACTUAL_RISE + _POSITION_AZ;
     public static final String COLUMN_SUN_ACTUAL_RISE_ALT = COLUMN_SUN_ACTUAL_RISE + _POSITION_ALT;
@@ -739,7 +888,8 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_SUNPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
+        Context context = getContext();
+        SuntimesCalculator calculator = (context != null ? initSunCalculator(context, selection) : null);
         if (calculator != null)
         {
             Calendar datetime = Calendar.getInstance(calculator.getTimeZone());
@@ -799,7 +949,8 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_MOON_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
+        Context context = getContext();
+        SuntimesCalculator calculator = (context != null ? initMoonCalculator(context, selection) : null);
         if (calculator != null)
         {
             Calendar day = Calendar.getInstance(calculator.getTimeZone());
@@ -818,18 +969,18 @@ public class CalculatorProvider extends ContentProvider
                     {
                         case COLUMN_MOON_RISE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = (moontimes.riseTime) != null ? moontimes.riseTime.getTimeInMillis() : null;
+                            row[i] = (moontimes != null && moontimes.riseTime != null) ? moontimes.riseTime.getTimeInMillis() : null;
                             break;
                         case COLUMN_MOON_SET:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = (moontimes.setTime) != null ? moontimes.setTime.getTimeInMillis() : null;
+                            row[i] = (moontimes != null && moontimes.setTime != null) ? moontimes.setTime.getTimeInMillis() : null;
                             break;
 
                         case COLUMN_MOON_RISE_AZ: case COLUMN_MOON_RISE_ALT:
                         case COLUMN_MOON_RISE_RA: case COLUMN_MOON_RISE_DEC:
                         case COLUMN_MOON_RISE_DISTANCE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            position_rising = (position_rising == null && moontimes.riseTime != null) ? calculator.getMoonPosition(moontimes.riseTime) : position_rising;
+                            position_rising = (position_rising == null && moontimes != null && moontimes.riseTime != null) ? calculator.getMoonPosition(moontimes.riseTime) : position_rising;
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_RISE_AZ: row[i] = (position_rising != null ? position_rising.azimuth : null); break;
@@ -844,7 +995,7 @@ public class CalculatorProvider extends ContentProvider
                         case COLUMN_MOON_SET_RA: case COLUMN_MOON_SET_DEC:
                         case COLUMN_MOON_SET_DISTANCE:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            position_setting = (position_setting == null && moontimes.setTime != null) ? calculator.getMoonPosition(moontimes.setTime) : position_setting;
+                            position_setting = (position_setting == null && moontimes != null && moontimes.setTime != null) ? calculator.getMoonPosition(moontimes.setTime) : position_setting;
                             switch (columns[i])
                             {
                                 case COLUMN_MOON_SET_AZ: row[i] = (position_setting != null ? position_setting.azimuth : null); break;
@@ -857,11 +1008,11 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_MOON_RISE_ILLUM:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = (moontimes.riseTime) != null ? calculator.getMoonIlluminationForDate(moontimes.riseTime) : null;
+                            row[i] = (moontimes != null && moontimes.riseTime != null) ? calculator.getMoonIlluminationForDate(moontimes.riseTime) : null;
                             break;
                         case COLUMN_MOON_SET_ILLUM:
                             moontimes = (moontimes == null ? calculator.getMoonTimesForDate(day) : moontimes);
-                            row[i] = (moontimes.setTime) != null ? calculator.getMoonIlluminationForDate(moontimes.setTime) : null;
+                            row[i] = (moontimes != null && moontimes.setTime != null) ? calculator.getMoonIlluminationForDate(moontimes.setTime) : null;
                             break;
 
                         default:
@@ -894,7 +1045,8 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_MOONPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
+        Context context = getContext();
+        SuntimesCalculator calculator = (context != null ? initMoonCalculator(context, selection) : null);
         if (calculator != null)
         {
             Calendar datetime = Calendar.getInstance(calculator.getTimeZone());
@@ -928,11 +1080,13 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_MOONPOS_PERIGEE:
-                            row[i] = calculator.getMoonPerigeeNextDate(datetime).getTimeInMillis();
+                            Calendar perigee = calculator.getMoonPerigeeNextDate(datetime);
+                            row[i] = (perigee != null ? perigee.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOONPOS_APOGEE:
-                            row[i] = calculator.getMoonApogeeNextDate(datetime).getTimeInMillis();
+                            Calendar apogee = calculator.getMoonApogeeNextDate(datetime);
+                            row[i] = (apogee != null ? apogee.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOONPOS_ILLUMINATION:
@@ -962,7 +1116,8 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_MOONPHASE_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
+        Context context = getContext();
+        SuntimesCalculator calculator = (context != null ? initMoonCalculator(context, selection) : null);
         if (calculator != null)
         {
             ArrayList<Calendar> events = new ArrayList<>();
@@ -986,22 +1141,22 @@ public class CalculatorProvider extends ContentProvider
                     {
                         case COLUMN_MOON_NEW:
                             events.add(event = initEventValue(SuntimesCalculator.MoonPhase.NEW, events1, calculator, date));
-                            row[i] = event.getTimeInMillis();
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOON_FIRST:
                             events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FIRST_QUARTER, events1, calculator, date));
-                            row[i] = event.getTimeInMillis();
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOON_FULL:
                             events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FULL, events1, calculator, date));
-                            row[i] = event.getTimeInMillis();
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOON_THIRD:
                             events.add(event = initEventValue(SuntimesCalculator.MoonPhase.THIRD_QUARTER, events1, calculator, date));
-                            row[i] = event.getTimeInMillis();
+                            row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
                         case COLUMN_MOON_NEW_DISTANCE:
@@ -1047,6 +1202,7 @@ public class CalculatorProvider extends ContentProvider
         return retValue;
     }
 
+    @Nullable
     private Calendar initEventValue(@NonNull SuntimesCalculator.MoonPhase phase, @NonNull HashMap<SuntimesCalculator.MoonPhase, Calendar> events, @NonNull SuntimesCalculator calculator, @NonNull Calendar date)
     {
         Calendar event = events.get(phase);
@@ -1063,7 +1219,8 @@ public class CalculatorProvider extends ContentProvider
     {
         String[] columns = (projection != null ? projection : QUERY_SEASONS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
-        SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
+        Context context = getContext();
+        SuntimesCalculator calculator = (context != null ? initSunCalculator(context, selection) : null);
         if (calculator != null)
         {
             Calendar year = Calendar.getInstance(calculator.getTimeZone());
@@ -1116,6 +1273,7 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = (event != null ? event.getTimeInMillis() : null);
                             break;
 
+                        //noinspection deprecation
                         case COLUMN_SEASON_VERNAL:
                         case COLUMN_SEASON_SPRING:
                             event = calculator.getSpringEquinoxForYear(year);
@@ -1155,7 +1313,7 @@ public class CalculatorProvider extends ContentProvider
     // Calculator Init
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    private SuntimesCalculator initCalculator(Context context, HashMap<String,String> selection, String calculatorName)
+    private SuntimesCalculator initCalculator(Context context, HashMap<String,String> selection, @Nullable String calculatorName)
     {
         int appWidgetID = 0;
         if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
@@ -1170,7 +1328,7 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculatorDescriptor descriptor = null;
         String calculator = selection.get(COLUMN_CONFIG_CALCULATOR);
         if (calculator != null) {
-            descriptor = SuntimesCalculatorDescriptor.valueOf(context, calculator);
+            descriptor = SuntimesCalculatorDescriptor.valueOf(calculator);
         }
 
         if (location == null && timezone == null && descriptor == null) {
@@ -1189,13 +1347,13 @@ public class CalculatorProvider extends ContentProvider
                 descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
                         : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
             }
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             //Log.d("CalculatorProvider", "initCalculator: " + location.getLabel() + " :: " + location.toString());
             return factory.createCalculator(location, timezone);
         }
     }
 
-    private static SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
+    private static final SparseArray<SuntimesCalculator> sunSource = new SparseArray<>();    // sun source for appWidgetID (app is 0)
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
@@ -1205,7 +1363,7 @@ public class CalculatorProvider extends ContentProvider
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
             //Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
         } //else Log.d("CalculatorProvider", "initSunCalculator: using pre-existing calculator");
@@ -1215,7 +1373,7 @@ public class CalculatorProvider extends ContentProvider
         return initCalculator(context, selection, null);
     }
 
-    private static SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
+    private static final SparseArray<SuntimesCalculator> moonSource = new SparseArray<>();   // moon source for appWidgetID (app is 0)
     private static SuntimesCalculator initMoonCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = moonSource.get(appWidgetID);
@@ -1225,7 +1383,7 @@ public class CalculatorProvider extends ContentProvider
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
-            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(descriptor);
             moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
             //Log.d("CalculatorProvider", "initMoonCalculator: " + location.getLabel() + " :: " + location.toString());
         } //else Log.d("CalculatorProvider", "initMoonCalculator: using pre-existing calculator");
@@ -1426,19 +1584,23 @@ public class CalculatorProvider extends ContentProvider
      * @param selection selection override
      * @return TimeZone object
      */
-    public static TimeZone getTimeZone(Context context, HashMap<String,String> selection)
+    public static TimeZone getTimeZone(@Nullable Context context, HashMap<String,String> selection)
     {
         String tzID = selection.get(COLUMN_CONFIG_TIMEZONE);
         if (tzID != null) {
             return TimeZone.getTimeZone(tzID);
 
-        } else {
+        } else if (context != null) {
             int appWidgetID = 0;
             if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
                 String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
                 appWidgetID = Integer.parseInt(id != null ? id : "0");
             }
             return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+
+        } else {
+            Log.w("CalculatorProvider", "getTimeZone: null context! returning default tz; " + TimeZone.getDefault());
+            return TimeZone.getDefault();
         }
     }
 

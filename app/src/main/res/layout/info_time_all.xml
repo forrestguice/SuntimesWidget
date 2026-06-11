@@ -20,7 +20,7 @@
        xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/table" style="@style/SunsetTimeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,17 +87,17 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunrise"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
                     android:background="?attr/sunriseIconSmall"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
+                    android:contentDescription="@string/table_header_dawn" />
 
                 <TextView android:id="@+id/label_time_sunrise" style="@style/TableHeadTextView"
-                    android:text="@string/sunrise_short" android:textColor="?attr/table_risingColor"
+                    android:text="@string/table_header_sunrise_short" android:textColor="?attr/table_risingColor"
                     android:maxWidth="@dimen/table_heading_label_maxdim" />
 
             </LinearLayout>
@@ -126,20 +126,20 @@
                 android:layout_gravity="end|right"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.forrestguice.support.widget.ImageView
                     android:id="@+id/icon_time_sunset"
                     style="@style/TableHeadImageView"
                     android:layout_width="@dimen/table_heading_iconsize"
                     android:background="?attr/sunsetIconSmall"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_margin="0dp"
-                    tools:ignore="contentDescription"/>
+                    android:contentDescription="@string/table_header_dusk" />
 
                 <TextView
                     android:id="@+id/label_time_sunset"
                     style="@style/TableHeadTextView"
                     android:maxWidth="@dimen/table_heading_label_maxdim"
-                    android:text="@string/sunset_short"
+                    android:text="@string/table_header_sunset_short"
                     android:textColor="?attr/table_settingColor"/>
 
             </LinearLayout>
@@ -708,13 +708,33 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <TextView
+            android:id="@+id/text_time_label_midnight"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
+            android:text="@string/timeMode_midnight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_position_noon"
+            />
+
+        <TextView
+            android:id="@+id/text_time_midnight"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginEnd="@dimen/table_set_rightMargin"
+            android:layout_marginRight="@dimen/table_set_rightMargin"
+            android:textColor="?attr/table_nightColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_midnight"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
+            tools:text="00:00 PM"/>
+
         <View
             android:id="@+id/noon_clickArea" android:orientation="horizontal"
             android:layout_width="0dp" android:layout_height="0dp" android:elevation="2dp"
             android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_time_label_noon"
-            app:layout_constraintBottom_toBottomOf="@+id/text_time_label_noon" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_time_label_midnight" />
 
         <!-- Moon -->
         <TextView
@@ -724,7 +744,7 @@
             android:layout_marginBottom="0dp" android:paddingBottom="0dp"
             android:text="@string/timeMode_moon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon" />
+            app:layout_constraintTop_toBottomOf="@+id/text_time_label_midnight" />
 
         <com.forrestguice.suntimeswidget.moon.MoonPhaseView
             android:id="@+id/moonphase_view" app:illuminationRange="true"
@@ -750,6 +770,6 @@
             app:layout_constraintTop_toTopOf="@+id/text_time_label_moon"
             app:layout_constraintBottom_toBottomOf="@+id/moonphase_view" />
 
-    </android.support.constraint.ConstraintLayout>
+    </com.forrestguice.support.constraint.ConstraintLayout>
 
 </merge>

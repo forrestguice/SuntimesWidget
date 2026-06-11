@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.widgets;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
@@ -34,9 +35,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,33 +45,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.ClockWidget0;
-import com.forrestguice.suntimeswidget.ClockWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0;
-import com.forrestguice.suntimeswidget.MoonWidget0_2x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x1;
-import com.forrestguice.suntimeswidget.MoonWidget0_3x2;
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
+import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SolsticeWidget0;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_2x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget0_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x1;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x2;
-import com.forrestguice.suntimeswidget.SuntimesWidget2_3x3;
 
+import com.forrestguice.suntimeswidget.calculator.DataSubstitutions;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.settings.android.AndroidSuntimesDataSettings;
+import com.forrestguice.util.ExecutorUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A ListAdapter of WidgetListItems.
@@ -79,10 +75,8 @@ import java.util.List;
 @SuppressWarnings("Convert2Diamond")
 public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetListItem>
 {
-    private static final SuntimesUtils utils = new SuntimesUtils();
-
     @SuppressWarnings("rawtypes")
-    public static Class[] ALL_WIDGETS = new Class[] {
+    public static final Class[] ALL_WIDGETS = new Class[] {
             SuntimesWidget0.class, SuntimesWidget0_2x1.class, SuntimesWidget0_3x1.class, SuntimesWidget1.class, SolsticeWidget0.class,
             MoonWidget0.class, MoonWidget0_2x1.class, MoonWidget0_3x1.class, MoonWidget0_3x2.class,
             SuntimesWidget2.class, SuntimesWidget2_3x1.class, SuntimesWidget2_3x2.class, SuntimesWidget2_3x3.class,
@@ -103,14 +97,105 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         return components.toArray(new ComponentName[0]);
     }
 
-    private Context context;
-    private ArrayList<WidgetListItem> widgets;
+    private final WeakReference<Context> contextRef;
+    private final ArrayList<WidgetListItem> widgets;
+
+    public WidgetListAdapter(Context context)
+    {
+        super(context, R.layout.layout_listitem_widgets);
+        this.contextRef = new WeakReference<>(context);
+        this.widgets = new ArrayList<WidgetListItem>();
+    }
 
     public WidgetListAdapter(Context context, ArrayList<WidgetListItem> widgets)
     {
         super(context, R.layout.layout_listitem_widgets, widgets);
-        this.context = context;
+        this.contextRef = new WeakReference<>(context);
         this.widgets = widgets;
+    }
+
+    public void loadItems(Context context, Class<?>[] widgetClasses)
+    {
+        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+        String packageName = context.getPackageName();
+        ArrayList<WidgetListItem> items = new ArrayList<>();
+        for (Class<?> widgetClass : widgetClasses) {
+            items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass.getName()));
+        }
+        addAll(items);
+    }
+
+    public void loadItems(final Context context, final List<String> widgetInfoProviders, boolean blocking)
+    {
+        if (blocking)
+        {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            for (final String uri : widgetInfoProviders)
+            {
+                ArrayList<WidgetListItem> items = ExecutorUtils.getResult("WidgetListAdapter", new Callable<ArrayList<WidgetListItem>>()
+                {
+                    @Override
+                    public ArrayList<WidgetListItem> call()
+                    {
+                        long bench_start = System.nanoTime();
+                        ArrayList<WidgetListItem> result = createWidgetListItems(context, uri);
+                        Log.d("WidgetListAdapter", "BENCH: querying " + uri  + " took " + ((System.nanoTime() - bench_start) / 1000000.0) + " ms");
+                        return result;
+                    }
+                }, MAX_WAIT_MS);
+                if (items != null) {
+                    addAll(items);
+                }
+            }
+            executor.shutdownNow();
+
+        } else {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            initExecutorService().submit(new Runnable()
+            {
+                public void run()
+                {
+                    for (String contentUri : widgetInfoProviders)
+                    {
+                        final ArrayList<WidgetListItem> result = createWidgetListItems(context, contentUri);
+                        handler.post(new Runnable() {
+                            public void run() {
+                                addAll(result);
+                                cleanupExecutorService();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    public static final long MAX_WAIT_MS = 1000;
+
+    @Nullable
+    private ExecutorService executor = null;
+    protected ExecutorService initExecutorService()
+    {
+        if (executor == null || executor.isShutdown()) {
+            executor = Executors.newSingleThreadExecutor();
+        }
+        return executor;
+    }
+    protected void cleanupExecutorService()
+    {
+        if (executor != null) {
+            if (!executor.isShutdown()) {
+                executor.shutdownNow();
+            }
+            executor = null;
+        }
+    }
+
+    @Override
+    public void addAll(@NonNull Collection<? extends WidgetListItem> collection)
+    {
+        widgets.addAll(collection);
+        super.addAll(collection);
     }
 
     @Override
@@ -131,7 +216,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         View view = convertView;
         if (convertView == null)
         {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(contextRef.get());
             view = inflater.inflate(R.layout.layout_listitem_widgets, parent, false);
         }
 
@@ -165,7 +250,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
             SuntimesData data;
             String widgetTitle;
-            int widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern;
+            int widgetSummaryResID = R.string.widgetList_label_itemSummaryPattern;
             String widgetType = getWidgetName(context, widgetClass);
             String widgetClass0 = simpleClassName(widgetClass);
             String configClass = info.configure.getClassName();
@@ -174,30 +259,31 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             if (widgetClass0.equals("SolsticeWidget0"))
             {
                 SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("MoonWidget0") || widgetClass0.equals("MoonWidget0_2x1") || widgetClass0.equals("MoonWidget0_3x1") || widgetClass0.equals("MoonWidget0_3x2")) {
                 SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
 
             } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")
                     || widgetClass0.equals("DateWidget0")
                     || widgetClass0.equals("AlarmWidget0") || widgetClass0.equals("AlarmWidget0_2x2") || widgetClass0.equals("AlarmWidget0_3x2")) {
                 SuntimesClockData data0 = new SuntimesClockData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
+                widgetSummaryResID = R.string.widgetList_label_itemSummaryPattern1;
                 data = data0;
 
             } else {
                 SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
-                widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                widgetTitle = DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), titlePattern, data0);
                 data = data0;
             }
 
-            String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+            String title = context.getString(R.string.widgetList_label_itemTitle, widgetTitle);
             String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
+            @SuppressLint("StringFormatMatches")    // second argument may be omitted/ignored intentionally
             String summary = context.getString(widgetSummaryResID, widgetType, source);
             items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
         }
@@ -258,18 +344,15 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         return items;
     }
 
-    public static WidgetListAdapter createWidgetListAdapter(@NonNull Context context)
+    public static WidgetListAdapter createWidgetListAdapter(@NonNull Context context) {
+        return createWidgetListAdapter(context, true);
+    }
+    public static WidgetListAdapter createWidgetListAdapter(@NonNull Context context, boolean blocking)
     {
-        AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-        ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
-        String packageName = context.getPackageName();
-        for (Class widgetClass : ALL_WIDGETS) {
-            items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass.getName()));
-        }
-        for (String uri : queryWidgetInfoProviders(context)) {
-            items.addAll(createWidgetListItems(context, uri));
-        }
-        return new WidgetListAdapter(context, items);
+        WidgetListAdapter adapter = new WidgetListAdapter(context);
+        adapter.loadItems(context, ALL_WIDGETS);
+        adapter.loadItems(context, queryWidgetInfoProviders(context), blocking);
+        return adapter;
     }
 
     private static String getTitlePattern(Context context, @NonNull String widgetClass)
@@ -277,18 +360,18 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         switch (simpleClassName(widgetClass))
         {
             case "DateWidget0":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
+                return context.getString(R.string.widgetList_label_itemTitlePattern2);
 
             case "AlarmWidget0": case "AlarmWidget0_2x2": case "AlarmWidget0_3x2":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern3);
+                return context.getString(R.string.widgetList_label_itemTitlePattern3);
 
             case "ClockWidget0": case "ClockWidget0_3x1":
             case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
             case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
-                return context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
+                return context.getString(R.string.widgetList_label_itemTitlePattern1);
 
             case "SuntimesWidget0": case "SuntimesWidget0_2x1": case "SuntimesWidget1": case "SolsticeWidget0":
-            default: return context.getString(R.string.configLabel_widgetList_itemTitlePattern);
+            default: return context.getString(R.string.widgetList_label_itemTitlePattern);
         }
     }
 
@@ -346,7 +429,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         context.sendBroadcast(updateIntent);
     }
 
-    public static void updateWidgetsMatchingTheme(Context context, WidgetListAdapter adapter, String themeName)
+    public static void updateWidgetsMatchingTheme(Context context, @Nullable WidgetListAdapter adapter, @Nullable String themeName)
     {
         if (adapter != null) {
             for (ComponentName widgetClass : adapter.getAllWidgetClasses()) {
@@ -354,7 +437,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             }
         }
     }
-    public static void updateWidgetThemes(Context context, ComponentName widgetClass, String themeName)
+    public static void updateWidgetThemes(Context context, ComponentName widgetClass, @Nullable String themeName)
     {
         Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_THEME_UPDATE);
         updateIntent.putExtra(SuntimesWidget0.KEY_THEME, themeName);
@@ -368,7 +451,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     public static final String ACTION_SUNTIMES_LISTWIDGETS = "suntimes.action.LIST_WIDGETS";
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
     public static final String KEY_WIDGET_INFO_PROVIDER = "WidgetInfoProvider";
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+    public static String REQUIRED_PERMISSION() {
+        return BuildConfig.SUNTIMES_PERMISSION_ROOT + ".permission.READ_CALCULATOR";
+    }
 
     public static final String COLUMN_WIDGET_PACKAGENAME = "packagename";
     public static final String COLUMN_WIDGET_APPWIDGETID = "appwidgetid";
@@ -420,8 +505,9 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         boolean hasPermission = false;
         if (packageInfo.requestedPermissions != null)
         {
+            String requiredPermission = REQUIRED_PERMISSION();
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(requiredPermission)) {
                     hasPermission = true;
                     break;
                 }
@@ -434,7 +520,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.f
+     * ListItem representing a running widget; specifies appWidgetId, and configuration activity.
      */
     public static class WidgetListItem
     {
@@ -446,7 +532,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
         protected final String title;
         protected final String summary;
 
-        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, String title, String summary, String configClass )
+        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, @Nullable Drawable icon, @NonNull String title, String summary, @Nullable String configClass )
         {
             this.packageName = packageName;
             this.widgetClass = widgetClass;
@@ -470,15 +556,18 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return widgetClass;
         }
 
+        @Nullable
         public String getConfigClass()
         {
             return configClass;
         }
 
+        @Nullable
         public Drawable getIcon() {
             return icon;
         }
 
+        @NonNull
         public String getTitle()
         {
             return title;
@@ -489,6 +578,7 @@ public class WidgetListAdapter extends ArrayAdapter<WidgetListAdapter.WidgetList
             return summary;
         }
 
+        @NonNull
         public String toString()
         {
             return getTitle();

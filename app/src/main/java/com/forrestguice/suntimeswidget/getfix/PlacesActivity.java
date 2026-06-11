@@ -22,20 +22,28 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AndroidResID_LengthUnitDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.AngleDisplay;
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
+import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.views.PopupMenuCompat;
+import com.forrestguice.support.app.AppCompatActivity;
+import com.forrestguice.support.widget.PopupMenuCompat;
+import com.forrestguice.support.widget.Toolbar;
+import com.forrestguice.util.android.AndroidResources;
 
 public class PlacesActivity extends AppCompatActivity
 {
@@ -44,6 +52,7 @@ public class PlacesActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED = "selectedRowID";
     public static final String EXTRA_LOCATION = "selectedLocation";
 
+    @Nullable
     protected PlacesListFragment list;
 
     @Override
@@ -65,28 +74,53 @@ public class PlacesActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (getSupportActionBar() != null)
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
+        initFragments();
+    }
+
+    public static final String TAG_FRAGMENT_PLACESLIST = "PlacesListFragment";
+
+    protected void initFragments()
+    {
+        Intent intent = getIntent();
+        final long selectedRowID = intent.getLongExtra(EXTRA_SELECTED, -1);
+
+        list = (PlacesListFragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_PLACESLIST);
+        if (list == null) {
+            list = PlacesListFragment.newInstance();    // (PlacesListFragment) getSupportFragmentManager().findFragmentById(R.id.placesListFragment);
+        }
+
         list.setDialogThemOverride(AppSettings.loadTheme(this));
+        list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
         list.setFragmentListener(listFragmentListener);
 
-        Intent intent = getIntent();
-        list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
-        list.setSelectedRowID(intent.getLongExtra(EXTRA_SELECTED, -1));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, list, TAG_FRAGMENT_PLACESLIST)
+                .setReorderingAllowed(true)
+                .runOnCommit(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (selectedRowID != -1) {
+                            list.setSelectedRowID(selectedRowID);
+                        }
+                    }
+                })
+                .commit();
     }
 
     protected void initLocale()
     {
+        AndroidResources res = AndroidResources.wrap(this);
         WidgetSettings.initDefaults(this);
         WidgetSettings.initDisplayStrings(this);
+        LengthUnitDisplay.initDisplayStrings_LengthUnit(res, new AndroidResID_LengthUnitDisplay());
+        AngleDisplay.initDisplayStrings(res, new AndroidResID_AngleDisplay());
+        CardinalDirection.initDisplayStrings(res, new AndroidResID_CardinalDirection());
     }
 
     @Override
@@ -97,33 +131,29 @@ public class PlacesActivity extends AppCompatActivity
         return true;
     }
 
-    @SuppressWarnings("RestrictedApi")
     @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    public boolean onPreparePanel(int featureId, View view, @NonNull Menu menu)
     {
         PopupMenuCompat.forceActionBarIcons(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return super.onPreparePanel(featureId, view, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.action_about:
-                showAbout();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_about) {
+            showAbout();
+            return true;
 
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    private PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
+    private final PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
     {
         @Override
         public boolean onItemEdit(PlaceItem item) {
@@ -149,6 +179,18 @@ public class PlacesActivity extends AppCompatActivity
 
         @Override
         public void onFilterChanged(String filterText, Long[] filterExceptions) {}
+
+        @Override
+        public void onToggleProgress(boolean value) {
+            toggleProgress(value);
+        }
+
+        @Override
+        public void onLiftAppBar(boolean value) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setElevation(value ? SuntimesUtils.dpToPixels(PlacesActivity.this, 50) : 0);
+            }
+        }
     };
 
     protected void pickPlace(PlaceItem item)
@@ -156,17 +198,25 @@ public class PlacesActivity extends AppCompatActivity
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED, item.rowID);
         intent.putExtra(EXTRA_LOCATION, item.location);
-        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, (list != null && list.isModified()));
         setResult(Activity.RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
+    }
+
+    protected void toggleProgress(boolean value)
+    {
+        View progress = findViewById(R.id.app_progress);
+        if (progress != null) {
+            progress.setVisibility(value ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
     public void onBackPressed()
     {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, (list != null && list.isModified()));
         setResult(list.isModified() ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
         finish();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);

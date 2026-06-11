@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import com.forrestguice.support.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
@@ -31,7 +31,7 @@ public class LightTheme1 extends LightTheme
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
     private static ThemeDescriptor THEMEDEF_DESCRIPTOR = null;
 
-    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.LIGHT;
+    public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.LIGHT_HOLO;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_light;
     public static final int[] THEMEDEF_PADDING = {2, 4, 4, 4};
 
@@ -47,7 +47,7 @@ public class LightTheme1 extends LightTheme
         this.themeVersion = THEMEDEF_VERSION;
         this.themeName = THEMEDEF_NAME;
         this.themeIsDefault = true;
-        this.themeDisplayString = context.getString(R.string.widgetThemes_light);
+        this.themeDisplayString = context.getString(R.string.themes_widgetThemes_light);
 
         this.themeBackground = THEMEDEF_BACKGROUND;
         this.themeBackgroundColor = ContextCompat.getColor(context, THEMEDEF_BACKGROUND_COLOR_ID);
@@ -62,7 +62,7 @@ public class LightTheme1 extends LightTheme
     public static ThemeDescriptor themeDescriptor(Context context)
     {
         if (THEMEDEF_DESCRIPTOR == null) {
-            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.widgetThemes_light), THEMEDEF_VERSION, THEMEDEF_BACKGROUND.name(), Color.LTGRAY);
+            THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, context.getString(R.string.themes_widgetThemes_light), THEMEDEF_VERSION, THEMEDEF_BACKGROUND.name(), Color.LTGRAY);
         }
         return THEMEDEF_DESCRIPTOR;
     }
