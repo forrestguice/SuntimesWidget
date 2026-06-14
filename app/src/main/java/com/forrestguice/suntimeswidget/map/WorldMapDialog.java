@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
 import com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgroundItem;
@@ -50,6 +51,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -543,6 +545,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
             options.showGrid = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showDebugLines = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.anim_frameOffsetMinutes = getFrameOffsetMinutes(WorldMapWidgetSettings.loadMapSpeed(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
+            options.rotation = WorldMapWidgetSettings.loadWorldMapRotation(context, 0, mapMode.getMapTag());
 
             try {
                 options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
@@ -958,6 +961,11 @@ public class WorldMapDialog extends BottomSheetDialogBase
     {
         WorldMapOptions options = worldmap.getOptions();
 
+        MenuItem option_orientation = m.findItem(R.id.mapOption_orientation);
+        if (option_orientation != null) {
+            populateOrientationMenu(context, option_orientation, R.id.mapOption_orientation_group);
+        }
+
         MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
             option_latitudes.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2));
@@ -1092,6 +1100,48 @@ public class WorldMapDialog extends BottomSheetDialogBase
             return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
         }
         return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
+    }
+
+    protected void populateOrientationMenu(Context context, MenuItem item, int groupId)
+    {
+        if (item != null)
+        {
+            WorldMapProjection projection = WorldMapView.getMapProjection(mapMode);
+            double[] rotations = projection.getRotations();
+            WorldMapOptions options = worldmap.getOptions();
+
+            if (rotations != null && rotations.length > 0)
+            {
+                SubMenu submenu = item.getSubMenu();
+                int order = 0;
+                for (double rotation : rotations)
+                {
+                    int itemID = Menu.NONE;
+                    if (Build.VERSION.SDK_INT >= 17) {
+                        itemID = View.generateViewId();
+                    }
+
+                    String label = CardinalDirection.getDirection(-rotation).getLongDisplayString();
+                    MenuItem menuItem = submenu.add(groupId, itemID, order++, label);
+                    menuItem.setChecked(options.rotation == rotation);
+                    menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
+                    {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem)
+                        {
+                            WorldMapWidgetSettings.saveWorldMapRotation(context, 0, mapMode.getMapTag(), rotation);
+                            updateOptions(context);
+                            updateViews();
+                            return true;
+                        }
+                    });
+                }
+                submenu.setGroupCheckable(groupId, true, true);    // true checkable, true exclusive
+                item.setVisible(order > 0);
+            } else {
+                item.setVisible(false);
+            }
+        }
     }
 
     private void shareMap()

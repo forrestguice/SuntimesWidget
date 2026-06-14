@@ -82,6 +82,8 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_CENTER_LATITUDE = "center_latitude";
     public static final String PREF_KEY_WORLDMAP_CENTER_LONGITUDE = "center_longitude";
 
+    public static final String PREF_KEY_WORLDMAP_ROTATION = "rotation";
+
     public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
     public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
 
@@ -414,6 +416,16 @@ public class WorldMapWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
         String s = prefs.getString(prefs_prefix + key + mapTag, defValue);
         return (s != null ? s : defValue);
+    }
+
+    public static double loadWorldMapRotation(Context context, int appWidgetId, String mapTag) {
+        return Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_ROTATION, mapTag, "0"));
+    }
+    public static void saveWorldMapRotation(Context context, int appWidgetId, String mapTag, double value) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_ROTATION, mapTag, Double.toString(value));
+    }
+    public static void deleteWorldMapRotation(Context context, int appWidgetId, String mapTag) {
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_ROTATION, mapTag);
     }
 
     public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] defCenter) {

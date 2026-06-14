@@ -59,6 +59,18 @@
                 android:icon="?attr/icActionAppearance"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/mapOption_orientation"
+                android:title="@string/worldmap_dialog_option_orientation"
+                android:icon="?attr/icActionWorldMap"
+                android:visible="false"
+                app:showAsAction="never">
+                <menu>
+                    <group
+                        android:id="@+id/mapOption_orientation_group"
+                        android:checkableBehavior="single" />
+                </menu>
+            </item>
+
             <group android:id="@+id/mapOption_group_light">
 
                 <item android:id="@+id/mapOption_sunlight"
