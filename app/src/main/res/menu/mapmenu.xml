@@ -2,12 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/mapOption_addonBackgrounds"
+        android:icon="?attr/icActionWorldMap"
+        android:title="@string/themes_configLabel_themeColorMapBackground"
+        android:visible="false"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/addonBackgroundsGroup"
+                android:checkableBehavior="single" />
+        </menu>
+    </item>
+
     <item android:id="@+id/mapOption_center_current"
         android:title="@string/worldmap_dialog_option_center_current"
         android:icon="?attr/icActionSettings"
         app:showAsAction="never">
 
         <menu>
+
             <item android:id="@+id/mapOption_center"
                 android:title="@string/worldmap_dialog_option_center"
                 android:icon="?attr/icActionPlace"
