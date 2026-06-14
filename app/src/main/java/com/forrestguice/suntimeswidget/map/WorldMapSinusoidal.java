@@ -158,4 +158,9 @@ public class WorldMapSinusoidal extends WorldMapVanDerGrinten
         return path;
     }
 
+    @Override
+    public double[] getRotations() {
+        return new double[] { 0d, 180d };
+    }
+
 }

@@ -276,6 +276,10 @@ public class WorldMapEquiazimuthal extends WorldMapProjection
             initPaint(options);
         }
 
+        if (options.rotation != 0 && supportsRotation(options.rotation)) {
+            c.rotate((float) options.rotation, (float) mid[0], (float) mid[1]);
+        }
+
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
@@ -618,6 +622,11 @@ public class WorldMapEquiazimuthal extends WorldMapProjection
             path.add((float)(mid[1] - ((point[1] / 180d) * mid[1])));
         }
         return toFloatArray(path);
+    }
+
+    @Override
+    public double[] getRotations() {
+        return new double[0];    // empty array (any/all)
     }
 
 }

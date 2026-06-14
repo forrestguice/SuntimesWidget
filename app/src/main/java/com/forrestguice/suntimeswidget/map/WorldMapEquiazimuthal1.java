@@ -308,5 +308,4 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
     }
 
-
 }

@@ -492,4 +492,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return toFloatArray(path);
     }
 
+    @Override
+    public double[] getRotations() {
+        return new double[] { 0d, 90d, 180d, 270d };
+    }
+
 }

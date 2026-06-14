@@ -49,6 +49,23 @@ public abstract class WorldMapProjection
     public abstract double[] fromBitmapCoords(int x, int y, double[] mid, int w, int h);
     public double[] getCenter() { return new double[] {0,0}; }
 
+    public double[] getRotations() { return new double[0]; }    // empty array (any rotation); null array (none)
+    protected boolean supportsRotation(double deg)
+    {
+        double[] rotations = getRotations();
+        if (rotations != null && rotations.length == 0) {
+            return true;
+        }
+        if (rotations != null) {
+            for (double rotation : rotations) {
+                if (rotation == deg) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapOptions options)
     {
         Calendar mapTime;

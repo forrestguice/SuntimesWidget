@@ -219,4 +219,9 @@ public class WorldMapMercator extends WorldMapEquirectangular
         c.drawLine(0, polar1[1], w, polar1[1], p);
     }
 
+    @Override
+    public double[] getRotations() {
+        return new double[] { 0d, 90d, 180d, 270d };
+    }
+
 }

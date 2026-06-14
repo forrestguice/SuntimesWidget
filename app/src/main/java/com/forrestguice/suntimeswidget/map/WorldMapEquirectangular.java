@@ -23,6 +23,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -157,6 +158,10 @@ public class WorldMapEquirectangular extends WorldMapProjection
 
         if (!paintInitialized) {
             initPaint(options);
+        }
+
+        if (options.rotation != 0 && supportsRotation(options.rotation)) {
+            c.rotate((float) options.rotation, (float) mid[0], (float) mid[1]);
         }
 
         drawMap(c, w, h, paintForeground, options);
@@ -329,6 +334,12 @@ public class WorldMapEquirectangular extends WorldMapProjection
         Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
     }
+
+    /*protected Bitmap makeRotatedBitmap(Bitmap b, float deg) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(deg);
+        return Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+    }*/
 
     protected Bitmap makeMaskedBitmap(int w, int h, Bitmap b) {
         return b;
@@ -508,6 +519,11 @@ public class WorldMapEquirectangular extends WorldMapProjection
         int polarY1 = (int)(mid[1] - polar);
         p.setColor(Color.RED);
         c.drawLine(0, polarY1, w, polarY1, p);
+    }
+
+    @Override
+    public double[] getRotations() {
+        return new double[] { 0d, 180d };
     }
 
 }

@@ -379,4 +379,9 @@ public class WorldMapVanDerGrinten extends WorldMapMercator
         return toFloatArray(path);
     }
 
+    @Override
+    public double[] getRotations() {
+        return new double[] { 0d, 90d, 180d, 270d };
+    }
+
 }

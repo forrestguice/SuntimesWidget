@@ -70,6 +70,7 @@ public class WorldMapOptions
     public int moonStrokeScale = 3;               // 3; default 3 strokes fit within the radius of the moon
 
     public boolean translateToLocation = false;
+    public double rotation = 90d;    // degrees
 
     public double[] center = null;
     @Nullable
