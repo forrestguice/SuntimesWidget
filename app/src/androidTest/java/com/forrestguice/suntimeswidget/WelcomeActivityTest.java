@@ -267,7 +267,7 @@ public class WelcomeActivityTest extends SuntimesActivityTestBase
         {
             onView(withText(R.string.app_name)).check(assertShownCompletely);
             onView(withText(R.string.app_shortdesc)).check(assertShownCompletely);
-            onView(allOf( withId(R.id.icon), hasDrawable(R.drawable.ic_action_suntimes_huge),
+            onView(allOf( withId(R.id.icon), hasDrawable(R.drawable.ic_96dp_suntimes),
                     hasSibling(withText(R.string.app_name))
             )).check(assertShownCompletely);
             return this;

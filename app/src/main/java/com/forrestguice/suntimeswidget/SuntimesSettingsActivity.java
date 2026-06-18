@@ -451,8 +451,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
             int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
-            int calendarIcon = a.getResourceId(3, R.drawable.ic_calendar);
-            int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
+            int calendarIcon = a.getResourceId(3, R.drawable.ic_action_calendar);
+            int paletteIcon = a.getResourceId(4, R.drawable.ic_action_palette);
             int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
             int alarmIcon = a.getResourceId(6, R.drawable.ic_action_alarms);
             a.recycle();

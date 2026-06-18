@@ -44,10 +44,10 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/map_modemenu"
-        android:layout_width="0dp" android:layout_height="match_parent"
+        android:layout_width="0dp" android:layout_height="56dp" android:minWidth="56dp"
         android:background="?attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/worldmap_dialog_action_menu"
+        android:contentDescription="@string/worldmap_dialog_action_menu" android:scaleType="fitCenter" android:padding="14dp"
         android:src="?attr/icActionWorldMap"
         style="?attr/actionOverflowButtonStyle" />
 

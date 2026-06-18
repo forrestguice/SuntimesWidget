@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/text_offset" style="@style/ChipText"
-                    android:gravity="center"
+                    android:gravity="center" android:drawablePadding="6dp"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minWidth="100dp" android:minHeight="@dimen/chip_minHeight"
                     tools:text="at" />
@@ -48,7 +48,7 @@
                 <TextView
                     android:id="@+id/text_event" style="@style/ChipText1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:minHeight="@dimen/chip_minHeight"
+                    android:minHeight="@dimen/chip_minHeight" android:drawablePadding="6dp"
                     android:drawableLeft="?attr/icActionTime" android:drawableStart="?attr/icActionTime"
                     tools:text="Nautical Twilight (end)" />
 
@@ -78,7 +78,7 @@
                 <TextView
                     android:id="@+id/text_repeat" style="@style/ChipText1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:minHeight="@dimen/chip_minHeight"
+                    android:minHeight="@dimen/chip_minHeight" android:drawablePadding="6dp"
                     android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
                     android:text="@string/alarmOption_repeat"
                     tools:text="Sun, Mon, Tue, Wed, Thu, Fri" />

@@ -13,6 +13,6 @@
     android:widgetFeatures="reconfigurable"
     android:configure="com.forrestguice.suntimeswidget.widgets.SuntimesConfigActivity1"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/widget1_preview">
+    android:previewImage="@drawable/widget_preview_widget1">
 
 </appwidget-provider>

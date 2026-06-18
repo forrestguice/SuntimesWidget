@@ -24,7 +24,7 @@
 
                 <item android:id="@+id/action_sunposition"
                     android:title="@string/action_sunDialog"
-                    android:icon="@drawable/ic_sun"
+                    android:icon="@drawable/ic_action_sun0"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"

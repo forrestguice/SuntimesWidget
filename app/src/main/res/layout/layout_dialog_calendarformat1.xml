@@ -30,7 +30,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_general_calendarFormat_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible" android:enabled="false"
                 android:layout_height="wrap_content" android:layout_width="0dp"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_action_help_dark" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/action_help" />
 
         </LinearLayout>
@@ -58,7 +58,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_general_calendarPattern_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_action_help_dark" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/action_help" />
 
         </LinearLayout>

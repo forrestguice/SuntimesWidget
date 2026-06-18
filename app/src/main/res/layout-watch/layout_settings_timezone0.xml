@@ -93,7 +93,7 @@
 
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_solartime_help"
                 style="@style/ActionButton" android:visibility="visible"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_action_help_dark" android:tint="?attr/colorAccent"
                 android:layout_width="wrap_content" android:layout_height="32dp"
                 android:contentDescription="@string/action_help" />
 

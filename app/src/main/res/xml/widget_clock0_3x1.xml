@@ -5,7 +5,7 @@
 
     android:updatePeriodMillis="@integer/widget_updateInterval_hourly"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/clockwidget_3x1_preview"
+    android:previewImage="@drawable/widget_preview_clockwidget_3x1"
 
     android:resizeMode="horizontal|vertical"
     android:minWidth="@dimen/widget_size_minWidth3x1" android:minHeight="@dimen/widget_size_minHeight"

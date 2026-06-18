@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minHeight="@dimen/chip_minHeight"
                     android:button="@android:color/transparent"
-                    android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss"
+                    android:drawableLeft="?attr/icActionDismiss" android:drawableStart="?attr/icActionDismiss" android:drawablePadding="6dp"
                     tools:text="Addon alarm challenge dismiss" />
 
             </FrameLayout>
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minHeight="@dimen/chip_minHeight"
                     android:button="@android:color/transparent"
-                    android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
+                    android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension" android:drawablePadding="6dp"
                     tools:text="No Action" />
 
             </FrameLayout>
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minHeight="@dimen/chip_minHeight"
                     android:button="@android:color/transparent"
-                    android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze"
+                    android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze" android:drawablePadding="6dp"
                     tools:text="Snooze Limit: none" />
 
             </FrameLayout>
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:minHeight="@dimen/chip_minHeight"
                     android:button="@android:color/transparent"
-                    android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze"
+                    android:drawableLeft="?attr/icActionSnooze" android:drawableStart="?attr/icActionSnooze" android:drawablePadding="6dp"
                     tools:text="Snooze for\n10 minutes" />
 
             </FrameLayout>

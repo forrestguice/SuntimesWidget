@@ -35,13 +35,16 @@ import android.view.View;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.BuildConfig;
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
+import com.forrestguice.util.ExecutorUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.Callable;
+
+import static com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgroundContract.TYPE_DAY;
 
 /**
  * WorldMapBackgrounds
@@ -145,6 +148,28 @@ public class WorldMapBackgrounds
         return items;
     }
 
+    public static List<WorldMapBackgroundItem> queryWorldMapBackgroundItemsWithTimeout(Context context, String projection, int timeoutAfter)
+    {
+        List<WorldMapBackgroundItem> items = ExecutorUtils.getResult("", new Callable<List<WorldMapBackgroundItem>>() {
+            @Override
+            public List<WorldMapBackgroundItem> call() throws Exception {
+                return queryWorldMapBackgroundItems(context, projection);
+            }
+        }, timeoutAfter);
+        return (items != null ? items : new ArrayList<>());
+    }
+
+    public static List<WorldMapBackgroundItem> values(String type, List<WorldMapBackgroundItem> items)
+    {
+        List<WorldMapBackgroundItem> result = new ArrayList<>();
+        for (WorldMapBackgroundItem item : items) {
+            if (type.equals(item.getType())) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
+
     /**
      * Retrieve the list of available backgrounds from a given background provider.
      * @param provider world map background provider uri (@see queryWorldMapBackgroundProviders)
@@ -168,7 +193,8 @@ public class WorldMapBackgrounds
                     int i_summary = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_SUMMARY);
                     int i_mapproj = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_PROJECTION);
                     int i_mapproj_center = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_PROJECTION_CENTER);
-                    int i_fileuri = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_FILE);
+                    int i_fileUri = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_FILE);
+                    int i_type = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_TYPE);
                     int i_tint = cursor.getColumnIndex(WorldMapBackgroundContract.COLUMN_BACKGROUND_TINT);
 
                     String map_projection = (i_mapproj >= 0) ? cursor.getString(i_mapproj) : null;
@@ -176,7 +202,7 @@ public class WorldMapBackgrounds
                         Log.w("queryBackground", "map projection is missing! skipping item returned from: " + provider);
                         continue;
                     }
-                    String file_uri = (i_fileuri >= 0) ? cursor.getString(i_fileuri) : null;
+                    String file_uri = (i_fileUri >= 0) ? cursor.getString(i_fileUri) : null;
                     if (file_uri == null) {
                         Log.w("queryBackground", "file uri is missing! skipping item returned from: " + provider);
                         continue;
@@ -188,6 +214,7 @@ public class WorldMapBackgrounds
                     item.map_projection = map_projection;
                     item.map_projection_center = (i_mapproj_center >= 0 ? WorldMapBackgroundItem.parseCenter(cursor.getString(i_mapproj_center)) : null);
                     item.file_uri = file_uri;
+                    item.type = (i_type >= 0) ? cursor.getString(i_type) : TYPE_DAY;
                     item.tint = (i_tint >= 0 && Boolean.parseBoolean(cursor.getString(i_tint)));
 
                     String titleValue = (i_title >= 0) ? cursor.getString(i_title) : null;
@@ -226,11 +253,12 @@ public class WorldMapBackgrounds
      * @param submenuItem MenuItem
      * @param backgroundItems List<WorldMapBackgroundItem>
      */
-    public static void populateSubMenu(Context context, @Nullable MenuItem submenuItem, int groupId, String mapTag, @Nullable double[] center, @NonNull List<WorldMapBackgroundItem> backgroundItems, @Nullable OnWorldMapBackgroundItemClick menuItemListener)
+    public static void populateSubMenu(Context context, @Nullable MenuItem submenuItem, int groupId, String mapTag, @Nullable double[] center, @NonNull Collection<WorldMapBackgroundItem> backgroundItems, @Nullable OnWorldMapBackgroundItemClick menuItemListener)
     {
         if (submenuItem != null)
         {
-            String selectedUri = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
+            String selectedDayUri = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center, false);
+            String selectedNightUri = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center, true);
             SubMenu submenu = submenuItem.getSubMenu();
             if (submenu != null)
             {
@@ -243,8 +271,7 @@ public class WorldMapBackgrounds
                     }
 
                     MenuItem menuItem = submenu.add(groupId, itemID, order++, item.getTitle());
-                    menuItem.setChecked(item.getUri().equals(selectedUri));
-                    Log.d("DEBUG", item.getUri() + " ?= " + selectedUri);
+                    menuItem.setChecked(item.getUri().equals(selectedDayUri) || item.getUri().equals(selectedNightUri));
                     menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
                     {
                         @Override

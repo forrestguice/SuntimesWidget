@@ -168,7 +168,8 @@ public class UIPrefsFragment extends PreferenceFragment
 
         Preference manage_events = (Preference) fragment.findPreference("manage_events");
         if (manage_events != null) {
-            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
+            manage_events.setIcon(IconUtils.getPreferenceIcon(activity, R.attr.icActionEvents, R.drawable.ic_action_events_ref));
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(activity));
             manage_events.setOrder(-91);
         }
 
@@ -264,7 +265,7 @@ public class UIPrefsFragment extends PreferenceFragment
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                             .setCancelable(false)
                             .setMessage(context.getString(R.string.events_editevent_dialog_showevent_off))
-                            .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
+                            .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
@@ -576,13 +577,10 @@ public class UIPrefsFragment extends PreferenceFragment
 
     public static void initPref_observerHeight(final Activity context, final LengthPreference pref)
     {
-        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionShadow});
-        int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
-        a.recycle();
-
+        int drawableID = IconUtils.getThemedIcon(context, R.attr.icActionShadow, R.drawable.ic_action_shadow);
         String title = context.getString(R.string.settings_general_observerheight) + " [i]";
-        int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
-        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
+        int iconSize = (int) context.getResources().getDimension(R.dimen.prefSummaryIcon_size);
+        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0, null);
         SpannableStringBuilder titleSpan = SpanUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 

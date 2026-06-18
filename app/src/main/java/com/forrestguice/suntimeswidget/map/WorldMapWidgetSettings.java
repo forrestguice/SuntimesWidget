@@ -450,13 +450,24 @@ public class WorldMapWidgetSettings
     }
 
     public static String loadWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
-        return loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+        return loadWorldMapBackground(context, appWidgetId, mapTag, center, false);
     }
     public static void saveWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, String backgroundUri) {
-        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center), backgroundUri);
+        saveWorldMapBackground(context, appWidgetId, mapTag, center, false, backgroundUri);
     }
     public static void deleteWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
-        deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+        deleteWorldMapBackground(context, appWidgetId, mapTag, center, false);
+        deleteWorldMapBackground(context, appWidgetId, mapTag, center, true);
+    }
+
+    public static String loadWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, boolean night) {
+        return loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center) + (night ? ":night" : ""));
+    }
+    public static void saveWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, boolean night, @Nullable String backgroundUri) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center) + (night ? ":night" : ""), backgroundUri);
+    }
+    public static void deleteWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, boolean night) {
+        deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center) + (night ? ":night" : ""));
     }
     public static void initWorldMapBackgroundDefaults(Context context)
     {

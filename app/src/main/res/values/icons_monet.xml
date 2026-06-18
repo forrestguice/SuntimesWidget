@@ -33,22 +33,22 @@
 
     <drawable name="ic_action_place_ref1">@drawable/ic_action_place_light</drawable>
     <drawable name="ic_action_map1_ref1">@drawable/ic_action_map1_light</drawable>
-    <drawable name="ic_action_map_ref1">@drawable/ic_action_map_light</drawable>
+    <drawable name="ic_action_map_ref1">@drawable/ic_action_map2_light</drawable>
     <drawable name="ic_action_time_ref1">@drawable/ic_action_time_light</drawable>
     <drawable name="ic_weather_sunny_ref1">@drawable/ic_weather_sunny_light</drawable>
     <drawable name="ic_action_alarms_ref1">@drawable/ic_action_alarms_light</drawable>
-    <drawable name="ic_calendar_ref1">@drawable/ic_calendar_light</drawable>
+    <drawable name="ic_calendar_ref1">@drawable/ic_action_calendar_light</drawable>
     <drawable name="ic_action_notification_ref1">@drawable/ic_action_notification_light</drawable>
     <drawable name="ic_action_vibration_ref1">@drawable/ic_action_vibration_light</drawable>
     <drawable name="ic_action_soundenabled_ref1">@drawable/ic_action_soundenabled_light</drawable>
     <drawable name="ic_action_sounddisabled_ref1">@drawable/ic_action_sounddisabled_light</drawable>
     <drawable name="ic_action_about_ref1">@drawable/ic_action_about_light</drawable>
     <drawable name="ic_action_warning_ref1">@drawable/ic_action_warning_light</drawable>
-    <drawable name="ic_action_error_ref1">@drawable/ic_action_error_light</drawable>
+    <drawable name="ic_action_error_ref1">@drawable/ic_action_report_light</drawable>
     <drawable name="ic_action_widget_ref1">@drawable/ic_action_widget_light</drawable>
-    <drawable name="ic_palette_ref1">@drawable/ic_palette_light</drawable>
+    <drawable name="ic_palette_ref1">@drawable/ic_action_palette_light</drawable>
     <drawable name="ic_action_extension_ref1">@drawable/ic_action_extension_light</drawable>
-    <drawable name="baseline_terrain_ref1_18">@drawable/baseline_terrain_black_18</drawable>
+    <drawable name="baseline_terrain_ref1_18">@drawable/ic_action_terrain_light</drawable>
     <drawable name="ic_action_shadow_ref1">@drawable/ic_action_shadow_light</drawable>
     <drawable name="ic_action_locale_ref1">@drawable/ic_action_locale_light</drawable>
     <drawable name="ic_action_settings_ref1">@drawable/ic_action_settings_light</drawable>

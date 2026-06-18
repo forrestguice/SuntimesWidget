@@ -18,15 +18,18 @@
 
 package com.forrestguice.suntimeswidget.map.backgrounds;
 
+import static com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgroundContract.TYPE_DAY;
+
 /**
  * @see WorldMapBackgroundContract
  */
 public class WorldMapBackgroundItem
 {
     public WorldMapBackgroundItem() {}
-    public WorldMapBackgroundItem(String providerUri, String id, String title, String summary, String mapProjection, String mapProjectionCenter, String fileUri, String tint)
+    public WorldMapBackgroundItem(String providerUri, String type, String id, String title, String summary, String mapProjection, String mapProjectionCenter, String fileUri, String tint)
     {
         this.provider_uri = providerUri;
+        this.type = type;
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -42,11 +45,12 @@ public class WorldMapBackgroundItem
         this.provider_uri = provider_uri;
         this.id = id;
         this.file_uri = manifest[0];
-        this.title = manifest[1];
-        this.summary = manifest[2];
-        this.map_projection = manifest[3];
-        this.map_projection_center = parseCenter(manifest[4]);
-        this.tint = Boolean.parseBoolean(manifest[5]);
+        this.type = manifest[1];
+        this.title = manifest[2];
+        this.summary = manifest[3];
+        this.map_projection = manifest[4];
+        this.map_projection_center = parseCenter(manifest[5]);
+        this.tint = Boolean.parseBoolean(manifest[6]);
         isValid = true;
     }
 
@@ -157,5 +161,13 @@ public class WorldMapBackgroundItem
             }
         }
         return center;
+    }
+
+    protected String type = TYPE_DAY;
+    public String getType() {
+        return type;
+    }
+    public void setType(String value) {
+        type = value;
     }
 }

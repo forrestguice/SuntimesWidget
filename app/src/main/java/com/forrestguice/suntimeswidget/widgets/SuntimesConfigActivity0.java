@@ -2675,7 +2675,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         String title = context.getString(R.string.widgetimport_dialog_title2);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title)
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
@@ -2699,7 +2699,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         String title = context.getString(R.string.widgetimport_dialog_title1);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title)
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                 .setSingleChoiceItems(labels, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })
@@ -2766,7 +2766,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         String title = context.getString(R.string.action_restoreDefaults);
         AlertDialog.Builder confirm = new AlertDialog.Builder(context).setTitle(title)
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                 .setMessage(context.getString(R.string.widgetreset_dialog_message))
                 .setPositiveButton(context.getString(R.string.action_restoreDefaults), new DialogInterface.OnClickListener()
                 {

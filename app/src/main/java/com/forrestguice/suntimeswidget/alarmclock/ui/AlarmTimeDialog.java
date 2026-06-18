@@ -414,7 +414,7 @@ public class AlarmTimeDialog extends DialogBase
                 int res_icon0 = typedArray.getResourceId(0, R.drawable.ic_action_time);
                 typedArray.recycle();
 
-                int resID = (item != null && item.timeZoneID() != null ? R.drawable.ic_sun : res_icon0);
+                int resID = (item != null && item.timeZoneID() != null ? R.drawable.ic_action_sun0 : res_icon0);
                 icon.setImageDrawable(null);
                 icon.setBackgroundResource(item != null ? resID : 0);
             }

@@ -38,6 +38,7 @@ import android.os.Bundle;
 import com.forrestguice.suntimeswidget.calculator.settings.display.CardinalDirection;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDeltaDisplay;
+import com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgroundContract;
 import com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgroundItem;
 import com.forrestguice.suntimeswidget.map.backgrounds.WorldMapBackgrounds;
 import com.forrestguice.suntimeswidget.views.IconUtils;
@@ -99,6 +100,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
@@ -1037,30 +1039,44 @@ public class WorldMapDialog extends BottomSheetDialogBase
             } //else addonSubmenuItem.setVisible(false);
         }
 
-        MenuItem addonBackgroundsItem = m.findItem(R.id.mapOption_addonBackgrounds);
-        if (addonBackgroundsItem != null)
+        updateBackgroundMenu(context, m);
+    }
+
+    protected void updateBackgroundMenu(Context context, Menu m)
+    {
+        WorldMapBackgrounds.OnWorldMapBackgroundItemClick itemListener = new WorldMapBackgrounds.OnWorldMapBackgroundItemClick()
         {
-            String projectionID = worldmap.getMapMode().getProjectionID();
-            ExecutorUtils.waitForTask("", new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception
-                {
-                    List<WorldMapBackgroundItem> items = WorldMapBackgrounds.queryWorldMapBackgroundItems(context, projectionID);   // TODO: w/ timeout
-                    if (!items.isEmpty()) {
-                        WorldMapBackgrounds.populateSubMenu(context, addonBackgroundsItem, R.id.addonBackgroundsGroup,
-                                mapMode.getMapTag(), mapMode.getProjectionCenter(), items, new WorldMapBackgrounds.OnWorldMapBackgroundItemClick()
-                        {
-                            @Override
-                            public void onClick(WorldMapBackgroundItem item) {
-                                onMapBackgroundResult(context, 0, Uri.parse(item.getUri()), item.shouldTint(), item.getMapProjectionCenter());
-                            }
-                        });
-                    }
-                    addonBackgroundsItem.setVisible(!items.isEmpty());
-                    return true;
-                }
-            }, 1000);
+            @Override
+            public void onClick(WorldMapBackgroundItem item)
+            {
+                Uri uri = Uri.parse(item.getUri());
+                Boolean tint = (WorldMapBackgroundContract.TYPE_DAY.equals(item.getType()) ? item.shouldTint() : null);
+                onMapBackgroundResult(context, 0, item.getType(), uri, tint, item.getMapProjectionCenter());
+            }
+        };
+
+        String projectionID = worldmap.getMapMode().getProjectionID();
+        List<WorldMapBackgroundItem> allItems = WorldMapBackgrounds.queryWorldMapBackgroundItemsWithTimeout(context, projectionID, 1000);
+
+        MenuItem addonBackgroundsItem_day = m.findItem(R.id.mapOption_addonBackgrounds_day);
+        if (addonBackgroundsItem_day != null) {
+            List<WorldMapBackgroundItem> dayItems = WorldMapBackgrounds.values(WorldMapBackgroundContract.TYPE_DAY, allItems);
+            initBackgroundMenu(context, addonBackgroundsItem_day, R.id.addonBackgrounds_dayGroup, dayItems, itemListener);
         }
+
+        MenuItem addonBackgroundsItem_night = m.findItem(R.id.mapOption_addonBackgrounds_night);
+        if (addonBackgroundsItem_night != null) {
+            List<WorldMapBackgroundItem> nightItems = WorldMapBackgrounds.values(WorldMapBackgroundContract.TYPE_NIGHT, allItems);
+            initBackgroundMenu(context, addonBackgroundsItem_night, R.id.addonBackgrounds_nightGroup, nightItems, itemListener);
+        }
+    }
+
+    protected void initBackgroundMenu(Context context, MenuItem menuItem, int groupID, List<WorldMapBackgroundItem> items, WorldMapBackgrounds.OnWorldMapBackgroundItemClick listener)
+    {
+        if (!items.isEmpty()) {
+            WorldMapBackgrounds.populateSubMenu(context, menuItem, groupID, mapMode.getMapTag(), mapMode.getProjectionCenter(), items, listener);
+        }
+        menuItem.setVisible(!items.isEmpty());
     }
 
     private int menuItemForMapMode(WorldMapWidgetSettings.WorldMapWidgetMode mode) {
@@ -1224,7 +1240,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context)
                     .setTitle(title).setMessage(message)
-                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionSettings, R.drawable.ic_action_settings))
+                    .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionSettings, R.drawable.ic_action_settings))
                     .setPositiveButton(context.getString(R.string.dialog_ok),
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -1253,11 +1269,14 @@ public class WorldMapDialog extends BottomSheetDialogBase
         }
     }
 
-    private void clearMapBackground(Context context)
+    private void clearMapBackground(Context context, boolean night) {
+        clearMapBackground(context, night, true);
+    }
+    private void clearMapBackground(Context context, boolean night, boolean updateViews)
     {
         double[] center = worldmap.getOptions().center;
         String mapTag = mapMode.getMapTag();
-        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
+        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center, night);
         Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
 
         if (Build.VERSION.SDK_INT >= 19)
@@ -1271,15 +1290,20 @@ public class WorldMapDialog extends BottomSheetDialogBase
             }
         }
 
-        WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
-        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
+        WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center, night);
+        if (!night) {
+            WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
+        }
 
-        updateOptions(context);
-        worldmap.setMapMode(context, mapMode);
-        updateViews();
+        if (updateViews)
+        {
+            updateOptions(context);
+            worldmap.setMapMode(context, mapMode);
+            updateViews();
+        }
     }
 
-    protected void onMapBackgroundResult(Context context, int requestCode, Uri uri, boolean applyTint, @Nullable double[] recenter)
+    protected void onMapBackgroundResult(Context context, int requestCode, String type, Uri uri, Boolean applyTint, @Nullable double[] recenter)
     {
         Drawable background = WorldMapView.loadDrawableFromUri(context, uri.toString());
         if (background == null) {
@@ -1303,8 +1327,11 @@ public class WorldMapDialog extends BottomSheetDialogBase
             WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, mapMode.getMapTag(), "TODO");
         }
 
-        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, uri.toString());
-        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, applyTint);    // TODO: automatically set tint flag based on image transparency?
+        boolean isNight = (WorldMapBackgroundContract.TYPE_NIGHT.equals(type));
+        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, isNight, uri.toString());
+        if (applyTint != null) {
+            WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, applyTint);    // TODO: automatically set tint flag based on image transparency?
+        }
 
         updateOptions(context);
         worldmap.setMapMode(context, mapMode);
@@ -1322,7 +1349,7 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
                 context.getContentResolver().takePersistableUriPermission(uri, flags);
             }
-            onMapBackgroundResult(context, requestCode, uri, false, null);
+            onMapBackgroundResult(context, requestCode, WorldMapBackgroundContract.TYPE_DAY, uri, false, null);
         } else {
             Log.d(LOGTAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }
@@ -1431,7 +1458,16 @@ public class WorldMapDialog extends BottomSheetDialogBase
                 return true;
 
             } else if (itemId == R.id.mapOption_background_clear) {
-                clearMapBackground(context);
+                clearMapBackground(context, true, false);
+                clearMapBackground(context, false, true);
+                return true;
+
+            } else if (itemId == R.id.mapOption_background_clear_day) {
+                clearMapBackground(context, false);
+                return true;
+
+            } else if (itemId == R.id.mapOption_background_clear_night) {
+                clearMapBackground(context, true);
                 return true;
 
             } else if (itemId == R.id.mapOption_location) {

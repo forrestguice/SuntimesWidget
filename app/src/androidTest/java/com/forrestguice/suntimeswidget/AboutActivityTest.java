@@ -210,7 +210,7 @@ public class AboutActivityTest extends SuntimesActivityTestBase
                     onView(withId(R.id.txt_about_support)).check(assertShownCompletely);
                     onView(withId(R.id.txt_about_url)).check(assertShownCompletely);
                     onView(withId(R.id.check_donate)).check(assertShownCompletely);
-                    onView(allOf(withId(R.id.txt_about_icon), hasDrawable(R.drawable.ic_action_suntimes_huge))).check(assertShownCompletely);
+                    onView(allOf(withId(R.id.txt_about_icon), hasDrawable(R.drawable.ic_96dp_suntimes))).check(assertShownCompletely);
                     break;
             }
             return this;

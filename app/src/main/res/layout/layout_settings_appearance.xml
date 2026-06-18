@@ -62,7 +62,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_appearance_theme_button"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_palette"  android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_action_palette"  android:tint="?attr/colorAccent"
                 android:contentDescription="@string/themes_action_editTheme" />
 
         </LinearLayout>
