@@ -204,7 +204,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler
 
         @Override
         protected int getNotificationIconResID() {
-            return R.drawable.ic_action_error_light;
+            return R.drawable.ic_action_report_light;
         }
     }
 }

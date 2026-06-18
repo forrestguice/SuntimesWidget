@@ -22,7 +22,7 @@
     android:gravity="center" android:orientation="vertical">
 
     <com.forrestguice.support.widget.ImageView
-        android:id="@+id/emptyView_image" android:src="@drawable/ic_widgets_96dp"
+        android:id="@+id/emptyView_image" android:src="@drawable/ic_96dp_widgets"
         android:layout_width="96dp" android:layout_height="96dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

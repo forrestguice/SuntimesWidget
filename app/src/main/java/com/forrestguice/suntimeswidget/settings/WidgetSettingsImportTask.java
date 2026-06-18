@@ -684,7 +684,7 @@ public class WidgetSettingsImportTask extends ProgressCallable<ContentValues, Wi
         }
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.restorebackup_dialog_item_widgetsettings))
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWidgets, R.drawable.ic_action_widget))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionWidgets, R.drawable.ic_action_widget))
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
                 })

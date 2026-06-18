@@ -10,8 +10,7 @@
 
         <com.forrestguice.support.widget.ImageButton
             android:id="@+id/button_settings"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_width="48dp" android:layout_height="48dp"
             android:background="?attr/selectableItemBackground"
             android:scaleType="centerInside"
             android:contentDescription="@string/action_settings"

@@ -99,7 +99,7 @@ public class SuntimesUtils
     public static final String SPANTAG_WARNING = "[w]";
 
     public static final int DEF_WARNING_DRAWABLE = R.drawable.ic_action_warning;
-    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_error;
+    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_report_dark;
     public static final int DEF_DST_DRAWABLE = R.drawable.ic_weather_sunny;
 
     protected static String strTimeShorter = "shorter";

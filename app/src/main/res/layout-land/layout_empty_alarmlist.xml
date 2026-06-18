@@ -23,7 +23,7 @@
     tools:showIn="@layout/layout_activity_alarmclock">
 
     <com.forrestguice.support.widget.ImageView
-        android:id="@+id/emptyView_image" android:src="@drawable/ic_alarm_96dp"
+        android:id="@+id/emptyView_image" android:src="@drawable/ic_96dp_alarm"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

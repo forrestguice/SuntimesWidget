@@ -22,7 +22,7 @@
 
             <com.forrestguice.support.widget.ImageView android:id="@+id/icon_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="@drawable/ic_bedtime_96dp"
+                android:src="@drawable/ic_96dp_bedtime"
                 android:contentDescription="@string/bedtime_label" />
 
             <TextSwitcher android:id="@+id/text_label"

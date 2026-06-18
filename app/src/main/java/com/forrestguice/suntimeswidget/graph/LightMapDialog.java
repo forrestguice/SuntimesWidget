@@ -2937,7 +2937,7 @@ public class LightMapDialog extends BottomSheetDialogBase
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionShadow, R.attr.tagColor_dst, R.attr.icActionDst };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
-        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0);
+        ImageSpan shadowIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_shadow), iconSize, iconSize, 0, null);
         int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.dstTag_dark));
         ImageSpan dstIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();

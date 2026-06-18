@@ -480,7 +480,7 @@ public class BuildPlacesTask implements Callable<Integer> //extends AsyncTask<Ob
 
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.places_label_build))
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWorldMap, R.drawable.ic_action_map))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionLocale, R.drawable.ic_action_locale))
                 .setMultiChoiceItems(displayStrings, Arrays.copyOf(checked, checked.length), onMultiChoiceClickListener)
                 .setPositiveButton(context.getString(R.string.places_action_addPlace), new DialogInterface.OnClickListener()
                 {

@@ -878,11 +878,11 @@ public class EventListHelper
             int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
             int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionAccept, R.attr.icActionVisibilityOn };
             TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
-            ImageSpan addIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
-            ImageSpan editIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_edit), iconSize, iconSize, 0);
-            ImageSpan deleteIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_discard), iconSize, iconSize, 0);
-            ImageSpan okIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_action_accept), iconSize, iconSize, 0);
-            ImageSpan viewIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_visibility), iconSize, iconSize, 0);
+            ImageSpan addIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0, null);
+            ImageSpan editIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_edit), iconSize, iconSize, 0, null);
+            ImageSpan deleteIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_discard), iconSize, iconSize, 0, null);
+            ImageSpan okIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_action_accept), iconSize, iconSize, 0, null);
+            ImageSpan viewIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_visibility), iconSize, iconSize, 0, null);
             typedArray.recycle();
 
             SpanUtils.ImageSpanTag[] helpTags = {

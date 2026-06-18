@@ -327,7 +327,7 @@ public class ColorValuesSheetFragment extends ColorValuesFragment
                 String message = context.getString(R.string.colorsdelete_dialog_message, colorsID);
                 AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                         .setTitle(title).setMessage(message)
-                        .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
+                        .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                         .setPositiveButton(context.getString(R.string.colorsdelete_dialog_ok), onConfirmDelete(context, colorsID))
                         .setNegativeButton(context.getString(R.string.colorsdelete_dialog_cancel), null);
                 confirm.show();

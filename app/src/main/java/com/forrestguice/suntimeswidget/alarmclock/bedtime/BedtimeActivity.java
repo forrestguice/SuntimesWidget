@@ -522,9 +522,9 @@ public class BedtimeActivity extends AppCompatActivity
         int iconSize = (int) context.getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionBedtime, R.attr.icActionNotification1, R.attr.icActionAlarm };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
-        ImageSpan bedtimeIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_bedtime), iconSize, iconSize, 0);
-        ImageSpan reminderIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_notification1), iconSize, iconSize, 0);
-        ImageSpan alarmIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_alarms), iconSize, iconSize, 0);
+        ImageSpan bedtimeIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(0, R.drawable.ic_action_bedtime), iconSize, iconSize, 0, null);
+        ImageSpan reminderIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_notification1), iconSize, iconSize, 0, null);
+        ImageSpan alarmIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_alarms), iconSize, iconSize, 0, null);
         typedArray.recycle();
 
         SpanUtils.ImageSpanTag[] helpTags = {

@@ -55,7 +55,7 @@ public class SpanUtils
     public static final String SPANTAG_WARNING = "[w]";
 
     public static final int DEF_WARNING_DRAWABLE = R.drawable.ic_action_warning;
-    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_error;
+    public static final int DEF_ERROR_DRAWABLE = R.drawable.ic_action_report_dark;
     public static final int DEF_DST_DRAWABLE = R.drawable.ic_weather_sunny;
 
     public SpanUtils() {
@@ -380,7 +380,7 @@ public class SpanUtils
     {
         return createImageSpan(context, drawableID, width, height, tint, PorterDuff.Mode.SRC_ATOP);
     }
-    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, PorterDuff.Mode tintMode)
+    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, @Nullable PorterDuff.Mode tintMode)
     {
         Drawable drawable = null;
         try {
@@ -397,7 +397,9 @@ public class SpanUtils
         {
             drawable.setBounds(0, 0, width, height);
         }
-        drawable.setColorFilter(tint, tintMode);
+        if (tintMode != null) {
+            drawable.setColorFilter(tint, tintMode);
+        }
         return new ImageSpan(drawable);
     }
 

@@ -59,7 +59,7 @@
                 <TextView
                     android:id="@+id/text_action2" style="@style/ChipText1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:minHeight="@dimen/chip_minHeight"
+                    android:minHeight="@dimen/chip_minHeight" android:drawablePadding="6dp"
                     android:button="@android:color/transparent"
                     android:drawableLeft="?attr/icActionExtension"
                     android:drawableStart="?attr/icActionExtension"

@@ -1357,7 +1357,7 @@ public class BedtimeDialog extends DialogBase
             String message = context.getString(R.string.alarmsclear_dialog_message);
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                     .setTitle(context.getString(R.string.alarmsclear_dialog_title)).setMessage(message)
-                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
+                    .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                     .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onDeleteConfirmed)
                     .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
             confirm.show();

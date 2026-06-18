@@ -38,7 +38,7 @@
                 <TextView
                     android:id="@+id/text_ringtone" style="@style/ChipText1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:minHeight="@dimen/chip_minHeight"
+                    android:minHeight="@dimen/chip_minHeight" android:drawablePadding="6dp"
                     android:button="@android:color/transparent"
                     android:drawableLeft="?attr/icActionSoundDisabled" android:drawableStart="?attr/icActionSoundDisabled"
                     tools:text="No Sound" />
@@ -75,7 +75,7 @@
                 <TextView
                     android:id="@+id/text_action0" style="@style/ChipText1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:minHeight="@dimen/chip_minHeight"
+                    android:minHeight="@dimen/chip_minHeight" android:drawablePadding="6dp"
                     android:button="@android:color/transparent"
                     android:drawableLeft="?attr/icActionExtension" android:drawableStart="?attr/icActionExtension"
                     tools:text="No Action" />

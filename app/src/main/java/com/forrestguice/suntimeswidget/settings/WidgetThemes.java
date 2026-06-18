@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
@@ -490,7 +491,7 @@ public class WidgetThemes
 
                 int flagColor = theme.getTimeSuffixColor();
                 ImageView flagDefault = (ImageView)view.findViewById(R.id.icon_isdefault);
-                BitmapDrawable flagIcon = (BitmapDrawable) flagDefault.getBackground().mutate();
+                Drawable flagIcon = flagDefault.getBackground().mutate();
                 flagIcon.setColorFilter(flagColor, PorterDuff.Mode.SRC_ATOP);
                 flagDefault.setVisibility((theme.isDefault()) ? View.VISIBLE : View.GONE);
 

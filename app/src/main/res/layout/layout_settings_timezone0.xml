@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content">
 
                 <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
-                    android:dropDownVerticalOffset="32sp" android:layout_height="wrap_content" />
+                    android:dropDownVerticalOffset="32sp" android:layout_height="wrap_content" android:minHeight="48dp" />
 
                 <ProgressBar android:id="@+id/appwidget_timezone_progress" android:visibility="gone"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/sort_timezones"
                 style="@style/ActionButton" android:visibility="visible"
                 android:src="?attr/icActionSort" app:tint="@drawable/btn_accent"
-                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:layout_width="wrap_content" android:layout_height="48dp"
                 android:contentDescription="@string/timezone_sort_contextAction" />
 
         </LinearLayout>
@@ -97,12 +97,12 @@
             <Spinner android:id="@+id/appwidget_solartime"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_gravity="center"
                 android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" android:minHeight="48dp" />
 
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_solartime_help"
                 style="@style/ActionButton" android:visibility="visible"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:layout_width="wrap_content" android:layout_height="32dp"
+                android:src="@drawable/ic_action_help_dark" android:tint="?attr/colorAccent"
+                android:layout_width="wrap_content" android:layout_height="48dp"
                 android:contentDescription="@string/action_help" />
 
         </LinearLayout>

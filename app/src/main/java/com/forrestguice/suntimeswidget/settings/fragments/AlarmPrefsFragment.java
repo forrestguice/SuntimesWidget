@@ -398,7 +398,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
                 {
                     AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                             .setMessage(context.getString(R.string.alarms_label_bootcompleted_action_confirm))
-                            .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
+                            .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionWarning, R.drawable.ic_action_warning))
                             .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener()
                             {
                                 public void onClick(DialogInterface dialog, int whichButton)
@@ -526,7 +526,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
     public static void showPermissionRationalDialog(Context context, String title, String message, DialogInterface.OnClickListener onAccepted)
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context)
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionAbout, R.drawable.ic_action_about))
                 .setTitle(title)
                 .setMessage(SpanUtils.fromHtml(message + "<br/><br/>" + context.getString(R.string.privacy_permissiondialog_prompt)))
                 .setPositiveButton(context.getString(R.string.dialog_ok), onAccepted)
@@ -650,7 +650,7 @@ public class AlarmPrefsFragment extends PreferenceFragment
         int[] iconAttrs = { R.attr.tagColor_warning, R.attr.icActionAbout, R.attr.icActionWarning };
         TypedArray typedArray = context.obtainStyledAttributes(iconAttrs);
         int warningColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
-        ImageSpan iconInfo = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0);
+        ImageSpan iconInfo = SpanUtils.createImageSpan(context, typedArray.getResourceId(1, R.drawable.ic_action_about), iconSize, iconSize, 0, null);
         ImageSpan iconWarn = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_action_warning), iconSize, iconSize, warningColor);
         typedArray.recycle();
 

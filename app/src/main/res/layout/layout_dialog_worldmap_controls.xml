@@ -7,8 +7,9 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_reset_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="8dp" android:paddingStart="8dp"
         android:paddingRight="4dp" android:paddingEnd="4dp"
@@ -19,8 +20,9 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_play_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="4dp" android:paddingStart="4dp"
         android:paddingRight="8dp" android:paddingEnd="8dp"
@@ -31,8 +33,9 @@
 
     <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/media_pause_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="4dp" android:paddingStart="4dp"
         android:paddingRight="8dp" android:paddingEnd="8dp"
@@ -43,8 +46,9 @@
 
     <com.forrestguice.support.widget.ImageButton android:visibility="gone"
         android:id="@+id/media_record_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="4dp" android:paddingStart="4dp"
         android:paddingRight="8dp" android:paddingEnd="8dp"
@@ -55,8 +59,9 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_prev_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:scaleY="0.75" android:scaleX="0.75"
         app:layout_constraintEnd_toStartOf="@+id/info_time_offset"
@@ -67,16 +72,17 @@
     <TextView
         style="@style/SunsetTimeTextView"
         android:id="@+id/info_time_offset"
-        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="65dp" android:layout_height="wrap_content"
+        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="75dp" android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-        android:minLines="2" android:maxLines="2"
-        tools:text="30m\nfrom now" android:gravity="center_horizontal" />
+        android:minLines="2" android:maxLines="2" android:layout_margin="0dp"
+        tools:text="30m\nfrom now" android:gravity="center" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_next_map"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:scaleY="0.75" android:scaleX="0.75"
         app:layout_constraintStart_toEndOf="@+id/info_time_offset"
@@ -87,8 +93,8 @@
     <TextView
         style="@style/SunsetTimeTextView"
         android:id="@+id/map_speed" android:textStyle="bold"
-        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="0dp"
+        android:background="?attr/selectableItemBackground" android:layout_margin="0dp"
         android:focusable="true" android:clickable="true"
         app:layout_constraintEnd_toStartOf="@+id/map_menu" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/worldmap_dialog_speed_15m" android:gravity="center" />
@@ -98,6 +104,7 @@
         android:layout_width="0dp" android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/worldmap_dialog_action_menu"
+        android:background="?attr/selectableItemBackground"
         style="?attr/actionOverflowButtonStyle" />
 
 </com.forrestguice.support.constraint.ConstraintLayout>

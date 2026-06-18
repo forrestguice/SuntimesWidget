@@ -33,10 +33,10 @@
             android:layout_gravity="center_vertical" />
 
         <com.forrestguice.support.widget.ImageView
-            android:id="@+id/icon2"
+            android:id="@+id/icon2" android:layout_margin="4dp"
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:src="?attr/icActionLocale" tools:ignore="ContentDescription"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical" />   <!-- icons expected to be 24x24 -->
 
     </FrameLayout>
 
