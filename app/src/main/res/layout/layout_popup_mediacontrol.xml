@@ -8,20 +8,20 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_reset" android:visibility="gone"
-        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="8dp" android:paddingStart="8dp"
         android:paddingRight="4dp" android:paddingEnd="4dp"
-        android:contentDescription="@string/worldmap_dialog_action_reset"
+        android:contentDescription="@string/worldmap_dialog_action_reset" android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="?attr/icActionTimeReset" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_play" android:visibility="visible"
-        android:layout_width="48dp" android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground" android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="4dp" android:paddingStart="4dp"
         android:paddingRight="8dp" android:paddingEnd="8dp"
@@ -30,8 +30,8 @@
 
     <com.forrestguice.support.widget.ImageButton android:visibility="visible"
         android:id="@+id/media_pause"
-        android:layout_width="48dp" android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="48dp" android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground" android:scaleType="fitCenter"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:paddingLeft="4dp" android:paddingStart="4dp"
         android:paddingRight="8dp" android:paddingEnd="8dp"
@@ -40,17 +40,17 @@
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_prev"
-        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
-        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingTop="8dp" android:paddingBottom="8dp" android:scaleType="fitCenter"
         android:contentDescription="@string/worldmap_dialog_action_prev"
         android:src="?attr/icActionPrevious" />
 
     <com.forrestguice.support.widget.ImageButton
         android:id="@+id/media_next"
-        android:layout_width="48dp" android:layout_height="wrap_content"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
-        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingTop="8dp" android:paddingBottom="8dp" android:scaleType="fitCenter"
         android:contentDescription="@string/worldmap_dialog_action_next"
         android:src="?attr/icActionNext" />
 
@@ -66,7 +66,7 @@
         android:id="@+id/media_search"
         android:layout_width="48dp" android:layout_height="48dp"
         android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
-        android:paddingTop="8dp" android:paddingBottom="8dp"
+        android:paddingTop="8dp" android:paddingBottom="8dp" android:scaleType="fitCenter"
         android:contentDescription="@string/action_seekTime"
         android:src="?attr/icActionSearch" />
 

@@ -256,13 +256,13 @@
                             android:orientation="vertical" android:layout_gravity="center">
 
                             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_getfix"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="48dp" android:minHeight="48dp"
                                 android:src="?attr/icActionGPS_searching"
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/action_getLocation" />
 
                             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_location_mapview"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="48dp" android:minHeight="48dp"
                                 android:src="?attr/icActionWorldMap"
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/action_mapLocation" />

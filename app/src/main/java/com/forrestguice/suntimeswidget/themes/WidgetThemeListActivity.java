@@ -338,7 +338,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             AlertDialog.Builder confirm = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.themes_deletetheme_dialog_title))
                     .setMessage(getString(R.string.themes_deletetheme_dialog_message, theme.themeDisplayString()))
-                    .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
+                    .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                     .setPositiveButton(getString(R.string.themes_deletetheme_dialog_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int whichButton)
@@ -991,11 +991,11 @@ public class WidgetThemeListActivity extends AppCompatActivity
         int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionCopy, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionSettings };
         TypedArray typedArray = obtainStyledAttributes(iconAttrs);
-        ImageSpan addIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
-        ImageSpan copyIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0);
-        ImageSpan editIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0);
-        ImageSpan deleteIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0);
-        ImageSpan defaultIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0);
+        ImageSpan addIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0, null);
+        ImageSpan copyIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(1, R.drawable.ic_action_copy), iconSize, iconSize, 0, null);
+        ImageSpan editIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(2, R.drawable.ic_action_edit), iconSize, iconSize, 0, null);
+        ImageSpan deleteIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(3, R.drawable.ic_action_discard), iconSize, iconSize, 0, null);
+        ImageSpan defaultIcon = SpanUtils.createImageSpan(this, typedArray.getResourceId(4, R.drawable.ic_action_settings), iconSize, iconSize, 0, null);
         typedArray.recycle();
 
         SpanUtils.ImageSpanTag[] helpTags = {

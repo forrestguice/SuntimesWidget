@@ -862,7 +862,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             if (forItem.getEvent() != null)
             {
                 AlertDialog.Builder confirmOverride = new AlertDialog.Builder(AlarmClockLegacyActivity.this);
-                confirmOverride.setIcon(IconUtils.getThemedIcon(AlarmClockLegacyActivity.this, R.attr.icActionWarning, R.drawable.ic_action_warning));
+                confirmOverride.setIcon(IconUtils.getAlertDialogIcon(AlarmClockLegacyActivity.this, R.attr.icActionWarning, R.drawable.ic_action_warning));
                 confirmOverride.setMessage(getString(R.string.alarmtime_dialog_message));
                 confirmOverride.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     @Override

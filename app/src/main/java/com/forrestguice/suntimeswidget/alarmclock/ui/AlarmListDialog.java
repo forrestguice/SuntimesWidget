@@ -435,7 +435,7 @@ public class AlarmListDialog extends DialogBase
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.alarmsclear_dialog_title))
                 .setMessage(context.getString(R.string.alarmsclear_dialog_message))
-                .setIcon(IconUtils.getThemedIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
+                .setIcon(IconUtils.getAlertDialogIcon(context, R.attr.icActionDelete, R.drawable.ic_action_discard))
                 .setPositiveButton(context.getString(R.string.alarmsclear_dialog_ok), onClearAlarmsConfirmed(context))
                 .setNegativeButton(context.getString(R.string.alarmsclear_dialog_cancel), null);
         confirm.show();

@@ -145,20 +145,21 @@ public class WorldMapView extends ImageView
     @SuppressLint("ResourceType")
     public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
-        Drawable background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
+        Drawable background = loadBackgroundDrawable(context, mode.getMapTag(), options.center, false);
+        Drawable background_night = loadBackgroundDrawable(context, mode.getMapTag(), options.center, true);
         this.mode = mode;
         switch (mode)
         {
             case MERCATOR_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_mercator);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case VANDERGRINTEN_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_van_der_grinten);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
@@ -172,35 +173,35 @@ public class WorldMapView extends ImageView
 
             case SINUSOIDAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap_sinusoidal);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
                 options.map = background;
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.world_topo_bathy_1024x512);   // land_shallow_topo_1024);
-                options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
+                options.map_night = ContextCompat.getDrawable(context, R.drawable.world_earth_lights_lrg_1024);
                 options.foregroundColor = Color.TRANSPARENT;
                 options.hasTransparentBaseMap = false;
                 break;
@@ -208,7 +209,7 @@ public class WorldMapView extends ImageView
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
-                options.map_night = null;
+                options.map_night = background_night;
                 options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
@@ -216,9 +217,9 @@ public class WorldMapView extends ImageView
     }
 
     @Nullable
-    public static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
+    public static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center, boolean night)
     {
-        String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
+        String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center, night);
         Drawable drawable = loadDrawableFromUri(context, backgroundString);
         if (drawable != null)
         {

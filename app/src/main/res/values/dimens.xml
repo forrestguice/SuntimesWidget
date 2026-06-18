@@ -95,8 +95,9 @@
 
     <dimen name="offsetIcon_width">16dip</dimen>
     <dimen name="offsetIcon_margin">8dip</dimen>
-    <dimen name="eventIcon_width">32dip</dimen>
-    <dimen name="eventIcon_margin">6dip</dimen>
+    <dimen name="eventIcon_width">24dip</dimen>
+    <dimen name="eventIcon_width1">32dip</dimen>
+    <dimen name="eventIcon_margin">8dip</dimen>
     <dimen name="eventIcon_margin1">4dip</dimen>
 
     <dimen name="alarmcreate_bottomsheet_peek">56dip</dimen>
@@ -150,10 +151,13 @@
     <dimen name="statusIcon_size">16dp</dimen>
     <dimen name="warningIcon_size">18dp</dimen>
     <dimen name="chipIcon_size">20dp</dimen>
-    <dimen name="prefIcon_size">24dp</dimen>
     <dimen name="helpIcon_size">24dp</dimen>
     <dimen name="aboutIcon_size">96dp</dimen>
     <dimen name="welcomeIcon_size">128dp</dimen>
+    <dimen name="alertIcon_size">32dp</dimen>
+    <dimen name="prefIcon_size">28dp</dimen>
+    <dimen name="prefIconFrame_size">48dp</dimen>
+    <dimen name="prefSummaryIcon_size">24dp</dimen>
 
     <dimen name="welcomeIndicator_size">24dp</dimen>
     <dimen name="welcomeActivity_margin">16dp</dimen>

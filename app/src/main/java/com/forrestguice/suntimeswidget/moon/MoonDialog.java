@@ -1270,7 +1270,7 @@ public class MoonDialog extends BottomSheetDialogBase
         ImageSpan settingIcon = SpanUtils.createImageSpan(context, R.drawable.svg_sunset, iconSize, iconSize, moonsetColor);
         ImageSpan noonIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(2, R.drawable.ic_moon_noon), iconSize, iconSize/2, moonriseColor);
         ImageSpan midnightIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(3, R.drawable.ic_moon_night), iconSize, iconSize/2, moonsetColor);
-        ImageSpan shareIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0);
+        ImageSpan shareIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(4, R.drawable.ic_action_share), iconSize, iconSize, 0, null);
         int dstColor = ContextCompat.getColor(context, typedArray.getResourceId(5, R.color.dstTag_dark));
         ImageSpan dstIcon = SpanUtils.createImageSpan(context, typedArray.getResourceId(6, R.drawable.ic_weather_sunny), iconSize, iconSize, dstColor);
         typedArray.recycle();

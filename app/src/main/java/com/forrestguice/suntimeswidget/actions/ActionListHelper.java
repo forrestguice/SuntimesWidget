@@ -610,7 +610,7 @@ public class ActionListHelper
                     int[] attrs = { R.attr.icActionCalendar };
                     @SuppressLint("ResourceType")
                     TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_calendar)));
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_calendar)));
                     a.recycle();
 
                 } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {

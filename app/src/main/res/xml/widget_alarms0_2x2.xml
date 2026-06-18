@@ -4,7 +4,7 @@
                     tools:ignore="UnusedAttribute"
 
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/alarmwidget_2x2_preview"
+    android:previewImage="@drawable/widget_preview_alarmwidget_2x2"
     android:resizeMode="horizontal|vertical"
     android:initialKeyguardLayout="@layout/layout_widget_alarm_2x2_0"
 

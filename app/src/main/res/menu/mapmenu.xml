@@ -2,12 +2,46 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/mapOption_addonBackgrounds_day"
+        android:icon="?attr/icActionWorldMap"
+        android:title="@string/timeMode_day"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/addonBackgrounds_dayGroup"
+                android:checkableBehavior="single" />
+
+            <item android:id="@+id/mapOption_background_clear_day"
+                android:title="@string/worldmap_dialog_option_background_clear"
+                android:icon="?attr/icActionWorldMap"
+                android:orderInCategory="999" app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+    <item android:id="@+id/mapOption_addonBackgrounds_night"
+        android:icon="?attr/icActionWorldMap"
+        android:title="@string/timeMode_night"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/addonBackgrounds_nightGroup"
+                android:checkableBehavior="single" />
+
+            <item android:id="@+id/mapOption_background_clear_night"
+                android:title="@string/worldmap_dialog_option_background_clear"
+                android:icon="?attr/icActionWorldMap"
+                android:orderInCategory="999" app:showAsAction="never" />
+        </menu>
+    </item>
+
     <item android:id="@+id/mapOption_center_current"
         android:title="@string/worldmap_dialog_option_center_current"
         android:icon="?attr/icActionSettings"
         app:showAsAction="never">
 
         <menu>
+
             <item android:id="@+id/mapOption_center"
                 android:title="@string/worldmap_dialog_option_center"
                 android:icon="?attr/icActionPlace"
@@ -99,12 +133,12 @@
 
                 <item android:id="@+id/action_sunposition"
                     android:title="@string/action_sunDialog"
-                    android:icon="@drawable/ic_sun"
+                    android:icon="@drawable/ic_action_sun0"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_moon"
                     android:title="@string/action_moon"
-                    android:icon="@drawable/ic_moon"
+                    android:icon="@drawable/ic_action_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_calendar"

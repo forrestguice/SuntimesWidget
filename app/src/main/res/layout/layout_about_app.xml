@@ -21,7 +21,7 @@
                 android:id="@+id/txt_about_icon"
                 android:layout_width="@dimen/aboutIcon_size" android:layout_height="@dimen/aboutIcon_size" android:layout_margin="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_action_suntimes_huge"
+                android:src="@drawable/ic_96dp_suntimes"
                 tools:ignore="ContentDescription" />
 
             <TextView

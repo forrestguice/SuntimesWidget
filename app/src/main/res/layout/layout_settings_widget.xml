@@ -164,7 +164,7 @@
             <com.forrestguice.support.widget.ImageButton android:id="@+id/appwidget_appearance_allowResize_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_action_help_dark" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/action_help" />
 
         </LinearLayout>

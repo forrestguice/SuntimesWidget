@@ -28,18 +28,22 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.map.colors.WorldMapColorValues;
 
 /**
- * Mercator map projection
+ * Web mercator map projection
  */
 public class WorldMapMercator extends WorldMapEquirectangular
 {
+    public static final double MAX_LATITUDE_DEG = 85.051129;
+    public static final double MAX_LATITUDE_RAD = Math.toRadians(MAX_LATITUDE_DEG);
+
     private static final double PI_OVER_2 = Math.PI / 2d;
     private static final double PI_OVER_4 = Math.PI / 4d;
 
     @Override
     public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
+        double lat0 = Math.max(Math.min(lat, MAX_LATITUDE_DEG), -MAX_LATITUDE_DEG);    // clamp (web mercator)
         double x = Math.toRadians(lon - 0);    // minus center_longitude
-        double y = Math.log(Math.tan(PI_OVER_4 + (0.5d * Math.toRadians(lat))));
+        double y = Math.log(Math.tan(PI_OVER_4 + (0.5d * Math.toRadians(lat0))));
 
         int[] p = new int[2];
         p[0] = (int) (mid[0] + ((x / Math.PI) * mid[0]));
@@ -76,6 +80,7 @@ public class WorldMapMercator extends WorldMapEquirectangular
                 radY = Math.toRadians(-1 * (((double) j * ih0) - 180d));      // j in [0,h] to [0,360] to [-180,180] (inverted to canvas); every Y is 0.5 degrees
                 //radLat = 2d * Math.atan(Math.pow(Math.E, radY)) - PI_OVER_2;    // Gudermannian
                 radLat = Math.atan(Math.sinh(radY));    // Gudermannian
+                radLat = Math.max(Math.min(radLat, MAX_LATITUDE_RAD), -MAX_LATITUDE_RAD);    // clamp to web mercator
                 cosLat = Math.cos(radLat);
 
                 v[i + (size[0] * j)] = cosLon * cosLat;

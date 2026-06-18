@@ -235,6 +235,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         {
             boolean isSchedulable = AlarmScheduler.updateAlarmTime(AndroidSuntimesDataSettings.wrap(context), item, Calendar.getInstance(), false);
             float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
+            float iconSize1 = context.getResources().getDimension(R.dimen.eventIcon_width1);
 
             /*if (card_backdrop != null)
             {
@@ -317,7 +318,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && ((item.location != null) && item.location.getLatitudeAsDouble() < 0);
-                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward, options.colors);
+                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize1, (int)iconSize1, northward, options.colors);
                 text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 

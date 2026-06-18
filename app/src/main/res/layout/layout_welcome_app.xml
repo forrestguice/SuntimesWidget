@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp" android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_action_suntimes_huge"
+            android:src="@drawable/ic_96dp_suntimes"
             tools:ignore="ContentDescription" />
 
         <TextView android:visibility="visible"

@@ -9,7 +9,7 @@
         android:layout_marginTop="32dp" android:layout_marginBottom="24dp"
         android:layout_width="64dp" android:layout_height="64dp"
         android:scaleType="fitCenter" android:layout_gravity="center"
-        android:src="@drawable/ic_action_suntimes_huge"
+        android:src="@drawable/ic_96dp_suntimes"
         android:contentDescription="@string/app_name" />
 
 </LinearLayout>

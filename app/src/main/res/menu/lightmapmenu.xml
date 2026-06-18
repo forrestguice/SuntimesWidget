@@ -60,7 +60,7 @@
 
                 <item android:id="@+id/action_moon"
                     android:title="@string/action_moon"
-                    android:icon="@drawable/ic_moon"
+                    android:icon="@drawable/ic_action_moon"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap"
