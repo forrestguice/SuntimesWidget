@@ -77,11 +77,15 @@ public class AppSettings
     public static final String THEME_MONET_SYSTEM = MonetSystemThemeInfo.THEME_MONET_SYSTEM;
     public static final String THEME_MONET_DARK = MonetDarkThemeInfo.THEME_MONET_DARK;
     public static final String THEME_MONET_LIGHT = MonetLightThemeInfo.THEME_MONET_LIGHT;
+    public static final String THEME_HOLO_DARK = HoloDarkThemeInfo.THEME_HOLO_DARK;
+    public static final String THEME_HOLO_LIGHT = HoloLightThemeInfo.THEME_HOLO_LIGHT;
 
     public static final String THEME_DEFAULT = "default";
     public static final String[] THEMES = new String[] { THEME_DEFAULT, THEME_DARK, THEME_LIGHT, THEME_DAYNIGHT, THEME_SYSTEM,
             THEME_SYSTEM1, THEME_DARK1, THEME_LIGHT1,
-            THEME_MONET_SYSTEM, THEME_MONET_DARK, THEME_MONET_LIGHT };
+            THEME_MONET_SYSTEM, THEME_MONET_DARK, THEME_MONET_LIGHT,
+            THEME_HOLO_DARK, THEME_HOLO_LIGHT
+    };
 
     public static final String PREF_KEY_APPEARANCE_THEME = "app_appearance_theme";
     // public static final String PREF_DEF_APPEARANCE_THEME = THEME_SYSTEM;    // @see R.string.def_app_appearance_theme
@@ -1129,6 +1133,12 @@ public class AppSettings
         } else if (extendedThemeName.startsWith(THEME_SYSTEM1)) {
             retValue = info_system1Theme;
 
+        } else if (extendedThemeName.startsWith(THEME_HOLO_DARK)) {
+            retValue = info_holo_darkTheme;
+
+        } else if (extendedThemeName.startsWith(THEME_HOLO_LIGHT)) {
+            retValue = info_holo_lightTheme;
+
         } // else if (extendedThemeName.startsWith(SOME_THEME_NAME)) { /* additional themes here */ }
         else {
             retValue = info_defaultTheme;
@@ -1149,6 +1159,8 @@ public class AppSettings
     private static final AppThemeInfo info_monet_systemTheme = new MonetSystemThemeInfo();
     private static final AppThemeInfo info_monet_darkTheme = new MonetDarkThemeInfo();
     private static final AppThemeInfo info_monet_lightTheme = new MonetLightThemeInfo();
+    private static final AppThemeInfo info_holo_darkTheme = new HoloDarkThemeInfo();
+    private static final AppThemeInfo info_holo_lightTheme = new HoloLightThemeInfo();
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
 
     public static AppThemeInfo[] appThemeInfo()
@@ -1157,12 +1169,14 @@ public class AppSettings
             return new AppThemeInfo[] {
                     info_systemTheme, info_darkTheme, info_lightTheme,
                     info_system1Theme, info_dark1Theme, info_light1Theme,
-                    info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme
+                    info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme,
+                    info_holo_darkTheme, info_holo_lightTheme
             };
         } else {
             return new AppThemeInfo[] {
                     info_systemTheme, info_darkTheme, info_lightTheme,
                     info_system1Theme, info_dark1Theme, info_light1Theme,
+                    info_holo_darkTheme, info_holo_lightTheme
             };
         }
     }
@@ -1508,6 +1522,62 @@ public class AppSettings
         @Override
         public int requiredTargetSdkVersion() {
             return 31;
+        }
+    }
+
+    public static class HoloDarkThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_DARK = "holo_dark";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_DARK;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Dark_Small;
+                case LARGE: return R.style.AppTheme_Holo_Dark_Large;
+                case XLARGE: return R.style.AppTheme_Holo_Dark_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Holo_Dark;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_darkHolo);
+        }
+    }
+
+    public static class HoloLightThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_LIGHT = "holo_light";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_LIGHT;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Light_Small;
+                case LARGE: return R.style.AppTheme_Holo_Light_Large;
+                case XLARGE: return R.style.AppTheme_Holo_Light_XLarge;
+                case NORMAL: default: return R.style.AppTheme_Holo_Light;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_lightHolo);
         }
     }
 

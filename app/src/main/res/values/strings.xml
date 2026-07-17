@@ -1826,6 +1826,8 @@
     <string name="themes_appThemes_systemMonet">Material You (System Default)</string>     <!-- TODO -->
     <string name="themes_appThemes_darkMonet">Material You (Dark)</string>    <!-- TODO -->
     <string name="themes_appThemes_lightMonet">Material You (Light)</string>     <!-- TODO -->
+    <string name="themes_appThemes_darkHolo">Holo (Dark)</string>                             <!-- TODO -->
+    <string name="themes_appThemes_lightHolo">Holo (Light)</string>                             <!-- TODO -->
 
     <!-- App Setting: time format -->
     <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->

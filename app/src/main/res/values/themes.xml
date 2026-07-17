@@ -17,21 +17,25 @@
         <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_lightTheme1</item>
+        <item>@string/themes_appThemes_lightHolo</item>
     </string-array>
     <string-array name="appThemes_light_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
         <item>contrast_system</item>
         <item>contrast_light</item>
+        <item>holo_light</item>
     </string-array>
 
     <string-array name="appThemes_dark_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
         <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_darkTheme1</item>
+        <item>@string/themes_appThemes_darkHolo</item>
     </string-array>
     <string-array name="appThemes_dark_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
         <item>contrast_system</item>
         <item>contrast_dark</item>
+        <item>holo_dark</item>
     </string-array>
 </resources>

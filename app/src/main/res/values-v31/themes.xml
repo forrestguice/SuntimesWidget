@@ -19,6 +19,7 @@
         <item>@string/themes_appThemes_systemMonet</item>
         <item>@string/themes_appThemes_lightTheme1</item>
         <item>@string/themes_appThemes_lightMonet</item>
+        <item>@string/themes_appThemes_lightHolo</item>
     </string-array>
     <string-array name="appThemes_light_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
@@ -26,6 +27,7 @@
         <item>monet_system</item>
         <item>contrast_light</item>
         <item>monet_light</item>
+        <item>holo_light</item>
     </string-array>
 
     <string-array name="appThemes_dark_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
@@ -34,6 +36,7 @@
         <item>@string/themes_appThemes_systemMonet</item>
         <item>@string/themes_appThemes_darkTheme1</item>
         <item>@string/themes_appThemes_darkMonet</item>
+        <item>@string/themes_appThemes_darkHolo</item>
     </string-array>
     <string-array name="appThemes_dark_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
@@ -41,5 +44,6 @@
         <item>monet_system</item>
         <item>contrast_dark</item>
         <item>monet_dark</item>
+        <item>holo_dark</item>
     </string-array>
 </resources>

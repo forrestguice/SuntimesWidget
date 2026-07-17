@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Holo Dark -->
+    <style name="AppThemeBase.Holo.Dark" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="dialogFrame">?android:attr/colorPrimary</item>
+        <item name="dialogBackground">?android:attr/windowBackground</item>
+        <item name="dialogBackgroundAlt">@color/grey_900</item>
+        <item name="widgetBackground">@drawable/bg_widget_dark</item>
+        <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
+        <item name="timeCardBackground">@color/grey_900</item>
+        <item name="tileCardBackground">@color/grey_900</item>
+        <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
+        <item name="alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>
+        <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>-->
+
+        <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupMenuBackground">@color/grey_850</item>
+        <item name="popupControlBackground">@color/grey_900</item>
+
+        <item name="snackbar_textColor">@color/snackbar_text_dark</item>
+        <item name="snackbar_accentColor">@android:color/holo_blue_bright</item>
+        <item name="snackbar_backgroundColor">@color/grey_900</item>
+
+        <item name="fab_backgroundColor">@color/grey_900</item>
+        <item name="fab_foregroundColor">@android:color/holo_blue_bright</item>
+        <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
+
+        <item name="chipBackground">@drawable/chip_dark</item>
+        <item name="chipTrayBackground">@color/grey_900</item>
+
+        <item name="tagColor_warning">@android:color/holo_blue_dark</item>
+        <item name="tagColor_error">@android:color/holo_red_dark</item>
+        <item name="tagColor_dst">@android:color/holo_blue_dark</item>
+
+        <item name="text_primaryColor">@color/text_primary_dark</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
+        <item name="text_secondaryColor">@color/text_secondary_dark</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
+        <item name="text_disabledColor">@color/text_disabled_dark</item>
+        <item name="text_accentColor">@android:color/holo_blue_bright</item>
+
+        <item name="colorAccent">@android:color/holo_blue_bright</item>
+        <item name="hrColor">@android:color/holo_blue_dark</item>
+
+        <item name="buttonPressColor">@android:color/holo_blue_bright</item>
+        <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
+        <item name="gridItemSelected">@android:color/holo_blue_dark</item>
+
+        <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
+        <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
+        <item name="sunriseColor">@color/sunIcon_color_rising_dark</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset</item>
+        <item name="sunsetIconLarge">@drawable/ic_sunset_large</item>
+        <item name="sunsetColor">@color/sunIcon_color_setting_dark</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_dark</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_dark</item>
+
+        <item name="moonriseIcon">@drawable/ic_moon_rise</item>
+        <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
+        <item name="moonsetIcon">@drawable/ic_moon_set</item>
+        <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night</item>
+
+        <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
+        <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
+        <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
+        <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_dark</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_dark</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_dark</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_dark</item>
+
+        <item name="springColor">@color/springColor_dark</item>
+        <item name="summerColor">@color/summerColor_dark</item>
+        <item name="fallColor">@color/fallColor_dark</item>
+        <item name="winterColor">@color/winterColor_dark</item>
+
+    </style>
+    <style name="AppTheme.Holo.Dark" parent="AppThemeBase.Holo.Dark">
+        <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Small" parent="AppTheme.Holo.Dark">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Large" parent="AppTheme.Holo.Dark">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.XLarge" parent="AppTheme.Holo.Dark">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
+
+    <!-- Holo Light -->
+    <style name="AppThemeBase.Holo.Light" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="dialogFrame">?android:attr/colorPrimary</item>
+        <item name="dialogBackground">?android:attr/windowBackground</item>
+        <item name="dialogBackgroundAlt">?android:attr/colorPrimary</item>
+        <item name="widgetBackground">@drawable/bg_widget</item>
+        <item name="settingsCardBackground">@drawable/bg_widget</item>
+        <item name="timeCardBackground">@color/white</item>
+        <item name="tileCardBackground">@color/white</item>
+        <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
+        <!--<item name="alertDialogTheme">@android:style/Dialog</item>-->
+        <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>-->
+
+        <item name="snackbar_textColor">@color/snackbar_text_light</item>
+        <item name="snackbar_accentColor">@android:color/holo_blue_dark</item>
+        <item name="snackbar_backgroundColor">@color/grey_100</item>
+
+        <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="popupMenuBackground">@color/grey_100</item>
+        <item name="popupControlBackground">@color/grey_300</item>
+
+        <item name="fab_backgroundColor">?attr/colorPrimary</item>
+        <item name="fab_foregroundColor">@android:color/holo_blue_dark</item>
+        <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
+
+        <item name="chipBackground">@drawable/chip_light</item>
+        <item name="chipTrayBackground">@color/grey_100</item>
+
+        <item name="tagColor_warning">@android:color/holo_blue_dark</item>
+        <item name="tagColor_error">@android:color/holo_red_dark</item>
+        <item name="tagColor_dst">@android:color/holo_blue_dark</item>
+
+        <item name="text_primaryColor">@color/text_primary_light</item>
+        <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
+        <item name="text_secondaryColor">@color/text_secondary_light</item>
+        <item name="text_tertiaryColor">@color/text_tertiary_light</item>
+        <item name="text_disabledColor">@color/text_disabled_light</item>
+        <item name="text_accentColor">@android:color/holo_blue_dark</item>
+
+        <item name="colorAccent">@android:color/holo_blue_dark</item>
+        <item name="hrColor">@android:color/holo_blue_dark</item>
+
+        <item name="buttonPressColor">@android:color/holo_blue_dark</item>
+        <item name="text_buttonSelector">@drawable/btn_txt_light</item>
+        <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
+        <item name="gridItemSelected">@android:color/holo_blue_dark</item>
+
+        <item name="graphColor_background">@color/graphColor_bg_light</item>
+        <item name="graphColor_day">@color/graphColor_day_light</item>
+        <item name="graphColor_night">@color/graphColor_night_light</item>
+        <item name="graphColor_civil">@color/graphColor_civil_light</item>
+        <item name="graphColor_nautical">@color/graphColor_nautical_light</item>
+        <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
+        <item name="graphColor_axis">@color/graphColor_axis_light</item>
+        <item name="graphColor_grid">@color/graphColor_grid_light</item>
+        <item name="graphColor_labels">@color/graphColor_labels_light</item>
+        <item name="graphColor_labels_bg">@color/graphColor_labels_bg_light</item>
+
+        <item name="table_risingColor">@color/table_rising_light</item>
+        <item name="table_settingColor">@color/table_setting_light</item>
+        <item name="table_civilColor">@color/table_civil_light</item>
+        <item name="table_nauticalColor">@color/table_nautical_light</item>
+        <item name="table_astroColor">@color/table_astro_light</item>
+        <item name="table_nightColor">@color/table_night_light</item>
+        <item name="table_noonColor">@color/table_noon_light</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_light</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_light</item>
+        <item name="table_springColor">@color/springColor_light</item>
+        <item name="table_summerColor">@color/summerColor_light</item>
+        <item name="table_fallColor">@color/fallColor_light</item>
+        <item name="table_winterColor">@color/winterColor_light</item>
+
+        <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
+        <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
+        <item name="sunriseColor">@color/sunIcon_color_rising_light</item>
+        <item name="sunsetIconSmall">@drawable/ic_sunset_light</item>
+        <item name="sunsetIconLarge">@drawable/ic_sunset_large_light</item>
+        <item name="sunsetColor">@color/sunIcon_color_setting_light</item>
+        <item name="sunnoonIcon">@drawable/ic_noon_large_light</item>
+        <item name="sunnightIcon">@drawable/ic_midnight_large_light</item>
+        <item name="sunnightColor0">@color/sunIcon_color_midnight_light</item>
+        <item name="sunnightColor1">@color/sunIcon_color_midnightBorder_light</item>
+
+        <item name="moonriseIcon">@drawable/ic_moon_rise</item>
+        <item name="moonriseColor">@color/moonIcon_color_rising_light</item>
+        <item name="moonsetIcon">@drawable/ic_moon_set</item>
+        <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
+        <item name="moonnoonIcon">@drawable/ic_moon_noon</item>
+        <item name="moonnightIcon">@drawable/ic_moon_night</item>
+
+        <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
+        <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
+        <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
+        <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
+        <item name="moonNewColor">@color/moonIcon_color_new_light</item>
+        <item name="moonWaxingColor">@color/moonIcon_color_waxing_light</item>
+        <item name="moonFullColor">@color/moonIcon_color_full_light</item>
+        <item name="moonWaningColor">@color/moonIcon_color_waning_light</item>
+
+        <item name="springColor">@color/springColor_light</item>
+        <item name="summerColor">@color/summerColor_light</item>
+        <item name="fallColor">@color/fallColor_light</item>
+        <item name="winterColor">@color/winterColor_light</item>
+
+        <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
+        <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
+        <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
+        <item name="icActionGPS_satellite">@drawable/ic_action_satellite_light</item>
+        <item name="icActionGPS_network">@drawable/ic_action_network_light</item>
+        <item name="icActionGPS_cell">@drawable/ic_action_celltower_light</item>
+
+        <item name="icActionPlace">@drawable/ic_action_place_light</item>
+        <item name="icActionMap">@drawable/ic_action_map1_light</item>
+        <item name="icActionWorldMap">@drawable/ic_action_map2_light</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline_light</item>
+        <item name="icActionTime">@drawable/ic_action_time_light</item>
+        <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
+        <item name="icActionDnd">@drawable/ic_action_dnd_light</item>
+        <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionHome">@drawable/ic_action_home_light</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime_light</item>
+        <item name="icActionCalendar">@drawable/ic_action_calendar_light</item>
+        <item name="icActionNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1_light</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2_light</item>
+        <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_light</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
+        <item name="icActionAbout">@drawable/ic_action_about_light</item>
+        <item name="icActionWarning">@drawable/ic_action_warning_light</item>
+        <item name="icActionError">@drawable/ic_action_report_light</item>
+        <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
+        <item name="icActionEvents">@drawable/ic_action_widget_light</item>    <!-- TODO -->
+        <item name="icActionAppearance">@drawable/ic_action_palette_light</item>
+        <item name="icActionExtension">@drawable/ic_action_extension_light</item>
+        <item name="icActionAltitude">@drawable/ic_action_terrain_light</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
+        <item name="icActionSun">@drawable/ic_action_sun_light</item>
+        <item name="icActionSunChart">@drawable/ic_action_multiline_chart_light</item>
+        <item name="icActionLocale">@drawable/ic_action_locale_light</item>
+        <item name="icActionSettings">@drawable/ic_action_settings_light</item>
+        <item name="icActionHelp">@drawable/ic_action_help_light</item>
+        <item name="icActionAccept">@drawable/ic_action_accept_light</item>
+        <item name="icActionClose">@drawable/ic_action_close_light</item>
+        <item name="icActionBack">@drawable/ic_action_back_light</item>
+        <item name="icActionSearch">@drawable/ic_action_search_light</item>
+        <item name="icActionNew">@drawable/ic_action_new_light</item>
+        <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall_light</item>
+        <item name="icActionSave">@drawable/ic_action_save_light</item>
+        <item name="icActionEdit">@drawable/ic_action_edit_light</item>
+        <item name="icActionDelete">@drawable/ic_action_discard_light</item>
+        <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+        <item name="icActionSort">@drawable/ic_action_sort_light</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
+        <item name="icActionShare">@drawable/ic_action_share_light</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
+        <item name="icActionLabel">@drawable/ic_action_label_light</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel_light</item>
+        <item name="icActionDeselect">@drawable/ic_action_deselect_light</item>
+
+        <item name="icPlaceUser">@drawable/ic_action_place_light</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale_light</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_light</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_light</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found_light</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about_light</item>
+        <item name="icPlaceHome">@drawable/ic_action_home_light</item>
+
+        <item name="icActionPlay">@drawable/ic_action_play_light</item>
+        <item name="icActionPause">@drawable/ic_action_pause_light</item>
+        <item name="icActionRecord">@drawable/ic_action_record_light</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility_light</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off_light</item>
+        <item name="checkExpand">@drawable/check_expand_light</item>
+        <item name="checkFavorite">@drawable/check_favorite_light</item>
+        <item name="checkAltitude">@drawable/check_altitude_light</item>
+        <item name="checkVibrate">@drawable/check_vibrate_light</item>
+        <item name="checkDnd">@drawable/check_dnd_light</item>
+        <item name="checkVisibility">@drawable/check_visible_light</item>
+        <item name="checkReminder">@drawable/check_reminder_light</item>
+    </style>
+    <style name="AppTheme.Holo.Light" parent="AppThemeBase.Holo.Light">
+        <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
+        <item name="icActionPrevious">@drawable/ic_action_previous_item_ref</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Small" parent="AppTheme.Holo.Light">
+        <item name="text_size_tiny">@dimen/smalltext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/smalltext_size_xsmall</item>
+        <item name="text_size_small">@dimen/smalltext_size_small</item>
+        <item name="text_size_medium">@dimen/smalltext_size_medium</item>
+        <item name="text_size_large">@dimen/smalltext_size_large</item>
+        <item name="text_size_xlarge">@dimen/smalltext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/smalltext_size_huge</item>
+        <item name="text_size_enormous">@dimen/smalltext_size_enormous</item>
+        <item name="actionBarSize">@dimen/small_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Large" parent="AppTheme.Holo.Light">
+        <item name="text_size_tiny">@dimen/largetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/largetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/largetext_size_small</item>
+        <item name="text_size_medium">@dimen/largetext_size_medium</item>
+        <item name="text_size_large">@dimen/largetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/largetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/largetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/largetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/large_actionbar_size</item>
+    </style>
+    <style name="AppTheme.Holo.Light.XLarge" parent="AppTheme.Holo.Light">
+        <item name="text_size_tiny">@dimen/xlargetext_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/xlargetext_size_xsmall</item>
+        <item name="text_size_small">@dimen/xlargetext_size_small</item>
+        <item name="text_size_medium">@dimen/xlargetext_size_medium</item>
+        <item name="text_size_large">@dimen/xlargetext_size_large</item>
+        <item name="text_size_xlarge">@dimen/xlargetext_size_xlarge</item>
+        <item name="text_size_huge">@dimen/xlargetext_size_huge</item>
+        <item name="text_size_enormous">@dimen/xlargetext_size_enormous</item>
+        <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
+    </style>
+
+
+    <style name="HoloOverflowMenu.System" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/dialog_bg</item>
+    </style>
+    <style name="HoloOverflowMenu.Dark" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/grey_850</item>
+    </style>
+    <style name="HoloOverflowMenu.Light" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/grey_100</item>
+    </style>
+
+</resources>
