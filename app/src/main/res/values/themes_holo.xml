@@ -8,7 +8,7 @@
         <item name="dialogBackground">?android:attr/windowBackground</item>
         <item name="dialogBackgroundAlt">@color/grey_900</item>
         <item name="widgetBackground">@drawable/bg_widget_dark</item>
-        <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
+        <item name="settingsCardBackground">@color/grey_900</item>
         <item name="timeCardBackground">@color/grey_900</item>
         <item name="tileCardBackground">@color/grey_900</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
@@ -16,7 +16,7 @@
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>-->
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
-        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
         <item name="popupMenuBackground">@color/grey_850</item>
         <item name="popupControlBackground">@color/grey_900</item>
 
@@ -28,8 +28,14 @@
         <item name="fab_foregroundColor">@android:color/holo_blue_bright</item>
         <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
 
-        <item name="chipBackground">@drawable/chip_dark</item>
+        <item name="chipBackground">@drawable/holo_chip_dark</item>
         <item name="chipTrayBackground">@color/grey_900</item>
+
+        <item name="alarmColorEnabled">@android:color/holo_blue_bright</item>
+        <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_dark</item>
+        <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_dark</item>
+        <item name="alarmCardControls">@color/grey_900</item>
+        <item name="alarmCardBackdrop">@color/transparent</item>
 
         <item name="tagColor_warning">@android:color/holo_blue_dark</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
@@ -141,7 +147,7 @@
         <item name="snackbar_backgroundColor">@color/grey_100</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
-        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light</item>
         <item name="popupMenuBackground">@color/grey_100</item>
         <item name="popupControlBackground">@color/grey_300</item>
 
@@ -149,8 +155,14 @@
         <item name="fab_foregroundColor">@android:color/holo_blue_dark</item>
         <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
 
-        <item name="chipBackground">@drawable/chip_light</item>
+        <item name="chipBackground">@drawable/holo_chip_light</item>
         <item name="chipTrayBackground">@color/grey_100</item>
+
+        <item name="alarmColorEnabled">@android:color/holo_blue_dark</item>
+        <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_light</item>
+        <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_light</item>
+        <item name="alarmCardControls">@color/grey_100</item>
+        <item name="alarmCardBackdrop">@color/transparent</item>
 
         <item name="tagColor_warning">@android:color/holo_blue_dark</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
@@ -352,7 +364,6 @@
         <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
-
     <style name="HoloOverflowMenu.System" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/dialog_bg</item>
     </style>
@@ -361,6 +372,24 @@
     </style>
     <style name="HoloOverflowMenu.Light" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/grey_100</item>
+    </style>
+
+    <style name="HoloAppToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">@drawable/holo_toolbar_dark</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">?attr/actionBarPopupTheme</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Light">
+        <item name="android:background">@drawable/holo_toolbar_light</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Dark">
+        <item name="android:background">@drawable/holo_toolbar_dark</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
 </resources>
