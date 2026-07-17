@@ -36,7 +36,7 @@
 			app:layout_constraintTop_toTopOf="parent">
 
 			<com.forrestguice.support.widget.Toolbar
-				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+				android:id="@+id/app_menubar" style="?attr/toolbarTheme"
 				app:title="@string/bedtime_label" />
 
 		</com.forrestguice.support.widget.AppBarLayout>

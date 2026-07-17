@@ -31,7 +31,7 @@
 			app:layout_constraintTop_toTopOf="parent">
 
 			<com.forrestguice.support.widget.Toolbar
-				android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+				android:id="@+id/app_menubar" style="?attr/toolbarTheme"
 				app:title="@string/alarms_label_alarmClock" />
 
 		</com.forrestguice.support.widget.AppBarLayout>

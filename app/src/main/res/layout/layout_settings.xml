@@ -28,7 +28,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <com.forrestguice.support.widget.Toolbar
-            android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+            android:id="@+id/app_menubar" style="?attr/toolbarTheme"
             app:navigationIcon="?attr/icActionWidgets"
             app:title="" />
 

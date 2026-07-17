@@ -12,7 +12,7 @@
             android:animateLayoutChanges="true" android:elevation="50dp">
 
             <com.forrestguice.support.widget.Toolbar
-            android:id="@+id/app_menubar" style="@style/AppToolbarStyle"
+            android:id="@+id/app_menubar" style="?attr/toolbarTheme"
             app:title="@string/places_label" />
 
             <ProgressBar android:id="@+id/app_progress" android:visibility="visible"

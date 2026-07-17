@@ -18,7 +18,7 @@
         <item name="settingsCardBackground">@drawable/settings_card_bg_ref</item>
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
-        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="toolbarTheme">@style/AppToolbarStyle</item>
         <item name="hrColor">@color/hr</item>
         <item name="colorAccent">@color/text_accent</item>
         <item name="text_primaryColor">@color/text_primary</item>
@@ -268,7 +268,7 @@
         <item name="settingsCardBackground">@drawable/card_alarmitem_controls_light</item>
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
-        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="toolbarTheme">@style/AppToolbarStyle.Light</item>
         <item name="hrColor">@color/hr_light</item>
         <item name="colorAccent">@color/text_accent_light</item>
         <item name="text_primaryColor">@color/text_primary_light</item>
@@ -523,7 +523,7 @@
         <item name="settingsCardBackground">@drawable/card_alarmitem_controls_dark</item>
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
-        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarTheme">@style/AppToolbarStyle.Dark</item>
         <item name="hrColor">@color/hr_dark</item>
         <item name="colorAccent">@color/text_accent_dark</item>
         <item name="text_primaryColor">@color/text_primary_dark</item>
@@ -1384,11 +1384,15 @@
     <style name="AppToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:theme">?attr/toolbarTheme</item>
+        <item name="android:background">?android:attr/colorPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="popupTheme">?attr/actionBarPopupTheme</item>
         <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
         <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
+    </style>
+    <style name="AppToolbarStyle.Light" />
+    <style name="AppToolbarStyle.Dark">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
     <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -1403,7 +1407,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AboutToolbarStyle" parent="@style/AppToolbarStyle">
+    <style name="AboutToolbarStyle" parent="@style/AppToolbarStyle.Light">
         <item name="android:visibility">visible</item>
     </style>
     <style name="AboutTabStyle">

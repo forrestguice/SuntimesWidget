@@ -33,11 +33,7 @@
 			android:id="@+id/app_menubar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			android:theme="?attr/toolbarTheme"
-			app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
-			app:subtitleTextAppearance="@style/ToolbarSubtitleTextAppearance"
-			app:popupTheme="?attr/actionBarPopupTheme"
+			style="?attr/toolbarTheme"
 			app:title="@string/alarms_label_alarmClock" />
 
 	</com.forrestguice.support.widget.AppBarLayout>
