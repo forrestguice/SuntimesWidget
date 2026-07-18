@@ -122,6 +122,7 @@
     <attr name="fab_backgroundDrawable" format="reference" />   <!-- background drawable to make ImageButton look like a fab -->
 
     <attr name="toolbarTheme" format="reference" />
+    <attr name="activityMargin" format="reference" />
 
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />

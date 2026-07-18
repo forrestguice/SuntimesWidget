@@ -19,6 +19,7 @@
         <item name="timeCardBackground">@color/card_bg</item>
         <item name="semiTransparentBackground">@color/card_bg_trans</item>
         <item name="toolbarTheme">@style/AppToolbarStyle</item>
+        <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr</item>
         <item name="colorAccent">@color/text_accent</item>
         <item name="text_primaryColor">@color/text_primary</item>
@@ -269,6 +270,7 @@
         <item name="timeCardBackground">@color/card_bg_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <item name="toolbarTheme">@style/AppToolbarStyle.Light</item>
+        <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr_light</item>
         <item name="colorAccent">@color/text_accent_light</item>
         <item name="text_primaryColor">@color/text_primary_light</item>
@@ -524,6 +526,7 @@
         <item name="timeCardBackground">@color/card_bg_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="toolbarTheme">@style/AppToolbarStyle.Dark</item>
+        <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr_dark</item>
         <item name="colorAccent">@color/text_accent_dark</item>
         <item name="text_primaryColor">@color/text_primary_dark</item>

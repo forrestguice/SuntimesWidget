@@ -1349,7 +1349,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout = new CardLayoutManager(this));
-        card_view.addItemDecoration(new RecyclerView.MarginDecorator(context, R.dimen.activity_margin, 0, R.dimen.activity_margin, 0));
+        card_view.addItemDecoration(new RecyclerView.MarginDecorator(context, R.attr.activityMargin, 0, R.attr.activityMargin, 0, true));
 
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);

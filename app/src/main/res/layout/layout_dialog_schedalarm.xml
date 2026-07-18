@@ -28,8 +28,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|start"
             android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-            android:paddingTop="16dp" android:paddingBottom="16dp"
-            android:layout_marginBottom="8dp">
+            android:paddingTop="16dp" android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/dialog_title"
@@ -44,7 +43,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="?attr/dialogBackground"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="12dp">
+            android:paddingTop="8dp" android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingBottom="12dp">
 
             <TextView android:id="@+id/appwidget_schedalarm_mode_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
