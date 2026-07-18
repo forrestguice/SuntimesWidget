@@ -9,7 +9,7 @@
         <item name="dialogBackgroundAlt">@color/grey_900</item>
         <item name="widgetBackground">@drawable/bg_widget_dark</item>
         <item name="settingsCardBackground">@color/grey_900</item>
-        <item name="timeCardBackground">@color/grey_900</item>
+        <item name="timeCardBackground">@color/card_bg_darktrans</item>
         <item name="tileCardBackground">@color/grey_900</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>
@@ -17,6 +17,7 @@
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
+        <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/grey_850</item>
         <item name="popupControlBackground">@color/grey_900</item>
 
@@ -148,6 +149,7 @@
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light</item>
+        <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/grey_100</item>
         <item name="popupControlBackground">@color/grey_300</item>
 
@@ -391,5 +393,7 @@
         <item name="android:background">@drawable/holo_toolbar_dark</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
+
+    <dimen name="holo_activity_margin">0dp</dimen>
 
 </resources>
