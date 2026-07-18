@@ -1,6 +1,7 @@
 package com.forrestguice.support.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -83,15 +84,28 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView
             marginPx[2] = rightPx;
             marginPx[3] = bottomPx;
         }
-        public MarginDecorator( Context context, int dimenResId ) {
-            this(context, dimenResId, dimenResId, dimenResId, dimenResId);
+        public MarginDecorator( Context context, int dimenResId_left, int dimenResId_top, int dimenResId_right, int dimenResId_bottom ) {
+            this(context, dimenResId_left, dimenResId_top, dimenResId_right, dimenResId_bottom, false);
         }
-        public MarginDecorator( Context context, int dimenResId_left, int dimenResId_top, int dimenResId_right, int dimenResId_bottom )
+        public MarginDecorator( Context context, int dimenResId_left, int dimenResId_top, int dimenResId_right, int dimenResId_bottom, boolean attrs ) {
+            init(context, dimenResId_left, dimenResId_top, dimenResId_right, dimenResId_bottom, attrs);
+        }
+
+        private void init(Context context, int dimenResId_left, int dimenResId_top, int dimenResId_right, int dimenResId_bottom, boolean attrs)
         {
-            marginPx[0] = (context != null && dimenResId_left != 0 ? (int) context.getResources().getDimension(dimenResId_left) : 0);
-            marginPx[1] = (context != null && dimenResId_top != 0 ? (int) context.getResources().getDimension(dimenResId_top) : 0);
-            marginPx[2] = (context != null && dimenResId_right != 0 ? (int) context.getResources().getDimension(dimenResId_right) : 0);
-            marginPx[3] = (context != null && dimenResId_bottom != 0 ? (int) context.getResources().getDimension(dimenResId_bottom) : 0);
+            marginPx[0] = (context != null && dimenResId_left != 0 ? (int) context.getResources().getDimension(getResID(context, dimenResId_left, attrs)) : 0);
+            marginPx[1] = (context != null && dimenResId_top != 0 ? (int) context.getResources().getDimension(getResID(context, dimenResId_top, attrs)) : 0);
+            marginPx[2] = (context != null && dimenResId_right != 0 ? (int) context.getResources().getDimension(getResID(context, dimenResId_right, attrs)) : 0);
+            marginPx[3] = (context != null && dimenResId_bottom != 0 ? (int) context.getResources().getDimension(getResID(context, dimenResId_bottom, attrs)) : 0);
+        }
+        private int getResID(Context context, int dimenAttr, boolean attrs)
+        {
+            if (attrs) {
+                TypedArray a = context.obtainStyledAttributes(new int[] { dimenAttr });
+                int dimenResId = a.getResourceId(0, 0);
+                a.recycle();
+                return dimenResId;
+            } else return dimenAttr;
         }
 
         @Override
