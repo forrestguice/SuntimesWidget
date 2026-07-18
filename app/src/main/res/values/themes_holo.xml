@@ -51,6 +51,8 @@
 
         <item name="colorAccent">@android:color/holo_blue_bright</item>
         <item name="hrColor">@android:color/holo_blue_dark</item>
+        <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
+        <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
         <item name="buttonPressColor">@android:color/holo_blue_bright</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
@@ -89,6 +91,99 @@
         <item name="summerColor">@color/summerColor_dark</item>
         <item name="fallColor">@color/fallColor_dark</item>
         <item name="winterColor">@color/winterColor_dark</item>
+
+        <item name="icActionGPS">@drawable/ic_action_location_found</item>
+        <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
+        <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
+        <item name="icActionGPS_satellite">@drawable/ic_action_satellite_dark</item>
+        <item name="icActionGPS_network">@drawable/ic_action_network_dark</item>
+        <item name="icActionGPS_cell">@drawable/ic_action_celltower_dark</item>
+
+        <item name="icActionPlace">@drawable/ic_menu_place</item>
+        <item name="icActionMap">@drawable/ic_action_map1</item>
+        <item name="icActionWorldMap">@drawable/ic_action_map2_dark</item>
+        <item name="icActionGraph">@drawable/ic_action_timeline</item>
+        <item name="icActionTime">@drawable/ic_action_time</item>
+        <item name="icActionDst">@drawable/ic_weather_sunny</item>
+        <item name="icActionDnd">@drawable/ic_action_dnd</item>
+        <item name="icActionAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionHome">@drawable/ic_action_home</item>
+        <item name="icActionBedtime">@drawable/ic_action_bedtime</item>
+        <item name="icActionCalendar">@drawable/ic_action_calendar</item>
+        <item name="icActionNotification">@drawable/ic_action_notification</item>
+        <item name="icActionNotification1">@drawable/ic_action_notification1</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2</item>
+        <item name="icActionVibrationEnabled">@drawable/ic_action_vibration</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
+        <item name="icActionAbout">@drawable/ic_action_about</item>
+        <item name="icActionWarning">@drawable/ic_action_warning</item>
+        <item name="icActionError">@drawable/ic_action_report_dark</item>
+        <item name="icActionWidgets">@drawable/ic_action_widget</item>
+        <item name="icActionEvents">@drawable/ic_action_widget</item>    <!-- TODO -->
+        <item name="icActionAppearance">@drawable/ic_action_palette</item>
+        <item name="icActionExtension">@drawable/ic_action_extension</item>
+        <item name="icActionAltitude">@drawable/ic_action_terrain_dark</item>
+        <item name="icActionShadow">@drawable/ic_action_shadow</item>
+        <item name="icActionSun">@drawable/ic_action_sun_dark</item>
+        <item name="icActionSunChart">@drawable/ic_action_multiline_chart_dark</item>
+        <item name="icActionLocale">@drawable/ic_action_locale</item>
+        <item name="icActionSettings">@drawable/ic_menu_settings</item>
+        <item name="icActionHelp">@drawable/ic_menu_help</item>
+        <item name="icActionAccept">@drawable/ic_action_accept</item>
+        <item name="icActionClose">@drawable/ic_menu_close</item>
+        <item name="icActionBack">@drawable/ic_action_back</item>
+        <item name="icActionSearch">@drawable/ic_action_search</item>
+        <item name="icActionNew">@drawable/ic_menu_new</item>
+        <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionNewNotification">@drawable/ic_action_notification</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall</item>
+        <item name="icActionSave">@drawable/ic_menu_save</item>
+        <item name="icActionEdit">@drawable/ic_menu_edit</item>
+        <item name="icActionDelete">@drawable/ic_menu_discard</item>
+        <item name="icActionCopy">@drawable/ic_menu_copy</item>
+        <item name="icActionSort">@drawable/ic_action_sort</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel</item>
+        <item name="icActionShare">@drawable/ic_action_share</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+        <item name="icActionLabel">@drawable/ic_action_label</item>
+        <item name="icActionAddLabel">@drawable/ic_action_addlabel</item>
+        <item name="icActionDeselect">@drawable/ic_action_deselect_dark</item>
+
+        <item name="icPlaceUser">@drawable/ic_action_place</item>
+        <item name="icPlaceCity">@drawable/ic_action_locale</item>
+        <item name="icPlaceCapital">@drawable/ic_action_stars_dark</item>
+        <item name="icPlaceMisc">@drawable/ic_action_flagcircle_dark</item>
+        <item name="icPlaceGPS">@drawable/ic_action_location_found</item>
+        <item name="icPlaceInfo">@drawable/ic_action_about</item>
+        <item name="icPlaceHome">@drawable/ic_action_home</item>
+
+        <item name="icActionPlay">@drawable/ic_action_play</item>
+        <item name="icActionPause">@drawable/ic_action_pause</item>
+        <item name="icActionRecord">@drawable/ic_action_record</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand</item>
+        <item name="icActionVisibilityOn">@drawable/ic_action_visibility</item>
+        <item name="icActionVisibilityOff">@drawable/ic_action_visibility_off</item>
+        <item name="checkExpand">@drawable/check_expand_dark</item>
+        <item name="checkFavorite">@drawable/check_favorite_dark</item>
+        <item name="checkAltitude">@drawable/check_altitude_dark</item>
+        <item name="checkVibrate">@drawable/check_vibrate_dark</item>
+        <item name="checkDnd">@drawable/check_dnd_dark</item>
+        <item name="checkVisibility">@drawable/check_visible_dark</item>
+        <item name="checkReminder">@drawable/check_reminder_dark</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
 
     </style>
     <style name="AppTheme.Holo.Dark" parent="AppThemeBase.Holo.Dark">
@@ -179,6 +274,8 @@
 
         <item name="colorAccent">@android:color/holo_blue_dark</item>
         <item name="hrColor">@android:color/holo_blue_dark</item>
+        <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
+        <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
         <item name="buttonPressColor">@android:color/holo_blue_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
@@ -252,7 +349,7 @@
         <item name="icActionGPS_network">@drawable/ic_action_network_light</item>
         <item name="icActionGPS_cell">@drawable/ic_action_celltower_light</item>
 
-        <item name="icActionPlace">@drawable/ic_action_place_light</item>
+        <item name="icActionPlace">@drawable/ic_menu_place_light</item>
         <item name="icActionMap">@drawable/ic_action_map1_light</item>
         <item name="icActionWorldMap">@drawable/ic_action_map2_light</item>
         <item name="icActionGraph">@drawable/ic_action_timeline_light</item>
@@ -281,20 +378,20 @@
         <item name="icActionSun">@drawable/ic_action_sun_light</item>
         <item name="icActionSunChart">@drawable/ic_action_multiline_chart_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
-        <item name="icActionSettings">@drawable/ic_action_settings_light</item>
-        <item name="icActionHelp">@drawable/ic_action_help_light</item>
+        <item name="icActionSettings">@drawable/ic_menu_settings_light</item>
+        <item name="icActionHelp">@drawable/ic_menu_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
-        <item name="icActionClose">@drawable/ic_action_close_light</item>
+        <item name="icActionClose">@drawable/ic_menu_close_light</item>
         <item name="icActionBack">@drawable/ic_action_back_light</item>
         <item name="icActionSearch">@drawable/ic_action_search_light</item>
-        <item name="icActionNew">@drawable/ic_action_new_light</item>
+        <item name="icActionNew">@drawable/ic_menu_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
         <item name="icActionEnableAlarm">@drawable/ic_action_doneall_light</item>
-        <item name="icActionSave">@drawable/ic_action_save_light</item>
-        <item name="icActionEdit">@drawable/ic_action_edit_light</item>
-        <item name="icActionDelete">@drawable/ic_action_discard_light</item>
-        <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+        <item name="icActionSave">@drawable/ic_menu_save_light</item>
+        <item name="icActionEdit">@drawable/ic_menu_edit_light</item>
+        <item name="icActionDelete">@drawable/ic_menu_discard_light</item>
+        <item name="icActionCopy">@drawable/ic_menu_copy_light</item>
         <item name="icActionSort">@drawable/ic_action_sort_light</item>
         <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
@@ -327,6 +424,16 @@
         <item name="checkDnd">@drawable/check_dnd_light</item>
         <item name="checkVisibility">@drawable/check_visible_light</item>
         <item name="checkReminder">@drawable/check_reminder_light</item>
+
+        <item name="text_size_tiny">@dimen/text_size_tiny</item>
+        <item name="text_size_xsmall">@dimen/text_size_xsmall</item>
+        <item name="text_size_small">@dimen/text_size_small</item>
+        <item name="text_size_medium">@dimen/text_size_medium</item>
+        <item name="text_size_large">@dimen/text_size_large</item>
+        <item name="text_size_xlarge">@dimen/text_size_xlarge</item>
+        <item name="text_size_huge">@dimen/text_size_huge</item>
+        <item name="text_size_enormous">@dimen/text_size_enormous</item>
+        <item name="actionBarSize">@dimen/normal_actionbar_size</item>
     </style>
     <style name="AppTheme.Holo.Light" parent="AppThemeBase.Holo.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_ref</item>
@@ -393,6 +500,14 @@
         <item name="android:background">@drawable/holo_toolbar_dark</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
+
+    <style name="HoloBottomSheetEdge">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">?attr/hrColor</item>
+    </style>
+    <style name="HoloBottomSheetEdge.Strong" />
+    <style name="HoloBottomSheetEdge.Weak" />
 
     <dimen name="holo_activity_margin">0dp</dimen>
 

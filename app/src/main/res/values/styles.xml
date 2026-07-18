@@ -22,6 +22,8 @@
         <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr</item>
         <item name="colorAccent">@color/text_accent</item>
+        <item name="sheetEdgeStrong">@style/BottomSheetEdge.Strong</item>
+        <item name="sheetEdgeWeak">@style/BottomSheetEdge.Weak</item>
         <item name="text_primaryColor">@color/text_primary</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse</item>
         <item name="text_secondaryColor">@color/text_secondary</item>
@@ -273,6 +275,8 @@
         <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr_light</item>
         <item name="colorAccent">@color/text_accent_light</item>
+        <item name="sheetEdgeStrong">@style/BottomSheetEdge.Strong</item>
+        <item name="sheetEdgeWeak">@style/BottomSheetEdge.Weak</item>
         <item name="text_primaryColor">@color/text_primary_light</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
         <item name="text_secondaryColor">@color/text_secondary_light</item>
@@ -529,6 +533,8 @@
         <item name="activityMargin">@dimen/activity_margin</item>
         <item name="hrColor">@color/hr_dark</item>
         <item name="colorAccent">@color/text_accent_dark</item>
+        <item name="sheetEdgeStrong">@style/BottomSheetEdge.Strong</item>
+        <item name="sheetEdgeWeak">@style/BottomSheetEdge.Weak</item>
         <item name="text_primaryColor">@color/text_primary_dark</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
         <item name="text_secondaryColor">@color/text_secondary_dark</item>
@@ -1490,6 +1496,17 @@
     </style>
     <style name="ContrastSpinnerStyle.Light" parent="Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@drawable/contrast_popupmenu_frame_light</item>
+    </style>
+
+    <style name="BottomSheetEdge">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="BottomSheetEdge.Strong">
+        <item name="android:background">?attr/text_accentColor</item>
+    </style>
+    <style name="BottomSheetEdge.Weak">
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

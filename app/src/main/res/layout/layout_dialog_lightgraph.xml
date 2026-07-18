@@ -21,6 +21,9 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:background="?attr/dialogBackground">
 
+    <View style="?attr/sheetEdgeWeak"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
     <com.forrestguice.support.constraint.ConstraintLayout
         android:id="@+id/layout_header" android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content"

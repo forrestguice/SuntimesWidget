@@ -20,11 +20,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
     android:background="?attr/dialogBackground">
 
-    <LinearLayout android:visibility="visible"
-        android:background="?attr/text_accentColor"
-        android:layout_width="match_parent" android:layout_height="1dp"
-        android:orientation="horizontal" android:gravity="center_vertical|start">
-    </LinearLayout>
+    <View style="?attr/sheetEdgeStrong" />
 
     <LinearLayout android:id="@+id/dialog_header"
         android:background="?attr/dialogBackgroundAlt"

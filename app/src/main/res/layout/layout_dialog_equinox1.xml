@@ -10,6 +10,8 @@
         android:background="?attr/dialogBackground"
         android:layout_width="match_parent" android:layout_height="match_parent">
 
+        <View style="?attr/sheetEdgeWeak" />
+
         <com.forrestguice.support.constraint.ConstraintLayout
             android:id="@+id/dialog_header" android:orientation="horizontal"
             android:layout_gravity="center" android:layout_marginTop="4dp"

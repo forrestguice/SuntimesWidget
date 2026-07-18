@@ -17,6 +17,8 @@
     <attr name="tileCardBackground" format="reference" />
     <attr name="semiTransparentBackground" format="reference" />
     <attr name="hrColor" format="reference" />
+    <attr name="sheetEdgeStrong" format="reference" />
+    <attr name="sheetEdgeWeak" format="reference" />
 
     <attr name="text_primaryColor" format="reference" />
     <attr name="text_primaryInverseColor" format="reference" />

@@ -22,6 +22,8 @@
     android:orientation="vertical" android:gravity="start"
     android:background="?dialogBackground">
 
+    <View style="?attr/sheetEdgeWeak" />
+
     <TextView android:id="@+id/sundialog_title" style="@style/DialogTitleStyle"
         android:text="@string/lightmap_dialog_title"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"

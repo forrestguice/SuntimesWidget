@@ -26,6 +26,9 @@
         android:background="?dialogBackground"
         tools:ignore="InconsistentLayout">
 
+        <View style="?attr/sheetEdgeWeak"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
             android:text="@string/worldmap_dialog_title"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"

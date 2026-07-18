@@ -29,6 +29,8 @@
         android:paddingTop="6dp" android:paddingBottom="10dp"
         android:background="?attr/dialogBackground">
 
+        <View style="?attr/sheetEdgeWeak" />
+
         <include layout="@layout/layout_settings_date0" />
 
     </LinearLayout>
