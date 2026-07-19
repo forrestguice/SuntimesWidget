@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <attr name="holo_accentColor0" format="reference" />
+    <attr name="holo_accentColor1" format="reference" />
 
     <color name="holo_primary">@color/holo_primary_light</color>
     <color name="holo_surface">@color/holo_surface_light</color>
@@ -9,7 +11,7 @@
     <color name="holo_primary_dark">@color/black</color>
     <color name="holo_surface_dark">@color/grey_900</color>
     <color name="holo_accent_dark">@android:color/holo_blue_bright</color>
-    <color name="holo_accent_alt_dark">@android:color/holo_blue_dark</color>
+    <color name="holo_accent_alt_dark">@android:color/holo_blue_bright</color>
 
     <color name="holo_primary_light">@color/white</color>
     <color name="holo_surface_light">@color/grey_100</color>
@@ -18,6 +20,8 @@
 
     <!-- Holo Dark -->
     <style name="AppThemeBase.Holo.Dark" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="holo_accentColor0">@color/holo_accent_dark</item>
+        <item name="holo_accentColor1">@color/holo_accent_alt_dark</item>
         <item name="colorPrimary">@color/holo_primary_dark</item>
         <item name="dialogFrame">@color/holo_surface_dark</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
@@ -37,46 +41,46 @@
         <item name="popupControlBackground">@color/holo_surface_dark</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_dark</item>
-        <item name="snackbar_accentColor">@color/holo_accent_dark</item>
+        <item name="snackbar_accentColor">?attr/holo_accentColor0</item>
         <item name="snackbar_backgroundColor">@color/holo_surface_dark</item>
 
-        <item name="fab_foregroundColor">@android:color/holo_blue_bright</item>
+        <item name="fab_foregroundColor">?attr/holo_accentColor0</item>
         <item name="fab_backgroundColor">@color/holo_surface_dark</item>
-        <item name="fab_rippleColor">@color/holo_accent_alt_dark</item>
+        <item name="fab_rippleColor">?attr/holo_accentColor1</item>
 
         <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
-        <item name="fab_rippleColorAlt">@color/holo_accent_alt_dark</item>
+        <item name="fab_rippleColorAlt">?attr/holo_accentColor1</item>
 
         <item name="chipBackground">@drawable/holo_chip_dark</item>
         <item name="chipTrayBackground">@color/holo_surface_dark</item>
 
-        <item name="alarmColorEnabled">@color/holo_accent_dark</item>
+        <item name="alarmColorEnabled">?attr/holo_accentColor0</item>
         <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_dark</item>
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_dark</item>
         <item name="alarmCardControls">@color/holo_surface_dark</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
 
-        <item name="tagColor_warning">@color/holo_accent_alt_dark</item>
+        <item name="tagColor_warning">?attr/holo_accentColor1</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
-        <item name="tagColor_dst">@color/holo_accent_alt_dark</item>
+        <item name="tagColor_dst">?attr/holo_accentColor1</item>
 
         <item name="text_primaryColor">@color/text_primary_dark</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
         <item name="text_secondaryColor">@color/text_secondary_dark</item>
         <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
-        <item name="text_accentColor">@color/holo_accent_dark</item>
+        <item name="text_accentColor">?attr/holo_accentColor0</item>
 
-        <item name="colorAccent">@color/holo_accent_dark</item>
-        <item name="hrColor">@color/holo_accent_alt_dark</item>
+        <item name="colorAccent">?attr/holo_accentColor0</item>
+        <item name="hrColor">?attr/holo_accentColor1</item>
         <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
         <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
-        <item name="buttonPressColor">@color/holo_accent_dark</item>
+        <item name="buttonPressColor">?attr/holo_accentColor0</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
-        <item name="gridItemSelected">@color/holo_accent_alt_dark</item>
+        <item name="gridItemSelected">?attr/holo_accentColor1</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -243,22 +247,112 @@
         <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
+    <!-- Holo Dark (Green) -->
+    <style name="AppTheme.Holo.Dark.Green" parent="AppTheme.Holo.Dark">
+        <item name="holo_accentColor0">@android:color/holo_green_light</item>
+        <item name="holo_accentColor1">@android:color/holo_green_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Small.Green" parent="AppTheme.Holo.Dark.Small">
+        <item name="holo_accentColor0">@android:color/holo_green_light</item>
+        <item name="holo_accentColor1">@android:color/holo_green_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Large.Green" parent="AppTheme.Holo.Dark.Large">
+        <item name="holo_accentColor0">@android:color/holo_green_light</item>
+        <item name="holo_accentColor1">@android:color/holo_green_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.XLarge.Green" parent="AppTheme.Holo.Dark.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_green_light</item>
+        <item name="holo_accentColor1">@android:color/holo_green_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Green</item>
+    </style>
+
+    <!-- Holo Dark (Purple) -->
+    <style name="AppTheme.Holo.Dark.Purple" parent="AppTheme.Holo.Dark">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Small.Purple" parent="AppTheme.Holo.Dark.Small">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Large.Purple" parent="AppTheme.Holo.Dark.Large">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.XLarge.Purple" parent="AppTheme.Holo.Dark.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Purple</item>
+    </style>
+
+    <!-- Holo Dark (Orange) -->
+    <style name="AppTheme.Holo.Dark.Orange" parent="AppTheme.Holo.Dark">
+        <item name="holo_accentColor0">@android:color/holo_orange_light</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Small.Orange" parent="AppTheme.Holo.Dark.Small">
+        <item name="holo_accentColor0">@android:color/holo_orange_light</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Large.Orange" parent="AppTheme.Holo.Dark.Large">
+        <item name="holo_accentColor0">@android:color/holo_orange_light</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.XLarge.Orange" parent="AppTheme.Holo.Dark.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_orange_light</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Orange</item>
+    </style>
+
+    <!-- Holo Dark (Red) -->
+    <style name="AppTheme.Holo.Dark.Red" parent="AppTheme.Holo.Dark">
+        <item name="holo_accentColor0">@android:color/holo_red_light</item>
+        <item name="holo_accentColor1">@android:color/holo_red_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Small.Red" parent="AppTheme.Holo.Dark.Small">
+        <item name="holo_accentColor0">@android:color/holo_red_light</item>
+        <item name="holo_accentColor1">@android:color/holo_red_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.Large.Red" parent="AppTheme.Holo.Dark.Large">
+        <item name="holo_accentColor0">@android:color/holo_red_light</item>
+        <item name="holo_accentColor1">@android:color/holo_red_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Dark.XLarge.Red" parent="AppTheme.Holo.Dark.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_red_light</item>
+        <item name="holo_accentColor1">@android:color/holo_red_light</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark.Red</item>
+    </style>
+
     <!-- Holo Light -->
     <style name="AppThemeBase.Holo.Light" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <item name="holo_accentColor0">@color/holo_accent_light</item>
+        <item name="holo_accentColor1">@color/holo_accent_alt_light</item>
         <item name="colorPrimary">@color/holo_primary_light</item>
         <item name="dialogFrame">@color/holo_surface_light</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
         <item name="dialogBackgroundAlt">@color/holo_surface_light</item>
         <item name="widgetBackground">@drawable/bg_widget</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
-        <item name="timeCardBackground">@color/holo_primary_light</item>
-        <item name="tileCardBackground">@color/holo_primary_light</item>
+        <item name="timeCardBackground">@color/holo_surface_light</item>
+        <item name="tileCardBackground">@color/holo_surface_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <!--<item name="alertDialogTheme">@android:style/Dialog</item>-->
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>-->
 
         <item name="snackbar_textColor">@color/snackbar_text_light</item>
-        <item name="snackbar_accentColor">@color/holo_accent_light</item>
+        <item name="snackbar_accentColor">?attr/holo_accentColor0</item>
         <item name="snackbar_backgroundColor">@color/holo_surface_light</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
@@ -268,42 +362,42 @@
         <item name="popupControlBackground">@color/grey_300</item>
 
         <item name="fab_backgroundColor">?attr/colorPrimary</item>
-        <item name="fab_foregroundColor">@color/holo_accent_light</item>
-        <item name="fab_rippleColor">@color/holo_accent_alt_light</item>
+        <item name="fab_foregroundColor">?attr/holo_accentColor0</item>
+        <item name="fab_rippleColor">?attr/holo_accentColor1</item>
 
         <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
-        <item name="fab_rippleColorAlt">@color/holo_accent_alt_light</item>
+        <item name="fab_rippleColorAlt">?attr/holo_accentColor1</item>
 
         <item name="chipBackground">@drawable/holo_chip_light</item>
         <item name="chipTrayBackground">@color/holo_surface_light</item>
 
-        <item name="alarmColorEnabled">@color/holo_accent_light</item>
+        <item name="alarmColorEnabled">?attr/holo_accentColor0</item>
         <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_light</item>
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_light</item>
         <item name="alarmCardControls">@color/holo_surface_light</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
 
-        <item name="tagColor_warning">@color/holo_accent_alt_light</item>
+        <item name="tagColor_warning">?attr/holo_accentColor1</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
-        <item name="tagColor_dst">@color/holo_accent_alt_light</item>
+        <item name="tagColor_dst">?attr/holo_accentColor1</item>
 
         <item name="text_primaryColor">@color/text_primary_light</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
         <item name="text_secondaryColor">@color/text_secondary_light</item>
         <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
-        <item name="text_accentColor">@color/holo_accent_light</item>
+        <item name="text_accentColor">?attr/holo_accentColor0</item>
 
-        <item name="colorAccent">@color/holo_accent_light</item>
-        <item name="hrColor">@color/holo_accent_alt_light</item>
+        <item name="colorAccent">?attr/holo_accentColor0</item>
+        <item name="hrColor">?attr/holo_accentColor1</item>
         <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
         <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
-        <item name="buttonPressColor">@color/holo_accent_light</item>
+        <item name="buttonPressColor">?attr/holo_accentColor0</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
-        <item name="gridItemSelected">@color/holo_accent_alt_light</item>
+        <item name="gridItemSelected">?attr/holo_accentColor1</item>
 
         <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
@@ -496,6 +590,94 @@
         <item name="actionBarSize">@dimen/xlarge_actionbar_size</item>
     </style>
 
+    <!-- Holo Light (Green) -->
+    <style name="AppTheme.Holo.Light.Green" parent="AppTheme.Holo.Light">
+        <item name="holo_accentColor0">@android:color/holo_green_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_green_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Small.Green" parent="AppTheme.Holo.Light.Small">
+        <item name="holo_accentColor0">@android:color/holo_green_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_green_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Large.Green" parent="AppTheme.Holo.Light.Large">
+        <item name="holo_accentColor0">@android:color/holo_green_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_green_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Green</item>
+    </style>
+    <style name="AppTheme.Holo.Light.XLarge.Green" parent="AppTheme.Holo.Light.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_green_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_green_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Green</item>>
+    </style>
+
+    <!-- Holo Light (Purple) -->
+    <style name="AppTheme.Holo.Light.Purple" parent="AppTheme.Holo.Light">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Small.Purple" parent="AppTheme.Holo.Light.Small">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Large.Purple" parent="AppTheme.Holo.Light.Large">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Purple</item>
+    </style>
+    <style name="AppTheme.Holo.Light.XLarge.Purple" parent="AppTheme.Holo.Light.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_purple</item>
+        <item name="holo_accentColor1">@android:color/holo_purple</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Purple</item>
+    </style>
+
+    <!-- Holo Light (Orange) -->
+    <style name="AppTheme.Holo.Light.Orange" parent="AppTheme.Holo.Light">
+        <item name="holo_accentColor0">@android:color/holo_orange_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Small.Orange" parent="AppTheme.Holo.Light.Small">
+        <item name="holo_accentColor0">@android:color/holo_orange_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Large.Orange" parent="AppTheme.Holo.Light.Large">
+        <item name="holo_accentColor0">@android:color/holo_orange_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Orange</item>
+    </style>
+    <style name="AppTheme.Holo.Light.XLarge.Orange" parent="AppTheme.Holo.Light.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_orange_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_orange_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Orange</item>
+    </style>
+
+    <!-- Holo Light (Red) -->
+    <style name="AppTheme.Holo.Light.Red" parent="AppTheme.Holo.Light">
+        <item name="holo_accentColor0">@android:color/holo_red_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_red_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Small.Red" parent="AppTheme.Holo.Light.Small">
+        <item name="holo_accentColor0">@android:color/holo_red_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_red_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Light.Large.Red" parent="AppTheme.Holo.Light.Large">
+        <item name="holo_accentColor0">@android:color/holo_red_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_red_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Red</item>
+    </style>
+    <style name="AppTheme.Holo.Light.XLarge.Red" parent="AppTheme.Holo.Light.XLarge">
+        <item name="holo_accentColor0">@android:color/holo_red_dark</item>
+        <item name="holo_accentColor1">@android:color/holo_red_dark</item>
+        <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light.Red</item>>
+    </style>
+
     <style name="HoloOverflowMenu.System" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/dialog_bg</item>
     </style>
@@ -509,19 +691,43 @@
     <style name="HoloAppToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">@drawable/holo_toolbar_dark</item>
+        <item name="android:background">@drawable/holo_toolbar_blue_dark</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="popupTheme">?attr/actionBarPopupTheme</item>
         <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
         <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearance</item>
     </style>
     <style name="HoloAppToolbarStyle.Light">
-        <item name="android:background">@drawable/holo_toolbar_light</item>
+        <item name="android:background">@drawable/holo_toolbar_blue_light</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
+    <style name="HoloAppToolbarStyle.Light.Orange">
+        <item name="android:background">@drawable/holo_toolbar_orange_light</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Light.Purple">
+        <item name="android:background">@drawable/holo_toolbar_purple_light</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Light.Green">
+        <item name="android:background">@drawable/holo_toolbar_green_light</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Light.Red">
+        <item name="android:background">@drawable/holo_toolbar_red_light</item>
+    </style>
     <style name="HoloAppToolbarStyle.Dark">
-        <item name="android:background">@drawable/holo_toolbar_dark</item>
+        <item name="android:background">@drawable/holo_toolbar_blue_dark</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Dark.Orange">
+        <item name="android:background">@drawable/holo_toolbar_orange_dark</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Dark.Purple">
+        <item name="android:background">@drawable/holo_toolbar_purple_dark</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Dark.Green">
+        <item name="android:background">@drawable/holo_toolbar_green_dark</item>
+    </style>
+    <style name="HoloAppToolbarStyle.Dark.Red">
+        <item name="android:background">@drawable/holo_toolbar_red_dark</item>
     </style>
 
     <style name="HoloBottomSheetEdge">

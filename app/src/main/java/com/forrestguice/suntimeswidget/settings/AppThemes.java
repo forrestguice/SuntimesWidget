@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2024 Forrest Guice
+    Copyright (C) 2014-2026 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ public class AppThemes
     public static final String THEME_MONET_SYSTEM = MonetSystemThemeInfo.THEME_MONET_SYSTEM;
     public static final String THEME_MONET_DARK = MonetDarkThemeInfo.THEME_MONET_DARK;
     public static final String THEME_MONET_LIGHT = MonetLightThemeInfo.THEME_MONET_LIGHT;
-    public static final String THEME_HOLO_DARK = HoloDarkThemeInfo.THEME_HOLO_DARK;
+    public static final String THEME_HOLO_DARK = HoloBlueDarkThemeInfo.THEME_HOLO_DARK;
     public static final String THEME_HOLO_LIGHT = HoloLightThemeInfo.THEME_HOLO_LIGHT;
 
     public static final String[] THEMES = new String[] { AppSettings.THEME_DEFAULT, THEME_DARK, THEME_LIGHT, THEME_DAYNIGHT, THEME_SYSTEM,
@@ -67,6 +67,7 @@ public class AppThemes
                     retValue = info;
                     break;
                 }
+            }
         }
         if (Build.VERSION.SDK_INT < retValue.requiredTargetSdkVersion()) {
             retValue = info_defaultTheme;
@@ -81,11 +82,23 @@ public class AppThemes
     private static final AppThemeInfo info_system1Theme = new System1ThemeInfo();
     private static final AppThemeInfo info_dark1Theme = new DarkTheme1Info();
     private static final AppThemeInfo info_light1Theme = new LightTheme1Info();
+
     private static final AppThemeInfo info_monet_systemTheme = new MonetSystemThemeInfo();
     private static final AppThemeInfo info_monet_darkTheme = new MonetDarkThemeInfo();
     private static final AppThemeInfo info_monet_lightTheme = new MonetLightThemeInfo();
-    private static final AppThemeInfo info_holo_darkTheme = new HoloDarkThemeInfo();
+
+    private static final AppThemeInfo info_holo_darkTheme = new HoloBlueDarkThemeInfo();
+    private static final AppThemeInfo info_holo_orange_darkTheme = new HoloOrangeDarkThemeInfo();
+    private static final AppThemeInfo info_holo_purple_darkTheme = new HoloPurpleDarkThemeInfo();
+    private static final AppThemeInfo info_holo_green_darkTheme = new HoloGreenDarkThemeInfo();
+    private static final AppThemeInfo info_holo_red_darkTheme = new HoloRedDarkThemeInfo();
+
     private static final AppThemeInfo info_holo_lightTheme = new HoloLightThemeInfo();
+    private static final AppThemeInfo info_holo_orange_lightTheme = new HoloOrangeLightThemeInfo();
+    private static final AppThemeInfo info_holo_purple_lightTheme = new HoloPurpleLightThemeInfo();
+    private static final AppThemeInfo info_holo_green_lightTheme = new HoloGreenLightThemeInfo();
+    private static final AppThemeInfo info_holo_red_lightTheme = new HoloRedLightThemeInfo();
+
     private static final AppThemeInfo info_defaultTheme = info_systemTheme;
 
     public static AppThemeInfo[] appThemeInfo()
@@ -95,13 +108,15 @@ public class AppThemes
                     info_systemTheme, info_darkTheme, info_lightTheme,
                     info_system1Theme, info_dark1Theme, info_light1Theme,
                     info_monet_systemTheme, info_monet_darkTheme, info_monet_lightTheme,
-                    info_holo_darkTheme, info_holo_lightTheme
+                    info_holo_darkTheme, info_holo_orange_darkTheme, info_holo_red_darkTheme, info_holo_purple_darkTheme, info_holo_green_darkTheme,
+                    info_holo_lightTheme, info_holo_orange_lightTheme, info_holo_red_lightTheme, info_holo_purple_lightTheme, info_holo_green_lightTheme,
             };
         } else {
             return new AppThemeInfo[] {
                     info_systemTheme, info_darkTheme, info_lightTheme,
                     info_system1Theme, info_dark1Theme, info_light1Theme,
-                    info_holo_darkTheme, info_holo_lightTheme
+                    info_holo_darkTheme, info_holo_orange_darkTheme, info_holo_red_darkTheme, info_holo_purple_darkTheme, info_holo_green_darkTheme,
+                    info_holo_lightTheme, info_holo_orange_lightTheme, info_holo_red_lightTheme, info_holo_purple_lightTheme, info_holo_green_lightTheme,
             };
         }
     }
@@ -450,7 +465,7 @@ public class AppThemes
         }
     }
 
-    public static class HoloDarkThemeInfo extends AppThemeInfo
+    public static class HoloBlueDarkThemeInfo extends AppThemeInfo
     {
         public static final String THEME_HOLO_DARK = "holo_dark";
 
@@ -474,10 +489,9 @@ public class AppThemes
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.themes_appThemes_darkHolo);
+            return context.getString(R.string.themes_appThemes_darkHolo_blue);
         }
     }
-
     public static class HoloLightThemeInfo extends AppThemeInfo
     {
         public static final String THEME_HOLO_LIGHT = "holo_light";
@@ -502,7 +516,232 @@ public class AppThemes
         }
         @Override
         public String getDisplayString(Context context) {
-            return context.getString(R.string.themes_appThemes_lightHolo);
+            return context.getString(R.string.themes_appThemes_lightHolo_blue);
+        }
+    }
+
+    public static class HoloOrangeDarkThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_ORANGE_DARK = "holo_orange_dark";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_ORANGE_DARK;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Dark_Small_Orange;
+                case LARGE: return R.style.AppTheme_Holo_Dark_Large_Orange;
+                case XLARGE: return R.style.AppTheme_Holo_Dark_XLarge_Orange;
+                case NORMAL: default: return R.style.AppTheme_Holo_Dark_Orange;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_darkHolo_orange);
+        }
+    }
+
+    public static class HoloRedDarkThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_RED_DARK = "holo_red_dark";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_RED_DARK;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Dark_Small_Red;
+                case LARGE: return R.style.AppTheme_Holo_Dark_Large_Red;
+                case XLARGE: return R.style.AppTheme_Holo_Dark_XLarge_Red;
+                case NORMAL: default: return R.style.AppTheme_Holo_Dark_Red;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_darkHolo_red);
+        }
+    }
+
+    public static class HoloPurpleDarkThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_PURPLE_DARK = "holo_purple_dark";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_PURPLE_DARK;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Dark_Small_Purple;
+                case LARGE: return R.style.AppTheme_Holo_Dark_Large_Purple;
+                case XLARGE: return R.style.AppTheme_Holo_Dark_XLarge_Purple;
+                case NORMAL: default: return R.style.AppTheme_Holo_Dark_Purple;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_darkHolo_purple);
+        }
+    }
+
+    public static class HoloGreenDarkThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_GREEN_DARK = "holo_green_dark";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_GREEN_DARK;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_YES;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Dark_Small_Green;
+                case LARGE: return R.style.AppTheme_Holo_Dark_Large_Green;
+                case XLARGE: return R.style.AppTheme_Holo_Dark_XLarge_Green;
+                case NORMAL: default: return R.style.AppTheme_Holo_Dark_Green;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_darkHolo_green);
+        }
+    }
+
+
+    public static class HoloOrangeLightThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_ORANGE_LIGHT = "holo_orange_light";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_ORANGE_LIGHT;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Light_Small_Orange;
+                case LARGE: return R.style.AppTheme_Holo_Light_Large_Orange;
+                case XLARGE: return R.style.AppTheme_Holo_Light_XLarge_Orange;
+                case NORMAL: default: return R.style.AppTheme_Holo_Light_Orange;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_lightHolo_orange);
+        }
+    }
+
+    public static class HoloRedLightThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_RED_LIGHT = "holo_red_light";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_RED_LIGHT;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Light_Small_Red;
+                case LARGE: return R.style.AppTheme_Holo_Light_Large_Red;
+                case XLARGE: return R.style.AppTheme_Holo_Light_XLarge_Red;
+                case NORMAL: default: return R.style.AppTheme_Holo_Light_Red;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_lightHolo_red);
+        }
+    }
+
+    public static class HoloPurpleLightThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_PURPLE_LIGHT = "holo_purple_light";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_PURPLE_LIGHT;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Light_Small_Purple;
+                case LARGE: return R.style.AppTheme_Holo_Light_Large_Purple;
+                case XLARGE: return R.style.AppTheme_Holo_Light_XLarge_Purple;
+                case NORMAL: default: return R.style.AppTheme_Holo_Light_Purple;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_lightHolo_purple);
+        }
+    }
+
+    public static class HoloGreenLightThemeInfo extends AppThemeInfo
+    {
+        public static final String THEME_HOLO_GREEN_LIGHT = "holo_green_light";
+
+        @NonNull
+        @Override
+        public String getThemeName() {
+            return THEME_HOLO_GREEN_LIGHT;
+        }
+        @Override
+        public int getDefaultNightMode() {
+            return AppCompatDelegateHelper.MODE_NIGHT_NO;
+        }
+        @Override
+        public int getStyleId(Context context, TextSize size, SuntimesRiseSetData data) {
+            switch (size) {
+                case SMALL: return R.style.AppTheme_Holo_Light_Small_Green;
+                case LARGE: return R.style.AppTheme_Holo_Light_Large_Green;
+                case XLARGE: return R.style.AppTheme_Holo_Light_XLarge_Green;
+                case NORMAL: default: return R.style.AppTheme_Holo_Light_Green;
+            }
+        }
+        @Override
+        public String getDisplayString(Context context) {
+            return context.getString(R.string.themes_appThemes_lightHolo_green);
         }
     }
 

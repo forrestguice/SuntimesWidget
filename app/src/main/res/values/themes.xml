@@ -17,25 +17,41 @@
         <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_lightTheme1</item>
-        <item>@string/themes_appThemes_lightHolo</item>
+        <item>@string/themes_appThemes_lightHolo_blue</item>
+        <item>@string/themes_appThemes_lightHolo_green</item>
+        <item>@string/themes_appThemes_lightHolo_orange</item>
+        <item>@string/themes_appThemes_lightHolo_purple</item>
+        <item>@string/themes_appThemes_lightHolo_red</item>
     </string-array>
     <string-array name="appThemes_light_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
         <item>contrast_system</item>
         <item>contrast_light</item>
         <item>holo_light</item>
+        <item>holo_green_light</item>
+        <item>holo_orange_light</item>
+        <item>holo_purple_light</item>
+        <item>holo_red_light</item>
     </string-array>
 
     <string-array name="appThemes_dark_display" tools:ignore="InconsistentArrays"> <!-- display values (one-to-one with appThemes_dark_values) -->
         <item>@string/tag_tagDefault</item>
         <item>@string/themes_appThemes_systemDefault1</item>
         <item>@string/themes_appThemes_darkTheme1</item>
-        <item>@string/themes_appThemes_darkHolo</item>
+        <item>@string/themes_appThemes_darkHolo_blue</item>
+        <item>@string/themes_appThemes_darkHolo_green</item>
+        <item>@string/themes_appThemes_darkHolo_orange</item>
+        <item>@string/themes_appThemes_darkHolo_purple</item>
+        <item>@string/themes_appThemes_darkHolo_red</item>
     </string-array>
     <string-array name="appThemes_dark_values" translatable="false" tools:ignore="InconsistentArrays">  <!-- config values (one-to-one with appThemes_dark_display) -->
         <item>default</item>
         <item>contrast_system</item>
         <item>contrast_dark</item>
         <item>holo_dark</item>
+        <item>holo_green_dark</item>
+        <item>holo_orange_dark</item>
+        <item>holo_purple_dark</item>
+        <item>holo_red_dark</item>
     </string-array>
 </resources>

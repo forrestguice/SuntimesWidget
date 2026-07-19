@@ -1826,8 +1826,19 @@
     <string name="themes_appThemes_systemMonet">Material You (System Default)</string>     <!-- TODO -->
     <string name="themes_appThemes_darkMonet">Material You (Dark)</string>    <!-- TODO -->
     <string name="themes_appThemes_lightMonet">Material You (Light)</string>     <!-- TODO -->
-    <string name="themes_appThemes_darkHolo">Holo (Dark)</string>                             <!-- TODO -->
-    <string name="themes_appThemes_lightHolo">Holo (Light)</string>                             <!-- TODO -->
+
+    <string name="themes_appThemes_darkHolo_blue">Holo Blue (Dark)</string>                   <!-- TODO -->
+    <string name="themes_appThemes_darkHolo_orange">Holo Orange (Dark)</string>               <!-- TODO -->
+    <string name="themes_appThemes_darkHolo_purple">Holo Purple (Dark)</string>               <!-- TODO -->
+    <string name="themes_appThemes_darkHolo_green">Holo Green (Dark)</string>                 <!-- TODO -->
+    <string name="themes_appThemes_darkHolo_red">Holo Red (Dark)</string>                     <!-- TODO -->
+
+    <string name="themes_appThemes_lightHolo_blue">Holo Blue (Light)</string>                 <!-- TODO -->
+    <string name="themes_appThemes_lightHolo_orange">Holo Orange (Light)</string>             <!-- TODO -->
+    <string name="themes_appThemes_lightHolo_purple">Holo Purple (Light)</string>             <!-- TODO -->
+    <string name="themes_appThemes_lightHolo_green">Holo Green (Light)</string>               <!-- TODO -->
+    <string name="themes_appThemes_lightHolo_red">Holo Red (Light)</string>                   <!-- TODO -->
+
 
     <!-- App Setting: time format -->
     <string-array name="settings_timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
