@@ -32,6 +32,7 @@ import com.forrestguice.suntimeswidget.getfix.LocationDialogTest;
 import com.forrestguice.suntimeswidget.graph.LightMapDialogTest;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.AppThemes;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
@@ -91,7 +92,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         configureAppForTesting(context);
 
         String[] locales = context.getResources().getStringArray(R.array.locale_values);
-        String[] themes = new String[] { AppSettings.THEME_DARK, AppSettings.THEME_LIGHT };
+        String[] themes = new String[] { AppThemes.THEME_DARK, AppThemes.THEME_LIGHT };
         for (String languageTag : locales)
         {
             for (String theme : themes)

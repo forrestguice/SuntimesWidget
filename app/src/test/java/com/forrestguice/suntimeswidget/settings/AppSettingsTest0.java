@@ -42,8 +42,8 @@ public class AppSettingsTest0
     @Test
     public void test_themeNames()
     {
-        for (String theme0 : AppSettings.THEMES) {
-            for (String theme1 : AppSettings.THEMES) {
+        for (String theme0 : AppThemes.THEMES) {
+            for (String theme1 : AppThemes.THEMES) {
                 //noinspection StringEquality
                 if (theme0 == theme1) {
                     continue;

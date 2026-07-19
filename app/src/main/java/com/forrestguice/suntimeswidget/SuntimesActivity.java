@@ -46,6 +46,7 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmType;
 import com.forrestguice.suntimeswidget.calculator.settings.display.LengthUnitDisplay;
 import com.forrestguice.suntimeswidget.calculator.settings.display.TimeDateDisplay;
+import com.forrestguice.suntimeswidget.settings.AppThemes;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.app.ActivityResultLauncherCompat;
 import com.forrestguice.support.app.PermissionResultLauncherCompat;
@@ -767,7 +768,7 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 Log.d("UpdateAlarms", "onReceive: " + SUNTIMES_APP_UPDATE_PARTIAL);
 
-                if (appTheme.equals(AppSettings.THEME_DAYNIGHT))
+                if (appTheme.equals(AppThemes.THEME_DAYNIGHT))
                 {
                     boolean needsRecreate = dataset.isDay() ? (appThemeResID != R.style.AppTheme_Light)
                                                             : (appThemeResID != R.style.AppTheme_Dark);

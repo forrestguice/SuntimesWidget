@@ -40,6 +40,7 @@ import com.forrestguice.annotation.Nullable;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.WelcomeActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.AppThemes;
 import com.forrestguice.support.app.AppCompatActivity;
 
 public class WelcomeAppearanceView extends WelcomeView
@@ -111,13 +112,13 @@ public class WelcomeAppearanceView extends WelcomeView
         setCheckedChangeListener(largeText, onTextSizeChecked(context, AppSettings.TextSize.LARGE));
         setCheckedChangeListener(xlargeText, onTextSizeChecked(context, AppSettings.TextSize.XLARGE));
 
-        final AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
+        final AppThemes.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(context);
         String themeID = themeInfo.getThemeName();
         String themeID1 = AppSettings.getThemeOverride(context, themeInfo);
-        final AppSettings.AppThemeInfo themeInfo1 = AppSettings.loadThemeInfo(themeID1);
+        final AppThemes.AppThemeInfo themeInfo1 = AppThemes.loadThemeInfo(themeID1);
         String darkThemeID = AppSettings.loadThemeDarkPref(context);
         String lightThemeID = AppSettings.loadThemeLightPref(context);
-        AppSettings.AppThemeInfo darkThemeInfo = AppSettings.loadThemeInfo(darkThemeID);
+        AppThemes.AppThemeInfo darkThemeInfo = AppThemes.loadThemeInfo(darkThemeID);
 
         setArg(KEY_THEMEID, themeID);
         setArg(KEY_THEMEID1, themeID1);
@@ -130,7 +131,7 @@ public class WelcomeAppearanceView extends WelcomeView
         spinner = (Spinner) view.findViewById(R.id.spin_theme);
         if (spinner != null)
         {
-            final ArrayAdapter<AppSettings.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(context, R.layout.layout_listitem_welcome);
+            final ArrayAdapter<AppThemes.AppThemeInfo> spinnerAdapter = new AppThemeInfoAdapter(context, R.layout.layout_listitem_welcome);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(spinnerAdapter);
             int initialPosition = spinnerAdapter.getPosition(themeID1 != null ? themeInfo1 : themeInfo);
@@ -150,37 +151,37 @@ public class WelcomeAppearanceView extends WelcomeView
         }
 
         if (systemThemeButton != null) {
-            if (setChecked(systemThemeButton, AppSettings.THEME_SYSTEM.equals(themeID) && AppSettings.THEME_DEFAULT.equals(darkThemeID))) {
+            if (setChecked(systemThemeButton, AppThemes.THEME_SYSTEM.equals(themeID) && AppSettings.THEME_DEFAULT.equals(darkThemeID))) {
                 updatePreview(context, themeInfo.getDisplayString(context));
             }
-            systemThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, null, null));
+            systemThemeButton.setOnClickListener(onThemeButtonClicked(AppThemes.THEME_SYSTEM, null, null));
         }
 
         if (systemTheme1Button != null) {
-            if (setChecked(systemTheme1Button, AppSettings.THEME_SYSTEM.equals(themeID) && AppSettings.THEME_SYSTEM1.equals(darkThemeID))) {
+            if (setChecked(systemTheme1Button, AppThemes.THEME_SYSTEM.equals(themeID) && AppThemes.THEME_SYSTEM1.equals(darkThemeID))) {
                 updatePreview(context, darkThemeInfo.getDisplayString(context));
             }
-            systemTheme1Button.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1));
+            systemTheme1Button.setOnClickListener(onThemeButtonClicked(AppThemes.THEME_SYSTEM, AppThemes.THEME_SYSTEM1, AppThemes.THEME_SYSTEM1));
         }
 
         if (darkThemeButton != null) {
-            if (setChecked(darkThemeButton, AppSettings.THEME_DARK.equals(themeID))) {
+            if (setChecked(darkThemeButton, AppThemes.THEME_DARK.equals(themeID))) {
                 updatePreview(context, themeInfo.getDisplayString(context));
             }
-            darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK, null, null));
+            darkThemeButton.setOnClickListener(onThemeButtonClicked(AppThemes.THEME_DARK, null, null));
         }
 
         if (lightThemeButton != null) {
-            if (setChecked(lightThemeButton, AppSettings.THEME_LIGHT.equals(themeID))) {
+            if (setChecked(lightThemeButton, AppThemes.THEME_LIGHT.equals(themeID))) {
                 updatePreview(context, themeInfo.getDisplayString(context));
             }
-            lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT, null, null));
+            lightThemeButton.setOnClickListener(onThemeButtonClicked(AppThemes.THEME_LIGHT, null, null));
         }
 
         Log.d("DEBUG", "Appearance: initViews: " + lightThemeID + ", " + darkThemeID + ", " + textSize + ", " + themeID + " .. " + toString());
     }
 
-    public static class AppThemeInfoAdapter extends ArrayAdapter<AppSettings.AppThemeInfo>
+    public static class AppThemeInfoAdapter extends ArrayAdapter<AppThemes.AppThemeInfo>
     {
         protected final int layout;
 
@@ -188,7 +189,7 @@ public class WelcomeAppearanceView extends WelcomeView
         {
             super(context, resource);
             layout = resource;
-            for (AppSettings.AppThemeInfo info : AppSettings.appThemeInfo()) {
+            for (AppThemes.AppThemeInfo info : AppThemes.appThemeInfo()) {
                 add(info);
             }
         }
@@ -211,7 +212,7 @@ public class WelcomeAppearanceView extends WelcomeView
                 view = inflater.inflate(layoutResID, parent, false);
             }
 
-            AppSettings.AppThemeInfo item = getItem(position);
+            AppThemes.AppThemeInfo item = getItem(position);
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(item != null ? item.getDisplayString(getContext()) : "");
             return view;
@@ -242,44 +243,44 @@ public class WelcomeAppearanceView extends WelcomeView
     }
     private void onThemeItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
-        AppSettings.AppThemeInfo themeInfo = (AppSettings.AppThemeInfo) parent.getAdapter().getItem(position);
+        AppThemes.AppThemeInfo themeInfo = (AppThemes.AppThemeInfo) parent.getAdapter().getItem(position);
         switch (themeInfo.getThemeName())
         {
-            case AppSettings.THEME_MONET_SYSTEM:
-                onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_MONET_SYSTEM, AppSettings.THEME_MONET_SYSTEM).onClick(view);
+            case AppThemes.THEME_MONET_SYSTEM:
+                onThemeButtonClicked(AppThemes.THEME_SYSTEM, AppThemes.THEME_MONET_SYSTEM, AppThemes.THEME_MONET_SYSTEM).onClick(view);
                 break;
 
-            case AppSettings.THEME_MONET_DARK:
-                onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_MONET_LIGHT, AppSettings.THEME_MONET_DARK).onClick(view);
+            case AppThemes.THEME_MONET_DARK:
+                onThemeButtonClicked(AppThemes.THEME_DARK, AppThemes.THEME_MONET_LIGHT, AppThemes.THEME_MONET_DARK).onClick(view);
                 break;
 
-            case AppSettings.THEME_MONET_LIGHT:
-                onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_MONET_LIGHT, AppSettings.THEME_MONET_DARK).onClick(view);
+            case AppThemes.THEME_MONET_LIGHT:
+                onThemeButtonClicked(AppThemes.THEME_LIGHT, AppThemes.THEME_MONET_LIGHT, AppThemes.THEME_MONET_DARK).onClick(view);
                 break;
 
-            case AppSettings.THEME_SYSTEM1:
-                onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_SYSTEM1, AppSettings.THEME_SYSTEM1).onClick(view);
+            case AppThemes.THEME_SYSTEM1:
+                onThemeButtonClicked(AppThemes.THEME_SYSTEM, AppThemes.THEME_SYSTEM1, AppThemes.THEME_SYSTEM1).onClick(view);
                 break;
 
-            case AppSettings.THEME_DARK1:
-                onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
+            case AppThemes.THEME_DARK1:
+                onThemeButtonClicked(AppThemes.THEME_DARK, AppThemes.THEME_LIGHT1, AppThemes.THEME_DARK1).onClick(view);
                 break;
 
-            case AppSettings.THEME_LIGHT1:
-                onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_LIGHT1, AppSettings.THEME_DARK1).onClick(view);
+            case AppThemes.THEME_LIGHT1:
+                onThemeButtonClicked(AppThemes.THEME_LIGHT, AppThemes.THEME_LIGHT1, AppThemes.THEME_DARK1).onClick(view);
                 break;
 
-            case AppSettings.THEME_DARK:
-                onThemeButtonClicked(AppSettings.THEME_DARK, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
+            case AppThemes.THEME_DARK:
+                onThemeButtonClicked(AppThemes.THEME_DARK, AppThemes.THEME_LIGHT, AppThemes.THEME_DARK).onClick(view);
                 break;
 
-            case AppSettings.THEME_LIGHT:
-                onThemeButtonClicked(AppSettings.THEME_LIGHT, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
+            case AppThemes.THEME_LIGHT:
+                onThemeButtonClicked(AppThemes.THEME_LIGHT, AppThemes.THEME_LIGHT, AppThemes.THEME_DARK).onClick(view);
                 break;
 
-            case AppSettings.THEME_SYSTEM:
+            case AppThemes.THEME_SYSTEM:
             default:
-                onThemeButtonClicked(AppSettings.THEME_SYSTEM, AppSettings.THEME_LIGHT, AppSettings.THEME_DARK).onClick(view);
+                onThemeButtonClicked(AppThemes.THEME_SYSTEM, AppThemes.THEME_LIGHT, AppThemes.THEME_DARK).onClick(view);
                 break;
         }
     }

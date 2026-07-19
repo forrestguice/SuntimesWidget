@@ -28,6 +28,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.AppThemes;
 import com.forrestguice.util.SuntimesJUnitTestRunner;
 
 import org.junit.After;
@@ -72,7 +73,7 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
         AlarmClockActivity activity = activityRule.getActivity();
         configureAppForTesting(activity);
         String[] locales = activity.getResources().getStringArray(R.array.locale_values);
-        String[] themes = new String[] { AppSettings.THEME_DARK, AppSettings.THEME_LIGHT };
+        String[] themes = new String[] { AppThemes.THEME_DARK, AppThemes.THEME_LIGHT };
         for (String languageTag : locales) {
             for (String theme : themes) {
                 makeScreenshots0(activity, languageTag, theme);

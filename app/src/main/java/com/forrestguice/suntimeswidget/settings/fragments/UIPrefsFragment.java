@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.events.ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.SunElevationEvent;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.AppThemes;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SettingsActivityInterface;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
@@ -386,7 +387,7 @@ public class UIPrefsFragment extends PreferenceFragment
     {
         if (listPref != null)
         {
-            AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(activity);
+            AppThemes.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(activity);
 
             boolean isLightThemePref = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
             String[] defaultEntries = activity.getResources().getStringArray(isLightThemePref ? R.array.appThemes_light_display : R.array.appThemes_dark_display);
@@ -394,7 +395,7 @@ public class UIPrefsFragment extends PreferenceFragment
             HashMap<String,String> defaults = new HashMap<>();
             for (int i=0; i<defaultEntries.length; i++)
             {
-                if (defaultValues[i].equals(AppSettings.THEME_DEFAULT) || themeInfo.getDefaultNightMode() == AppSettings.loadThemeInfo(defaultValues[i]).getDefaultNightMode()) {
+                if (defaultValues[i].equals(AppSettings.THEME_DEFAULT) || themeInfo.getDefaultNightMode() == AppThemes.loadThemeInfo(defaultValues[i]).getDefaultNightMode()) {
                     defaults.put(defaultValues[i], defaultEntries[i]);
                 }
             }
@@ -477,11 +478,11 @@ public class UIPrefsFragment extends PreferenceFragment
 
     public static void updatePref_ui_themeOverride(@NonNull String mode, ListPreference darkPref, ListPreference lightPref)
     {
-        AppSettings.AppThemeInfo themeInfo = AppSettings.loadThemeInfo(mode);
+        AppThemes.AppThemeInfo themeInfo = AppThemes.loadThemeInfo(mode);
         String themeName = themeInfo.getThemeName();
         int themeNightMode = themeInfo.getDefaultNightMode();
-        darkPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_YES || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
-        lightPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_NO || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppSettings.THEME_DAYNIGHT));
+        darkPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_YES || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppThemes.THEME_DAYNIGHT));
+        lightPref.setEnabled(themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_NO || themeNightMode == AppCompatDelegateHelper.MODE_NIGHT_FOLLOW_SYSTEM || themeName.equals(AppThemes.THEME_DAYNIGHT));
     }
 
     /**
