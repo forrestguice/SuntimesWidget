@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="holo_primary">@color/holo_primary_dark</color>
+    <color name="holo_surface">@color/holo_surface_dark</color>
+    <color name="holo_accent">@color/holo_accent_dark</color>
+    <color name="holo_accent_alt">@color/holo_accent_alt_dark</color>
+</resources>

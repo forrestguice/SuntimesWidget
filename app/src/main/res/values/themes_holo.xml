@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <color name="holo_primary">@color/holo_primary_light</color>
+    <color name="holo_surface">@color/holo_surface_light</color>
+    <color name="holo_accent">@color/holo_accent_light</color>
+    <color name="holo_accent_alt">@color/holo_accent_alt_light</color>
+
+    <color name="holo_primary_dark">@color/black</color>
+    <color name="holo_surface_dark">@color/grey_900</color>
+    <color name="holo_accent_dark">@android:color/holo_blue_bright</color>
+    <color name="holo_accent_alt_dark">@android:color/holo_blue_dark</color>
+
+    <color name="holo_primary_light">@color/white</color>
+    <color name="holo_surface_light">@color/grey_100</color>
+    <color name="holo_accent_light">@android:color/holo_blue_dark</color>
+    <color name="holo_accent_alt_light">@android:color/holo_blue_dark</color>
+
     <!-- Holo Dark -->
     <style name="AppThemeBase.Holo.Dark" parent="@android:style/Theme.Holo.NoActionBar">
-        <item name="colorPrimary">@color/black</item>
-        <item name="dialogFrame">?android:attr/colorPrimary</item>
+        <item name="colorPrimary">@color/holo_primary_dark</item>
+        <item name="dialogFrame">@color/holo_surface_dark</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
-        <item name="dialogBackgroundAlt">@color/grey_900</item>
+        <item name="dialogBackgroundAlt">@color/holo_surface_dark</item>
         <item name="widgetBackground">@drawable/bg_widget_dark</item>
-        <item name="settingsCardBackground">@color/grey_900</item>
+        <item name="settingsCardBackground">@color/holo_surface_dark</item>
         <item name="timeCardBackground">@color/card_bg_darktrans</item>
-        <item name="tileCardBackground">@color/grey_900</item>
+        <item name="tileCardBackground">@color/holo_surface_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>-->
@@ -19,45 +34,49 @@
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/grey_850</item>
-        <item name="popupControlBackground">@color/grey_900</item>
+        <item name="popupControlBackground">@color/holo_surface_dark</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_dark</item>
-        <item name="snackbar_accentColor">@android:color/holo_blue_bright</item>
-        <item name="snackbar_backgroundColor">@color/grey_900</item>
+        <item name="snackbar_accentColor">@color/holo_accent_dark</item>
+        <item name="snackbar_backgroundColor">@color/holo_surface_dark</item>
 
-        <item name="fab_backgroundColor">@color/grey_900</item>
         <item name="fab_foregroundColor">@android:color/holo_blue_bright</item>
-        <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
+        <item name="fab_backgroundColor">@color/holo_surface_dark</item>
+        <item name="fab_rippleColor">@color/holo_accent_alt_dark</item>
+
+        <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/holo_accent_alt_dark</item>
 
         <item name="chipBackground">@drawable/holo_chip_dark</item>
-        <item name="chipTrayBackground">@color/grey_900</item>
+        <item name="chipTrayBackground">@color/holo_surface_dark</item>
 
-        <item name="alarmColorEnabled">@android:color/holo_blue_bright</item>
+        <item name="alarmColorEnabled">@color/holo_accent_dark</item>
         <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_dark</item>
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_dark</item>
-        <item name="alarmCardControls">@color/grey_900</item>
+        <item name="alarmCardControls">@color/holo_surface_dark</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
 
-        <item name="tagColor_warning">@android:color/holo_blue_dark</item>
+        <item name="tagColor_warning">@color/holo_accent_alt_dark</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
-        <item name="tagColor_dst">@android:color/holo_blue_dark</item>
+        <item name="tagColor_dst">@color/holo_accent_alt_dark</item>
 
         <item name="text_primaryColor">@color/text_primary_dark</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_dark</item>
         <item name="text_secondaryColor">@color/text_secondary_dark</item>
         <item name="text_tertiaryColor">@color/text_tertiary_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
-        <item name="text_accentColor">@android:color/holo_blue_bright</item>
+        <item name="text_accentColor">@color/holo_accent_dark</item>
 
-        <item name="colorAccent">@android:color/holo_blue_bright</item>
-        <item name="hrColor">@android:color/holo_blue_dark</item>
+        <item name="colorAccent">@color/holo_accent_dark</item>
+        <item name="hrColor">@color/holo_accent_alt_dark</item>
         <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
         <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
-        <item name="buttonPressColor">@android:color/holo_blue_bright</item>
+        <item name="buttonPressColor">@color/holo_accent_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_dark</item>
-        <item name="gridItemSelected">@android:color/holo_blue_dark</item>
+        <item name="gridItemSelected">@color/holo_accent_alt_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -226,61 +245,65 @@
 
     <!-- Holo Light -->
     <style name="AppThemeBase.Holo.Light" parent="@android:style/Theme.Holo.Light.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="dialogFrame">?android:attr/colorPrimary</item>
+        <item name="colorPrimary">@color/holo_primary_light</item>
+        <item name="dialogFrame">@color/holo_surface_light</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
-        <item name="dialogBackgroundAlt">?android:attr/colorPrimary</item>
+        <item name="dialogBackgroundAlt">@color/holo_surface_light</item>
         <item name="widgetBackground">@drawable/bg_widget</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
-        <item name="timeCardBackground">@color/white</item>
-        <item name="tileCardBackground">@color/white</item>
+        <item name="timeCardBackground">@color/holo_primary_light</item>
+        <item name="tileCardBackground">@color/holo_primary_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
         <!--<item name="alertDialogTheme">@android:style/Dialog</item>-->
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>-->
 
         <item name="snackbar_textColor">@color/snackbar_text_light</item>
-        <item name="snackbar_accentColor">@android:color/holo_blue_dark</item>
-        <item name="snackbar_backgroundColor">@color/grey_100</item>
+        <item name="snackbar_accentColor">@color/holo_accent_light</item>
+        <item name="snackbar_backgroundColor">@color/holo_surface_light</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
-        <item name="popupMenuBackground">@color/grey_100</item>
+        <item name="popupMenuBackground">@color/holo_surface_light</item>
         <item name="popupControlBackground">@color/grey_300</item>
 
         <item name="fab_backgroundColor">?attr/colorPrimary</item>
-        <item name="fab_foregroundColor">@android:color/holo_blue_dark</item>
-        <item name="fab_rippleColor">@android:color/holo_blue_dark</item>
+        <item name="fab_foregroundColor">@color/holo_accent_light</item>
+        <item name="fab_rippleColor">@color/holo_accent_alt_light</item>
+
+        <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
+        <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
+        <item name="fab_rippleColorAlt">@color/holo_accent_alt_light</item>
 
         <item name="chipBackground">@drawable/holo_chip_light</item>
-        <item name="chipTrayBackground">@color/grey_100</item>
+        <item name="chipTrayBackground">@color/holo_surface_light</item>
 
-        <item name="alarmColorEnabled">@android:color/holo_blue_dark</item>
+        <item name="alarmColorEnabled">@color/holo_accent_light</item>
         <item name="alarmCardEnabled">@drawable/holo_card_alarmitem_enabled_light</item>
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_light</item>
-        <item name="alarmCardControls">@color/grey_100</item>
+        <item name="alarmCardControls">@color/holo_surface_light</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
 
-        <item name="tagColor_warning">@android:color/holo_blue_dark</item>
+        <item name="tagColor_warning">@color/holo_accent_alt_light</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
-        <item name="tagColor_dst">@android:color/holo_blue_dark</item>
+        <item name="tagColor_dst">@color/holo_accent_alt_light</item>
 
         <item name="text_primaryColor">@color/text_primary_light</item>
         <item name="text_primaryInverseColor">@color/text_primary_inverse_light</item>
         <item name="text_secondaryColor">@color/text_secondary_light</item>
         <item name="text_tertiaryColor">@color/text_tertiary_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
-        <item name="text_accentColor">@android:color/holo_blue_dark</item>
+        <item name="text_accentColor">@color/holo_accent_light</item>
 
-        <item name="colorAccent">@android:color/holo_blue_dark</item>
-        <item name="hrColor">@android:color/holo_blue_dark</item>
+        <item name="colorAccent">@color/holo_accent_light</item>
+        <item name="hrColor">@color/holo_accent_alt_light</item>
         <item name="sheetEdgeStrong">@style/HoloBottomSheetEdge.Strong</item>
         <item name="sheetEdgeWeak">@style/HoloBottomSheetEdge.Weak</item>
 
-        <item name="buttonPressColor">@android:color/holo_blue_dark</item>
+        <item name="buttonPressColor">@color/holo_accent_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
-        <item name="gridItemSelected">@android:color/holo_blue_dark</item>
+        <item name="gridItemSelected">@color/holo_accent_alt_light</item>
 
         <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>

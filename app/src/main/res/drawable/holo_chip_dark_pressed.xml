@@ -3,8 +3,8 @@
     <item>
         <shape android:shape="rectangle">
             <size android:width="24dp" android:height="24dp" />
-            <solid android:color="@android:color/holo_blue_bright" />
-            <stroke android:width="@dimen/chip_stroke" android:color="@android:color/holo_blue_bright" />
+            <solid android:color="@color/holo_accent_dark" />
+            <stroke android:width="@dimen/chip_stroke" android:color="@color/holo_accent_dark" />
             <corners android:radius="0dp" />
         </shape>
     </item>
