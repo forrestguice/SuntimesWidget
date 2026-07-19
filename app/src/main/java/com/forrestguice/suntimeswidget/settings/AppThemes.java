@@ -58,46 +58,15 @@ public class AppThemes
         AppThemeInfo retValue;
         if (extendedThemeName == null) {
             retValue = info_defaultTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_LIGHT)) {
-            retValue = info_lightTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_LIGHT1)) {
-            retValue = info_light1Theme;
-
-        } else if (extendedThemeName.startsWith(THEME_DARK)) {
-            retValue = info_darkTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_DARK1)) {
-            retValue = info_dark1Theme;
-
-        } else if (extendedThemeName.startsWith(THEME_SYSTEM)) {
-            retValue = info_systemTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_MONET_SYSTEM)) {
-            retValue = info_monet_systemTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_MONET_DARK)) {
-            retValue = info_monet_darkTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_MONET_LIGHT)) {
-            retValue = info_monet_lightTheme;
-
         } else if (extendedThemeName.startsWith(THEME_DAYNIGHT)) {
             retValue = info_dayNightTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_SYSTEM1)) {
-            retValue = info_system1Theme;
-
-        } else if (extendedThemeName.startsWith(THEME_HOLO_DARK)) {
-            retValue = info_holo_darkTheme;
-
-        } else if (extendedThemeName.startsWith(THEME_HOLO_LIGHT)) {
-            retValue = info_holo_lightTheme;
-
-        } // else if (extendedThemeName.startsWith(SOME_THEME_NAME)) { /* additional themes here */ }
-        else {
+        } else {
             retValue = info_defaultTheme;
+            for (AppThemeInfo info : appThemeInfo()) {
+                if (extendedThemeName.startsWith(info.getThemeName())) {
+                    retValue = info;
+                    break;
+                }
         }
         if (Build.VERSION.SDK_INT < retValue.requiredTargetSdkVersion()) {
             retValue = info_defaultTheme;

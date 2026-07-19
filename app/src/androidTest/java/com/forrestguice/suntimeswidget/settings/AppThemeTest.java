@@ -36,32 +36,32 @@ public class AppThemeTest extends SuntimesActivityTestBase
 {
     @Test
     public void test_appTheme_system() {
-        test_appTheme(new AppSettings.SystemThemeInfo());
+        test_appTheme(new AppThemes.SystemThemeInfo());
     }
 
     @Test
     public void test_appTheme_systemContrast() {
-        test_appTheme(new AppSettings.System1ThemeInfo());
+        test_appTheme(new AppThemes.System1ThemeInfo());
     }
 
     @Test
     public void test_appTheme_dark() {
-        test_appTheme(new AppSettings.DarkThemeInfo());
+        test_appTheme(new AppThemes.DarkThemeInfo());
     }
 
     @Test
     public void test_appTheme_darkContrast() {
-        test_appTheme(new AppSettings.DarkTheme1Info());
+        test_appTheme(new AppThemes.DarkTheme1Info());
     }
 
     @Test
     public void test_appTheme_light() {
-        test_appTheme(new AppSettings.LightThemeInfo());
+        test_appTheme(new AppThemes.LightThemeInfo());
     }
 
     @Test
     public void test_appTheme_lightContrast() {
-        test_appTheme(new AppSettings.LightTheme1Info());
+        test_appTheme(new AppThemes.LightTheme1Info());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -69,14 +69,14 @@ public class AppThemeTest extends SuntimesActivityTestBase
     @Rule
     public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class, true, false);
 
-    protected Activity launchActivity(AppSettings.AppThemeInfo theme, AppSettings.TextSize textSize)
+    protected Activity launchActivity(AppThemes.AppThemeInfo theme, AppSettings.TextSize textSize)
     {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.putExtra(SuntimesActivity.EXTRA_APPTHEME, theme.getExtendedThemeName(textSize));
         return activityRule.launchActivity(intent);
     }
 
-    protected void test_appTheme(AppSettings.AppThemeInfo theme)
+    protected void test_appTheme(AppThemes.AppThemeInfo theme)
     {
         SuntimesActivityTest.MainActivityRobot robot = new SuntimesActivityTest.MainActivityRobot();
         for (AppSettings.TextSize textSize : AppSettings.TextSize.values())
