@@ -10,8 +10,8 @@
 
     <color name="holo_primary_dark">@color/black</color>
     <color name="holo_surface_dark">@color/grey_900</color>
-    <color name="holo_accent_dark">@android:color/holo_blue_bright</color>
-    <color name="holo_accent_alt_dark">@android:color/holo_blue_bright</color>
+    <color name="holo_accent_dark">@android:color/holo_blue_dark</color>
+    <color name="holo_accent_alt_dark">@android:color/holo_blue_dark</color>
 
     <color name="holo_primary_light">@color/white</color>
     <color name="holo_surface_light">@color/grey_100</color>
@@ -398,6 +398,7 @@
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
         <item name="date_buttonSelector">@drawable/btn_datetxt_light</item>
         <item name="gridItemSelected">?attr/holo_accentColor1</item>
+        <item name="colorControlNormal">?attr/holo_accentColor0</item>
 
         <item name="graphColor_background">@color/graphColor_bg_light</item>
         <item name="graphColor_day">@color/graphColor_day_light</item>
