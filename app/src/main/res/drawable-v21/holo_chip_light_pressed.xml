@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:color="@color/holo_accent_light"
+    android:color="?attr/holo_accentColor0"
     tools:targetApi="lollipop">
     <item android:drawable="@drawable/holo_chip_light_enabled" />
     <item android:id="@android:id/mask">
