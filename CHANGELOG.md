@@ -1,6 +1,6 @@
 ### ~
 
-### v0.17.4 (2026-06-26)
+### v0.17.4 (2026-07-26)
 * fixes bug where "latest sunset time is slightly off" (#960).
 * fixes bug where "sunlight dialog does not honor the `show seconds` option".
 * fixes bug where "sunlight dialog `share` does not honor the `time zone` option".
