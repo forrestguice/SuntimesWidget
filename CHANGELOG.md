@@ -1,5 +1,12 @@
 ### ~
 
+### v0.17.4 (2026-06-26)
+* fixes bug where "latest sunset time is slightly off" (#960).
+* fixes bug where "sunlight dialog does not honor the `show seconds` option".
+* fixes bug where "sunlight dialog `share` does not honor the `time zone` option".
+* updates translation to Italian (it) (#964 by McCio).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#962 by James Liu).
+
 ### v0.17.3 (2026-06-22)
 * extends the "set background" world map action; additional map backgrounds are now available as an addon (https://github.com/forrestguice/SuntimesMapPack).
 * fixes inconsistent Mercator and Van der Grinten projection extents.
