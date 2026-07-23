@@ -18,10 +18,16 @@
 
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.util.Log;
 
+import net.time4j.calendar.astro.SolarTime;
 import net.time4j.calendar.astro.StdSolarCalculator;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.TimeZone;
 
 public class Time4ACCSuntimesCalculator extends Time4ASuntimesCalculator implements SuntimesCalculator
 {
@@ -48,6 +54,23 @@ public class Time4ACCSuntimesCalculator extends Time4ASuntimesCalculator impleme
     public StdSolarCalculator getCalculator()
     {
         return StdSolarCalculator.CC;
+    }
+
+    @Override
+    public void init(Location location, TimeZone timezone)
+    {
+        double longitude = location.getLongitudeAsDouble();
+        if (longitude > 165 || longitude < -165)    // [165,180] and [-165,-180] throws IllegalArgumentException with fractional zonal offsets
+        {
+            BigDecimal d = BigDecimal.valueOf(longitude);
+            d = d.setScale(1, RoundingMode.HALF_UP);    // so round to nearest 11km
+            longitude = d.doubleValue();
+            Log.w("Time4JCC", "longitude is >165 (or <-165); rounding to one decimal place to avoid fractional offsets!");
+        }
+
+        this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), longitude, clampAltitude(location.getAltitudeAsInteger()), getCalculator());
+        this.timezone = timezone;
+        this.location = location;
     }
 
 }
