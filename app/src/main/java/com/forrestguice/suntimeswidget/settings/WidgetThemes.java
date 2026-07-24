@@ -18,14 +18,17 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -357,13 +360,19 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private final int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
+        private int selectedResourceID = R.color.grid_selected_dark;
         private final int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
         {
             this.context = context;
             this.themes = themes;
+
+            int[] attr = { R.attr.gridItemSelected };
+            @SuppressLint("ResourceType")
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            selectedResourceID = typedArray.getResourceId(0, selectedResourceID);
+            typedArray.recycle();
 
             riseTime = Calendar.getInstance();
             riseTime.set(Calendar.HOUR_OF_DAY, 7);
