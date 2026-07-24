@@ -47,10 +47,12 @@
         <item name="fab_foregroundColor">?attr/holo_accentColor0</item>
         <item name="fab_backgroundColor">@color/holo_surface_dark</item>
         <item name="fab_rippleColor">?attr/holo_accentColor1</item>
+        <item name="fab_shapeOverlay">@style/HoloFabShapeAppearanceOverlay</item>
 
         <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
         <item name="fab_rippleColorAlt">?attr/holo_accentColor1</item>
+        <item name="fab_shapeOverlayAlt">@style/HoloFabShapeAppearanceOverlay</item>
 
         <item name="chipBackground">@drawable/holo_chip_dark</item>
         <item name="chipTrayBackground">@color/holo_surface_dark</item>
@@ -364,10 +366,12 @@
         <item name="fab_backgroundColor">?attr/colorPrimary</item>
         <item name="fab_foregroundColor">?attr/holo_accentColor0</item>
         <item name="fab_rippleColor">?attr/holo_accentColor1</item>
+        <item name="fab_shapeOverlay">@style/HoloFabShapeAppearanceOverlay</item>
 
         <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
         <item name="fab_rippleColorAlt">?attr/holo_accentColor1</item>
+        <item name="fab_shapeOverlayAlt">@style/HoloFabShapeAppearanceOverlay</item>
 
         <item name="chipBackground">@drawable/holo_chip_light</item>
         <item name="chipTrayBackground">@color/holo_surface_light</item>
@@ -738,6 +742,11 @@
     </style>
     <style name="HoloBottomSheetEdge.Strong" />
     <style name="HoloBottomSheetEdge.Weak" />
+
+    <style name="HoloFabShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0dp</item>
+    </style>
 
     <dimen name="holo_activity_margin">0dp</dimen>
 
