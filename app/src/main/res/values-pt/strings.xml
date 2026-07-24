@@ -864,6 +864,10 @@
 
     <string name="themes_configLabel_themePadding">Preenchimento:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[esquerda, superior, direita, inferior]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">esquerda</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">superior</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">direita</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">inferior</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">Tema do ID</string>                  <!-- edit hint -->

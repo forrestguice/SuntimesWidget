@@ -831,6 +831,10 @@
 
     <string name="themes_configLabel_themePadding">留白:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[左，上，右，下]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">左</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">上</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">右</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">下</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">主题ID</string>                  <!-- edit hint -->

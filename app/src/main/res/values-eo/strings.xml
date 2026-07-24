@@ -828,6 +828,10 @@
 
     <string name="themes_configLabel_themePadding">Deŝovo:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[maldekstren, supren, dekstren, malsupren]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">maldekstren</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">supren</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">dekstren</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">malsupren</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">Identigilo:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">Identigilo de haŭto</string>                  <!-- edit hint -->
