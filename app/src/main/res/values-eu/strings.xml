@@ -819,6 +819,10 @@
 
     <string name="themes_configLabel_themePadding">Betea:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[ezkerra, goia, eskuina, behea]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">ezkerra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">goia</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">eskuina</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">behea</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">IDa:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">Itxuraren IDa</string>                  <!-- edit hint -->

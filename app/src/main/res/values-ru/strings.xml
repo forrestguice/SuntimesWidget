@@ -896,6 +896,10 @@
 
     <string name="themes_configLabel_themePadding">Отступ от края:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[слева, сверху, справа, снизу]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">слева</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">сверху</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">справа</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">снизу</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID темы</string>                  <!-- edit hint -->

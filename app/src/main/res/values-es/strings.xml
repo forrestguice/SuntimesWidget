@@ -810,6 +810,10 @@
 
     <string name="themes_configLabel_themePadding">Espaciado:</string>
     <string name="themes_configHint_themePadding">[izquierda, arriba, derecha, abajo]</string>
+    <string name="themes_configHint_themePadding_left">izquierda</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">arriba</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">derecha</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">abajo</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>
     <string name="themes_configHint_themeID">ID del tema</string>

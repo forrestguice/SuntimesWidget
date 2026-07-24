@@ -856,6 +856,10 @@
 
     <string name="themes_configLabel_themePadding">Utfylling:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[venstre, øverst, høyre, nederst]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">venstre</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">øverst</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">høyre</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">nederst</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">Tema-ID</string>                  <!-- edit hint -->

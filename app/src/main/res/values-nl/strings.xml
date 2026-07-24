@@ -862,6 +862,10 @@
 
     <string name="themes_configLabel_themePadding">Padding:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">left</string> <!-- edit hint -->    <!-- TODO -->
+    <string name="themes_configHint_themePadding_top">top</string> <!-- edit hint -->    <!-- TODO -->
+    <string name="themes_configHint_themePadding_right">right</string> <!-- edit hint -->    <!-- TODO -->
+    <string name="themes_configHint_themePadding_bottom">bottom</string> <!-- edit hint -->    <!-- TODO -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">Theme ID</string>                  <!-- edit hint -->
