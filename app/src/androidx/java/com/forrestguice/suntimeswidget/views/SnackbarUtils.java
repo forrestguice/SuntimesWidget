@@ -40,7 +40,7 @@ public class SnackbarUtils extends SnackbarCompat
     public static class BasicSnackbarTheme implements SnackbarTheme
     {
         public int[] colorAttrs() {
-            return new int[] { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, R.attr.selectableItemBackground };
+            return new int[] { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor, android.R.attr.selectableItemBackground };
         }
         public int[] colorAttrs_defaults() {
             return new int[] { android.R.color.primary_text_dark, R.color.text_accent_dark, R.color.card_bg_dark, R.drawable.button_fab_dark };

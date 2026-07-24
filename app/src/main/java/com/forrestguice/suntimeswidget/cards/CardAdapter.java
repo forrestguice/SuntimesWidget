@@ -81,7 +81,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     private void initTheme(Context context)
     {
-        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.tagColor_warning, R.attr.text_accentColor, R.attr.colorBackgroundFloating };
+        @SuppressLint("InlinedApi")
+        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.tagColor_warning, R.attr.text_accentColor, android.R.attr.colorBackgroundFloating };
         TypedArray a = context.obtainStyledAttributes(attrs);
         options.color_textTimeDelta = ContextCompat.getColor(context, a.getResourceId(0, Color.WHITE));
         options.color_enabled = options.color_textTimeDelta;

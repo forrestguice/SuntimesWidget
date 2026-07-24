@@ -1347,7 +1347,7 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             params.leftMargin = params.rightMargin = margin;
             editText.setLayoutParams(params);
 
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog);
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
             dialog.setView(layout);
             dialog.setTitle(problem.first);
             dialog.setCancelable(true);
