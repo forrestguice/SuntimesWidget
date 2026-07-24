@@ -1,6 +1,8 @@
 ### ~
 
 ### v0.17.4 (2026-07-26)
+* fixes app crash when using `cc` calculator with longitudes over +-165 degrees (#966).
+* fixes app crash when changing widget padding (#963).
 * fixes bug where "latest sunset time is slightly off" (#960).
 * fixes bug where "sunlight dialog does not honor the `show seconds` option".
 * fixes bug where "sunlight dialog `share` does not honor the `time zone` option".
