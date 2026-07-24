@@ -120,10 +120,12 @@
         <item name="fab_foregroundColor">@color/onSecondaryContainerColor</item>
         <item name="fab_backgroundColor">@color/secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple</item>
+        <item name="fab_shapeOverlay">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_foregroundColorAlt">@color/onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/primaryContainerColor</item>
         <item name="fab_rippleColorAlt">@color/secondaryContainerColor</item>
+        <item name="fab_shapeOverlayAlt">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_backgroundDrawable">@drawable/button_fab_ref</item>
 
@@ -373,10 +375,12 @@
         <item name="fab_foregroundColor">@color/light_onSecondaryContainerColor</item>
         <item name="fab_backgroundColor">@color/light_secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple_light</item>
+        <item name="fab_shapeOverlay">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_foregroundColorAlt">@color/light_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/light_primaryContainerColor</item>
         <item name="fab_rippleColorAlt">@color/light_secondaryContainerColor</item>
+        <item name="fab_shapeOverlayAlt">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_backgroundDrawable">@drawable/button_fab_light</item>
 
@@ -631,10 +635,12 @@
         <item name="fab_foregroundColor">@color/dark_onSecondaryContainerColor</item>
         <item name="fab_backgroundColor">@color/dark_secondaryContainerColor</item>
         <item name="fab_rippleColor">@color/fab_ripple_dark</item>
+        <item name="fab_shapeOverlay">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_foregroundColorAlt">@color/dark_onPrimaryColor</item>
         <item name="fab_backgroundColorAlt">@color/dark_primaryContainerColor</item>
         <item name="fab_rippleColorAlt">@color/dark_secondaryContainerColor</item>
+        <item name="fab_shapeOverlayAlt">@style/FabShapeAppearanceOverlay</item>
 
         <item name="fab_backgroundDrawable">@drawable/button_fab_dark</item>
 
@@ -1507,6 +1513,10 @@
     </style>
     <style name="BottomSheetEdge.Weak">
         <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="FabShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
     </style>
 
 </resources>

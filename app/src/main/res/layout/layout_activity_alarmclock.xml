@@ -112,6 +112,7 @@
 					android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_gravity="center_vertical"
 					android:src="?attr/icActionNewNotification" android:scaleType="center"
 					android:contentDescription="@string/alarms_action_addNotification"
+					app:shapeAppearance="?attr/fab_shapeOverlay"
 					android:tint="?attr/fab_foregroundColor"
 					app:backgroundTint="?attr/fab_backgroundColor"
 					app:rippleColor="?attr/fab_rippleColor"
@@ -125,6 +126,7 @@
 				android:layout_gravity="end" android:layout_marginTop="12dp"
 				android:src="?attr/icActionNew" android:scaleType="center"
 				android:contentDescription="@string/alarms_action_addAlarm"
+				app:shapeAppearance="?attr/fab_shapeOverlay"
 				android:tint="?attr/fab_foregroundColor"
 				app:backgroundTint="?attr/fab_backgroundColor"
 				app:rippleColor="?attr/fab_rippleColor" />
