@@ -29,6 +29,7 @@ import android.widget.EditText;
 
 import com.forrestguice.annotation.NonNull;
 
+@Deprecated
 public class PaddingChooser implements TextWatcher, View.OnFocusChangeListener
 {
     private final int[] padding = new int[4];
