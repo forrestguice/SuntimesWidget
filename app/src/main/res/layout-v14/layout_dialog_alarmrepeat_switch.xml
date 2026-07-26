@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <com.forrestguice.support.widget.SwitchCompat
-            android:id="@+id/alarmOption_repeat"
+            android:id="@+id/alarmOption_repeat" style="?attr/alarmSwitchStyle"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:textOn="" android:textOff="" app:switchMinWidth="100dp" android:textSize="?attr/text_size_small"
             tools:text="Repeat" />

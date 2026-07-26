@@ -90,7 +90,7 @@
             android:clipToPadding="false">
 
             <com.forrestguice.support.widget.SwitchCompat android:id="@+id/switch_enabled"
-
+                style="?attr/alarmSwitchStyle"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
                 android:layout_marginStart="0dp" android:layout_marginLeft="0dp" />

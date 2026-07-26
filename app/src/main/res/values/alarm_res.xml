@@ -64,6 +64,9 @@
     <dimen name="clockcard_corners">4dp</dimen>
     <dimen name="clockcard_corners_controls">8dp</dimen>
 
+    <style name="card_alarmitem_switch_style">
+    </style>
+
     <integer-array name="alarm_bright_colors_list">
         <item>@color/white</item>
         <item>@color/blue_grey_100</item>
