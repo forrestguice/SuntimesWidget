@@ -22,6 +22,8 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_marginBottom="8dp">
 
+    <View style="?attr/sheetEdgeWeak" />
+
     <LinearLayout android:id="@+id/layout_dialog_content0"
         android:orientation="vertical"
         android:layout_width="match_parent" android:layout_height="wrap_content"

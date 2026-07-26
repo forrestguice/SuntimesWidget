@@ -7,11 +7,15 @@
     android:background="?dialogBackground"
     tools:ignore="InconsistentLayout">
 
+    <View android:id="@+id/dialog_edge" style="?attr/sheetEdgeWeak"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout android:id="@+id/dialog_header"
         android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_edge"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
         <com.forrestguice.support.widget.ImageButton android:id="@+id/dialog_button_cancel" style="@style/ActionButton"
