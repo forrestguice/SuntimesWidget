@@ -64,6 +64,7 @@
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_dark</item>
         <item name="alarmCardControls">@color/holo_surface_dark</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
+        <item name="alarmSwitchStyle">@style/holo_card_alarmitem_switch_style</item>
 
         <item name="tagColor_warning">?attr/holo_accentColor1</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
@@ -401,6 +402,7 @@
         <item name="alarmCardDisabled">@drawable/holo_card_alarmitem_disabled_light</item>
         <item name="alarmCardControls">@color/holo_surface_light</item>
         <item name="alarmCardBackdrop">@color/transparent</item>
+        <item name="alarmSwitchStyle">@style/holo_card_alarmitem_switch_style</item>
 
         <item name="tagColor_warning">?attr/holo_accentColor1</item>
         <item name="tagColor_error">@android:color/holo_red_dark</item>
@@ -768,6 +770,12 @@
         <item name="cornerSize">0dp</item>
     </style>
 
+    <style name="holo_card_alarmitem_switch_style" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/holo_switch_thumb_dark</item>
+        <item name="track">@drawable/holo_switch_track_dark</item>
+    </style>
+
     <dimen name="holo_activity_margin">0dp</dimen>
+    <dimen name="holo_switch_track_size">1dp</dimen>
 
 </resources>
