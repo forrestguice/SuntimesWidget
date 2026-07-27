@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -54,9 +55,11 @@ import com.forrestguice.support.app.FragmentManagerCompat;
 import com.forrestguice.support.app.FragmentManagerProvider;
 import com.forrestguice.support.widget.PopupMenuCompat;
 import com.forrestguice.support.content.ContextCompat;
+import com.forrestguice.support.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -75,7 +78,7 @@ public class ActionListHelper
     @Nullable
     private ActionDisplay selectedItem;
     private ListView list;
-    private ActionDisplayAdapter adapter;
+    private ActionDisplayListAdapter adapter;
     @Nullable
     protected ActionMode actionMode = null;
     protected ActionDisplayActionMode1 actionModeCallback = new ActionDisplayActionMode1();
@@ -255,7 +258,7 @@ public class ActionListHelper
 
         ids.add(0, new ActionDisplay("", context.getString(R.string.actionDesc_doNothing), context.getString(R.string.actionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
 
-        adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
+        adapter = new ActionDisplayListAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
     }
 
@@ -506,26 +509,130 @@ public class ActionListHelper
     }
 
     /**
-     * ActionDisplayAdapter
+     * ActionDisplay (RecyclerView.ViewHolder)
      */
-    public static class ActionDisplayAdapter extends ArrayAdapter<ActionDisplay>
+    public static class ActionDisplayViewHolder extends RecyclerView.ViewHolder
+    {
+        public View layout;
+        public TextView primaryText, secondaryText;
+        public ImageView icon;
+        public boolean isSelected = false;
+
+        public ActionDisplayViewHolder(@NonNull View view)
+        {
+            super(view);
+            layout = view.findViewById(R.id.itemLayout);
+            primaryText = (TextView) view.findViewById(android.R.id.text1);
+            secondaryText = (TextView) view.findViewById(android.R.id.text2);
+            icon = (ImageView) view.findViewById(android.R.id.icon1);
+        }
+
+        public void bindToItem(ActionDisplay item)
+        {
+            if (item == null)
+            {
+                primaryText.setText("");
+                if (secondaryText != null) {
+                    secondaryText.setText("");
+                }
+                icon.setImageBitmap(null);
+                isSelected = false;
+
+            } else {
+                primaryText.setText(item.toString());
+                if (secondaryText != null) {
+                    secondaryText.setText(item.desc != null && !item.desc.trim().isEmpty() ? item.desc : item.id);
+                }
+                if (icon != null) {
+                    icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    icon.setImageDrawable(getIconDrawable(icon.getContext(), item));
+                }
+            }
+
+            if (layout != null) {
+                layout.setSelected(isSelected);
+            }
+        }
+    }
+
+    /**
+     * ActionDisplay (RecyclerView.Adapter)
+     */
+    public static class ActionDisplayViewAdapter extends RecyclerView.Adapter<ActionDisplayViewHolder>
+    {
+        private final ArrayList<ActionDisplay> items = new ArrayList<>();
+        private final int layoutResID;
+
+        public ActionDisplayViewAdapter(Context context, int layoutResID, ActionDisplay[] values) {
+            items.addAll(Arrays.asList(values));
+            this.layoutResID = layoutResID;
+        }
+
+        @NonNull
+        @Override
+        public ActionDisplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(layoutResID, parent, false);
+            return new ActionDisplayViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ActionDisplayViewHolder holder, int position)
+        {
+            ActionDisplay item = getItem(position);
+            holder.bindToItem(item);
+            holder.isSelected = isSelected(item);
+        }
+
+        @Nullable
+        public ActionDisplay getItem(int position)
+        {
+            if (position >= 0 && position < items.size()) {
+                return items.get(position);
+            } else return null;
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        @Nullable
+        protected ActionDisplay selectedItem;
+        protected boolean isSelected(ActionDisplay item) {
+            return (selectedItem != null && item != null && item.id.equals(selectedItem.id));
+        }
+
+        public void setSelected( @Nullable ActionDisplay item ) {
+            selectedItem = item;
+            notifyDataSetChanged();
+        }
+        @Nullable
+        public ActionDisplay getSelected() {
+            return selectedItem;
+        }
+    }
+
+    /**
+     * ActionDisplay (ArrayAdapter)
+     */
+    public static class ActionDisplayListAdapter extends ArrayAdapter<ActionDisplay>
     {
         private int resourceID, dropDownResourceID;
         @Nullable
         private ActionDisplay selectedItem;
         private ActionDisplay[] objects;
 
-        public ActionDisplayAdapter(@NonNull Context context, int resource) {
+        public ActionDisplayListAdapter(@NonNull Context context, int resource) {
             super(context, resource);
             init(context, resource);
         }
 
-        public ActionDisplayAdapter(@NonNull Context context, int resource, @NonNull ActionDisplay[] objects) {
+        public ActionDisplayListAdapter(@NonNull Context context, int resource, @NonNull ActionDisplay[] objects) {
             super(context, resource, objects);
             init(context, resource);
         }
 
-        public ActionDisplayAdapter(@NonNull Context context, int resource, @NonNull List<ActionDisplay> objects) {
+        public ActionDisplayListAdapter(@NonNull Context context, int resource, @NonNull List<ActionDisplay> objects) {
             super(context, resource, objects);
             init(context, resource);
         }
@@ -575,18 +682,17 @@ public class ActionListHelper
 
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
         {
-            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(resID, parent, false);
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+                view = layoutInflater.inflate(resID, parent, false);
+            }
 
             ActionDisplay item = getItem(position);
             if (item == null) {
                 Log.w("getItemView", "item at position " + position + " is null.");
                 return view;
             }
-
-            if (selectedItem != null && item.id.equals(selectedItem.id)) {
-                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
-            } else view.setBackgroundColor(Color.TRANSPARENT);
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
             primaryText.setText(item.toString());
@@ -600,55 +706,74 @@ public class ActionListHelper
             if (icon != null && colorize)
             {
                 icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMESALARMS)) {
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_alarms_foreground));
-
-                } else if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMES)) {
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
-
-                } else if (item.hasTag(SuntimesActionsContract.TAG_CALENDAR)) {
-                    int[] attrs = { R.attr.icActionCalendar };
-                    @SuppressLint("ResourceType")
-                    TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_calendar)));
-                    a.recycle();
-
-                } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {
-                    int[] attrs = { R.attr.icActionPlace };
-                    @SuppressLint("ResourceType")
-                    TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_place)));
-                    a.recycle();
-
-                } else if (item.hasTag(SuntimesActionsContract.TAG_ALARM)) {
-                    int[] attrs = { R.attr.icActionAlarm };
-                    @SuppressLint("ResourceType")
-                    TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_alarms)));
-                    a.recycle();
-
-                } else if (item.hasTag(SuntimesActionsContract.TAG_SETTINGS)) {
-                    int[] attrs = { R.attr.icActionSettings };
-                    @SuppressLint("ResourceType")
-                    TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_settings)));
-                    a.recycle();
-
-                } else {
-                    int[] attrs = { R.attr.icActionExtension };
-                    @SuppressLint("ResourceType")
-                    TypedArray a = getContext().obtainStyledAttributes(attrs);
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_extension)));
-                    a.recycle();
-                }
+                icon.setImageDrawable(getIconDrawable(icon.getContext(), item));
             }
+
+            final boolean isSelected = (selectedItem != null && item.id.equals(selectedItem.id));
+            final View v = view;
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    v.setSelected(isSelected);
+                }
+            });
 
             return view;
         }
+    }
 
-        private int getColorForPosition(int position) {
-            ActionDisplay item = getItem(position);
-            return item != null ? item.color : WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR;
+    public static int getColorForPosition(int position, ActionDisplay item) {
+        return item != null ? item.color : WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR;
+    }
+
+    @Nullable
+    public static Drawable getIconDrawable(Context context, ActionDisplay item)
+    {
+        if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMESALARMS)) {
+            return ContextCompat.getDrawable(context, R.drawable.ic_launcher_alarms_foreground);
+
+        } else if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMES)) {
+            return ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground);
+
+        } else if (item.hasTag(SuntimesActionsContract.TAG_CALENDAR)) {
+            int[] attrs = { R.attr.icActionCalendar };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            Drawable d = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_action_calendar));
+            a.recycle();
+            return d;
+
+        } else if (item.hasTag(SuntimesActionsContract.TAG_LOCATION)) {
+            int[] attrs = { R.attr.icActionPlace };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            Drawable d = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_action_place));
+            a.recycle();
+            return d;
+
+        } else if (item.hasTag(SuntimesActionsContract.TAG_ALARM)) {
+            int[] attrs = { R.attr.icActionAlarm };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            Drawable d = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_action_alarms));
+            a.recycle();
+            return d;
+
+        } else if (item.hasTag(SuntimesActionsContract.TAG_SETTINGS)) {
+            int[] attrs = { R.attr.icActionSettings };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            Drawable d = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_action_settings));
+            a.recycle();
+            return d;
+
+        } else {
+            int[] attrs = { R.attr.icActionExtension };
+            @SuppressLint("ResourceType")
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            Drawable d = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.ic_action_extension));
+            a.recycle();
+            return d;
         }
     }
 
