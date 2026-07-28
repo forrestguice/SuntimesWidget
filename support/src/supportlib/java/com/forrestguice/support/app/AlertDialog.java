@@ -40,4 +40,6 @@ public class AlertDialog extends android.support.v7.app.AlertDialog
             return ((android.support.v7.app.AlertDialog) dialog).getListView();
         } else return null;
     }
+
+    public static final int Theme_AppCompat_DialogStyle = android.support.v7.appcompat.R.style.Theme_AppCompat_Dialog;
 }

@@ -346,7 +346,7 @@ public abstract class BedtimeViewHolder extends RecyclerView.ViewHolder
 
             if (context != null)
             {
-                int[] attrs = { R.attr.alarmColorEnabled, R.attr.colorControlNormal,
+                int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.colorControlNormal,
                         R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
                 @SuppressLint("ResourceType")
                 TypedArray a = context.obtainStyledAttributes(attrs);
