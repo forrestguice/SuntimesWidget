@@ -898,6 +898,10 @@
 
     <string name="themes_configLabel_themePadding">Riempimento:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[sinistra, alto, destra, basso]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">sinistra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">alto</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">destra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">basso</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID del tema</string>                  <!-- edit hint -->

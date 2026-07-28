@@ -834,6 +834,10 @@
 
     <string name="themes_configLabel_themePadding">Wyrównanie:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[lewo, góra, prawo, dół]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">lewo</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">góra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">prawo</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">dół</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID skórki</string>                  <!-- edit hint -->
