@@ -18,7 +18,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/itemLayout" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="4dp" android:background="?attr/selectableItemBackground">
+                android:padding="4dp" android:background="?attr/selectableItemCard">
 
     <LinearLayout android:id="@+id/icon_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
