@@ -6,6 +6,7 @@
 * fixes bug where "latest sunset time is slightly off" (#960).
 * fixes bug where "sunlight dialog does not honor the `show seconds` option".
 * fixes bug where "sunlight dialog `share` does not honor the `time zone` option".
+* build: updated to support jdk21 (minimum required is now jdk17+); updates gradle `7.4.0 -> 8.5.2`; updates agp `7.5 -> 8.7`.
 * updates translation to Italian (it) (#964 by McCio).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#962 by James Liu).
 
