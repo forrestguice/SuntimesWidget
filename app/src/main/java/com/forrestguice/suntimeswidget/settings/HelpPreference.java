@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -79,7 +80,8 @@ public class HelpPreference extends DialogPreference
 
         float marginTopBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getContext().getResources().getDisplayMetrics());
         float marginLeftRight;
-        TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.dialogPreferredPadding });
+        @SuppressLint("InlinedApi")
+        TypedArray a = context.obtainStyledAttributes(new int[] { android.R.attr.dialogPreferredPadding });
         marginLeftRight = context.getResources().getDimension(a.getResourceId(0, R.dimen.settingsGroup_margin));
         a.recycle();
 
