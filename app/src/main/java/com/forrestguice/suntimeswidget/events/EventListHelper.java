@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -346,7 +347,6 @@ public class EventListHelper
             });
         }
         initAdapter(context);
-
         //ImageButton button_menu = (ImageButton) content.findViewById(R.id.edit_event_menu);
         //if (button_menu != null) {
         //    button_menu.setOnClickListener(onMenuButtonClicked);
@@ -1002,8 +1002,12 @@ public class EventListHelper
             }
 
             if (selectedItem != null && item.getID().equals(selectedItem.getID())) {
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
-            } else view.setBackgroundColor(Color.TRANSPARENT);
+                view.setSelected(true);
+                //view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
+            } else {
+                //view.setBackgroundColor(Color.TRANSPARENT);
+                view.setSelected(false);
+            }
 
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
@@ -1043,8 +1047,12 @@ public class EventListHelper
             String displayString = item.toString() + " " + context.getString(rising ? R.string.event_eventalias_title_tag_rising : R.string.event_eventalias_title_tag_setting);  // TODO
 
             if (selectedItem != null && item.getID().equals(selectedItem.getID()) && (selectedChild == childPosition)) {
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
-            } else view.setBackgroundColor(Color.TRANSPARENT);
+                //view.setBackgroundColor(ContextCompat.getColor(context, R.color.text_accent_dark));
+                view.setSelected(true);
+            } else {
+                //view.setBackgroundColor(Color.TRANSPARENT);
+                view.setSelected(false);
+            }
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
             if (primaryText != null) {
@@ -1220,19 +1228,17 @@ public class EventListHelper
 
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, int resID)
         {
-            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(resID, parent, false);
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+                view = layoutInflater.inflate(resID, parent, false);
+            }
 
             EventAlias item = getItem(position);
             if (item == null) {
                 Log.w("getItemView", "item at position " + position + " is null.");
                 return view;
             }
-
-            if (selectedItem != null && item.getID().equals(selectedItem.getID())) {
-                Log.d("DEBUG", "getItemView: " + selectedItem.getID());
-                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
-            } else view.setBackgroundColor(Color.TRANSPARENT);
 
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
             if (primaryText != null) {
@@ -1255,6 +1261,17 @@ public class EventListHelper
                 checkbox.setVisibility(checkbox.isChecked() ? View.VISIBLE : View.INVISIBLE);
             }
 
+            final boolean isSelected = (selectedItem != null && item.getID().equals(selectedItem.getID()));
+            final View layout = view.findViewById(R.id.itemLayout);
+            if (layout != null) {
+                layout.post(new Runnable()
+                {
+                    @Override
+                    public void run() {    // workaround broken selected state (listview resets child drawable states)
+                        layout.setSelected(isSelected);
+                    }
+                });
+            }
             return view;
         }
     }

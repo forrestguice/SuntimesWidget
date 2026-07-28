@@ -122,7 +122,9 @@ public class ActionListHelper
         disallowSelect = value;
     }
 
-    public void setSelected( @Nullable String actionID ) {
+    public void setSelected( @Nullable String actionID )
+    {
+        ListAdapterInterface adapter = getAdapter();
         adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
     }
 
@@ -140,7 +142,7 @@ public class ActionListHelper
         String actionID = savedState.getString("selectedItem");
         if (actionID != null && !actionID.trim().isEmpty()) {
             setSelected(actionID);
-            triggerActionMode(list, adapter.getSelected());
+            triggerActionMode(getList().getView(), getAdapter().getSelected());
         }
     }
 
@@ -173,8 +175,8 @@ public class ActionListHelper
     @Nullable
     public String getIntentID()
     {
-        if (list != null) {
-            ActionDisplay selected = adapter.getSelected();
+        if (getAdapter() != null) {
+            ActionDisplay selected = getAdapter().getSelected();
             return selected != null ? selected.id : null;
         } else return null;
     }
@@ -182,20 +184,93 @@ public class ActionListHelper
     @Nullable
     public String getIntentTitle()
     {
-        if (list != null) {
-            ActionDisplay selected = (ActionDisplay) list.getSelectedItem();
+        if (getAdapter() != null) {
+            ActionDisplay selected = getAdapter().getSelected();
             return selected != null ? selected.title : null;
         } else return null;
     }
 
-    public ListView getListView() {
-        return list;
+    public interface ListViewInterface
+    {
+        View getView();
+        ActionMode startActionModeForChild(View originalView, android.view.ActionMode. Callback callback);
+    }
+    public interface ListAdapterInterface
+    {
+        ActionDisplay getSelected();
+        void setSelected(ActionDisplay value);
+        ActionDisplay findItemByID(String id);
+    }
+
+    public ListViewInterface getList()
+    {
+        if (list != null) {
+            return new ListViewInterface()
+            {
+                @Override
+                public View getView() {
+                    return list;
+                }
+
+                @Override
+                public ActionMode startActionModeForChild(View originalView, ActionMode.Callback callback) {
+                    return list.startActionModeForChild(originalView, callback);
+                }
+            };
+
+        } else {
+            return new ListViewInterface() {
+                @Override
+                public View getView() {
+                    return null;
+                }
+                @Override
+                public ActionMode startActionModeForChild(View originalView, ActionMode.Callback callback) {
+                    return null;
+                }
+            };
+        }
+    }
+
+    public ListAdapterInterface getAdapter()
+    {
+        if (adapter != null) {
+            return new ListAdapterInterface() {
+                @Override
+                public ActionDisplay getSelected() {
+                    return adapter.getSelected();
+                }
+
+                @Override
+                public void setSelected(ActionDisplay value) {
+                    adapter.setSelected(value);
+                }
+
+                @Override
+                public ActionDisplay findItemByID(String id) {
+                    return adapter.findItemByID(id);
+                }
+            };
+        } else {
+            return new ListAdapterInterface() {
+                @Override
+                public ActionDisplay getSelected() {
+                    return null;
+                }
+                @Override
+                public void setSelected(ActionDisplay value) {}
+                @Override
+                public ActionDisplay findItemByID(String id) {
+                    return null;
+                }
+            };
+        }
     }
 
     protected void updateViews(@Nullable Context context)
     {
         if (onUpdateViews != null) {
-            onUpdateViews.onClick(list);
+            onUpdateViews.onClick(getList().getView());
         }
     }
 
@@ -206,16 +281,20 @@ public class ActionListHelper
         }
 
         list = (ListView) content.findViewById(R.id.list_intentid);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                list.setSelection(position);
-                adapter.setSelected(selectedItem = (ActionDisplay) list.getItemAtPosition(position));
-                updateViews(getContext());
-                triggerActionMode(view, selectedItem);
-            }
-        });
+        if (list != null)
+        {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+                    list.setSelection(position);
+                    adapter.setSelected(selectedItem = (ActionDisplay) list.getItemAtPosition(position));
+                    updateViews(getContext());
+                    triggerActionMode(view, selectedItem);
+                }
+            });
+        }
+
         initAdapter(context);
 
         ImageButton button_menu = (ImageButton) content.findViewById(R.id.edit_intent_menu);
@@ -258,8 +337,15 @@ public class ActionListHelper
 
         ids.add(0, new ActionDisplay("", context.getString(R.string.actionDesc_doNothing), context.getString(R.string.actionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
 
-        adapter = new ActionDisplayListAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
-        list.setAdapter(adapter);
+        if (list != null)
+        {
+            adapter = new ActionDisplayListAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
+            list.setAdapter(adapter);
+
+        } else {
+            ActionDisplayViewAdapter adapter = new ActionDisplayViewAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
+            // TODO
+        }
     }
 
     protected View.OnClickListener onMenuButtonClicked = new View.OnClickListener() {
@@ -389,7 +475,7 @@ public class ActionListHelper
                 adapterModified = true;
 
                 setSelected(intentID);
-                triggerActionMode(list, selectedItem);
+                triggerActionMode(getList().getView(), selectedItem);
             }
         };
     }
@@ -451,7 +537,7 @@ public class ActionListHelper
                                     WidgetActions.deleteActionLaunchPref(context, 0, actionID);
                                     adapterModified = true;
 
-                                    list.post(new Runnable()
+                                    getList().getView().post(new Runnable()
                                     {
                                         @Override
                                         public void run()
@@ -558,7 +644,7 @@ public class ActionListHelper
     /**
      * ActionDisplay (RecyclerView.Adapter)
      */
-    public static class ActionDisplayViewAdapter extends RecyclerView.Adapter<ActionDisplayViewHolder>
+    public static class ActionDisplayViewAdapter extends RecyclerView.Adapter<ActionDisplayViewHolder> implements ListAdapterInterface
     {
         private final ArrayList<ActionDisplay> items = new ArrayList<>();
         private final int layoutResID;
@@ -606,6 +692,12 @@ public class ActionListHelper
             selectedItem = item;
             notifyDataSetChanged();
         }
+
+        @Override
+        public ActionDisplay findItemByID(String id) {
+            return null;
+        }
+
         @Nullable
         public ActionDisplay getSelected() {
             return selectedItem;
@@ -615,7 +707,7 @@ public class ActionListHelper
     /**
      * ActionDisplay (ArrayAdapter)
      */
-    public static class ActionDisplayListAdapter extends ArrayAdapter<ActionDisplay>
+    public static class ActionDisplayListAdapter extends ArrayAdapter<ActionDisplay> implements ListAdapterInterface
     {
         private int resourceID, dropDownResourceID;
         @Nullable
@@ -645,6 +737,7 @@ public class ActionListHelper
             selectedItem = item;
             notifyDataSetChanged();
         }
+
         @Nullable
         public ActionDisplay getSelected() {
             return selectedItem;
@@ -781,7 +874,7 @@ public class ActionListHelper
      * triggerActionMode
      */
     public boolean triggerActionMode() {
-        return triggerActionMode(list, selectedItem);
+        return triggerActionMode(getList().getView(), selectedItem);
     }
     protected boolean triggerActionMode(View view, @Nullable ActionDisplay item)
     {
@@ -792,7 +885,7 @@ public class ActionListHelper
                 if (item != null)
                 {
                     actionModeCallback.setItem(item);
-                    actionMode = list.startActionModeForChild(view, actionModeCallback);
+                    actionMode = getList().startActionModeForChild(view, actionModeCallback);
                     if (actionMode != null) {
                         actionMode.setTitle(item.title);
                     }
@@ -856,7 +949,7 @@ public class ActionListHelper
                 int itemId = item.getItemId();
                 if (itemId == R.id.selectAction) {
                     if (onItemSelected != null) {
-                        onItemSelected.onClick(list);
+                        onItemSelected.onClick(getList().getView());
                     }
                     return true;
 
