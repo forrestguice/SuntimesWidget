@@ -27,10 +27,9 @@
 
     <LinearLayout
         android:background="?attr/dialogFrame"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal" android:gravity="center_vertical|start"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="16dp" android:paddingBottom="16dp">
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding">
 
         <TextView
             android:id="@+id/dialog_title"

@@ -20,12 +20,13 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View style="?attr/sheetEdgeWeak" />
+
     <LinearLayout android:id="@+id/dialog_frame_header"
         android:background="?attr/dialogFrame"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal" android:gravity="center_vertical|start"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="16dp" android:paddingBottom="16dp">
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding">
 
         <TextView
             android:id="@+id/dialog_title"
@@ -35,7 +36,7 @@
             android:text="@string/actions_loadaction_dialog_title" />
 
         <com.forrestguice.support.widget.ImageButton android:id="@+id/edit_intent_menu"
-            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            style="?attr/actionOverflowButtonStyle"
             android:layout_height="wrap_content" android:layout_width="wrap_content" />
 
     </LinearLayout>
