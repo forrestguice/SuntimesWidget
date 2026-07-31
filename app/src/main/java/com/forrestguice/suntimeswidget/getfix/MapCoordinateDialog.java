@@ -29,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -59,6 +61,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
     public static final String KEY_DIALOG_LONGITUDE_SELECTED = "selected_longitude";
     public static final String KEY_DIALOG_LATITUDE_INITIAL = "dialog_latitude";
     public static final String KEY_DIALOG_LONGITUDE_INITIAL = "dialog_longitude";
+    public static final String KEY_DIALOG_DIMMING = "dialog_dimming";
 
     public MapCoordinateDialog() {
         super();
@@ -270,6 +273,7 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onDialogShow);
+        dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
@@ -302,6 +306,22 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
         getArgs().putString(KEY_DIALOG_TITLE, title);
     }
 
+    public void setDialogDimming(boolean value) {
+        getArgs().putBoolean(KEY_DIALOG_DIMMING, value);
+    }
+    public boolean shouldDimDialogBackground() {
+        return getArgs().getBoolean(KEY_DIALOG_DIMMING, true);
+    }
+    protected void disableDialogBackgroundDimming(@Nullable Dialog dialog)
+    {
+        if (dialog != null) {
+            Window window = dialog.getWindow();
+            if (window != null) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            }
+        }
+    }
+
     private DialogInterface.OnClickListener onAccepted = null;
     public void setOnAcceptedListener( DialogInterface.OnClickListener listener ) {
         onAccepted = listener;
@@ -332,6 +352,15 @@ public class MapCoordinateDialog extends BottomSheetDialogBase
     {
         super.onResume();
         expandSheet(getDialog());
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        if (!shouldDimDialogBackground()) {
+            disableDialogBackgroundDimming(getDialog());   // disable dimming, because the whole screen flashes when this dialog is shown over another
+        }
     }
 
     protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
