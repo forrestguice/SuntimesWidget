@@ -128,7 +128,7 @@ public class LocationConfigView extends LinearLayout
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        FragmentManagerProvider f = fragmentRef.get();
+        FragmentManagerProvider f = (fragmentRef != null ? fragmentRef.get() : null);
         return f != null ? f.getFragmentManagerCompat() : null;
     }
 
