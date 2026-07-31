@@ -1,0 +1,5 @@
+- fixes app crash when using `cc` calculator with longitudes over +-165 degrees (#966).
+- fixes app crash when changing widget padding (#963).
+- fixes bug where "latest sunset time is slightly off" (#960).
+- updates translation to Italian.
+- updates translations to Simplified Chinese and Traditional Chinese.

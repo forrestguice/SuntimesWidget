@@ -226,7 +226,8 @@ public class MoonRiseSetView1 extends LinearLayout
     @SuppressLint("ResourceType")
     protected void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor, R.attr.tagColor_warning };
+        @SuppressLint("InlinedApi")
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, android.R.attr.colorBackgroundFloating, R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.grey_50));

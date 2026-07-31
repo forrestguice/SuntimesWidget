@@ -1255,7 +1255,7 @@ public class EventListHelper
                 icon.setBackgroundColor(item.getColor());
             }
 
-            CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+            CheckBox checkbox = (CheckBox) view.findViewById(android.R.id.checkbox);
             if (checkbox != null) {
                 checkbox.setChecked(EventSettings.isShown(AndroidEventSettings.wrap(getContext()), item.getID()));
                 checkbox.setVisibility(checkbox.isChecked() ? View.VISIBLE : View.INVISIBLE);
