@@ -7,7 +7,7 @@
     android:background="?dialogBackground"
     tools:ignore="InconsistentLayout">
 
-    <View android:id="@+id/dialog_edge" style="?attr/sheetEdgeWeak"
+    <View android:id="@+id/dialog_edge" style="?attr/sheetEdgeStrong"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
