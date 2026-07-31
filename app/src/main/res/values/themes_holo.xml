@@ -35,6 +35,7 @@
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
         <item name="alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>-->
+        <item name="textColorAlertDialogListItem">?attr/text_primaryColor</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
@@ -371,8 +372,9 @@
         <item name="timeCardBackground">@color/holo_surface_light</item>
         <item name="tileCardBackground">@color/holo_surface_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
-        <!--<item name="alertDialogTheme">@android:style/Dialog</item>-->
-        <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>-->
+        <item name="alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>
+        <!--<item name="android:alertDialogTheme">@style/HoloAlertDialogTheme.Light</item>-->
+        <item name="textColorAlertDialogListItem">?attr/text_primaryColor</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_light</item>
         <item name="snackbar_accentColor">?attr/holo_accentColor0</item>
