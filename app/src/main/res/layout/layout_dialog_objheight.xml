@@ -41,7 +41,7 @@
             android:text="@string/events_editevent_dialog_height" />
 
         <com.forrestguice.support.widget.ImageButton android:id="@+id/menu_button"
-            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            style="?attr/actionOverflowButtonStyle"
             android:layout_width="48dp" android:layout_height="48dp"
             android:contentDescription="@string/action_overflow" />
 

@@ -38,7 +38,8 @@
         android:text="@string/events_editevent_dialog_length" />
 
     <com.forrestguice.support.widget.ImageButton
-        android:id="@+id/button_menu" style="@android:style/Widget.DeviceDefault.ActionButton.Overflow"
+        android:id="@+id/button_menu"
+        style="?attr/actionOverflowButtonStyle"
         android:layout_width="48dp" android:layout_height="48dp"
         android:contentDescription="@string/action_overflow" android:textColor="?attr/text_accentColor" />
 
