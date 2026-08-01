@@ -38,6 +38,7 @@
         <item name="textColorAlertDialogListItem">?attr/text_primaryColor</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
+        <item name="android:actionModeCloseDrawable">?android:attr/homeAsUpIndicator</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/grey_850</item>
@@ -162,7 +163,7 @@
         <item name="icActionHelp">@drawable/ic_menu_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
         <item name="icActionClose">@drawable/ic_menu_close</item>
-        <item name="icActionBack">@drawable/ic_action_back</item>
+        <item name="icActionBack">?android:attr/homeAsUpIndicator</item>
         <item name="icActionSearch">@drawable/ic_action_search</item>
         <item name="icActionNew">@drawable/ic_menu_new</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
@@ -381,6 +382,7 @@
         <item name="snackbar_backgroundColor">@color/holo_surface_light</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Light</item>
+        <item name="android:actionModeCloseDrawable">?android:attr/homeAsUpIndicator</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/holo_surface_light</item>
@@ -528,7 +530,7 @@
         <item name="icActionHelp">@drawable/ic_menu_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
         <item name="icActionClose">@drawable/ic_menu_close_light</item>
-        <item name="icActionBack">@drawable/ic_action_back_light</item>
+        <item name="icActionBack">?android:attr/homeAsUpIndicator</item>
         <item name="icActionSearch">@drawable/ic_action_search_light</item>
         <item name="icActionNew">@drawable/ic_menu_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
