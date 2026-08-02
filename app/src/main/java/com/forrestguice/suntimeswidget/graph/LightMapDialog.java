@@ -1934,6 +1934,11 @@ public class LightMapDialog extends BottomSheetDialogBase
                     updateShadowObjHeightEditView(context, edit, meters);
                 }
 
+                TextView unitsLabel = (TextView) popupView.findViewById(R.id.suffix_height);
+                if (unitsLabel != null) {
+                    updateShadowObjHeightUnitsLabel(context, unitsLabel);
+                }
+
                 ImageButton menuButton = (ImageButton) popupView.findViewById(R.id.menu_button);
                 if (menuButton != null) {
                     menuButton.setOnClickListener(onObjectHeightMenuButtonClicked(edit));
@@ -1975,6 +1980,12 @@ public class LightMapDialog extends BottomSheetDialogBase
             edit.setText(String.format(Locale.getDefault(), "%.2f", displayValue));
             edit.addTextChangedListener(shadowObjHeightEditTextWatcher);
         }
+    }
+    private void updateShadowObjHeightUnitsLabel(Context context, @Nullable TextView label)
+    {
+        LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        TimeDisplayText displayValue = LengthUnitDisplay.formatAsHeight(AndroidResources.wrap(context), 1, units, 0, true);
+        label.setText(displayValue.getUnits());
     }
     private final TextWatcher shadowObjHeightEditTextWatcher = new TextWatcher()
     {
