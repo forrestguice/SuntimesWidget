@@ -3,6 +3,8 @@
     <attr name="holo_accentColor0" format="reference" />    <!-- primary: clickable text, buttons, controls) -->
     <attr name="holo_accentColor1" format="reference" />    <!-- secondary: hr, ripple, icons  -->
     <attr name="holo_accentColor2" format="reference" />    <!-- tertiary: accented surface color (shown under text) -->
+    <attr name="holo_warningColor" format="reference" />
+    <attr name="holo_errorColor" format="reference" />
 
     <color name="holo_primary">@color/holo_primary_light</color>
     <color name="holo_surface">@color/holo_surface_light</color>
@@ -24,6 +26,8 @@
         <item name="holo_accentColor0">@color/holo_accent_dark</item>
         <item name="holo_accentColor1">@color/holo_accent_alt_dark</item>
         <item name="holo_accentColor2">@android:color/holo_blue_dark</item>
+        <item name="holo_warningColor">@android:color/holo_orange_dark</item>
+        <item name="holo_errorColor">@android:color/holo_red_dark</item>
         <item name="colorPrimary">@color/holo_primary_dark</item>
         <item name="dialogFrame">@color/holo_surface_dark</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
@@ -33,16 +37,17 @@
         <item name="timeCardBackground">@color/card_bg_darktrans</item>
         <item name="tileCardBackground">@color/holo_surface_dark</item>
         <item name="semiTransparentBackground">@color/card_bg_darktrans</item>
+        <!--<item name="alertDialogTheme">@style/HoloAlertDialogStyle.Dark</item>-->
         <item name="alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>
         <!--<item name="android:alertDialogTheme">@android:style/Theme.Holo.Dialog.NoActionBar</item>-->
-        <item name="textColorAlertDialogListItem">?attr/text_primaryColor</item>
+        <item name="textColorAlertDialogListItem">?android:attr/textColorPrimaryDisableOnly</item>
 
         <item name="actionOverflowMenuStyle">@style/HoloOverflowMenu.Dark</item>
         <item name="android:actionModeCloseDrawable">?android:attr/homeAsUpIndicator</item>
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Dark</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/grey_850</item>
-        <item name="popupControlBackground">@color/holo_surface_dark</item>
+        <item name="popupControlBackground">@drawable/holo_popupcontrol_frame_dark</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_dark</item>
         <item name="snackbar_accentColor">?attr/holo_accentColor0</item>
@@ -68,8 +73,8 @@
         <item name="alarmCardBackdrop">@color/transparent</item>
         <item name="alarmSwitchStyle">@style/HoloSwitchStyle.Dark</item>
 
-        <item name="tagColor_warning">?attr/holo_accentColor1</item>
-        <item name="tagColor_error">@android:color/holo_red_dark</item>
+        <item name="tagColor_warning">?attr/holo_warningColor</item>
+        <item name="tagColor_error">?attr/holo_errorColor</item>
         <item name="tagColor_dst">?attr/holo_accentColor1</item>
 
         <item name="text_primaryColor">@color/text_primary_dark</item>
@@ -122,6 +127,20 @@
         <item name="summerColor">@color/summerColor_dark</item>
         <item name="fallColor">@color/fallColor_dark</item>
         <item name="winterColor">@color/winterColor_dark</item>
+
+        <item name="table_risingColor">?attr/sunriseColor</item>
+        <item name="table_settingColor">?attr/sunsetColor</item>
+        <item name="table_civilColor">@color/table_civil_dark</item>
+        <item name="table_nauticalColor">@color/table_nautical_dark</item>
+        <item name="table_astroColor">@color/table_astro_dark</item>
+        <item name="table_nightColor">@color/table_night_dark</item>
+        <item name="table_noonColor">@color/table_noon_dark</item>
+        <item name="table_moonRisingColor">@color/table_moon_rising_dark</item>
+        <item name="table_moonSettingColor">@color/table_moon_setting_dark</item>
+        <item name="table_springColor">?attr/springColor</item>
+        <item name="table_summerColor">?attr/summerColor</item>
+        <item name="table_fallColor">?attr/fallColor</item>
+        <item name="table_winterColor">?attr/winterColor</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
@@ -364,6 +383,8 @@
         <item name="holo_accentColor0">@color/holo_accent_light</item>
         <item name="holo_accentColor1">@color/holo_accent_alt_light</item>
         <item name="holo_accentColor2">@android:color/holo_blue_dark</item>
+        <item name="holo_warningColor">@android:color/holo_purple</item>
+        <item name="holo_errorColor">@android:color/holo_red_dark</item>
         <item name="colorPrimary">@color/holo_primary_light</item>
         <item name="dialogFrame">@color/holo_surface_light</item>
         <item name="dialogBackground">?android:attr/windowBackground</item>
@@ -373,9 +394,9 @@
         <item name="timeCardBackground">@color/holo_surface_light</item>
         <item name="tileCardBackground">@color/holo_surface_light</item>
         <item name="semiTransparentBackground">@color/card_bg_lighttrans</item>
-        <item name="alertDialogTheme">@android:style/Theme.Holo.Light.Dialog.NoActionBar</item>
+        <item name="alertDialogTheme">@style/HoloAlertDialogStyle.Light</item>
         <!--<item name="android:alertDialogTheme">@style/HoloAlertDialogTheme.Light</item>-->
-        <item name="textColorAlertDialogListItem">?attr/text_primaryColor</item>
+        <item name="textColorAlertDialogListItem">?android:attr/textColorPrimaryDisableOnly</item>
 
         <item name="snackbar_textColor">@color/snackbar_text_light</item>
         <item name="snackbar_accentColor">?attr/holo_accentColor0</item>
@@ -386,7 +407,7 @@
         <item name="toolbarTheme">@style/HoloAppToolbarStyle.Light</item>
         <item name="activityMargin">@dimen/holo_activity_margin</item>
         <item name="popupMenuBackground">@color/holo_surface_light</item>
-        <item name="popupControlBackground">@color/grey_300</item>
+        <item name="popupControlBackground">@drawable/holo_popupcontrol_frame_light</item>
 
         <item name="fab_backgroundColor">?attr/colorPrimary</item>
         <item name="fab_foregroundColor">?attr/holo_accentColor0</item>
@@ -408,8 +429,8 @@
         <item name="alarmCardBackdrop">@color/transparent</item>
         <item name="alarmSwitchStyle">@style/HoloSwitchStyle.Light</item>
 
-        <item name="tagColor_warning">?attr/holo_accentColor1</item>
-        <item name="tagColor_error">@android:color/holo_red_dark</item>
+        <item name="tagColor_warning">?attr/holo_warningColor</item>
+        <item name="tagColor_error">?attr/holo_errorColor</item>
         <item name="tagColor_dst">?attr/holo_accentColor1</item>
 
         <item name="text_primaryColor">@color/text_primary_light</item>
@@ -781,6 +802,25 @@
     <style name="HoloSwitchStyle.Dark" parent="@style/Widget.AppCompat.CompoundButton.Switch">
         <item name="android:thumb">@drawable/holo_switch_thumb_dark</item>
         <item name="track">@drawable/holo_switch_track_dark</item>
+    </style>
+
+    <style name="HoloAlertDialogStyle.Light" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/holo_accent_light</item>
+        <item name="android:windowTitleStyle">@style/HoloAlertDialog_TitleTextStyle.Light</item>
+    </style>
+    <style name="HoloAlertDialogStyle.Dark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">?attr/text_primaryColor</item>
+        <item name="android:windowTitleStyle">@style/HoloAlertDialog_TitleTextStyle.Dark</item>
+    </style>
+
+    <style name="HoloAlertDialog_TitleTextStyle">
+        <item name="android:textAppearance">@android:style/TextAppearance.Holo.DialogWindowTitle</item>
+    </style>
+    <style name="HoloAlertDialog_TitleTextStyle.Light">
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+    </style>
+    <style name="HoloAlertDialog_TitleTextStyle.Dark">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
     </style>
 
     <dimen name="holo_activity_margin">0dp</dimen>
