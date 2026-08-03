@@ -48,3 +48,6 @@ Access data from separate "addon" apps or widgets using the Suntimes ContentProv
 
 ## Other
 Use the issue tracker to start a discussion and get started. Your participation in the project in other ways is also welcome.
+
+## Certificate of Origin
+Contributors certify that the work they submit to this project is their own, does not contain outputs from generative AI, and that they have full rights to submit that work under an open source license.
