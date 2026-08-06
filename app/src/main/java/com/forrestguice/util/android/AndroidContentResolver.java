@@ -23,6 +23,7 @@ import android.net.Uri;
 import com.forrestguice.annotation.Nullable;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.util.content.ContentResolver;
+import com.forrestguice.util.content.ContentValues;
 import com.forrestguice.util.content.Cursor;
 
 public class AndroidContentResolver implements ContentResolver
@@ -42,5 +43,31 @@ public class AndroidContentResolver implements ContentResolver
     {
         android.database.Cursor c = resolver.query(Uri.parse(uri), projection, selection, selectionArgs, sortOrder);
         return (c != null ? AndroidCursor.wrap(c) : null);
+    }
+
+    @Override
+    public int update(String uri, ContentValues values, String where, String[] selectionArgs) {
+        return resolver.update(Uri.parse(uri), (android.content.ContentValues) values.getNativeObject(), where, selectionArgs);
+    }
+
+    @Override
+    public String insert(String uri, ContentValues values) {
+        Uri r = resolver.insert(Uri.parse(uri), (android.content.ContentValues) values.getNativeObject());
+        return (r != null ? r.toString() : uri);
+    }
+
+    @Override
+    public int bulkInsert(String uri, ContentValues[] values)
+    {
+        android.content.ContentValues[] v = new android.content.ContentValues[values.length];
+        for (int i=0; i<v.length; i++) {
+            v[i] = (android.content.ContentValues) values[i].getNativeObject();
+        }
+        return resolver.bulkInsert(Uri.parse(uri), v);
+    }
+
+    @Override
+    public int delete(String uri, String where, String[] selectionArgs) {
+        return resolver.delete(Uri.parse(uri), where, selectionArgs);
     }
 }
