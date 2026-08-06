@@ -20,8 +20,8 @@ package com.forrestguice.util.android;
 
 import android.net.Uri;
 
-import com.forrestguice.annotation.Nullable;
 import com.forrestguice.annotation.NonNull;
+import com.forrestguice.annotation.Nullable;
 import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.content.ContentValues;
 import com.forrestguice.util.content.Cursor;

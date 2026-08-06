@@ -1,0 +1,117 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
+    def targetVersion = project.properties['android.targetVersion'] != null ? project.properties['android.targetVersion'].toInteger() : null
+    if (targetVersion == null) {
+        if (useAndroidX) {
+            targetVersion = 30
+        } else {
+            targetVersion = 28
+        }
+    }
+    def compileVersion = project.properties['android.compileVersion'] != null ? project.properties['android.compileVersion'].toInteger() : null
+    if (compileVersion == null) {
+        if (useAndroidX) {
+            compileVersion = 31
+        } else {
+            compileVersion = 28
+        }
+    }
+
+    if (useAndroidX) {
+        namespace 'com.forrestguice.util.android'
+        buildFeatures {
+            buildConfig = true
+        }
+        flavorDimensions = ["support_version"]
+
+    } else {
+        compileSdkVersion compileVersion
+        flavorDimensions "support_version"
+    }
+
+    productFlavors {
+        supportlib {
+            dimension "support_version"
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 28
+            minSdkVersion 14
+            versionNameSuffix "-supportlib"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+        androidx {
+            dimension "support_version"
+            //noinspection GradleDependency
+            if (targetVersion >= 33) {
+                compileSdk 33
+            }
+            //noinspection ExpiredTargetSdkVersion,OldTargetApi
+            targetSdkVersion 30
+            minSdkVersion 14
+            versionNameSuffix "-androidx"
+            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        }
+    }
+
+    defaultConfig {
+        if (useAndroidX) {
+            compileSdk compileVersion
+        }
+
+        minSdk 14
+        targetSdkVersion targetVersion
+
+        missingDimensionStrategy 'support_version', 'androidx'
+        missingDimensionStrategy 'api', 'api30'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    configurations {
+        supportlibImplementation {}
+        androidxImplementation {}
+    }
+}
+
+dependencies {
+    implementation project(path: ":util")
+    implementation project(path: ":support")
+
+    supportlibImplementation 'com.android.support:design:28.0.0'
+    supportlibImplementation 'com.android.support:appcompat-v7:28.0.0'
+
+    androidxImplementation 'androidx.core:core:1.6.0'
+
+    testImplementation 'junit:junit:4.12'
+
+    Boolean useAndroidX = project.properties['android.useAndroidX'] != null && project.properties['android.useAndroidX'].toBoolean()
+    if (useAndroidX) {
+        androidTestImplementation 'androidx.test:core:1.1.0'
+        androidTestImplementation 'androidx.test:rules:1.2.0'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    } else {
+        androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test:rules:0.5'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+        androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    }
+}

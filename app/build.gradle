@@ -192,6 +192,7 @@ android
 dependencies
 {
     implementation project(path: ":util")
+    implementation project(path: ":util-android")
     implementation project(path: ":support")
     implementation project(path: ":calculator")
 

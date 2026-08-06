@@ -19,8 +19,8 @@
 package com.forrestguice.util.android;
 
 import android.content.Context;
-import com.forrestguice.support.content.ContextCompat;
 
+import com.forrestguice.support.content.ContextCompat;
 import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.res.TypedArray;
 
