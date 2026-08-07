@@ -35,6 +35,15 @@ public class AndroidContentValues implements ContentValues
         return new AndroidContentValues(values);
     }
 
+    public static ContentValues[] wrap(android.content.ContentValues[] values)
+    {
+        ContentValues[] r = new ContentValues[values.length];
+        for (int i=0; i<r.length; i++) {
+            r[i] = AndroidContentValues.wrap(values[i]);
+        }
+        return r;
+    }
+
     @Override
     public Object getNativeObject() {
         return v;
