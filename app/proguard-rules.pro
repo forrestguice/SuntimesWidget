@@ -76,3 +76,12 @@
 #    public void readExternal(java.io.ObjectInput);
 #    java.lang.Object readResolve();
 #}
+
+# required with `android.enableR8.fullMode=true`
+#-keep class net.time4j.calendar.astro.** { *; }
+#-keepnames class net.time4j.calendar.**
+
+#-keep class net.time4j.calendar.** { *; }
+#-keep class net.time4j.calendar.CopticCalendar { *; }
+#-keep class net.time4j.calendar.CopticCalendar
+#-keepnames class net.time4j.calendar.CopticCalendar
