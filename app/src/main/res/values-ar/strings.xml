@@ -911,6 +911,10 @@
 
     <string name="themes_configLabel_themePadding">الهامش:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[يسار، أعلى، يمين، أسفل]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">أسفل</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">يمين</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">أعلى</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">يسار</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">معرف:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">معرف النسق</string>                  <!-- edit hint -->

@@ -49,10 +49,10 @@ public class LightnessSlider extends com.flask.colorpicker.slider.LightnessSlide
     {
         if (attrs != null) {
             TypedArray styledAttrs = context.getTheme().obtainStyledAttributes(
-                    attrs, R.styleable.AbsCustomSlider, 0, 0);
+                    attrs, com.flask.colorpicker.R.styleable.AbsCustomSlider, 0, 0);
             try {
                 inVerticalOrientation = styledAttrs.getBoolean(
-                        R.styleable.AbsCustomSlider_inVerticalOrientation, inVerticalOrientation);
+                        com.flask.colorpicker.R.styleable.AbsCustomSlider_inVerticalOrientation, inVerticalOrientation);
             } finally {
                 styledAttrs.recycle();
             }

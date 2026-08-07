@@ -814,6 +814,10 @@
 
     <string name="themes_configLabel_themePadding">Espaiat:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[esquerra, dalt, dreta, baix]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">esquerra</string> <!-- edit hint -->s
+    <string name="themes_configHint_themePadding_top">dalt</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">dreta</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">baix</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID del tema</string>                  <!-- edit hint -->

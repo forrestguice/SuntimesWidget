@@ -642,6 +642,7 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     protected void showMapCoordinateDialog(Context context)
     {
         MapCoordinateDialog dialog = new MapCoordinateDialog();
+        dialog.setDialogDimming(false);
         dialog.setColorCollection(new WorldMapColorValuesCollection<>(context));
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));

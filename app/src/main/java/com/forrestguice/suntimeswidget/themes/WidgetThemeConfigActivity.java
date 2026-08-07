@@ -42,6 +42,7 @@ import com.forrestguice.suntimeswidget.graph.LightMapTask;
 import com.forrestguice.suntimeswidget.graph.LightMapTaskListener;
 import com.forrestguice.suntimeswidget.map.WorldMapOptions;
 import com.forrestguice.suntimeswidget.map.WorldMapProjection;
+import com.forrestguice.suntimeswidget.settings.PaddingChooser1;
 import com.forrestguice.suntimeswidget.views.SpanUtils;
 import com.forrestguice.support.content.ContextCompat;
 
@@ -225,7 +226,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private SizeChooser chooseMoonStroke;
     private ArrayList<SizeChooser> sizeChoosers;
     private ThemeNameChooser chooseName;
-    private PaddingChooser choosePadding;
+    private PaddingChooser1 choosePadding;
 
     private final ArrayList<Integer> recentColors = new ArrayList<>();
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
@@ -394,12 +395,22 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseNoonIconStroke = createSizeChooser(this, R.id.chooser_noonIconStroke, THEME_NOONICON_STROKE_WIDTH_MIN, THEME_NOONICON_STROKE_WIDTH_MAX, THEME_NOONICON_STROKE_WIDTH);
         chooseMoonStroke = createSizeChooser(this, THEME_MOON_STROKE_MIN, THEME_MOON_STROKE_MAX, THEME_MOONFULL_STROKE_WIDTH);
 
-        EditText editPadding = (EditText)findViewById(R.id.edit_padding);
-        choosePadding = new PaddingChooser(editPadding)
+        /*EditText editPadding = (EditText)findViewById(R.id.edit_padding);
+        choosePadding = new PaddingChooser(editPadding) {
+            @Override
+            protected void onPaddingChanged( int[] newPadding ) {
+                updatePreview();
+            }
+        };*/
+
+        EditText editPadding_left = (EditText) findViewById(R.id.edit_padding_left);
+        EditText editPadding_top = (EditText) findViewById(R.id.edit_padding_top);
+        EditText editPadding_right = (EditText) findViewById(R.id.edit_padding_right);
+        EditText editPadding_bottom = (EditText) findViewById(R.id.edit_padding_bottom);
+        choosePadding = new PaddingChooser1(editPadding_left, editPadding_top, editPadding_right, editPadding_bottom)
         {
             @Override
-            protected void onPaddingChanged( int[] newPadding )
-            {
+            protected void onPaddingChanged( int[] newPadding ) {
                 updatePreview();
             }
         };

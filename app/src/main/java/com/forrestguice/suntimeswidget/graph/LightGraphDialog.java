@@ -435,6 +435,26 @@ public class LightGraphDialog extends BottomSheetDialogBase
     }
 
     @Nullable
+    protected Calendar getCalendar(Context context, long eventTime)
+    {
+        SuntimesRiseSetDataset data0 = (graph != null ? graph.getData0() : null);
+        if (context != null && data0 != null)
+        {
+            Location location = data0.location();
+            double longitude = (location != null ? location.getLongitudeAsDouble() : 0);
+
+            String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTGRAPH, TimeZones.LocalMeanTime.TIMEZONEID);
+            TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data0.timezone() :
+                    WidgetTimezones.getTimeZone(tzId, longitude, data0.calculator());
+
+            Calendar c = Calendar.getInstance(timezone);
+            c.setTimeInMillis(eventTime);
+            return c;
+        } else return null;
+    }
+
+    @Nullable
+    @Deprecated
     protected Calendar getCalendar(Context context, int day, double hour)
     {
         SuntimesRiseSetDataset data0 = (graph != null ? graph.getData0() : null);
@@ -530,25 +550,38 @@ public class LightGraphDialog extends BottomSheetDialogBase
         if (context != null && options.earliestLatestData != null)
         {
             if (text_sunrise_early != null) {
-                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise_day, options.earliestLatestData.early_sunrise_hour, R.string.lightgraph_label_earliest_sunrise);
+                updateEarliestLatestText(context, text_sunrise_early, layout_sunrise_early, options.earliestLatestData.early_sunrise, R.string.lightgraph_label_earliest_sunrise);
             }
             if (text_sunrise_late != null) {
-                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise_day, options.earliestLatestData.late_sunrise_hour, R.string.lightgraph_label_latest_sunrise);
+                updateEarliestLatestText(context, text_sunrise_late, layout_sunrise_late, options.earliestLatestData.late_sunrise, R.string.lightgraph_label_latest_sunrise);
             }
             if (text_sunset_early != null) {
-                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset_day, options.earliestLatestData.early_sunset_hour, R.string.lightgraph_label_earliest_sunset);
+                updateEarliestLatestText(context, text_sunset_early, layout_sunset_early, options.earliestLatestData.early_sunset, R.string.lightgraph_label_earliest_sunset);
             }
             if (text_sunset_late != null) {
-                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset_day, options.earliestLatestData.late_sunset_hour, R.string.lightgraph_label_latest_sunset);
+                updateEarliestLatestText(context, text_sunset_late, layout_sunset_late, options.earliestLatestData.late_sunset, R.string.lightgraph_label_latest_sunset);
             }
         }
     }
 
+    @Deprecated
     protected void updateEarliestLatestText(Context context, TextView textView, View layout, int day, double hour, int labelResID)
     {
         Calendar calendar = getCalendar(context, day, hour);
         if (calendar != null) {
             textView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), calendar).toString());
+        } else textView.setText("");
+        if (calendar != null && context != null) {
+            layout.setOnClickListener(onMoreInfoClicked(context.getString(labelResID), calendar.getTimeInMillis()));
+        } else layout.setOnClickListener(null);
+    }
+
+    protected void updateEarliestLatestText(Context context, TextView textView, View layout, long eventTime, int labelResID)
+    {
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+        Calendar calendar = getCalendar(context, eventTime);
+        if (calendar != null) {
+            textView.setText(utils.calendarDateTimeDisplayString(AndroidResources.wrap(context), calendar, true, showSeconds).toString());
         } else textView.setText("");
         if (calendar != null && context != null) {
             layout.setOnClickListener(onMoreInfoClicked(context.getString(labelResID), calendar.getTimeInMillis()));
@@ -955,8 +988,7 @@ public class LightGraphDialog extends BottomSheetDialogBase
             long itemMillis = itemData.getLongExtra(MenuAddon.EXTRA_SHOW_DATE, -1L);
             if (itemMillis != -1L)
             {
-                Calendar itemTime = Calendar.getInstance();
-                itemTime.setTimeInMillis(itemMillis);
+                Calendar itemTime = getCalendar(context, itemMillis);
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
                 boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 

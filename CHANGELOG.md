@@ -1,5 +1,22 @@
 ### ~
 
+### v0.17.4 (2026-07-26)
+* fixes app crash when using `cc` calculator with longitudes over +-165 degrees (#966).
+* fixes app crash when changing widget padding (#963).
+* fixes bug where "latest sunset time is slightly off" (#960).
+* fixes bug where "sunlight dialog does not honor the `show seconds` option".
+* fixes bug where "sunlight dialog `share` does not honor the `time zone` option".
+* build: updated to support jdk21 (minimum required is now jdk17+); updates gradle `7.4.0 -> 8.5.2`; updates agp `7.5 -> 8.7`.
+* updates translation to Italian (it) (#964 by McCio).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#962 by James Liu).
+
+### v0.17.3 (2026-06-22)
+* extends the "set background" world map action; additional map backgrounds are now available as an addon (https://github.com/forrestguice/SuntimesMapPack).
+* fixes inconsistent Mercator and Van der Grinten projection extents.
+* fixes bug where "menu icons and text are misaligned" (#954); updates legacy icons with "material icons" and other icon related changes.
+* fixes bug where "span icons aren't readable in light mode" (white-on-white).
+* updates translation to German (#953 by Wuzzy).
+
 ### v0.17.2 (2026-05-23)
 * adds "material widget" themes: `Dark/Light/System (MD2)`, and `Dark/Light/System (Material)` themes (#934); renames legacy themes to `Dark/Light (Holo)`.
 * adds typeface options to the clock widget; color, font-family, bold, italic, outline, and cutout options.

@@ -96,9 +96,9 @@ public class WorldMapWidgetSettings
     public static final String PROJ4_EQC = "+proj=eqc +lat_ts=0 +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs";
     public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
     public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
-    public static final String PROJ4_MERC = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs";
+    public static final String PROJ4_MERC = "+proj=merc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +R=6378137 +units=m +no_defs";
     public static final String PROJ4_VANDG = "+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m +no_defs";
-    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6378140 +b=6356750 +units=m +no_defs ";
+    public static final String PROJ4_SINU = "+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////

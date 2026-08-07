@@ -202,33 +202,33 @@
         Copied from default on 2026-05-14 
     -->
     <string name="help_general_solartime">
-          &lt;b&gt;Apparent Solar Time:&lt;/b&gt; Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
+          &lt;b&gt;视太阳时：&lt;/b&gt;即日晷时间。通过追踪视太阳相对于给定经纬度的运动所确定的时间。
           &lt;br/&gt;&lt;br/&gt;
-          The motion of the apparent sun is not constant. It varies seasonally due to the obliquity of the ecliptic and eccentricity of the Earth\'s orbit.
-          The length of each apparent solar day, measured from one noon to the next, may be slightly longer or shorter than 24 hours (up to 30s).
-          These small variations accumulate with each passing day (and average out over the course of the year).
-          &lt;br/&gt;&lt;br/&gt;
-
-          &lt;b&gt;Local Mean Time:&lt;/b&gt; Clock time. The time determined from the position of the mean sun with respect to a given longitude.
-          &lt;br/&gt;&lt;br/&gt;
-          The motion of the mean sun corrects for obliquity and eccentricity and is uniform.
-          The length of each mean solar day is exactly 24 hours.&lt;br/&gt;&lt;br/&gt;
-
-          &lt;b&gt;Equation of Time (EOT):&lt;/b&gt; The difference between local mean time and apparent solar time.
-          This is the accumulated variation of the apparent solar day.
-          &lt;br/&gt;&lt;br/&gt;
-          Apparent solar time may differ from local mean time by up to 16 minutes depending on the season.
+          视太阳的运动并不是恒定的。由于黄道倾角以及地球公转轨道的离心率，它会随季节而变化。
+          每个视太阳日的长度（从一个正午到下一个正午测量）可能会略长或略短于 24 小时（相差可达 30 秒）。
+          这些微小的改变会随着时间的推移而逐日累积（并在一年之中自动抵消平摊）。
           &lt;br/&gt;&lt;br/&gt;
 
-          &lt;i&gt;This app uses an algorithm to calculate the equation of time (and derive the apparent solar time).
-          Your location is used to determine the local mean time.&lt;/i&gt;
+          &lt;b&gt;地方平太阳时：&lt;/b&gt;即时钟时间。根据平太阳相对于给定经度的位置所确定的时间。
+          &lt;br/&gt;&lt;br/&gt;
+          平太阳的运动修正了黄道倾角和离心率的影响，是均匀恒定的。
+          每个平太阳日的长度精确为 24 小时。&lt;br/&gt;&lt;br/&gt;
+
+          &lt;b&gt;均时差 (EOT)：&lt;/b&gt;地方平太阳时与视太阳时之间的差值。
+          这就是视太阳日逐日累积下来的变化量。
+          &lt;br/&gt;&lt;br/&gt;
+          视太阳时与地方平太阳时之间的差异根据季节的不同，最多可达 16 分钟。
           &lt;br/&gt;&lt;br/&gt;
 
-    </string>    <!-- TODO -->
+          &lt;i&gt;本应用使用特定算法来计算均时差（并以此推导出视太阳时）。
+          您所处的位置将用于确定地方平太阳时。&lt;/i&gt;
+          &lt;br/&gt;&lt;br/&gt;
+
+    </string>
     <string name="help_general_twilight_more">
-          &lt;b&gt;White Night:&lt;/b&gt; The sun does not set more than 6 degrees below the horizon. It remains light enough for most outdoor activities all night long.&lt;br/&gt;&lt;br/&gt;
-          &lt;b&gt;Midnight Twilight:&lt;/b&gt; The sun does not set more than 18 degrees below the horizon. It is twilight all night long and the sky never becomes fully dark.&lt;br/&gt;&lt;br/&gt;
-          &lt;b&gt;Midnight Sun:&lt;/b&gt; The sun does not set below the horizon (24 hours of daylight). This is also called &lt;b&gt;polar day&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
-          &lt;b&gt;Polar night:&lt;/b&gt; The sun does not rise above the horizon (24 hours of darkness).&lt;br/&gt;&lt;br/&gt;
-    </string>    <!-- TODO -->
+          &lt;b&gt;白夜：&lt;/b&gt;太阳下落到地平线以下的角度不超过 6 度。此时整夜的光照强度仍足以进行大多数户外活动。&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;午夜曙暮光：&lt;/b&gt;太阳下落到地平线以下的角度不超过 18 度。整夜都处于曙暮光状态，天空永远不会完全变暗。&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;极昼（午夜太阳）：&lt;/b&gt;太阳不会落入地平线以下（24 小时全天昼光）。这也被称为&lt;b&gt;极昼&lt;/b&gt;。&lt;br/&gt;&lt;br/&gt;
+          &lt;b&gt;极夜：&lt;/b&gt;太阳不会升起至地平线以上（24 小时全天黑暗）。&lt;br/&gt;&lt;br/&gt;
+    </string>
 </resources>

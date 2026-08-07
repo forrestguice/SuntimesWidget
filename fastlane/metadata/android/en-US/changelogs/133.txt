@@ -1,0 +1,3 @@
+- adds an extension for world map backgrounds (https://github.com/forrestguice/SuntimesMapPack).
+- updates material icons; fixes bug where "menu icons and text are misaligned" (#954).
+- updates translation to German.

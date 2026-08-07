@@ -891,6 +891,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig = (LocationConfigView) findViewById(R.id.appwidget_location_config);
         if (locationConfig != null)
         {
+            locationConfig.setFragmentManager(this);
             locationConfig.setHideTitle(true);
             locationConfig.setAutoAllowed(true);
             locationConfig.setHideMode(false);

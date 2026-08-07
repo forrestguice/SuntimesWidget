@@ -809,6 +809,10 @@
 
     <string name="themes_configLabel_themePadding">Belső margó:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[balra, fent, jobbra, lent]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">balra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">fent</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">jobbra</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">lent</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">Azonosító:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">A téma azonosítója</string>                  <!-- edit hint -->

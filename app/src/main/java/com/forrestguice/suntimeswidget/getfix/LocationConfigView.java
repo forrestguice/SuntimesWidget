@@ -128,7 +128,7 @@ public class LocationConfigView extends LinearLayout
     }
     @Nullable
     public FragmentManagerCompat getFragmentManager() {
-        FragmentManagerProvider f = fragmentRef.get();
+        FragmentManagerProvider f = (fragmentRef != null ? fragmentRef.get() : null);
         return f != null ? f.getFragmentManagerCompat() : null;
     }
 
@@ -703,6 +703,7 @@ public class LocationConfigView extends LinearLayout
     protected void showMapCoordinateDialog(@NonNull Context context)
     {
         MapCoordinateDialog dialog = new MapCoordinateDialog();
+        dialog.setDialogDimming(false);
         dialog.setColorCollection(new WorldMapColorValuesCollection<>(context));
         dialog.setInitialCoordinates(text_locationLon.getText().toString(), text_locationLat.getText().toString());
         dialog.setOnAcceptedListener(onMapCoordinateDialogAccepted(dialog));

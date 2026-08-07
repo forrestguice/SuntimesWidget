@@ -16,23 +16,26 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
     
-<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
 An alarm clock for Suntimes.<br/><br />
 
-<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
+<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
 A calendar provider add-on for Suntimes.<br/><br />        
 
-<a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
+<a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
 A hunting and fishing add-on for Suntimes.<br/><br />
 
-<a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
+<a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
 A 24-hour clock & roman timekeeping add-on for Suntimes.<br/><br />
 
-<a href="https://github.com/forrestguice/SuntimesNFC/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_suntimesnfc.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesNFC/">Suntimes NFC</a> <br />
+<a href="https://github.com/forrestguice/SuntimesNFC/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_suntimesnfc.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesNFC/">Suntimes NFC</a> <br />
 An NFC Addon for Suntimes Alarms; dismiss alarms with an NFC tag.<br/><br />
 
-<a href="https://github.com/forrestguice/IntervalMidpoints/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_imidpoints.png" height="64" /></a> <a href="https://github.com/forrestguice/IntervalMidpoints/">Interval Midpoints</a> <br />
+<a href="https://github.com/forrestguice/IntervalMidpoints/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_imidpoints.png" height="64" /></a> <a href="https://github.com/forrestguice/IntervalMidpoints/">Interval Midpoints</a> <br />
 A midpoint calculator add-on for Suntimes Alarms; schedule alarms for event midpoints.<br/><br />
+
+<a href="https://github.com/forrestguice/SuntimesMapPack/"><img align="left" src="https://forrestguice.github.io/Suntimes/images/ic_mappack.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesMapPack/">Suntimes Map Pack</a> <br />
+A world map background expansion pack for Suntimes.
 
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -108,21 +111,21 @@ Widgets are resizable and include...
 * 3x2 sun position widget that displays the sun's altitude as a line graph.
 * 3x2 sun position widget that displays sunlight over the year.
 
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_1x1_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_2x2_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/alarmwidget_3x2_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/clockwidget_1x1_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
-<img width="288px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_2x1_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget2_preview.png" align="center"></img>
-<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget4_1x1_preview.png" align="center"></img>
-<img width="288px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget0_2x1_preview.png" align="center"></img>
-<img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/moonwidget0_3x1_preview.png" align="center"></img>
-<img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_1x1_preview.png" align="center"></img>
-<img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget1_1x1_preview.png" align="center"></img>
-<img height="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x1_preview.png" align="center"></img>
-<img height="256px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x2_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/alarmwidget_1x1_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/alarmwidget_2x2_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/alarmwidget_3x2_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/clockwidget_1x1_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/widget1_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/widget0_1x1_preview.png" align="center"></img>
+<img width="288px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/widget0_2x1_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/widget2_preview.png" align="center"></img>
+<img width="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/moonwidget4_1x1_preview.png" align="center"></img>
+<img width="288px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/moonwidget0_2x1_preview.png" align="center"></img>
+<img height="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/moonwidget0_3x1_preview.png" align="center"></img>
+<img height="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/sunposwidget0_1x1_preview.png" align="center"></img>
+<img height="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/sunposwidget1_1x1_preview.png" align="center"></img>
+<img height="128px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/sunposwidget0_3x1_preview.png" align="center"></img>
+<img height="256px" src="https://forrestguice.github.io/Suntimes/help/widgets/images/sunposwidget0_3x2_preview.png" align="center"></img>
 <br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
 <img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot2" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-alarms0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot3" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-light.png' width="280px" />
@@ -166,8 +169,9 @@ Version `0.9.*` contained the following additional permissions (removed in v0.10
 
 Do you find value in this software? Pay as you feel. 
 
-[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 <noscript><a href="https://liberapay.com/forrestguice/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+
+[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2)
 
 I want to express my thanks to those who have sent me something. This is greatly appreciated.
 

@@ -876,6 +876,10 @@
 
     <string name="themes_configLabel_themePadding">Odsazení:</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[levé, horní, pravé, spodní]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">levé</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">horní</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">pravé</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">spodní</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID tématu</string>                  <!-- edit hint -->

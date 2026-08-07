@@ -848,6 +848,10 @@
 
     <string name="themes_configLabel_themePadding">Espacement :</string>            <!-- edit label -->
     <string name="themes_configHint_themePadding">[gauche, haut, droite, bas]</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_left">gauche</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_top">haut</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_right">droite</string> <!-- edit hint -->
+    <string name="themes_configHint_themePadding_bottom">bas</string> <!-- edit hint -->
 
     <string name="themes_configLabel_themeID">ID :</string>                      <!-- edit label -->
     <string name="themes_configHint_themeID">ID du thème</string>                  <!-- edit hint -->

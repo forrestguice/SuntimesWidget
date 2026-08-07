@@ -37,15 +37,19 @@ public class EarliestLatestSunriseSunsetData
 
     public double early_sunrise_hour = -1;
     public int early_sunrise_day = -1;
+    public long early_sunrise = -1L;
 
     public double early_sunset_hour = -1;
     public int early_sunset_day = -1;
+    public long early_sunset = -1L;
 
     public double late_sunrise_hour = -1;
     public int late_sunrise_day = -1;
+    public long late_sunrise = -1L;
 
     public double late_sunset_hour = -1;
     public int late_sunset_day = -1;
+    public long late_sunset = -1L;
 
     public static EarliestLatestSunriseSunsetData findEarliestLatest(TimeMode mode, @NonNull SuntimesRiseSetDataset[] data)
     {
@@ -68,10 +72,12 @@ public class EarliestLatestSunriseSunsetData
                 if (result.early_sunrise_hour == -1 || lmtRisingHour < result.early_sunrise_hour) {
                     result.early_sunrise_hour = lmtRisingHour;
                     result.early_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
+                    result.early_sunrise = risingEvent.getTimeInMillis();
                 }
                 if (result.late_sunrise_hour == -1 || lmtRisingHour > result.late_sunrise_hour) {
                     result.late_sunrise_hour = lmtRisingHour;
                     result.late_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
+                    result.late_sunrise = risingEvent.getTimeInMillis();
                 }
             }
 
@@ -82,10 +88,12 @@ public class EarliestLatestSunriseSunsetData
                 if (result.early_sunset_hour == -1 || lmtSettingHour < result.early_sunset_hour) {
                     result.early_sunset_hour = lmtSettingHour;
                     result.early_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);
+                    result.early_sunset = settingEvent.getTimeInMillis();
                 }
                 if (result.late_sunset_hour == -1 || lmtSettingHour > result.late_sunset_hour) {
                     result.late_sunset_hour = lmtSettingHour;
                     result.late_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);
+                    result.late_sunset = settingEvent.getTimeInMillis();
                 }
             }
             i++;
