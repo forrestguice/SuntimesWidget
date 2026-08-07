@@ -43,7 +43,7 @@ import com.forrestguice.suntimeswidget.calendar.AndroidResID_CalendarModeDisplay
 import com.forrestguice.suntimeswidget.calendar.AndroidCalendarDisplayFactory;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormatDisplay;
 import com.forrestguice.suntimeswidget.calendar.CalendarModeDisplay;
-import com.forrestguice.suntimeswidget.colors.android.AndroidColor;
+import com.forrestguice.util.android.AndroidColor;
 import com.forrestguice.suntimeswidget.events.BaseEvent;
 import com.forrestguice.suntimeswidget.events.DayPercentEvent;
 import com.forrestguice.suntimeswidget.events.EventSettings;

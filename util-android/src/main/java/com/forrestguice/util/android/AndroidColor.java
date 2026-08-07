@@ -17,7 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.colors.android;
+package com.forrestguice.util.android;
 
 import android.graphics.Color;
 
