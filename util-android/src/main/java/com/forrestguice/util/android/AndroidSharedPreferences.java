@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.calculator.settings.android;
+package com.forrestguice.util.android;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

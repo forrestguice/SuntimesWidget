@@ -10,6 +10,7 @@ import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettingsInterface;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.android.AndroidContentResolver;
+import com.forrestguice.util.android.AndroidSharedPreferences;
 import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.prefs.SharedPreferences;
 import com.forrestguice.util.android.AndroidResources;

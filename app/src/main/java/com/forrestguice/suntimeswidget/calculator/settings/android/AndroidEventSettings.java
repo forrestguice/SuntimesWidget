@@ -10,6 +10,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.util.Resources;
 import com.forrestguice.util.android.AndroidContentResolver;
 import com.forrestguice.util.android.AndroidResources;
+import com.forrestguice.util.android.AndroidSharedPreferences;
 import com.forrestguice.util.content.ContentResolver;
 import com.forrestguice.util.prefs.SharedPreferences;
 
