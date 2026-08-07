@@ -64,10 +64,12 @@ import com.forrestguice.suntimeswidget.events.android.AndroidResID_ShadowLengthE
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_ShadowRatioEvent;
 import com.forrestguice.suntimeswidget.events.android.AndroidResID_SunElevationEvent;
 import com.forrestguice.util.SystemTimeFormat;
+import com.forrestguice.util.android.AndroidPreferenceManager;
 import com.forrestguice.util.android.AndroidResources;
 import com.forrestguice.util.android.AndroidTimeFormat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.util.prefs.PreferenceManager;
 
 import net.time4j.android.ApplicationStarter;
 
@@ -87,6 +89,7 @@ public class AndroidSuntimesCalculator
 
         ApplicationStarter.initialize(context, false);    // time4j
         SystemTimeFormat.init(new AndroidTimeFormat(context.getApplicationContext()));
+        PreferenceManager.init(new AndroidPreferenceManager());
 
         SuntimesCalculatorDescriptor.initDefaultDescriptors(new DefaultCalculatorDescriptors());
         SuntimesData.initDataSettingsFactory(new AndroidSuntimesDataSettingsFactory());
