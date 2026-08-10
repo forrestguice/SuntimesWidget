@@ -31,7 +31,7 @@ public class AndroidContext implements ContextInterface
         this.context = context;
     }
 
-    public ContextInterface wrap(android.content.Context context) {
+    public static ContextInterface wrap(android.content.Context context) {
         return new AndroidContext(context);
     }
 
