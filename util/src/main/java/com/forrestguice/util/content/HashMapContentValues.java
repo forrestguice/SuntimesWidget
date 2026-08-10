@@ -38,6 +38,11 @@ public class HashMapContentValues implements ContentValues
     }
 
     @Override
+    public ContentValues newInstance() {
+        return new HashMapContentValues();
+    }
+
+    @Override
     public Object getNativeObject() {
         return map;
     }

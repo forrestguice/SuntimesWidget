@@ -27,6 +27,11 @@ import java.util.Set;
 public class AndroidContentValues implements ContentValues
 {
     protected final android.content.ContentValues v;
+
+    public AndroidContentValues() {
+        v = new android.content.ContentValues();
+    }
+
     public AndroidContentValues(android.content.ContentValues values) {
         v = values;
     }
@@ -42,6 +47,11 @@ public class AndroidContentValues implements ContentValues
             r[i] = AndroidContentValues.wrap(values[i]);
         }
         return r;
+    }
+
+    @Override
+    public ContentValues newInstance() {
+        return new AndroidContentValues();
     }
 
     @Override

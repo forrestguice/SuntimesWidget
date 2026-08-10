@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public interface ContentValues
 {
+    ContentValues newInstance();
     Object getNativeObject();
 
     boolean containsKey(String key);
