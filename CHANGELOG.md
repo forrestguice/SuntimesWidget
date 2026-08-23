@@ -1,5 +1,12 @@
 ### ~
 
+### v0.17.5 (2026-08-26)
+* fixes bug where "date widgets display wrong month names" (#970).
+* fixes bug where "object height popup shows the wrong units label" (#969).
+* fixes app crash when using location picker from widget configuration activity.
+* fixes screen flash when showing map picker dialog over the location dialog.
+* adds world places; ~59 places; US national parks.
+
 ### v0.17.4 (2026-07-26)
 * fixes app crash when using `cc` calculator with longitudes over +-165 degrees (#966).
 * fixes app crash when changing widget padding (#963).
