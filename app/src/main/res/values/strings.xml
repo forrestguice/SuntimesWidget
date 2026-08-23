@@ -1681,6 +1681,7 @@
     <string name="place_label_NA_US_S" tools:common="true">North America (US, South)</string>
     <string name="place_label_NA_US_NE" tools:common="true">North America (US, North East)</string>
     <string name="place_label_NA_US_MW" tools:common="true">North America (US, Midwest)</string>
+    <string name="place_label_NA_US_NP" tools:common="true">North America (US, National Parks)</string>
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>

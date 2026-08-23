@@ -58,6 +58,7 @@
         <item>places_NA_US_MW, place_label_NA_US_MW</item>
         <item>places_NA_US_NE, place_label_NA_US_NE</item>
         <item>places_NA_US_S, place_label_NA_US_S</item>
+        <item>places_NA_US_NP, place_label_NA_US_NP</item>
     </string-array>
     <string-array name="place_group_OC">
         <item>places_OC, place_label_OC</item>                <!-- Oceania (unsorted) -->
@@ -596,6 +597,44 @@
         <item>\"San Antonio\", 29.428, -98.48916, 220, [US-TX]</item>
         <item>\"Richmond, VA\", 37.53832, -77.4341, 65, [capital][US-VA]</item>
         <item>\"Charleston, WV\", 38.33012, -81.58262, 180, [capital][US-WV]</item>
+    </string-array>
+
+    <string-array name="places_NA_US_NP">   <!-- US: National Parks -->
+        <item>\"Saguaro NP\", 32.18012, -110.7363, 730, [US-AZ]</item>
+        <item>\"Petrified Forest NP\", 35.08605, -109.79599, 1650, [US-AZ]</item>
+        <item>\"Grand Canyon NP\", 36.05736, -112.14085, 2160, [US-AZ]</item>
+        <item>\"Zion NP\", 37.19962, -112.9871, 1300, [US-UT]</item>
+        <item>\"Bryce Canyon NP\", 37.62276, -112.16615, 2500, [US-UT]</item>
+        <item>\"Arches NP\", 38.70174, -109.56641, 1535, [US-UT]</item>
+        <item>\"Mesa Verde NP\", 37.18406, -108.48693, 2100, [US-CO]</item>
+        <item>\"Haleakalā NP\", 20.71005, -156.25303, 3030, [US-HI]</item>
+        <item>\"Yosemite NP\", 37.74658, -119.58455, 1220, [US-CA]</item>
+        <item>\"Sequoia NP\", 36.60477, -118.72592, 2055, [US-CA]</item>
+        <item>\"Joshua Tree NP\", 34.01235, -116.16769, 1290, [US-CA]</item>
+        <item>\"Death Valley NP\", 36.46335, -116.86999, -63, [US-CA]</item>
+
+        <item>\"King\'s Canyon NP\", 36.73994, -118.96321, 2010, [US-CA]</item>
+        <item>\"Yellowstone NP\", 44.73458, -110.49188, 2410, [US-CA]</item>
+        <item>\"Redwood NP\", 41.2864, -124.0906, 5, [US-CA]</item>
+        <item>\"Wind Cave NP\", 43.55646, -103.47846, 1255, [US-SD]</item>
+        <item>\"Great Smokey Mountains NP\", 35.56285, -83.49867, 2015, [US-NC][US-TN]</item>
+        <item>\"Glacier NP\", 48.69571, -113.71767, 2030, [US-MT]</item>
+        <item>\"Great Basin NP\", 39.00578, -114.21942, 2080, [US-NV]</item>
+        <item>\"Rocky Mountain NP\", 40.35853, -105.58451, 2485, [US-CO]</item>
+        <item>\"Grand Teton NP\", 43.75136, -110.72252, 2075, [US-WY]</item>
+        <item>\"Everglades NP\", 25.38247, -80.60987, 5, [US-FL]</item>
+        <item>\"Acadia NP\", 44.40898, -68.24745, 30, [US-MA]</item>
+        <item>\"Olympic NP\", 48.10001, -123.42885, 125, [US-WA]</item>
+        <item>\"Mammoth Cave NP\", 37.1863159,-86.100381, 225, [US-KY]</item>
+        <item>\"White Sands NP\", 32.81041, -106.26369, 1210, [US-NM]</item>
+
+        <!--<item>\"Big Bend NP\", T, T, T, [US-TX]</item>
+        <item>\"Lassen Volcanic NP\", T, T, T, [US-CA]</item>
+        <item>\"New River Gorge NP\", T, T, T, [US-WV]</item>
+        <item>\"North Cascades NP\", T, T, T, [US-WA]</item>
+        <item>\"Pinacles NP\", T, T, T, [US-CA]</item>
+        <item>\"Shenandoah NP\", T, T, T, [US-VA]</item>
+        <item>\"Mt Rainier NP\", T, T, T, [US-WA]</item>-->  <!-- TODO -->
     </string-array>
 
     <!-- Oceania -->
