@@ -612,11 +612,11 @@
         <item>\"Sequoia NP\", 36.60477, -118.72592, 2055, [US-CA]</item>
         <item>\"Joshua Tree NP\", 34.01235, -116.16769, 1290, [US-CA]</item>
         <item>\"Death Valley NP\", 36.46335, -116.86999, -63, [US-CA]</item>
-
         <item>\"King\'s Canyon NP\", 36.73994, -118.96321, 2010, [US-CA]</item>
         <item>\"Yellowstone NP\", 44.73458, -110.49188, 2410, [US-CA]</item>
         <item>\"Redwood NP\", 41.2864, -124.0906, 5, [US-CA]</item>
         <item>\"Wind Cave NP\", 43.55646, -103.47846, 1255, [US-SD]</item>
+        <item>\"Badlands NP\", 43.51155, -102.49638, 800, [US-SD]</item>
         <item>\"Great Smokey Mountains NP\", 35.56285, -83.49867, 2015, [US-NC][US-TN]</item>
         <item>\"Glacier NP\", 48.69571, -113.71767, 2030, [US-MT]</item>
         <item>\"Great Basin NP\", 39.00578, -114.21942, 2080, [US-NV]</item>
@@ -627,14 +627,41 @@
         <item>\"Olympic NP\", 48.10001, -123.42885, 125, [US-WA]</item>
         <item>\"Mammoth Cave NP\", 37.1863159,-86.100381, 225, [US-KY]</item>
         <item>\"White Sands NP\", 32.81041, -106.26369, 1210, [US-NM]</item>
+        <item>\"Big Bend NP\", 29.27015, -103.30038, 1640, [US-TX]</item>
+        <item>\"Lassen Volcanic NP\", 40.43751, -121.53333, 2045, [US-CA]</item>
+        <item>\"Shenandoah NP\", 38.51789, -78.43732, 1080, [US-VA]</item>
+        <item>\"Mt Rainier NP\", 46.78617, -121.73599, 1660, [US-WA]</item>
+        <item>\"North Cascades NP\", 48.66651, -121.26692, 180, [US-WA]</item>
+        <item>\"Pinacles NP\", 36.47767, -121.22607, 600, [US-CA]</item>
+        <item>\"New River Gorge NP\", 37.83067, -81.06363, 760, [US-WV]</item>
+        <item>\"Black Canyon of the Gunnison NP\", 38.56881, -107.73322, 2460, [US-CO]</item>
+        <item>\"Canyonlands NP\", 38.45949, -109.82195, 1790, [US-UT]</item>
 
-        <!--<item>\"Big Bend NP\", T, T, T, [US-TX]</item>
-        <item>\"Lassen Volcanic NP\", T, T, T, [US-CA]</item>
-        <item>\"New River Gorge NP\", T, T, T, [US-WV]</item>
-        <item>\"North Cascades NP\", T, T, T, [US-WA]</item>
-        <item>\"Pinacles NP\", T, T, T, [US-CA]</item>
-        <item>\"Shenandoah NP\", T, T, T, [US-VA]</item>
-        <item>\"Mt Rainier NP\", T, T, T, [US-WA]</item>-->  <!-- TODO -->
+        <!--<item>\"Capitol Reef NP\", [US-UT]</item>
+        <item>\"Carlsbad Caverns NP\", [US-NM]</item>
+        <item>\"Channel Islands NP\", [US-CA]</item>
+        <item>\"Congaree NP", [US-SC]</item>
+        <item>\"Crater Lake NP", [US-OR]</item>
+        <item>\"Cuyahoga Valley NP", [US-OH]</item>
+        <item>\"Denali NP", [US-AK]</item>
+        <item>\"Gates of the Arctic [NP]", [US-AK]</item>
+        <item>\"Katmai [NP]", [US-AK]</item>
+        <item>\"Glaciar Bay [NP]", [US-AK]</item>
+        <item>\"Kenai Fjords [NP]", [US-AK]</item>
+        <item>\"Kobuk Valley [NP]", [US-AK]</item>
+        <item>\"Wrangell–St. Elias [NP]", [US-AK]</item>
+        <item>\"Lake Clark [NP]", [US-AK]</item>
+        <item>\"Great Sand Dunes [NP]", [US-CO]</item>
+        <item>\"Guadalupe Mountains [NP]", [US-TX]</item>
+        <item>\"Hawaiʻi Volcanoes [NP]", [US-HI]</item>
+        <item>\"Hot Springs [NP]", [US-AR]</item>
+        <item>\"Indiana Dunes [NP]", [US-IN]</item>
+        <item>\"Isle Royale [NP]", [US-MI]</item>
+        <item>\"Voyageurs [NP]", [US-MN]</item>
+        <item>\"Virgin Islands [NP]", [US-VI]</item>
+        <item>\"Theodore Roosevelt [NP]", [US-ND]</item>
+        <item>\"Dry Tortugas [NP]", [US-FL]</item>
+        <item>\"Biscayne [NP]", [US-FL]</item>-->
     </string-array>
 
     <!-- Oceania -->
