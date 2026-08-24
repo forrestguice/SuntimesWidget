@@ -31,6 +31,7 @@
         <item>places_AS_SA, place_label_AS_SA</item>          <!-- Asia; Saudi Arabia -->
         <item>places_AS_RU, place_label_AS_RU</item>          <!-- Asia; Russia -->
         <item>places_AS_TR, place_label_AS_TR</item>          <!-- Asia; Turkey -->
+        <item>places_AS_SY, place_label_AS_SY</item>          <!-- Asia; Syria -->
         <item>places_AS_VN, place_label_AS_VN</item>          <!-- Asia; Vietnam -->
     </string-array>
     <string-array name="place_group_EU">
@@ -146,7 +147,6 @@
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
         <item>"Bishkek", 42.87954, 74.60022, 800, [capital][KG]</item>
         <item>"Colombo", 6.93147, 79.84219, 0, [capital][LK]</item>
-        <item>"Damascus", 33.51378, 36.27654, 680, [capital][SY]</item>
         <item>"Dhaka", 23.7806, 90.3492, 3, [capital][BD]</item>
         <item>"Doha", 25.29069, 51.53225, 0, [capital][QA]</item>
         <item>"Dubai", 25.23561, 55.29685, 0, [capital][AE-DU]</item>
@@ -239,6 +239,13 @@
         <item>"Ufa", 54.72611, 55.9475, 150, [capital][RU-BA]</item>
         <item>"Yakutsk", 62.02538, 129.73172, 95, [capital][RU-SA]</item>
     </string-array>
+    <string-array name="places_AS_SY">
+        <item>"Aleppo", 36.21004, 37.14712, 380, [SY]</item>
+        <item>"Damascus", 33.51378, 36.27654, 680, [capital][SY]</item>
+        <item>"Hasakah", 36.51044, 40.74149, 300, [SY]</item>
+        <item>"Homs", 34.72364, 36.71463, 530, [SY]</item>
+        <item>"Hama", 35.13673, 36.74947, 300, [SY]</item>
+        <item>"Latakia", 35.49711, 35.77899, 0, [SY]</item>
     <string-array name="places_AS_TR">    <!-- Turkey -->
         <item>"Adana", 36.98999, 35.33828, 25, [TR]</item>
         <item>"Amed", 37.93052, 40.18369, 720, [TR]</item>
