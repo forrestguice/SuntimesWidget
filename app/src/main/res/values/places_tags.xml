@@ -317,7 +317,18 @@
     </string-array>
 
     <string-array name="place_tags_FR">
-        <item>[FR]|France, Mediterranean Sea*, Alps*, Europe</item>
+        <item>[FR]|France, Europe</item>
+        <item>[FR-20R]|Corsica, Mediterranean Sea*</item>
+        <item>[FR-ARA]|Auvergne-Rhône-Alpes, Alps*</item>
+        <item>[FR-BRE]|Brittany, Atlantic Ocean*, English Channel*</item>
+        <item>[FR-GES]|Grand Est</item>
+        <item>[FR-NAQ]|Nouvelle-Aquitaine, Atlantic Ocean*</item>
+        <item>[FR-HDF]|Hauts-de-France, North Sea*, English Channel*</item>
+        <item>[FR-IDF]|Île-de-France</item>
+        <item>[FR-NOR]|Normandy, English Channel*</item>
+        <item>[FR-OCC]|Occitania, Mediterranean Sea*</item>
+        <item>[FR-PAC]|Provence-Alpes-Côte d\'Azur, Mediterranean Sea*, Alps*</item>
+        <item>[FR-PDL]|Pays de la Loire, Atlantic Ocean*</item>
         <item>[GF]|French Guiana, Atlantic Ocean*, South America, France</item>
         <item>[GP]|Guadeloupe, Caribbean Sea, Atlantic Ocean*, North America, France</item>
         <item>[MF]|Saint Martin, Caribbean Sea, North America, France</item>
@@ -327,7 +338,7 @@
 
     <string-array name="place_tags_GB">
         <item>[GB]|Great Britain, United Kingdom, Irish Sea*, Atlantic Ocean*, Europe</item>
-        <item>[GB-ENG]|England, North Sea*</item>
+        <item>[GB-ENG]|England, North Sea*, English Channel*</item>
         <item>[GB-NIR]|Northern Ireland</item>
         <item>[GB-SCT]|Scotland, North Sea*</item>
         <item>[GB-WLS]|Wales</item>
