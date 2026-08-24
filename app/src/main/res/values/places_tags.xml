@@ -2,7 +2,7 @@
 <resources>
     <string-array name="place_tags">
         <item>[AO]|Angola, Atlantic Ocean*, Africa</item>
-        <item>[AE]|United Arab Emirates, Persian Gulf*, Asia</item>
+        <item>[AE]|United Arab Emirates, Persian Gulf*, Gulf of Oman*, Asia</item>
         <item>[AF]|Afghanistan, Asia</item>
         <item>[AL]|Albania, Mediterranean Sea*, Europe</item>
         <item>[AM]|Armenia, Europe</item>
@@ -11,7 +11,7 @@
         <item>[AW]|Aruba, Caribbean Sea*, South America, Netherlands</item>
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
-        <item>[BD]|Bangladesh, Indian Ocean*, Asia</item>
+        <item>[BD]|Bangladesh, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[BG]|Bulgaria, Black Sea*, Europe</item>
         <item>[BH]|Bahrain, Asia</item>
         <item>[BI]|Burundi, Africa</item>
@@ -47,11 +47,11 @@
         <item>[HN-FM]|Francisco Morazán</item>
         <item>[HR]|Croatia, Mediterranean Sea*, Europe</item>
         <item>[HU]|Hungary, Europe</item>
-        <item>[ID]|Indonesia, Indian Ocean*, Asia</item>
+        <item>[ID]|Indonesia, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[IE]|Republic of Ireland, Europe</item>
         <item>[IL]|Israel, Mediterranean Sea*, Asia</item>
         <item>[IQ]|Iraq, Persian Gulf*, Asia</item>
-        <item>[IR]|Iran, Persia*, Persian Gulf*, Caspian Sea*, Asia</item>
+        <item>[IR]|Iran, Persia*, Persian Gulf*, Caspian Sea*, Strait of Hormuz*, Gulf of Oman*, Arabian Sea*, Asia</item>
         <item>[IS]|Iceland, Atlantic Ocean, Nordic*, Arctic*, Europe</item>
         <item>[JM]|Jamaica, Caribbean Sea, North America</item>
         <item>[JP]|Japan, Pacific Ocean*, Asia</item>
@@ -64,6 +64,7 @@
         <item>[KZ]|Kazakhstan, Caspian Sea*, Asia</item>
         <item>[LB]|Lebanon, Mediterranean Sea*, Asia</item>
         <item>[LI]|Liechtenstein, Alps*, Europe</item>
+        <item>[LK]|Sri Lanka, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[LT]|Lithuania, Baltic Sea*, Europe</item>
         <item>[LU]|Luxembourg, Europe</item>
         <item>[LV]|Latvia, Baltic Sea*, Europe</item>
@@ -73,7 +74,7 @@
         <item>[MC]|Monaco, Mediterranean Sea*, Alps*, Europe</item>
         <item>[MD]|Moldova, Black Sea*, Europe</item>
         <item>[ML]|Mali, Sahara Desert*, Africa</item>
-        <item>[MM]|Myanmar, Indian Ocean*, Asia</item>
+        <item>[MM]|Myanmar, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[MM]|Mongolia, Asia</item>
         <item>[MR]|Mauritania, Atlantic Ocean*, Sahara Desert*, Africa</item>
         <item>[MT]|Malta, Mediterranean Sea*, Europe</item>
@@ -83,10 +84,10 @@
         <item>[NG]|Nigeria, Atlantic Ocean*, Africa</item>
         <item>[NI]|Nicaragua, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[NP]|Nepal, Asia</item>
-        <item>[OM]|Oman, Indian Ocean*, Asia</item>
+        <item>[OM]|Oman, Indian Ocean*, Persian Gulf*, Strait of Hormuz*, Gulf of Oman*, Arabian Sea*, Asia</item>
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[PH]|Philippines, Pacific Ocean*, Asia</item>
-        <item>[PK]|Pakistan, Indian Ocean*, Asia</item>
+        <item>[PK]|Pakistan, Indian Ocean*, Gulf of Oman*, Arabian Sea*, Asia</item>
         <item>[PS]|Palestine, Mediterranean Sea*, Asia</item>
         <item>[PY]|Paraguay, South America</item>
         <item>[QA]|Qatar, Asia</item>
@@ -97,12 +98,12 @@
         <item>[SD]|Sudan, Red Sea*, Sahara Desert*, Africa</item>
         <item>[SE]|Sweden, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[SN]|Senegal, Atlantic Ocean*, Africa</item>
-        <item>[SO]|Somalia, Indian Ocean*, Africa</item>
+        <item>[SO]|Somalia, Indian Ocean*, Arabian Sea*, Africa</item>
         <item>[SR]|Suriname, Caribbean Sea*, Atlantic Ocean*, Central America</item>
         <item>[SV]|El Salvador, Pacific Ocean*, Central America</item>
         <item>[SX]|Sint Maarten, Caribbean Sea, North America, Netherlands</item>
         <item>[SY]|Syria, Mediterranean Sea*, Asia</item>
-        <item>[TH]|Thailand, Asia</item>
+        <item>[TH]|Thailand, Asia, Bay of Bengal*</item>
         <item>[TJ]|Tajikistan, Asia</item>
         <item>[TM]|Turkmenistan, Caspian Sea*, Asia</item>
         <item>[TN]|Tunisia, Mediterranean Sea*, Sahara Desert*, Africa</item>
@@ -115,7 +116,7 @@
         <item>[UZ]|Uzbekistan, Asia</item>
         <item>[VN]|Vietnam, Asia</item>
         <item>[WS]|Samoa, Polynesia, Pacific Ocean, Oceania</item>
-        <item>[YE]|Yemen, Red Sea*, Indian Ocean*, Asia</item>
+        <item>[YE]|Yemen, Red Sea*, Indian Ocean*, Arabian Sea*, Asia</item>
         <item>[ZA]|South Africa, Atlantic Ocean*, Indian Ocean*, Africa</item>
         <item>[ZM]|Zambia, Africa</item>
         <item>[ZW]|Zimbabwe, Africa</item>
@@ -362,12 +363,12 @@
         <item>[IN]|India, Asia</item>
         <item>[IN-AS]|Assam</item>
         <item>[IN-DL]|Delhi</item>
-        <item>[IN-GJ]|Gujarāt, Indian Ocean*</item>
-        <item>[IN-KA]|Karnātaka, Indian Ocean*</item>
-        <item>[IN-KL]|Kerala, Indian Ocean*</item>
-        <item>[IN-MH]|Mahārāshtra, Indian Ocean*</item>
-        <item>[IN-TN]|Tamil Nādu, Indian Ocean*</item>
-        <item>[IN-WB]|West Bengal, Indian Ocean*</item>
+        <item>[IN-GJ]|Gujarāt, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-KA]|Karnātaka, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-KL]|Kerala, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-MH]|Mahārāshtra, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-TN]|Tamil Nādu, Indian Ocean*, Bay of Bengal*</item>
+        <item>[IN-WB]|West Bengal, Indian Ocean*, Bay of Bengal*</item>
     </string-array>
 
     <string-array name="place_tags_IT">
