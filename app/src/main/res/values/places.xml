@@ -30,6 +30,7 @@
         <item>places_AS_PK, place_label_AS_PK</item>          <!-- Asia; Pakistan -->
         <item>places_AS_SA, place_label_AS_SA</item>          <!-- Asia; Saudi Arabia -->
         <item>places_AS_RU, place_label_AS_RU</item>          <!-- Asia; Russia -->
+        <item>places_AS_TR, place_label_AS_TR</item>          <!-- Asia; Turkey -->
         <item>places_AS_VN, place_label_AS_VN</item>          <!-- Asia; Vietnam -->
     </string-array>
     <string-array name="place_group_EU">
@@ -138,7 +139,6 @@
 
     <!-- Asia -->
     <string-array name="places_AS">
-        <item>"Ankara", 39.92668, 32.86314, 938, [capital][TR]</item>
         <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
@@ -238,6 +238,17 @@
     <string-array name="places_AS_RU">    <!-- Russia -->
         <item>"Ufa", 54.72611, 55.9475, 150, [capital][RU-BA]</item>
         <item>"Yakutsk", 62.02538, 129.73172, 95, [capital][RU-SA]</item>
+    </string-array>
+    <string-array name="places_AS_TR">    <!-- Turkey -->
+        <item>"Adana", 36.98999, 35.33828, 25, [TR]</item>
+        <item>"Amed", 37.93052, 40.18369, 720, [TR]</item>
+        <item>"Ankara", 39.92668, 32.86314, 938, [capital][TR]</item>
+        <item>"Antalya", 36.88349, 30.67714, 0, [TR]</item>
+        <item>"Bursa", 40.18865, 29.06087, 195, [TR]</item>
+        <item>"Gaziantep", 37.06579, 37.37785, 830, [TR]</item>
+        <item>"Izmir", 38.42366, 27.14307, 10, [TR]</item>
+        <item>"Konya", 37.87252, 32.49216, 1040, [TR]</item>
+        <item>"Urfa", 37.16745, 38.79549, 525, [TR]</item>
     </string-array>
 
     <!-- Europe -->

@@ -1655,6 +1655,7 @@
     <string name="place_label_AS_PK" tools:common="true">Asia (Pakistan)</string>
     <string name="place_label_AS_SA" tools:common="true">Asia (Saudi Arabia)</string>
     <string name="place_label_AS_RU" tools:common="true">Asia (Russia)</string>
+    <string name="place_label_AS_TR" tools:common="true">Asia (Turkey)</string>
     <string name="place_label_AS_VN" tools:common="true">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
     <string name="place_label_EU_BE" tools:common="true">Europe (Belgium)</string>
