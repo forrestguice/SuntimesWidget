@@ -361,13 +361,41 @@
 
     <string-array name="place_tags_IN">
         <item>[IN]|India, Asia</item>
+        <item>[IN-AR]|Arunachal Pradesh</item>
+        <item>[IN-AP]|Andhra Pradesh</item>
+        <item>[IN-AN]|Andaman and Nicobar Islands</item>
         <item>[IN-AS]|Assam</item>
+        <item>[IN-BR]|Bihar</item>
+        <item>[IN-CH]|Chandigarh</item>
+        <item>[IN-CG]|Chhattisgarh</item>
+        <item>[IN-DH]|Dadra and Nagar Haveli</item>
         <item>[IN-DL]|Delhi</item>
+        <item>[IN-GA]|Goa</item>
         <item>[IN-GJ]|Gujarāt, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-HP]|Himachal Pradesh</item>
+        <item>[IN-HR]|Haryana</item>
+        <item>[IN-JK]|Jammu and Kashmir</item>
+        <item>[IN-JH]|Jharkhand</item>
         <item>[IN-KA]|Karnātaka, Indian Ocean*, Arabian Sea*</item>
         <item>[IN-KL]|Kerala, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-LA]|Ladakh</item>
+        <item>[IN-LD]|Lakshadweep</item>
         <item>[IN-MH]|Mahārāshtra, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-ML]|Meghalaya</item>
+        <item>[IN-MN]|Manipur</item>
+        <item>[IN-MP]|Madhya Pradesh</item>
+        <item>[IN-MZ]|Mizoram</item>
+        <item>[IN-NL]|Nagaland</item>
+        <item>[IN-OD]|Odisha</item>
+        <item>[IN-PB]|Punjab</item>
+        <item>[IN-PY]|Puducherry</item>
+        <item>[IN-RJ]|Rajasthan</item>
+        <item>[IN-SK]|Sikkim</item>
         <item>[IN-TN]|Tamil Nādu, Indian Ocean*, Bay of Bengal*</item>
+        <item>[IN-TR]|Tripura</item>
+        <item>[IN-TS]|Telangana</item>
+        <item>[IN-UP]|Uttar Pradesh</item>
+        <item>[IN-UK]|Uttarakhand</item>
         <item>[IN-WB]|West Bengal, Indian Ocean*, Bay of Bengal*</item>
     </string-array>
 
