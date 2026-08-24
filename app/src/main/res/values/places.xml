@@ -252,6 +252,7 @@
         <item>"Gibraltar", 36.11072, -5.34687, 0, [GI]</item>
         <item>"Istanbul", 41.0039, 28.4517, 0, [TR]</item>               <!-- Turkey -->
         <item>"Kyiv", 50.4496, 30.5252, 179, [capital][UA]</item>        <!-- Ukraine -->
+        <item>"Ljubljana", 46.04888, 14.50842, 455, [capital][SI]</item> <!-- Slovenia -->
         <item>"Luxembourg", 49.61056, 6.13048, 230, [LU]</item>          <!-- Luxembourg -->
         <item>"Minsk", 53.8838, 27.4548, 242, [capital][BY]</item>       <!-- Belarus -->
         <item>"Monaco", 43.73233, 7.42731, 0, [MC]</item>                <!-- Monaco -->
@@ -862,7 +863,7 @@
         <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc][summit]</item>          <!-- Russia -->
         <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc][summit]</item>      <!-- Antarctica -->
         <item>"Puncak Jaya", -4.07888, 137.15833, 4884, [misc][summit]</item>        <!-- Indonesia -->
-        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc][summit]</item>        <!-- Europe -->
+        <item>"Mont Blanc", 45.83294, 6.86589, 4805.59, [misc][summit][FR][IT-23]</item>        <!-- Europe -->
         <item>"Mount Kosciuszko", -36.45651, 148.26338, 2228, [misc][summit]</item>  <!-- Australia -->
     </string-array>
 

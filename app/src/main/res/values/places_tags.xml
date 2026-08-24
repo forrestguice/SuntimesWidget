@@ -7,7 +7,7 @@
         <item>[AL]|Albania, Mediterranean Sea*, Europe</item>
         <item>[AM]|Armenia, Europe</item>
         <item>[AS]|Solomon Islands, Melanesia, Pacific Ocean, Oceania</item>
-        <item>[AT]|Austria, Europe</item>
+        <item>[AT]|Austria, Alps*, Europe</item>
         <item>[AW]|Aruba, Caribbean Sea*, South America, Netherlands</item>
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
@@ -22,7 +22,7 @@
         <item>[CD]|Democratic Republic of the Congo, Africa</item>
         <item>[CF]|Central African Republic, Africa</item>
         <item>[CG]|Republic of the Congo, Africa</item>
-        <item>[CH]|Switzerland, Europe</item>
+        <item>[CH]|Switzerland, Alps*, Europe</item>
         <item>[CI]|Ivory Coast, Atlantic Ocean*, Africa</item>
         <item>[CM]|Cameroon, Atlantic Ocean*, Africa</item>
         <item>[CR]|Costa Rica, Caribbean Sea*, Pacific Ocean*, Central America</item>
@@ -63,14 +63,14 @@
         <item>[KW]|Kuwait, Persian Gulf*, Asia</item>
         <item>[KZ]|Kazakhstan, Caspian Sea*, Asia</item>
         <item>[LB]|Lebanon, Mediterranean Sea*, Asia</item>
-        <item>[LI]|Liechtenstein, Europe</item>
+        <item>[LI]|Liechtenstein, Alps*, Europe</item>
         <item>[LT]|Lithuania, Baltic Sea*, Europe</item>
         <item>[LU]|Luxembourg, Europe</item>
         <item>[LV]|Latvia, Baltic Sea*, Europe</item>
         <item>[LY]|Libya, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[NZ]|New Zealand, Pacific Ocean*, Oceania</item>
         <item>[MA]|Morocco, Mediterranean Sea*, Atlantic Ocean*, Sahara Desert*, Africa</item>
-        <item>[MC]|Monaco, Mediterranean Sea*, Europe</item>
+        <item>[MC]|Monaco, Mediterranean Sea*, Alps*, Europe</item>
         <item>[MD]|Moldova, Black Sea*, Europe</item>
         <item>[ML]|Mali, Sahara Desert*, Africa</item>
         <item>[MM]|Myanmar, Indian Ocean*, Asia</item>
@@ -93,6 +93,7 @@
         <item>[RO]|Romania, Black Sea*, Europe</item>
         <item>[RW]|Rwanda, Africa</item>
         <item>[SA]|Saudi Arabia, Red Sea*, Persian Gulf*, Asia</item>
+        <item>[SI]|Slovenia, Alps*, Europe</item>
         <item>[SD]|Sudan, Red Sea*, Sahara Desert*, Africa</item>
         <item>[SE]|Sweden, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
         <item>[SN]|Senegal, Atlantic Ocean*, Africa</item>
@@ -275,8 +276,8 @@
     <string-array name="place_tags_DE">
         <item>[DE]|Germany, North Sea*, Baltic Sea*, Europe</item>
         <item>[DE-BE]|Berlin</item>
-        <item>[DE-BW]|Baden-Württemberg</item>
-        <item>[DE-BY]|Bavaria</item>
+        <item>[DE-BW]|Baden-Württemberg, Alps*</item>
+        <item>[DE-BY]|Bavaria, Alps*</item>
         <item>[DE-HB]|Bremen</item>
         <item>[DE-HE]|Hesse</item>
         <item>[DE-HH]|Hamburg</item>
@@ -316,7 +317,7 @@
     </string-array>
 
     <string-array name="place_tags_FR">
-        <item>[FR]|France, Mediterranean Sea*, Europe</item>
+        <item>[FR]|France, Mediterranean Sea*, Alps*, Europe</item>
         <item>[GF]|French Guiana, Atlantic Ocean*, South America, France</item>
         <item>[GP]|Guadeloupe, Caribbean Sea, Atlantic Ocean*, North America, France</item>
         <item>[MF]|Saint Martin, Caribbean Sea, North America, France</item>
@@ -360,11 +361,12 @@
 
     <string-array name="place_tags_IT">
         <item>[IT]|Italy, Mediterranean Sea*, Europe</item>
-        <item>[IT-21]|Piedmont</item>
-        <item>[IT-25]|Lombardy</item>
-        <item>[IT-34]|Veneto</item>
-        <item>[IT-36]|Friuli-Venezia Giulia</item>
-        <item>[IT-42]|Liguria</item>
+        <item>[IT-21]|Piedmont, Alps*</item>
+        <item>[IT-23]|Aosta Valley, Alps*</item>
+        <item>[IT-25]|Lombardy, Alps*</item>
+        <item>[IT-34]|Veneto, Alps*</item>
+        <item>[IT-36]|Friuli-Venezia Giulia, Alps*</item>
+        <item>[IT-42]|Liguria, Alps*</item>
         <item>[IT-45]|Emilia-Romagna</item>
         <item>[IT-52]|Tuscany</item>
         <item>[IT-62]|Lazio</item>
