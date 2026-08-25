@@ -632,9 +632,9 @@
         <item>\"Yosemite NP\", 37.74658, -119.58455, 1220, [US-CA]</item>
         <item>\"Sequoia NP\", 36.60477, -118.72592, 2055, [US-CA]</item>
         <item>\"Joshua Tree NP\", 34.01235, -116.16769, 1290, [US-CA]</item>
-        <item>\"Death Valley NP\", 36.46335, -116.86999, -63, [US-CA]</item>
+        <item>\"Death Valley NP\", 36.46335, -116.86999, -63, [US-CA][US-NV]</item>
         <item>\"King\'s Canyon NP\", 36.73994, -118.96321, 2010, [US-CA]</item>
-        <item>\"Yellowstone NP\", 44.73458, -110.49188, 2410, [US-CA]</item>
+        <item>\"Yellowstone NP\", 44.73458, -110.49188, 2410, [US-ID][US-MT][US-WY]</item>
         <item>\"Redwood NP\", 41.2864, -124.0906, 5, [US-CA]</item>
         <item>\"Wind Cave NP\", 43.55646, -103.47846, 1255, [US-SD]</item>
         <item>\"Badlands NP\", 43.51155, -102.49638, 800, [US-SD]</item>
@@ -878,7 +878,7 @@
         <item>"Mount Everest", 27.98833, 86.92527, 8848.86, [misc][summit]</item>    <!-- Asia -->
         <item>"Aconcagua", -32.65332, -70.012, 6960.8, [misc][summit]</item>         <!-- South America -->
         <item>"Chimborazo", -1.46916, -78.8175, 6263.47, [misc][summit]</item>       <!-- South America -->
-        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc][summit]</item>          <!-- North America -->
+        <item>"Denali", 63.06919, -151.00713, 6190.0, [misc][summit][US-AK]</item>   <!-- North America -->
         <item>"Mount Kilimanjaro", -3.0767, 37.35370, 5895, [misc][summit]</item>    <!-- Africa -->
         <item>"Mount Elbrus", 43.355, 42.43916, 5642, [misc][summit]</item>          <!-- Russia -->
         <item>"Vinson Massif", -78.52607, -85.6274, 4892, [misc][summit]</item>      <!-- Antarctica -->
