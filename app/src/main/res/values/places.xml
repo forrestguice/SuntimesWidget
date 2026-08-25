@@ -232,11 +232,20 @@
     </string-array>
     <string-array name="places_AS_IR">    <!-- Iran -->
         <item>"Ahvaz", 31.32103, 48.67098, 15, [IR]</item>                      <!-- Khuzestan -->
+        <item>"Bandar Abbas", 27.17629, 56.28028, 0, [IR]</item>                <!-- Hormozgan -->
+        <item>"Birjand", 32.87324, 59.21649, 1455, [IR]</item>                  <!-- South Khorasan -->
         <item>"Isfahan", 32.66434, 51.66906, 1570, [IR]</item>                  <!-- Isfahan -->
+        <item>"Kerman", 30.28098, 57.0859, 1760, [IR]</item>                    <!-- Kerman -->
+        <item>"Kermanshah", 34.32426, 47.07383, 1350, [IR]</item>               <!-- Kermanshah -->
         <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>                   <!-- Razavi Khorasan -->
+        <item>"Qom", 34.63283, 50.8848, 930, [IR]</item>                        <!-- Qom -->
+        <item>"Rasht", 37.27126, 49.59209, 5, [IR]</item>                       <!-- Gilan -->
         <item>"Shiraz", 29.60519, 52.53324, 1500, [IR]</item>                   <!-- Fars -->
         <item>"Tabriz", 38.07682, 46.28055, 1350, [IR]</item>                   <!-- East Azarbaijan -->
         <item>"Tehran", 35.70251, 51.35131, 900, [capital][IR]</item>           <!-- Tehran -->
+        <item>"Urmia", 37.55292, 45.07618, 1355, [IR]</item>                    <!-- West Azerbaijan -->
+        <item>"Yazd", 31.88732, 54.3556, 1225, [IR]</item>                      <!-- Yazd -->
+        <item>"Zahedan", 29.48927, 60.86385, 1385, [IR]</item>                  <!-- Sistan and Baluchestan -->
     </string-array>
     <string-array name="places_AS_IQ">    <!-- Iraq -->
         <item>"Baghdad", 33.27353, 44.38063, 34, [capital][IQ]</item>
