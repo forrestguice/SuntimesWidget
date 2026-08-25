@@ -133,11 +133,18 @@
         <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
     </string-array>
     <string-array name="places_AF_EG">    <!-- Egypt -->
-        <item>"Alexandria", 31.20558, 29.87522, 0, [EG]</item>
-        <item>"Aswan", 24.09189, 32.8860, 194, [EG]</item>
-        <item>"Cairo", 30.0594, 31.2234, 36, [capital][EG]</item>
-        <item>"Giza", 29.97519, 31.13780, 30, [EG]</item>
-        <item>"Luxor", 25.69925, 32.64036, 89, [EG]</item>
+        <item>"Alexandria", 31.20558, 29.87522, 0, [EG-ALX]</item>
+        <item>"Aswan", 24.09189, 32.8860, 194, [EG-ASN]</item>
+        <item>"Asyut", 27.17826, 31.18609, 60, [EG-AST]</item>
+        <item>"Cairo", 30.0594, 31.2234, 36, [capital][EG-C]</item>
+        <item>"Faiyum", 29.3091, 30.84587, 25, [EG-FYM]</item>
+        <item>"Giza", 29.97519, 31.13780, 30, [EG-GZ]</item>
+        <item>"Hurghada", 27.24818, 33.84222, 0, [EG-BA]</item>
+        <item>"Kharga", 25.44284, 30.55573, 70, [EG-WAD]</item>
+        <item>"Luxor", 25.69925, 32.64036, 89, [EG-LX]</item>
+        <item>"Mansoura", 31.04082, 31.3785, 20, [EG-DK]</item>
+        <item>"Port Said", 31.27297, 32.31244, 0, [EG-PTS]</item>
+        <item>"Suez", 29.95533, 32.54493, 0, [EG-SUZ]</item>
     </string-array>
 
     <!-- Asia -->

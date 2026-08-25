@@ -35,7 +35,6 @@
         <item>[DO]|Dominican Republic, Caribbean Sea, North America</item>
         <item>[DZ]|Algeria, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[EE]|Estonia, Baltic Sea*, Europe</item>
-        <item>[EG]|Egypt, Mediterranean Sea*, Red Sea*, Sahara Desert*, Africa</item>
         <item>[ER]|Eritrea, Red Sea*, Africa</item>
         <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
         <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
@@ -295,6 +294,22 @@
         <item>[EC-A]|Azuay</item>
         <item>[EC-P]|Pichincha</item>
         <item>[EC-G]|Guayas</item>
+    </string-array>
+
+    <string-array name="place_tags_EG">
+        <item>[EG]|Egypt, Sahara Desert*, Africa</item>
+        <item>[EG-ALX]|Alexandria, Mediterranean Sea*, Nile River Delta*</item>
+        <item>[EG-ASN]|Aswan, Nile River*</item>
+        <item>[EG-AST]|Asyut, Nile River*</item>
+        <item>[EG-BA]|Red Sea</item>
+        <item>[EG-C]|Cairo, Nile River Delta*</item>
+        <item>[EG-DK]|Dakahlia, Nile River Delta*</item>
+        <item>[EG-FYM]|Faiyum, Nile River*</item>
+        <item>[EG-GZ]|Giza, Nile River Delta*</item>
+        <item>[EG-LX]|Luxor, Nile River*</item>
+        <item>[EG-PTS]|Port Said, Suez Canal*, Mediterranean Sea*</item>
+        <item>[EG-SUZ]|Suez, Suez Canal*, Gulf of Suez*, Red Sea*</item>
+        <item>[EG-WAD]|New Valley, Sahara Desert*</item>
     </string-array>
 
     <string-array name="place_tags_ES">
