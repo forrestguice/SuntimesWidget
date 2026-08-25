@@ -149,6 +149,7 @@
         <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
         <item>"Bishkek", 42.87954, 74.60022, 800, [capital][KG]</item>
+        <item>"Chattogram", 22.31217, 91.76644, 0, [BD]</item>
         <item>"Colombo", 6.93147, 79.84219, 0, [capital][LK]</item>
         <item>"Dhaka", 23.7806, 90.3492, 3, [capital][BD]</item>
         <item>"Doha", 25.29069, 51.53225, 0, [capital][QA]</item>
@@ -190,15 +191,44 @@
     </string-array>
     <string-array name="places_AS_IN">    <!-- India -->
         <item>"Ahmedabad", 23.0203, 72.5097, 49, [IN-GJ]</item>
+        <item>"Aizawl", 23.72861, 92.7188, 1070, [capital][IN-MZ]</item>
+        <item>"Agartala", 23.83034, 91.28256, 12, [capital][IN-TR]</item>
         <item>"Bengaluru", 12.97688, 77.59360, 920, [capital][IN-KA]</item>
+        <item>"Bhopal", 23.25215, 77.43083, 496, [IN-MP]</item>
+        <item>"Bhubaneswar", 20.30147, 85.80445, 60, [capital][IN-OD]</item>
+        <item>"Chandigarh", 30.72642, 76.76851, 335, [capital][IN-CH][IN-PB][IN-HR]</item>
         <item>"Chennai", 13.08989, 80.27250, 5, [capital][IN-TN]</item>
+        <item>"Coimbatore", 11.00134, 76.96293, 415, [IN-TN]</item>
+        <item>"Dehradun", 30.32424, 78.04207, 675, [capital][IN-UK]</item>
         <item>"Delhi", 28.68803, 77.21791, 215, [capital][IN-DL]</item>
+        <item>"Gangtok", 27.33408, 88.61205, 1565, [capital][IN-SK]</item>
         <item>"Guwahati", 26.1429, 91.5627, 49, [IN-AS]</item>
+        <item>\"Hyderabad, India\", 17.36158, 78.47471, 510, [capital][IN-TS]</item>
+        <item>"Imphal", 24.80741, 93.93845, 780, [capital][IN-MN]</item>
+        <item>"Indore", 22.71221, 75.8572, 545, [IN-MP]</item>
+        <item>"Itanagar", 27.09791, 93.62114, 340, [capital][IN-AR]</item>
+        <item>"Jaipur", 26.90756, 75.80553, 430, [capital][IN-RJ]</item>
+        <item>"Kanpur", 26.45568, 80.33398, 130, [IN-UP]</item>
         <item>"Kochi", 9.93626, 76.24488, 6, [IN-KL]</item>
+        <item>"Kohima", 25.67413, 94.10867, 1445, [capital][IN-NL]</item>
         <item>"Kokrajhar", 26.4018, 90.2607, 51, [IN-AS]</item>
         <item>"Kolkata", 22.6754, 88.0884, 6, [capital][IN-WB]</item>
+        <item>"Leh", 34.15193, 77.57625, 3410, [capital][IN-LA]</item>
+        <item>"Lucknow", 26.82459, 80.91528, 120, [capital][IN-UP]</item>
         <item>"Mumbai", 19.1246, 72.7932, 0, [capital][IN-MH]</item>
+        <item>"Nagpur", 21.14575, 79.08809, 310, [IN-MH]</item>
+        <item>"Panaji", 15.46683, 73.80448, 0, [IN-GA]</item>
+        <item>"Patna", 25.60015, 85.11163, 55, [capital][IN-BR]</item>
         <item>"Pune", 18.52023, 73.85529, 570, [IN-MH]</item>
+        <item>"Ranchi", 23.36684, 85.31834, 650, [capital][IN-JH]</item>
+        <item>"Raipur", 21.2436, 81.63575, 305, [capital][IN-CG]</item>
+        <item>"Shillong", 25.58045, 91.89267, 1420, [capital][IN-ML]</item>
+        <item>"Shimla", 31.10482, 77.17425, 2190, [capital][IN-HP]</item>
+        <item>"Srinagar", 34.08394, 74.79705, 1590, [capital][IN-JK]</item>
+        <item>"Surat", 21.19809, 72.82972, 20, [IN-GJ]</item>
+        <item>"Varanasi", 25.31907, 82.97609, 80, [IN-UP]</item>
+        <item>"Vijayawada", 16.50527, 80.63819, 23, [IN-AP]</item>
+        <item>"Visakhapatnam", 17.72887, 83.33596, 30, [IN-AP]</item>
     </string-array>
     <string-array name="places_AS_IR">    <!-- Iran -->
         <item>"Ahvaz", 31.32103, 48.67098, 15, [IR]</item>                      <!-- Khuzestan -->

@@ -11,12 +11,12 @@
         <item>[AW]|Aruba, Caribbean Sea*, South America, Netherlands</item>
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
-        <item>[BD]|Bangladesh, Indian Ocean*, Bay of Bengal*, Asia</item>
+        <item>[BD]|Bangladesh, Indian Ocean*, Bay of Bengal*, Ganges Basin*, Asia</item>
         <item>[BG]|Bulgaria, Black Sea*, Europe</item>
         <item>[BH]|Bahrain, Persian Gulf*, Asia</item>
         <item>[BI]|Burundi, Africa</item>
         <item>[BS]|The Bahamas, Caribbean Sea, North America</item>
-        <item>[BT]|Bhutan, Himalayas*, Asia</item>
+        <item>[BT]|Bhutan, Himalayas*, Ganges Basin*, Asia</item>
         <item>[BQ]|Caribbean Sea, South America, Netherlands</item>
         <item>[BZ]|Belize, Caribbean Sea*, Central America</item>
         <item>[BY]|Belarus, Europe</item>
@@ -86,7 +86,7 @@
         <item>[NE]|Niger, Sahara Desert*, Africa</item>
         <item>[NG]|Nigeria, Atlantic Ocean*, Africa</item>
         <item>[NI]|Nicaragua, Caribbean Sea*, Pacific Ocean*, Central America</item>
-        <item>[NP]|Nepal, Himalayas*, Asia</item>
+        <item>[NP]|Nepal, Himalayas*, Tibetan Plateau*, Ganges Basin*, Asia</item>
         <item>[OM]|Oman, Indian Ocean*, Persian Gulf*, Strait of Hormuz*, Gulf of Oman*, Arabian Sea*, Asia</item>
         <item>[PA]|Panama, Caribbean Sea*, Pacific Ocean*, Central America</item>
         <item>[PH]|Philippines, Pacific Ocean*, Asia</item>
@@ -238,7 +238,7 @@
         <item>[CN-GD]|Guangdong</item>
         <item>[CN-HB]|Hubei</item>
         <item>[CN-XJ]|Xinjiang</item>
-        <item>[CN-XZ]|Tibet</item>
+        <item>[CN-XZ]|Tibet, Tibetan Plateau*</item>
     </string-array>
 
     <string-array name="place_tags_CO">
@@ -364,42 +364,42 @@
 
     <string-array name="place_tags_IN">
         <item>[IN]|India, Asia</item>
-        <item>[IN-AR]|Arunachal Pradesh, Himalayas*</item>
-        <item>[IN-AP]|Andhra Pradesh, Bay of Bengal*</item>
+        <item>[IN-AR]|Arunachal Pradesh, Himalayas*, Ganges Basin*</item>
+        <item>[IN-AP]|Andhra Pradesh, Bay of Bengal*, Deccan Plateau*</item>
         <item>[IN-AN]|Andaman and Nicobar Islands, Indian Ocean*, Bay of Bengal*</item>
         <item>[IN-AS]|Assam, Himalayas*</item>
-        <item>[IN-BR]|Bihar</item>
+        <item>[IN-BR]|Bihar, Ganges Basin*</item>
         <item>[IN-CH]|Chandigarh</item>
         <item>[IN-CG]|Chhattisgarh</item>
-        <item>[IN-DH]|Dadra and Nagar Haveli</item>
-        <item>[IN-DL]|Delhi</item>
+        <item>[IN-DH]|Dadra and Nagar Haveli, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-DL]|Delhi, Ganges Basin*</item>
         <item>[IN-GA]|Goa, Indian Ocean*, Arabian Sea*</item>
         <item>[IN-GJ]|Gujarāt, Indian Ocean*, Arabian Sea*</item>
-        <item>[IN-HP]|Himachal Pradesh, Himalayas*</item>
-        <item>[IN-HR]|Haryana</item>
-        <item>[IN-JK]|Jammu and Kashmir, Himalayas*</item>
+        <item>[IN-HP]|Himachal Pradesh, Himalayas*, Ganges Basin*</item>
+        <item>[IN-HR]|Haryana, Ganges Basin*</item>
+        <item>[IN-JK]|Jammu and Kashmir, Himalayas*, Tibetan Plateau*</item>
         <item>[IN-JH]|Jharkhand</item>
-        <item>[IN-KA]|Karnātaka, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-KA]|Karnātaka, Indian Ocean*, Arabian Sea*, Deccan Plateau*</item>
         <item>[IN-KL]|Kerala, Indian Ocean*, Arabian Sea*</item>
-        <item>[IN-LA]|Ladakh, Himalayas*</item>
-        <item>[IN-LD]|Lakshadweep</item>
-        <item>[IN-MH]|Mahārāshtra, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-LA]|Ladakh, Himalayas*, Tibetan Plateau*</item>
+        <item>[IN-LD]|Lakshadweep, Indian Ocean*, Arabian Sea*</item>
+        <item>[IN-MH]|Mahārāshtra, Indian Ocean*, Arabian Sea*, Deccan Plateau*</item>
         <item>[IN-ML]|Meghalaya, Himalayas*</item>
         <item>[IN-MN]|Manipur, Himalayas*</item>
-        <item>[IN-MP]|Madhya Pradesh</item>
+        <item>[IN-MP]|Madhya Pradesh, Ganges Basin*</item>
         <item>[IN-MZ]|Mizoram, Himalayas*</item>
         <item>[IN-NL]|Nagaland, Himalayas*</item>
         <item>[IN-OD]|Odisha, Indian Ocean*, Bay of Bengal*</item>
         <item>[IN-PB]|Punjab</item>
         <item>[IN-PY]|Puducherry, Indian Ocean*, Bay of Bengal*</item>
-        <item>[IN-RJ]|Rajasthan</item>
+        <item>[IN-RJ]|Rajasthan, Thar Desert*, Ganges Basin*</item>
         <item>[IN-SK]|Sikkim, Himalayas*</item>
         <item>[IN-TN]|Tamil Nādu, Indian Ocean*, Bay of Bengal*</item>
         <item>[IN-TR]|Tripura, Himalayas*</item>
-        <item>[IN-TS]|Telangana</item>
-        <item>[IN-UP]|Uttar Pradesh</item>
+        <item>[IN-TS]|Telangana, Deccan Plateau*</item>
+        <item>[IN-UP]|Uttar Pradesh, Ganges Basin*</item>
         <item>[IN-UK]|Uttarakhand, Himalayas*</item>
-        <item>[IN-WB]|West Bengal, Himalayas*, Indian Ocean*, Bay of Bengal*</item>
+        <item>[IN-WB]|West Bengal, Ganges Basin*, Himalayas*, Indian Ocean*, Bay of Bengal*</item>
     </string-array>
 
     <string-array name="place_tags_IT">
