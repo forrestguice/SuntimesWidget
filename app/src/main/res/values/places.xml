@@ -100,6 +100,7 @@
     <string-array name="places_AF">
         <item>"Abidjan", 5.34872, -3.98679, 18, [CI]</item>                 <!-- Ivory Coast -->
         <item>"Algiers", 36.74782, 3.07333, 0, [capital][DZ]</item>         <!-- Algeria -->
+        <item>"Asmara", 15.33196, 38.93011, 2335, [ER]</item>               <!-- Eritrea -->
         <item>"Bamako", 12.66148, -7.99798, 350, [capital][ML]</item>       <!-- Mali -->
         <item>"Bangui", 4.36195, 18.58294, 370, [capital][CF]</item>        <!-- Central African Republic -->
         <item>"Brazzaville", -4.27758, 15.24504, 320, [capital][CG]</item>  <!-- Republic of the Congo -->
@@ -126,6 +127,7 @@
         <item>"Nairobi", -1.3047, 36.7073, 1860, [capital][KE]</item>       <!-- Kenya -->
         <item>"Niamey", 13.5127, 2.0489, 192, [capital][NE]</item>          <!-- Niger -->
         <item>"Nouakchott", 18.07932, -15.96449, 7, [capital][MR]</item>    <!-- Mauritania -->
+        <item>\"N\'Djamena\", 12.11912, 15.05037, 295, [capital][TD]</item> <!-- Chad -->
         <item>\"Tripoli, Libya\", 32.89500, 13.18431, 81, [capital][LY]</item>  <!-- Libya -->
         <item>"Tunis", 36.82443, 10.17103, 0, [capital][TN]</item>          <!-- Tunisia -->
         <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
@@ -142,6 +144,7 @@
     <string-array name="places_AS">
         <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
+        <item>"Amman", 31.95392, 35.91053, 865, [capital][JO]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
         <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
@@ -167,6 +170,7 @@
         <item>"Singapore", 1.2976, 103.9053, 10, [capital][SG]</item>
         <item>"Taipei", 25.0330, 121.5654, 0, [capital][TW]</item>
         <item>"Tashkent", 41.31026, 69.2805, 455, [capital][UZ]</item>
+        <item>"Thimphu", 27.46649, 89.63798, 2355, [capital][BT]</item>
         <item>"Ulaanbaatar", 47.90029, 106.94324, 1350, [capital][MN]</item>
         <item>"Yangon", 16.79525, 96.15955, 23, [capital][MM]</item>
     </string-array>
