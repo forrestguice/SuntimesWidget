@@ -240,12 +240,13 @@
         <item>"Yakutsk", 62.02538, 129.73172, 95, [capital][RU-SA]</item>
     </string-array>
     <string-array name="places_AS_SY">
-        <item>"Aleppo", 36.21004, 37.14712, 380, [SY]</item>
-        <item>"Damascus", 33.51378, 36.27654, 680, [capital][SY]</item>
-        <item>"Hasakah", 36.51044, 40.74149, 300, [SY]</item>
-        <item>"Homs", 34.72364, 36.71463, 530, [SY]</item>
-        <item>"Hama", 35.13673, 36.74947, 300, [SY]</item>
-        <item>"Latakia", 35.49711, 35.77899, 0, [SY]</item>
+        <item>"Aleppo", 36.21004, 37.14712, 380, [SY-HL]</item>
+        <item>"Damascus", 33.51378, 36.27654, 680, [capital][SY-DI]</item>
+        <item>"Hasakah", 36.51044, 40.74149, 300, [SY-HA]</item>
+        <item>"Homs", 34.72364, 36.71463, 530, [SY-HI]</item>
+        <item>"Hama", 35.13673, 36.74947, 300, [SY-HM]</item>
+        <item>"Latakia", 35.49711, 35.77899, 0, [SY-LA]</item>
+    </string-array>
     <string-array name="places_AS_TR">    <!-- Turkey -->
         <item>"Adana", 36.98999, 35.33828, 25, [TR]</item>
         <item>"Amed", 37.93052, 40.18369, 720, [TR]</item>

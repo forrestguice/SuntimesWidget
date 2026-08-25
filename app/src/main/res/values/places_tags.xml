@@ -512,6 +512,24 @@
         <item>[RU-TA]|Tatarstan</item>
     </string-array>
 
+    <string-array name="place_tags_SY">
+        <item>[SY]|Syria, Mediterranean Sea*, Asia</item>
+        <item>[SY-DI]|Damascus</item>
+        <item>[SY-DR]|Daraa</item>
+        <item>[SY-DY]|Deir Ezzor</item>
+        <item>[SY-HA]|Hasaka</item>
+        <item>[SY-HI]|Homs</item>
+        <item>[SY-HL]|Aleppo</item>
+        <item>[SY-HM]|Hama</item>
+        <item>[SY-ID]|Idlib</item>
+        <item>[SY-LA]|Latakia</item>
+        <item>[SY-QU]|Quneitra, </item>
+        <item>[SY-RA]|Raqqa</item>
+        <item>[SY-RD]|Tartus</item>
+        <item>[SY-SU]|Suwayda</item>
+        <item>[SY-TA]|Damascus Countryside</item>
+    </string-array>
+
     <string-array name="place_tags_US">
         <item>[US]|United States, North America</item>
         <item>[US-AL]|Alabama, Gulf of Mexico*</item>
