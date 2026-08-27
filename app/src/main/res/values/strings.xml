@@ -1646,6 +1646,7 @@
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egypt)</string>
+    <string name="place_label_AF_SD">Africa (Sudan)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN" tools:common="true">Asia (China)</string>
     <string name="place_label_AS_IN" tools:common="true">Asia (India)</string>

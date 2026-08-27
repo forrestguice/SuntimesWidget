@@ -12,14 +12,17 @@
         <item>[AZ]|Azerbaijan, Caspian Sea*, Asia</item>
         <item>[BA]|Bosnia and Herzegovina, Mediterranean Sea*, Europe</item>
         <item>[BD]|Bangladesh, Indian Ocean*, Bay of Bengal*, Ganges Basin*, Asia</item>
+        <item>[BF]|Burkina Faso, Africa</item>
         <item>[BG]|Bulgaria, Black Sea*, Europe</item>
         <item>[BH]|Bahrain, Persian Gulf*, Asia</item>
         <item>[BI]|Burundi, Africa</item>
+        <item>[BJ]|Benin, Atlantic Ocean*, Africa</item>
         <item>[BS]|The Bahamas, Caribbean Sea, North America</item>
         <item>[BT]|Bhutan, Himalayas*, Ganges Basin*, Asia</item>
         <item>[BQ]|Caribbean Sea, South America, Netherlands</item>
-        <item>[BZ]|Belize, Caribbean Sea*, Central America</item>
+        <item>[BW]|Botswana, Kalahari Desert*, Africa</item>
         <item>[BY]|Belarus, Europe</item>
+        <item>[BZ]|Belize, Caribbean Sea*, Central America</item>
         <item>[CD]|Democratic Republic of the Congo, Africa</item>
         <item>[CF]|Central African Republic, Africa</item>
         <item>[CG]|Republic of the Congo, Africa</item>
@@ -32,17 +35,24 @@
         <item>[CY]|Cyprus, Mediterranean Sea*, Asia</item>
         <item>[CZ]|Czech Republic, Europe</item>
         <item>[DK]|Denmark, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
+        <item>[DJ]|Djibouti, Red Sea*, Gulf of Aden*, Horn of Africa*, Africa</item>
         <item>[DO]|Dominican Republic, Caribbean Sea, North America</item>
         <item>[DZ]|Algeria, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[EE]|Estonia, Baltic Sea*, Europe</item>
         <item>[ER]|Eritrea, Red Sea*, Africa</item>
+        <item>[ET]|Ethiopia, Horn of Africa*, Africa</item>
         <item>[FJ]|Fiji, Melanesia, Pacific Ocean, Oceania</item>
         <item>[FM]|Micronesia, Pacific Ocean, Oceania</item>
         <item>[FO]|Faroe Islands, Nordic*, Atlantic Ocean, Europe, Denmark</item>
+        <item>[GA]|Gabon, Atlantic Ocean*, Africa</item>
         <item>[GE]|Georgia, Black Sea*, Europe</item>
+        <item>[GH]|Ghana, Atlantic Ocean*, Africa</item>
+        <item>[GM]|The Gambia, Atlantic Ocean*, Africa</item>
         <item>[GN]|Guinea, Atlantic Ocean*, Africa</item>
         <item>[GL]|Greenland, Atlantic Ocean*, North America, Arctic*, Nordic*, Denmark</item>
         <item>[GT]|Guatemala, Pacific Ocean*, Central America</item>
+        <item>[GQ]|Equatorial Guinea, Atlantic Ocean*, Africa</item>
+        <item>[GW]|Guinea-Bissau, Atlantic Ocean*, Africa</item>
         <item>[HT]|Haiti, Caribbean Sea, Atlantic Ocean*, North America</item>
         <item>[HN]|Honduras, Pacific Ocean*, Central America</item>
         <item>[HN-FM]|Francisco Morazán</item>
@@ -69,17 +79,21 @@
         <item>[LK]|Sri Lanka, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[LT]|Lithuania, Baltic Sea*, Europe</item>
         <item>[LU]|Luxembourg, Europe</item>
+        <item>[LR]|Liberia, Atlantic Ocean*, Africa</item>
+        <item>[LS]|Lesotho, Africa</item>
         <item>[LV]|Latvia, Baltic Sea*, Europe</item>
         <item>[LY]|Libya, Mediterranean Sea*, Sahara Desert*, Africa</item>
         <item>[NZ]|New Zealand, Pacific Ocean*, Oceania</item>
         <item>[MA]|Morocco, Mediterranean Sea*, Atlantic Ocean*, Sahara Desert*, Africa</item>
         <item>[MC]|Monaco, Mediterranean Sea*, Alps*, Europe</item>
         <item>[MD]|Moldova, Black Sea*, Europe</item>
+        <item>[MG]|Madagascar, Indian Ocean*, Africa</item>
         <item>[ML]|Mali, Sahara Desert*, Africa</item>
         <item>[MM]|Myanmar, Indian Ocean*, Bay of Bengal*, Asia</item>
         <item>[MM]|Mongolia, Asia</item>
         <item>[MR]|Mauritania, Atlantic Ocean*, Sahara Desert*, Africa</item>
         <item>[MT]|Malta, Mediterranean Sea*, Europe</item>
+        <item>[MW]|Malawi, Africa</item>
         <item>[MZ]|Mozambique, Indian Ocean*, Africa</item>
         <item>[NA]|Namibia, Atlantic Ocean*, Africa</item>
         <item>[NE]|Niger, Sahara Desert*, Africa</item>
@@ -99,12 +113,16 @@
         <item>[SI]|Slovenia, Alps*, Europe</item>
         <item>[SD]|Sudan, Red Sea*, Sahara Desert*, Africa</item>
         <item>[SE]|Sweden, North Sea*, Baltic Sea*, Nordic*, Scandinavia*, Europe</item>
+        <item>[SL]|Sierra Leone, Atlantic Ocean*, Africa</item>
         <item>[SN]|Senegal, Atlantic Ocean*, Africa</item>
-        <item>[SO]|Somalia, Indian Ocean*, Arabian Sea*, Africa</item>
+        <item>[SO]|Somalia, Indian Ocean*, Arabian Sea*, Horn of Africa*, Africa</item>
         <item>[SR]|Suriname, Caribbean Sea*, Atlantic Ocean*, Central America</item>
+        <item>[SS]|South Sudan, Africa</item>
         <item>[SV]|El Salvador, Pacific Ocean*, Central America</item>
         <item>[SX]|Sint Maarten, Caribbean Sea, North America, Netherlands</item>
+        <item>[SZ]|Eswatini, Africa</item>
         <item>[TD]|Chad, Sahara Desert*, Africa</item>
+        <item>[TG]|Togo, Atlantic Ocean*, Africa</item>
         <item>[TH]|Thailand, Asia, Bay of Bengal*</item>
         <item>[TJ]|Tajikistan, Asia</item>
         <item>[TM]|Turkmenistan, Caspian Sea*, Asia</item>

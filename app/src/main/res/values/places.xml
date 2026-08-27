@@ -19,6 +19,7 @@
     <string-array name="place_group_AF">
         <item>places_AF, place_label_AF</item>                <!-- Africa (unsorted) -->
         <item>places_AF_EG, place_label_AF_EG</item>          <!-- Africa; Egypt -->
+        <item>places_AF_SD, place_label_AF_SD</item>          <!-- Africa; Sudan -->
     </string-array>
     <string-array name="place_group_AS">
         <item>places_AS, place_label_AS</item>                <!-- Asia (unsorted) -->
@@ -99,10 +100,16 @@
     <!-- Africa -->
     <string-array name="places_AF">
         <item>"Abidjan", 5.34872, -3.98679, 18, [CI]</item>                 <!-- Ivory Coast -->
+        <item>"Accra", 5.54359, -0.196, [capital][GH]</item>                <!-- Ghana -->
+        <item>"Addis Ababa", 9.01064, 38.76113, 2340, [capital][ET]</item>  <!-- Ethiopia -->
         <item>"Algiers", 36.74782, 3.07333, 0, [capital][DZ]</item>         <!-- Algeria -->
+        <item>"Antananarivo", -18.92623, 47.51309, 1280, [capital][MG]</item>  <!-- Madagascar -->
         <item>"Asmara", 15.33196, 38.93011, 2335, [ER]</item>               <!-- Eritrea -->
+        <item>"Banjul", 13.45886, -16.57564, [capital][GM]</item>           <!-- The Gambia -->
         <item>"Bamako", 12.66148, -7.99798, 350, [capital][ML]</item>       <!-- Mali -->
         <item>"Bangui", 4.36195, 18.58294, 370, [capital][CF]</item>        <!-- Central African Republic -->
+        <item>"Bata", 1.86193, 9.76278, 5, [GQ]</item>                      <!-- Equatorial Guinea -->
+        <item>"Bissau", 11.85754, -15.5798, 5, [capital][GW]</item>         <!-- Guinea-Bissau -->
         <item>"Brazzaville", -4.27758, 15.24504, 320, [capital][CG]</item>  <!-- Republic of the Congo -->
         <item>"Bujumbura", -3.37672, 29.38364, 774, [capital][BI]</item>    <!-- Burundi -->
         <item>"Cape Town", -33.90419, 18.40110, 0, [capital][ZA]</item>     <!-- South Africa -->
@@ -110,24 +117,35 @@
         <item>"Conakry", 9.57276, -13.60708, 0, [capital][GN]</item>        <!-- Guinea -->
         <item>"Dakar", 14.76354, -17.47550, 0, [capital][SN]</item>         <!-- Senegal -->
         <item>"Dar es Salaam", -6.81361, 39.30010, 0, [TZ]</item>           <!-- Tanzania -->
+        <item>"Djibouti City", 11.58849, 43.14518, 5, [capital][DJ]</item>  <!-- Djibouti -->
         <item>"Douala", 4.0359, 9.7074, 18, [capital][CM]</item>            <!-- Cameroon -->
+        <item>"Freetown", 8.48703, -13.23263, 45, [capital][SL]</item>      <!-- Sierra Leone -->
+        <item>"Gaborone", -24.65791, 25.90774, 1010, [capital][BW]</item>   <!-- Botswana -->
         <item>"Harare", -17.8165, 30.9167, 1433, [capital][ZW]</item>       <!-- Zimbabwe -->
         <item>"Johannesburg", -26.2069, 28.0438, 1755, [ZA]</item>          <!-- South Africa -->
+        <item>"Juba", 4.84042, 31.58891, 505, [capital][SS]</item>          <!-- South Sudan [SS-EC|Central Equitoria] -->
         <item>"Kampala", 0.3138, 32.5290, 1203, [capital][UG]</item>        <!-- Uganda -->
-        <item>"Khartoum", 15.59872, 32.51307, 381, [capital][SD]</item>     <!-- Sudan -->
         <item>"Kano", 11.99000, 8.53609, 488, [NG]</item>                   <!-- Nigeria -->
         <item>"Kigali", -1.96446, 30.07506, 1567, [capital][RW]</item>      <!-- Rwanda -->
         <item>"Kinshasa", -4.45418, 15.28757, 240, [capital][CD]</item>     <!-- Democratic Republic of the Congo -->
         <item>"Lagos", 6.5482, 3.2574, 27, [NG]</item>                      <!-- Nigeria -->
+        <item>"Libreville", 0.40258, 9.43311, 0, [GA]</item>                <!-- Gabon -->
+        <item>"Lilongwe", -13.97392, 33.75693, 1090, [capital][MW]</item>   <!-- Malawi -->
+        <item>"Lomé", 6.12185, 1.22502, [capital][TG]</item>                <!-- Togo -->
         <item>"Luanda", -8.80879, 13.22332, 0, [capital][AO]</item>         <!-- Angola -->
         <item>"Lusaka", -15.4167, 28.2036, 1262, [capital][ZM]</item>       <!-- Zambia -->
         <item>"Maputo", -25.97148, 32.57326, 47, [capital][MZ]</item>       <!-- Mozambique -->
         <item>"Marrakesh", 31.62649, -7.99649, 466, [MA]</item>             <!-- Morocco -->
+        <item>"Maseru", -29.31642, 27.49386, 1555, [capital][LS]</item>     <!-- Lesotho -->
+        <item>"Mbabane", -26.32644, 31.1442, 1165, [capital][SZ]</item>     <!-- Eswatini -->
         <item>"Mogadishu", 2.03979, 45.36332, 0, [capital][SO]</item>       <!-- Somalia -->
+        <item>"Monrovia", 6.31028, -10.81462, [capital][LI]</item>          <!-- Liberia -->
         <item>"Nairobi", -1.3047, 36.7073, 1860, [capital][KE]</item>       <!-- Kenya -->
         <item>"Niamey", 13.5127, 2.0489, 192, [capital][NE]</item>          <!-- Niger -->
         <item>"Nouakchott", 18.07932, -15.96449, 7, [capital][MR]</item>    <!-- Mauritania -->
         <item>\"N\'Djamena\", 12.11912, 15.05037, 295, [capital][TD]</item> <!-- Chad -->
+        <item>"Ouagadougou", 9.96886, -5.15689, 318, [capital][BF]</item>   <!-- Burkina Faso -->
+        <item>"Porto-Novo", 6.46929, 2.62016, 5, [capital][BJ]</item>       <!-- Benin -->
         <item>\"Tripoli, Libya\", 32.89500, 13.18431, 81, [capital][LY]</item>  <!-- Libya -->
         <item>"Tunis", 36.82443, 10.17103, 0, [capital][TN]</item>          <!-- Tunisia -->
         <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
@@ -146,10 +164,19 @@
         <item>"Port Said", 31.27297, 32.31244, 0, [EG-PTS]</item>
         <item>"Suez", 29.95533, 32.54493, 0, [EG-SUZ]</item>
     </string-array>
+    <string-array name="places_AF_SD">    <!-- Sudan -->
+        <item>"Kassala", 15.45699, 36.3961, 505, [SD]</item>                <!-- Sudan, Kassala -->
+        <item>"Khartoum", 15.59872, 32.51307, 381, [capital][SD]</item>     <!-- Sudan -->
+        <item>"El Obeid", 13.18534, 30.22151, 575, [SD]</item>              <!-- Sudan -->
+        <item>"Port Sudan", 19.57167, 37.2456, 0, [SD]</item>               <!-- Sudan, Red Sea -->
+        <item>\"Nyala, Sudan\", 12.05414, 24.8756, 665, [SD]</item>         <!-- Sudan, South Darfur -->
+    </string-array>
 
     <!-- Asia -->
     <string-array name="places_AS">
+        <item>"Abu Dhabi", 24.45383, 54.37743, 5, [capital][AE]</item>
         <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
+        <item>"Ashdod", 31.79802, 34.6307, 0, [IL]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
         <item>"Amman", 31.95392, 35.91053, 865, [capital][JO]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
@@ -162,22 +189,30 @@
         <item>"Doha", 25.29069, 51.53225, 0, [capital][QA]</item>
         <item>"Dubai", 25.23561, 55.29685, 0, [capital][AE-DU]</item>
         <item>"Dushanbe", 38.60366, 68.78098, 823, [capital][TJ]</item>
+        <item>"Gaza City", 31.50192, 34.46662, 47, [PS]</item>
+        <item>"Haifa", 32.8058, 34.95575, 0, [IL]</item>
+        <item>"Hebron", 31.52858, 35.09686, 895, [PS]</item>
         <item>"Jakarta", -6.2297, 106.7594, 20, [capital][ID]</item>
+        <item>"Jenin", 32.46181, 35.29771, 150, [PS]</item>
         <item>"Jerusalem", 31.7962, 35.1053, 643, [capital][IL][PS]</item>
         <item>"Kabul", 34.51569, 69.13544, 1791, [capital][AF]</item>
         <item>"Kathmandu", 27.73078, 85.32092, 1400, [capital][NP]</item>
+        <item>"Khan Yunis", 31.34386, 34.31406, 50, [PS]</item>
         <item>"Kuwait City", 29.36950, 47.99377, 0, [capital][KW]</item>
         <item>"Manama", 26.28596, 50.57698, 0, [capital][BH]</item>
         <item>"Manila", 14.5964, 120.9094, 0, [capital][PH]</item>
         <item>"Muscat", 23.60333, 58.40487, 0, [capital][OM]</item>
+        <item>"Nablus", 32.22113, 35.26094, 530, [PS]</item>
         <item>"Nicosia", 35.1922, 33.3273, 140, [capital][CY]</item>
         <item>"Phnom Penh", 11.57604, 104.92290, 27, [capital][KH]</item>
         <item>"Pyongyang", 39.0291, 125.6720, 28, [capital][KP]</item>
+        <item>"Salalah", 17.01073, 54.17174, 0, [OM]</item>
         <item>"Sanaa", 15.36238, 44.19534, 2250, [capital][YE]</item>
         <item>"Seoul", 37.5650, 126.8494, 14, [capital][KR]</item>
         <item>"Singapore", 1.2976, 103.9053, 10, [capital][SG]</item>
         <item>"Taipei", 25.0330, 121.5654, 0, [capital][TW]</item>
         <item>"Tashkent", 41.31026, 69.2805, 455, [capital][UZ]</item>
+        <item>"Tel Aviv", 32.08185, 34.76725, 0, [IL]</item>
         <item>"Thimphu", 27.46649, 89.63798, 2355, [capital][BT]</item>
         <item>"Ulaanbaatar", 47.90029, 106.94324, 1350, [capital][MN]</item>
         <item>"Yangon", 16.79525, 96.15955, 23, [capital][MM]</item>
@@ -269,6 +304,7 @@
         <item>"Yokohama", 35.42296, 139.63807, 15, [JP]</item>
     </string-array>
     <string-array name="places_AS_PK">    <!-- Pakistan -->
+        <item>"Gujranwala", 32.1566508,74.1903154, 230, [PK-PB]</item>
         <item>"Islamabad", 33.6936, 73.06797, 500, [capital][PK-IS]</item>
         <item>"Karachi", 25.0108, 66.7845, 97, [PK-SD]</item>
         <item>"Lahore", 31.55091, 74.34373, 217, [PK-PB]</item>
