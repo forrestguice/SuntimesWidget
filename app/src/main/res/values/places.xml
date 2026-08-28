@@ -112,7 +112,6 @@
         <item>"Bissau", 11.85754, -15.5798, 5, [capital][GW]</item>         <!-- Guinea-Bissau -->
         <item>"Brazzaville", -4.27758, 15.24504, 320, [capital][CG]</item>  <!-- Republic of the Congo -->
         <item>"Bujumbura", -3.37672, 29.38364, 774, [capital][BI]</item>    <!-- Burundi -->
-        <item>"Cape Town", -33.90419, 18.40110, 0, [capital][ZA]</item>     <!-- South Africa -->
         <item>"Casablanca", 33.56592, -7.61412, 0, [MA]</item>              <!-- Morocco -->
         <item>"Conakry", 9.57276, -13.60708, 0, [capital][GN]</item>        <!-- Guinea -->
         <item>"Dakar", 14.76354, -17.47550, 0, [capital][SN]</item>         <!-- Senegal -->
@@ -122,7 +121,7 @@
         <item>"Freetown", 8.48703, -13.23263, 45, [capital][SL]</item>      <!-- Sierra Leone -->
         <item>"Gaborone", -24.65791, 25.90774, 1010, [capital][BW]</item>   <!-- Botswana -->
         <item>"Harare", -17.8165, 30.9167, 1433, [capital][ZW]</item>       <!-- Zimbabwe -->
-        <item>"Johannesburg", -26.2069, 28.0438, 1755, [ZA]</item>          <!-- South Africa -->
+
         <item>"Juba", 4.84042, 31.58891, 505, [capital][SS]</item>          <!-- South Sudan [SS-EC|Central Equitoria] -->
         <item>"Kampala", 0.3138, 32.5290, 1203, [capital][UG]</item>        <!-- Uganda -->
         <item>"Kano", 11.99000, 8.53609, 488, [NG]</item>                   <!-- Nigeria -->
@@ -150,6 +149,15 @@
         <item>"Tunis", 36.82443, 10.17103, 0, [capital][TN]</item>          <!-- Tunisia -->
         <item>"Windhoek", -22.5637, 16.9921, 1617, [capital][NA]</item>     <!-- Namibia -->
     </string-array>
+
+    <string-array name="places_AF_ZA">    <!-- South Africa -->
+        <item>"Cape Town", -33.90419, 18.40110, 0, [capital][ZA-WC]</item>     <!-- Western Cape -->
+        <item>"Durban", -29.86887, 31.05295, 0, [ZA-KZN]</item>                <!-- Kwazulu-Natal -->
+        <item>"Johannesburg", -26.2069, 28.0438, 1755, [ZA-EC]</item>          <!-- Gauteng -->
+        <item>"Gqeberha", -33.96723, 25.6445, 0, [ZA-GP]</item>                <!-- Eastern Cape -->
+        <item>"Bloemfontein", -29.11206, 26.21511, 1405, [ZA-FS]</item>        <!-- Free State -->
+    </string-array>
+
     <string-array name="places_AF_EG">    <!-- Egypt -->
         <item>"Alexandria", 31.20558, 29.87522, 0, [EG-ALX]</item>
         <item>"Aswan", 24.09189, 32.8860, 194, [EG-ASN]</item>
@@ -175,6 +183,7 @@
     <!-- Asia -->
     <string-array name="places_AS">
         <item>"Abu Dhabi", 24.45383, 54.37743, 5, [capital][AE]</item>
+        <item>"Aden", 12.79284, 45.03797, 5, [YE]</item>
         <item>"Almaty", 43.21613, 76.91578, 500, [KZ]</item>
         <item>"Ashdod", 31.79802, 34.6307, 0, [IL]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
@@ -211,6 +220,7 @@
         <item>"Seoul", 37.5650, 126.8494, 14, [capital][KR]</item>
         <item>"Singapore", 1.2976, 103.9053, 10, [capital][SG]</item>
         <item>"Taipei", 25.0330, 121.5654, 0, [capital][TW]</item>
+        <item>"Taiz", 13.57759, 44.01789, 1350, [YE]</item>
         <item>"Tashkent", 41.31026, 69.2805, 455, [capital][UZ]</item>
         <item>"Tel Aviv", 32.08185, 34.76725, 0, [IL]</item>
         <item>"Thimphu", 27.46649, 89.63798, 2355, [capital][BT]</item>
@@ -311,10 +321,14 @@
         <item>"Multan", 30.19769, 71.47397, 0, [PK-PB]</item>
     </string-array>
     <string-array name="places_AS_SA">    <!-- Saudi Arabia -->
+        <item>"Abha", 18.21688, 42.5033, 2225, [SA]</item>
+        <item>"Dammam", 26.45713, 50.10806, 5, [SA]</item>
+        <item>"Hail", 27.51303, 41.71528, 975, [SA]</item>
         <item>"Jeddah", 21.53003, 39.15633, 12, [SA]</item>
         <item>"Mecca", 21.42090, 39.82562, 277, [SA]</item>
         <item>"Medina", 24.42607, 39.59699, 620, [SA]</item>
         <item>"Riyadh", 24.61984, 46.70894, 612, [SA]</item>
+        <item>"Tabuk", 28.39168, 36.55461, 760, [SA]</item>
     </string-array>
     <string-array name="places_AS_VN">    <!-- Vietnam -->
         <item>"Da Nang", 16.07320, 108.19174, 0, [VN]</item>
@@ -511,6 +525,7 @@
     <string-array name="places_EU_RU">    <!-- Russia -->
         <item>"Grozny", 43.3125, 45.698611, 130, [capital][RU]</item>
         <item>"Moscow", 55.7656, 37.6040, 186, [capital][RU]</item>
+        <item>"Murmansk", 68.95756, 33.0324, 0, [capital][RU]</item>
         <item>"Kazan", 55.79638, 49.10888, 60, [capital][RU-TA]</item>       <!-- Tatarstan -->
         <item>"Cheboksary", 56.15384, 47.24776, 150, [capital][RU-CU]</item> <!-- Chuvashia -->
     </string-array>
