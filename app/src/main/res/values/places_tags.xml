@@ -137,7 +137,6 @@
         <item>[VN]|Vietnam, Asia</item>
         <item>[WS]|Samoa, Polynesia, Pacific Ocean, Oceania</item>
         <item>[YE]|Yemen, Red Sea*, Indian Ocean*, Arabian Sea*, Gulf of Aden*, Asia</item>
-        <item>[ZA]|South Africa, Atlantic Ocean*, Indian Ocean*, Africa</item>
         <item>[ZM]|Zambia, Africa</item>
         <item>[ZW]|Zimbabwe, Africa</item>
     </string-array>
@@ -546,6 +545,7 @@
         <item>[RU-CU]|Chuvashia</item>
         <item>[RU-SA]|Sakha</item>
         <item>[RU-TA]|Tatarstan</item>
+        <item>[RU-MUR]|Murmansk</item>
     </string-array>
 
     <string-array name="place_tags_SY">
@@ -637,6 +637,19 @@
         <item>[VE-N]|Monagas, Caribbean Sea*</item>
         <item>[VE-R]|Sucre, Caribbean Sea*</item>
         <item>[VE-V]|Zulia, Caribbean Sea*</item>
+    </string-array>
+
+    <string-array name="place_tags_ZA">
+        <item>[ZA]|South Africa, Atlantic Ocean*, Indian Ocean*, Africa</item>
+        <item>[ZA-EC]|Eastern Cape</item>
+        <item>[ZA-FS]|Free State</item>
+        <item>[ZA-GP]|Gauteng</item>
+        <item>[ZA-KZN]|Kwazulu-Natal</item>
+        <item>[ZA-LP]|Limpopo</item>
+        <item>[ZA-MP]|Mpumalanga</item>
+        <item>[ZA-NC]|Northern Cape</item>
+        <item>[ZA-NW]|North West</item>
+        <item>[ZA-WC]|Western Cape</item>
     </string-array>
 
 </resources>
