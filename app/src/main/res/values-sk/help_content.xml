@@ -1,42 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="help_alarms_bedtime"><![CDATA["\n           [Icon Bedtime] Režim „Čas na spanie“ môžete použiť na naplánovanie funkcie <b>Nerušiť</b> počas spánku.<br>\n<br>\n[Icon Reminder] Zobraziť upozornenie s pripomienkou pred časom na spanie.<br>\n[Icon Alarm] Naplánujte si budík na nasledujúce ráno.<br><br>\n    "]]></string>
-    <string name="help_alarms_edit"><![CDATA["\n          [Icon Back] na zrušenie bez uloženia zmien.<br>\n[Icon Save] na uloženie a [Icon Done] na uloženie a aktiváciu.<br>\n[Icon Cancel] na uloženie a deaktiváciu.<br>\n[Icon Delete] na zrušenie a odstránenie.<br>\n<br>\n[Icon Offset] sa zobrazí, ak je naplánovaný čas posunutý pred alebo za čas udalosti.\n    "]]></string>
-    <string name="help_appearance_allowresize"><![CDATA["\n      <big>Striedanie rozložení na vyplnenie dostupného priestoru</big><br><br>\n<i><b>[povolené]</b></i> Widget bude prepínať medzi rozloženiami v závislosti od dostupného priestoru.<br><br>\n<i><b>[vypnuté]</b></i> Widget si pri zmene veľkosti zachová svoje pôvodné rozloženie. Túto možnosť použite spolu s možnosťou „<i>zmenšiť text a ikony</i>“ pre mimoriadne veľké widgety.<br>\n    "]]></string>
-    <string name="help_appearance_widgetlayout"><![CDATA["\n      Tento widget bol vytvorený s <b>%1$s</b> <em>začiatočné rozloženie</em>.<br/></br/>\n    "]]></string>
-    <string name="help_appearance_title"><![CDATA["\n        Podporované sú nasledujúce náhrady názvov:<br>\n<br>\n<b>Všetky widgety:</b> <br>\n* <b>%d</b> pre dátum (napr. 12. február) <br>\n* <b>%dd</b> pre deň (skrátený) (napr. Po) <br>\n* <b>%dD</b> pre deň (rozšírený) (napr. pondelok) <br>\n* <b>%dY</b> pre rok (napr. 2018) <br>\n* <b>%dt</b> pre čas (poslednej aktualizácie) <br>\n* <b>%dT</b> pre čas so sekundami (poslednej aktualizácie) <br>\n* <b>%dm</b> pre milisekundy (poslednej aktualizácie) <br>\n<br>\n* <b>%loc</b> pre názov (napr. Phoenix) <br>\n* <b>%lat</b> pre zemepisnú šírku <br>\n* <b>%lon</b> pre dĺžku <br>\n* <b>%lel</b> pre nadmorskú výšku (napr. 385 metrov) <br>\n<br>\n* <b>%s</b> pre zdroj údajov (napr. sunrisesunsetlib) <br>\n* <b>%t</b> pre časové pásmo (id) (napr. US/Arizona) <br>\n* <b>%id</b> pre appWidgetID <br>\n<br>\n<b>Widgety dátumu:</b> <br>\n* <b>%M</b> pre režim (napr. gregoriánsky) <br>\n<br>\n<b>Widgety pre slnko:</b> <br>\n* <b>%m</b> pre režim (skrátený) (napr. občiansky) <br>\n* <b>%M</b> pre režim (dlhý) (napr. občiansky súmrak) <br>\n* <b>%o</b> pre poradie (napr. predchádzajúci/nasledujúci, dnes) <br>\n<br>\n<b>Widgety pre Mesiac:</b> <br>\n* <b>%i</b> pre osvetlenie Mesiaca (napr. 25 %) <br>\n* <b>%M</b> pre fázu Mesiaca (napr. dorastajúci mesiac) <br>\n* <b>%o</b> pre poradie (napr. predchádzajúce/ďalšie, dnes)) <br>\n<br>\n<b>Widgety slnovratov:</b> <br>\n* <b>%m</b> pre režim (krátky) (napr. slnovrat) <br>\n* <b>%M</b> pre režim (dlhý) (napr. zimný slnovrat) <br>\n* <b>%o</b> pre poradie (napr. najbližšia udalosť, nadchádzajúca udalosť) <br>\n    "]]></string>
+    <string name="help_alarms_bedtime"><![CDATA[
+            [Icon Bedtime] Režim „Čas na spanie“ môžete použiť na naplánovanie funkcie <b>Nerušiť</b> počas spánku.<br/>
+            <br/>
+            [Icon Reminder] Zobraziť upozornenie s pripomienkou pred časom na spanie.<br/>
+            [Icon Alarm] Naplánujte si budík na nasledujúce ráno.<br/><br/>
+    ]]></string>
+    <string name="help_alarms_edit"><![CDATA[
+            [Icon Back] na zrušenie bez uloženia zmien.<br/>
+            [Icon Save] na uloženie a [Icon Done] na uloženie a aktiváciu.<br/>
+            [Icon Cancel] na uloženie a deaktiváciu.<br/>
+            [Icon Delete] na zrušenie a odstránenie.<br/><br/>
+            [Icon Offset] sa zobrazí, ak je naplánovaný čas posunutý pred alebo za čas udalosti.
+    ]]></string>
+    <string name="help_appearance_allowresize"><![CDATA[
+            <big>Striedanie rozložení na vyplnenie dostupného priestoru</big><br/><br/>
+            <i><b>[povolené]</b></i> Widget bude prepínať medzi rozloženiami v závislosti od dostupného priestoru.<br/><br/>
+            <i><b>[vypnuté]</b></i> Widget si pri zmene veľkosti zachová svoje pôvodné rozloženie. Túto možnosť použite spolu s možnosťou „<i>zmenšiť text a ikony</i>“ pre mimoriadne veľké widgety.<br/>
+    ]]></string>
+    <string name="help_appearance_widgetlayout"><![CDATA[
+            Tento widget bol vytvorený s <b>%1$s</b> <em>začiatočné rozloženie</em>.<br/></br/>
+    ]]></string>
+    <string name="help_appearance_title"><![CDATA[
+            Podporované sú nasledujúce náhrady názvov:<br/><br/>
+            <b>Všetky widgety:</b> <br/>
+            * <b>%d</b> pre dátum (napr. 12. február) <br/>
+            * <b>%dd</b> pre deň (skrátený) (napr. Po) <br/>
+            * <b>%dD</b> pre deň (rozšírený) (napr. pondelok) <br/>
+            * <b>%dY</b> pre rok (napr. 2018) <br/>
+            * <b>%dt</b> pre čas (poslednej aktualizácie) <br/>
+            * <b>%dT</b> pre čas so sekundami (poslednej aktualizácie) <br/>
+            * <b>%dm</b> pre milisekundy (poslednej aktualizácie) <br/><br/>
+            * <b>%loc</b> pre názov (napr. Phoenix) <br/>
+            * <b>%lat</b> pre zemepisnú šírku <br/>
+            * <b>%lon</b> pre dĺžku <br/>
+            * <b>%lel</b> pre nadmorskú výšku (napr. 385 metrov) <br/><br/>
+            * <b>%s</b> pre zdroj údajov (napr. sunrisesunsetlib) <br/>
+            * <b>%t</b> pre časové pásmo (id) (napr. US/Arizona) <br/>
+            * <b>%id</b> pre appWidgetID <br/><br/>
+            <b>Widgety dátumu:</b> <br/>
+            * <b>%M</b> pre režim (napr. gregoriánsky) <br/><br/>
+            <b>Widgety pre slnko:</b> <br/>
+            * <b>%m</b> pre režim (skrátený) (napr. občiansky) <br/>
+            * <b>%M</b> pre režim (dlhý) (napr. občiansky súmrak) <br/>
+            * <b>%o</b> pre poradie (napr. predchádzajúci/nasledujúci, dnes) <br/><br/>
+            <b>Widgety pre Mesiac:</b> <br/>
+            * <b>%i</b> pre osvetlenie Mesiaca (napr. 25 %) <br/>
+            * <b>%M</b> pre fázu Mesiaca (napr. dorastajúci mesiac) <br/>
+            * <b>%o</b> pre poradie (napr. predchádzajúce/ďalšie, dnes)) <br/><br/>
+            <b>Widgety slnovratov:</b> <br/>
+            * <b>%m</b> pre režim (krátky) (napr. slnovrat) <br/>
+            * <b>%M</b> pre režim (dlhý) (napr. zimný slnovrat) <br/>
+            * <b>%o</b> pre poradie (napr. najbližšia udalosť, nadchádzajúca udalosť) <br/>
+    ]]></string>
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> nesmie byť „optimalizované“, aby sa dosiahli najlepšie výsledky.</string>
     <string name="help_battery_optimization_aggressive">Toto je zariadenie <xliff:g example="Samsung" id="manufacturer">%s</xliff:g>, ktoré môže na správne fungovanie vyžadovať dodatočné nastavenie.</string>
     <string name="help_restricted_bucket">Aplikácia bola zaradená do kategórie zriedkavých alebo obmedzených aplikácií v pohotovostnom režime. Je možné, že budíky nebudú fungovať spoľahlivo.</string>
-    <string name="help_calendar"><![CDATA["Pridávanie udalostí do aplikácie Kalendár (fázy Mesiaca, slnovraty a rovnodennosti).<br>\n<br>\n<u><b><font color=\"#ff9900\">Integrácia s Kalendárom bola vo verzii v0.10.0 odstránená.</font></b></u><br>\n<br>\nTáto funkcia je teraz k dispozícii ako <a href=\"moreInfoLink\">samostatná aplikácia</a>.\n    "]]></string>
+    <string name="help_calendar"><![CDATA[
+        Pridávanie udalostí do aplikácie Kalendár (fázy Mesiaca, slnovraty a rovnodennosti).<br/><br/>
+        <u><b><font color=\"#ff9900\">Integrácia s Kalendárom bola vo verzii v0.10.0 odstránená.</font></b></u><br/><br/>
+        Táto funkcia je teraz k dispozícii ako <a href=\"moreInfoLink\">samostatná aplikácia</a>.
+    ]]></string>
     <string name="help_datasources"><![CDATA[
-
         Suntimes používa knižnice tretích strán na vykonávanie astronomických výpočtov.<br/>
-<br/>
-Nastavenie <b>zdroj údajov</b> umožňuje výber medzi rôznymi knižnicami (alebo medzi rôznymi algoritmami, ktoré tieto knižnice ponúkajú). Predvolené nastavenie je <b>time4a-time4j</b>.<br/>
-<br/>
-Toto nastavenie ovplyvňuje rýchlosť a presnosť výpočtov a môže obmedziť dostupnosť niektorých funkcií. <br/>
-<br/>
-Ďalšie informácie o dostupných možnostiach alebo o rozšírení aplikácie na podporu iných knižníc nájdete v online nápovede.
-]]></string>
-    <string name="help_eventlist"><![CDATA[[Icon OK] Vyberte vlastnú udalosť.\n[Icon Add] Pridať, [Icon Edit] upraviť alebo [Icon Delete] odstráť vlastné udalosti.\n\nVlastné udalosti sa môžu zobrazovať v aplikácii, prostredníctvom widgetov na domovskej obrazovke alebo sa môžu použiť na naplánovanie budíkov a upozornení.\n[Icon View] Označené udalosti sa zobrazujú v aplikácii.]]></string>
-    <string name="help_general_calendarFormatPattern"><![CDATA["\n          <b>Formát dátumu:</b> Šablóna formátu dátumu.<br>\n<br>Dostupné prvky sa môžu líšiť v závislosti od kalendára, zvyčajne však zahŕňajú:<br>\n<br>\n<b>E</b> : deň v týždni <br>\n<b>d</b> : deň v mesiaci <br>\n<b>D</b> : deň v roku <br>\n<b>F</b> : pracovný deň v mesiaci <br>\n<b>M</b> : mesiac v roku <br>\n<b>y</b> : rok éry <br>\n<b>G</b> : éra <br>\n<br>\n    "]]></string>
-    <string name="help_general_moondialog"><![CDATA[[Icon Rising] východ mesiaca \u0020 \u0020 \u0020 \u0020 [Icon Noon] lunárny poludník \n\n[Icon Setting] západ mesiaca \u0020 \u0020 \u0020 \u0020 [Icon Midnight] lunárna polnoc \n\nZdieľať [Icon Share] skopíruje text do schránky.]]></string>
-    <string name="help_general_timeMode2_1"><![CDATA["\n          <b>Zimno-jarný priesečný deň:</b> Stred medzi zimným slnovratom a jarnou rovnodennosťou; <em>február</em> [severná pologuľa] alebo <em>august</em> [južná pologuľa].<br><br>\n\n          <b>Jarno-letný priesečný deň:</b> Stred medzi jarnou rovnodennosťou a letným slnovratom; <em>máj</em> [severná pologuľa] alebo <em>november</em> [južná pologuľa].<br><br>\n\n          <b>Letno-jesenný priesečný deň:</b> Stred medzi letným slnovratom a jesennou rovnodennosťou; <em>august</em> [severná pologuľa] alebo <em>február</em> [južná pologuľa].<br><br>\n\n          <b>Jeseňo-zimný priesečný deň:</b> Stred medzi jesennou rovnodennosťou a zimným slnovratom; <em>november</em> [severná pologuľa] alebo <em>máj</em> [južná pologuľa].<br>\n    "]]></string>
-    <string name="help_general_dst"><![CDATA["\n          [Icon DST] sa zobrazuje, ak sa na aktuálny čas vzťahuje <b>letný čas</b> alebo ak bol čas upravený podľa podobného pravidla.<br><br>\n    "]]></string>
-    <string name="help_general_actualTime"><![CDATA["\n          <b>Aktuálny čas:</b> Približný čas východu a západu slnka.<br>\n    "]]></string>
-    <string name="help_general_twilight"><![CDATA["\n          <b>Časy východu</b> označujú začiatok každého obdobia súmraku (<b>úsvit</b>) a <b>Časy západu</b> označujú ich koniec (<b>súmrak</b>).<br><br>\n          <b>Občiansky súmrak:</b> Slnko je menej ako 6 stupňov pod obzorom. Sú viditeľné najjasnejšie hviezdy. Je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br><br>\n          <b>Nautický súmrak:</b> Slnko je 6 až 12 stupňov pod obzorom. Obrysy objektov a obzor sú čoraz menej zreteľné. Nie je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br><br>\n          <b>Astronomický súmrak:</b> Slnko je 12 až 18 stupňov pod obzorom. Takmer nočná tma.<br><br>\n          <b>Noc:</b> Slnko je viac ako 18 stupňov pod obzorom. Viditeľné sú aj najslabšie hviezdy.<br><br>\n    "]]></string>
-    <string name="help_general_twilight_more"><![CDATA["\n          <b>Biela noc:</b> Slnko neklesne viac ako 6 stupňov pod obzor. Celú noc je dostatočné osvetlenie na väčšinu aktivít pod šírym nebom.<br><br>\n<b>Polnočný súmrak:</b> Slnko neklesne viac ako 18 stupňov pod obzor. Celú noc panuje súmrak a obloha sa nikdy úplne nezotmie.<br><br>\n<b>Polnočné slnko:</b> Slnko nezapadá pod obzor (24 hodín denného svetla). Tomuto javu sa tiež hovorí <b>polárny deň</b>.<br><br>\n<b>Polárna noc:</b> Slnko nevychádza nad obzor (24 hodín tmy).<br><br>\n    "]]></string>
-    <string name="help_general_riseSetOrder"><![CDATA["\n          <b>Dnes:</b> Časy východu a západu slnka pre dnešný deň.<br><br>\n<b>Predchádzajúce / Nasledujúce:</b> Čas predchádzajúcej udalosti a nasledujúcej udalosti.<br>\n    "]]></string>
-    <string name="help_general_timeMode2"><![CDATA["\n          b&gt;Jarná rovnodennosť: Začiatok astronomickej jari; <em>marec</em> [severná pologuľa] alebo <em>september</em> [južná pologuľa]. Marcová rovnodennosť sa tiež nazýva <em>severná rovnodennosť</em>.<br><br>\n<b>Letný slnovrat:</b> Začiatok astronomického leta; <em>jún</em> [severná pologuľa] alebo <em>december</em> [južná pologuľa]. Júnový slnovrat sa tiež nazýva <em>severný slnovrat</em>.<br><br>\n<b>Jesenná rovnodennosť:</b> Začiatok astronomickej jesene; <em>september</em> [severná pologuľa] alebo <em>marec</em> [južná pologuľa]. Septembrová rovnodennosť sa tiež nazýva <em>južná rovnodennosť</em>.<br><br>\n<b>Zimný slnovrat:</b> Začiatok astronomickej zimy; <em>december</em> [severná pologuľa] alebo <em>jún</em> [južná pologuľa]. Decembrový slnovrat sa tiež nazýva <em>južný slnovrat</em>.<br>\n    "]]></string>
-    <string name="help_general_tropicalyear"><![CDATA["\n          <b>Tropický rok:</b> Úplný cyklus ročných období. Dĺžka <em>tropického roka</em> sa meria od jednej <em>marcovej rovnodennosti</em> po ďalšiu. V priemere trvá <em>~365,24 dní</em>, pričom jeho presná dĺžka sa každý rok mení (až o 30 minút).<br>\n    "]]></string>
-    <string name="help_general_solartime"><![CDATA["\n          <b>Zdanlivý slnečný čas:</b> Čas podľa slnečných hodín. Čas stanovený sledovaním pohybu viditeľného Slnka vzhľadom na danú dĺžku a šírku.\n<br><br>\n          Pohyb zdanlivého Slnka nie je konštantný. Mení sa v závislosti od ročného obdobia v dôsledku sklonu ekliptiky a excentricity obežnej dráhy Zeme.\nDĺžka každého zdanlivého slnečného dňa, meraná od jedného poludnia do druhého, môže byť o niečo dlhšia alebo kratšia ako 24 hodín (až o 30 s).\nTieto malé odchýlky sa s každým dňom kumulujú (a v priebehu roka sa vyrovnávajú).\n\n<br><br>\n\n <b>Miestny stredný čas:</b> Čas na hodinách. Čas určený na základe polohy stredného Slnka vzhľadom na danú dĺžku.\n\n<br><br>\nPohyb stredného Slnka zohľadňuje sklon a excentricitu a je rovnomerný.\nDĺžka každého stredného slnečného dňa je presne 24 hodín.<br><br>\n\n<b>Rovnica času (EOT):</b> Rozdiel medzi miestnym stredným časom a zdanlivým slnečným časom.\n\nIde o kumulatívnu odchýlku zdanlivého slnečného dňa.\n\n<br><br>\nZdanlivý slnečný čas sa môže od miestneho stredného času líšiť až o 16 minút v závislosti od ročného obdobia.\n\n<br><br>\n<i>Táto aplikácia používa algoritmus na výpočet rovnice času (a odvodenie zdanlivého slnečného času).\nVaša poloha sa používa na určenie miestneho stredného času.</i>\n\n          <br><br>\n\n    "]]></string>
-    <string name="help_general_daylength"><![CDATA["\n        <b>Dĺžka dňa:</b> Časový úsek medzi východom a západom slnka.<br><br>\n<b>Čas s dostatočným osvetlením:</b> Časový úsek medzi ranným a večerným občianskym súmrakom.<br>\n    "]]></string>
-    <string name="help_general_moonillum"><![CDATA["\n        <b>Osvetlenie Mesiaca:</b> Na hlavnej stránke sa zobrazuje osvetlenie Mesiaca v čase lunárneho poludnia, zatiaľ čo v dialógovom okne Mesiaca sa zobrazuje aktuálne osvetlenie Mesiaca.<br>\n    "]]></string>
-    <string name="help_general_goldhour"><![CDATA["\n        <b>Zlatá hodina:</b> Slnko sa nachádza 6 stupňov nad alebo pod obzorom. Ráno začína zlatá hodina s občianskym súmrakom a končí krátko po východe slnka. Večer začína zlatá hodina krátko pred západom slnka a končí s občianskym súmrakom.<br>\n    "]]></string>
-    <string name="help_general_bluehour"><![CDATA["\n        <b>Modrá hodina:</b> Slnko sa nachádza v uhle od 8 stupňov do 4 stupňov pod obzorom. Začiatok a koniec modrej hodiny spadá do obdobia medzi nautickým a občianskym súmrakom.<br>\n    "]]></string>
-    <string name="help_widgetlist"><![CDATA["\n          Ak chcete <b>pridať</b> alebo <b>odstrániť</b> widget, musíte prejsť na domovskú obrazovku.<br><br>\nAk chcete <b>prekonfigurovať</b> existujúci widget, môžete si vybrať z nasledujúceho zoznamu.<br>\n    "]]></string>
+        <br/>
+        Nastavenie <b>zdroj údajov</b> umožňuje výber medzi rôznymi knižnicami (alebo medzi rôznymi algoritmami, ktoré tieto knižnice ponúkajú). Predvolené nastavenie je <b>time4a-time4j</b>.<br/>
+        <br/>
+        Toto nastavenie ovplyvňuje rýchlosť a presnosť výpočtov a môže obmedziť dostupnosť niektorých funkcií. <br/>
+        <br/>
+        Ďalšie informácie o dostupných možnostiach alebo o rozšírení aplikácie na podporu iných knižníc nájdete v online nápovede.
+    ]]></string>
+    <string name="help_eventlist"><![CDATA[
+        [Icon OK] Vyberte vlastnú udalosť.\n
+        [Icon Add] Pridať, [Icon Edit] upraviť alebo [Icon Delete] odstráť vlastné udalosti.\n\n
+        Vlastné udalosti sa môžu zobrazovať v aplikácii, prostredníctvom widgetov na domovskej obrazovke alebo sa môžu použiť na naplánovanie budíkov a upozornení.\n
+        [Icon View] Označené udalosti sa zobrazujú v aplikácii.
+    ]]></string>
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+        <b>Formát dátumu:</b> Šablóna formátu dátumu.<br/><br/>
+        Dostupné prvky sa môžu líšiť v závislosti od kalendára, zvyčajne však zahŕňajú:<br/><br/>
+        <b>E</b> : deň v týždni <br/>
+        <b>d</b> : deň v mesiaci <br/>
+        <b>D</b> : deň v roku <br/>
+        <b>F</b> : pracovný deň v mesiaci <br/>
+        <b>M</b> : mesiac v roku <br/>
+        <b>y</b> : rok éry <br/>
+        <b>G</b> : éra <br/><br/>
+    ]]></string>
+    <string name="help_general_moondialog"><![CDATA[
+        \n[Icon Rising] východ mesiaca \t\t[Icon Noon] lunárny poludník
+        \n[Icon Setting] západ mesiaca \t\t[Icon Midnight] lunárna polnoc
+        \n\nZdieľať [Icon Share] skopíruje text do schránky.
+    ]]></string>
+    <string name="help_general_timeMode2_1"><![CDATA[
+        <b>Zimno-jarný priesečný deň:</b> Stred medzi zimným slnovratom a jarnou rovnodennosťou; <em>február</em> [severná pologuľa] alebo <em>august</em> [južná pologuľa].<br/><br/>
+        <b>Jarno-letný priesečný deň:</b> Stred medzi jarnou rovnodennosťou a letným slnovratom; <em>máj</em> [severná pologuľa] alebo <em>november</em> [južná pologuľa].<br/><br/>
+        <b>Letno-jesenný priesečný deň:</b> Stred medzi letným slnovratom a jesennou rovnodennosťou; <em>august</em> [severná pologuľa] alebo <em>február</em> [južná pologuľa].<br/><br/>
+        <b>Jeseňo-zimný priesečný deň:</b> Stred medzi jesennou rovnodennosťou a zimným slnovratom; <em>november</em> [severná pologuľa] alebo <em>máj</em> [južná pologuľa].<br/>
+    ]]></string>
+    <string name="help_general_dst"><![CDATA[
+        [Icon DST] sa zobrazuje, ak sa na aktuálny čas vzťahuje <b>letný čas</b> alebo ak bol čas upravený podľa podobného pravidla.<br/><br/>
+    ]]></string>
+    <string name="help_general_actualTime"><![CDATA[
+        <b>Aktuálny čas:</b> Približný čas východu a západu slnka.<br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+        <b>Časy východu</b> označujú začiatok každého obdobia súmraku (<b>úsvit</b>) a <b>Časy západu</b> označujú ich koniec (<b>súmrak</b>).<br/><br/>
+        <b>Občiansky súmrak:</b> Slnko je menej ako 6 stupňov pod obzorom. Sú viditeľné najjasnejšie hviezdy. Je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br/><br/>
+        <b>Nautický súmrak:</b> Slnko je 6 až 12 stupňov pod obzorom. Obrysy objektov a obzor sú čoraz menej zreteľné. Nie je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br/><br/>
+        <b>Astronomický súmrak:</b> Slnko je 12 až 18 stupňov pod obzorom. Takmer nočná tma.<br/><br/>
+        <b>Noc:</b> Slnko je viac ako 18 stupňov pod obzorom. Viditeľné sú aj najslabšie hviezdy.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight_more"><![CDATA[
+        <b>Biela noc:</b> Slnko neklesne viac ako 6 stupňov pod obzor. Celú noc je dostatočné osvetlenie na väčšinu aktivít pod šírym nebom.<br/><br/>
+        <b>Polnočný súmrak:</b> Slnko neklesne viac ako 18 stupňov pod obzor. Celú noc panuje súmrak a obloha sa nikdy úplne nezotmie.<br/><br/>
+        <b>Polnočné slnko:</b> Slnko nezapadá pod obzor (24 hodín denného svetla). Tomuto javu sa tiež hovorí <b>polárny deň</b>.<br/><br/>
+        <b>Polárna noc:</b> Slnko nevychádza nad obzor (24 hodín tmy).<br/><br/>
+    ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+        <b>Dnes:</b> Časy východu a západu slnka pre dnešný deň.<br/><br/>
+        <b>Predchádzajúce / Nasledujúce:</b> Čas predchádzajúcej udalosti a nasledujúcej udalosti.<br/>
+    ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+        <b>Jarná rovnodennosť:</b> Začiatok astronomickej jari; <em>marec</em> [severná pologuľa] alebo <em>september</em> [južná pologuľa]. Marcová rovnodennosť sa tiež nazýva <em>severná rovnodennosť</em>.<br/><br/>
+        <b>Letný slnovrat:</b> Začiatok astronomického leta; <em>jún</em> [severná pologuľa] alebo <em>december</em> [južná pologuľa]. Júnový slnovrat sa tiež nazýva <em>severný slnovrat</em>.<br/><br/>
+        <b>Jesenná rovnodennosť:</b> Začiatok astronomickej jesene; <em>september</em> [severná pologuľa] alebo <em>marec</em> [južná pologuľa]. Septembrová rovnodennosť sa tiež nazýva <em>južná rovnodennosť</em>.<br/><br/>
+        <b>Zimný slnovrat:</b> Začiatok astronomickej zimy; <em>december</em> [severná pologuľa] alebo <em>jún</em> [južná pologuľa]. Decembrový slnovrat sa tiež nazýva <em>južný slnovrat</em>.<br/>
+    ]]></string>
+    <string name="help_general_tropicalyear"><![CDATA[
+        <b>Tropický rok:</b> Úplný cyklus ročných období. Dĺžka <em>tropického roka</em> sa meria od jednej <em>marcovej rovnodennosti</em> po ďalšiu. V priemere trvá <em>~365,24 dní</em>, pričom jeho presná dĺžka sa každý rok mení (až o 30 minút).<br/>
+    ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+        <b>Zdanlivý slnečný čas:</b> Čas podľa slnečných hodín. Čas stanovený sledovaním pohybu viditeľného Slnka vzhľadom na danú dĺžku a šírku.<br/><br/>
+        Pohyb zdanlivého Slnka nie je konštantný. Mení sa v závislosti od ročného obdobia v dôsledku sklonu ekliptiky a excentricity obežnej dráhy Zeme.<br/>
+        Dĺžka každého zdanlivého slnečného dňa, meraná od jedného poludnia do druhého, môže byť o niečo dlhšia alebo kratšia ako 24 hodín (až o 30 s).<br/>
+        Tieto malé odchýlky sa s každým dňom kumulujú (a v priebehu roka sa vyrovnávajú).<br/><br/>
+        <b>Miestny stredný čas:</b> Čas na hodinách. Čas určený na základe polohy stredného Slnka vzhľadom na danú dĺžku.<br/><br/>
+        Pohyb stredného Slnka zohľadňuje sklon a excentricitu a je rovnomerný.<br/>
+        Dĺžka každého stredného slnečného dňa je presne 24 hodín.<br/><br/>
+        <b>Rovnica času (EOT):</b> Rozdiel medzi miestnym stredným časom a zdanlivým slnečným časom.<br/><br/>
+        Ide o kumulatívnu odchýlku zdanlivého slnečného dňa.<br/><br/>
+        Zdanlivý slnečný čas sa môže od miestneho stredného času líšiť až o 16 minút v závislosti od ročného obdobia.<br/><br/>
+        <i>Táto aplikácia používa algoritmus na výpočet rovnice času (a odvodenie zdanlivého slnečného času).<br/>
+        Vaša poloha sa používa na určenie miestneho stredného času.</i><br/><br/>
+    ]]></string>
+    <string name="help_general_daylength"><![CDATA[
+        <b>Dĺžka dňa:</b> Časový úsek medzi východom a západom slnka.<br/><br/>
+        <b>Čas s dostatočným osvetlením:</b> Časový úsek medzi ranným a večerným občianskym súmrakom.<br/>
+    ]]></string>
+    <string name="help_general_moonillum"><![CDATA[
+        <b>Osvetlenie Mesiaca:</b> Na hlavnej stránke sa zobrazuje osvetlenie Mesiaca v čase lunárneho poludnia, zatiaľ čo v dialógovom okne Mesiaca sa zobrazuje aktuálne osvetlenie Mesiaca.<br/>
+    ]]></string>
+    <string name="help_general_goldhour"><![CDATA[
+        <b>Zlatá hodina:</b> Slnko sa nachádza 6 stupňov nad alebo pod obzorom. Ráno začína zlatá hodina s občianskym súmrakom a končí krátko po východe slnka. Večer začína zlatá hodina krátko pred západom slnka a končí s občianskym súmrakom.<br/>
+    ]]></string>
+    <string name="help_general_bluehour"><![CDATA[
+        <b>Modrá hodina:</b> Slnko sa nachádza v uhle od 8 stupňov do 4 stupňov pod obzorom. Začiatok a koniec modrej hodiny spadá do obdobia medzi nautickým a občianskym súmrakom.<br/>
+    ]]></string>
+    <string name="help_widgetlist"><![CDATA[
+        Ak chcete <b>pridať</b> alebo <b>odstrániť</b> widget, musíte prejsť na domovskú obrazovku.<br/><br/>
+        Ak chcete <b>prekonfigurovať</b> existujúci widget, môžete si vybrať z nasledujúceho zoznamu.<br/>
+    ]]></string>
     <string name="help_themelist">[Icon Add] Pridajte novú tému alebo [Icon Copy] skopírujte z existujúcej témy.\n\n [Icon Edit] Upravte alebo [Icon Delete] odstráňte témy.\nPredvolené témy [Icon Default] nie je možné upravovať.</string>
-    <string name="help_worldmap_background"><xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">\n%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">\n%3$s</xliff:g>)\n \n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>\n \nPre dosiahnutie najlepších výsledkov vyberte obrázok, ktorý spĺňa tieto vlastnosti.</string>
-    <string name="help_action_launch"><![CDATA["\n        Všetky polia sú nepovinné (hodnoty môžu zostať prázdne v prípade <em>implicit intent</em>).\n<br>\n<br>\n<b>Akcia:</b> Reťazec akcie.<br><small>napr. <em>android.intent.action.VIEW</em></small>\n<br>\n<br>\n<b>Balík:</b> Názov balíka.<br><small>napr. <em>app.package.name</em></small>\n<br>\n<br>\n<b>Trieda:</b> Plne kvalifikovaný názov triedy. <br><small>napr. <em>app.package.name.MainActivity</em></small>\n<br>\n<br>\n<b>Dáta:</b> URI, ktoré obsahuje alebo odkazuje na priložené dáta. Podporuje <em>%s</em>ubstitutions. <small>napr. <em>geo:%lat,%lon</em></small>\n<br>\n<br>\nb&gt;MIME: Typ MIME priložených údajov.\n<br>\n<br>\n<b>Extras:</b> Reťazec oddelený znakmi <em>&amp;</em>, obsahujúci dodatočné hodnoty. Podporuje substitúcie <em>%s</em>.<br><br>Hodnoty môžu byť typu <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> alebo reťazec. <small>napr. <em>key1=value1 &amp; int=1 &amp; long=1L &amp; double=1D &amp; float=1F &amp; bool=true &amp; etc=%dm</em></small>\n    "]]></string>
+    <string name="help_worldmap_background"><xliff:g example="Azimuthal Equidistant" id="projectionName">%1$s</xliff:g> (<xliff:g example="0" id="centerLatitude">\n%2$s</xliff:g>, <xliff:g example="0" id="centerLongitude">\n%3$s</xliff:g>)\n \n<xliff:g example="+proj4=eqd .." id="proj4String">%4$s</xliff:g>\n\nPre dosiahnutie najlepších výsledkov vyberte obrázok, ktorý spĺňa tieto vlastnosti.</string>
+    <string name="help_action_launch"><![CDATA[
+        Všetky polia sú nepovinné (hodnoty môžu zostať prázdne v prípade <em>implicit intent</em>).<br/><br/>
+        <b>Akcia:</b> Reťazec akcie.<br/>
+        <small>napr. <em>android.intent.action.VIEW</em></small><br/><br/>
+        <b>Balík:</b> Názov balíka.<br/>
+        <small>napr. <em>app.package.name</em></small><br/><br/>
+        <b>Trieda:</b> Plne kvalifikovaný názov triedy. <br/>
+        <small>napr. <em>app.package.name.MainActivity</em></small><br/><br/>
+        <b>Dáta:</b> URI, ktoré obsahuje alebo odkazuje na priložené dáta. Podporuje <em>%s</em>ubstitutions. <small>napr. <em>geo:%lat,%lon</em></small><br/><br/>
+        <b>MIME:</b> Typ MIME priložených údajov.<br/><br/>
+        <b>Extras:</b> Reťazec oddelený znakmi <em>&amp;</em>, obsahujúci dodatočné hodnoty. Podporuje substitúcie <em>%s</em>.<br/><br/>
+        Hodnoty môžu byť typu <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> alebo reťazec. <small>napr. <em>key1=value1 &amp; int=1 &amp; long=1L &amp; double=1D &amp; float=1F &amp; bool=true &amp; etc=%dm</em></small>
+    ]]></string>
 </resources>
