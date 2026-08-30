@@ -10,7 +10,6 @@
     <!-- button (contentDescription) -->
     <string name="action_avgLocation">Priemerná poloha</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="action_mapLocation">Mapa</string>
     <string name="action_mapLocation_chooser">Zobraziť polohu pomocou</string>
     <string name="action_mapLocation_chooser_noapp">Nepodarilo sa nájsť mapovú aplikáciu!</string>
@@ -26,7 +25,6 @@
     <string name="action_import">Import</string>
     <string name="action_info">Viac informácií</string>
     <string name="action_sort">Zoradiť</string>
-    <!-- TODO -->
     <string name="action_sortBy">Zoradiť podľa</string>
     <string name="action_sunDialog">Poloha Slnka</string>
     <string name="action_equinoxDialog">Slnovrat / Rovnodennosť</string>
@@ -39,40 +37,29 @@
     <string name="action_lineGraph">Graf nadmorskej výšky</string>
     <string name="action_seek">Hľadať</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekDawn">Hľadaj úsvit</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekDusk">Hľadaj súmrak</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekNoon">Hľadaj poludnie</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekShadowLength">Zistiť dĺžku tieňa</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekTime">Vyhľadať čas</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_time">Čas</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_date">Dátum</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekDate">Vyhľadať dátum</string>
     <!-- checkbox label -->
-    <!-- TODO -->
     <string name="action_seekAltitude">Vyhľadajte nadmorskú výšku</string>
     <!-- checkbox label -->
     <string name="action_search">Vyhľadávanie</string>
     <!-- button (contentDescription) -->
     <string name="action_deselect">Vymazať výber</string>
     <string name="action_checkNone">Žiadny</string>
-    <!-- TODO -->
     <string name="action_checkAll">Všetko</string>
-    <!-- TODO -->
     <string name="action_moon">Mesiac</string>
     <string name="action_help">Pomoc</string>
     <string name="action_onlineHelp">Online pomoc</string>
@@ -83,7 +70,6 @@
     <string name="action_about">O nás</string>
     <string name="action_colors">Farby</string>
     <string name="action_preview">Náhľad</string>
-    <!-- TODO -->
     <string name="action_expandMore">Viac</string>
     <!-- contentDescription -->
     <string name="action_expandLess">Menej</string>
@@ -183,7 +169,7 @@
     <string name="delta_day_shorter">kratší</string>
     <string name="delta_day_longer">dlhší</string>
     <string name="delta_day_same">rovnakej dĺžky</string>
-    <!-- TODO -->
+
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
                   4 hr
@@ -236,7 +222,6 @@
     <string name="until_sunrise">východ slnka</string>
     <string name="until_noon">slnečné poludnie</string>
     <string name="until_midnight">slnečná polnoc</string>
-    <!-- TODO -->
     <string name="until_sunset">západ slnka</string>
     <string name="untilEnd_civilTwilight">občiansky súmrak</string>
     <string name="untilEnd_nauticalTwilight">nautický súmrak</string>
@@ -252,10 +237,8 @@
     <!-- Table -->
     <string name="table_header_dawn">Úsvit</string>
     <!-- table title -->
-    <!-- TODO -->
     <string name="table_header_dusk">Súmrak</string>
     <!-- table title -->
-    <!-- TODO -->
     <string name="table_header_sunrise">Východ slnka</string>
     <!-- contentDescription -->
     <string name="table_header_sunrise_short">Východ slnka</string>
@@ -428,12 +411,9 @@
     <!-- pref summary -->
     <string name="settings_bugreport">Hlásenie chýb</string>
     <!-- group title -->
-    <!-- TODO -->
     <string name="settings_crashreport_title">@string/crash_dialog_title</string>
     <string name="settings_crashreport_summary">Chyby aplikácie budú hlásené tu.\nNič na hlásenie.</string>
-    <!-- TODO -->
     <string name="settings_crashreport_summary1">Bola vytvorená správa o zlyhaní \n%2$s.</string>
-    <!-- TODO -->
     <!-- Widget Setting: appearance -->
     <string name="settings_widgetlayout">Rozloženie</string>
     <!-- group title -->
@@ -459,7 +439,6 @@
     <!-- spinner label -->
     <string name="settings_appearance_fontfamily">Písmo:</string>
     <!-- spinner label -->
-    <!-- TODO -->
     <string name="settings_appearance_allowResize">Zmeňte rozloženie tak, aby sa vyplnil voľný priestor</string>
     <!-- checkbox label -->
     <string name="settings_appearance_scaleText">Zmeniť veľkosť textu a ikon</string>
@@ -505,10 +484,8 @@
     <!-- setting -->
     <string name="timeMode_midnight_short">Polnoc</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="timeMode_midnight">Slnečná polnoc</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="timeMode_official_short">Skutočný</string>
     <!-- setting -->
     <string name="timeMode_official">Skutočný čas</string>
@@ -545,16 +522,12 @@
     <!-- label -->
     <string name="timeMode_polarnight">Polárna noc</string>
     <!-- a label (not an actual timeMode setting) -->
-    <!-- TODO -->
     <string name="timeMode_midnightsun">Polnočné slnko</string>
     <!-- a label (not an actual timeMode setting) -->
-    <!-- TODO -->
     <string name="timeMode_midnighttwilight">Polnočný súmrak</string>
     <!-- a label (not an actual timeMode setting) -->
-    <!-- TODO -->
     <string name="timeMode_midnighttwilight_whitenight">Biela noc</string>
     <!-- a label (not an actual timeMode setting) -->
-    <!-- TODO -->
     <string name="timeMode_equinox_vernal">Jarná rovnodennosť</string>
     <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Rovnodennosť</string>
@@ -635,10 +608,8 @@
     <!-- label -->
     <string name="timeMode_moon_noon">Mesačné poludnie</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="timeMode_moon_midnight">Mesačná polnoc</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="timeMode_moon_super">Supermesiac</string>
     <!-- label -->
     <string name="timeMode_moon_micro">Mikromesiac</string>
@@ -729,20 +700,15 @@
     <!-- setting -->
     <string name="widgetMode_sunPosMap_simplerectangular">Základná mapa</string>
     <!-- setting -->
-    <!-- TODO: "Basic" to "Basic Map" -->
     <string name="widgetMode_sunPosMap_simplemercator">Mercatorovo zobrazenie</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simplevandergrinten">Van der Grintenova projekcia</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simplesinusoidal">Mercatorova rovnoplošná projekcia</string>
     <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->
     <!-- setting -->
-    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simplemollweide">Mollweideova projekcia</string>
     <!-- setting -->
-    <!-- TODO -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polarárny [sever]</string>
     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polárny [juh]</string>
@@ -754,12 +720,9 @@
     <string name="worldmap_projection_equirectangular">Obdĺžniková ekvidištančná</string>
     <string name="worldmap_projection_equiazimuthal">Azimutálna ekvidištančná</string>
     <string name="worldmap_projection_mercator">Mercatorovo zobrazenie</string>
-    <!-- TODO -->
     <string name="worldmap_projection_vandergrinten">Van der Grintenova projekcia</string>
-    <!-- TODO -->
     <string name="worldmap_projection_sinusoidal">Mercatorova rovnoplošná projekcia</string>
     <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->
-    <!-- TODO -->
     <string name="widgetMode1x1_moonriseset">Východ &amp; západ Mesiaca</string>
     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Fáza Mesiaca &amp; osvetlenie</string>
@@ -799,7 +762,6 @@
     <!-- setting -->
     <string name="actionMode_launchActivity">Vykonaj akciu</string>
     <!-- setting -->
-    <!-- TODO: update -->
     <string name="actionMode_flipToNextItem">Preklopiť zobrazenie</string>
     <!-- setting -->
     <string name="actions_launchType_activity">Aktivita</string>
@@ -853,7 +815,7 @@
     <!-- checkbox text -->
     <string name="location_label_comment">Komentár</string>
     <!-- edittext hint -->
-    <!-- TODO -->
+
     <!-- Widget Setting: timezone -->
     <string name="settings_timezoneMode_standard">Časový štandard</string>
     <!-- setting -->
@@ -1057,7 +1019,6 @@
     <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark1">Tmavý (Holo)</string>
     <!-- default widget theme name -->
-    <!-- TODO: update -->
     <string name="themes_widgetThemes_dark_transparent">Priehľadný (svetlý)</string>
     <!-- default widget theme name -->
     <string name="themes_widgetThemes_dark_translucent">Tmavý [T]</string>
@@ -1080,7 +1041,6 @@
     <!-- default widget theme name -->
     <string name="themes_widgetThemes_light1">Svetlý (Holo)</string>
     <!-- default widget theme name -->
-    <!-- TODO: update -->
     <string name="themes_widgetThemes_light_md2">Svetlý (MD2)</string>
     <!-- default widget theme name -->
     <string name="themes_widgetThemes_light_md2_translucent">Svetlý (MD2) [T]</string>
@@ -1106,10 +1066,8 @@
     <!-- error hint (display text is empty) -->
     <string name="themes_edittheme_error_textsize_min">Veľkosť musí byť &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>
     <!-- error hint (size is smaller than min) -->
-    <!-- TODO: drop "an integer"  -->
     <string name="themes_edittheme_error_textsize_max">Veľkosť musí byť &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>
     <!-- error hint (size is larger than max) -->
-    <!-- TODO: drop "an integer" -->
     <string name="themes_edittheme_flag_default">predvolené</string>
     <!-- content description -->
     <string name="themes_deletetheme_dialog_title">Odstrániť motív</string>
@@ -1132,22 +1090,16 @@
     <!-- spinner label -->
     <string name="themes_configLabel_themeBackground_light">Svetlý (Holo)</string>
     <!-- light background -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_light_monet">Svetlý (Monet)</string>
     <!-- light material background-->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_light_monet_t">Svetlý (Monet) (T)</string>
     <!-- light material background-->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_dark">Tmavý (Holo)</string>
     <!-- dark background -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_dark_monet">Tmavý (Monet)</string>
     <!-- dark material background -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_dark_monet_t">Tmavý (Monet) (T)</string>
     <!-- dark material background -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeBackground_trans">Priehľadný</string>
     <!-- transparent background -->
     <string name="themes_configLabel_themeBackground_color">Farba</string>
@@ -1236,13 +1188,10 @@
     <!-- color label -->
     <string name="themes_configLabel_themeColorGraphMidnightText">Polnoc (text)</string>
     <!-- color label -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeColorGraphMidnightFill">Polnoc (vyplň)</string>
     <!-- color label -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeColorGraphMidnightStroke">Polnoc (obrys)</string>
     <!-- color label -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeColorGraphMoonFill">Mesiac (výplň)</string>
     <!-- color label -->
     <string name="themes_configLabel_themeColorGraphMoonStroke">Mesiac (obrys)</string>
@@ -1307,16 +1256,12 @@
     <!-- edit hint -->
     <string name="themes_configHint_themePadding_left">vľavo</string>
     <!-- edit hint -->
-    <!-- TODO -->
     <string name="themes_configHint_themePadding_top">hore</string>
     <!-- edit hint -->
-    <!-- TODO -->
     <string name="themes_configHint_themePadding_right">vpravo</string>
     <!-- edit hint -->
-    <!-- TODO -->
     <string name="themes_configHint_themePadding_bottom">dole</string>
     <!-- edit hint -->
-    <!-- TODO -->
     <string name="themes_configLabel_themeID">ID:</string>
     <!-- edit label -->
     <string name="themes_configHint_themeID">ID motívu</string>
@@ -1379,23 +1324,14 @@
          CUSTOM EVENTS
     -->
     <string name="eventType_sun_elevation">Slnko (výška)</string>
-    <!-- TODO -->
     <string name="eventType_sun_shadowlength">Slnko (dĺžka tieňa)</string>
-    <!-- TODO -->
     <string name="eventType_date">Dátum</string>
-    <!-- TODO -->
     <string name="eventType_alias">Alias</string>
-    <!-- TODO -->
     <string name="eventType_default">Predvolené</string>
-    <!-- TODO -->
     <string name="eventType_default_sun">Slnko</string>
-    <!-- TODO -->
     <string name="eventType_default_moon">Mesiac</string>
-    <!-- TODO -->
     <string name="eventType_default_moonphases">Fázy Mesiaca</string>
-    <!-- TODO -->
     <string name="eventType_default_seasons">Ročné obdobia</string>
-    <!-- TODO -->
     <string name="eventlist_dialog_title">Vlastné udalosti</string>
     <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
     <string name="event_eventalias_title_tag_rising">↑</string>
@@ -1419,18 +1355,14 @@
     <string name="event_shadowratio_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_shadowratio_label_suggested">Pomer tieňa</string>
-    <!-- TODO -->
     <string name="event_daypercentevent_title_day">Percento dňa</string>
     <!-- (custom) day percent event title; e.g. "Day 25%" -->
-    <!-- TODO -->
     <string name="event_daypercentevent_title_night">Percento noci</string>
     <!-- (custom) night percent event title; e.g. "Night 25%" -->
-    <!-- TODO -->
     <string name="event_daypercentevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonevent_title">Mesiac</string>
     <!-- (custom) moon event title; e.g. "Moon 6°" -->
-    <!-- TODO -->
     <string name="event_moonevent_summary_format"><xliff:g id="title">%1$s</xliff:g> v <xliff:g id="angle">%2$s</xliff:g></string>
     <!-- (custom) moon event summary; e.g. "Moon 6°" -->
     <string name="event_moonevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> v <xliff:g id="angle">%3$s</xliff:g></string>
@@ -1438,14 +1370,11 @@
     <string name="event_moonevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonevent_label_suggested">Uhol Mesiaca</string>
-    <!-- TODO -->
     <string name="event_moonillumevent_title">Mesiac</string>
     <!-- (custom) moon illum event title; e.g. "Moon 25%" -->
-    <!-- TODO -->
     <string name="event_moonillumevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonillumevent_label_suggested">Osvetlenie Mesiaca</string>
-    <!-- TODO -->
     <string name="events_pref_manageEvents">Správa udalostí</string>
     <!-- settings activity / pref -->
     <string name="events_pref_manageEvents_summary">Pridať alebo odstrániť vlastné udalosti.</string>
@@ -1468,16 +1397,12 @@
     <!-- button (contentDescription) -->
     <string name="events_action_addEvent_shadowRatio">Pridať (pomer tieňa)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="events_action_addEvent_dayPercentEvent">Pridať (percento dňa/noci)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="events_action_addEvent_moonIllumEvent">Pridať (osvetlenie Mesiaca)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="events_action_addEvent_moonEvent">Pridať (výška Mesiaca)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="events_action_importEvents">@string/action_import</string>
     <!-- button (contentDescription) -->
     <string name="events_action_exportEvents">@string/action_export</string>
@@ -1513,29 +1438,19 @@
     <string name="events_editevent_dialog_label_suggested1">Dĺžka tieňa</string>
     <string name="events_editevent_dialog_factor">Tieňový faktor</string>
     <string name="events_editevent_dialog_factor_suffix">x</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_factor_absolute">absolútny</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_factor_relative">relatívny (poludnie)</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_factor_error">Je potrebný tieňový faktor!</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_height">Výška objektu</string>
     <string name="events_editevent_dialog_height_hint">1</string>
     <string name="events_editevent_dialog_height_suffix">m</string>
     <string name="events_editevent_dialog_height_error">Je potrebné zadať výšku objektu!</string>
     <string name="events_editevent_dialog_percent">Percent</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_percent_suffix">%</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_percent_error">Je potrebné zadať hodnotu v percentách!</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_label_suggested2">Vlastná udalosť</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_percent_ofday">počas dňa</string>
-    <!-- TODO -->
     <string name="events_editevent_dialog_percent_ofnight">v noci</string>
-    <!-- TODO -->
     <string name="events_delevent_dialog_msg">Naozaj chcete odstrániť %1$s (%2$s)?\n\nAlarmy, upozornenia alebo widgety používajúce túto udalosť nemusia už fungovať a mali by byť priradené znova.</string>
     <string name="events_delevent_dialog_ok">Odstrániť</string>
     <string name="events_delevent_dialog_cancel">@string/dialog_cancel</string>
@@ -1568,7 +1483,6 @@
     <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms">@string/action_sort</string>
     <!-- action button / menu item -->
-    <!-- TODO: updated -->
     <string name="alarms_action_sortAlarms_by_time">Čas budíka</string>
     <!-- action button / menu item -->
     <string name="alarms_action_sortAlarms_by_creation">Dátum vytvorenia</string>
@@ -1643,7 +1557,6 @@
     <!-- alarm type (setting) -->
     <string name="alarmMode_notification2">Oznámenie (trvalé)</string>
     <!-- alarm type (setting) -->
-    <!-- TODO -->
     <string name="alarmEdit_label_beforeAlertTray">Pred upozornením:</string>
     <!-- group title -->
     <string name="alarmEdit_label_scheduleTray">Rozvrh:</string>
@@ -1705,7 +1618,6 @@
     <string name="alarmsimport_toast_success">Importované <xliff:g id="alarmPlural">%s</xliff:g>.</string>
     <!-- toast msg -->
     <!-- uses alarmPlural -->
-    <!-- TODO: fix inconsistent translation -->
     <plurals name="alarmPlural">
         <item quantity="one">%d budík</item>
         <item quantity="few">%d budíkov</item>
@@ -1797,10 +1709,8 @@
     <!-- notification channel title -->
     <string name="notificationChannel_crashreport_title">Hlásenie zlyhania</string>
     <!-- notification channel title -->
-    <!-- TODO -->
     <string name="notificationChannel_crashreport_desc">Hlásenie zlyhania</string>
     <!-- notification channel title -->
-    <!-- TODO -->
     <string name="alarms_warning_autostart"><xliff:g id="warningTag">[w]</xliff:g>Automatické spustenie je vypnuté!\nPo reštarte nemusia upozornenia fungovať.</string>
     <!-- snackbar message (xiomi devices only) -->
     <string name="alarms_warning_notificationChannel">@string/alarms_warning_notifications</string>
@@ -1820,10 +1730,8 @@
     <string name="alarms_label_bootcompleted_action_confirm">Zmeniť čas všetkých budíkov a upozornení?</string>
     <string name="alarms_label_bootcompleted_action_message">Zmeniť času budíkov a upozornení...</string>
     <string name="alarms_label_bootcompleted_delay">Oneskorenie po spustení zariadenia</string>
-    <!-- TODO -->
     <string name="alarms_message_background_action">%s práve vykonáva úlohu na pozadí.</string>
     <!-- message shown whenever alarm foreground service does periodic work -->
-    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="alarms_label_silenceAfter">Stíšiť po</string>
     <string name="alarms_label_silenceAfter_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_timeoutAfter">Časový limit po</string>
@@ -1841,11 +1749,8 @@
     <string name="alarms_label_fadein">Postupne zvyšujte hlasitosť</string>
     <string name="alarms_label_fadein_disabled">Vypnuté</string>
     <string name="alarms_label_fadein_method">Postupne zvyšujte hlasitosť (krivka)</string>
-    <!-- TODO -->
     <string name="alarms_label_fadein_method_linear">Lineárne</string>
-    <!-- TODO -->
     <string name="alarms_label_fadein_method_cubic">Kubické</string>
-    <!-- TODO -->
     <string-array name="alarms_fadeInMethod_display">
         <!-- one-to-one with fadeInMethod_values -->
         <item>@string/alarms_label_fadein_method_linear</item>
@@ -1917,25 +1822,20 @@
     <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
     <string name="timedialog_action_addTime_hours">hodiny</string>
     <!-- + hours -->
-    <!-- TODO -->
     <string name="timedialog_action_addTime_minutes">minúty</string>
     <!-- + minutes -->
-    <!-- TODO -->
     <string name="timedialog_action_addTime_seconds">sekundy</string>
     <!-- + seconds -->
-    <!-- TODO -->
     <string name="timedialog_action_addTime_days">dni</string>
     <!-- + days -->
-    <!-- TODO -->
     <string name="alarms_label_alarmMisc">Rôzne</string>
     <string name="alarms_label_showlauncher">Ikona spúšťača</string>
     <string name="alarms_label_showlauncher_summary">Zobraziť ikonu budíka v zozname aplikácií.</string>
     <string name="alarms_label_poweroffalarms">Budík pri vypnutom zariadení</string>
     <string name="alarms_label_poweroffalarms_summary">Zapne zariadenie z vypnutého stavu.\nbalík: <xliff:g id="packageName">%s</xliff:g></string>
     <string name="alarms_label_clearall">Vymazať budíky</string>
-    <!-- TODO -->
     <string name="alarms_label_clearall_summary">Vymazať zoznam budíkov a oznámení.</string>
-    <!-- TODO -->
+
     <!--
       BEDTIME
     -->
@@ -2122,13 +2022,10 @@
     <!-- button (contentDescription) -->
     <string name="places_action_sortPlaces_by_label_ascending">Štítok (vzostupne)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="places_action_sortPlaces_by_label_descending">Štítok (v zostupe)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="places_action_sortPlaces_by_proximity">Najbližšie (posledné známe)</string>
     <!-- button (contentDescription) -->
-    <!-- TODO -->
     <string name="place_label_AN">Antarktída</string>
     <string name="place_label_AF">Afrika</string>
     <string name="place_label_AF_EG">Afrika (Egypt)</string>
@@ -2152,7 +2049,6 @@
     <string name="place_label_EU_GB" tools:common="true">Európa (Spojené kráľovstvo)</string>
     <string name="place_label_EU_GR" tools:common="true">Európa (Grécko)</string>
     <string name="place_label_EU_UK" tools:common="true">Európa (Spojené kráľovstvo)</string>
-    <!-- deprecated; use _GB instead; TODO: remove all references -->
     <string name="place_label_EU_IT" tools:common="true">Európa (Taliansko)</string>
     <string name="place_label_EU_NL" tools:common="true">Európa (Holandsko)</string>
     <string name="place_label_EU_NO" tools:common="true">Európa (Nórsko)</string>
@@ -2214,9 +2110,7 @@
     <string name="settings_ui_showmoon_phase_columns">Stĺpce (fázy)</string>
     <!-- App Setting: Moon Phase Date -->
     <string name="settings_ui_showMoonPhaseDate">Zobraziť dátumy fáz Mesiaca</string>
-    <!-- TODO -->
     <string name="settings_ui_showMoonPhaseDate_summary">Pri zobrazovaní fáz Mesiaca uveďte dátum.</string>
-    <!-- TODO -->
     <!-- App Setting: Show Cross Quarter days -->
     <string name="settings_ui_showCrossQuarter">Dni medzi štvrťrokmi</string>
     <string name="settings_ui_showCrossQuarter_summary">Zahrnúť medzibody medzi slnovratmi a rovnodennosťami.</string>
@@ -2225,9 +2119,7 @@
     <string name="settings_ui_showEquinox_summary">Zobraziť čas do najbližšieho slnovratu alebo rovnodennosti.</string>
     <!-- App Setting: Show Equinox / Solstice (date) -->
     <string name="settings_ui_showEquinoxDate">Dátum slnovratu</string>
-    <!-- TODO -->
     <string name="settings_ui_showEquinoxDate_summary">Pri zobrazovaní času do nasledujúceho slnovratu alebo rovnodennosti uveďte dátum.</string>
-    <!-- TODO -->
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="settings_ui_solsticeTrackingMode">Sledovanie slnovratu</string>
     <string name="settings_ui_solsticeTrackingMode_summary"><xliff:g example="Upcoming Event" id="modeName">%s</xliff:g></string>
@@ -2239,9 +2131,7 @@
     <string name="settings_ui_showmapbutton_summary">Zobraziť tlačidlo na paneli akcií, ktoré otvorí predvolenú mapovú aplikáciu.</string>
     <!-- App Setting: show location coordinates -->
     <string name="settings_ui_showcoordinates">Zobraziť súradnice</string>
-    <!-- TODO -->
     <string name="settings_ui_showcoordinates_summary">Zobraziť súradnice polohy na paneli akcií.</string>
-    <!-- TODO -->
     <!-- App Setting: emphasize field -->
     <string name="settings_ui_emphasizefield_text">Zvýrazniť pole</string>
     <!-- checkbox label -->
@@ -2271,7 +2161,6 @@
         <item>Žiadny</item>
         <item>Štítky</item>
         <!--<item>Labels</item>-->
-        <!-- TODO -->
         <item>Azimut</item>
     </string-array>
     <!-- App Setting: show golden hour -->
@@ -2282,17 +2171,13 @@
     <string name="themes_appThemes_lightTheme">Svetlý motív</string>
     <string name="themes_appThemes_darkTheme">Tmavý motív</string>
     <string name="themes_appThemes_nightMode">Svetlý motív / Tmavý motív (nočný režim)</string>
-    <!-- TODO -->
     <string name="themes_appThemes_systemDefault">Predvolené nastavenie systému</string>
     <string name="themes_appThemes_systemDefault1">Kontrast (predvolené systémom)</string>
     <string name="themes_appThemes_darkTheme1">Kontrast (tmavý)</string>
     <string name="themes_appThemes_lightTheme1">Kontrast (svetlý)</string>
     <string name="themes_appThemes_systemMonet">Material You (predvolené systémom)</string>
-    <!-- TODO -->
     <string name="themes_appThemes_darkMonet">Material You (tmavý)</string>
-    <!-- TODO -->
     <string name="themes_appThemes_lightMonet">Material You (svetlý)</string>
-    <!-- TODO -->
     <!-- App Setting: time format -->
     <string-array name="settings_timeFormatMode_display">
         <!-- one-to-one with timeFormatMode_values -->
@@ -2518,51 +2403,35 @@
     </string-array>
     <string name="location_label_lastRequest_flag">@string/location_label_gnss_log</string>
     <!-- pref title -->
-    <!-- TODO -->
     <string name="location_label_lastRequest">Posledná aktualizácia</string>
-    <!-- TODO -->
     <string name="location_label_lastRequest_noreport">Nič na nahlásenie.</string>
-    <!-- TODO -->
     <string name="location_label_lastRequest_report0"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> pred
     </string>
     <!-- e.g. 2025-09-06 8:37 PM, 2h ago -->
-    <!-- TODO -->
     <string name="location_label_lastRequest_report_success"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> ago
         \n\n<xliff:g id="provider">%3$s</xliff:g> ±<xliff:g id="accuracy">%4$s</xliff:g>m
         \nElapsed: <xliff:g id="elapsedTime">%5$s</xliff:g>
     </string>
     <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->
-    <!-- TODO -->
     <string name="location_label_lastRequest_report_failed"><xliff:g id="atTime">%1$s</xliff:g>
         \n~<xliff:g id="timeAgo">%2$s</xliff:g> pred (nenájdené)
         \nElapsed: <xliff:g id="elapsedTime">%3$s</xliff:g>
     </string>
     <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->
-    <!-- TODO -->
     <string name="location_label_gnss">GNSS</string>
-    <!-- TODO -->
     <string name="location_label_gnss_log">Záznam GNSS</string>
-    <!-- TODO -->
     <string name="location_label_gnss_almanac">Almanach</string>
-    <!-- TODO -->
     <string name="location_label_gnss_ephemeris">Efeméridy</string>
-    <!-- TODO -->
     <string name="location_label_gnss_used">Použité</string>
-    <!-- TODO -->
     <string name="location_label_gnss_signal">Signál</string>
-    <!-- TODO -->
     <string name="location_label_gnss_cnrFormat">%s db</string>
-    <!-- TODO -->
     <string name="location_label_gnss_agps">AGPS</string>
-    <!-- TODO -->
     <string name="location_label_gnss_agps_reload">Znova načítať údaje AGPS</string>
-    <!-- TODO -->
     <string name="location_label_gnss_agps_reload_warning">Na znovu načítanie údajov AGPS je potrebné sieťové pripojenie.\n\nPred pokračovaním skontrolujte pripojenie…</string>
-    <!-- TODO -->
     <string name="location_label_gnss_agps_delete">Odstrániť údaje AGPS</string>
-    <!-- TODO -->
+
     <!-- App Setting: calendars -->
     <string name="calendars_pref_title">Kalendáre</string>
     <!-- group title for "calendars" app setting -->
@@ -2571,7 +2440,7 @@
     <string name="location_pref_passiveMode">Pasívna poloha</string>
     <string name="location_pref_passiveMode_summary">Použije pasívnu polohu od poskytovateľa.</string>
     <string name="location_label_locationproviders">Poskytovatelia lokalizačných služieb</string>
-    <!-- TODO -->
+
     <!-- App Setting: locale mode -->
     <string name="locale_pref_title">Jazyk</string>
     <!-- group title -->
@@ -2693,7 +2562,6 @@
     <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_10m">× 10m</string>
     <!-- menu item; "x 10m"; increments of 10 minutes -->
-    <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">× 15m</string>
     <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">× 1d</string>
@@ -2707,7 +2575,7 @@
     <!-- button (contentDescription) -->
     <!-- export (share) -->
     <string name="worldmap_pickplace_title">@string/location_dialog_title</string>
-    <!-- TODO -->
+
     <!-- Dialog: Light Graph -->
     <string name="lightgraph_dialog_title">@string/action_lightGraphDialog</string>
     <string name="lightgraph_dialog_action_menu">@string/action_options</string>
@@ -2734,17 +2602,11 @@
     <string name="lightmap_graph_option_filledpath">Vyplnená krivka</string>
     <string name="lightmap_graph_option_moon">Zobraziť Mesiac</string>
     <string name="lightmap_graph_option_noon">Zobraziť poludnie</string>
-    <!-- TODO -->
     <string name="lightmap_graph_option_symbol">Symbol</string>
-    <!-- TODO -->
     <string name="lightmap_graph_option_symbol_circle">Kruh</string>
-    <!-- TODO -->
     <string name="lightmap_graph_option_symbol_dot">Bodka</string>
-    <!-- TODO -->
     <string name="lightmap_graph_option_symbol_cross">Kríž</string>
-    <!-- TODO -->
     <string name="lightmap_graph_option_symbol_line">Čiara</string>
-    <!-- TODO -->
     <string name="lightmap_seekAltitude_configHint">stupne</string>
     <string name="lightmap_seekAltitude_suffix">°∠</string>
     <string name="lightmap_seekAltitude_rising">@string/event_eventalias_title_tag_rising</string>
@@ -2765,14 +2627,12 @@
     <string name="schedalarm_label_notification_mode">Nastaviť upozornenie na</string>
     <string name="schedalarm_dialog_title">@string/action_setAlarm</string>
     <!-- may also be set to action_setNotification -->
-    <!-- TODO -->
     <string name="schedalarm_dialog_tab_event">Udalosť</string>
     <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Čas</string>
     <!-- tab text -->
     <string name="schedalarm_dialog_ok">Rozvrh</string>
     <!-- button text -->
-    <!-- TODO -->
     <string name="schedalarm_dialog_cancel">Zrušiť</string>
     <string name="schedalarm_dialog_error">Budík nebol nastavený…</string>
     <string name="schedalarm_dialog_error2">Budík sa nedá nastaviť…</string>
@@ -2967,7 +2827,6 @@
     <!-- gps_lastfix (current location mode) -->
     <string name="location_lastfix_title_set">Nastavená poloha</string>
     <!-- may appear as place name when location set by intent -->
-    <!-- TODO: changed from "Set Position" to "Configured Position" -->
     <string name="location_lastfix_title_cached">Predchádzajúca poloha</string>
     <!-- may appear as place name after location mode is changed away from 'current location'  -->
     <string name="location_lastfix_title_found">Posledná poloha</string>
@@ -3037,7 +2896,6 @@
     <string name="themesexport_dialog_message">Exportovanie motívov do súboru.</string>
     <!-- Dialog: Import / Export -->
     <string name="msg_export_success">Uložené do <xliff:g id="filepath">%s</xliff:g></string>
-    <!-- TODO: update -->
     <string name="msg_export_failure">Export do <xliff:g id="filepath">%s</xliff:g> sa nepodaril!</string>
     <string name="msg_export_to">Exportovať s</string>
     <!-- title displayed over "share action" chooser -->
@@ -3109,22 +2967,16 @@
     <!-- toast -->
     <!-- Dialog: Crash Report -->
     <string name="crash_dialog_title">Hlásenie zlyhania</string>
-    <!-- TODO -->
     <string name="crash_dialog_message">%s zlyhalo…</string>
-    <!-- TODO -->
     <string name="crash_dialog_message1"><![CDATA[
         Pomôžte vylepšiť túto aplikáciu tým, že nahlásite túto chybu: <br/><br/>
         <b>%1$s</b>
     ]]></string>
-    <!-- TODO -->
     <string name="crash_dialog_copy">Kopírovať správu</string>
-    <!-- TODO -->
     <string name="crash_dialog_view">Zobraziť správu</string>
-    <!-- TODO -->
     <string name="crash_dialog_clear">Vyčistiť</string>
-    <!-- TODO -->
     <string name="crash_dialog_cleared">Správa o havárii bola vymazaná.</string>
-    <!-- TODO -->
+
     <!-- Dialog: About -->
     <string name="app_name">Suntimes</string>
     <string name="app_shortdesc">Zobrazuje časy slnečného a mesačného svitu.</string>
@@ -3180,15 +3032,12 @@
     <string name="privacy_policy"><![CDATA[<b>Ochrana súkromia:</b><br/>Aplikácia Suntimes nezhromažďuje, neukladá ani neprenáša osobné údaje používateľov. Neobsahuje <b>žiadnu reklamu</b>, <b>žiadne analytické nástroje</b>, <b>žiadne sledovacie prvky</b> ani <b>žiadne zbytočné oprávnenia</b>. <br/><br/>Aplikácia sa konfiguruje na základe údajov o polohe. Tieto informácie (a ďalšie konfiguračné údaje používané aplikáciou) sa ukladajú lokálne a neopúšťajú zariadenie.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <!-- full statement (about dialog) -->
     <string name="privacy_permission_calculator_label">Integrovať ako doplnkovú aplikáciu</string>
-    <!-- TODO -->
     <string name="privacy_permission_calculator_desc">Povoľuje integráciu aplikácie so Suntimes ako doplnok. Aplikácia získa prístup ku konfiguračným údajom poskytovaným Suntimes (napríklad k súkromným údajom o polohe a ďalším nastaveniam) a bude mať povolený prístup k rozhraniam určeným na rozšírenie funkcionality Suntimes.</string>
-    <!-- TODO -->
     <string name="privacy_permission_dnd"><![CDATA[Suntimes potrebuje <b>prístup k funkcii „Nerušiť“</b>, aby mohol tieto nastavenia zmeniť pred spaním.]]></string>
     <string name="privacy_permission_location"><![CDATA[Aplikácia Suntimes využíva oprávnenie k <b>polohe</b>na určenie vašej aktuálnej zemepisnej dĺžky a šírky.<br/><br/>Toto oprávnenie je voliteľné; poloha sa štandardne nastavuje manuálne.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Aplikácia Suntimes využíva oprávnenia <b>externé úložisko</b> na zálohovanie/export údajov do súboru (napr. miesta, motívy).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Aplikácia Suntimes využíva oprávnenie na budíky <b>externé úložisko</b> na prehrávanie zvukov uložených na SD karte.<br/><br/>Toto oprávnenie je voliteľné; v prípade zamietnutia prístupu sa prehrá predvolený zvuk. Pre systémové zvuky (úložisko médií) nie je toto oprávnenie potrebné.]]></string>
     <string name="privacy_permission_notifications"><![CDATA[Aplikácia Suntimes potrebuje oprávnenia na <b>oznámenia</b> pre zobrazovanie budíkov a oznámení.]]></string>
-    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Požiadať o povolenia teraz?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorovať</string>
     <string name="privacy_permissiondialog_title">Oprávnenia</string>
