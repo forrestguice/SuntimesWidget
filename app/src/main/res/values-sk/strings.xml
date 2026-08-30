@@ -135,7 +135,6 @@
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField" tools:common="true"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Časové pásmo pre túto lokalitu môže byť nesprávne.</string>
     <!-- snackbar message -->
     <string name="timezoneWarningNote"><xliff:g id="tzID">%1$s</xliff:g> je <xliff:g id="timeSpan">%2$s</xliff:g> od miestneho stredného času (<xliff:g id="locationName">%3$s</xliff:g>).</string>
@@ -153,7 +152,6 @@
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
              where [date] is a dateString formatted by app using user's locale
     -->
-    <string name="card_dateField" tools:common="true"><xliff:g example="Today" id="dateDesc">%1$s</xliff:g>\n<xliff:g example="Jul 8, 2016" id="date">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="card_warning_date"><xliff:g id="warningTag">[w]</xliff:g> Dátum je nastavený na iný deň ako dnes.</string>
     <!-- snackbar message -->
     <string name="cardlabel_past_today">Minulosť</string>
@@ -173,13 +171,9 @@
     <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> využiteľného denného svetla</string>
     <!-- time between civil twilights; 12 hr 50m of usable light -->
-    <string name="length_twilight1" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g></string>
-    <string name="length_twilight1e_pos" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [+<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
-    <string name="length_twilight1e_neg" tools:common="true"><xliff:g example="10h 5m" id="timeSpan1">%1$s</xliff:g> [-<xliff:g example="+30s" id="timeSpan1">%2$s</xliff:g>]</string>
-    <string name="length_twilight2" tools:common="true"><xliff:g example="30m" id="timeSpan1">%1$s</xliff:g> | <xliff:g example="30m" id="timeSpan2">%2$s</xliff:g></string>
-    <string name="length_delimiter" tools:common="true">|</string>
+
     <string name="timeMode_tropical_year">Tropický rok</string>
-    <string name="length_tropical_year" tools:common="true"><xliff:g example="365d 5h 41m" id="timeSpan1">%1$s</xliff:g>\n<xliff:g example="365.24" id="fractionalDays">%2$s</xliff:g></string>
+
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
@@ -301,43 +295,7 @@
     <!-- no time / time does not occur -->
     <string name="time_loading">…</string>
     <!-- calculating / time is loading -->
-    <string name="time_format_12hr_veryshort" tools:common="true"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>
-    <!-- shortest 12hr time format; should omit am/pm -->
-    <string name="time_format_12hr_veryshort_withseconds" tools:common="true"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>
-    <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
-    <string name="time_format_24hr_veryshort" tools:common="true"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>
-    <!-- 24hr time format -->
-    <string name="time_format_24hr_veryshort_withseconds" tools:common="true"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>
-    <!-- 24hr time format (w/ seconds) -->
-    <string name="time_format_12hr_short" tools:common="true"><xliff:g id="hoursMinutes">%1$s</xliff:g> <xliff:g id="suffix">%2$s</xliff:g></string>
-    <string name="date_format_veryshort" tools:common="true"><xliff:g id="patternMonth">MMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>
-    <!-- MMM d ... e.g. Dec 3 -->
-    <string name="date_format_short" tools:common="true"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>
-    <!-- MMMM d ... e.g. December 3 -->
-    <string name="date_format_long" tools:common="true"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>
-    <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
-    <string name="datetime_format_short" tools:common="true"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>
-    <!-- shortDate, time ... e.g. December 3, 11:00 am -->
-    <string name="datetime_format_long" tools:common="true"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>
-    <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
-    <string name="datetime_format_verylong" tools:common="true"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>]</string>
-    <!-- datetime_format and timezone -->
-    <string name="datetime_format_verylong1" tools:common="true"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g example="UTC" id="tzID">%2$s</xliff:g>] [<xliff:g example="Future" id="suffix">%3$s</xliff:g>]</string>
-    <!-- datetime_format and timezone (+suffix) -->
-    <string name="dateyear_format_short" tools:common="true"><xliff:g id="patternYear">yyyy</xliff:g></string>
-    <!-- yyyy ... e.g. 2017 -->
-    <!--<string name="date_any">Any Date</string>-->
-    <!-- no particular date; unset date -->
-    <string name="format_share" tools:common="true"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>
-    <!-- location display formats -->
-    <string name="location_format_alt" tools:common="true"><xliff:g id="altitude">%1$s</xliff:g><xliff:g example="m" id="distanceUnit">%2$s</xliff:g></string>
-    <!-- altitude, e.g. 1600m -->
-    <string name="location_format_alttag" tools:common="true">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>
-    <!-- altitude as a tag, e.g. [1600m] -->
-    <string name="location_format_latlon" tools:common="true"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>
-    <!-- latitude, longitude -->
-    <string name="location_format_latlonalt" tools:common="true"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>
-    <!-- latitude, longitude [altitude] -->
+
     <!-- distances (meters, feet, etc) -->
     <string name="settings_lengthUnits_metric">Metrický</string>
     <string name="settings_lengthUnits_imperial">Imperialny</string>
@@ -346,8 +304,7 @@
         <item>@string/settings_lengthUnits_metric</item>
         <item>@string/settings_lengthUnits_imperial</item>
     </string-array>
-    <string name="units_format_short" tools:common="true">%1$s %2$s</string>
-    <!-- e.g. 6 ft -->
+
     <string name="units_feet">stopy</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
@@ -385,8 +342,7 @@
     -->
     <string name="tag_tagDefault">[predvolené]</string>
     <string name="tag_tagPlugin">[plugin]</string>
-    <string name="tag_prefSummaryTagged" tools:common="true"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g example="[default]" id="tag">%2$s</xliff:g></string>
-    <!-- label applied to ListPref items (e.g. defaults) -->
+
     <string name="tag_warning_contentDescription">Upozornenie!</string>
     <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
     <!-- WidgetConfig Activity -->
@@ -522,10 +478,7 @@
     <!-- checkbox label -->
     <string name="settings_appearance_titleText">Názov:</string>
     <!-- edittext label -->
-    <string name="settings_appearance_titleText_hint" tools:common="true">(%t %m %M %lat %lon)</string>
-    <!-- edittext hint -->
-    <string name="button_label_addSymbol" tools:common="true"> +</string>
-    <!-- "+", add symbol / simple buttons -->
+
     <!-- Setting: navigation -->
     <string name="settings_navigation">Navigácia</string>
     <!-- group title -->
@@ -918,12 +871,7 @@
     <!-- setting / custom timezone id -->
     <string name="time_apparent">Zdanlivý slnečný čas</string>
     <!-- setting / custom timezone id -->
-    <string name="settings_timezoneCustom_line1" tools:common="true"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>
-    <!-- selector item format (e.g. "US/Arizona" ) -->
-    <string name="settings_timezoneCustom_line2" tools:common="true">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
-    <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
-    <string name="settings_timezoneCustom_line2b" tools:common="true"><xliff:g example="US/Arizona" id="timezoneID">%2$s</xliff:g></string>
-    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
+
     <string name="settings_timezone">Časové pásmo</string>
     <!-- group title -->
     <string name="settings_timezone_mode">Režim:</string>
@@ -945,8 +893,7 @@
     <!-- setting -->
     <string name="settings_timeFormatMode">Formát času</string>
     <!-- preference label -->
-    <string name="settings_timeFormatMode_systemsummary" tools:common="true"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>
-    <!-- preference summary -->
+
     <!-- Widget Setting: calendar mode -->
     <string name="calendarMode_coptic">koptský</string>
     <string name="calendarMode_ethiopian">etiópsky</string>
@@ -1142,10 +1089,7 @@
     <!-- default widget theme name -->
     <string name="themes_widgetThemes_light_md3_translucent">Svetlý (Material) [T]</string>
     <!-- default widget theme name -->
-    <string name="themes_addtheme_custname" tools:common="true">motív_<xliff:g id="#">%1$s</xliff:g></string>
-    <!-- suggested new theme id -->
-    <string name="themes_addtheme_copyname" tools:common="true"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>
-    <!-- copied theme id -->
+
     <string name="themes_addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (kopírovať)</string>
     <!-- copied theme name (display string) -->
     <string name="themes_addtheme_toast_success">Pridané <xliff:g id="themeName">%1$s</xliff:g>.</string>
@@ -1212,12 +1156,10 @@
     <!-- color label -->
     <string name="themes_configLabel_themeColorTitle">Farba nadpisu</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorTitle" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
+
     <string name="themes_configLabel_themeColorText">Farba textu</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorText" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
+
     <string name="themes_configLabel_themeColorSpring">Jar</string>
     <!-- color label -->
     <string name="themes_configLabel_themeColorSummer">Leto</string>
@@ -1274,18 +1216,12 @@
     <!-- color label -->
     <string name="themes_configLabel_themeColorSunrise">Východ slnka</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorSunrise" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
     <string name="themes_configLabel_themeColorSunset_text">Západ slnka (text)</string>
     <!-- color label -->
     <string name="themes_configLabel_themeColorSunset">Západ slnka</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorSunset" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
     <string name="themes_configLabel_themeColorNoon">Poludnie</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorNoon" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
     <string name="themes_configLabel_themeColorGraphSunFill">Slnko (výplň)</string>
     <!-- color label -->
     <string name="themes_configLabel_themeColorGraphSunStroke">Slnko (obrys)</string>
@@ -1337,42 +1273,24 @@
     <!-- color label -->
     <string name="themes_configLabel_themeColorFill">Vyplniť</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorFill" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
-    <string name="themes_configLabel_themeColorBorder">Farba orámovania</string>
+        <string name="themes_configLabel_themeColorBorder">Farba orámovania</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorBorder" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
-    <string name="themes_configLabel_themeBorderWidthRiseSet">Šírka orámovania (východ/západ)</string>
+        <string name="themes_configLabel_themeBorderWidthRiseSet">Šírka orámovania (východ/západ)</string>
     <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthRiseSet" tools:common="true">2</string>
-    <!-- size hint -->
     <string name="themes_configLabel_themeBorderWidthNoon">Šírka orámovania (poludnie)</string>
     <!-- size label -->
-    <string name="themes_configHint_themeBorderWidthNoon" tools:common="true">3</string>
-    <!-- size hint -->
     <string name="themes_configLabel_themeColorSuffix">Prípona farby</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorSuffix" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
     <string name="themes_configLabel_themeColorTime">Farba textu 2</string>
     <!-- color label -->
-    <string name="themes_configHint_themeColorTime" tools:common="true">#FFFFFFFF</string>
-    <!-- color hint -->
     <string name="themes_configLabel_themeSizeTitle">Veľkosť nadpisu:</string>
     <!-- edit label -->
-    <string name="themes_configHint_themeSizeTitle" tools:common="true">14</string>
-    <!-- edit hint -->
     <string name="themes_configLabel_themeBoldTitle">Tučný</string>
     <!-- checkbox label -->
     <string name="themes_configLabel_themeSizeText">Veľkosť textu:</string>
     <!-- edit label -->
-    <string name="themes_configHint_themeSizeText" tools:common="true">10</string>
-    <!-- edit hint -->
     <string name="themes_configLabel_themeSizeTime">Veľkosť času:</string>
     <!-- edit label -->
-    <string name="themes_configHint_themeSizeTime" tools:common="true">12</string>
-    <!-- edit hint -->
     <string name="themes_configLabel_themeBoldTime">Tučný</string>
     <!-- checkbox label -->
     <string name="themes_configLabel_themeItalicTime">Kurzíva</string>
@@ -1383,8 +1301,6 @@
     <!-- checkbox label -->
     <string name="themes_configLabel_themeSizeSuffix">Veľkosť prípony:</string>
     <!-- edit label -->
-    <string name="themes_configHint_themeSizeSuffix" tools:common="true">8</string>
-    <!-- edit hint -->
     <string name="themes_configLabel_themePadding">Výplň:</string>
     <!-- edit label -->
     <string name="themes_configHint_themePadding">[vľavo, hore, vpravo, dole]</string>
@@ -1482,11 +1398,6 @@
     <!-- TODO -->
     <string name="eventlist_dialog_title">Vlastné udalosti</string>
     <string name="eventlist_emptyMsg">@string/events_action_manageEvents</string>
-    <string name="event_label_alarmitem" tools:common="true">%1$s\n%2$s</string>
-    <!-- alarm (custom) event chip; e.g. title \n summary -->
-    <string name="event_label_alarmitem_desc" tools:common="true">%1$s</string>
-    <string name="event_eventalias_title_format" tools:common="true"><xliff:g id="label">%1$s</xliff:g> <xliff:g id="tag">%2$s</xliff:g></string>
-    <!-- (custom) event title; e.g. "Custom [rising]" -->
     <string name="event_eventalias_title_tag_rising">↑</string>
     <string name="event_eventalias_title_tag_setting">↓</string>
     <string name="event_sunevent_title">Slnko</string>
@@ -1495,26 +1406,16 @@
     <!-- (custom) sun event title; e.g. "Sun 6°" -->
     <string name="event_sunevent_summary_format"><xliff:g id="title">%1$s</xliff:g> v <xliff:g id="angle">%2$s</xliff:g></string>
     <!-- (custom) sun event summary; e.g. "Sun 6°" -->
-    <string name="event_sunevent_title_format1" tools:common="true">%1$s %2$s %3$s</string>
-    <!-- (custom) sun event title; e.g. "5m before Sun 6°" -->
     <string name="event_sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> v <xliff:g id="angle">%3$s</xliff:g></string>
     <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->
     <string name="event_sunevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_shadowevent_title">Tieň</string>
     <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
-    <string name="event_shadowevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="objHeight">%2$s</xliff:g> : <xliff:g id="length">%3$s</xliff:g>)</string>
-    <!-- (custom) shadow event summary -->
-    <string name="event_shadowevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="objHeight">%3$s</xliff:g> : <xliff:g id="length">%4$s</xliff:g>)</string>
-    <!-- (custom) sun event summary; e.g. "5m before/after Shadow 6m" -->
     <string name="event_shadowevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_shadowratio_title">Pomer tieňa</string>
     <!-- (custom) shadow ratio event title; e.g. "Shadow Ratio x2" -->
-    <string name="event_shadowratio_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="factor">%2$s</xliff:g>x)</string>
-    <!-- (custom) shadow event summary -->
-    <string name="event_shadowratio_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="factor">%3$s</xliff:g>x)</string>
-    <!-- (custom) sun event summary; e.g. "5m before/after Shadow Ratio x1" -->
     <string name="event_shadowratio_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_shadowratio_label_suggested">Pomer tieňa</string>
@@ -1525,21 +1426,13 @@
     <string name="event_daypercentevent_title_night">Percento noci</string>
     <!-- (custom) night percent event title; e.g. "Night 25%" -->
     <!-- TODO -->
-    <string name="event_daypercentevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>
-    <!-- (custom) day percent event summary -->
-    <string name="event_daypercentevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>
-    <!-- (custom) sun event summary; e.g. "5m before/after Day Duration 25%" -->
     <string name="event_daypercentevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonevent_title">Mesiac</string>
     <!-- (custom) moon event title; e.g. "Moon 6°" -->
     <!-- TODO -->
-    <string name="event_moonevent_title_format" tools:common="true">%1$s %2$s</string>
-    <!-- (custom) moon event title; e.g. "Moon 6°" -->
     <string name="event_moonevent_summary_format"><xliff:g id="title">%1$s</xliff:g> v <xliff:g id="angle">%2$s</xliff:g></string>
     <!-- (custom) moon event summary; e.g. "Moon 6°" -->
-    <string name="event_moonevent_title_format1" tools:common="true">%1$s %2$s %3$s</string>
-    <!-- (custom) moon event title; e.g. "5m before Moon 6°" -->
     <string name="event_moonevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> v <xliff:g id="angle">%3$s</xliff:g></string>
     <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->
     <string name="event_moonevent_phrase_gender" tools:common="true">iné</string>
@@ -1549,10 +1442,6 @@
     <string name="event_moonillumevent_title">Mesiac</string>
     <!-- (custom) moon illum event title; e.g. "Moon 25%" -->
     <!-- TODO -->
-    <string name="event_moonillumevent_summary_format" tools:common="true"><xliff:g id="title">%1$s</xliff:g> (<xliff:g id="percent">%2$s</xliff:g>%%)</string>
-    <!-- (custom) moon illum event summary -->
-    <string name="event_moonillumevent_summary_format1" tools:common="true"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> (<xliff:g id="percent">%3$s</xliff:g>%%)</string>
-    <!-- (custom) moon illum summary; e.g. "5m before/after Moon (25%)" -->
     <string name="event_moonillumevent_phrase_gender" tools:common="true">iné</string>
     <!-- either 'other' or 'female' (SelectFormat api) -->
     <string name="event_moonillumevent_label_suggested">Osvetlenie Mesiaca</string>
@@ -1616,17 +1505,13 @@
     <string name="events_editevent_dialog_label_error">@string/actions_addaction_error_title</string>
     <string name="events_editevent_dialog_label_suggested">Vlastný uhol</string>
     <string name="events_editevent_dialog_angle">Uhol</string>
-    <string name="events_editevent_dialog_angle_hint" tools:common="true">-6</string>
     <string name="events_editevent_dialog_angle_suffix">°</string>
     <string name="events_editevent_dialog_angle_error">Je potrebný uhol!</string>
     <string name="events_editevent_dialog_length">Dĺžka tieňa</string>
-    <string name="events_editevent_dialog_length_hint" tools:common="true">6</string>
     <string name="events_editevent_dialog_length_suffix">m</string>
     <string name="events_editevent_dialog_length_error">Je potrebná dĺžka tieňa!</string>
     <string name="events_editevent_dialog_label_suggested1">Dĺžka tieňa</string>
     <string name="events_editevent_dialog_factor">Tieňový faktor</string>
-    <!-- TODO -->
-    <string name="events_editevent_dialog_factor_hint" tools:common="true">1</string>
     <string name="events_editevent_dialog_factor_suffix">x</string>
     <!-- TODO -->
     <string name="events_editevent_dialog_factor_absolute">absolútny</string>
@@ -1640,8 +1525,6 @@
     <string name="events_editevent_dialog_height_suffix">m</string>
     <string name="events_editevent_dialog_height_error">Je potrebné zadať výšku objektu!</string>
     <string name="events_editevent_dialog_percent">Percent</string>
-    <!-- TODO -->
-    <string name="events_editevent_dialog_percent_hint" tools:common="true">25</string>
     <!-- TODO -->
     <string name="events_editevent_dialog_percent_suffix">%</string>
     <!-- TODO -->
@@ -1740,8 +1623,6 @@
     <!-- notification action button -->
     <string name="alarmAction_timeout">Časový limit</string>
     <!-- notification action button -->
-    <string name="alarmAction_playingMsg" tools:common="true"><xliff:g id="label">%1$s</xliff:g></string>
-    <!-- toast message -->
     <string name="alarmAction_silencedMsg">Budík stíšený</string>
     <!-- toast message -->
     <string name="alarmAction_snoozeMsg">Odloženie budíka na <xliff:g id="alarm">%1$s</xliff:g></string>
@@ -1779,10 +1660,6 @@
     <!-- menu item; Select a "Ringtone" -->
     <string name="alarmOption_ringtone_file">Zvukový súbor</string>
     <!-- menu item; Select an "Audio File" -->
-    <string name="alarmOption_ringtone_label" tools:common="true"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>
-    <!-- ringtone label format -->
-    <string name="alarmOption_action_label" tools:common="true"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>
-    <!-- action label format -->
     <string name="alarmOption_solarevent_none">Čas podľa hodín</string>
     <!-- ringtone label (none) -->
     <string name="alarmOption_repeat">Opakovať</string>
@@ -1889,20 +1766,14 @@
     <string name="alarms_label_autostart">Automatické spustenie</string>
     <string name="alarms_label_autostart_on">Zapnuté</string>
     <string name="alarms_label_autostart_off">Vypnuté.\nPo reštarte nemusia budíky fungovať.</string>
-    <string name="alarms_label_autostart_summary" tools:common="true">%1$s</string>
-    <!-- "On", "Off" -->
     <string name="alarms_label_notifications">Oznámenia</string>
     <string name="alarms_label_notifications_on">Zapnuté</string>
     <string name="alarms_label_notifications_off">Vypnuté.\nUpozornenia sa nemusia zobrazovať správne.</string>
-    <string name="alarms_label_notifications_summary0" tools:common="true">%1$s</string>
-    <!-- "On", "Off" -->
     <string name="alarms_label_notifications_summary1">Na uzamknutej obrazovke: %1$s</string>
     <!-- "On lock screen: Off -->
     <string name="alarms_label_notifications_fullscreen">Oznámenia na celej obrazovke</string>
     <string name="alarms_label_notifications_fullscreen_on">Zapnuté</string>
     <string name="alarms_label_notifications_fullscreen_off">Vypnuté.\nJe možné, že sa upozornenia na uzamknutej obrazovke nezobrazia.</string>
-    <string name="alarms_label_notifications_fullscreen_summary0" tools:common="true">%1$s</string>
-    <!-- "On", "Off" -->
     <string name="alarms_label_notifications_fullscreen_summary1">Povolenie plnej obrazovky.</string>
     <string name="notificationChannel_alarms_title">@string/alarmMode_alarm</string>
     <!-- notification channel title -->
@@ -1950,8 +1821,6 @@
     <string name="alarms_label_bootcompleted_action_message">Zmeniť času budíkov a upozornení...</string>
     <string name="alarms_label_bootcompleted_delay">Oneskorenie po spustení zariadenia</string>
     <!-- TODO -->
-    <string name="alarms_label_bootcompleted_delay_summary" tools:common="true">%s</string>
-    <!-- TODO -->
     <string name="alarms_message_background_action">%s práve vykonáva úlohu na pozadí.</string>
     <!-- message shown whenever alarm foreground service does periodic work -->
     <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
@@ -1970,7 +1839,6 @@
     <string name="alarms_label_upcoming_summary"><xliff:g example="10 minutes" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_upcoming_checkbox">Zobraziť upozornenia na budík.</string>
     <string name="alarms_label_fadein">Postupne zvyšujte hlasitosť</string>
-    <string name="alarms_label_fadein_summary" tools:common="true"><xliff:g example="30 seconds" id="timePeriod">%s</xliff:g></string>
     <string name="alarms_label_fadein_disabled">Vypnuté</string>
     <string name="alarms_label_fadein_method">Postupne zvyšujte hlasitosť (krivka)</string>
     <!-- TODO -->
@@ -2007,7 +1875,6 @@
     <string name="alarmtile_dialogmsg_format0">Ďalší budík je nastavený na <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>
     <string name="alarmtile_dialogmsg_format1">Ďalší budík je nastavený na <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>
     <string name="alarms_label_hardwarebuttons">Hardvérové tlačidlá</string>
-    <string name="alarms_label_hardwarebuttons_summary" tools:common="true"><xliff:g example="Snooze" id="action">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">
         <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Zrušiť</item>
@@ -2162,17 +2029,6 @@
     <!--App Setting: WidgetList -->
     <string name="widgetList_label">Widgety</string>
     <!-- group title -->
-    <string name="widgetList_label_itemTitle" tools:common="true"><xliff:g id="widgetTitle">%s</xliff:g></string>
-    <string formatted="false" name="widgetList_label_itemTitlePattern" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string>
-    <!-- the pattern used when generating sun widget titles -->
-    <string formatted="false" name="widgetList_label_itemTitlePattern1" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string>
-    <!-- the pattern used when generating sun widget titles -->
-    <string formatted="false" name="widgetList_label_itemTitlePattern2" tools:common="true"><xliff:g id="titlePattern"><![CDATA[%M]]></xliff:g></string>
-    <!-- the pattern used when generating date widget titles -->
-    <string formatted="false" name="widgetList_label_itemTitlePattern3" tools:common="true">@string/app_name</string>
-    <!-- the pattern used when generating alarm widget titles -->
-    <string name="widgetList_label_itemSummaryPattern" tools:common="true"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="widgetList_label_itemSummaryPattern1" tools:common="true"><xliff:g id="widgetType">%1$s</xliff:g></string>
     <string name="widgetList_label_help_title">Pomoc</string>
     <!-- always the first item in the widgetList -->
     <string name="widgetlist_label_help_summary">Zobraziť nápovedu k widgetu</string>
@@ -2189,8 +2045,6 @@
     <string name="restorebackup_dialog_item_placeitems">Miesta</string>
     <string name="restorebackup_dialog_item_eventitems">Udalosti</string>
     <string name="restorebackup_dialog_item_actions">Akcie</string>
-    <string name="restorebackup_dialog_report_format" tools:common="true"><xliff:g id="item">%1$s</xliff:g></string>
-    <string name="restorebackup_dialog_report_format1" tools:common="true"><xliff:g id="item">%1$s</xliff:g> (<xliff:g id="item">%2$s</xliff:g>)</string>
     <string name="widgetlist_action_exportWidget">@string/action_export</string>
     <!-- button (contentDescription) -->
     <!-- export single widget config -->
@@ -2203,13 +2057,11 @@
     <string name="widgetimport_dialog_message">Importovanie nastavení widgetu zo súboru.</string>
     <string name="widgetimport_dialog_title1">Nastavenia sa našli,\nale sú určené pre iné widgety…</string>
     <string name="widgetimport_dialog_title2">Našlo sa viacero nastavení…</string>
-    <string name="widgetimport_dialog_item" tools:common="true"><xliff:g id="widgetClassName">%1$s</xliff:g></string>
     <string name="widgetimport_dialog_item_unknown">(neznámy)</string>
     <!-- shown as item when widgetClassName is missing -->
     <string name="widgetimport_dialog_item_restorebackup"><![CDATA[<b>Obnoviť zálohu</b>. Importované nastavenia sa zatiaľ uložia do vyrovnávacej pamäte a neskôr sa obnovia na požiadanie spúšťača.<br/>]]></string>
     <string name="widgetimport_dialog_item_bestguess"><![CDATA[<b>Najlepší odhad</b>. Importované nastavenia sa uplatnia na existujúce widgety podľa typu.<br/>]]></string>
     <string name="widgetimport_dialog_item_direct"><![CDATA[<b>Priamy import</b>. Importované nastavenia sa uplatnia priamo. Toto funguje správne len v prípade, že sa ID widgetov nezmenili.<br/>]]></string>
-    <string name="widgetimport_dialog_report_format" tools:common="true"><xliff:g id="WidgetClassName">%2$s</xliff:g> [<xliff:g id="appWidgetId">%1$s</xliff:g>]</string>
     <string name="widgetreset_dialog_message">Naozaj chcete obnoviť predvolené nastavenia?</string>
     <string name="alarmsimport_dialog_item_clear"><![CDATA[<b>Vymazať</b>. Pred importom zo zálohy sa vymažú všetky budíky.<br/>]]></string>
     <string name="alarmsimport_dialog_item_addall"><![CDATA[<b>Zachovať existujúce</b>. Existujúce budíky zostanú zachované (môže to viesť k duplicitám).<br/>]]></string>
@@ -2277,8 +2129,6 @@
     <string name="places_action_sortPlaces_by_proximity">Najbližšie (posledné známe)</string>
     <!-- button (contentDescription) -->
     <!-- TODO -->
-    <string name="place_item_label_format" tools:common="true">%1$s\n%2$s</string>
-    <string name="event_item_label_format" tools:common="true">%1$s %2$s</string>
     <string name="place_label_AN">Antarktída</string>
     <string name="place_label_AF">Afrika</string>
     <string name="place_label_AF_EG">Afrika (Egypt)</string>
@@ -2362,9 +2212,6 @@
     <string name="settings_ui_showmoon_noon_summary">Zobraziť mesačné poludnie a mesačnú polnoc ako súčasť dialógu Mesiac.</string>
     <!-- App Setting: Moon Phase Columns -->
     <string name="settings_ui_showmoon_phase_columns">Stĺpce (fázy)</string>
-    <string name="settings_ui_showmoon_phase_columns_2" tools:common="true">2</string>
-    <string name="settings_ui_showmoon_phase_columns_3" tools:common="true">3</string>
-    <string name="settings_ui_showmoon_phase_columns_4" tools:common="true">4</string>
     <!-- App Setting: Moon Phase Date -->
     <string name="settings_ui_showMoonPhaseDate">Zobraziť dátumy fáz Mesiaca</string>
     <!-- TODO -->
@@ -2418,7 +2265,7 @@
     <!-- checkbox label -->
     <string name="settings_ui_showheader_text">Zobraziť ikonu textu</string>
     <!-- checkbox label -->
-    <string name="settings_ui_showheader_text_summary" tools:common="true"><xliff:g example="Labels" id="modeName">%s</xliff:g></string>
+
     <string-array name="settings_headerText_display">
         <!-- one-to-one with headerText_values -->
         <item>Žiadny</item>
@@ -2455,7 +2302,6 @@
     </string-array>
     <!-- App Setting: text size -->
     <string name="textSize_pref_title">Veľkosť textu</string>
-    <string name="textSize_pref_summary" tools:common="true">%s</string>
     <string name="textSize_small">Malý</string>
     <string name="textSize_normal">Normálna</string>
     <string name="textSize_large">Veľká</string>
@@ -2695,8 +2541,6 @@
     </string>
     <!-- e.g. 2025-09-06 8:37 PM, 2h ago, GPS +-200m, Elapsed: 1m 30s -->
     <!-- TODO -->
-    <string name="location_label_num_satellites" tools:common="true">%1$s/%2$s</string>
-    <!-- TODO -->
     <string name="location_label_gnss">GNSS</string>
     <!-- TODO -->
     <string name="location_label_gnss_log">Záznam GNSS</string>
@@ -2710,10 +2554,6 @@
     <string name="location_label_gnss_signal">Signál</string>
     <!-- TODO -->
     <string name="location_label_gnss_cnrFormat">%s db</string>
-    <!-- TODO -->
-    <string name="location_label_gnss_positionFormat" tools:common="true">%1$s %2$s</string>
-    <!-- TODO -->
-    <string name="location_label_gnss_labelFormat" tools:common="true">%1$s %2$s</string>
     <!-- TODO -->
     <string name="location_label_gnss_agps">AGPS</string>
     <!-- TODO -->
@@ -2736,7 +2576,6 @@
     <string name="locale_pref_title">Jazyk</string>
     <!-- group title -->
     <string name="locale_pref_localeMode">Režim</string>
-    <string name="locale_pref_localeMode_summary" tools:common="true"><xliff:g example="System Locale" id="localeMode_display">%s</xliff:g></string>
     <string-array name="localeMode_display">
         <!-- one-to-one with localeMode_values -->
         <item>Systém</item>
@@ -2766,19 +2605,7 @@
         <item>Zjednodušená čínština</item>
         <item>Arabčina</item>
     </string-array>
-    <!-- position formats -->
-    <string name="format_degrees" tools:common="true"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>
-    <!-- e.g. 45° -->
-    <string name="format_elevation" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>
-    <!-- e.g. 45°∠ -->
-    <string name="format_declination" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>
-    <!-- e.g. 5° δ -->
-    <string name="format_rightascension" tools:common="true"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>
-    <!-- e.g. 5° α -->
-    <string name="format_direction" tools:common="true"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>
-    <!-- e.g. 180°S -->
-    <string name="format_distance" tools:common="true"><xliff:g example="6" id="value">%1$s</xliff:g> <xliff:g example="ft" id="units_short">%2$s</xliff:g></string>
-    <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+
     <!-- cardinal directions -->
     <string-array name="directions_short">
         <!-- one-to-one with directions_long -->
@@ -2931,8 +2758,6 @@
     <string name="moon_label_perigee">Perigeum</string>
     <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> osvetlený</string>
     <!-- used in 2x1 widget -->
-    <string name="moon_illumination_short" tools:common="true"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
-    <!-- used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> \@ <xliff:g example="11:55" id="illuminationTime">%2$s</xliff:g></string>
     <string name="moon_illumination_range"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g>–<xliff:g example="60%" id="illuminationPercent">%2$s</xliff:g></string>
     <!-- Dialog: Set Alarm -->
@@ -2954,8 +2779,6 @@
     <string name="schedalarm_dialog_note">o <xliff:g example="6h 30m" id="timetext">%s</xliff:g> odteraz.</string>
     <string name="schedalarm_dialog_note1">~<xliff:g example="6h 30m" id="timetext">%s</xliff:g> odteraz</string>
     <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> nenastáva.</string>
-    <string name="schedalarm_labelformat" tools:common="true"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g> (<xliff:g example="4/6/2018" id="shortDate">%2$s</xliff:g>)</string>
-    <string name="schedalarm_labelformat2" tools:common="true"><xliff:g example="sunrise" id="solarevents_short">%1$s</xliff:g></string>
     <string-array name="solarevents_short">
         <!-- one-to-one with solarevents_long -->
         <item>astronomický súmrak</item>
@@ -3240,16 +3063,10 @@
     <string name="color_dialog_suggest">Navrhnúť</string>
     <string name="color_dialog_recent">Najnovšie</string>
     <!-- recent color list label -->
-    <string name="color_dialog_tab1" tools:common="true">1</string>
-    <string name="color_dialog_tab2" tools:common="true">2</string>
-    <string name="color_dialog_tab3" tools:common="true">3</string>
-    <string name="color_dialog_tab4" tools:common="true">4</string>
     <string name="color_dialog_label_r">R</string>
     <string name="color_dialog_label_g">G</string>
     <string name="color_dialog_label_b">B</string>
     <string name="color_dialog_label_a">A</string>
-    <string name="color_dialog_hint_rgba" tools:common="true">0–255</string>
-    <string name="color_dialog_hint_hex" tools:common="true">#FFFFFF</string>
     <string name="colors_action_filterColors">Filter</string>
     <!-- checkbox label -->
     <string name="colors_action_addColors">Pridať</string>
@@ -3341,24 +3158,10 @@
     ]]></string>
     <string name="about_translations_field"><![CDATA[<b>Preklady do:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
-    <string name="about_authorListFormat_i" tools:common="true"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
-    <!-- e.g. "name1, name2, name3, ..." -->
     <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, a <xliff:g id="authorName">%2$s</xliff:g></string>
     <!-- e.g. "..., and nameN" -->
     <string name="about_libraries_field"><![CDATA[ <b>Knižnice:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="about_libraryCreditsFormat" tools:common="true"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
-    <string-array name="about_libraries" tools:common="true">
-        <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
-        <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
-        <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
-        <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
-        <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
-    </string-array>
     <string name="about_media_field"><![CDATA[ <b>Média:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
-    <string name="about_media_bluemarble" tools:common="true"><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></string>
-    <string-array name="about_media">
-        <item>@string/about_media_bluemarble</item>
-    </string-array>
     <string name="about_dialog_title">O aplikácii</string>
     <string name="about_dialog_credits">Poďakovania</string>
     <string name="about_dialog_privacy">Ochrana osobných údajov</string>
@@ -3372,21 +3175,6 @@
     <string name="welcome_pref_summary">Spustiť sprievodcu konfiguráciou pri prvom spustení.</string>
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Nápoveda</string>
-    <string name="help_general2" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g>
-    </string>
-    <string name="help_general3" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g>
-    </string>
-    <string name="help_general4" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
-        <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic2">%2$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
-        <xliff:g id="help_topic4">%4$s</xliff:g>
-    </string>
     <string name="privacy_policy0"><![CDATA[<b>Ochrana súkromia:</b><br/>Aplikácia Suntimes nezhromažďuje, neukladá ani neprenáša osobné údaje používateľov. Neobsahuje <b>žiadnu reklamu</b>, <b>žiadne analytické nástroje</b>, <b>žiadne sledovacie prvky</b> ani <b>žiadne zbytočné oprávnenia</b>.]]></string>
     <!-- brief statement (welcome dialog) -->
     <string name="privacy_policy"><![CDATA[<b>Ochrana súkromia:</b><br/>Aplikácia Suntimes nezhromažďuje, neukladá ani neprenáša osobné údaje používateľov. Neobsahuje <b>žiadnu reklamu</b>, <b>žiadne analytické nástroje</b>, <b>žiadne sledovacie prvky</b> ani <b>žiadne zbytočné oprávnenia</b>. <br/><br/>Aplikácia sa konfiguruje na základe údajov o polohe. Tieto informácie (a ďalšie konfiguračné údaje používané aplikáciou) sa ukladajú lokálne a neopúšťajú zariadenie.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
