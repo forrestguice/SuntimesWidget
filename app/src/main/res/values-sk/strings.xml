@@ -1344,36 +1344,30 @@
     <!-- (custom) sun event summary; e.g. "Sun 6°" -->
     <string name="event_sunevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> v <xliff:g id="angle">%3$s</xliff:g></string>
     <!-- (custom) sun event summary; e.g. "5m before/after Sun 6°" -->
-    <string name="event_sunevent_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_shadowevent_title">Tieň</string>
     <!-- (custom) shadow length event title; e.g. "Shadow 6m" -->
-    <string name="event_shadowevent_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_shadowratio_title">Pomer tieňa</string>
     <!-- (custom) shadow ratio event title; e.g. "Shadow Ratio x2" -->
-    <string name="event_shadowratio_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_shadowratio_label_suggested">Pomer tieňa</string>
     <string name="event_daypercentevent_title_day">Percento dňa</string>
     <!-- (custom) day percent event title; e.g. "Day 25%" -->
     <string name="event_daypercentevent_title_night">Percento noci</string>
     <!-- (custom) night percent event title; e.g. "Night 25%" -->
-    <string name="event_daypercentevent_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_moonevent_title">Mesiac</string>
     <!-- (custom) moon event title; e.g. "Moon 6°" -->
     <string name="event_moonevent_summary_format"><xliff:g id="title">%1$s</xliff:g> v <xliff:g id="angle">%2$s</xliff:g></string>
     <!-- (custom) moon event summary; e.g. "Moon 6°" -->
     <string name="event_moonevent_summary_format1"><xliff:g id="offset">%1$s</xliff:g> <xliff:g id="title">%2$s</xliff:g> v <xliff:g id="angle">%3$s</xliff:g></string>
     <!-- (custom) moon event summary; e.g. "5m before/after Moon 6°" -->
-    <string name="event_moonevent_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_moonevent_label_suggested">Uhol Mesiaca</string>
     <string name="event_moonillumevent_title">Mesiac</string>
     <!-- (custom) moon illum event title; e.g. "Moon 25%" -->
-    <string name="event_moonillumevent_phrase_gender" tools:common="true">iné</string>
-    <!-- either 'other' or 'female' (SelectFormat api) -->
+
     <string name="event_moonillumevent_label_suggested">Osvetlenie Mesiaca</string>
     <string name="events_pref_manageEvents">Správa udalostí</string>
     <!-- settings activity / pref -->
@@ -2749,77 +2743,7 @@
     </string-array>
     <string name="solarevents_event_equinox_autumnal">jesenná rovnodennosť</string>
     <!-- solarevents_* array value; optional if arrays are overridden by translation -->
-    <string-array name="solarevents_gender" tools:common="true">
-        <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
-        <item>other</item>
-        <!-- start of astronomical twilight -->
-        <item>other</item>
-        <!-- start of nautical twilight -->
-        <item>other</item>
-        <!-- start of morning blue hour -->
-        <item>other</item>
-        <!-- start of civil twilight -->
-        <item>other</item>
-        <!-- end of morning blue hour -->
-        <item>other</item>
-        <!-- sunrise -->
-        <item>other</item>
-        <!-- start of golden hour -->
-        <item>other</item>
-        <!-- solar noon -->
-        <item>other</item>
-        <!-- end of golden hour -->
-        <item>other</item>
-        <!-- sunset -->
-        <item>other</item>
-        <!-- start of evening blue hour -->
-        <item>other</item>
-        <!-- end of civil twilight -->
-        <item>other</item>
-        <!-- end of evening blue hour -->
-        <item>other</item>
-        <!-- end of nautical twilight -->
-        <item>other</item>
-        <!-- end of astronomical twilight -->
-        <item>female</item>
-        <!-- moonrise -->
-        <item>female</item>
-        <!-- moonset -->
-        <item>female</item>
-        <!-- new moon -->
-        <item>other</item>
-        <!-- first quarter -->
-        <item>female</item>
-        <!-- full moon -->
-        <item>other</item>
-        <!-- third quarter -->
-        <item>other</item>
-        <!-- spring solstice -->
-        <item>other</item>
-        <!-- summer solstice -->
-        <item>other</item>
-        <!-- autumn equinox -->
-        <item>other</item>
-        <!-- winter solstice -->
-        <item>other</item>
-        <!-- lunar noon -->
-        <item>female</item>
-        <!-- lunar midnight -->
-        <item>other</item>
-        <!-- cross spring -->
-        <item>other</item>
-        <!-- cross summer -->
-        <item>other</item>
-        <!-- cross autumn -->
-        <item>other</item>
-        <!-- cross winter -->
-        <item>other</item>
-        <!-- midnight -->
-    </string-array>
-    <string name="selectformat_time_gender" tools:common="true">female</string>
-    <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
-    <string name="selectformat_date_gender" tools:common="true">other</string>
-    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
+    
     <!-- Dialog: Enable Location? -->
     <string name="location_enable_dialog_msg">Poloha je vypnutá. Chcete ju zapnúť?</string>
     <string name="location_enable_dialog_ok">Áno</string>
