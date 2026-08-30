@@ -1,1 +1,1 @@
-- [ ] Contributors certify that the work they submit to this project is their own, does not contain outputs from generative AI, and that they have full rights to submit that work under an open source license.
+- [ ] I certify that the work I submit to this project is my own, does not contain outputs from generative AI, and that I have full rights to submit that work under an open source license.
