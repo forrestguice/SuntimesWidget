@@ -1855,6 +1855,7 @@
         <item>Чешский</item>
         <item>Китайский (упрощенный)</item>
         <item>Арабский</item>
+        <item>Slovak</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

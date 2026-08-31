@@ -1798,6 +1798,7 @@
 		<item>التشيكية</item>
 		<item>الصينية المبسطة</item>
 		<item>العربية</item>
+        <item>Slovak</item>    <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
