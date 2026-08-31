@@ -1,0 +1,5 @@
+- fixes bug where "date widgets display wrong month names" (#970).
+- fixes bug where "object height popup shows the wrong units label" (#969).
+- fixes app crash when using location picker from widget configuration activity.
+- adds world places; 172 places (Africa, Asia, North America).
+- adds translation to Slovak.

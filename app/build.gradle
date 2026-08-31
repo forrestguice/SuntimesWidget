@@ -81,8 +81,8 @@ android
             missingDimensionStrategy 'api', 'api28'
         }
 
-        versionCode 134
-        versionName "0.17.4"
+        versionCode 135
+        versionName "0.17.5"
 
         manifestPlaceholders = [suntimesAuthorityRoot:"suntimes",
                                 suntimesAuthorityRoot0:"suntimeswidget",
@@ -109,6 +109,11 @@ android
 
     buildTypes
     {
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release
         {
             minifyEnabled true
