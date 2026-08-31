@@ -1646,6 +1646,7 @@
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egypt)</string>
+    <string name="place_label_AF_SD">Africa (Sudan)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN" tools:common="true">Asia (China)</string>
     <string name="place_label_AS_IN" tools:common="true">Asia (India)</string>
@@ -1655,6 +1656,8 @@
     <string name="place_label_AS_PK" tools:common="true">Asia (Pakistan)</string>
     <string name="place_label_AS_SA" tools:common="true">Asia (Saudi Arabia)</string>
     <string name="place_label_AS_RU" tools:common="true">Asia (Russia)</string>
+    <string name="place_label_AS_TR" tools:common="true">Asia (Turkey)</string>
+    <string name="place_label_AS_SY" tools:common="true">Asia (Syria)</string>
     <string name="place_label_AS_VN" tools:common="true">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
     <string name="place_label_EU_BE" tools:common="true">Europe (Belgium)</string>
@@ -2223,6 +2226,7 @@
         <item>Czech</item>
         <item>Simplified Chinese</item>
         <item>Arabic</item>
+        <item>Slovak</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -2243,6 +2247,7 @@
         <item>Čeština</item>
         <item>简体中文</item>
         <item>العربية</item>
+        <item>Slovenčina</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -2263,6 +2268,7 @@
         <item>cs</item>
         <item>zh_CN</item>
         <item>ar</item>
+        <item>sk</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item/>
@@ -2283,6 +2289,7 @@
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>|<a href=https://github.com/sr093906>sr093906</a>]]></item>
         <item><![CDATA[<a href=https://github.com/mstfelg>Alelg</a>|<a href=https://github.com/islam2hamy>islam2hamy</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/padi-sk>padi-sk</a>]]></item>
     </string-array>
 
     <!-- position formats -->
