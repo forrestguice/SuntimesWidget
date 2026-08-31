@@ -221,7 +221,7 @@ Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
 Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>, and <u><a href=https://github.com/sr093906>sr093906</a></u>.<br />
 Arabic translation by <u><a href=https://github.com/mstfelg>Alelg</a></u>, and <u><a href=https://github.com/islam2hamy>islam2hamy</a></u>.<br />
-
+Slovak translation by <u><a href=https://github.com/padi-sk>padi-sk</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
