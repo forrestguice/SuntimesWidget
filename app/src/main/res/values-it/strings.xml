@@ -1716,6 +1716,7 @@
         <item>Ceco</item>
         <item>Cinese Semplificato</item>
         <item>Arabo</item>
+        <item>Slovak</item>    <!-- TODO -->
     </string-array>  <!-- these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->
