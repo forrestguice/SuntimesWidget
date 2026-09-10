@@ -1646,6 +1646,7 @@
     <string name="place_label_AN">Antarctica</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egypt)</string>
+    <string name="place_label_AF_SD">Africa (Sudan)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN" tools:common="true">Asia (China)</string>
     <string name="place_label_AS_IN" tools:common="true">Asia (India)</string>
@@ -1655,6 +1656,8 @@
     <string name="place_label_AS_PK" tools:common="true">Asia (Pakistan)</string>
     <string name="place_label_AS_SA" tools:common="true">Asia (Saudi Arabia)</string>
     <string name="place_label_AS_RU" tools:common="true">Asia (Russia)</string>
+    <string name="place_label_AS_TR" tools:common="true">Asia (Turkey)</string>
+    <string name="place_label_AS_SY" tools:common="true">Asia (Syria)</string>
     <string name="place_label_AS_VN" tools:common="true">Asia (Vietnam)</string>
     <string name="place_label_EU">Europe</string>
     <string name="place_label_EU_BE" tools:common="true">Europe (Belgium)</string>
@@ -1681,6 +1684,7 @@
     <string name="place_label_NA_US_S" tools:common="true">North America (US, South)</string>
     <string name="place_label_NA_US_NE" tools:common="true">North America (US, North East)</string>
     <string name="place_label_NA_US_MW" tools:common="true">North America (US, Midwest)</string>
+    <string name="place_label_NA_US_NP" tools:common="true">North America (US, National Parks)</string>
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
     <string name="place_label_SA">South and Central America</string>
