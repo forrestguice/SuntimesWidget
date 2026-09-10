@@ -102,10 +102,10 @@
         [Icon DST] sa zobrazuje, ak sa na aktuálny čas vzťahuje <b>letný čas</b> alebo ak bol čas upravený podľa podobného pravidla.<br/><br/>
     ]]></string>
     <string name="help_general_actualTime"><![CDATA[
-        <b>Aktuálny čas:</b> Približný čas východu a západu slnka.<br/>
+        <b>Skutočný čas:</b> Približný čas východu a západu slnka.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-        <b>Časy východu</b> označujú začiatok každého obdobia súmraku (<b>úsvit</b>) a <b>Časy západu</b> označujú ich koniec (<b>súmrak</b>).<br/><br/>
+        <b>Čas východu</b> označujú začiatok každého obdobia súmraku (<b>úsvit</b>) a <b>Čas západu</b> označujú ich koniec (<b>súmrak</b>).<br/><br/>
         <b>Občiansky súmrak:</b> Slnko je menej ako 6 stupňov pod obzorom. Sú viditeľné najjasnejšie hviezdy. Je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br/><br/>
         <b>Nautický súmrak:</b> Slnko je 6 až 12 stupňov pod obzorom. Obrysy objektov a obzor sú čoraz menej zreteľné. Nie je dostatok svetla na väčšinu vonkajších aktivít bez potreby osvetlenia.<br/><br/>
         <b>Astronomický súmrak:</b> Slnko je 12 až 18 stupňov pod obzorom. Takmer nočná tma.<br/><br/>
