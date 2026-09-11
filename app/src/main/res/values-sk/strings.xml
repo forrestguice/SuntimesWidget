@@ -236,25 +236,25 @@
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">astronomický súmrak</string>
-    <string name="until_civilTwilight">občianske súmrak</string>
-    <string name="until_nauticalTwilight">nautický súmrak</string>
-    <string name="until_sunrise">východ slnka</string>
-    <string name="until_noon">slnečné poludnie</string>
-    <string name="until_midnight">slnečná polnoc</string>
+    <string name="until_astroTwilight">astronomického súmraku</string>
+    <string name="until_civilTwilight">občianskeho súmraku</string>
+    <string name="until_nauticalTwilight">nautického súmraku</string>
+    <string name="until_sunrise">východu slnka</string>
+    <string name="until_noon">slnečného poludnia</string>
+    <string name="until_midnight">slnečnej polnoci</string>
     <!-- TODO -->
-    <string name="until_sunset">západ slnka</string>
+    <string name="until_sunset">západu slnka</string>
     <string name="untilEnd_civilTwilight">občianskeho súmraku</string>
     <string name="untilEnd_nauticalTwilight">nautického súmraku</string>
     <string name="untilEnd_astroTwilight">astronomického súmraku</string>
-    <string name="until_goldhour">zlatá hodina</string>
+    <string name="until_goldhour">zlatej hodiny</string>
     <string name="untilEnd_goldhour">zlatej hodiny</string>
-    <string name="until_bluehour">modrá hodina</string>
+    <string name="until_bluehour">modrej hodiny</string>
     <string name="untilEnd_bluehour">modrej hodiny</string>
-    <string name="until_moonrise">východ mesiaca</string>
-    <string name="until_moonset">západ mesiaca</string>
-    <string name="until_moonnoon">mesačné poludnie</string>
-    <string name="until_moonnight">mesačná polnoc</string>
+    <string name="until_moonrise">východu mesiaca</string>
+    <string name="until_moonset">západu mesiaca</string>
+    <string name="until_moonnoon">mesačného poludnia</string>
+    <string name="until_moonnight">mesačnej polnoci</string>
     <!-- Table -->
     <string name="table_header_dawn">Úsvit</string>
     <!-- table title -->
@@ -2282,6 +2282,7 @@
     <string name="place_label_AN">Antarktída</string>
     <string name="place_label_AF">Afrika</string>
     <string name="place_label_AF_EG">Afrika (Egypt)</string>
+    <string name="place_label_AF_SD">Afrika (Sudán)</string>
     <string name="place_label_AS">Ázia</string>
     <string name="place_label_AS_CN" tools:common="true">Ázia (Čína)</string>
     <string name="place_label_AS_IN" tools:common="true">Ázia (India)</string>
@@ -2291,6 +2292,8 @@
     <string name="place_label_AS_PK" tools:common="true">Ázia (Pakistan)</string>
     <string name="place_label_AS_SA" tools:common="true">Ázia (Saudská Arábia)</string>
     <string name="place_label_AS_RU" tools:common="true">Ázia (Rusko)</string>
+    <string name="place_label_AS_TR" tools:common="true">Ázia (Turecko)</string>
+    <string name="place_label_AS_SY" tools:common="true">Ázia (Sýria)</string>
     <string name="place_label_AS_VN" tools:common="true">Ázia (Vietnam)</string>
     <string name="place_label_EU">Európa</string>
     <string name="place_label_EU_BE" tools:common="true">Európa (Belgicko)</string>
@@ -2318,10 +2321,11 @@
     <string name="place_label_NA_US_S" tools:common="true">Severná Amerika (USA, juh)</string>
     <string name="place_label_NA_US_NE" tools:common="true">Severná Amerika (USA, severovýchod)</string>
     <string name="place_label_NA_US_MW" tools:common="true">Severná Amerika (USA, Stredozápad)</string>
+    <string name="place_label_NA_US_NP" tools:common="true">Severná Amerika (USA, národné parky)</string>
     <string name="place_label_OC">Oceánia</string>
     <string name="place_label_OC_AU">Oceánia (Austrália)</string>
     <string name="place_label_SA">Južná a Stredná Amerika</string>
-    <string name="place_label_SA_AR" tools:common="true">Argentina</string>
+    <string name="place_label_SA_AR" tools:common="true">Argentína</string>
     <string name="place_label_SA_BR" tools:common="true">Brazília</string>
     <string name="place_label_SA_BO" tools:common="true">Bolívia</string>
     <string name="place_label_SA_CO" tools:common="true">Kolumbia</string>
@@ -2763,9 +2767,9 @@
         <item>Ruština</item>
         <item>Holandčina</item>
         <item>Čeština</item>
-        <item>Slovenčina</item>
         <item>Zjednodušená čínština</item>
         <item>Arabčina</item>
+        <item>Slovenčina</item>
     </string-array>
     <!-- position formats -->
     <string name="format_degrees" tools:common="true"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>
@@ -3372,7 +3376,7 @@
     <string name="welcome_pref_title">Úvodná obrazovka</string>
     <string name="welcome_pref_summary">Spustiť sprievodcu konfiguráciou pri prvom spustení.</string>
     <!-- Dialog: Help -->
-    <string name="help_dialog_title">Nápoveda</string>
+    <string name="help_dialog_title">Pomoc</string>
     <string name="help_general2" tools:common="true">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic2">%2$s</xliff:g>
@@ -3397,7 +3401,7 @@
     <string name="privacy_permission_calculator_desc">Povoľuje integráciu aplikácie so Suntimes ako doplnok. Aplikácia získa prístup ku konfiguračným údajom poskytovaným Suntimes (napríklad k súkromným údajom o polohe a ďalším nastaveniam) a bude mať povolený prístup k rozhraniam určeným na rozšírenie funkcionality Suntimes.</string>
     <!-- TODO -->
     <string name="privacy_permission_dnd"><![CDATA[Suntimes potrebuje <b>prístup k funkcii „Nerušiť“</b>, aby mohol tieto nastavenia zmeniť pred spaním.]]></string>
-    <string name="privacy_permission_location"><![CDATA[Aplikácia Suntimes využíva oprávnenie k <b>polohe</b>na určenie vašej aktuálnej zemepisnej dĺžky a šírky.<br/><br/>Toto oprávnenie je voliteľné; poloha sa štandardne nastavuje manuálne.]]></string>
+    <string name="privacy_permission_location"><![CDATA[Aplikácia Suntimes využíva oprávnenie k <b>polohe</b> na určenie vašej aktuálnej zemepisnej dĺžky a šírky.<br/><br/>Toto oprávnenie je voliteľné; poloha sa štandardne nastavuje manuálne.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Aplikácia Suntimes využíva oprávnenia <b>externé úložisko</b> na zálohovanie/export údajov do súboru (napr. miesta, motívy).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Aplikácia Suntimes využíva oprávnenie na budíky <b>externé úložisko</b> na prehrávanie zvukov uložených na SD karte.<br/><br/>Toto oprávnenie je voliteľné; v prípade zamietnutia prístupu sa prehrá predvolený zvuk. Pre systémové zvuky (úložisko médií) nie je toto oprávnenie potrebné.]]></string>
     <string name="privacy_permission_notifications"><![CDATA[Aplikácia Suntimes potrebuje oprávnenia na <b>oznámenia</b> pre zobrazovanie budíkov a oznámení.]]></string>
