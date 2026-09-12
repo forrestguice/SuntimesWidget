@@ -60,7 +60,7 @@
             <b>Widgety pre Mesiac:</b> <br/>
             * <b>%i</b> pre osvetlenie Mesiaca (napr. 25 %) <br/>
             * <b>%M</b> pre fázu Mesiaca (napr. dorastajúci mesiac) <br/>
-            * <b>%o</b> pre poradie (napr. predchádzajúce/ďalšie, dnes)) <br/><br/>
+            * <b>%o</b> pre poradie (napr. predchádzajúce/ďalšie, dnes) <br/><br/>
             <b>Widgety slnovratov:</b> <br/>
             * <b>%m</b> pre režim (krátky) (napr. slnovrat) <br/>
             * <b>%M</b> pre režim (dlhý) (napr. zimný slnovrat) <br/>
@@ -70,10 +70,11 @@
     <string name="help_battery_optimization"><xliff:g id="appName">%s</xliff:g> nesmie byť „optimalizované“, aby sa dosiahli najlepšie výsledky.</string>
     <string name="help_battery_optimization_aggressive">Toto je zariadenie <xliff:g example="Samsung" id="manufacturer">%s</xliff:g>, ktoré môže na správne fungovanie vyžadovať dodatočné nastavenie.</string>
     <string name="help_restricted_bucket">Aplikácia bola zaradená do kategórie zriedkavých alebo obmedzených aplikácií v pohotovostnom režime. Je možné, že budíky nebudú fungovať spoľahlivo.</string>
-    <string name="help_calendar"><![CDATA[
-        Pridávanie udalostí do aplikácie Kalendár (fázy Mesiaca, slnovraty a rovnodennosti).<br/><br/>
-        <u><b><font color=\"#ff9900\">Integrácia s Kalendárom bola vo verzii v0.10.0 odstránená.</font></b></u><br/><br/>
-        Táto funkcia je teraz k dispozícii ako <a href=\"moreInfoLink\">samostatná aplikácia</a>.
+    <string name="help_calendar"><![CDATA[Pridávanie udalostí do aplikácie Kalendár (fázy Mesiaca, slnovraty a rovnodennosti).<br/>
+<br/>
+        <u><b><font color="#ff9900">Integrácia s Kalendárom bola vo verzii v0.10.0 odstránená.</font></b></u><br/>
+<br/>
+        Táto funkcia je teraz k dispozícii ako <a href="moreInfoLink">samostatná aplikácia</a>.
     ]]></string>
     <string name="help_datasources"><![CDATA[
         Suntimes používa knižnice tretích strán na vykonávanie astronomických výpočtov.<br/>
@@ -136,7 +137,7 @@
     ]]></string>
     <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
-        <b>Dnes:</b> Časy východu a západu slnka pre dnešný deň.<br/><br/>
+        <b>Dnes:</b> Čas východu a západu slnka pre dnešný deň.<br/><br/>
         <b>Predchádzajúce / Nasledujúce:</b> Čas predchádzajúcej udalosti a nasledujúcej udalosti.<br/>
     ]]></string>
     <string name="help_general_timeMode2"><![CDATA[

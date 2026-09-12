@@ -746,15 +746,15 @@
     <!-- setting -->
     <string name="widgetMode1x1_sunset">Iba západ slnka</string>
     <!-- setting -->
-    <string name="widgetMode1x1_both_1">Východ &amp; západ slnka</string>
+    <string name="widgetMode1x1_both_1">Východ a západ slnka</string>
     <!-- setting -->
-    <string name="widgetMode1x1_both_2">Východ &amp; západ slnka (2)</string>
+    <string name="widgetMode1x1_both_2">Východ a západ slnka (2)</string>
     <!-- setting -->
-    <string name="widgetMode3x1_sunrise_sunset_noon">Východ slnka, západ slnka &amp; poludnie</string>
+    <string name="widgetMode3x1_sunrise_sunset_noon">Východ slnka, západ slnka a poludnie</string>
     <!-- setting -->
-    <string name="widgetMode1x1_altaz">Nadmorská výška &amp; azimut</string>
+    <string name="widgetMode1x1_altaz">Nadmorská výška a azimut</string>
     <!-- setting -->
-    <string name="widgetMode1x1_decright">Deklinácia &amp; Rektascenzia</string>
+    <string name="widgetMode1x1_decright">Deklinácia a Rektascenzia</string>
     <!-- setting -->
     <string name="widgetMode1x1_distance">Aktuálna vzdialenosť</string>
     <!-- setting -->
@@ -807,9 +807,9 @@
     <string name="worldmap_projection_sinusoidal">Mercatorova rovnoplošná projekcia</string>
     <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->
     <!-- TODO -->
-    <string name="widgetMode1x1_moonriseset">Východ &amp; západ Mesiaca</string>
+    <string name="widgetMode1x1_moonriseset">Východ a západ Mesiaca</string>
     <!-- setting -->
-    <string name="widgetMode1x1_moonphaseillum">Fáza Mesiaca &amp; osvetlenie</string>
+    <string name="widgetMode1x1_moonphaseillum">Fáza Mesiaca a osvetlenie</string>
     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Iba fáza Mesiaca</string>
     <!-- setting -->
@@ -1728,9 +1728,9 @@
     <!-- button (contentDescription) -->
     <string name="alarms_action_saveAlarm">Uložiť</string>
     <!-- button (contentDescription) -->
-    <string name="alarms_action_enableAlarm">Uložiť &amp; zapnúť</string>
+    <string name="alarms_action_enableAlarm">Uložiť a zapnúť</string>
     <!-- button (contentDescription) -->
-    <string name="alarms_action_disableAlarm">Uložiť &amp; vypnúť</string>
+    <string name="alarms_action_disableAlarm">Uložiť a vypnúť</string>
     <!-- button (contentDescription) -->
     <string name="alarmAction_dismiss">Zrušiť</string>
     <!-- notification action button -->
