@@ -188,6 +188,7 @@
         <item>"Ashdod", 31.79802, 34.6307, 0, [IL]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
         <item>"Amman", 31.95392, 35.91053, 865, [capital][JO]</item>
+        <item>"Petra", 30.32876, 35.44229, 875, [JO]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
         <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
@@ -214,6 +215,7 @@
         <item>"Nablus", 32.22113, 35.26094, 530, [PS]</item>
         <item>"Nicosia", 35.1922, 33.3273, 140, [capital][CY]</item>
         <item>"Phnom Penh", 11.57604, 104.92290, 27, [capital][KH]</item>
+        <item>"Angkor Wat", 13.4124, 103.86569, 25, [KH]</item>
         <item>"Pyongyang", 39.0291, 125.6720, 28, [capital][KP]</item>
         <item>"Salalah", 17.01073, 54.17174, 0, [OM]</item>
         <item>"Sanaa", 15.36238, 44.19534, 2250, [capital][YE]</item>
@@ -261,6 +263,7 @@
         <item>"Itanagar", 27.09791, 93.62114, 340, [capital][IN-AR]</item>
         <item>"Jaipur", 26.90756, 75.80553, 430, [capital][IN-RJ]</item>
         <item>"Kanpur", 26.45568, 80.33398, 130, [IN-UP]</item>
+        <item>"Taj Mahal", 27.17484, 78.04215, 162, [IN-UP]</item>
         <item>"Kochi", 9.93626, 76.24488, 6, [IN-KL]</item>
         <item>"Kohima", 25.67413, 94.10867, 1445, [capital][IN-NL]</item>
         <item>"Kokrajhar", 26.4018, 90.2607, 51, [IN-AS]</item>
@@ -290,6 +293,7 @@
         <item>"Kerman", 30.28098, 57.0859, 1760, [IR]</item>                    <!-- Kerman -->
         <item>"Kermanshah", 34.32426, 47.07383, 1350, [IR]</item>               <!-- Kermanshah -->
         <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>                   <!-- Razavi Khorasan -->
+        <item>"Persepolis", 29.93603, 52.88998, 1628, [IR]</item>
         <item>"Qom", 34.63283, 50.8848, 930, [IR]</item>                        <!-- Qom -->
         <item>"Rasht", 37.27126, 49.59209, 5, [IR]</item>                       <!-- Gilan -->
         <item>"Shiraz", 29.60519, 52.53324, 1500, [IR]</item>                   <!-- Fars -->
@@ -468,6 +472,7 @@
         <item>\"Newport, Wales\", 51.57923, -3.001285, 60, [GB-WLS]</item>
         <item>"Nottingham", 52.94977, -1.15329, 60, [GB-ENG]</item>
         <item>"Sheffield", 53.3835, -1.46015, 130, [GB-ENG]</item>
+        <item>"Stonehenge", 51.17881, -1.82625, 872, [GB-ENG]</item>
         <item>"Swansea", 51.613,-3.98091, 180, [GB-WLS]</item>
         <item>"Truro", 50.2648, -5.0827, 64, [GB-ENG]</item>
         <item>"Wrexham", 53.04318, -3.0008, 140, [GB-WLS]</item>
@@ -971,6 +976,7 @@
         <item>"Arequipa", -16.4035, -71.54836, 2335, [capital][PE-ARE]</item>           <!-- Arequipa -->
         <item>"Chimbote", -9.07456, -78.59356, 5, [capital][PE-ANC]</item>              <!-- Ancash -->
         <item>"Cusco", -13.53171, -71.96829, 3400, [capital][PE-CUS]</item>             <!-- Cusco -->
+        <item>"Machu Picchu", -13.16447, -72.54508, 2435, [PE-CUS]</item>               <!-- Cusco -->
         <item>"Huancayo", -12.06811, -75.21007, 3260, [capital][PE-JUN]</item>          <!-- Huancayo -->
         <item>\"Ica, Peru\", -14.06406, -75.72915, 405, [capital][PE-ICA]</item>        <!-- Ica -->
         <item>\"Trujillo, Peru\", -8.11184, -79.02877, 35, [capital][PE-LAL]</item>     <!-- La Libertad -->
