@@ -612,11 +612,40 @@
         <item>"Saskatoon", 52.14982, -106.68429, 480, [CA-SK]</item>                             <!-- Saskatchewan -->
         <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capital][CA-NL]</item>     <!-- Newfoundland and Labrador -->
         <item>"Toronto", 43.6159, -79.3769, 78, [capital][CA-ON]</item>                          <!-- Ontario -->
-        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670, [CA-YT]</item>                   <!-- Yukon -->
+        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670, [capital][CA-YT]</item>          <!-- Yukon -->
         <item>"Winnipeg", 49.89908, -97.12469, 239, [capital][CA-MB]</item>                      <!-- Manitoba -->
         <item>"Vancouver", 49.27934, -123.13920, 0, [CA-BC]</item>                               <!-- British Columbia -->
         <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capital][CA-BC]</item>   <!-- British Columbia -->
         <item>"Yellowknife", 62.45498, -114.36085, 200, [capital][CA-NT]</item>                  <!-- Northwest Territories -->
+
+
+        <item>\"Banff, Alberta\", 51.17885, -115.56989, 1385, [CA-AB]</item>                     <!-- Alberta, Banff National Park -->
+        <item>\"Jasper, Alberta\", 52.87325, -118.08222, 1060, [CA-AB]</item>                    <!-- Alberta, Jasper National Park -->
+        <item>\"Waterton, Alberta\", 49.05128, -113.91612, 1315, [CA-AB]</item>                  <!-- Alberta, Waterton Lakes National Park -->
+
+        <item>\"Revelstoke, British Columbia\", 50.99356, -118.19189, 455, [CA-BC]</item>        <!-- British Columbia; Mount Revelstroke National Park -->
+
+        <item>\"Prince Albert, Saskatchewan\", 53.21763, -105.77706, 445, [CA-SK]</item>         <!-- Saskatchewan; Prince Albert National Park -->
+
+        <item>"Inuvik", 68.35716, -133.71651, 25, [CA-NT]</item>                                 <!-- Northwest Territories -->
+        <item>"Dawson City", 64.05594, -139.43595, 320, [CA-YT]</item>                           <!-- Yukon -->
+
+        <item>"Chibougamau", 49.911321, -74.35614, 395, [CA-QC]</item>                           <!-- Quebec -->
+        <item>\"Saguenay, Quebec\", 48.43053, -71.06121, 0, [CA-QC]</item>                       <!-- Quebec -->
+        <item>"Sherbrooke", 45.40162, -71.88648, 145, [CA-QC]</item>                             <!-- Quebec -->
+
+        <item>\"Brandon, Manitoba\", 49.84223, -99.9618, 3909, [CA-MB]</item>                    <!-- Manitoba -->
+        <item>\"Thompson, Manitoba\", 55.74508, -97.85081, 205, [CA-MB]</item>                   <!-- Manitoba -->
+
+        <item>"\Killarney, Ontario\", 45.97252, -81.51082, 180, [CA-ON]</item>                   <!-- Ontario; Killarney Provincial Park -->
+        <item>\"Niagara Falls", 43.09039, -79.0722, 170, [CA-ON]</item>                          <!-- Ontario -->
+        <item>"Thunder Bay", 48.37486, -89.21226, 0, [CA-ON]</item>                              <!-- Ontario -->
+
+        <item>"Igloolik", 69.37724, -81.79398, 0, [CA-NU]</item>                                 <!-- Nunavut -->
+        <item>"Rankin Inlet", 62.81238, -92.07242, 0, [CA-NU]</item>                             <!-- Nunavut -->
+        <item>\"Baker Lake, Nunavut\", 64.31443, -96.01026, 0, [CA-NU]</item>                    <!-- Nunavut -->
+        <item>"Cambridge Bay", 69.11398, -105.05948, 0, [CA-NU]</item>                           <!-- Nunavut -->
+
     </string-array>
 
     <string-array name="places_NA_US">
@@ -625,8 +654,12 @@
     </string-array>
     <string-array name="places_NA_US_W">
         <item>\"Anchorage, AK\", 61.15496, -150.05585, 31, [US-AK]</item>
-        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
+        <item>\"Fairbanks, AK\", 64.83858, -147.73324, 135, [US-AK]</item>
         <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capital][US-AK]</item>
+        <item>\"Ketchikan, AK\", 55.34249, -131.64867, 30, [US-AK]</item>
+        <item>\"Kodiak, AK\", 57.79227, -152.38861, 0, [US-AK]</item>
+        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
+        <item>\"Sitka, AK\", 57.0498, -135.33836, 8, [US-AK]</item>
         <item>"Phoenix", 33.45579, -111.94580, 385, [capital][US-AZ]</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731, [US-AZ]</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044, [US-AZ]</item>
@@ -663,7 +696,11 @@
         <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capital][US-NH]</item>
         <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capital][US-NJ]</item>
         <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capital][US-NY]</item>
+        <item>\"Buffalo, NY\", 42.88635, -78.87804, 180, [US-NY]</item>
         <item>"New York City", 40.68620, -74.02619, 0, [US-NY]</item>
+        <item>\"Rochester, NY\", 43.15407, -77.60182, 160, [US-NY]</item>
+        <item>\"Syracuse, NY\", 43.0511, -76.15267, 125, [US-NY]</item>
+        <item>\"Erie, PA\", 42.12947, -80.08517, 198, [US-PA]</item>
         <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capital][US-PA]</item>
         <item>"Philadelphia", 39.94704, -75.15252, 12, [US-PA]</item>
         <item>"Pittsburgh", 40.43997, -79.97385, 300, [US-PA]</item>
