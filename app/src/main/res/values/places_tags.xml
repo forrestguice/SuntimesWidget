@@ -252,10 +252,39 @@
 
     <string-array name="place_tags_CN">
         <item>[CN]|China, Asia</item>
+        <item>[CN-AH]|Anhui</item>
+        <item>[CN-BJ]|Beijing</item>
+        <item>[CN-CQ]|Chongqing</item>
+        <item>[CN-FJ]|Fujian</item>
         <item>[CN-GD]|Guangdong</item>
+        <item>[CN-GS]|Gansu</item>
+        <item>[CN-GX]|Guangxi</item>
+        <item>[CN-GZ]|Guizhou</item>
+        <item>[CN-HA]|Henan</item>
         <item>[CN-HB]|Hubei</item>
+        <item>[CN-HE]|Hebei</item>
+        <item>[CN-HI]|Hainan</item>
+        <item>[CN-HL]|Heilongjiang</item>
+        <item>[CN-HN]|Hunan</item>
+        <item>[HK]|Hong Kong</item>
+        <item>[CN-JL]|Jilin</item>
+        <item>[CN-JS]|Jiangsu</item>
+        <item>[CN-JX]|Jiangxi</item>
+        <item>[CN-LN]|Liaoning</item>
+        <item>[CN-MO]|Macau</item>
+        <item>[CN-NM]|Inner Mongolia</item>
+        <item>[CN-NX]|Ningxia</item>
+        <item>[CN-QH]|Qinghai, Tibetan Plateau*</item>
+        <item>[CN-SC]|Sichuan</item>
+        <item>[CN-SD]|Shandong</item>
+        <item>[CN-SH]|Shanghai</item>
+        <item>[CN-SN]|Shaanxi</item>
+        <item>[CN-SX]|Shanxi</item>
+        <item>[CN-TJ]|Tianjin</item>
         <item>[CN-XJ]|Xinjiang</item>
-        <item>[CN-XZ]|Tibet, Tibetan Plateau*</item>
+        <item>[CN-XZ]|Tibet, Xizang*, Tibetan Plateau*</item>
+        <item>[CN-YN]|Yunnan</item>
+        <item>[CN-ZJ]|Zhejiang</item>
     </string-array>
 
     <string-array name="place_tags_CO">

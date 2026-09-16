@@ -231,17 +231,40 @@
     </string-array>
     <string-array name="places_AS_CN">    <!-- China -->
         <item>"Beijing", 39.9042, 116.4074, 0, [capital][CN-BJ]</item>
+        <item>"Changchun", 43.8778, 125.30137, 230, [capital][CN-JL]</item>
+        <item>"Changsha", 28.22314, 112.93752, 65, [capital][CN-HN]</item>
+        <item>"Chengdu", 30.65987, 104.06338, 495, [capital][CN-SC]</item>
         <item>"Chongqing", 29.57075, 106.50416, 244, [CN-CQ]</item>
+        <item>"Fuzhou", 26.06525, 119.28386, 5, [capital][CN-FJ]</item>
         <item>"Guangzhou", 23.134924, 113.23749, 21, [capital][CN-GD]</item>
+        <item>"Guiyang", 26.62032, 106.60735, 1310, [capital][CN-GZ]</item>
+        <item>"Haikou", 20.02809, 110.25516, 0, [capital][CN-HI]</item>
+        <item>"Hangzhou", 30.30799, 120.23271, 12, [capital][CN-ZJ]</item>
+        <item>"Harbin", 45.75424, 126.67818, 138, [capital][CN-HL]</item>
+        <item>"Hefei", 31.86079, 117.30506, 10, [capital][CN-AH]</item>
+        <item>"Hohhot", 40.80794, 111.66213, 1045, [capital][CN-NM]</item>
         <item>"Hong Kong", 22.3576, 113.9809, 0, [HK]</item>
         <item>"Kashgar", 39.47514, 75.99195, 1270, [CN-XJ]</item>
-        <item>"Lhasa", 29.6487, 91.0052, 3649, [capital][CN-XZ]</item>
+        <item>"Kunming", 25.07464, 102.72433, 1898, [capital][CN-YN]</item>
+        <item>"Jinan", 36.66122, 117.01562, 32, [capital][CN-SD]</item>
+        <item>"Lanzhou", 36.0527, 103.83955, 1515, [capital][CN-GS]</item>
+        <item>"Lhasa", 29.65611, 91.11805, 3655, [capital][CN-XZ]</item>
         <item>"Macau", 22.1634, 113.5284, 0, [CN-MO]</item>
+        <item>"Nanchang", 28.64212, 115.84766, 12, [capital][CN-JX]</item>
+        <item>"Nanjing", 32.00801, 118.74632, 5, [capital][CN-JS]</item>
+        <item>"Nanning", 22.81418, 108.37081, 80, [capital][CN-GX]</item>
         <item>"Shanghai", 31.2231, 120.9163, 0, [CN-SH]</item>
+        <item>"Shenyang", 41.79451, 123.40441, 48, [capital][CN-LN]</item>
         <item>"Shenzhen", 22.55307, 114.05560, 0, [CN-GD]</item>
+        <item>"Shijiazhuang", 38.04425, 114.50888, 72, [capital][CN-HE]</item>
+        <item>"Taiyuan", 37.85087, 112.55444, 790, [capital][CN-SX]</item>
         <item>"Tianjin", 39.07444, 117.17202, 5, [CN-TJ]</item>
         <item>"Ürümqi", 44.03198, 87.80816, 862, [capital][CN-XJ]</item>
         <item>"Wuhan", 30.557477, 114.25426, 37, [capital][CN-HB]</item>
+        <item>\"Xi\'an\", 34.26549, 108.94965, 400, [capital][CN-SN]</item>
+        <item>"Xining", 36.6234, 101.77249, 2442, [capital][CN-QH]</item>
+        <item>"Yinchuan", 38.48529, 106.22628, 1010, [capital][CN-NX]</item>
+        <item>"Zhengzhou", 34.79042, 113.67691, 95, [capital][CN-HA]</item>
     </string-array>
     <string-array name="places_AS_IN">    <!-- India -->
         <item>"Ahmedabad", 23.0203, 72.5097, 49, [IN-GJ]</item>
