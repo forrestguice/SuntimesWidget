@@ -686,7 +686,11 @@
         <item>\"Ketchikan, AK\", 55.34249, -131.64867, 30, [US-AK]</item>
         <item>\"Kodiak, AK\", 57.79227, -152.38861, 0, [US-AK]</item>
         <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
-        <item>\"Sitka, AK\", 57.0498, -135.33836, 8, [US-AK]</item>
+        <item>\"Nome, AK\", 64.49524, -165.39379, 0, [US-AK]</item>
+        <item>\"Prudhoe Bay, AK\", 70.18822, -148.43885, 15, [US-AK]</item>
+        <item>\"Sitka, AK\", 57.0498, -135.33[836, 8, [US-AK]</item>
+        <item>\"Utqiagvik, AK\", 71.29028,-156.79624, 0, [US-AK]</item>
+
         <item>"Phoenix", 33.45579, -111.94580, 385, [capital][US-AZ]</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731, [US-AZ]</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044, [US-AZ]</item>
