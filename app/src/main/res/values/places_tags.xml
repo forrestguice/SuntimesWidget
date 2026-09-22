@@ -90,7 +90,7 @@
         <item>[MG]|Madagascar, Indian Ocean*, Africa</item>
         <item>[ML]|Mali, Sahara Desert*, Africa</item>
         <item>[MM]|Myanmar, Indian Ocean*, Bay of Bengal*, Asia</item>
-        <item>[MN]|Mongolia, Asia</item>
+        <item>[MN]|Mongolia, Asia, Mongolian Plateau*</item>
         <item>[MR]|Mauritania, Atlantic Ocean*, Sahara Desert*, Africa</item>
         <item>[MT]|Malta, Mediterranean Sea*, Europe</item>
         <item>[MW]|Malawi, Africa</item>
@@ -272,7 +272,7 @@
         <item>[CN-JX]|Jiangxi</item>
         <item>[CN-LN]|Liaoning</item>
         <item>[CN-MO]|Macau</item>
-        <item>[CN-NM]|Inner Mongolia</item>
+        <item>[CN-NM]|Inner Mongolia, Mongolian Plateau*</item>
         <item>[CN-NX]|Ningxia</item>
         <item>[CN-QH]|Qinghai, Tibetan Plateau*</item>
         <item>[CN-SC]|Sichuan</item>

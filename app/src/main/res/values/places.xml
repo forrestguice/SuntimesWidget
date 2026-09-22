@@ -121,7 +121,6 @@
         <item>"Freetown", 8.48703, -13.23263, 45, [capital][SL]</item>      <!-- Sierra Leone -->
         <item>"Gaborone", -24.65791, 25.90774, 1010, [capital][BW]</item>   <!-- Botswana -->
         <item>"Harare", -17.8165, 30.9167, 1433, [capital][ZW]</item>       <!-- Zimbabwe -->
-
         <item>"Juba", 4.84042, 31.58891, 505, [capital][SS]</item>          <!-- South Sudan [SS-EC|Central Equitoria] -->
         <item>"Kampala", 0.3138, 32.5290, 1203, [capital][UG]</item>        <!-- Uganda -->
         <item>"Kano", 11.99000, 8.53609, 488, [NG]</item>                   <!-- Nigeria -->
@@ -824,29 +823,29 @@
         <item>\"New River Gorge NP\", 37.83067, -81.06363, 760, [US-WV]</item>
         <item>\"Black Canyon of the Gunnison NP\", 38.56881, -107.73322, 2460, [US-CO]</item>
         <item>\"Canyonlands NP\", 38.45949, -109.82195, 1790, [US-UT]</item>
-        <item>\"Guadalupe Mountains [NP]", 31.89645, -104.82796, 1780, [US-NM][US-TX]</item>
+        <item>\"Guadalupe Mountains [NP]\", 31.89645, -104.82796, 1780, [US-NM][US-TX]</item>
         <item>\"Carlsbad Caverns NP\", 32.17502, -104.44322, 1340, [US-NM]</item>
-        <item>\"Crater Lake NP", 42.91114, -122.14353, 2150, [US-OR]</item>
-        <item>\"Voyageurs [NP]", 48.43552, -92.8509, 340, [US-MN]</item>
-        <item>\"Hot Springs [NP]", 34.5172, -93.04611, 305, [US-AR]</item>
+        <item>\"Crater Lake NP\", 42.91114, -122.14353, 2150, [US-OR]</item>
+        <item>\"Voyageurs [NP]\", 48.43552, -92.8509, 340, [US-MN]</item>
+        <item>\"Hot Springs [NP]\", 34.5172, -93.04611, 305, [US-AR]</item>
         <item>\"Capitol Reef NP\", 38.29139, -111.26162, 1670, [US-UT]</item>
-        <item>\"Indiana Dunes [NP]", 41.63383, -87.0548, 190, [US-IN]</item>
-        <item>\"Isle Royale [NP]", 47.99406, -88.91556, 250, [US-MI]</item>
-        <item>\"Great Sand Dunes [NP]", 37.73971, -105.51774, 2485, [US-CO]</item>
-        <item>\"Kobuk Valley [NP]", 67.09513, -158.9463, 55, [US-AK]</item>
-        <item>\"Denali NP", 63.73105, -148.91759, 535, [US-AK]</item>
-        <item>\"Lake Clark [NP]", 60.19743, -154.32293, 90, [US-AK]</item>
-        <item>\"Congaree NP", 33.82989, -80.82373, 60, [US-SC]</item>
-        <item>\"Theodore Roosevelt [NP]", 46.91599, -103.52607, 690, [US-ND]</item>
-        <item>\"Glaciar Bay [NP]", 58.45443, -135.88331, 5, [US-AK]</item>
-        <item>\"Kenai Fjords [NP]", 60.18838, -149.6314, 125, [US-AK]</item>
-        <item>\"Katmai [NP]", 58.55597, -155.77836, 20, [US-AK]</item>
-        <item>\"Gates of the Arctic [NP]", 66.91786, -151.51397, 195, [US-AK]</item>
-        <item>\"Wrangell–St. Elias [NP]", 62.02123, -145.36458, 400, [US-AK]</item>
+        <item>\"Indiana Dunes NP\", 41.63383, -87.0548, 190, [US-IN]</item>
+        <item>\"Isle Royale NP\", 47.99406, -88.91556, 250, [US-MI]</item>
+        <item>\"Great Sand Dunes NP\", 37.73971, -105.51774, 2485, [US-CO]</item>
+        <item>\"Kobuk Valley NP\", 67.09513, -158.9463, 55, [US-AK]</item>
+        <item>\"Denali NP\", 63.73105, -148.91759, 535, [US-AK]</item>
+        <item>\"Lake Clark NP\", 60.19743, -154.32293, 90, [US-AK]</item>
+        <item>\"Congaree NP\", 33.82989, -80.82373, 60, [US-SC]</item>
+        <item>\"Theodore Roosevelt NP\", 46.91599, -103.52607, 690, [US-ND]</item>
+        <item>\"Glaciar Bay NP\", 58.45443, -135.88331, 5, [US-AK]</item>
+        <item>\"Kenai Fjords NP\", 60.18838, -149.6314, 125, [US-AK]</item>
+        <item>\"Katmai NP\", 58.55597, -155.77836, 20, [US-AK]</item>
+        <item>\"Gates of the Arctic NP\", 66.91786, -151.51397, 195, [US-AK]</item>
+        <item>\"Wrangell–St. Elias NP\", 62.02123, -145.36458, 400, [US-AK]</item>
         <item>\"Channel Islands NP\", 34.01967,-119.68448, 0, [US-CA]</item>
-        <item>\"Biscayne [NP]", 25.46423, -80.33566, 0, [US-FL]</item>
-        <item>\"Dry Tortugas [NP]", 24.62837, -82.87312, 0, [US-FL]</item>
-        <item>\"Cuyahoga Valley NP", 41.26172, -81.56035, 200, [US-OH]</item>
+        <item>\"Biscayne NP\", 25.46423, -80.33566, 0, [US-FL]</item>
+        <item>\"Dry Tortugas NP\", 24.62837, -82.87312, 0, [US-FL]</item>
+        <item>\"Cuyahoga Valley NP\", 41.26172, -81.56035, 200, [US-OH]</item>
     </string-array>
 
     <!-- Oceania -->
