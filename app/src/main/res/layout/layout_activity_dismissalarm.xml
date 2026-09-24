@@ -188,6 +188,36 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			tools:text="Snoozing for 10m" />
 
+		<LinearLayout
+			android:id="@+id/layout_status" android:orientation="vertical"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+			android:gravity="center_horizontal|top"
+			android:layout_margin="16dp">
+
+			<com.forrestguice.support.widget.ImageView android:id="@+id/status_sound"
+				android:layout_width="18dp" android:layout_height="18dp"
+				android:layout_marginBottom="8dp"
+				app:tint="?attr/text_disabledColor"
+				android:src="?attr/icActionSoundEnabled"
+				android:contentDescription="@string/alarmOption_ringtone_ringtone" />
+
+			<com.forrestguice.support.widget.ImageView android:id="@+id/status_silent"
+				android:layout_width="18dp" android:layout_height="18dp"
+				android:layout_marginBottom="8dp"
+				app:tint="?attr/text_disabledColor"
+				android:src="?attr/icActionSoundDisabled"
+				android:contentDescription="@string/alarmOption_ringtone_none" />
+
+			<com.forrestguice.support.widget.ImageView android:id="@+id/status_vibrate"
+				android:layout_width="18dp" android:layout_height="18dp"
+				android:layout_marginBottom="8dp"
+				app:tint="?attr/text_disabledColor"
+				android:src="?attr/icActionVibrationEnabled"
+				android:contentDescription="@string/alarmOption_vibrate" />
+
+		</LinearLayout>
+
 		<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_gravity="bottom|start"
 			app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
