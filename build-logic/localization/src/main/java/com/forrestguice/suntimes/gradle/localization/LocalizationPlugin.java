@@ -44,6 +44,15 @@ public abstract class LocalizationPlugin implements Plugin<Project>
             task.getInputDir().set(extension.getInputDir());
             task.getOutputDir().set(extension.getOutputDir());
         });
+
+        project.getTasks().register("cleanupTranslations", CleanupTranslations.class, task ->
+        {
+            task.setGroup("Translation");
+            task.getBaseNames().set(extension.getBaseNames());
+            task.getExcludeLocales().set(extension.getExcludeLocales());
+            task.getInputDir().set(extension.getInputDir());
+            task.getOutputDir().set(extension.getOutputDir());
+        });
     }
 
 }
