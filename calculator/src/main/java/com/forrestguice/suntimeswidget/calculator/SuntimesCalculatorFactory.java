@@ -97,7 +97,7 @@ public class SuntimesCalculatorFactory
         } catch (Exception e1) {
             calculator = fallbackCalculator();
             signalCreatedFallback(fallbackCalculatorDescriptor());
-            Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone);
+            Log.e("createCalculator", "fail! .oO( " + current.getReference() + "), so instantiating default: " + calculator.getClass().getName() + " :: " + timezone + " :: " + e1);
         }
         calculator.init(location, timezone);
 
