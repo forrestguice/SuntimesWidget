@@ -248,7 +248,7 @@ public class WidgetSettings
     public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE_ENABLED = "altitude_enabled";
-    public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = true;
+    public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = false;
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Phoenix";       // reassigned later by initDefaults
