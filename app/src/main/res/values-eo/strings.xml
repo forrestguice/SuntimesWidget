@@ -2053,7 +2053,7 @@
         :: Update ::
         Copied from default on 2026-05-14 
     -->
-    <string name="">Mezuma pozicio</string>    <!-- button (contentDescription) --> 
+    <string name="action_avgLocation">Mezuma pozicio</string>    <!-- button (contentDescription) --> 
     <string name="action_date">Dato</string>    <!-- checkbox label -->
     <string name="action_preview">Antaŭmontri</string>
     <string name="action_seek">Trovi</string>    <!-- checkbox label -->
