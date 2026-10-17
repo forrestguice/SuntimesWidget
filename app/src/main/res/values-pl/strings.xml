@@ -2192,7 +2192,7 @@
     <string name="settings_ui_showEquinoxDate_summary">Wyświetl datę wraz z czasem do najbliższego przesilenia/równonocy.</string>
     <string name="settings_ui_showMoonPhaseDate">Daty faz Księżyca</string>
     <string name="settings_ui_showMoonPhaseDate_summary">Wyświetl daty przy fazach Księżyca.</string>
-    <string name="settings_ui_showcoordinates">Wyświetl współrzędnes</string>
+    <string name="settings_ui_showcoordinates">Wyświetl współrzędne</string>
     <string name="settings_ui_showcoordinates_summary">Wyświetl współrzędne lokalizacji na pasku akcji.</string>
     <string name="solarevents_event_equinox_autumnal">równonoc jesienna</string>    <!-- solarevents_* array value; optional if arrays are overridden by translation -->
     <string name="table_header_dawn">Świt</string>    <!-- table title -->
