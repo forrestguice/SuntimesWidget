@@ -432,10 +432,10 @@
     <string name="timeMode_cross_midautumnal">Metà autunno verso l\'inverno</string>    <!-- setting -->
     <string name="timeMode_cross_midautumnal_short">Metà autunno</string>     <!-- setting -->
 
-    <string name="timeMode_cross_midwinter0">Imbolc (Metà stagione)</string>      <!-- setting --> <!-- uses pagan labels; cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
-    <string name="timeMode_cross_midsummer0">Lughnasadh (Metà stagione)</string>  <!-- setting -->
-    <string name="timeMode_cross_midspring0">Beltane (Metà stagione)</string>    <!-- setting --> <!-- uses pagan labels; cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
-    <string name="timeMode_cross_midautumnal0">Samhain (Metà stagione)</string>    <!-- setting -->
+    <string name="timeMode_cross_midwinter0">Imbolc (Metà inverno)</string>      <!-- setting --> <!-- uses pagan labels; cross-quarter in "astronomical winter"; Imbolc, the onset of spring -->
+    <string name="timeMode_cross_midsummer0">Lughnasadh (Metà estate)</string>  <!-- setting -->
+    <string name="timeMode_cross_midspring0">Beltane (Metà primavera)</string>    <!-- setting --> <!-- uses pagan labels; cross-quarter in "astronomical spring"; Beltane, the onset of summer -->
+    <string name="timeMode_cross_midautumnal0">Samhain (Metà autunno)</string>    <!-- setting -->
 
     <string name="timeMode_moon">Luna</string>                               <!-- label -->
     <string name="timeMode_moon_new">Luna nuova</string>                               <!-- setting -->
@@ -1232,8 +1232,8 @@
     <string name="alarms_widgetLabel_nextAlarm_error">Errore caricamento!</string>            <!-- widget text (null/missing error) -->
 
     <string name="alarmtile_dialogmsg_none">Nessuna sveglia impostata.</string>
-    <string name="alarmtile_dialogmsg_format0">La prossima sveglia è alle <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>     <!-- TODO: should be prulalised "all\'1:00" (any minute, both AM and PM if 12-hour, just AM if 24-hour)/"a 0:00" (any minute, midnight/midday if 12-hour, just midnight if 24-hour)/"alle <others>" -->
-    <string name="alarmtile_dialogmsg_format1">La prossima sveglia è alle <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format0">Prossima sveglia: <xliff:g example="7:00 AM" id="time">%1$s</xliff:g>, <xliff:g example="7h 30m from now" id="timeUntil">%2$s</xliff:g>.</string>
+    <string name="alarmtile_dialogmsg_format1">Prossima sveglia: <xliff:g example="6:30 AM" id="time">%1$s</xliff:g> (<xliff:g example="30m before sunrise" id="eventPhrase">%2$s</xliff:g>), <xliff:g example="7h 30m from now" id="timeUntil">%3$s</xliff:g>.</string>
 
     <string name="alarms_label_hardwarebuttons">Pulsanti fisici</string>
     <string name="alarms_label_hardwarebuttons_summary"><xliff:g example="Snooze" id="action">%s</xliff:g></string>
@@ -1436,6 +1436,7 @@
     <string name="place_label_AN">Antartide</string>
     <string name="place_label_AF">Africa</string>
     <string name="place_label_AF_EG">Africa (Egitto)</string>
+    <string name="place_label_AF_SD">Africa (Sudan)</string>
     <string name="place_label_AS">Asia</string>
     <string name="place_label_AS_CN">Asia (Cina)</string>
     <string name="place_label_AS_IN">Asia (India)</string>
@@ -1444,6 +1445,8 @@
     <string name="place_label_AS_JP">Asia (Giappone)</string>
     <string name="place_label_AS_PK">Asia (Pakistan)</string>
     <string name="place_label_AS_SA">Asia (Arabia Saudita)</string>
+    <string name="place_label_AS_TR">Asia (Turchia)</string>
+    <string name="place_label_AS_SY">Asia (Siria)</string>
     <string name="place_label_AS_RU">Asia (Russia)</string>
     <string name="place_label_AS_VN">Asia (Vietnam)</string>
     <string name="place_label_EU">Europa</string>
@@ -1465,15 +1468,16 @@
     <string name="place_label_EU_SE">Europa (Svezia)</string>
     <string name="place_label_NA">America del Nord</string>
     <string name="place_label_NA_CA">America del Nord (Canada)</string>
-    <string name="place_label_NA_MX">Nord America (Messico)</string>
+    <string name="place_label_NA_MX">America del Nord (Messico)</string>
     <string name="place_label_NA_US">America del Nord (USA)</string>
-    <string name="place_label_NA_US_W">Nord America (USA, Ovest)</string>
-    <string name="place_label_NA_US_S">Nord America (USA, Sud)</string>
-    <string name="place_label_NA_US_NE">Nord America (USA, Nord Est)</string>
-    <string name="place_label_NA_US_MW">Nord America (USA, Midwest)</string>
+    <string name="place_label_NA_US_W">America del Nord (USA, Ovest)</string>
+    <string name="place_label_NA_US_S">America del Nord (USA, Sud)</string>
+    <string name="place_label_NA_US_NE">America del Nord (USA, Nordest)</string>
+    <string name="place_label_NA_US_MW">America del Nord (USA, Midwest)</string>
+    <string name="place_label_NA_US_NP">America del Nord (USA, Parchi nazionali)</string>
     <string name="place_label_OC">Oceania</string>
     <string name="place_label_OC_AU">Oceania (Australia)</string>
-    <string name="place_label_SA">America del Sud e Centrale</string>
+    <string name="place_label_SA">America Meridionale e Centrale</string>
     <string name="place_label_SA_AR">Argentina</string>
     <string name="place_label_SA_BR">Brasile</string>
     <string name="place_label_SA_BO">Bolivia</string>
@@ -1716,7 +1720,7 @@
         <item>Ceco</item>
         <item>Cinese Semplificato</item>
         <item>Arabo</item>
-        <item>Slovak</item>    <!-- TODO -->
+        <item>Slovacco</item>
     </string-array>  <!-- these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->
@@ -2136,7 +2140,7 @@
     ]]></string>
 
     <string name="about_translations_field"><![CDATA[<b>Traduzioni in:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> di <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="about_translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> a cura di <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="about_authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>
     <string name="about_authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
