@@ -1,5 +1,17 @@
 ### ~
 
+### v0.17.6 (2026-10-20)
+* fixes bug where "time4a-simple and time4a-noaa calculators fail to load" (#989).
+* fixes bug where "set bedtime from alarm" ignores the alarm offset (before/after).
+* miscellaneous alarm ui; adds a "no sound" status icon to the dismiss screen.
+* changes the default for the `use elevation` option. The altitude based adjustments are not accurate in all contexts so this option is now disabled by default to avoid potential confusion.
+* adds world places; 30 places (Canada, Alaska, and US North East).
+* adds world places; 23 places (China); fixes place tag `MN` (Mongolia).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#977 by James Liu).
+* updates translation to Slovak (#978 by padi-sk).
+* updates translation to Italian (#988 by McCio).
+* updates translation to Polish and Esperanto (eo, pl) (#992 by Verdulo).
+
 ### v0.17.5 (2026-08-30)
 * fixes bug where "date widgets display wrong month names" (#970).
 * fixes bug where "object height popup shows the wrong units label" (#969).

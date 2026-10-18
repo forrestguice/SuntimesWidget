@@ -1,0 +1,6 @@
+- fixes bug where "time4a-simple and time4a-noaa calculators fail to load" (#989).
+- fixes bug where "set bedtime from alarm" ignores the alarm offset.
+- updates translations to Simplified Chinese and Traditional Chinese.
+- updates translation to Slovak.
+- updates translation to Italian.
+- updates translation to Polish and Esperanto.
