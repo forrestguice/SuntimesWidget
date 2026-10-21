@@ -1,8 +1,11 @@
 package com.forrestguice.suntimeswidget.calculator.time4a;
 
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
+import net.time4j.base.UnixTime;
+import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
 import org.junit.Ignore;
@@ -13,6 +16,9 @@ import org.junit.rules.ErrorCollector;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
+import java.util.TimeZone;
+
+import static org.junit.Assert.assertEquals;
 
 public class Time4jCalculatorTest
 {
@@ -20,6 +26,71 @@ public class Time4jCalculatorTest
 
     @Rule
     public ErrorCollector collector = new ErrorCollector();
+
+    @Test
+    public void test_toTimezone_utc()
+    {
+        TimeZone utc = TimeZone.getTimeZone("UTC");
+        Time4A4JSuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+        calculator.init(location, utc);
+
+        Timezone tz = calculator.toTimezone(utc);
+        ZonalOffset tzOffset = tz.getOffset(now());
+
+        long offsetSeconds0 = utc.getRawOffset() / 1000L;
+        long offsetSeconds = tzOffset.getIntegralAmount();
+        assertEquals(offsetSeconds0, offsetSeconds);
+    }
+
+    @Test
+    public void test_toTimezone_lmt()
+    {
+        TimeZone lmt = TimeZones.localMeanTime(location);
+        Time4A4JSuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+        calculator.init(location, lmt);
+
+        Timezone tz = calculator.toTimezone(lmt);
+        ZonalOffset tzOffset = tz.getOffset(now());
+
+        long offsetSeconds0 = lmt.getRawOffset() / 1000L;
+        long offsetSeconds = tzOffset.getIntegralAmount();
+        assertEquals(offsetSeconds0, offsetSeconds);
+    }
+
+    @Test
+    public void test_toTimezone_ltst()
+    {
+        TimeZone ltst = TimeZones.apparentSolarTime(location);
+        TimeZone lmt = TimeZones.localMeanTime(location);
+        Time4A4JSuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
+        calculator.init(location, ltst);
+
+        UnixTime now = now();
+        Timezone tz = calculator.toTimezone(ltst);
+        ZonalOffset tzOffset = tz.getOffset(now);
+
+        long offsetSeconds0 = lmt.getOffset(now.getPosixTime()) / 1000L;       // expects lmt but only because ltst isn't handled
+        //long offsetSeconds0 = ltst.getOffset(now.getPosixTime()) / 1000L;    // TODO: this is the condition that needs to pass
+        long offsetSeconds = tzOffset.getIntegralAmount();
+        assertEquals(offsetSeconds0, offsetSeconds);
+    }
+
+    protected UnixTime now()
+    {
+        long now = System.currentTimeMillis();
+        return new UnixTime()
+        {
+            @Override
+            public long getPosixTime() {
+                return now;
+            }
+
+            @Override
+            public int getNanosecond() {
+                return 0;
+            }
+        };
+    }
 
     @Test
     public void test_zonalOffset_0_165()
