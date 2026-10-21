@@ -1,9 +1,7 @@
-package com.forrestguice.suntimeswidget.calculator;
+package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.time4a.Time4ACCSuntimesCalculator;
 
 import net.time4j.tz.ZonalOffset;
 
@@ -18,6 +16,8 @@ import java.util.Calendar;
 
 public class Time4jCalculatorTest
 {
+    protected Location location = new Location("TEST", "33", "-112", "0");
+
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
