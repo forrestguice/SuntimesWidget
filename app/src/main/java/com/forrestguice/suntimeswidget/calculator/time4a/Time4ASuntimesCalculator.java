@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.annotation.Nullable;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -41,6 +42,7 @@ import net.time4j.tz.TZID;
 import net.time4j.tz.Timezone;
 import net.time4j.tz.ZonalOffset;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -358,10 +360,30 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return sunshine.isPresent(moment);
     }
 
+    protected Timezone localMeanTime()
+    {
+        try {
+            return net.time4j.tz.Timezone.of(localMeanZonalOffset());
+        } catch (IllegalArgumentException e) {
+            Log.e("Time4A", "toTimezone: falling back to platform timezone!", e);
+            return Timezone.ofPlatform();
+        }
+    }
+    protected TZID localMeanZonalOffset() {
+        return ZonalOffset.atLongitude(BigDecimal.valueOf(this.solarTime.getLongitude()));
+    }
+
     protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input )
     {
+        String tzID = input.getID();
+        if (TimeZones.LocalMeanTime.TIMEZONEID.equals(tzID) || TimeZones.ApparentSolarTime.TIMEZONEID.equals(tzID)) {
+            return localMeanTime();
+        } else {
+            return toTimezone(input, Timezone.ofPlatform().getID());  // ofSystem().getID()
+        }
+    }
+    protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input, TZID tzFallback ) {
         String tzString = "java.util.TimeZone~" + input.getID();
-        TZID tzFallback = Timezone.ofPlatform().getID();  // ofSystem().getID();
         return net.time4j.tz.Timezone.of(tzString, tzFallback);
     }
 
