@@ -2231,4 +2231,29 @@
     <string name="worldmap_projection_sinusoidal">Mercator equal-area</string>    <!-- aka sinusoidal, Sanson-Flamsteed, Mercator equal-area -->    <!-- TODO -->
     <string name="worldmap_projection_vandergrinten">Van der Grinten</string>    <!-- TODO -->
 
+
+    <!--
+        :: Update ::
+        Copied from default on 2026-09-27 
+    -->
+    <string name="place_label_AF_SD">Africa (Sudan)</string>    <!-- TODO -->
+    <string name="settings_appearance_fontfamily">Font:</string>    <!-- spinner label -->    <!-- TODO -->
+    <string name="themes_configLabel_themeBackground_dark_monet">Dark (Monet)</string>    <!-- dark material background -->    <!-- TODO -->
+    <string name="themes_configLabel_themeBackground_dark_monet_t">Dark (Monet) (T)</string>    <!-- dark material background -->    <!-- TODO -->
+    <string name="themes_configLabel_themeBackground_light_monet">Light (Monet)</string>    <!-- light material background-->    <!-- TODO -->
+    <string name="themes_configLabel_themeBackground_light_monet_t">Light (Monet) (T)</string>    <!-- light material background-->    <!-- TODO -->
+    <string name="themes_configLabel_themeCutoutTime">Cutout</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="themes_configLabel_themeItalicTime">Italic</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="themes_configLabel_themeOutlineTime">Outline</string>    <!-- checkbox label -->    <!-- TODO -->
+    <string name="themes_widgetThemes_dark_md2">Dark (MD2)</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_dark_md2_translucent">Dark (MD2) [T]</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_dark_md3">Dark (Material)</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_dark_md3_translucent">Dark (Material) [T]</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_light_md2">Light (MD2)</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_light_md2_translucent">Light (MD2) [T]</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_light_md3">Light (Material)</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_light_md3_translucent">Light (Material) [T]</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_sys_md2">System (MD2)</string>    <!-- default widget theme name -->    <!-- TODO -->
+    <string name="themes_widgetThemes_sys_md3">System (Material)</string>    <!-- default widget theme name -->    <!-- TODO -->
+
 </resources>

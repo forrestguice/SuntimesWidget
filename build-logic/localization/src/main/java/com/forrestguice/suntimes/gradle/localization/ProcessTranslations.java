@@ -1,4 +1,4 @@
-package com.forrestguice.suntimes.gradle.localization;/*
+/*
     Copyright (C) 2026 Forrest Guice
     This file is part of SuntimesWidget.
 
@@ -16,11 +16,15 @@ package com.forrestguice.suntimes.gradle.localization;/*
      along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+package com.forrestguice.suntimes.gradle.localization;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
@@ -38,10 +42,13 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -263,6 +270,75 @@ public abstract class ProcessTranslations extends DefaultTask
         } catch (IOException e) {
             getLogger().error("Failed to write report", e);
         }
+    }
+
+    protected void checkForIllegalItems(String parent, String baseName, Document baseDocument, Document revised)
+    {
+        String reportTag = (parent + "/" + baseName + ".xml");
+        Set<String> baseStringNames = collectNames(baseDocument, "string");
+        Set<String> translatableFalse = collectNames(baseDocument, "string", false);
+        NodeList nodes0 = revised.getElementsByTagName("string");
+        for (int i=0; i<nodes0.getLength(); i++)
+        {
+            Element element = (Element) nodes0.item(i);
+            String name = element.getAttribute("name");
+            if (!baseStringNames.contains(name))
+            {
+                String message = MessageFormat.format("{0} contains string not present in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
+            }
+            if (translatableFalse.contains(name)) {
+                String message = MessageFormat.format("{0} contains string marked translatable=false in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
+            }
+            if (element.hasAttribute("translatable"))
+            {
+                boolean isTranslatable = Boolean.parseBoolean(element.getAttribute("translatable"));
+                if (!isTranslatable) {
+                    String message = MessageFormat.format("{0} contains string marked translatable=false! {1}", reportTag, name);
+                    getLogger().error(message);
+                    appendLineToReport("warnings", message);
+                }
+            }
+        }
+
+        Set<String> baseStringArrayNames = collectNames(baseDocument, "string-array");
+        NodeList nodes1 = revised.getElementsByTagName("string-array");
+        for (int i=0; i<nodes1.getLength(); i++)
+        {
+            Element element = (Element) nodes1.item(i);
+            String name = element.getAttribute("name");
+            if (!baseStringArrayNames.contains(name)) {
+                String message = MessageFormat.format("{0} contains string-array not present in default! {1}", reportTag, name);
+                getLogger().error(message);
+                appendLineToReport("warnings", message);
+            }
+        }
+    }
+
+    protected Set<String> collectNames(Document document, String tag) {
+        return collectNames(document, tag, null);
+    }
+    protected Set<String> collectNames(Document document, String tag, Boolean translatable)
+    {
+        Set<String> set = new TreeSet<>();
+        NodeList nodes = document.getElementsByTagName(tag);
+        for (int i=0; i<nodes.getLength(); i++)
+        {
+            Element element = (Element) nodes.item(i);
+            if (translatable != null)
+            {
+                if ((translatable && Utils.isTranslatable(element)) ||
+                        (!translatable && !Utils.isTranslatable(element))) {
+                    set.add(element.getAttribute("name"));
+                }
+            } else {
+                set.add(element.getAttribute("name"));
+            }
+        }
+        return set;
     }
 
 }

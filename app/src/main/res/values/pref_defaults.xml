@@ -3,7 +3,7 @@
 
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
     <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
-    <bool name="def_appwidget_0_general_altitude_enabled" translatable="false">true</bool>
+    <bool name="def_appwidget_0_general_altitude_enabled" translatable="false">false</bool>
     <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
     <bool name="def_appwidget_0_general_showcompare" translatable="false">true</bool>
     <string name="def_appwidget_0_general_comparemode" translatable="false">TOMORROW</string>

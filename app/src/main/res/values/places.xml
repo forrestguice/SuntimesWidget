@@ -121,7 +121,6 @@
         <item>"Freetown", 8.48703, -13.23263, 45, [capital][SL]</item>      <!-- Sierra Leone -->
         <item>"Gaborone", -24.65791, 25.90774, 1010, [capital][BW]</item>   <!-- Botswana -->
         <item>"Harare", -17.8165, 30.9167, 1433, [capital][ZW]</item>       <!-- Zimbabwe -->
-
         <item>"Juba", 4.84042, 31.58891, 505, [capital][SS]</item>          <!-- South Sudan [SS-EC|Central Equitoria] -->
         <item>"Kampala", 0.3138, 32.5290, 1203, [capital][UG]</item>        <!-- Uganda -->
         <item>"Kano", 11.99000, 8.53609, 488, [NG]</item>                   <!-- Nigeria -->
@@ -188,6 +187,7 @@
         <item>"Ashdod", 31.79802, 34.6307, 0, [IL]</item>
         <item>"Ashgabat", 37.9375, 58.38, 219, [capital][TM]</item>
         <item>"Amman", 31.95392, 35.91053, 865, [capital][JO]</item>
+        <item>"Petra", 30.32876, 35.44229, 875, [JO]</item>
         <item>"Baku", 40.39404, 49.8658, -28, [capital][AZ]</item>
         <item>"Bangkok", 13.75653, 100.49333, 2, [capital][TH]</item>
         <item>"Beirut", 33.87861, 35.48003, 0, [capital][LB]</item>
@@ -214,6 +214,7 @@
         <item>"Nablus", 32.22113, 35.26094, 530, [PS]</item>
         <item>"Nicosia", 35.1922, 33.3273, 140, [capital][CY]</item>
         <item>"Phnom Penh", 11.57604, 104.92290, 27, [capital][KH]</item>
+        <item>"Angkor Wat", 13.4124, 103.86569, 25, [KH]</item>
         <item>"Pyongyang", 39.0291, 125.6720, 28, [capital][KP]</item>
         <item>"Salalah", 17.01073, 54.17174, 0, [OM]</item>
         <item>"Sanaa", 15.36238, 44.19534, 2250, [capital][YE]</item>
@@ -229,17 +230,40 @@
     </string-array>
     <string-array name="places_AS_CN">    <!-- China -->
         <item>"Beijing", 39.9042, 116.4074, 0, [capital][CN-BJ]</item>
+        <item>"Changchun", 43.8778, 125.30137, 230, [capital][CN-JL]</item>
+        <item>"Changsha", 28.22314, 112.93752, 65, [capital][CN-HN]</item>
+        <item>"Chengdu", 30.65987, 104.06338, 495, [capital][CN-SC]</item>
         <item>"Chongqing", 29.57075, 106.50416, 244, [CN-CQ]</item>
+        <item>"Fuzhou", 26.06525, 119.28386, 5, [capital][CN-FJ]</item>
         <item>"Guangzhou", 23.134924, 113.23749, 21, [capital][CN-GD]</item>
+        <item>"Guiyang", 26.62032, 106.60735, 1310, [capital][CN-GZ]</item>
+        <item>"Haikou", 20.02809, 110.25516, 0, [capital][CN-HI]</item>
+        <item>"Hangzhou", 30.30799, 120.23271, 12, [capital][CN-ZJ]</item>
+        <item>"Harbin", 45.75424, 126.67818, 138, [capital][CN-HL]</item>
+        <item>"Hefei", 31.86079, 117.30506, 10, [capital][CN-AH]</item>
+        <item>"Hohhot", 40.80794, 111.66213, 1045, [capital][CN-NM]</item>
         <item>"Hong Kong", 22.3576, 113.9809, 0, [HK]</item>
         <item>"Kashgar", 39.47514, 75.99195, 1270, [CN-XJ]</item>
-        <item>"Lhasa", 29.6487, 91.0052, 3649, [capital][CN-XZ]</item>
+        <item>"Kunming", 25.07464, 102.72433, 1898, [capital][CN-YN]</item>
+        <item>"Jinan", 36.66122, 117.01562, 32, [capital][CN-SD]</item>
+        <item>"Lanzhou", 36.0527, 103.83955, 1515, [capital][CN-GS]</item>
+        <item>"Lhasa", 29.65611, 91.11805, 3655, [capital][CN-XZ]</item>
         <item>"Macau", 22.1634, 113.5284, 0, [CN-MO]</item>
+        <item>"Nanchang", 28.64212, 115.84766, 12, [capital][CN-JX]</item>
+        <item>"Nanjing", 32.00801, 118.74632, 5, [capital][CN-JS]</item>
+        <item>"Nanning", 22.81418, 108.37081, 80, [capital][CN-GX]</item>
         <item>"Shanghai", 31.2231, 120.9163, 0, [CN-SH]</item>
+        <item>"Shenyang", 41.79451, 123.40441, 48, [capital][CN-LN]</item>
         <item>"Shenzhen", 22.55307, 114.05560, 0, [CN-GD]</item>
+        <item>"Shijiazhuang", 38.04425, 114.50888, 72, [capital][CN-HE]</item>
+        <item>"Taiyuan", 37.85087, 112.55444, 790, [capital][CN-SX]</item>
         <item>"Tianjin", 39.07444, 117.17202, 5, [CN-TJ]</item>
         <item>"Ürümqi", 44.03198, 87.80816, 862, [capital][CN-XJ]</item>
         <item>"Wuhan", 30.557477, 114.25426, 37, [capital][CN-HB]</item>
+        <item>\"Xi\'an\", 34.26549, 108.94965, 400, [capital][CN-SN]</item>
+        <item>"Xining", 36.6234, 101.77249, 2442, [capital][CN-QH]</item>
+        <item>"Yinchuan", 38.48529, 106.22628, 1010, [capital][CN-NX]</item>
+        <item>"Zhengzhou", 34.79042, 113.67691, 95, [capital][CN-HA]</item>
     </string-array>
     <string-array name="places_AS_IN">    <!-- India -->
         <item>"Ahmedabad", 23.0203, 72.5097, 49, [IN-GJ]</item>
@@ -261,6 +285,7 @@
         <item>"Itanagar", 27.09791, 93.62114, 340, [capital][IN-AR]</item>
         <item>"Jaipur", 26.90756, 75.80553, 430, [capital][IN-RJ]</item>
         <item>"Kanpur", 26.45568, 80.33398, 130, [IN-UP]</item>
+        <item>"Taj Mahal", 27.17484, 78.04215, 162, [IN-UP]</item>
         <item>"Kochi", 9.93626, 76.24488, 6, [IN-KL]</item>
         <item>"Kohima", 25.67413, 94.10867, 1445, [capital][IN-NL]</item>
         <item>"Kokrajhar", 26.4018, 90.2607, 51, [IN-AS]</item>
@@ -290,6 +315,7 @@
         <item>"Kerman", 30.28098, 57.0859, 1760, [IR]</item>                    <!-- Kerman -->
         <item>"Kermanshah", 34.32426, 47.07383, 1350, [IR]</item>               <!-- Kermanshah -->
         <item>"Mashhad", 36.30091, 59.59229, 995, [IR]</item>                   <!-- Razavi Khorasan -->
+        <item>"Persepolis", 29.93603, 52.88998, 1628, [IR]</item>
         <item>"Qom", 34.63283, 50.8848, 930, [IR]</item>                        <!-- Qom -->
         <item>"Rasht", 37.27126, 49.59209, 5, [IR]</item>                       <!-- Gilan -->
         <item>"Shiraz", 29.60519, 52.53324, 1500, [IR]</item>                   <!-- Fars -->
@@ -468,6 +494,7 @@
         <item>\"Newport, Wales\", 51.57923, -3.001285, 60, [GB-WLS]</item>
         <item>"Nottingham", 52.94977, -1.15329, 60, [GB-ENG]</item>
         <item>"Sheffield", 53.3835, -1.46015, 130, [GB-ENG]</item>
+        <item>"Stonehenge", 51.17881, -1.82625, 872, [GB-ENG]</item>
         <item>"Swansea", 51.613,-3.98091, 180, [GB-WLS]</item>
         <item>"Truro", 50.2648, -5.0827, 64, [GB-ENG]</item>
         <item>"Wrexham", 53.04318, -3.0008, 140, [GB-WLS]</item>
@@ -612,11 +639,40 @@
         <item>"Saskatoon", 52.14982, -106.68429, 480, [CA-SK]</item>                             <!-- Saskatchewan -->
         <item>\"St. John\'s, Newfoundland\", 47.56037, -52.73581, 0, [capital][CA-NL]</item>     <!-- Newfoundland and Labrador -->
         <item>"Toronto", 43.6159, -79.3769, 78, [capital][CA-ON]</item>                          <!-- Ontario -->
-        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670, [CA-YT]</item>                   <!-- Yukon -->
+        <item>\"Whitehorse, Yukon\", 60.71519, -135.04725, 670, [capital][CA-YT]</item>          <!-- Yukon -->
         <item>"Winnipeg", 49.89908, -97.12469, 239, [capital][CA-MB]</item>                      <!-- Manitoba -->
         <item>"Vancouver", 49.27934, -123.13920, 0, [CA-BC]</item>                               <!-- British Columbia -->
         <item>\"Victoria, British Columbia\", 48.40911, -123.37295, 0, [capital][CA-BC]</item>   <!-- British Columbia -->
         <item>"Yellowknife", 62.45498, -114.36085, 200, [capital][CA-NT]</item>                  <!-- Northwest Territories -->
+
+
+        <item>\"Banff, Alberta\", 51.17885, -115.56989, 1385, [CA-AB]</item>                     <!-- Alberta, Banff National Park -->
+        <item>\"Jasper, Alberta\", 52.87325, -118.08222, 1060, [CA-AB]</item>                    <!-- Alberta, Jasper National Park -->
+        <item>\"Waterton, Alberta\", 49.05128, -113.91612, 1315, [CA-AB]</item>                  <!-- Alberta, Waterton Lakes National Park -->
+
+        <item>\"Revelstoke, British Columbia\", 50.99356, -118.19189, 455, [CA-BC]</item>        <!-- British Columbia; Mount Revelstroke National Park -->
+
+        <item>\"Prince Albert, Saskatchewan\", 53.21763, -105.77706, 445, [CA-SK]</item>         <!-- Saskatchewan; Prince Albert National Park -->
+
+        <item>"Inuvik", 68.35716, -133.71651, 25, [CA-NT]</item>                                 <!-- Northwest Territories -->
+        <item>"Dawson City", 64.05594, -139.43595, 320, [CA-YT]</item>                           <!-- Yukon -->
+
+        <item>"Chibougamau", 49.911321, -74.35614, 395, [CA-QC]</item>                           <!-- Quebec -->
+        <item>\"Saguenay, Quebec\", 48.43053, -71.06121, 0, [CA-QC]</item>                       <!-- Quebec -->
+        <item>"Sherbrooke", 45.40162, -71.88648, 145, [CA-QC]</item>                             <!-- Quebec -->
+
+        <item>\"Brandon, Manitoba\", 49.84223, -99.9618, 3909, [CA-MB]</item>                    <!-- Manitoba -->
+        <item>\"Thompson, Manitoba\", 55.74508, -97.85081, 205, [CA-MB]</item>                   <!-- Manitoba -->
+
+        <item>"\Killarney, Ontario\", 45.97252, -81.51082, 180, [CA-ON]</item>                   <!-- Ontario; Killarney Provincial Park -->
+        <item>\"Niagara Falls", 43.09039, -79.0722, 170, [CA-ON]</item>                          <!-- Ontario -->
+        <item>"Thunder Bay", 48.37486, -89.21226, 0, [CA-ON]</item>                              <!-- Ontario -->
+
+        <item>"Igloolik", 69.37724, -81.79398, 0, [CA-NU]</item>                                 <!-- Nunavut -->
+        <item>"Rankin Inlet", 62.81238, -92.07242, 0, [CA-NU]</item>                             <!-- Nunavut -->
+        <item>\"Baker Lake, Nunavut\", 64.31443, -96.01026, 0, [CA-NU]</item>                    <!-- Nunavut -->
+        <item>"Cambridge Bay", 69.11398, -105.05948, 0, [CA-NU]</item>                           <!-- Nunavut -->
+
     </string-array>
 
     <string-array name="places_NA_US">
@@ -625,8 +681,16 @@
     </string-array>
     <string-array name="places_NA_US_W">
         <item>\"Anchorage, AK\", 61.15496, -150.05585, 31, [US-AK]</item>
-        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
+        <item>\"Fairbanks, AK\", 64.83858, -147.73324, 135, [US-AK]</item>
         <item>\"Juneau, AK\", 58.29915, -134.42642, 0, [capital][US-AK]</item>
+        <item>\"Ketchikan, AK\", 55.34249, -131.64867, 30, [US-AK]</item>
+        <item>\"Kodiak, AK\", 57.79227, -152.38861, 0, [US-AK]</item>
+        <item>\"Kotzebue, AK\", 66.89488, -162.59726, 6, [US-AK]</item>
+        <item>\"Nome, AK\", 64.49524, -165.39379, 0, [US-AK]</item>
+        <item>\"Prudhoe Bay, AK\", 70.18822, -148.43885, 15, [US-AK]</item>
+        <item>\"Sitka, AK\", 57.0498, -135.33[836, 8, [US-AK]</item>
+        <item>\"Utqiagvik, AK\", 71.29028,-156.79624, 0, [US-AK]</item>
+
         <item>"Phoenix", 33.45579, -111.94580, 385, [capital][US-AZ]</item>
         <item>\"Kykotsmovi, AZ\", 35.87379, -110.6009, 1731, [US-AZ]</item>
         <item>\"Window Rock, AZ\", 35.6668, -109.0821, 2044, [US-AZ]</item>
@@ -663,7 +727,11 @@
         <item>\"Concord, NH\", 43.20707, -71.54589, 83, [capital][US-NH]</item>
         <item>\"Trenton, NJ\", 40.23259, -74.74053, 18, [capital][US-NJ]</item>
         <item>\"Albany, NY\", 42.65708, -73.77074, 2, [capital][US-NY]</item>
+        <item>\"Buffalo, NY\", 42.88635, -78.87804, 180, [US-NY]</item>
         <item>"New York City", 40.68620, -74.02619, 0, [US-NY]</item>
+        <item>\"Rochester, NY\", 43.15407, -77.60182, 160, [US-NY]</item>
+        <item>\"Syracuse, NY\", 43.0511, -76.15267, 125, [US-NY]</item>
+        <item>\"Erie, PA\", 42.12947, -80.08517, 198, [US-PA]</item>
         <item>\"Harrisburg, PA\", 40.265, -76.88241, 100, [capital][US-PA]</item>
         <item>"Philadelphia", 39.94704, -75.15252, 12, [US-PA]</item>
         <item>"Pittsburgh", 40.43997, -79.97385, 300, [US-PA]</item>
@@ -759,29 +827,29 @@
         <item>\"New River Gorge NP\", 37.83067, -81.06363, 760, [US-WV]</item>
         <item>\"Black Canyon of the Gunnison NP\", 38.56881, -107.73322, 2460, [US-CO]</item>
         <item>\"Canyonlands NP\", 38.45949, -109.82195, 1790, [US-UT]</item>
-        <item>\"Guadalupe Mountains [NP]", 31.89645, -104.82796, 1780, [US-NM][US-TX]</item>
+        <item>\"Guadalupe Mountains [NP]\", 31.89645, -104.82796, 1780, [US-NM][US-TX]</item>
         <item>\"Carlsbad Caverns NP\", 32.17502, -104.44322, 1340, [US-NM]</item>
-        <item>\"Crater Lake NP", 42.91114, -122.14353, 2150, [US-OR]</item>
-        <item>\"Voyageurs [NP]", 48.43552, -92.8509, 340, [US-MN]</item>
-        <item>\"Hot Springs [NP]", 34.5172, -93.04611, 305, [US-AR]</item>
+        <item>\"Crater Lake NP\", 42.91114, -122.14353, 2150, [US-OR]</item>
+        <item>\"Voyageurs [NP]\", 48.43552, -92.8509, 340, [US-MN]</item>
+        <item>\"Hot Springs [NP]\", 34.5172, -93.04611, 305, [US-AR]</item>
         <item>\"Capitol Reef NP\", 38.29139, -111.26162, 1670, [US-UT]</item>
-        <item>\"Indiana Dunes [NP]", 41.63383, -87.0548, 190, [US-IN]</item>
-        <item>\"Isle Royale [NP]", 47.99406, -88.91556, 250, [US-MI]</item>
-        <item>\"Great Sand Dunes [NP]", 37.73971, -105.51774, 2485, [US-CO]</item>
-        <item>\"Kobuk Valley [NP]", 67.09513, -158.9463, 55, [US-AK]</item>
-        <item>\"Denali NP", 63.73105, -148.91759, 535, [US-AK]</item>
-        <item>\"Lake Clark [NP]", 60.19743, -154.32293, 90, [US-AK]</item>
-        <item>\"Congaree NP", 33.82989, -80.82373, 60, [US-SC]</item>
-        <item>\"Theodore Roosevelt [NP]", 46.91599, -103.52607, 690, [US-ND]</item>
-        <item>\"Glaciar Bay [NP]", 58.45443, -135.88331, 5, [US-AK]</item>
-        <item>\"Kenai Fjords [NP]", 60.18838, -149.6314, 125, [US-AK]</item>
-        <item>\"Katmai [NP]", 58.55597, -155.77836, 20, [US-AK]</item>
-        <item>\"Gates of the Arctic [NP]", 66.91786, -151.51397, 195, [US-AK]</item>
-        <item>\"Wrangell–St. Elias [NP]", 62.02123, -145.36458, 400, [US-AK]</item>
+        <item>\"Indiana Dunes NP\", 41.63383, -87.0548, 190, [US-IN]</item>
+        <item>\"Isle Royale NP\", 47.99406, -88.91556, 250, [US-MI]</item>
+        <item>\"Great Sand Dunes NP\", 37.73971, -105.51774, 2485, [US-CO]</item>
+        <item>\"Kobuk Valley NP\", 67.09513, -158.9463, 55, [US-AK]</item>
+        <item>\"Denali NP\", 63.73105, -148.91759, 535, [US-AK]</item>
+        <item>\"Lake Clark NP\", 60.19743, -154.32293, 90, [US-AK]</item>
+        <item>\"Congaree NP\", 33.82989, -80.82373, 60, [US-SC]</item>
+        <item>\"Theodore Roosevelt NP\", 46.91599, -103.52607, 690, [US-ND]</item>
+        <item>\"Glaciar Bay NP\", 58.45443, -135.88331, 5, [US-AK]</item>
+        <item>\"Kenai Fjords NP\", 60.18838, -149.6314, 125, [US-AK]</item>
+        <item>\"Katmai NP\", 58.55597, -155.77836, 20, [US-AK]</item>
+        <item>\"Gates of the Arctic NP\", 66.91786, -151.51397, 195, [US-AK]</item>
+        <item>\"Wrangell–St. Elias NP\", 62.02123, -145.36458, 400, [US-AK]</item>
         <item>\"Channel Islands NP\", 34.01967,-119.68448, 0, [US-CA]</item>
-        <item>\"Biscayne [NP]", 25.46423, -80.33566, 0, [US-FL]</item>
-        <item>\"Dry Tortugas [NP]", 24.62837, -82.87312, 0, [US-FL]</item>
-        <item>\"Cuyahoga Valley NP", 41.26172, -81.56035, 200, [US-OH]</item>
+        <item>\"Biscayne NP\", 25.46423, -80.33566, 0, [US-FL]</item>
+        <item>\"Dry Tortugas NP\", 24.62837, -82.87312, 0, [US-FL]</item>
+        <item>\"Cuyahoga Valley NP\", 41.26172, -81.56035, 200, [US-OH]</item>
     </string-array>
 
     <!-- Oceania -->
@@ -934,6 +1002,7 @@
         <item>"Arequipa", -16.4035, -71.54836, 2335, [capital][PE-ARE]</item>           <!-- Arequipa -->
         <item>"Chimbote", -9.07456, -78.59356, 5, [capital][PE-ANC]</item>              <!-- Ancash -->
         <item>"Cusco", -13.53171, -71.96829, 3400, [capital][PE-CUS]</item>             <!-- Cusco -->
+        <item>"Machu Picchu", -13.16447, -72.54508, 2435, [PE-CUS]</item>               <!-- Cusco -->
         <item>"Huancayo", -12.06811, -75.21007, 3260, [capital][PE-JUN]</item>          <!-- Huancayo -->
         <item>\"Ica, Peru\", -14.06406, -75.72915, 405, [capital][PE-ICA]</item>        <!-- Ica -->
         <item>\"Trujillo, Peru\", -8.11184, -79.02877, 35, [capital][PE-LAL]</item>     <!-- La Libertad -->

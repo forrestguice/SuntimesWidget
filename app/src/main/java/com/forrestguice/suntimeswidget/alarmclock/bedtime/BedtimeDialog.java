@@ -717,9 +717,10 @@ public class BedtimeDialog extends DialogBase
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, hour, minute, 0, location, flags, BedtimeSettings.loadPrefBedtimeReminder(context));
     }
-    protected void configBedtimeOffsetEvent(final Context context, @Nullable BedtimeItem item, String event, @Nullable Location location, long offset, @Nullable String flags, boolean modifyEnabled, boolean enabled)
+    protected void configBedtimeOffsetEvent(final Context context, @Nullable BedtimeItem item, String event, @Nullable Location location, long eventOffset, @Nullable String flags, boolean modifyEnabled, boolean enabled, long offset)
     {
-        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, BedtimeSettings.getBedtimeOffOffset(context), flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
+        long notify_off_offset = eventOffset + BedtimeSettings.getBedtimeOffOffset(context);
+        configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFYOFF, event, location, -1, -1, notify_off_offset, flags, modifyEnabled, enabled && BedtimeSettings.loadPrefBedtimeAutoOff(context));
         configureBedtimeAt(context, item, BedtimeSettings.SLOT_BEDTIME_NOTIFY, event, location, -1, -1, offset, flags, modifyEnabled, enabled);
         BedtimeSettings.setAutomaticZenRule(context, BedtimeSettings.loadPrefBedtimeDoNotDisturb(context));
         BedtimeAlarmHelper.setBedtimeReminder_withEventInfo(context, event, location, offset, flags, BedtimeSettings.loadPrefBedtimeReminder(context));
@@ -751,7 +752,7 @@ public class BedtimeDialog extends DialogBase
                         if (wakeupItem != null)
                         {
                             if (wakeupItem.getEvent() != null) {
-                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.location, wakeupItem.offset - sleepTotalMs, wakeupItem.getAlarmFlags(), false, enabled);
+                                configBedtimeOffsetEvent(context, item, wakeupItem.getEvent(), wakeupItem.location, wakeupItem.offset, wakeupItem.getAlarmFlags(), false, enabled, wakeupItem.offset - sleepTotalMs);
 
                             } else {
                                 Calendar bedtime = Calendar.getInstance();

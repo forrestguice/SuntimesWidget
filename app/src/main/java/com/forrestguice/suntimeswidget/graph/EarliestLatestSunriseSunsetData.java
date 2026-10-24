@@ -23,10 +23,12 @@ import android.util.Log;
 import com.forrestguice.annotation.NonNull;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.TimeZones;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.settings.TimeMode;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * EarliestLatestSunriseSunsetData
@@ -34,6 +36,7 @@ import java.util.Calendar;
 public class EarliestLatestSunriseSunsetData
 {
     public double longitude = 0;
+    public boolean isLTST = false;
 
     public double early_sunrise_hour = -1;
     public int early_sunrise_day = -1;
@@ -56,9 +59,13 @@ public class EarliestLatestSunriseSunsetData
         long bench_start = System.nanoTime();
         EarliestLatestSunriseSunsetData result = new EarliestLatestSunriseSunsetData();
 
-        if (data.length > 0 && data[0] != null) {
+        if (data.length > 0 && data[0] != null)
+        {
             Location location0 = data[0].location();
             result.longitude = (location0 != null ? location0.getLongitudeAsDouble() : 0);
+
+            TimeZone timezone0 = data[0].timezone();
+            result.isLTST = (timezone0 != null) && TimeZones.ApparentSolarTime.TIMEZONEID.equals(timezone0.getID());
         }
 
         int i = 0;
@@ -68,7 +75,8 @@ public class EarliestLatestSunriseSunsetData
             Calendar risingEvent = ((d != null) ? d.sunriseCalendarToday() : null);
             if (risingEvent != null)
             {
-                double lmtRisingHour = LightGraphBitmap.lmtHour(risingEvent, result.longitude);
+                double lmtRisingHour = (result.isLTST ? LightGraphBitmap.tzHour(risingEvent)
+                        : LightGraphBitmap.lmtHour(risingEvent, result.longitude));
                 if (result.early_sunrise_hour == -1 || lmtRisingHour < result.early_sunrise_hour) {
                     result.early_sunrise_hour = lmtRisingHour;
                     result.early_sunrise_day = risingEvent.get(Calendar.DAY_OF_YEAR);
@@ -84,7 +92,8 @@ public class EarliestLatestSunriseSunsetData
             Calendar settingEvent = ((d != null) ? d.sunsetCalendarToday() : null);
             if (settingEvent != null)
             {
-                double lmtSettingHour = LightGraphBitmap.lmtHour(settingEvent, result.longitude);
+                double lmtSettingHour = (result.isLTST ? LightGraphBitmap.tzHour(settingEvent)
+                        : LightGraphBitmap.lmtHour(settingEvent, result.longitude));
                 if (result.early_sunset_hour == -1 || lmtSettingHour < result.early_sunset_hour) {
                     result.early_sunset_hour = lmtSettingHour;
                     result.early_sunset_day = settingEvent.get(Calendar.DAY_OF_YEAR);

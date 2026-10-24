@@ -1,4 +1,4 @@
-package com.forrestguice.suntimes.gradle.localization;/*
+/*
     Copyright (C) 2026 Forrest Guice
     This file is part of SuntimesWidget.
 
@@ -16,9 +16,10 @@ package com.forrestguice.suntimes.gradle.localization;/*
      along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+package com.forrestguice.suntimes.gradle.localization;
+
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -74,6 +74,8 @@ public abstract class UpdateTranslations extends ProcessTranslations
             }
         }
 
+        String reportTag = (parent + "/" + baseName + ".xml");
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -99,7 +101,6 @@ public abstract class UpdateTranslations extends ProcessTranslations
                 }
                 node.appendChild(revised.createTextNode("    "));
 
-                String reportTag = (parent + "/" + baseName + ".xml");
                 getLogger().warn("{} needs update! missing string: {}", reportTag, name);
                 appendLineToReport("actions", MessageFormat.format("{0} :: added string {1}", reportTag, name));
 
@@ -108,7 +109,7 @@ public abstract class UpdateTranslations extends ProcessTranslations
                 missingString.setTextContent(element.getTextContent());
                 node.appendChild(missingString);
 
-                String missingComment = getCommentAfter(element);
+                String missingComment = Utils.getCommentAfter(element);
                 if (missingComment != null && !missingComment.trim().equals("TODO")) {
                     node.appendChild(revised.createTextNode("    "));
                     node.appendChild(revised.createComment(missingComment));
@@ -133,14 +134,13 @@ public abstract class UpdateTranslations extends ProcessTranslations
                 missingStringArray.setAttribute("name", name);
                 missingStringArray.appendChild(revised.createTextNode("\n        "));
 
-                if (!containsOnlyItemReferences(element))
+                if (!Utils.containsOnlyItemReferences(element))
                 {
                     if (first) {
                         appendFirstComment(node, revised);
                         first = false;
                     }
 
-                    String reportTag = (parent + "/" + baseName + ".xml");
                     getLogger().warn("{} needs update! missing string-array: {}", reportTag, name);
                     appendLineToReport("actions", MessageFormat.format("{0} :: added string-array {1}", reportTag, name));
 
@@ -161,7 +161,7 @@ public abstract class UpdateTranslations extends ProcessTranslations
                     }
                     node.appendChild(missingStringArray);
 
-                    String missingComment = getCommentAfter(element);
+                    String missingComment = Utils.getCommentAfter(element);
                     if (missingComment != null && !missingComment.trim().equals("TODO")) {
                         node.appendChild(revised.createTextNode("    "));
                         node.appendChild(revised.createComment(missingComment));
@@ -208,7 +208,7 @@ public abstract class UpdateTranslations extends ProcessTranslations
         for (int i=0; i<nodes.getLength(); i++)
         {
             Element element = (Element) nodes.item(i);
-            if (isTranslatable(element) && !isMarkedCommon(element) && !isReference(element))
+            if (Utils.isTranslatable(element) && !Utils.isMarkedCommon(element) && !Utils.isReference(element))
             {
                 String name = element.getAttribute("name");
                 if (!names.contains(name)) {
@@ -233,127 +233,6 @@ public abstract class UpdateTranslations extends ProcessTranslations
                                                    "\n        Copied from default on " + dateFormat.format(new Date(System.currentTimeMillis())) +
                                                    " \n    "));
         node.appendChild(document.createTextNode("\n"));
-    }
-
-    protected void checkForIllegalItems(String parent, String baseName, Document baseDocument, Document revised)
-    {
-        String reportTag = (parent + "/" + baseName + ".xml");
-        Set<String> baseStringNames = collectNames(baseDocument, "string");
-        Set<String> translatableFalse = collectNames(baseDocument, "string", false);
-        NodeList nodes0 = revised.getElementsByTagName("string");
-        for (int i=0; i<nodes0.getLength(); i++)
-        {
-            Element element = (Element) nodes0.item(i);
-            String name = element.getAttribute("name");
-            if (!baseStringNames.contains(name))
-            {
-                String message = MessageFormat.format("{0} contains string not present in default! {1}", reportTag, name);
-                getLogger().error(message);
-                appendLineToReport("warnings", message);
-            }
-            if (translatableFalse.contains(name)) {
-                String message = MessageFormat.format("{0} contains string marked translatable=false in default! {1}", reportTag, name);
-                getLogger().error(message);
-                appendLineToReport("warnings", message);
-            }
-            if (element.hasAttribute("translatable"))
-            {
-                boolean isTranslatable = Boolean.parseBoolean(element.getAttribute("translatable"));
-                if (!isTranslatable) {
-                    String message = MessageFormat.format("{0} contains string marked translatable=false! {1}", reportTag, name);
-                    getLogger().error(message);
-                    appendLineToReport("warnings", message);
-                }
-            }
-        }
-
-        Set<String> baseStringArrayNames = collectNames(baseDocument, "string-array");
-        NodeList nodes1 = revised.getElementsByTagName("string-array");
-        for (int i=0; i<nodes1.getLength(); i++)
-        {
-            Element element = (Element) nodes1.item(i);
-            String name = element.getAttribute("name");
-            if (!baseStringArrayNames.contains(name)) {
-                String message = MessageFormat.format("{0} contains string-array not present in default! {1}", reportTag, name);
-                getLogger().error(message);
-                appendLineToReport("warnings", message);
-            }
-        }
-    }
-
-    private String getCommentAfter(Element element)
-    {
-        Node node = element.getNextSibling();
-        if (node != null)
-        {
-            while (node.getNodeType() == Node.TEXT_NODE)
-            {
-                if (node.getTextContent().contains("\n")) {
-                    return null;
-                }
-                node = node.getNextSibling();
-            }
-            if (node.getNodeType() == Node.COMMENT_NODE) {
-                return ((Comment) node).getData();
-            }
-        }
-        return null;
-    }
-
-    private boolean isTranslatable(Element element)
-    {
-        if (element.hasAttribute("translatable")) {
-            return Boolean.parseBoolean(element.getAttribute("translatable"));
-        }
-        return true;
-    }
-
-    private boolean isReference(Node element) {
-        return element.getTextContent().startsWith("@string/");
-    }
-
-    private boolean containsOnlyItemReferences(Element element)
-    {
-        NodeList children = element.getElementsByTagName("item");
-        for (int j=0; j<children.getLength(); j++)
-        {
-            Node child = (Element) children.item(j);
-            if (!isReference(child)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isMarkedCommon(Element element)
-    {
-        if (element.hasAttribute("tools:common")) {
-            return Boolean.parseBoolean(element.getAttribute("tools:common"));
-        }
-        return false;
-    }
-
-    private Set<String> collectNames(Document document, String tag) {
-        return collectNames(document, tag, null);
-    }
-    private Set<String> collectNames(Document document, String tag, Boolean translatable)
-    {
-        Set<String> set = new TreeSet<>();
-        NodeList nodes = document.getElementsByTagName(tag);
-        for (int i=0; i<nodes.getLength(); i++)
-        {
-            Element element = (Element) nodes.item(i);
-            if (translatable != null)
-            {
-                if ((translatable && isTranslatable(element)) ||
-                        (!translatable && !isTranslatable(element))) {
-                    set.add(element.getAttribute("name"));
-                }
-            } else {
-                set.add(element.getAttribute("name"));
-            }
-        }
-        return set;
     }
 
     @Override

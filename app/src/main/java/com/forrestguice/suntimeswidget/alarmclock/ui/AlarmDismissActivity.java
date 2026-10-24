@@ -138,6 +138,9 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, timezoneText, offsetText, infoText, noteText;
     private TextView[] labels;
 
+    private ImageView status_vibrate, status_sound, status_silent;
+    private ImageView[] statusIcons;
+
     private FloatingActionButton backButton;
     private AlarmButton dismissButton;
     private AlarmButton snoozeButton;
@@ -227,7 +230,13 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
         infoText = (TextView)findViewById(R.id.txt_snooze);
         noteText = (TextView)findViewById(R.id.txt_alarm_note);
 
-        if (colors != null) {
+        status_vibrate = (ImageView) findViewById(R.id.status_vibrate);
+        status_sound = (ImageView) findViewById(R.id.status_sound);
+        status_silent = (ImageView) findViewById(R.id.status_silent);
+        statusIcons = new ImageView[] { status_vibrate, status_sound, status_silent };
+
+        if (colors != null)
+        {
             alarmTitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
             alarmSubtitle.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_PRIMARY));
             alarmText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
@@ -236,6 +245,12 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
             offsetText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
             infoText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
             noteText.setTextColor(colors.getColor(AlarmColorValues.COLOR_TEXT_SECONDARY));
+
+            for (ImageView view : statusIcons) {
+                if (view != null) {
+                    view.setColorFilter(colors.getColor(AlarmColorValues.COLOR_CONTROL_DISABLED));
+                }
+            }
         }
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
@@ -909,12 +924,27 @@ public class AlarmDismissActivity extends AppCompatActivity implements AlarmDism
                 noteText.setText(DataSubstitutions.displayStringForTitlePattern0(AndroidSuntimesDataSettings.wrap(context), alarm.note, AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm)));
             } else noteText.setText("");
 
+            if (status_vibrate != null) {
+                status_vibrate.setVisibility(View.GONE);  // (alarm.getVibrate() ? View.VISIBLE : View.GONE);
+            }
+            if (status_sound != null) {
+                status_sound.setVisibility(View.GONE);    // (alarm.getRingtoneURI() != null) ? View.VISIBLE : View.GONE);
+            }
+            if (status_silent != null) {
+                status_silent.setVisibility((alarm.getRingtoneURI() == null) ? View.VISIBLE : View.GONE);
+            }
 
         } else {    // null alarm item
             alarmTitle.setText("");
             alarmSubtitle.setText("");
             alarmText.setText("");
             offsetText.setText("");
+
+            for (ImageView view : statusIcons) {
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
         }
 
         if (MODE_SNOOZING.equals(mode))
