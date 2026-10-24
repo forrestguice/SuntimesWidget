@@ -186,7 +186,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 Copyright &#169; 2014-2026 Forrest Guice<br/>
 
-The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
+The source code is available under [GPLv3 or later](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
 
 
