@@ -65,12 +65,12 @@ public class Time4jCalculatorTest
         Time4A4JSuntimesCalculator calculator = new Time4A4JSuntimesCalculator();
         calculator.init(location, ltst);
 
+        long date = System.currentTimeMillis();
         UnixTime now = now();
-        Timezone tz = calculator.toTimezone(ltst);
+        Timezone tz = calculator.toTimezone(ltst, date);
         ZonalOffset tzOffset = tz.getOffset(now);
 
-        long offsetSeconds0 = lmt.getOffset(now.getPosixTime()) / 1000L;       // expects lmt but only because ltst isn't handled
-        //long offsetSeconds0 = ltst.getOffset(now.getPosixTime()) / 1000L;    // TODO: this is the condition that needs to pass
+        long offsetSeconds0 = ltst.getOffset(now.getPosixTime()) / 1000L;
         long offsetSeconds = tzOffset.getIntegralAmount();
         assertEquals(offsetSeconds0, offsetSeconds);
     }

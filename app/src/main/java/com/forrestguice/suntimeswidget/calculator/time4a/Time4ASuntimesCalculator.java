@@ -353,7 +353,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public boolean isDay(Calendar dateTime)
     {
-        net.time4j.tz.Timezone tz = toTimezone(dateTime.getTimeZone());
+        net.time4j.tz.Timezone tz = getTimezone(dateTime);
         PlainDate localDate = calendarToPlainDate(dateTime);
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
         SolarTime.Sunshine sunshine = localDate.get(this.solarTime.sunshine(tz.getID()));
@@ -373,11 +373,36 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return ZonalOffset.atLongitude(BigDecimal.valueOf(this.solarTime.getLongitude()));
     }
 
-    protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input )
+    protected Timezone apparentSolarTime(long date)
+    {
+        try {
+            return net.time4j.tz.Timezone.of(apparentSolarZonalOffset(date));
+        } catch (IllegalArgumentException e) {
+            Log.e("Time4A", "toTimezone: falling back to platform timezone!", e);
+            return Timezone.ofPlatform();
+        }
+    }
+    protected TZID apparentSolarZonalOffset(long date) {
+        double eotSeconds = TimeZones.ApparentSolarTime.equationOfTimeOffset(date) / 1000d;
+        int lmtSeconds = ZonalOffset.atLongitude(BigDecimal.valueOf(solarTime.getLongitude())).getIntegralAmount();
+        return ZonalOffset.ofTotalSeconds((int) (lmtSeconds + eotSeconds));
+    }
+
+    protected net.time4j.tz.Timezone getTimezone( Calendar calendar ) {
+        return toTimezone(calendar.getTimeZone(), calendar.getTimeInMillis());
+    }
+    protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input ) {
+        return toTimezone(input, System.currentTimeMillis());
+    }
+    protected net.time4j.tz.Timezone toTimezone( java.util.TimeZone input, long date )
     {
         String tzID = input.getID();
-        if (TimeZones.LocalMeanTime.TIMEZONEID.equals(tzID) || TimeZones.ApparentSolarTime.TIMEZONEID.equals(tzID)) {
+        if (TimeZones.LocalMeanTime.TIMEZONEID.equals(tzID)) {
             return localMeanTime();
+
+        } else if (TimeZones.ApparentSolarTime.TIMEZONEID.equals(tzID)) {
+            return apparentSolarTime(date);
+
         } else {
             return toTimezone(input, Timezone.ofPlatform().getID());  // ofSystem().getID()
         }
@@ -421,7 +446,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     public MoonTimes getMoonTimesForDate(Calendar date)
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(date.getTime());
-        TZID tzid = toTimezone(date.getTimeZone()).getID();
+        TZID tzid = getTimezone(date).getID();
         PlainDate localDate = moment.toZonalTimestamp(tzid).toDate();
 
         LunarTime lunarTime = LunarTime.ofLocation(tzid, this.solarTime.getLatitude(), this.solarTime.getLongitude(), this.solarTime.getAltitude());
