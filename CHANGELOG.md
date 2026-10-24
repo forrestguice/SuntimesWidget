@@ -1,11 +1,12 @@
 ### ~
 
-### v0.17.6 (2026-10-20)
+### v0.17.6 (2026-10-25)
 * fixes bug where "time4a-simple and time4a-noaa calculators fail to load" (#989).
 * fixes bug where "earliest/latest sunrise and sunset are reported incorrectly when using LTST" (#980).
-* fixes bug where "set bedtime from alarm" ignores the alarm offset (before/after).
+* fixes bug where "moonrise/moonset is sometimes displayed on the wrong day in LMT" (#995).
+* fixes bug where "`set bedtime from alarm` ignores the alarm offset (before/after)".
 * miscellaneous alarm ui; adds a "no sound" status icon to the dismiss screen.
-* changes the default for the `use elevation` option. The altitude based adjustments are not accurate in all contexts so this option is now disabled by default to avoid potential confusion.
+* changes the default for the `use elevation` option. The altitude based adjustments are not accurate in all contexts so this option is now disabled by default.
 * adds world places; 30 places (Canada, Alaska, and US North East).
 * adds world places; 23 places (China); fixes place tag `MN` (Mongolia).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#977 by James Liu).
