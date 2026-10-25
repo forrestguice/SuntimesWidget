@@ -14,7 +14,7 @@
       <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/manage/index.html</guid>
       <description>Calendar Integration Add Calendars Remove Calendars Open Calendar Calendar Integration Suntimes Calendars works by integrating with the calendar app to provide its own custom calendars.
 It provides calendars for:
-Astronomical Twilight Nautical Twilight Civil Twilight Daylight (sunrise, noon, sunset) Golden Hour Blue Hour Moon (rising / setting) Moon Phases Moon Apsis (apogee / perigee) Solstices / Equinoxes Tip Additional calendars are available using add-ons. For example, Solunar Periods provides a &amp;ldquo;Hunting and Fishing&amp;rdquo; calendar.</description>
+Astronomical Twilight Nautical Twilight Civil Twilight Daylight (sunrise, noon, sunset) Golden Hour Blue Hour Moon (rising / setting) Moon Phases Moon Apsis (apogee / perigee) Solstices / Equinoxes TipAdditional calendars are available using add-ons. For example, Solunar Periods provides a &amp;ldquo;Hunting and Fishing&amp;rdquo; calendar.</description>
     </item>
     <item>
       <title>Options</title>
@@ -22,9 +22,9 @@ Astronomical Twilight Nautical Twilight Civil Twilight Daylight (sunrise, noon, 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/addons/suntimescalendars/options/index.html</guid>
       <description>Location Window Color Event Flags Event Strings Event Template Reminders Location The location is configured from Suntimes.
-Note The location is applied when calendars are added.
+NoteThe location is applied when calendars are added.
 Window Tap Calendar Window to change the time period of included events.
-Note The calendar window is applied when calendars are added.
+NoteThe calendar window is applied when calendars are added.
 Color Tap -&amp;gt; Color to change the calendar&amp;rsquo;s display color.
 Title Tap -&amp;gt; Title to change the calendar&amp;rsquo;s display title.
 Event Flags Tap -&amp;gt; Event Flags to customize included calendar events.</description>

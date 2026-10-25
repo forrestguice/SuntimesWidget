@@ -24,7 +24,7 @@ Use : -&amp;gt; Add World Places to add world places to the list.</description>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/more/places/placesettings/index.html</guid>
       <description>Suntimes can query the device&amp;rsquo;s current location using the GPS or Network providers.
 To configure this behavior, use Suntimes -&amp;gt; Settings -&amp;gt; Places to access the place settings.
-Permissions Getting the current location requires location permissions. When prompted, grant permissions and enable device location.
+PermissionsGetting the current location requires location permissions. When prompted, grant permissions and enable device location.
 Location time limit When requesting the current location, Suntimes will actively wait for a location update until the time limit expires.
 The default location time limit is 1 minute.</description>
     </item>

@@ -14,14 +14,14 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/configuration/index.html</guid>
       <description>Suntimes needs to be configured for best results.
-Welcome Select a Place Select a Time Zone </description>
+WelcomeSelect a PlaceSelect a Time Zone</description>
     </item>
     <item>
       <title>App Dialogs</title>
       <link>https://forrestguice.codeberg.page/Suntimes/help/dialogs/index.html</link>
       <pubDate>Sat, 16 Mar 2024 16:16:14 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/dialogs/index.html</guid>
-      <description>Main Sun Moon Solstice, Equinox World Map Use from the main screen to access app dialogs. Dialogs can also be shown by tapping different UI elements, or triggered using actions.</description>
+      <description>MainSunMoonSolstice, EquinoxWorld MapUse from the main screen to access app dialogs. Dialogs can also be shown by tapping different UI elements, or triggered using actions.</description>
     </item>
     <item>
       <title>Alarms</title>
@@ -29,7 +29,7 @@ Welcome Select a Place Select a Time Zone </description>
       <pubDate>Sat, 16 Mar 2024 15:50:03 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/alarms/index.html</guid>
       <description>Suntimes Alarms is a sunlight aware alarm clock with support for daily repeating alarms and notifications.
-Set Alarm Edit Alarm Alarm List Alarm Settings Alarm Recommendations </description>
+Set AlarmEdit AlarmAlarm ListAlarm SettingsAlarm Recommendations</description>
     </item>
     <item>
       <title>Widgets</title>
@@ -37,7 +37,7 @@ Set Alarm Edit Alarm Alarm List Alarm Settings Alarm Recommendations </descripti
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/widgets/index.html</guid>
       <description>Suntimes includes a variety of home screen widgets.
-Manage Widgets Configure Widgets Widget Themes Time &amp;amp; Date Alarm Sun Moon Solstice, Equinox </description>
+Manage WidgetsConfigure WidgetsWidget ThemesTime &amp;amp; Date Alarm Sun Moon Solstice, Equinox </description>
     </item>
     <item>
       <title>Tiles</title>
@@ -61,7 +61,7 @@ A 24-hour clock &amp; Roman timekeeping add-on app.</description>
       <link>https://forrestguice.codeberg.page/Suntimes/help/more/index.html</link>
       <pubDate>Sat, 16 Mar 2024 16:10:53 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/more/index.html</guid>
-      <description> Settings Events Places Actions Data Nightly Debug Documentation </description>
+      <description>SettingsEventsPlacesActionsDataNightly DebugDocumentation</description>
     </item>
   </channel>
 </rss>

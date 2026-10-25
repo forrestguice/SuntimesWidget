@@ -14,7 +14,7 @@
       <pubDate>Sat, 16 Mar 2024 16:10:53 -0700</pubDate>
       <guid>https://forrestguice.codeberg.page/Suntimes/help/more/data/datasubstitutions/index.html</guid>
       <description>Suntimes supports limited %substitutions, a set of tags that are replaced with values from the data set.
-Available Substitutions Substitutions may be used within widget titles, alarm notes, or within action data or extras.
+Available SubstitutionsSubstitutions may be used within widget titles, alarm notes, or within action data or extras.
 Examples %loc, %M, or %t can be used to include the location name, event name, or time zone as part of a widget&amp;rsquo;s title.
 %dm and %em@&amp;lt;event&amp;gt; can be used to pass time (milliseconds) as part of an action; e.</description>
     </item>
@@ -27,7 +27,7 @@ Examples %loc, %M, or %t can be used to include the location name, event name, o
 The data source settings allow for choosing between different libraries (or choosing between different algorithms offered by those libraries).
 Suntimes -&amp;gt; Settings -&amp;gt; General -&amp;gt; Advanced
 These are advanced settings that affect the speed and accuracy of calculations, and may limit which features are available.
-Available Data Sources Adding Data Sources </description>
+Available Data SourcesAdding Data Sources</description>
     </item>
     <item>
       <title>Data Provider</title>
