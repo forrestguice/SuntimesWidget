@@ -91,6 +91,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -164,6 +165,39 @@ public class AlarmNotifications extends BroadcastReceiver
     private static final long AFTER_BOOT_COMPLETED_DELAY_MS = 10 * 1000;
 
     /**
+     * Fixes `strictmode.UnsafeIntentLaunchViolation` when calling `startForegroundService`.
+     * The extras supplied to the service should be filtered first (do not blindly pass intent.getExtras)!
+     */
+    protected static Bundle copyExtras(Intent intent)
+    {
+        Bundle b = intent.getExtras();
+        if (b != null)
+        {
+            Bundle bundle = new Bundle();
+            Set<String> keys = b.keySet();
+
+            if (intent.hasExtra(EXTRA_NOTIFICATION_ID)) {
+                bundle.putInt(EXTRA_NOTIFICATION_ID, intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0));
+                keys.remove(EXTRA_NOTIFICATION_ID);
+            }
+            if (intent.hasExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM)) {
+                bundle.putLong(AlarmClockActivity.EXTRA_SELECTED_ALARM, intent.getLongExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, 0));
+                keys.remove(AlarmClockActivity.EXTRA_SELECTED_ALARM);
+            }
+            if (intent.hasExtra(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION)) {
+                bundle.putInt(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, -1));
+                keys.remove(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION);
+            }
+
+            if (!keys.isEmpty()) {
+                Log.e(TAG, "copyExtras: unrecognized keys! The following were filtered: " + String.join(", ", keys));
+            }
+            return bundle;
+        }
+        return null;
+    }
+
+    /**
      * onReceive
      * @param context Context
      * @param intent Intent
@@ -186,9 +220,9 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else if (actionIsPermitted(action)) {
                 if (Build.VERSION.SDK_INT >= 26) {
-                    context.startForegroundService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                    context.startForegroundService(NotificationService.getNotificationIntent(context, action, data, copyExtras(intent)));
                 } else {
-                    context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
+                    context.startService(NotificationService.getNotificationIntent(context, action, data, copyExtras(intent)));
                 }
             } else Log.e(TAG, "onReceive: `" + action + "` is not on the list of permitted actions! Ignoring...");
         } else Log.w(TAG, "onReceive: null action!");
@@ -1899,7 +1933,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext(), ContentUris.parseId(data));
-                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, action, intent.getExtras()));
+                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, action, copyExtras(intent)));
                     ExecutorUtils.runTask("AlarmItemTask", itemTask, itemTask.getTaskListeners());
 
                 } else {
