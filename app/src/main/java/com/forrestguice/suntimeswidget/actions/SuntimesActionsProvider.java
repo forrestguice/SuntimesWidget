@@ -74,7 +74,7 @@ public class SuntimesActionsProvider extends ContentProvider
         if (uriMatcher == null) {
             uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
             uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS, URIMATCH_ACTIONS);                  // content://AUTHORITY/actions
-            uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[themeName]
+            uriMatcher.addURI(AUTHORITY(), QUERY_ACTIONS + "/*", URIMATCH_ACTION);      // content://AUTHORITY/actions/[actionID]
         }
         return uriMatcher;
     }
@@ -142,7 +142,7 @@ public class SuntimesActionsProvider extends ContentProvider
     }
 
     /**
-     * queryThemes
+     * queryActions
      */
     private Cursor queryActions(@Nullable String actionID, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
