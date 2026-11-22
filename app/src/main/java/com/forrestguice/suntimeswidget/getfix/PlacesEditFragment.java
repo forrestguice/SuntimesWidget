@@ -86,10 +86,10 @@ public class PlacesEditFragment extends BottomSheetDialogBase
     public static final String KEY_LOCATION_LABEL = "locationLabel";
     public static final String KEY_LOCATION_COMMENT = "locationComment";
 
-    private EditText text_locationAlt;
+    private EditTextCoordinates text_locationAlt;
     private TextView text_locationAltUnits;
-    private EditText text_locationLat;
-    private EditText text_locationLon;
+    private EditTextCoordinates text_locationLat;
+    private EditTextCoordinates text_locationLon;
     private EditText text_locationName;
     private EditText text_locationComment;
 
@@ -387,13 +387,20 @@ public class PlacesEditFragment extends BottomSheetDialogBase
         WidgetSettings.initDisplayStrings(context);
 
         text_locationName = (EditText) content.findViewById(R.id.appwidget_location_name);
-        text_locationLat = (EditText) content.findViewById(R.id.appwidget_location_lat);
-        text_locationLon = (EditText) content.findViewById(R.id.appwidget_location_lon);
-        text_locationAlt = (EditText) content.findViewById(R.id.appwidget_location_alt);
+        text_locationLat = (EditTextCoordinates) content.findViewById(R.id.appwidget_location_lat);
+        text_locationLon = (EditTextCoordinates) content.findViewById(R.id.appwidget_location_lon);
+        text_locationAlt = (EditTextCoordinates) content.findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)content.findViewById(R.id.appwidget_location_alt_units);
         text_locationComment = (EditText) content.findViewById(R.id.appwidget_location_comment);
 
+        if (text_locationLat != null) {
+            text_locationLat.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
+        }
+        if (text_locationLon != null) {
+            text_locationLon.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
+        }
         if (text_locationAlt != null) {
+            text_locationAlt.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
             text_locationAlt.setNextFocusDownId(R.id.save_button);
         }
 

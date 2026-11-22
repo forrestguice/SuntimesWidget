@@ -396,14 +396,14 @@ public class LocationConfigView extends LinearLayout
     private Spinner spinner_locationMode;
 
     private TextView labl_locationAlt;
-    private EditText text_locationAlt;
+    private EditTextCoordinates text_locationAlt;
     private TextView text_locationAltUnits;
 
     private TextView labl_locationLat;
-    private EditText text_locationLat;
+    private EditTextCoordinates text_locationLat;
 
     private TextView labl_locationLon;
-    private EditText text_locationLon;
+    private EditTextCoordinates text_locationLon;
 
     //private LinearLayout layout_locationName;
     private TextView labl_locationName;
@@ -610,14 +610,24 @@ public class LocationConfigView extends LinearLayout
         });
 
         labl_locationLat = (TextView)findViewById(R.id.appwidget_location_lat_label);
-        text_locationLat = (EditText)findViewById(R.id.appwidget_location_lat);
+        text_locationLat = (EditTextCoordinates) findViewById(R.id.appwidget_location_lat);
 
         labl_locationLon = (TextView)findViewById(R.id.appwidget_location_lon_label);
-        text_locationLon = (EditText)findViewById(R.id.appwidget_location_lon);
+        text_locationLon = (EditTextCoordinates) findViewById(R.id.appwidget_location_lon);
 
         labl_locationAlt = (TextView)findViewById(R.id.appwidget_location_alt_label);
-        text_locationAlt = (EditText)findViewById(R.id.appwidget_location_alt);
+        text_locationAlt = (EditTextCoordinates) findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
+
+        if (text_locationLat != null) {
+            text_locationLat.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
+        }
+        if (text_locationLon != null) {
+            text_locationLon.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
+        }
+        if (text_locationAlt != null) {
+            text_locationAlt.setEditTextCoordinatesListener(new EditTextCoordinates.SimpleEditTextCoordinatesListener(text_locationLat, text_locationLon, text_locationAlt));
+        }
 
         button_list = (ImageButton)findViewById(R.id.appwidget_location_list);
         TooltipCompat.setTooltipText(button_list, button_list.getContentDescription());

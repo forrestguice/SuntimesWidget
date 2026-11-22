@@ -52,7 +52,7 @@
                 android:layout_gravity="start"
                 android:text="@string/location_label_lat" android:enabled="false" />
 
-            <EditText android:id="@+id/appwidget_location_lat"
+            <com.forrestguice.suntimeswidget.getfix.EditTextCoordinates android:id="@+id/appwidget_location_lat"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:inputType="numberDecimal|numberSigned"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -63,7 +63,7 @@
                 android:layout_gravity="start"
                 android:text="@string/location_label_lon" android:enabled="false" />
 
-            <EditText android:id="@+id/appwidget_location_lon"
+            <com.forrestguice.suntimeswidget.getfix.EditTextCoordinates android:id="@+id/appwidget_location_lon"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:inputType="numberDecimal|numberSigned"
                 android:textAppearance="?android:attr/textAppearanceSmall"
