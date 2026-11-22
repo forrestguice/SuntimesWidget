@@ -38,6 +38,8 @@ proguard/
 *.log
 
 # Android Studio Files
+SuntimesWidget.iml
+app/app.iml
 .idea/workspace.xml
 .idea/vcs.xml
 .idea/assetWizardSettings.xml
@@ -46,13 +48,24 @@ proguard/
 .idea/shelf/
 *.gz
 *.zip
-/.idea/libraries
+.idea/libraries
 .idea/compiler.xml
 .idea/gradle.xml
 .idea/misc.xml
 .idea/modules.xml
-app/app.iml
-/.idea/modules
-SuntimesWidget.iml
+
+.idea/modules
+
 app/test_location_serializable.txt
 app/production/release/output-metadata.json
+.idea/jarRepositories.xml
+.idea/androidTestResultsUserPreferences.xml
+.idea/deploymentTargetSelector.xml
+.idea/kotlinc.xml
+.idea/migrations.xml
+.idea/other.xml
+.idea/runConfigurations.xml
+.idea/AndroidProjectSystem.xml
+.idea/copyright/profiles_settings.xml
+.idea/scopes/scope_settings.xml
+.idea/inspectionProfiles/profiles_settings.xml

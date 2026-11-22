@@ -1,28 +1,28 @@
 # Contributing
 
-1. [Donations](#donations)
+1. [Awareness](#awareness)
 2. [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
-3. [Spread the Word](#spread-the-word)
+3. [Donations](#donations)
 4. [Translations](#translations)
-5. [Plugins and Addons](#plugins-and-addons)
+5. [Plugins / Addons](#plugins-and-addons)
 6. [Other](#other)
+7. [Certificate of Origin](#certificate-of-origin)
 
-## Donations
-
-Does this app provide value? Suntimes is available gratis, but if it has proven its value, please pay as you feel.
-
-* <a href="https://liberapay.com/forrestguice">Liberapay</a>
-* <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NZJ5FJBCKY6K2"><img src="/SuntimesWidget/assets/images/PP_logo_h_150x38.png" alt="paypal" /></a>
+## Awareness
+Spread the word. Share this app. Tell your friends. Let others know about [F-Droid](https://f-droid.org/en/packages/) and the software that's available there.
 
 ## Bug Reports and Feature Requests
 Use the issue tracker to submit a bug report or feature request.
 
 When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
 
-## Spread the Word
-Share this app. Tell your friends. Let others know about F-Droid and the software that's available there.
+## Donations
+Does this app provide value? Suntimes is available gratis, but if it has proven its value, please pay as you feel.
+
+* <a href="https://liberapay.com/forrestguice">Liberapay</a>
 
 ## Translations
+Add a translation of the app into your native language, or help update and maintain one of the app's existing translations.
 
  1. Determine your locale code and values-folder-name (e.g. values-en-rGB is British English); see https://github.com/championswimmer/android-locales for a list of codes.
 
@@ -42,12 +42,12 @@ Share this app. Tell your friends. Let others know about F-Droid and the softwar
   <br /><br />
  6. Submit a pull request.
 
-### Plugins and Addons
-Add additional data sources (use your own algorithms) by implementing the `SuntimesCalculator` interface.
-Access data from separate "addon" apps or widgets using the Suntimes ContentProvider. [https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
+### Plugins / Addons
+Add data sources (use your own algorithms) or extend functionality with a separate "addon" app.
+[https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
 
 ## Other
-Use the issue tracker to start a discussion and get started. Your participation in the project in other ways is also welcome.
+Use the issue tracker to start a discussion before you get started.
 
 ## Certificate of Origin
 Contributors certify that the work they submit to this project is their own, does not contain outputs from generative AI, and that they have full rights to submit that work under an open source license.
