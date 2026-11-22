@@ -27,6 +27,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * deprecated;
+ * trigger AlarmNotifications.ACTION_AFTER_BOOT_COMPLETED directly (@see AlarmNotifications.scheduleAfterBootCompleted).
+ */
+@Deprecated
 @TargetApi(24)
 public class AlarmJobService extends JobService
 {
@@ -71,6 +76,7 @@ public class AlarmJobService extends JobService
         return false;
     }
 
+    @Deprecated
     public static void scheduleJobAfterBootCompleted(Context context)
     {
         long delay = AlarmSettings.bootCompletedDelay(context);

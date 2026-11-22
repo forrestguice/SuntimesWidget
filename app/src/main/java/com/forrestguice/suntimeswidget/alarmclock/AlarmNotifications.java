@@ -230,19 +230,16 @@ public class AlarmNotifications extends BroadcastReceiver
 
     protected void scheduleAfterBootCompleted(Context context)
     {
-        if (Build.VERSION.SDK_INT >= 24) {
-            AlarmJobService.scheduleJobAfterBootCompleted(context);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23) {
+            flags = flags | PendingIntent.FLAG_IMMUTABLE;
+        }
 
-        } else {
-            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (Build.VERSION.SDK_INT == 23) {
-                flags = flags | PendingIntent.FLAG_IMMUTABLE;
-            }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+                getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), flags);
+        long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
+        addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
-                    getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), flags);
-            long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
-            addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
         }
     }
 
