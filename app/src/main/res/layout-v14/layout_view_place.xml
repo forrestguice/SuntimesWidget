@@ -32,7 +32,7 @@
         android:layout_column="0" />
 
 
-    <EditText android:id="@+id/appwidget_location_lat"
+    <com.forrestguice.suntimeswidget.getfix.EditTextCoordinates android:id="@+id/appwidget_location_lat"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:inputType="numberDecimal|numberSigned"
         android:textAppearance="?attr/textAppearanceSmallPopupMenu"
@@ -50,7 +50,7 @@
         android:layout_row="1"
         android:layout_column="0" />
 
-    <EditText android:id="@+id/appwidget_location_lon"
+    <com.forrestguice.suntimeswidget.getfix.EditTextCoordinates android:id="@+id/appwidget_location_lon"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:inputType="numberDecimal|numberSigned"
         android:textAppearance="?attr/textAppearanceSmallPopupMenu"
@@ -68,7 +68,7 @@
         android:layout_row="2"
         android:layout_column="0" />
 
-    <EditText android:id="@+id/appwidget_location_alt"
+    <com.forrestguice.suntimeswidget.getfix.EditTextCoordinates android:id="@+id/appwidget_location_alt"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:inputType="numberDecimal|numberSigned" android:minEms="2"
         android:textAppearance="?attr/textAppearanceSmallPopupMenu"
