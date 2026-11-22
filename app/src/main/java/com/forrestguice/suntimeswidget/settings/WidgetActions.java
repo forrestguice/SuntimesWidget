@@ -360,6 +360,9 @@ public class WidgetActions
         } else {
             switch (key)
             {
+                case PREF_KEY_ACTION_LAUNCH:
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, defaultValue);
+
                 case PREF_KEY_ACTION_LAUNCH_PACKAGE:
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_PACKAGE, defaultValue);
 
