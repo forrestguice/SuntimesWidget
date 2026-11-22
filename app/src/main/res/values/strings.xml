@@ -2866,7 +2866,11 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>  <!-- full statement (about dialog) -->
 
     <string name="privacy_permission_calculator_label">Integrate as an addon app</string>    <!-- TODO -->
-    <string name="privacy_permission_calculator_desc">Allows the app to integrate with Suntimes as an addon. The app will gain access to configuration data provided by Suntimes (such as private location data and other settings), and will be permitted access to interfaces designed to extend Suntimes.</string>      <!-- TODO -->
+    <string name="privacy_permission_calculator_desc">integrate with Suntimes as an addon</string>      <!-- TODO -->
+    <string name="privacy_permission_calculator_details">The app will gain access to configuration data provided by Suntimes (such as private location data and other settings), and will be permitted access to interfaces designed to extend Suntimes.</string>      <!-- TODO -->
+    <string name="privacy_permission_runaction_label">Run actions delegated by Suntimes</string>    <!-- TODO -->
+    <string name="privacy_permission_runaction_desc">run user-defined actions on behalf of Suntimes</string>      <!-- TODO -->
+    <string name="privacy_permission_runaction_details">Suntimes is restricted from launching activities from the background on Android 12+. This permission delegates background launches to a separate privileged app.</string>      <!-- TODO -->
     <string name="privacy_permission_dnd"><![CDATA[Suntimes needs <b>Do Not Disturb access</b> to change these settings at bedtime.]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>

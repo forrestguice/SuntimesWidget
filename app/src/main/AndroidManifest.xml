@@ -30,6 +30,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />  <!-- needed by Bedtime to trigger do-not-disturb -->
 
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->  <!-- needed by Actions to launch user-defined intents from a "notification trampoline" -->
     <!--<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>-->       <!-- needed by Actions to launch user-defined intents -->
 
 
@@ -58,6 +59,26 @@
         android:description="@string/privacy_permission_calculator_desc"
         android:icon="@mipmap/ic_launcher"
         android:protectionLevel="dangerous" />                       <!-- replaces READ_CALCULATOR; protects suntimeswidget.calculator.provider -->
+
+    <permission-group
+        android:name="${suntimesPermissionRoot}.permission-group.ACTIONS"
+        android:label="@string/privacy_permission_runaction_label"
+        android:description="@string/privacy_permission_runaction_desc" />
+    <permission
+        android:name="${suntimesPermissionRoot}.permission.ACTION_RECEIVER"
+        android:permissionGroup="${suntimesPermissionRoot}.permission-group.ACTIONS"
+        android:label="@string/privacy_permission_runaction_label"
+        android:description="@string/privacy_permission_runaction_desc"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="dangerous" />    <!-- addons that launch actions must obtain this permission from the user -->
+    <permission
+        android:name="${suntimesPermissionRoot}.permission.ACTION_SENDER"
+        android:permissionGroup="${suntimesPermissionRoot}.permission-group.ACTIONS"
+        android:label="@string/privacy_permission_calculator_label"
+        android:description="@string/privacy_permission_calculator_desc"
+        android:icon="@mipmap/ic_launcher"
+        android:protectionLevel="dangerous" />    <!-- addons that launch actions should protect their receiver with this permission -->
+    <uses-permission android:name="${suntimesPermissionRoot}.permission.ACTION_SENDER" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
