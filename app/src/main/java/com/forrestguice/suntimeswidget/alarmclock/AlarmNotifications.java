@@ -239,7 +239,27 @@ public class AlarmNotifications extends BroadcastReceiver
                 getAlarmIntent(context, ACTION_AFTER_BOOT_COMPLETED, null), flags);
         long atTime = System.currentTimeMillis() + AFTER_BOOT_COMPLETED_DELAY_MS;
         addTimeout(context, pendingIntent, atTime, AlarmManager.RTC_WAKEUP);
+    }
 
+    protected static void triggerUserDefinedAction(Context context, AlarmClockItem item, int actionID, @Nullable SuntimesData data, long timeoutAt)
+    {
+        //WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(actionID), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
+        //PendingIntent pendingIntent = WidgetActions.createPendingIntent(context.getApplicationContext(), 0, 0, item.getActionID(actionID), data, null);
+
+        String action = item.getActionID(actionID);
+        PendingIntent pendingIntent = WidgetActions.getPendingIntent(action);
+
+        if (pendingIntent != null)
+        {
+            addTimeout(context, pendingIntent, timeoutAt, AlarmManager.RTC_WAKEUP);
+            //try {
+            //    Log.d(TAG, "triggering user-defined intent: " + action);
+            //    pendingIntent.send();
+            //} catch (PendingIntent.CanceledException e) {
+            //    throw new RuntimeException(e);
+            //}
+        } else {
+            Log.d(TAG, "user-defined intent is not registered! " + action);
         }
     }
 
@@ -773,7 +793,7 @@ public class AlarmNotifications extends BroadcastReceiver
         {
             SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), alarm);
             data.calculate(context);
-            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
+            triggerUserDefinedAction(context.getApplicationContext(), alarm, AlarmClockItem.ACTIONID_MAIN, data, System.currentTimeMillis() + 500);
         }
     }
 
@@ -2578,7 +2598,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         SuntimesData data = AlarmScheduler.getData(AndroidSuntimesDataSettings.wrap(context), item);
                         data.calculate(context);
-                        WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
+                        triggerUserDefinedAction(context, item, AlarmClockItem.ACTIONID_DISMISS, data, System.currentTimeMillis() + 500);
                     }
 
                     if (item != null && item.getType() != AlarmType.ALARM) {
